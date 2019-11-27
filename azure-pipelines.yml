@@ -41,8 +41,11 @@ steps:
 
 # Setup and Deploy
 
-- script: ./.ci/env/set
-  displayName: 'Initialize build environment'
+-  script: 'sudo apt-get install jq'
+   displayName: 'Install jq utility'
+
+#- script: ./.ci/env/set
+#  displayName: 'Initialize build environment'
 
 # add domain
 #- bash: |
@@ -205,13 +208,9 @@ steps:
 #     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
 #     artifactName: BackstopJSTestScreenshots
 
-# Composer Lock Updater
-
-- script: true
-  displayName: 'Composer lock updater'
 
 # Clean up
 
-- script: ./.ci/env/clean
-  displayName: 'Clean up build environment'
-  condition: always()
+#- script: ./.ci/env/clean
+#  displayName: 'Clean up build environment'
+#  condition: always()
