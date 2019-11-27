@@ -1,0 +1,217 @@
+# Build, test, and deploy the content hub.
+# See: https://docs.microsoft.com/azure/devops/pipelines/languages/php
+#=========================================================================
+# In addition to the environment variables defined in this file, also
+# add the following variables in the Azure Pipelines UI.
+#
+# See: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables
+#
+# TERMINUS_SITE:  Name of the Pantheon site to run tests on, e.g. my_site
+# TERMINUS_TOKEN: The Pantheon machine token
+# DEVOPS_TOKEN:   The Azure DevOps personal access token
+# GIT_EMAIL:      The email address to use when making commits
+#
+# TEST_SITE_NAME: The name of the test site to provide when installing.
+# ADMIN_PASSWORD: The admin password to use when installing.
+# ADMIN_EMAIL:    The email address to give the admin when installing.
+#=========================================================================
+
+variables:
+  phpVersion: 7.2
+  MY_DEVOP_TOKEN: $(devops.token)
+  MY_DEVOP_URL: $(System.TeamFoundationCollectionUri)
+  MY_DEVOP_PROJ: $(System.TeamProject)
+  _subscription: '$(Azure.Subscription)'
+  _site: $(Site)
+  _env: $(Env)
+  _zone: $(Zone)
+  _gatsbysource: $(GatsbySource)
+  _pantheonsitelabel: $(PantheonSiteLabel)
+  _rg_name: '$(_env)$(_site)rg'
+  _storage_name: '$(_env)$(_site)storage'
+  _cdn_name: '$(_env)$(_site)cdn'
+  _endpoint_name: '$(_env)$(_site)endpoint'
+
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+  demands: npm
+
+steps:
+
+# Setup and Deploy
+
+- script: ./.ci/env/set
+  displayName: 'Initialize build environment'
+
+# add domain
+#- bash: |
+#    domain_exists=`terminus domain:list --format=list --field=id ''$(_pantheonsitelabel).$(_env)'' | grep "api.$(_env)$(_gatsbysource).$(_zone)"`
+#    if [ -z "$domain_exists" ]; then
+#      terminus domain:add ''$(_pantheonsitelabel).$(_env)'' ''api.$(_env)$(_gatsbysource).$(_zone)''
+#    fi
+#  displayName: 'If necessary, add domain to Pantheon environment'
+
+- task: "AzureResourceGroupDeployment@2"
+  displayName: 'Create or update resource group'
+  inputs:
+    azureSubscription: '$(_subscription)'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '$(_env)$(_site)rg'
+    location: 'East US'
+    templateLocation: 'Linked artifact'
+    csmFile: 'azuredeploy.json'
+    overrideParameters: '-env $(_env) -site $(_site) -zone $(_zone) -pantheonsitelabel $(_pantheonsitelabel)'
+    deploymentMode: 'Complete'
+    deploymentOutputs: 'outputConnectionString'
+
+- task: AzureCLI@1
+  displayName: 'Enable custom https using CDN Managed certificate'
+  inputs:
+    azureSubscription: '$(_subscription)'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      _zone_name=`echo $(_zone) | sed 's/\./\-/'`
+      https_exists=`az cdn custom-domain show --endpoint-name $(_endpoint_name) -n $(_env)$(_site)-$_zone_name --profile-name $(_cdn_name) -g $(_rg_name) | jq '.customHttpsProvisioningState' -r`
+      if [ $https_exists == "Enabled" ]; then
+        echo "##[DEBUG] Custom https already enabled."
+      else
+        az cdn custom-domain enable-https --endpoint-name $(_endpoint_name) -n $(_env)$(_site)-$_zone_name --profile-name $(_cdn_name) -g $(_rg_name)
+      fi
+
+- pwsh: |
+    $outputs = ConvertFrom-Json '$(outputConnectionString)'
+    foreach ($output in $outputs.PSObject.Properties) {
+      Write-Host "##vso[task.setvariable variable=_connectionstring]$($output.Value.value)"
+    }
+  displayName: 'Output parsed connection string'
+
+- task: AzureCLI@1
+  displayName: 'Enable static-website for storage account and set index to index.html'
+  inputs:
+    azureSubscription: '$(_subscription)'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az storage blob service-properties update --account-name ''$(_storage_name)'' --static-website  --index-document index.html'
+
+#- script: 'curl http://$(_env)-ccs-annual-report.pantheonsite.io/ >/dev/null'
+#  displayName: 'Wake up Drupal'
+
+- script: 'npm install --only=dev gatsby-cli'
+  displayName: 'Install Gatsby-CLI'
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    verbose: false
+
+# - task: CacheBeta@1
+#   inputs:
+#     key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
+#     path: $(_gatsby_cache_folder)
+#   displayName: 'Retrieve cached Gatsby .cache folder'
+
+# - task: CacheBeta@1
+#   inputs:
+#     key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
+#     path: $(_gatsby_public_folder)
+#   displayName: 'Retrieve cached Gatsby public folder'
+
+- script: |
+    npx gatsby build
+  displayName: 'Gatsby build'
+
+- task: AzureCLI@1
+  displayName: 'Upload storage content to static site'
+  inputs:
+    azureSubscription: '$(_subscription)'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az storage blob upload-batch -s ''public'' -d ''$web'' --connection-string ''$(_connectionstring)'''
+
+# - script: ./.ci/test/static/run
+#   displayName: 'Static tests'
+
+# - script: ./.ci/build/php
+#   displayName: 'Build PHP'
+
+# - script: ./.ci/deploy/pantheon/dev-multidev
+#   displayName: 'Deploy to Pantheon'
+
+# Behat Tests
+
+#- script: ./.ci/test/behat/initialize
+#  displayName: 'Initialize Behat tests'
+
+#- script: ./.ci/test/behat/run
+#  displayName: 'Run Behat tests'
+
+#- script: ./.ci/test/behat/cleanup
+#  displayName: 'Clean up Behat tests'
+#  condition: always()
+
+#- task: PublishTestResults@2
+#  displayName: 'Publish Behat test results'
+#  condition: always()
+#  inputs:
+#    testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+#    testRunTitle: 'Behat Test Results'
+#    testResultsFiles: '$(Common.TestResultsDirectory)/*' 
+
+#- task: CopyFiles@2
+#  displayName: "Copy Behat screenshots to Artifacts Directory"
+#  condition: failed()
+#  inputs:
+#      sourceFolder: 'var/behat_screenshots'
+#      contents: '**'
+#      targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+#- task: PublishBuildArtifacts@1
+#  displayName: 'Publish Behat screenshots to Artifacts Directory'
+#  condition: failed()
+#  inputs:
+#    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#    artifactName: BehatTestFailureScreenshots
+
+# Visual Regression Tests
+
+#- script: ./.ci/test/visual-regression/run
+#  displayName: 'Visual regression test'
+
+#- bash: |
+#    if [ -d backstop_data ]; then
+#      echo "##vso[task.setVariable variable=BACKSTOP_DATA_EXISTS]true"
+#    fi
+#  displayName: 'Check if BackstopJS test results exist'
+
+#- task: PublishTestResults@2
+#  displayName: 'Publish BackstopJS test results'
+#  condition: eq(variables.BACKSTOP_DATA_EXISTS, 'true')
+#  inputs:
+#    testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+#    testResultsFiles: 'backstop_data/ci_report/*' 
+#    testRunTitle: 'BackstopJS Test Results'
+
+# - task: CopyFiles@2
+#   displayName: "Copy BackstopJS screenshots to Artifacts Directory"
+#   condition: eq(variables.BACKSTOP_DATA_EXISTS, 'true')
+#   inputs:
+#       sourceFolder: 'backstop_data'
+#       contents: '**'
+#       targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+# - task: PublishBuildArtifacts@1
+#   displayName: 'Publish BackstopJS screenshots to Artifacts Directory'
+#   condition: eq(variables.BACKSTOP_DATA_EXISTS, 'true')
+#   inputs:
+#     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     artifactName: BackstopJSTestScreenshots
+
+# Composer Lock Updater
+
+- script: true
+  displayName: 'Composer lock updater'
+
+# Clean up
+
+- script: ./.ci/env/clean
+  displayName: 'Clean up build environment'
+  condition: always()

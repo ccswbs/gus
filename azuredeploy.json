@@ -1,0 +1,217 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "site": {
+      "type": "string"
+    },
+    "env": {
+      "type": "string"
+    },
+    "zone": {
+      "type": "string",
+      "defaultValue": "uoguelph.dev"
+    },
+    "pantheonsitelabel": {
+      "type": "string"
+    }
+    
+  },
+  "variables": {
+    "cdnProfileName": "[concat(parameters('env'), parameters('site'), 'cdn')]",
+    "storageAccountName": "[concat(parameters('env'), parameters('site'), 'storage')]",
+    "endpointName": "[concat(parameters('env'), parameters('site'), 'endpoint')]",
+    "domainProfileName": "[concat(parameters('env'), parameters('site'),'-uoguelph-dev')]",
+    "domainHostName": "[concat(parameters('env'), parameters('site'),'.uoguelph.dev')]",
+    "dnsResourceGroup": "ug-ccs-wds-dns-rg",
+    "apiCnameProfileName": "[concat('api.',parameters('env'),parameters('site'))]",
+    "apiCnameRecordName": "[concat(parameters('env'),'-',parameters('pantheonsitelabel'),'.pantheonsite.io')]",
+    "cnameProfileName": "[concat(parameters('env'), parameters('site'))]",
+    "cnameRecordName": "[concat(parameters('env'), parameters('site'),'endpoint.azureedge.net')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "name": "addDNSRecord_API",
+      "resourceGroup": "[variables('dnsResourceGroup')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/ccswbs/azure-resource-manager-templates/master/dns-cname-uoguelphdev/template.json"
+        },
+        "parameters": {
+          "name": {"value": "[variables('apiCnameProfileName')]"},
+          "value": {"value": "[variables('apiCnameRecordName')]"},
+          "zone": {"value": "[parameters('zone')]"}
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "name": "addDNSRecord",
+      "resourceGroup": "[variables('dnsResourceGroup')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/ccswbs/azure-resource-manager-templates/master/dns-cname-uoguelphdev/template.json"
+        },
+        "parameters": {
+          "name": {"value": "[variables('cnameProfileName')]"},
+          "value": {"value": "[variables('cnameRecordName')]"},
+          "zone": {"value": "[parameters('zone')]"}
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-04-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [],
+          "ipRules": [],
+          "defaultAction": "Allow"
+        },
+        "supportsHttpsTrafficOnly": false,
+        "encryption": {
+          "services": {
+            "file": {
+              "enabled": true
+            },
+            "blob": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "Hot"
+      },
+      "resources": [
+        {
+          "type": "blobServices",
+          "apiVersion": "2019-04-01",
+          "name": "default",
+          "dependsOn": [
+            "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+          ],
+          "properties": {
+            "cors": {
+              "corsRules": []
+            },
+            "deleteRetentionPolicy": {
+              "enabled": false
+            }
+          },
+          "resources": [
+            {
+              "type": "containers",
+              "apiVersion": "2019-04-01",
+              "name": "$web",
+              "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('storageAccountName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+              ],
+              "properties": {
+                "publicAccess": "None"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "[variables('cdnProfileName')]",
+      "type": "Microsoft.Cdn/profiles",
+      "apiVersion": "2016-04-02",
+      "dependsOn": [
+        "[resourceId(variables('dnsResourceGroup'),'Microsoft.Resources/deployments', 'addDNSRecord')]",
+        "[resourceId(variables('dnsResourceGroup'),'Microsoft.Resources/deployments', 'addDNSRecord_API')]"
+      ],
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard_Microsoft"
+      },
+      "resources": [
+        {
+          "name": "[variables('endpointName')]",
+          "type": "endpoints",
+          "apiVersion": "2016-04-02",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Cdn/profiles', variables('cdnProfileName'))]"
+          ],
+          "properties": {
+            "originHostHeader": "[replace(replace(reference(variables('storageAccountName')).primaryEndpoints.web,'https://',''),'/','')]",
+            "isHttpAllowed": true,
+            "isHttpsAllowed": true,
+            "queryStringCachingBehavior": "IgnoreQueryString",
+            "origins": [
+              {
+                "name": "origin1",
+                "properties": {
+                  "hostName": "[replace(replace(reference(variables('storageAccountName')).primaryEndpoints.web,'https://',''),'/','')]",
+                  "httpPort": 80,
+                  "httpsPort": 443
+                }
+              }
+            ],
+            "contentTypesToCompress": [
+              "text/plain",
+              "text/html",
+              "text/css",
+              "text/javascript",
+              "application/x-javascript",
+              "application/javascript",
+              "application/json",
+              "application/xml"
+            ],
+            "isCompressionEnabled": true
+          },
+          "resources": [
+            {
+              "type": "customDomains",
+              "apiVersion": "2016-04-02",
+              "name": "[variables('domainProfileName')]",
+              "dependsOn": [
+                "[resourceId('Microsoft.Cdn/profiles/endpoints', variables('cdnProfileName'), variables('endpointName'))]",
+                "[resourceId('Microsoft.Cdn/profiles', variables('cdnProfileName'))]"
+              ],
+              "properties": {
+                  "hostName": "[variables('domainHostName')]"
+              }
+            },
+            {
+              "type": "origins",
+              "apiVersion": "2016-04-02",
+              "name": "origin1",
+              "dependsOn": [
+                "[resourceId('Microsoft.Cdn/profiles/endpoints', variables('cdnProfileName'), variables('endpointName'))]",
+                "[resourceId('Microsoft.Cdn/profiles', variables('cdnProfileName'))]"
+              ],
+              "properties": {
+                  "hostName": "[replace(replace(reference(variables('storageAccountName')).primaryEndpoints.web,'https://',''),'/','')]",
+                  "httpPort": 80,
+                  "httpsPort": 443
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "connectionstring": {
+      "type": "string",
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-04-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
+    }
+  }
+}
