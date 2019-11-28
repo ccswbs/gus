@@ -18,9 +18,9 @@
 
 variables:
   phpVersion: 7.2
-  MY_DEVOP_TOKEN: $(devops.token)
-  MY_DEVOP_URL: $(System.TeamFoundationCollectionUri)
-  MY_DEVOP_PROJ: $(System.TeamProject)
+  #MY_DEVOP_TOKEN: $(devops.token)
+  #MY_DEVOP_URL: $(System.TeamFoundationCollectionUri)
+  #MY_DEVOP_PROJ: $(System.TeamProject)
   _subscription: '$(Azure.Subscription)'
   _site: $(Site)
   _env: $(Env)
@@ -46,14 +46,6 @@ steps:
 
 #- script: ./.ci/env/set
 #  displayName: 'Initialize build environment'
-
-# add domain
-#- bash: |
-#    domain_exists=`terminus domain:list --format=list --field=id ''$(_pantheonsitelabel).$(_env)'' | grep "api.$(_env)$(_gatsbysource).$(_zone)"`
-#    if [ -z "$domain_exists" ]; then
-#      terminus domain:add ''$(_pantheonsitelabel).$(_env)'' ''api.$(_env)$(_gatsbysource).$(_zone)''
-#    fi
-#  displayName: 'If necessary, add domain to Pantheon environment'
 
 - task: "AzureResourceGroupDeployment@2"
   displayName: 'Create or update resource group'
@@ -96,9 +88,6 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: 'az storage blob service-properties update --account-name ''$(_storage_name)'' --static-website  --index-document index.html'
 
-#- script: 'curl http://$(_env)-ccs-annual-report.pantheonsite.io/ >/dev/null'
-#  displayName: 'Wake up Drupal'
-
 - script: 'npm install --only=dev gatsby-cli'
   displayName: 'Install Gatsby-CLI'
 
@@ -129,50 +118,6 @@ steps:
     azureSubscription: '$(_subscription)'
     scriptLocation: 'inlineScript'
     inlineScript: 'az storage blob upload-batch -s ''public'' -d ''$web'' --connection-string ''$(_connectionstring)'''
-
-# - script: ./.ci/test/static/run
-#   displayName: 'Static tests'
-
-# - script: ./.ci/build/php
-#   displayName: 'Build PHP'
-
-# - script: ./.ci/deploy/pantheon/dev-multidev
-#   displayName: 'Deploy to Pantheon'
-
-# Behat Tests
-
-#- script: ./.ci/test/behat/initialize
-#  displayName: 'Initialize Behat tests'
-
-#- script: ./.ci/test/behat/run
-#  displayName: 'Run Behat tests'
-
-#- script: ./.ci/test/behat/cleanup
-#  displayName: 'Clean up Behat tests'
-#  condition: always()
-
-#- task: PublishTestResults@2
-#  displayName: 'Publish Behat test results'
-#  condition: always()
-#  inputs:
-#    testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-#    testRunTitle: 'Behat Test Results'
-#    testResultsFiles: '$(Common.TestResultsDirectory)/*' 
-
-#- task: CopyFiles@2
-#  displayName: "Copy Behat screenshots to Artifacts Directory"
-#  condition: failed()
-#  inputs:
-#      sourceFolder: 'var/behat_screenshots'
-#      contents: '**'
-#      targetFolder: '$(Build.ArtifactStagingDirectory)'
-
-#- task: PublishBuildArtifacts@1
-#  displayName: 'Publish Behat screenshots to Artifacts Directory'
-#  condition: failed()
-#  inputs:
-#    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-#    artifactName: BehatTestFailureScreenshots
 
 # Visual Regression Tests
 
