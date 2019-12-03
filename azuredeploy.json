@@ -81,7 +81,7 @@
           "ipRules": [],
           "defaultAction": "Allow"
         },
-        "supportsHttpsTrafficOnly": false,
+        "supportsHttpsTrafficOnly": true,
         "encryption": {
           "services": {
             "file": {
