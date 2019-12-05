@@ -25,7 +25,6 @@ variables:
   _site: $(Site)
   _env: $(Env)
   _zone: $(Zone)
-  #_gatsbysource: $(GatsbySource)
   _pantheonsitelabel: $(PantheonSiteLabel)
   _rg_name: '$(_env)$(_site)rg'
   _storage_name: '$(_env)$(_site)storage'
