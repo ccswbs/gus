@@ -35,11 +35,11 @@ steps:
 
 # Setup and Deploy
 
--  script: 'sudo apt-get install jq'
+- script: 'sudo apt-get install jq'
    displayName: 'Install jq utility'
 
-- script: ./.ci/env/set
- displayName: 'Initialize build environment'
+# - script: ./.ci/env/set
+#  displayName: 'Initialize build environment'
 
 - task: "AzureResourceGroupDeployment@2"
   displayName: 'Create or update resource group'
