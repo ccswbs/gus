@@ -36,7 +36,7 @@ steps:
 # Setup and Deploy
 
 - script: 'sudo apt-get install jq'
-   displayName: 'Install jq utility'
+  displayName: 'Install jq utility'
 
 # - script: ./.ci/env/set
 #  displayName: 'Initialize build environment'
@@ -90,17 +90,17 @@ steps:
   inputs:
     verbose: false
 
-- task: CacheBeta@1
-  inputs:
-    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
-    path: $(_gatsby_cache_folder)
-  displayName: 'Retrieve cached Gatsby .cache folder'
+# - task: CacheBeta@1
+#   inputs:
+#     key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
+#     path: $(_gatsby_cache_folder)
+#   displayName: 'Retrieve cached Gatsby .cache folder'
 
-- task: CacheBeta@1
-  inputs:
-    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
-    path: $(_gatsby_public_folder)
-  displayName: 'Retrieve cached Gatsby public folder'
+# - task: CacheBeta@1
+#   inputs:
+#     key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
+#     path: $(_gatsby_public_folder)
+#   displayName: 'Retrieve cached Gatsby public folder'
 
 - script: |
     npx gatsby build
@@ -149,6 +149,6 @@ steps:
 
 # Clean up
 
-- script: ./.ci/env/clean
- displayName: 'Clean up build environment'
- condition: always()
+# - script: ./.ci/env/clean
+#  displayName: 'Clean up build environment'
+#  condition: always()
