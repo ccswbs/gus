@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Use PHP 7.2
+# sudo update-alternatives --set php /usr/bin/php$PHPVERSION
+# sudo update-alternatives --set phar /usr/bin/phar$PHPVERSION
+# sudo update-alternatives --set phpdbg /usr/bin/phpdbg$PHPVERSION
+# sudo update-alternatives --set php-cgi /usr/bin/php-cgi$PHPVERSION
+# sudo update-alternatives --set phar.phar /usr/bin/phar.phar$PHPVERSION
+# php -version
+
+# Install Terminus
+sudo mkdir -p /opt/terminus &&
+curl -O https://raw.githubusercontent.com/pantheon-systems/terminus-installer/master/builds/installer.phar &&
+sudo php installer.phar install --install-dir=/opt/terminus --bin-dir=/usr/bin
+
+# Install Terminus Build Tools plugin
+# mkdir -p $HOME/.terminus/plugins &&
+# composer create-project --no-dev -d $HOME/.terminus/plugins pantheon-systems/terminus-build-tools-plugin:^2.0.0-beta16
+
+# Install Drush
+# composer require drush/drush:~8.3
+
+# Install Drush Launcher
+# curl -OL https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar
+# chmod +x drush.phar
+# sudo mv drush.phar /usr/local/bin/drush
+
+# Install Backstop JS
+# sudo npm install -g backstopjs --unsafe-perm=true --allow-root
+
+# Install jq utility
+sudo apt-get install jq
+
+# Log in to Pantheon
+terminus auth:login --machine-token="$TERMINUS_TOKEN" </dev/null
+
+# Generate an SSH key pair
+ssh-keygen -N "" -f ~/.ssh/id_rsa &&
+terminus ssh-key:add ~/.ssh/id_rsa.pub </dev/null
+
+# Configure Git user
+# git config --global user.email "$BUILD_REQUESTEDFOREMAIL"
+# git config --global user.name "$BUILD_REQUESTEDFORID"

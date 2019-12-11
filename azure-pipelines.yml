@@ -6,22 +6,18 @@
 #
 # See: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables
 #
-# TERMINUS_SITE:  Name of the Pantheon site to run tests on, e.g. my_site
-# TERMINUS_TOKEN: The Pantheon machine token
-# DEVOPS_TOKEN:   The Azure DevOps personal access token
-# GIT_EMAIL:      The email address to use when making commits
-#
-# TEST_SITE_NAME: The name of the test site to provide when installing.
-# ADMIN_PASSWORD: The admin password to use when installing.
-# ADMIN_EMAIL:    The email address to give the admin when installing.
+# ServiceConnection:  Name of the Azure service connection
+# Site:               Name of the site to create
+# Env:                Name of the environment to create
+# Zone:               Name of the domain zone in which to create the site (e.g. uoguelph.dev)
+# PantheonSiteLabel:  Name of the Pantheon site that will serve as the site back-end.
 #=========================================================================
 
 variables:
   phpVersion: 7.2
-  #MY_DEVOP_TOKEN: $(devops.token)
-  #MY_DEVOP_URL: $(System.TeamFoundationCollectionUri)
-  #MY_DEVOP_PROJ: $(System.TeamProject)
-  _subscription: '$(Azure.Subscription)'
+  _gatsby_cache_folder: '.cache'
+  _gatsby_public_folder: 'public'
+  _service_connection: '$(ServiceConnection)'
   _site: $(Site)
   _env: $(Env)
   _zone: $(Zone)
@@ -30,7 +26,6 @@ variables:
   _storage_name: '$(_env)$(_site)storage'
   _cdn_name: '$(_env)$(_site)cdn'
   _endpoint_name: '$(_env)$(_site)endpoint'
-
 
 pool:
   vmImage: 'Ubuntu 16.04'
@@ -43,13 +38,13 @@ steps:
 -  script: 'sudo apt-get install jq'
    displayName: 'Install jq utility'
 
-#- script: ./.ci/env/set
-#  displayName: 'Initialize build environment'
+- script: ./.ci/env/set
+ displayName: 'Initialize build environment'
 
 - task: "AzureResourceGroupDeployment@2"
   displayName: 'Create or update resource group'
   inputs:
-    azureSubscription: '$(_subscription)'
+    azureSubscription: '$(_service_connection)'
     action: 'Create Or Update Resource Group'
     resourceGroupName: '$(_env)$(_site)rg'
     location: 'East US'
@@ -62,7 +57,7 @@ steps:
 - task: AzureCLI@1
   displayName: 'Enable custom https using CDN Managed certificate'
   inputs:
-    azureSubscription: '$(_subscription)'
+    azureSubscription: '$(_service_connection)'
     scriptLocation: 'inlineScript'
     inlineScript: |
       _zone_name=`echo $(_zone) | sed 's/\./\-/'`
@@ -83,7 +78,7 @@ steps:
 - task: AzureCLI@1
   displayName: 'Enable static-website for storage account and set index to index.html'
   inputs:
-    azureSubscription: '$(_subscription)'
+    azureSubscription: '$(_service_connection)'
     scriptLocation: 'inlineScript'
     inlineScript: 'az storage blob service-properties update --account-name ''$(_storage_name)'' --static-website  --index-document index.html'
 
@@ -95,17 +90,17 @@ steps:
   inputs:
     verbose: false
 
-# - task: CacheBeta@1
-#   inputs:
-#     key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
-#     path: $(_gatsby_cache_folder)
-#   displayName: 'Retrieve cached Gatsby .cache folder'
+- task: CacheBeta@1
+  inputs:
+    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
+    path: $(_gatsby_cache_folder)
+  displayName: 'Retrieve cached Gatsby .cache folder'
 
-# - task: CacheBeta@1
-#   inputs:
-#     key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
-#     path: $(_gatsby_public_folder)
-#   displayName: 'Retrieve cached Gatsby public folder'
+- task: CacheBeta@1
+  inputs:
+    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
+    path: $(_gatsby_public_folder)
+  displayName: 'Retrieve cached Gatsby public folder'
 
 - script: |
     npx gatsby build
@@ -114,7 +109,7 @@ steps:
 - task: AzureCLI@1
   displayName: 'Upload storage content to static site'
   inputs:
-    azureSubscription: '$(_subscription)'
+    azureSubscription: '$(_service_connection)'
     scriptLocation: 'inlineScript'
     inlineScript: 'az storage blob upload-batch -s ''public'' -d ''$web'' --connection-string ''$(_connectionstring)'''
 
@@ -152,9 +147,8 @@ steps:
 #     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
 #     artifactName: BackstopJSTestScreenshots
 
-
 # Clean up
 
-#- script: ./.ci/env/clean
-#  displayName: 'Clean up build environment'
-#  condition: always()
+- script: ./.ci/env/clean
+ displayName: 'Clean up build environment'
+ condition: always()
