@@ -26,5 +26,12 @@ module.exports = {
         icon: `src/favicon.png`, // This path is relative to the root of the site.
       },
     },
+    // {
+    //   resolve: `gatsby-source-drupal`,
+    //   options: {
+    //     baseUrl: `https://api.` + process.env._ENV + process.env._SITE + `.` + process.env._ZONE + `/`,
+    //     apiBase: `jsonapi`, // optional, defaults to `jsonapi`
+    //   },
+    // },
   ],
 }
