@@ -26,12 +26,19 @@ module.exports = {
         icon: `src/favicon.png`, // This path is relative to the root of the site.
       },
     },
-    // {
-    //   resolve: `gatsby-source-drupal`,
-    //   options: {
-    //     baseUrl: `https://api.` + process.env._ENV + process.env._SITE + `.` + process.env._ZONE + `/`,
-    //     apiBase: `jsonapi`, // optional, defaults to `jsonapi`
-    //   },
-    // },
+    {
+       resolve: `gatsby-source-drupal`,
+       options: {
+         baseUrl: `http://dev-bovey.pantheonsite.io/`,
+         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
+       },
+    },
+	//{
+    //  resolve: `gatsby-plugin-remote-images`,
+    //  options: {
+    //    nodeType: 'Page',
+    //    imagePath: 'node.field_imageurl.uri',
+     // },
+	}
   ],
 }
