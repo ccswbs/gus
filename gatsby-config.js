@@ -33,12 +33,5 @@ module.exports = {
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
-	//{
-    //  resolve: `gatsby-plugin-remote-images`,
-    //  options: {
-    //    nodeType: 'Page',
-    //    imagePath: 'node.field_imageurl.uri',
-     // },
-	}
   ],
 }
