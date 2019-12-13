@@ -7,10 +7,8 @@ class IndexPage extends React.Component {
       return(
         <Layout>
           <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-          <main>
             <h1>Gatsby UG Starter Theme</h1>
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
-          </main>
         </Layout>
     )
   }
