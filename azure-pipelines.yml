@@ -14,7 +14,6 @@
 #=========================================================================
 
 variables:
-  phpVersion: 7.2
   _gatsby_cache_folder: '.cache'
   _gatsby_public_folder: 'public'
   _service_connection: '$(ServiceConnection)'
@@ -34,10 +33,6 @@ pool:
 steps:
 
 # Setup and Deploy
-
-# - script: 'sudo apt-get install jq'
-#   displayName: 'Install jq utility'
-
 - script: ./.ci/env/set
   displayName: 'Initialize build environment'
 
