@@ -141,9 +141,3 @@ steps:
 #   inputs:
 #     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
 #     artifactName: BackstopJSTestScreenshots
-
-# Clean up
-
-- script: ./.ci/env/clean
-  displayName: 'Clean up build environment'
-  condition: always()

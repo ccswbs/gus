@@ -1,19 +1,7 @@
 #!/bin/bash
 
-# Install Terminus
-sudo mkdir -p /opt/terminus &&
-curl -O https://raw.githubusercontent.com/pantheon-systems/terminus-installer/master/builds/installer.phar &&
-sudo php installer.phar install --install-dir=/opt/terminus --bin-dir=/usr/bin
-
 # Install Backstop JS
 # sudo npm install -g backstopjs --unsafe-perm=true --allow-root
 
 # Install jq utility
 sudo apt-get install jq
-
-# Log in to Pantheon
-terminus auth:login --machine-token="$TERMINUS_TOKEN" </dev/null
-
-# Generate an SSH key pair
-ssh-keygen -N "" -f ~/.ssh/id_rsa &&
-terminus ssh-key:add ~/.ssh/id_rsa.pub </dev/null
