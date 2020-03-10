@@ -33,3 +33,19 @@
    - [ ] PR has a summary of changes
    - [ ] PR is peer reviewed and meets team standards.
    - [ ] PR builds without error
+
+### Are there Gatsby Code changes?
+- [ ] No
+- [ ] If yes, then:
+   - [ ] Code is complete and commented.
+   - [ ] Code is secure to the best of our knowledge
+   - Is a test necessary?
+      - [ ] No
+      - [ ] If yes, then:
+         - [ ] Add a test if existing tests do not effectively test the code change
+         - [ ] Test passes
+   - [ ] Pull request (PR) is mergeable with *master* branch
+   - [ ] PR has a meaningful title
+   - [ ] PR has a summary of changes
+   - [ ] PR is peer reviewed and meets team standards.
+   - [ ] PR builds without error
