@@ -29,7 +29,7 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-         baseUrl: `http://dev-bovey.pantheonsite.io/`,
+         baseUrl: `https://api.` + process.env._ENV + process.env._SITE + `.` + process.env._ZONE + `/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
