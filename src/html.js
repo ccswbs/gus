@@ -11,10 +11,6 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
-        <script data-search-pseudo-elements="" src="https://kit.fontawesome.com/7993323d0c.js"></script>
-        <script src="https://kit-pro.fontawesome.com/releases/latest/js/pro.min.js" data-auto-a11y="true" data-auto-fetch-svg="" data-fetch-svg-from="https://kit-pro.fontawesome.com/releases/latest/svgs" defer=""></script>
-        <link href="https://www.uoguelph.ca/presidential-search/css/site-styles.css" rel="stylesheet"></link>
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="preconnect" crossOrigin=""></link>
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>

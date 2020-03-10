@@ -26,6 +26,12 @@ variables:
   _cdn_name: '$(_env)$(_site)cdn'
   _endpoint_name: '$(_env)$(_site)endpoint'
 
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+
 pool:
   vmImage: 'Ubuntu 16.04'
   demands: npm
@@ -141,9 +147,3 @@ steps:
 #   inputs:
 #     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
 #     artifactName: BackstopJSTestScreenshots
-
-# Clean up
-
-- script: ./.ci/env/clean
-  displayName: 'Clean up build environment'
-  condition: always()

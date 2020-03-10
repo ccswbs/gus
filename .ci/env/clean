@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Remove SSH key from Pantheon
-terminus ssh-key:remove `terminus ssh-key:list --format=list </dev/null | tail -1` </dev/null
-
-# Log out of Pantheon
-terminus auth:logout </dev/null
