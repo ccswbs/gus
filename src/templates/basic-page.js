@@ -10,8 +10,7 @@ export default ({data}) => {
 	return (
 		<Layout>
 			<>
-			<div id="content" class="row row-with-vspace site-content" dangerouslySetInnerHTML={{ __html: page.body.value }} />		
-			<img src={page.field_imageurl.uri} alt="" />
+			<div id="content" class="row row-with-vspace site-content" dangerouslySetInnerHTML={{ __html: page.body.value }} />
 			</>	
 		</Layout>
 	)
