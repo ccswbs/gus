@@ -12,7 +12,7 @@
    - [ ] Governed by appropriate roles and permissions
    - [ ] Organized by taxonomy
 
-### Are there User-facing changes?
+### Are there User-facing changes in the Drupal UI?
 - [ ] No
 - [ ] If yes, then:
    - [ ] User documentation is updated
