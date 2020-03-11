@@ -66,6 +66,7 @@ steps:
       if [ $https_exists == "Enabled" ]; then
         echo "##[DEBUG] Custom https already enabled."
       else
+        echo "##[DEBUG] Setting up custom https. If this step fails, you can manually enable Custom HTTPS for $(_endpoint_name) on the portal.azure.com dashboard."
         az cdn custom-domain enable-https --endpoint-name $(_endpoint_name) -n $(_env)$(_site)-$_zone_name --profile-name $(_cdn_name) -g $(_rg_name)
       fi
 
