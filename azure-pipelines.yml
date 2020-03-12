@@ -21,6 +21,7 @@ variables:
   _env: $(Env)
   _zone: $(Zone)
   _pantheonsitelabel: $(PantheonSiteLabel)
+  _stage_name: 'stage'
   _rg_name: '$(_env)$(_site)rg'
   _storage_name: '$(_env)$(_site)storage'
   _cdn_name: '$(_env)$(_site)cdn'
@@ -39,6 +40,14 @@ pool:
 steps:
 
 # Setup and Deploy
+- bash: |
+    if [ ${_ENV} == ${_STAGE_NAME} ]; then
+      echo "##vso[task.setVariable variable=_gatsby_source]live"
+    else
+      echo "##vso[task.setVariable variable=_gatsby_source]$(_env)"
+    fi
+  displayName: 'Set gatsby source'
+
 - script: ./.ci/env/set
   displayName: 'Initialize build environment'
 
@@ -47,7 +56,7 @@ steps:
   inputs:
     azureSubscription: '$(_service_connection)'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: '$(_env)$(_site)rg'
+    resourceGroupName: '$(_rg_name)'
     location: 'East US'
     templateLocation: 'Linked artifact'
     csmFile: 'azuredeploy.json'
@@ -117,14 +126,14 @@ steps:
 
 # Visual Regression Tests
 
-#- script: ./.ci/test/visual-regression/run
-#  displayName: 'Visual regression test'
+# - script: ./.ci/test/visual-regression/run
+#   displayName: 'Visual regression test'
 
-#- bash: |
-#    if [ -d backstop_data ]; then
-#      echo "##vso[task.setVariable variable=BACKSTOP_DATA_EXISTS]true"
-#    fi
-#  displayName: 'Check if BackstopJS test results exist'
+# - bash: |
+#     if [ -d backstop_data ]; then
+#       echo "##vso[task.setVariable variable=BACKSTOP_DATA_EXISTS]true"
+#     fi
+#   displayName: 'Check if BackstopJS test results exist'
 
 #- task: PublishTestResults@2
 #  displayName: 'Publish BackstopJS test results'
