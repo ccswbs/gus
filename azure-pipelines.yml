@@ -20,6 +20,7 @@ variables:
   _site: $(Site)
   _env: $(Env)
   _zone: $(Zone)
+  _gatsby_source: $(GatsbySource)
   _pantheonsitelabel: $(PantheonSiteLabel)
   # _stage_name: 'stage'
   # _rg_name: '$(_env)$(_site)rg'
