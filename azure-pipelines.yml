@@ -16,16 +16,11 @@
 variables:
   _gatsby_cache_folder: '.cache'
   _gatsby_public_folder: 'public'
-  _service_connection: '$(ServiceConnection)'
   _site: $(Site)
   _env: $(Env)
   _zone: $(Zone)
+  _gatsby_source: $(GatsbySource)
   _pantheonsitelabel: $(PantheonSiteLabel)
-  _stage_name: 'stage'
-  _rg_name: '$(_env)$(_site)rg'
-  _storage_name: '$(_env)$(_site)storage'
-  _cdn_name: '$(_env)$(_site)cdn'
-  _endpoint_name: '$(_env)$(_site)endpoint'
 
 trigger:
   batch: true
@@ -39,59 +34,9 @@ pool:
 
 steps:
 
-# Setup and Deploy
-- bash: |
-    if [ ${_ENV} == ${_STAGE_NAME} ]; then
-      echo "##vso[task.setVariable variable=_gatsby_source]live"
-    else
-      echo "##vso[task.setVariable variable=_gatsby_source]$(_env)"
-    fi
-  displayName: 'Set gatsby source'
-
+# Setup environment
 - script: ./.ci/env/set
   displayName: 'Initialize build environment'
-
-- task: "AzureResourceGroupDeployment@2"
-  displayName: 'Create or update resource group'
-  inputs:
-    azureSubscription: '$(_service_connection)'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: '$(_rg_name)'
-    location: 'East US'
-    templateLocation: 'Linked artifact'
-    csmFile: 'azuredeploy.json'
-    overrideParameters: '-env $(_env) -site $(_site) -zone $(_zone) -pantheonsitelabel $(_pantheonsitelabel)'
-    deploymentMode: 'Complete'
-    deploymentOutputs: 'outputConnectionString'
-
-- task: AzureCLI@1
-  displayName: 'Enable custom https using CDN Managed certificate'
-  inputs:
-    azureSubscription: '$(_service_connection)'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      _zone_name=`echo $(_zone) | sed 's/\./\-/'`
-      https_exists=`az cdn custom-domain show --endpoint-name $(_endpoint_name) -n $(_env)$(_site)-$_zone_name --profile-name $(_cdn_name) -g $(_rg_name) | jq '.customHttpsProvisioningState' -r`
-      if [ $https_exists == "Enabled" ]; then
-        echo "##[DEBUG] Custom https already enabled."
-      else
-        echo "##[DEBUG] Setting up custom https. If this step fails, you can manually enable Custom HTTPS for $(_endpoint_name) on the portal.azure.com dashboard."
-        az cdn custom-domain enable-https --endpoint-name $(_endpoint_name) -n $(_env)$(_site)-$_zone_name --profile-name $(_cdn_name) -g $(_rg_name)
-      fi
-
-- pwsh: |
-    $outputs = ConvertFrom-Json '$(outputConnectionString)'
-    foreach ($output in $outputs.PSObject.Properties) {
-      Write-Host "##vso[task.setvariable variable=_connectionstring]$($output.Value.value)"
-    }
-  displayName: 'Output parsed connection string'
-
-- task: AzureCLI@1
-  displayName: 'Enable static-website for storage account and set index to index.html'
-  inputs:
-    azureSubscription: '$(_service_connection)'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob service-properties update --account-name ''$(_storage_name)'' --static-website  --index-document index.html'
 
 - script: 'npm install --only=dev gatsby-cli'
   displayName: 'Install Gatsby-CLI'
@@ -101,6 +46,7 @@ steps:
   inputs:
     verbose: false
 
+# Retrieve caches
 - task: CacheBeta@1
   inputs:
     key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_env)" | "$(_zone)"'
@@ -113,47 +59,20 @@ steps:
     path: $(_gatsby_public_folder)
   displayName: 'Retrieve cached Gatsby public folder'
 
+# Build Gatsby
 - script: |
     npx gatsby build
   displayName: 'Gatsby build'
 
-- task: AzureCLI@1
-  displayName: 'Upload storage content to static site'
+# Publish artifact
+- task: ArchiveFiles@2
+  displayName: 'Archive $(Build.SourcesDirectory)'
   inputs:
-    azureSubscription: '$(_service_connection)'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob upload-batch -s ''public'' -d ''$web'' --connection-string ''$(_connectionstring)'''
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
 
-# Visual Regression Tests
-
-# - script: ./.ci/test/visual-regression/run
-#   displayName: 'Visual regression test'
-
-# - bash: |
-#     if [ -d backstop_data ]; then
-#       echo "##vso[task.setVariable variable=BACKSTOP_DATA_EXISTS]true"
-#     fi
-#   displayName: 'Check if BackstopJS test results exist'
-
-#- task: PublishTestResults@2
-#  displayName: 'Publish BackstopJS test results'
-#  condition: eq(variables.BACKSTOP_DATA_EXISTS, 'true')
-#  inputs:
-#    testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-#    testResultsFiles: 'backstop_data/ci_report/*' 
-#    testRunTitle: 'BackstopJS Test Results'
-
-# - task: CopyFiles@2
-#   displayName: "Copy BackstopJS screenshots to Artifacts Directory"
-#   condition: eq(variables.BACKSTOP_DATA_EXISTS, 'true')
-#   inputs:
-#       sourceFolder: 'backstop_data'
-#       contents: '**'
-#       targetFolder: '$(Build.ArtifactStagingDirectory)'
-
-# - task: PublishBuildArtifacts@1
-#   displayName: 'Publish BackstopJS screenshots to Artifacts Directory'
-#   condition: eq(variables.BACKSTOP_DATA_EXISTS, 'true')
-#   inputs:
-#     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-#     artifactName: BackstopJSTestScreenshots
+- task: PublishBuildArtifacts@1
+  displayName: Publish Build Artifact
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    artifactName: gatsby_build_artifact
