@@ -1,7 +1,4 @@
 #!/bin/bash
 
-# Install Backstop JS
-# sudo npm install -g backstopjs --unsafe-perm=true --allow-root
-
 # Install jq utility
 sudo apt-get install jq
