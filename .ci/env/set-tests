@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Install Backstop JS
+sudo npm install -g backstopjs --unsafe-perm=true --allow-root
