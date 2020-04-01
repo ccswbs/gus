@@ -2,7 +2,7 @@
  SITE-SPECIFIC CONFIGURATION
 ********************************/
 const liveURL = "https://liveugconthub.uoguelph.dev";
-const testURL = "https://testugconthub.uoguelph.dev";
+const testURL = "https://testugconthubstorage.z13.web.core.windows.net";
 const pathsToTest = {
     'Homepage': '/',
 }
