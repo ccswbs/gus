@@ -11,18 +11,19 @@ backstop reference --config=.ci/test/visual-regression/backstopConfig.js --siten
 echo -e "\nRunning backstop test..."
 VISUAL_REGRESSION_RESULTS=$(backstop test --config=.ci/test/visual-regression/backstopConfig.js --sitename=${RELEASE_DEFINITIONNAME} || echo 'true')
 
+# Create holder folder
+mkdir -p "backstop_data/backstopjs"
+mv "backstop_data/${RELEASE_DEFINITIONNAME}" "backstop_data/backstopjs/${RELEASE_DEFINITIONNAME}"
+
+# Output results
 echo "${VISUAL_REGRESSION_RESULTS}"
 
 if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
 then
 	# visual regression failed
 	echo -e "\nVisual regression test failed!"
+	exit 1
 else
 	# visual regression passed
 	echo -e "\n\nVisual regression test passed!"
-fi
-
-if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
-then
-    exit 1
 fi
