@@ -5,11 +5,11 @@
 
 # Backstop visual regression
 echo -e "\nRunning backstop reference..."
-backstop reference --config=.ci/test/visual-regression/backstopConfig.js --sitename=${Release.DefinitionName}
+backstop reference --config=.ci/test/visual-regression/backstopConfig.js --sitename=${RELEASE_DEFINITIONNAME}
 
 # Backstop test
 echo -e "\nRunning backstop test..."
-VISUAL_REGRESSION_RESULTS=$(backstop test --config=.ci/test/visual-regression/backstopConfig.js --sitename=${Release.DefinitionName} || echo 'true')
+VISUAL_REGRESSION_RESULTS=$(backstop test --config=.ci/test/visual-regression/backstopConfig.js --sitename=${RELEASE_DEFINITIONNAME} || echo 'true')
 
 echo "${VISUAL_REGRESSION_RESULTS}"
 
