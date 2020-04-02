@@ -17,11 +17,12 @@ mv "backstop_data/${RELEASE_DEFINITIONNAME}" "backstop_data/backstopjs/${RELEASE
 
 # Output results
 echo "${VISUAL_REGRESSION_RESULTS}"
+echo -e "\n##[DEBUG] Test report available at https://test${RELEASE_DEFINITIONNAME}.uoguelph.dev/backstopjs/${RELEASE_DEFINITIONNAME}/html_report/index.html"
 
 if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
 then
 	# visual regression failed
-	echo -e "\nVisual regression test failed!"
+	echo -e "\n##[ERROR] Visual regression test failed!"
 	exit 1
 else
 	# visual regression passed
