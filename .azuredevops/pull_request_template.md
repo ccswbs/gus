@@ -44,7 +44,7 @@
       - [ ] If yes, then:
          - [ ] Add a test if existing tests do not effectively test the code change
          - [ ] Test passes
-   - [ ] Pull request (PR) is mergeable with *master* branch
+   - [ ] Pull request (PR) is mergeable with *develop* branch
    - [ ] PR has a meaningful title
    - [ ] PR has a summary of changes
    - [ ] PR is peer reviewed and meets team standards.
