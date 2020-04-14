@@ -1,17 +1,14 @@
 import React from 'react'
 import { graphql } from "gatsby"
 import Layout from '../components/layout'
-
-//import Img from "gatsby-image"
-//import SEO from '../components/seo'
+import SEO from '../components/seo'
 
 export default ({data}) => {
 	const page = data.allNodePage.edges[0].node
 	return (
 		<Layout>
-			<>
+			<SEO title={page.name} keywords={[`gatsby`, `application`, `react`]} />
 			<div id="content" class="row row-with-vspace site-content" dangerouslySetInnerHTML={{ __html: page.body.value }} />
-			</>	
 		</Layout>
 	)
 }
