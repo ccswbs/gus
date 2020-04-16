@@ -5,12 +5,11 @@
  */
 
 const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
+  
   if (node.internal.type === `node__page`) {
-
     /* Create page path */
     var slug = createPageAlias(node);
 
@@ -19,6 +18,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: `slug`,
       value: slug,
     })
+
     /* Set content field for search */
     /*    - return body of content */
     if (typeof node.body !== 'undefined' && node.body !== null) {
@@ -45,7 +45,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const pageTemplate = path.resolve('./src/templates/basic-page.js');
   const programTemplate = path.resolve('src/templates/program-page.js');
 
-  // return graphql(`
   const result = await graphql(`
     {
       pages: allNodePage {
@@ -94,6 +93,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const specializations = result.data.specializations.edges;
   const majors = result.data.majors.edges;
 
+
   pages.forEach(({ node }, index) => {
     const alias = createPageAlias(node);
     createPage({
@@ -101,7 +101,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: pageTemplate,
       context: {
         id: node.drupal_id,
-        slug: alias,
       },
     })
   })
@@ -159,8 +158,6 @@ function slugify(string) {
   const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
   const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
   const p = new RegExp(a.split('').join('|'), 'g')
-
-  console.log(string);
 
   return string.toString().toLowerCase()
     .replace(/\s+/g, '-') // Replace spaces with -
