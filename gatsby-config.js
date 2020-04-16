@@ -29,7 +29,7 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-         baseUrl: `https://api.devugconthub.uoguelph.dev/`,
+         baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
