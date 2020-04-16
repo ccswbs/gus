@@ -4,11 +4,14 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 export default ({data}) => {
-	const page = data.allNodePage.edges[0].node
+	const pageData = data.pages.edges[0].node;
+	const title = pageData.title;
+	const body = (pageData.body !== null ? pageData.body.value:``);
 	return (
 		<Layout>
-			<SEO title={page.name} keywords={[`gatsby`, `application`, `react`]} />
-			<div id="content" class="row row-with-vspace site-content" dangerouslySetInnerHTML={{ __html: page.body.value }} />
+			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+			<h1>{title}</h1>
+			<div dangerouslySetInnerHTML={{ __html: body}} />
 		</Layout>
 	)
 }
@@ -16,22 +19,23 @@ export default ({data}) => {
 //export default BasicPage
 
 export const query = graphql`
-  query ($alias: String!) {
-	allNodePage(filter: {path: {alias: {eq: $alias}}}) {
+  query ($id: String!) {
+	pages: allNodePage(filter: {drupal_id: {eq: $id}}) {
 		edges {
-		  node {
-			title
-			path {
-			  alias
-			}
-			field_imageurl {
-			  uri
-			}
-			body {
-			  value
-			}
-		  }
+			node {
+				drupal_id
+				title
+				path {
+					alias
+				}
+				field_imageurl {
+					uri
+				}
+				body {
+					value
+				}
+		  	}
 		}
-	  }
 	}
+  }
 `

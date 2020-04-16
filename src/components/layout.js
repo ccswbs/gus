@@ -8,8 +8,8 @@ const Layout = ({ children }) => (
       <>
         <SkipLink mainContent="#content"/>
         <Header />
-		<main class="main-container">
-			<div class="container page-container">
+		<main className="main-container">
+			<div className="container page-container">
 				{children}
 			</div>
 		</main>

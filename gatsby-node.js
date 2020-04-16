@@ -5,16 +5,19 @@
  */
 
 const path = require(`path`)
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
-  if (node.internal.type === `node__page` || node.internal.type === `taxonomy_term__specializations`) {
+  if (node.internal.type === `node__page`) {
+
     /* Create page path */
-    const alias = `${node.path.alias}`    
+    var slug = createPageAlias(node);
+
     createNodeField({
       node,
-      name: `alias`,
-      value: alias,
+      name: `slug`,
+      value: slug,
     })
     /* Set content field for search */
     /*    - return body of content */
@@ -34,58 +37,137 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
         name: `content`,
         value: content,
     })
-    //console.log(content)
   }
 }
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const pageTemplate = path.resolve('./src/templates/basic-page.js');
   const programTemplate = path.resolve('src/templates/program-page.js');
-  
-  return graphql(`
+
+  // return graphql(`
+  const result = await graphql(`
     {
-	  pages: allNodePage {
-		  edges {
-		    node {
-		    	path {
-			      alias
-			    }
-		    }
-		  }
-    }
-    specializations: allTaxonomyTermSpecializations {
-      edges {
-        node {
-          path {
-            alias
+      pages: allNodePage {
+        edges {
+          node {
+            drupal_id
+            title
+            fields {
+              slug
+            }
           }
         }
       }
-    } 
-	}
-`
-  ).then(result => {
-    result.data.pages.edges.forEach(({ node }) => {
-      createPage({
-        path: node.path.alias,
-        component: pageTemplate,
-        context: {
-          alias: node.path.alias,
-        },
-      })
-    })
+      specializations: allTaxonomyTermSpecializations {
+        edges {
+          node {
+            drupal_id
+            drupal_internal__tid
+            name
+          }
+        }
+      }
+      majors: allTaxonomyTermMajors {
+        edges {
+          node {
+            drupal_id
+            drupal_internal__tid
+            name
+            field_degree_format
+            relationships {
+              field_specializations {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
 
-    result.data.specializations.edges.forEach(({ node }) => {
-      createPage({
-          path: node.path.alias,
-          component: programTemplate,
-          context: {
-              // Data passed to context is available
-              // in page queries as GraphQL variables.
-              alias: node.path.alias,
-          },
-      })
+  if (result.errors) {
+    reporter.panicOnBuild('ERROR: Loading "createPages" query')
+  }
+
+  const pages = result.data.pages.edges;
+  const specializations = result.data.specializations.edges;
+  const majors = result.data.majors.edges;
+
+  pages.forEach(({ node }, index) => {
+    const alias = createPageAlias(node);
+    createPage({
+      path: alias,
+      component: pageTemplate,
+      context: {
+        id: node.drupal_id,
+        slug: alias,
+      },
     })
   })
+
+  specializations.forEach(({ node }, index) => {
+    const alias = createProgramAlias(node);
+    createPage({
+      path: alias,
+      component: programTemplate,
+      context: {
+        id: node.drupal_id,
+      },
+    })
+  })
+
+  majors.forEach(({ node }, index) => {
+    const alias = createProgramMajorAlias(node);
+    createPage({
+      path: alias,
+      component: programTemplate,
+      context: {
+        id: node.drupal_id,
+      },
+    })
+  })
+}
+
+function createPageAlias(node){
+  var alias = `/` + slugify(node.title);
+  return alias;
+}
+
+function createProgramAlias(node){
+  var alias = `/programs/` + slugify(node.name);
+  return alias;
+}
+
+function createProgramMajorAlias(node){
+  var alias = `/programs/`;
+  node.relationships.field_specializations.forEach(element => {
+    alias += (slugify(element.name));
+    if(node.relationships.field_specializations.length > 1){
+      alias += `-`;
+    }
+  });
+  alias += `/major`;
+  if(node.field_degree_format !== `general`){
+    alias += (`-` + node.field_degree_format);
+  }
+  return alias;
+}
+
+// Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
+function slugify(string) {
+  const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
+  const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
+  const p = new RegExp(a.split('').join('|'), 'g')
+
+  console.log(string);
+
+  return string.toString().toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+    .replace(/&/g, '-and-') // Replace & with 'and'
+    .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, '') // Trim - from end of text
 }
