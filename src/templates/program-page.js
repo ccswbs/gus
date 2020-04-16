@@ -13,8 +13,9 @@ export default ({data, location}) => {
   }
 
   const title = pageData.name;
-  const description = (pageData.description !== null ? pageData.description.processed:``);
-  const acronym = (pageData.acronym !== undefined ? `(` + pageData.acronym + `)`: ``);
+  const description = (pageData.description !== undefined 
+    && pageData.description !== null ? pageData.description.processed:``);
+  const acronym = (pageData.acronym !== undefined && pageData.acronym !== null ? `(` + pageData.acronym + `)`: ``);
     
   return (
     <Layout>

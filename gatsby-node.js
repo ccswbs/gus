@@ -89,43 +89,47 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     reporter.panicOnBuild('ERROR: Loading "createPages" query')
   }
 
-  const pages = result.data.pages.edges;
-  const specializations = result.data.specializations.edges;
-  const majors = result.data.majors.edges;
-
-
-  pages.forEach(({ node }, index) => {
-    const alias = createPageAlias(node);
-    createPage({
-      path: alias,
-      component: pageTemplate,
-      context: {
-        id: node.drupal_id,
-      },
+  if(result.data.pages !== undefined){
+    const pages = result.data.pages.edges;
+    pages.forEach(({ node }, index) => {
+      const alias = createPageAlias(node);
+      createPage({
+        path: alias,
+        component: pageTemplate,
+        context: {
+          id: node.drupal_id,
+        },
+      })
     })
-  })
+  }
 
-  specializations.forEach(({ node }, index) => {
-    const alias = createProgramAlias(node);
-    createPage({
-      path: alias,
-      component: programTemplate,
-      context: {
-        id: node.drupal_id,
-      },
+  if(result.data.specializations !== undefined){
+    const specializations = result.data.specializations.edges;
+    specializations.forEach(({ node }, index) => {
+      const alias = createProgramAlias(node);
+      createPage({
+        path: alias,
+        component: programTemplate,
+        context: {
+          id: node.drupal_id,
+        },
+      })
     })
-  })
+  }
 
-  majors.forEach(({ node }, index) => {
-    const alias = createProgramMajorAlias(node);
-    createPage({
-      path: alias,
-      component: programTemplate,
-      context: {
-        id: node.drupal_id,
-      },
+  if(result.data.majors !== undefined){
+    const majors = result.data.majors.edges;
+    majors.forEach(({ node }, index) => {
+      const alias = createProgramMajorAlias(node);
+      createPage({
+        path: alias,
+        component: programTemplate,
+        context: {
+          id: node.drupal_id,
+        },
+      })
     })
-  })
+  }
 }
 
 function createPageAlias(node){
