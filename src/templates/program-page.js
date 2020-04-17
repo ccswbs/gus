@@ -2,6 +2,7 @@ import React from 'react'
 import { graphql } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import Degrees from '../components/degrees'
 
 export default ({data, location}) => {
   // determine source of query
@@ -12,6 +13,17 @@ export default ({data, location}) => {
     pageData = data.majors.edges[0].node;
   }
 
+	var deg;
+	var degList;
+	if (pageData.relationships.field_degrees !== undefined && pageData.relationships.field_degrees !== null) {
+		for (let i = 0; i < pageData.relationships.field_degrees.length; i++) {
+			degList += "<li>" + pageData.relationships.field_degrees[i].name + "</li>"
+		}
+		deg = "<h2>Degrees Offered</h2><ul>" + degList + "</ul>";
+	} else {
+		deg = "";
+	}
+
   const title = pageData.name;
   const description = (pageData.description !== undefined 
     && pageData.description !== null ? pageData.description.processed:``);
@@ -21,7 +33,9 @@ export default ({data, location}) => {
     <Layout>
       <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
       <h1>{title} {acronym}</h1>
-      <div dangerouslySetInnerHTML={{ __html: description }} />
+      <div dangerouslySetInnerHTML={{ __html: description }}  />
+	  <div dangerouslySetInnerHTML={{__html: deg}}  />
+		  
     </Layout>
   )
 }
@@ -38,6 +52,11 @@ export const query = graphql`
           description {
             processed
           }
+		  relationships {
+            field_degrees {
+            name
+          }
+         }
         }
       }
     }
@@ -54,5 +73,19 @@ export const query = graphql`
         }
       }
     }
+
+	degrees: allTaxonomyTermDegrees (filter: {drupal_id: {eq: $id}}) {
+		edges {
+		  node {
+			drupal_id
+			drupal_internal__tid
+			name
+			field_degree_acronym
+			path {
+			  alias
+			}
+		  }
+		}
+	  }
 	}
 `
