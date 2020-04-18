@@ -30,7 +30,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       description: TaxonomyDescription
       relationships: RelationshipSpecialization
     }
-    type DrupalAliasMapping implements Node {
+    type PathAlias implements Node {
       value: String
     }
     type BodyField {
@@ -202,7 +202,7 @@ function createNodeAlias(node, alias, helpers){
     parent: null,
     children: [],
     internal: {
-      type: `DrupalAliasMapping`,
+      type: `PathAlias`,
       mediaType: `text/html`,
       content: aliasContent,
       contentDigest: helpers.createContentDigest(aliasData)
