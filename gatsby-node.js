@@ -13,6 +13,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       drupal_internal__tid: Int
       body: BodyField
+      fields: FieldsPathAlias
     }
     type taxonomy_term__specializations implements Node {
       drupal_id: String
@@ -21,6 +22,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
       relationships: RelationshipMajors
+      fields: FieldsPathAlias
     }
     type taxonomy_term__majors implements Node {
       drupal_id: String
@@ -29,6 +31,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
       relationships: RelationshipSpecialization
+      fields: FieldsPathAlias
+    }
+    type FieldsPathAlias {
+      alias: PathAlias
     }
     type PathAlias implements Node {
       value: String
@@ -113,9 +119,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           node {
             drupal_id
             title
-            path {
-              alias
-            }
           }
         }
       }
@@ -124,10 +127,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           node {
             name
             drupal_id
-            drupal_internal__tid
-            path {
-              alias
-            }
           }
         }
       }
@@ -136,11 +135,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           node {
             name
             drupal_id
-            drupal_internal__tid
             field_degree_format
-            path {
-              alias
-            }
             relationships {
               field_specializations {
                 name
