@@ -98,10 +98,13 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   }
 }
 
-exports.createPages = async ({ graphql, actions, createNodeId, createContentDigest, reporter }) => {
-  const { createPage } = actions
+exports.createPages = async ({ graphql, actions, createContentDigest, createNodeId, reporter }) => {
   const pageTemplate = path.resolve('./src/templates/basic-page.js');
   const programTemplate = path.resolve('src/templates/program-page.js');
+  const helpers = Object.assign({}, actions, {
+    createContentDigest,
+    createNodeId,
+  })
 
   const result = await graphql(`
     {
@@ -156,56 +159,39 @@ exports.createPages = async ({ graphql, actions, createNodeId, createContentDige
   if (result.data !== undefined){
     if(result.data.pages !== undefined){
       const pages = result.data.pages.edges;
-      pages.forEach(({ node }, index) => {
-        const alias = createPageAlias(node);
-        createNodeAlias(node, alias, actions, createNodeId, createContentDigest);
-        createPage({
-          path: alias,
-          component: pageTemplate,
-          context: {
-            id: node.drupal_id,
-          },
-        })
-      })
+      processPages(pages, createPageAlias, pageTemplate, helpers);
     }
 
     if(result.data.specializations !== undefined){
       const specializations = result.data.specializations.edges;
-      specializations.forEach(({ node }, index) => {
-        const alias = createProgramAlias(node);
-        createNodeAlias(node, alias, actions, createNodeId, createContentDigest);
-        createPage({
-          path: alias,
-          component: programTemplate,
-          context: {
-            id: node.drupal_id,
-          },
-        })
-      })
+      processPages(specializations, createProgramAlias, programTemplate, helpers);
     }
 
     if(result.data.majors !== undefined){
       const majors = result.data.majors.edges;
-      majors.forEach(({ node }, index) => {
-        const alias = createProgramMajorAlias(node);
-        createNodeAlias(node, alias, actions, createNodeId, createContentDigest);
-        createPage({
-          path: alias,
-          component: programTemplate,
-          context: {
-            id: node.drupal_id,
-          },
-        })
-      })
+      processPages(majors, createProgramMajorAlias, programTemplate, helpers);
     }
 
   }
 }
 
-function createNodeAlias(node, alias, actions, createNodeId, createContentDigest){
-  const { createNode } = actions
+function processPages(dataType, functionToRetrieveAlias, template, helpers){
+  dataType.forEach(({ node }, index) => {
+    const alias = functionToRetrieveAlias(node);
+    createNodeAlias(node, alias, helpers);
+    helpers.createPage({
+      path: alias,
+      component: template,
+      context: {
+        id: node.drupal_id,
+      },
+    })
+  })
 
-  const aliasID = createNodeId(`alias-${node.drupal_id}`);
+}
+
+function createNodeAlias(node, alias, helpers){
+  const aliasID = helpers.createNodeId(`alias-${node.drupal_id}`);
   const aliasData = {
     key: aliasID,
     value: alias,
@@ -219,12 +205,12 @@ function createNodeAlias(node, alias, actions, createNodeId, createContentDigest
       type: `DrupalAliasMapping`,
       mediaType: `text/html`,
       content: aliasContent,
-      contentDigest: createContentDigest(aliasData)
+      contentDigest: helpers.createContentDigest(aliasData)
     }
   }
 
   const aliasNode = Object.assign({}, aliasData, aliasMeta);
-  createNode(aliasNode);
+  helpers.createNode(aliasNode);
 }
 
 function createPageAlias(node){
