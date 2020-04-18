@@ -34,4 +34,9 @@ module.exports = {
        },
     },
   ],
+  mapping: {
+    "node__page.fields.alias": `DrupalAliasMapping`,
+    "taxonomy_term__majors.fields.alias": `DrupalAliasMapping`,
+    "taxonomy_term__specializations.fields.alias": `DrupalAliasMapping`,
+  },
 }

@@ -9,6 +9,11 @@ const path = require(`path`)
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
+    type node__page implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      body: BodyField
+    }
     type taxonomy_term__specializations implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -24,6 +29,15 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
       relationships: RelationshipSpecialization
+    }
+    type DrupalAliasMapping implements Node {
+      value: String
+    }
+    type BodyField {
+      processed: String
+      value: String
+      format: String
+      summary: String
     }
     type TaxonomyDescription {
       processed: String
@@ -46,17 +60,21 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs)
 }
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+exports.onCreateNode = ({ node, createNodeId, actions }) => {
   const { createNodeField } = actions
-  
-  if (node.internal.type === `node__page`) {
-    /* Create page path */
-    var slug = createPageAlias(node);
 
+  if (node.internal.type === `node__page` || 
+      node.internal.type === `taxonomy_term__specializations` || 
+      node.internal.type === `taxonomy_term__majors`) {
+        
+    /* Create page path */
+    const aliasID = createNodeId(`alias-${node.drupal_id}`);
+
+    // add  mapped alias node as a field
     createNodeField({
       node,
-      name: `slug`,
-      value: slug,
+      name: "alias",
+      value: aliasID,
     })
 
     /* Set content field for search */
@@ -80,7 +98,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions, createNodeId, createContentDigest, reporter }) => {
   const { createPage } = actions
   const pageTemplate = path.resolve('./src/templates/basic-page.js');
   const programTemplate = path.resolve('src/templates/program-page.js');
@@ -92,8 +110,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           node {
             drupal_id
             title
-            fields {
-              slug
+            path {
+              alias
             }
           }
         }
@@ -101,19 +119,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       specializations: allTaxonomyTermSpecializations {
         edges {
           node {
+            name
             drupal_id
             drupal_internal__tid
-            name
+            path {
+              alias
+            }
           }
         }
       }
       majors: allTaxonomyTermMajors {
         edges {
           node {
+            name
             drupal_id
             drupal_internal__tid
-            name
             field_degree_format
+            path {
+              alias
+            }
             relationships {
               field_specializations {
                 name
@@ -134,6 +158,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       const pages = result.data.pages.edges;
       pages.forEach(({ node }, index) => {
         const alias = createPageAlias(node);
+        createNodeAlias(node, alias, actions, createNodeId, createContentDigest);
         createPage({
           path: alias,
           component: pageTemplate,
@@ -148,6 +173,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       const specializations = result.data.specializations.edges;
       specializations.forEach(({ node }, index) => {
         const alias = createProgramAlias(node);
+        createNodeAlias(node, alias, actions, createNodeId, createContentDigest);
         createPage({
           path: alias,
           component: programTemplate,
@@ -162,6 +188,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       const majors = result.data.majors.edges;
       majors.forEach(({ node }, index) => {
         const alias = createProgramMajorAlias(node);
+        createNodeAlias(node, alias, actions, createNodeId, createContentDigest);
         createPage({
           path: alias,
           component: programTemplate,
@@ -173,6 +200,31 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
 
   }
+}
+
+function createNodeAlias(node, alias, actions, createNodeId, createContentDigest){
+  const { createNode } = actions
+
+  const aliasID = createNodeId(`alias-${node.drupal_id}`);
+  const aliasData = {
+    key: aliasID,
+    value: alias,
+  }
+  const aliasContent = JSON.stringify(aliasData);
+  const aliasMeta = {
+    id: aliasID,
+    parent: null,
+    children: [],
+    internal: {
+      type: `DrupalAliasMapping`,
+      mediaType: `text/html`,
+      content: aliasContent,
+      contentDigest: createContentDigest(aliasData)
+    }
+  }
+
+  const aliasNode = Object.assign({}, aliasData, aliasMeta);
+  createNode(aliasNode);
 }
 
 function createPageAlias(node){
