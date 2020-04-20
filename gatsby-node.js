@@ -21,7 +21,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_specialization_acronym: String
       name: String
       description: TaxonomyDescription
-      relationships: RelationshipMajors
       fields: FieldsPathAlias
     }
     type taxonomy_term__majors implements Node {
@@ -30,8 +29,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_degree_format: String
       name: String
       description: TaxonomyDescription
-      relationships: RelationshipSpecialization
+      relationships: RelationshipMajors
       fields: FieldsPathAlias
+    }
+    type RelationshipMajors {
+      field_specializations: FieldSpecializations
     }
     type FieldsPathAlias {
       alias: PathAlias
@@ -50,16 +52,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
     }
-    type RelationshipSpecialization {
-      field_specializations: FieldSpecializations
-    }
-    type RelationshipMajors {
-      field_majors: FieldMajors
-    }
     type FieldSpecializations {
-      name: String
-    }
-    type FieldMajors {
       name: String
     }
   `
