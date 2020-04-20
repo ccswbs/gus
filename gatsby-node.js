@@ -9,13 +9,19 @@ const path = require(`path`)
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
+    type node__page implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      body: BodyField
+      fields: FieldsPathAlias
+    }
     type taxonomy_term__specializations implements Node {
       drupal_id: String
       drupal_internal__tid: Int
       field_specialization_acronym: String
       name: String
       description: TaxonomyDescription
-      relationships: RelationshipMajors
+      fields: FieldsPathAlias
     }
     type taxonomy_term__majors implements Node {
       drupal_id: String
@@ -23,40 +29,51 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_degree_format: String
       name: String
       description: TaxonomyDescription
-      relationships: RelationshipSpecialization
+      relationships: RelationshipMajors
+      fields: FieldsPathAlias
+    }
+    type RelationshipMajors {
+      field_specializations: FieldSpecializations
+    }
+    type FieldsPathAlias {
+      alias: PathAlias
+    }
+    type PathAlias implements Node {
+      value: String
+    }
+    type BodyField {
+      processed: String
+      value: String
+      format: String
+      summary: String
     }
     type TaxonomyDescription {
       processed: String
       value: String
       format: String
     }
-    type RelationshipSpecialization {
-      field_specializations: FieldSpecializations
-    }
-    type RelationshipMajors {
-      field_majors: FieldMajors
-    }
     type FieldSpecializations {
-      name: String
-    }
-    type FieldMajors {
       name: String
     }
   `
   createTypes(typeDefs)
 }
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+exports.onCreateNode = ({ node, createNodeId, actions }) => {
   const { createNodeField } = actions
-  
-  if (node.internal.type === `node__page`) {
-    /* Create page path */
-    var slug = createPageAlias(node);
 
+  if (node.internal.type === `node__page` || 
+      node.internal.type === `taxonomy_term__specializations` || 
+      node.internal.type === `taxonomy_term__majors`) {
+        
+    /* Create page path */
+    const aliasID = createNodeId(`alias-${node.drupal_id}`);
+
+    // add  mapped alias node as a field
     createNodeField({
       node,
-      name: `slug`,
-      value: slug,
+      name: "alias",
+      value: aliasID,
     })
 
     /* Set content field for search */
@@ -80,10 +97,13 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 }
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
+exports.createPages = async ({ graphql, actions, createContentDigest, createNodeId, reporter }) => {
   const pageTemplate = path.resolve('./src/templates/basic-page.js');
   const programTemplate = path.resolve('src/templates/program-page.js');
+  const helpers = Object.assign({}, actions, {
+    createContentDigest,
+    createNodeId,
+  })
 
   const result = await graphql(`
     {
@@ -92,27 +112,22 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           node {
             drupal_id
             title
-            fields {
-              slug
-            }
           }
         }
       }
       specializations: allTaxonomyTermSpecializations {
         edges {
           node {
-            drupal_id
-            drupal_internal__tid
             name
+            drupal_id
           }
         }
       }
       majors: allTaxonomyTermMajors {
         edges {
           node {
-            drupal_id
-            drupal_internal__tid
             name
+            drupal_id
             field_degree_format
             relationships {
               field_specializations {
@@ -132,47 +147,58 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (result.data !== undefined){
     if(result.data.pages !== undefined){
       const pages = result.data.pages.edges;
-      pages.forEach(({ node }, index) => {
-        const alias = createPageAlias(node);
-        createPage({
-          path: alias,
-          component: pageTemplate,
-          context: {
-            id: node.drupal_id,
-          },
-        })
-      })
+      processPages(pages, createPageAlias, pageTemplate, helpers);
     }
 
     if(result.data.specializations !== undefined){
       const specializations = result.data.specializations.edges;
-      specializations.forEach(({ node }, index) => {
-        const alias = createProgramAlias(node);
-        createPage({
-          path: alias,
-          component: programTemplate,
-          context: {
-            id: node.drupal_id,
-          },
-        })
-      })
+      processPages(specializations, createProgramAlias, programTemplate, helpers);
     }
 
     if(result.data.majors !== undefined){
       const majors = result.data.majors.edges;
-      majors.forEach(({ node }, index) => {
-        const alias = createProgramMajorAlias(node);
-        createPage({
-          path: alias,
-          component: programTemplate,
-          context: {
-            id: node.drupal_id,
-          },
-        })
-      })
+      processPages(majors, createProgramMajorAlias, programTemplate, helpers);
     }
 
   }
+}
+
+function processPages(dataType, functionToRetrieveAlias, template, helpers){
+  dataType.forEach(({ node }, index) => {
+    const alias = functionToRetrieveAlias(node);
+    createNodeAlias(node, alias, helpers);
+    helpers.createPage({
+      path: alias,
+      component: template,
+      context: {
+        id: node.drupal_id,
+      },
+    })
+  })
+
+}
+
+function createNodeAlias(node, alias, helpers){
+  const aliasID = helpers.createNodeId(`alias-${node.drupal_id}`);
+  const aliasData = {
+    key: aliasID,
+    value: alias,
+  }
+  const aliasContent = JSON.stringify(aliasData);
+  const aliasMeta = {
+    id: aliasID,
+    parent: null,
+    children: [],
+    internal: {
+      type: `PathAlias`,
+      mediaType: `text/html`,
+      content: aliasContent,
+      contentDigest: helpers.createContentDigest(aliasData)
+    }
+  }
+
+  const aliasNode = Object.assign({}, aliasData, aliasMeta);
+  helpers.createNode(aliasNode);
 }
 
 function createPageAlias(node){
