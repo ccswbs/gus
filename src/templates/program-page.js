@@ -2,27 +2,27 @@ import React from 'react'
 import { graphql } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-import Degrees from '../components/degrees'
+//import Degrees from '../components/degrees'
 
 export default ({data, location}) => {
   // determine source of query
   var pageData;
-  if(data.specializations.edges[0] !== undefined){
+  if (data.specializations.edges[0] !== undefined) {
     pageData = data.specializations.edges[0].node;
-  }else if(data.majors.edges[0] !== undefined){
-    pageData = data.majors.edges[0].node;
-  }
-
 	var deg;
 	var degList;
-	if (pageData.relationships.field_degrees !== undefined && pageData.relationships.field_degrees !== null) {
-		for (let i = 0; i < pageData.relationships.field_degrees.length; i++) {
-			degList += "<li>" + pageData.relationships.field_degrees[i].name + "</li>"
+	if (pageData.relationships.field_degrees !== undefined) {
+		for (var i=0; i<pageData.relationships.field_degrees.length; i++) {
+			degList += "<li>" + pageData.relationships.field_degrees[i].name + "</li>";
 		}
 		deg = "<h2>Degrees Offered</h2><ul>" + degList + "</ul>";
 	} else {
-		deg = "";
+		deg = "<p>No degrees to see here</p>";
 	}
+  } else if (data.majors.edges[0] !== undefined){
+    pageData = data.majors.edges[0].node;
+  }
+
 
   const title = pageData.name;
   const description = (pageData.description !== undefined 
