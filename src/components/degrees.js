@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 export default () => (
 	<>
@@ -9,7 +9,7 @@ export default () => (
 				query={degreeQuery}
 				render={data => (
 					data.allTaxonomyTermDegrees.edges.map(edge => (
-						<li><Link to={edge.node.path.alias}>{edge.node.name} ({edge.node.field_degree_acronym})</Link></li>
+						<li>{edge.node.name} ({edge.node.field_degree_acronym})</li>
 						)
 					)
 				)}
@@ -26,9 +26,6 @@ query MyQuery {
 			drupal_internal__tid
 			name
 			field_degree_acronym
-			path {
-			  alias
-			}
 		  }
 		}
 	  }
