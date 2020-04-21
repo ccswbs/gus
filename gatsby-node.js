@@ -32,6 +32,19 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: RelationshipMajors
       fields: FieldsPathAlias
     }
+
+	type taxonomy_term__degrees implements Node {
+	  drupal_id: String
+	  drupal_internal__tid: Int
+	  field_degree_acronym: String
+	  name: String
+	  description: TaxonomyDescription
+	  fields: FieldsPathAlias
+	}
+	type FieldDegrees {
+	  name: String
+	}
+
     type RelationshipMajors {
       field_specializations: FieldSpecializations
     }
