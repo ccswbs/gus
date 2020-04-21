@@ -5,35 +5,40 @@ import SEO from '../components/seo'
 
 export default ({data, location}) => {
   // determine source of query
-	var pageData;
+  var pageData;
+  var degreesData;
+  var degrees;
+	var degreesList="";
+
 	if (data.specializations.edges[0] !== undefined) {
 		pageData = data.specializations.edges[0].node;
 	} else if (data.majors.edges[0] !== undefined) {
 		pageData = data.majors.edges[0].node;
-	}
-	// get degree info
-	var deg;
-	var degList="";
-	if (pageData.relationships.field_degrees !== undefined) {
-		for (var i=0; i<pageData.relationships.field_degrees.length; i++) {
-			degList += "<li>" + pageData.relationships.field_degrees[i].name + " (" + pageData.relationships.field_degrees[i].field_degree_acronym + ")</li>";
-		}
-		deg = "<h2>Degrees Offered</h2><ul>" + degList + "</ul>";
-	} else {
-		deg = "<p>No degrees to see here</p>";
-	}
+  }
 
+  // set program info
   const title = pageData.name;
   const description = (pageData.description !== undefined 
     && pageData.description !== null ? pageData.description.processed:``);
   const acronym = (pageData.acronym !== undefined && pageData.acronym !== null ? `(` + pageData.acronym + `)`: ``);
+
+	// set degree info  
+  degreesData = pageData.relationships.field_degrees;
+  if (degreesData !== null) {
+		for (var i=0; i < degreesData.length; i++) {
+			degreesList += "<li>" + degreesData[i].name + " (" + degreesData[i].field_degree_acronym + ")</li>";
+		}
+		degrees = "<h2>Degrees Offered</h2><ul>" + degreesList + "</ul>";
+	} else {
+		degrees = "<p>No degrees to see here</p>";
+	}
     
   return (
     <Layout>
       <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
       <h1>{title} {acronym}</h1>
       <div dangerouslySetInnerHTML={{ __html: description }}  />
-	  <div dangerouslySetInnerHTML={{__html: deg}}  />
+      <div dangerouslySetInnerHTML={{__html: degrees}}  />
 		  
     </Layout>
   )
@@ -51,10 +56,10 @@ export const query = graphql`
           description {
             processed
           }
-		  relationships {
+          relationships {
             field_degrees {
               name
-			  field_degree_acronym
+              field_degree_acronym
             }
           }
         }
@@ -70,10 +75,10 @@ export const query = graphql`
           description {
             processed
           }
-		  relationships {
+          relationships {
             field_degrees {
               name
-			  field_degree_acronym
+              field_degree_acronym
             }
           }
         }
