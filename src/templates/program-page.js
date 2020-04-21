@@ -29,19 +29,23 @@ export default ({data, location}) => {
 			degreesList += "<li>" + degreesData[i].name + " (" + degreesData[i].field_degree_acronym + ")</li>";
 		}
 		degrees = "<h2>Degrees Offered</h2><ul>" + degreesList + "</ul>";
+		return (
+			<Layout>
+			  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+			  <h1>{title} {acronym}</h1>
+			  <div dangerouslySetInnerHTML={{ __html: description }}  />
+			  <div dangerouslySetInnerHTML={{__html: degrees}}  />		  
+			</Layout>
+		)
 	} else {
-		degrees = "<p>No degrees to see here</p>";
+		return (
+			<Layout>
+			  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+			  <h1>{title} {acronym}</h1>
+			  <div dangerouslySetInnerHTML={{ __html: description }}  />
+			</Layout>
+		)
 	}
-    
-  return (
-    <Layout>
-      <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-      <h1>{title} {acronym}</h1>
-      <div dangerouslySetInnerHTML={{ __html: description }}  />
-      <div dangerouslySetInnerHTML={{__html: degrees}}  />
-		  
-    </Layout>
-  )
 }
 
 export const query = graphql`
