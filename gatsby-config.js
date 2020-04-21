@@ -37,7 +37,5 @@ module.exports = {
   mapping: {
     "node__page.fields.alias": `PathAlias`,
     "taxonomy_term__programs.fields.alias": `PathAlias`,
-    "taxonomy_term__majors.fields.alias": `PathAlias`,
-    "taxonomy_term__specializations.fields.alias": `PathAlias`,
   },
 }

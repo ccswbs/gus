@@ -15,11 +15,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       body: BodyField
       fields: FieldsPathAlias
     }
-    type node__programs implements Node {
+    type taxonomy_term__programs implements Node {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
+      relationships: RelationshipsPrograms
       fields: FieldsPathAlias
     }
     type taxonomy_term__specializations implements Node {
@@ -28,19 +29,22 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_specialization_acronym: String
       name: String
       description: TaxonomyDescription
-      fields: FieldsPathAlias
     }
-    type taxonomy_term__majors implements Node {
+    type taxonomy_term__degrees implements Node {
       drupal_id: String
       drupal_internal__tid: Int
-      field_degree_format: String
+      field_degree_acronym: String
       name: String
       description: TaxonomyDescription
-      relationships: RelationshipMajors
-      fields: FieldsPathAlias
     }
-    type RelationshipMajors {
+    type taxonomy_term__program_varient_type implements Node {
+      name: String
+    }
+    type RelationshipsPrograms {
       field_specializations: [taxonomy_term__specializations]
+      field_degrees: [taxonomy_term__degrees]
+      field_program_variant: taxonomy_term__program_varient_type
+      field_program_areas_of_emphasis: [taxonomy_term__programs]
     }
     type FieldsPathAlias {
       alias: PathAlias
@@ -67,9 +71,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `node__page` || 
-      node.internal.type === `taxonomy_term__programs` || 
-      node.internal.type === `taxonomy_term__specializations` || 
-      node.internal.type === `taxonomy_term__majors`) {
+      node.internal.type === `taxonomy_term__programs`) {
         
     /* Create page path */
     const aliasID = createNodeId(`alias-${node.drupal_id}`);
@@ -125,24 +127,10 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           node {
             name
             drupal_id
-          }
-        }
-      }
-      specializations: allTaxonomyTermSpecializations {
-        edges {
-          node {
-            name
-            drupal_id
-          }
-        }
-      }
-      majors: allTaxonomyTermMajors {
-        edges {
-          node {
-            name
-            drupal_id
-            field_degree_format
             relationships {
+              field_program_variant {
+                name
+              }
               field_specializations {
                 name
               }
@@ -167,17 +155,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
       const programs = result.data.programs.edges;
       processPages(programs, createProgramAlias, programTemplate, helpers);
     }
-
-    if(result.data.specializations !== undefined){
-      const specializations = result.data.specializations.edges;
-      processPages(specializations, createProgramAlias, programTemplate, helpers);
-    }
-
-    if(result.data.majors !== undefined){
-      const majors = result.data.majors.edges;
-      processPages(majors, createProgramMajorAlias, programTemplate, helpers);
-    }
-
   }
 }
 
@@ -224,30 +201,32 @@ function createPageAlias(node){
   return alias;
 }
 
+/****** 
+* Creates Program alias path using pattern of `/programs/specialization-name/variant-type`
+* If no specialization is available, uses pattern of `/programs/program-name`
+********/
 function createProgramAlias(node){
-  var alias = `/programs/` + slugify(node.name);
-  return alias;
-}
-
-function createProgramMajorAlias(node){
   var alias = `/programs/`;
+  var specializations = node.relationships.field_specializations;
+  var variants = node.relationships.field_program_variant;
 
-  if(node.relationships.field_specializations !== null){
-    // if specialization existis, use name in url alias
-    node.relationships.field_specializations.forEach(element => {
+  // if specialization exists, add `specialization-name/variant-type` to alias
+  if(specializations !== null){
+    specializations.forEach(element => {
       alias += (slugify(element.name));
-      if(node.relationships.field_specializations.length > 1){
+      if(specializations.length > 1){
         alias += `-`;
       }
     });
+    if(variants !== null){
+      alias += (`-` + slugify(variants.name));
+    }
+
   }else{
-    // else use major name in alias
+    // otherwise, add `program-name` to alias
     alias += (slugify(node.name));
   }
-  alias += `/major`;
-  if(node.field_degree_format !== `general`){
-    alias += (`-` + node.field_degree_format);
-  }
+
   return alias;
 }
 
