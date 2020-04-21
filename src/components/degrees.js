@@ -1,33 +1,22 @@
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import PropTypes from 'prop-types'
 
-export default () => (
-	<>
-		<h2>Degrees</h2>	
-		<ul>
-			<StaticQuery
-				query={degreeQuery}
-				render={data => (
-					data.allTaxonomyTermDegrees.edges.map(edge => (
-						<li>{edge.node.name} ({edge.node.field_degree_acronym})</li>
-						)
-					)
-				)}
-			/>
-		</ul>
-	</>
-)
-
-const degreeQuery = graphql`
-query MyQuery {
-	  allTaxonomyTermDegrees {
-		edges {
-		  node {
-			drupal_internal__tid
-			name
-			field_degree_acronym
-		  }
-		}
-	  }
+function Degrees ({ degreesData }) {
+	var degrees;
+	var degreesList="";
+	if (degreesData !== null) {
+		for (var i=0; i < degreesData.length; i++) {
+				degreesList += "<li>" + degreesData[i].name + " (" + degreesData[i].field_degree_acronym + ")</li>";
+			}
+		degrees = "<h2>Degrees Offered</h2><ul>" + degreesList + "</ul>";
+		return <div dangerouslySetInnerHTML={{__html: degrees}}/>
+	} else {
+		return null
 	}
-`
+}
+
+Degrees.propTypes = {
+	degreesData: PropTypes.arrayOf(PropTypes.string),
+}
+
+export default Degrees

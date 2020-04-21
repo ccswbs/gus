@@ -2,50 +2,36 @@ import React from 'react'
 import { graphql } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import Degrees from '../components/degrees'
 
 export default ({data, location}) => {
-  // determine source of query
-  var pageData;
-  var degreesData;
-  var degrees;
-	var degreesList="";
+	// determine source of query
+	var pageData;
+	var degreesData;
 
 	if (data.specializations.edges[0] !== undefined) {
 		pageData = data.specializations.edges[0].node;
 	} else if (data.majors.edges[0] !== undefined) {
 		pageData = data.majors.edges[0].node;
-  }
+	}
 
-  // set program info
-  const title = pageData.name;
-  const description = (pageData.description !== undefined 
-    && pageData.description !== null ? pageData.description.processed:``);
-  const acronym = (pageData.acronym !== undefined && pageData.acronym !== null ? `(` + pageData.acronym + `)`: ``);
+	// set program info
+	const title = pageData.name;
+	const description = (pageData.description !== undefined 
+	&& pageData.description !== null ? pageData.description.processed:``);
+	const acronym = (pageData.acronym !== undefined && pageData.acronym !== null ? `(` + pageData.acronym + `)`: ``);
 
 	// set degree info  
-  degreesData = pageData.relationships.field_degrees;
-  if (degreesData !== null) {
-		for (var i=0; i < degreesData.length; i++) {
-			degreesList += "<li>" + degreesData[i].name + " (" + degreesData[i].field_degree_acronym + ")</li>";
-		}
-		degrees = "<h2>Degrees Offered</h2><ul>" + degreesList + "</ul>";
-		return (
-			<Layout>
-			  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-			  <h1>{title} {acronym}</h1>
-			  <div dangerouslySetInnerHTML={{ __html: description }}  />
-			  <div dangerouslySetInnerHTML={{__html: degrees}}  />		  
-			</Layout>
-		)
-	} else {
-		return (
-			<Layout>
-			  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-			  <h1>{title} {acronym}</h1>
-			  <div dangerouslySetInnerHTML={{ __html: description }}  />
-			</Layout>
-		)
-	}
+	degreesData = pageData.relationships.field_degrees;
+
+	return (
+		<Layout>
+		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+		  <h1>{title} {acronym}</h1>
+		  <div dangerouslySetInnerHTML={{ __html: description }}  />
+		  <Degrees degreesData={degreesData} />  
+		</Layout>
+	)
 }
 
 export const query = graphql`
