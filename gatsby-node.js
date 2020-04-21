@@ -33,7 +33,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: RelationshipMajors
       fields: FieldsPathAlias
     }
-
     type taxonomy_term__degrees implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -42,11 +41,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       description: TaxonomyDescription
     }
     type RelationshipSpecializations {
-      field_degrees: FieldDegrees
+      field_degrees: [taxonomy_term__degrees]
     }
     type RelationshipMajors {
-      field_specializations: FieldSpecializations
-      field_degrees: FieldDegrees
+      field_specializations: [taxonomy_term__specializations]
+      field_degrees: [taxonomy_term__degrees]
     }
     type FieldsPathAlias {
       alias: PathAlias
@@ -64,13 +63,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       processed: String
       value: String
       format: String
-    }
-    type FieldSpecializations {
-      name: String
-    }
-    type FieldDegrees {
-      name: String
-      field_degree_acronym: String
     }
   `
   createTypes(typeDefs)
