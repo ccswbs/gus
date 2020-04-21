@@ -9,19 +9,21 @@ export default ({data, location}) => {
   var pageData;
   if (data.specializations.edges[0] !== undefined) {
     pageData = data.specializations.edges[0].node;
-	var deg;
-	var degList;
+
+  } else if (data.majors.edges[0] !== undefined){
+    pageData = data.majors.edges[0].node;
+  }
+  
+  	var deg;
+	var degList="";
 	if (pageData.relationships.field_degrees !== undefined) {
 		for (var i=0; i<pageData.relationships.field_degrees.length; i++) {
-			degList += "<li>" + pageData.relationships.field_degrees[i].name + "</li>";
+			degList += "<li>" + pageData.relationships.field_degrees[i].name + " (" + pageData.relationships.field_degrees[i].field_degree_acronym + ")</li>";
 		}
 		deg = "<h2>Degrees Offered</h2><ul>" + degList + "</ul>";
 	} else {
 		deg = "<p>No degrees to see here</p>";
 	}
-  } else if (data.majors.edges[0] !== undefined){
-    pageData = data.majors.edges[0].node;
-  }
 
 
   const title = pageData.name;
@@ -54,9 +56,9 @@ export const query = graphql`
           }
 		  relationships {
             field_degrees {
-            name
+              name
+            }
           }
-         }
         }
       }
     }
@@ -69,6 +71,11 @@ export const query = graphql`
           name
           description {
             processed
+          }
+		  relationships {
+            field_degrees {
+              name
+            }
           }
         }
       }
