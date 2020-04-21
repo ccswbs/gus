@@ -15,6 +15,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       body: BodyField
       fields: FieldsPathAlias
     }
+    type node__programs implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+      description: TaxonomyDescription
+      fields: FieldsPathAlias
+    }
     type taxonomy_term__specializations implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -33,7 +40,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       fields: FieldsPathAlias
     }
     type RelationshipMajors {
-      field_specializations: FieldSpecializations
+      field_specializations: [taxonomy_term__specializations]
     }
     type FieldsPathAlias {
       alias: PathAlias
@@ -52,9 +59,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
     }
-    type FieldSpecializations {
-      name: String
-    }
   `
   createTypes(typeDefs)
 }
@@ -63,6 +67,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `node__page` || 
+      node.internal.type === `taxonomy_term__programs` || 
       node.internal.type === `taxonomy_term__specializations` || 
       node.internal.type === `taxonomy_term__majors`) {
         
@@ -115,6 +120,14 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           }
         }
       }
+      programs: allTaxonomyTermPrograms {
+        edges {
+          node {
+            name
+            drupal_id
+          }
+        }
+      }
       specializations: allTaxonomyTermSpecializations {
         edges {
           node {
@@ -148,6 +161,11 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     if(result.data.pages !== undefined){
       const pages = result.data.pages.edges;
       processPages(pages, createPageAlias, pageTemplate, helpers);
+    }
+
+    if(result.data.programs !== undefined){
+      const programs = result.data.programs.edges;
+      processPages(programs, createProgramAlias, programTemplate, helpers);
     }
 
     if(result.data.specializations !== undefined){
