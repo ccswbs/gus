@@ -2,19 +2,17 @@ import React from 'react'
 import { graphql } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-//import Degrees from '../components/degrees'
 
 export default ({data, location}) => {
   // determine source of query
-  var pageData;
-  if (data.specializations.edges[0] !== undefined) {
-    pageData = data.specializations.edges[0].node;
-
-  } else if (data.majors.edges[0] !== undefined){
-    pageData = data.majors.edges[0].node;
-  }
-  
-  	var deg;
+	var pageData;
+	if (data.specializations.edges[0] !== undefined) {
+		pageData = data.specializations.edges[0].node;
+	} else if (data.majors.edges[0] !== undefined) {
+		pageData = data.majors.edges[0].node;
+	}
+	// get degree info
+	var deg;
 	var degList="";
 	if (pageData.relationships.field_degrees !== undefined) {
 		for (var i=0; i<pageData.relationships.field_degrees.length; i++) {
@@ -24,7 +22,6 @@ export default ({data, location}) => {
 	} else {
 		deg = "<p>No degrees to see here</p>";
 	}
-
 
   const title = pageData.name;
   const description = (pageData.description !== undefined 
@@ -57,6 +54,7 @@ export const query = graphql`
 		  relationships {
             field_degrees {
               name
+			  field_degree_acronym
             }
           }
         }
@@ -75,24 +73,11 @@ export const query = graphql`
 		  relationships {
             field_degrees {
               name
+			  field_degree_acronym
             }
           }
         }
       }
     }
-
-	degrees: allTaxonomyTermDegrees (filter: {drupal_id: {eq: $id}}) {
-		edges {
-		  node {
-			drupal_id
-			drupal_internal__tid
-			name
-			field_degree_acronym
-			path {
-			  alias
-			}
-		  }
-		}
-	  }
-	}
+  }
 `
