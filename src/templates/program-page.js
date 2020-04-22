@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Degrees from '../components/degrees'
+import CallToAction from '../components/callToAction'
 
 export default ({data, location}) => {
   // determine source of query
@@ -27,7 +28,8 @@ export default ({data, location}) => {
 		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 		  <h1>{title} {acronym}</h1>
 		  <div dangerouslySetInnerHTML={{ __html: description }}  />
-		  <Degrees degreesData={degreesData} />  
+		  <Degrees degreesData={degreesData} />
+      <CallToAction href='#'>Apply</CallToAction>
 		</Layout>
 	)
 }
