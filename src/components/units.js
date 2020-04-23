@@ -6,7 +6,7 @@ function Units ({ unitData }) {
 	var unitList="";
 	if (unitData !== null) {
 		for (var i=0; i < unitData.length; i++) {
-				unitList += "<li>" + unitsData[i].name + " (" + unitsData[i].field_degree_acronym + ")</li>";
+				unitList += "<li>" + unitData[i].relationships.field_units[i].name + " (" + unitData[i].relationships.field_units[i].field_unit_acronym + ")</li>";
 			}
 		units = "<h2>Departments</h2><ul>" + unitList + "</ul>";
 		return <div dangerouslySetInnerHTML={{__html: units}}/>
@@ -15,7 +15,7 @@ function Units ({ unitData }) {
 	}
 }
 
-units.propTypes = {
+Units.propTypes = {
 	unitData: PropTypes.arrayOf(PropTypes.string),
 }
 
