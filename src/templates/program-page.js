@@ -11,7 +11,6 @@ export default ({data, location}) => {
 	var pageData;
 	var degreesData;
 	var specData;
-	var unitData;
 
 	if(data.programs.edges[0] !== undefined){
 		pageData = data.programs.edges[0].node;
