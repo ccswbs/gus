@@ -15,16 +15,9 @@ const IndexPage = ({ data }) => (
 					))}
 				</ul>
 
-				<h2>Specializations</h2>
+				<h2>Programs</h2>
 				<ul>
-					{data.specializations.edges.map(edge => (
-						<li><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
-					))}
-				</ul>
-
-				<h2>Majors</h2>
-				<ul>
-					{data.majors.edges.map(edge => (
+					{data.programs.edges.map(edge => (
 						<li><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
 					))}
 				</ul>
@@ -49,26 +42,7 @@ export const query = graphql`
 		}
 	  }
 
-	  specializations: allTaxonomyTermSpecializations {
-		edges {
-		  node {
-			drupal_id
-			drupal_internal__tid
-			name
-			acronym: field_specialization_acronym
-			description {
-			  processed
-			}
-			fields {
-				alias {
-					value
-				}
-			}
-		  }
-		}
-	  }
-
-	  majors: allTaxonomyTermMajors {
+	  programs: allTaxonomyTermPrograms {
 		edges {
 		  node {
 			drupal_id
@@ -85,7 +59,5 @@ export const query = graphql`
 		  }
 		}
 	  }
-	  
-	  
 	}
 `

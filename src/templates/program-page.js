@@ -2,47 +2,41 @@ import React from 'react'
 import { graphql } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import Degrees from '../components/degrees'
+import CallToAction from '../components/callToAction'
 
 export default ({data, location}) => {
   // determine source of query
   var pageData;
-  if(data.specializations.edges[0] !== undefined){
-    pageData = data.specializations.edges[0].node;
-  }else if(data.majors.edges[0] !== undefined){
-    pageData = data.majors.edges[0].node;
+	var degreesData;
+
+  if(data.programs.edges[0] !== undefined){
+    pageData = data.programs.edges[0].node;
   }
 
-  const title = pageData.name;
-  const description = (pageData.description !== undefined 
-    && pageData.description !== null ? pageData.description.processed:``);
-  const acronym = (pageData.acronym !== undefined && pageData.acronym !== null ? `(` + pageData.acronym + `)`: ``);
-    
-  return (
-    <Layout>
-      <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-      <h1>{title} {acronym}</h1>
-      <div dangerouslySetInnerHTML={{ __html: description }} />
-    </Layout>
-  )
+	// set program info
+	const title = pageData.name;
+	const description = (pageData.description !== undefined 
+	&& pageData.description !== null ? pageData.description.processed:``);
+	const acronym = (pageData.acronym !== undefined && pageData.acronym !== null ? `(` + pageData.acronym + `)`: ``);
+
+	// set degree info  
+	degreesData = pageData.relationships.field_degrees;
+
+	return (
+		<Layout>
+		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+		  <h1>{title} {acronym}</h1>
+		  <div dangerouslySetInnerHTML={{ __html: description }}  />
+		  <Degrees degreesData={degreesData} />
+      <CallToAction href='#'>Apply</CallToAction>
+		</Layout>
+	)
 }
 
 export const query = graphql`
   query ($id: String!) {
-    specializations: allTaxonomyTermSpecializations(filter: {drupal_id: {eq: $id}}) {
-      edges {
-        node {
-          drupal_id
-          drupal_internal__tid
-          name
-          acronym: field_specialization_acronym
-          description {
-            processed
-          }
-        }
-      }
-    }
-
-    majors: allTaxonomyTermMajors(filter: {drupal_id: {eq: $id}}) {
+    programs: allTaxonomyTermPrograms(filter: {drupal_id: {eq: $id}}) {
       edges {
         node {
           drupal_id
@@ -51,8 +45,14 @@ export const query = graphql`
           description {
             processed
           }
+          relationships {
+            field_degrees {
+              name
+              field_degree_acronym
+            }
+          }
         }
       }
     }
-	}
+  }
 `
