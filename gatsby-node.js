@@ -211,7 +211,7 @@ function createProgramAlias(node){
   var variants = node.relationships.field_program_variant;
 
   // if specialization exists, add `specialization-name/variant-type` to alias
-  if(specializations !== null){
+  if(specializations.length > 0){
     specializations.forEach(element => {
       alias += (slugify(element.name));
       if(specializations.length > 1){
