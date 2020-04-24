@@ -4,13 +4,28 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
+let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+
+if((metaConfig == null) || (metaConfig == undefined)) {
+  metaConfig['title'] = "Gatsby UG Starter Template";
+  metaConfig['description'] = "Description of the site";
+  metaConfig['author'] = "Author of site";
+  metaConfig['GAtrackingID'] = "";
+}
+
 module.exports = {
   siteMetadata: {
-    title: "Gatsby UG Starter Template",
-    description: "Description of the site",
-    author: "Author of site",
+    title: metaConfig['title'],
+    description: metaConfig['description'],
+    author: metaConfig['author'],
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: metaConfig['GAtrackingID'],
+      },
+    },
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -34,4 +49,8 @@ module.exports = {
        },
     },
   ],
+  mapping: {
+    "node__page.fields.alias": `PathAlias`,
+    "taxonomy_term__programs.fields.alias": `PathAlias`,
+  },
 }
