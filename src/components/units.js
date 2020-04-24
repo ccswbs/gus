@@ -7,13 +7,15 @@ function Units ({ unitData }) {
     if (unitData !== null) {
         unitData.forEach(element => {
             const field_units = element.relationships.field_units; 
-            field_units.forEach(unit => {
-                const acronym = (unit.field_unit_acronym !== undefined && unit.field_unit_acronym !== null ? ` (` + unit.field_unit_acronym + `)`: ``);
-                unitList += "<li>" + unit.name + acronym + "</li>";
-            });
+			if (field_units !== null) {
+				field_units.forEach(unit => {
+					const acronym = (unit.field_unit_acronym !== undefined && unit.field_unit_acronym !== null ? ` (` + unit.field_unit_acronym + `)`: ``);
+					unitList += "<li>" + unit.name + acronym + "</li>";
+				});
+            }			
         });
         if (unitList !== ""){
-            units = "<h2>Departments</h2><ul>" + unitList + "</ul>";
+            units = "<h2>Associcated Departments</h2><ul>" + unitList + "</ul>";
             return <div dangerouslySetInnerHTML={{__html: units}}/>
         }
         
