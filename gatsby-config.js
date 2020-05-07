@@ -45,16 +45,10 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-         baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+         //baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+         baseUrl: `http://stu-profile-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `src`,
-        path: `${__dirname}/src/`,
-      },
     },
     {
       resolve: `gatsby-source-instagram`,
