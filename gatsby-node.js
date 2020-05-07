@@ -28,12 +28,20 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__tid: Int
       field_specialization_acronym: String
       name: String
+	  relationships: RelationshipsSpecializations
       description: TaxonomyDescription
     }
     type taxonomy_term__degrees implements Node {
       drupal_id: String
       drupal_internal__tid: Int
       field_degree_acronym: String
+      name: String
+      description: TaxonomyDescription
+    }
+	type taxonomy_term__units implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      field_unit_acronym: String
       name: String
       description: TaxonomyDescription
     }
@@ -46,6 +54,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_program_variant: taxonomy_term__program_varient_type
       field_program_areas_of_emphasis: [taxonomy_term__programs]
     }
+	type RelationshipsSpecializations {
+		field_units: [taxonomy_term__units]
+	}
     type FieldsPathAlias {
       alias: PathAlias
     }
