@@ -4,6 +4,7 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Degrees from '../components/degrees'
 import Units from '../components/units'
+import Variants from '../components/variants'
 import CallToAction from '../components/callToAction'
 
 export default ({data, location}) => {
@@ -11,6 +12,7 @@ export default ({data, location}) => {
 	var pageData;
 	var degreesData;
 	var specData;
+	var progvarData;
 
 	if(data.programs.edges[0] !== undefined){
 		pageData = data.programs.edges[0].node;
@@ -27,13 +29,17 @@ export default ({data, location}) => {
 	
 	// set unit info by pulling specialization data first
 	specData = pageData.relationships.field_specializations;
+	
+	// set program variant data
+	progvarData = pageData.relationships.field_test;
 
 	return (
 		<Layout>
 		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 		  <h1>{title} {acronym}</h1>
 		  <div dangerouslySetInnerHTML={{ __html: description }}  />
-		  <Degrees degreesData={degreesData} />
+		  <Degrees degreesData={degreesData} />	
+		  <Variants progvarData={progvarData} />		  
 		  <Units unitData={specData} />
 		  <CallToAction href='#'>Apply</CallToAction>
 		</Layout>
@@ -64,6 +70,16 @@ export const query = graphql`
                 }
               }
             }
+			field_test {
+			  field_description {
+				value
+			  }
+			  relationships {
+				field_heading {
+				  name
+				}
+			  }
+			}
           }
         }
       }

@@ -48,11 +48,25 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__program_varient_type implements Node {
       name: String
     }
+	type paragraph__program_variant_desc implements Node {
+		field_description: paragraph__program_variant_descField_description
+		relationships: paragraph__program_variant_descRelationships
+	}
+	type paragraph__program_variant_descField_description {
+		value: String
+		format: String
+		processed: String
+		summary: String
+	}
+	type paragraph__program_variant_descRelationships {
+		field_heading: taxonomy_term__program_variant_type
+	}
     type RelationshipsPrograms {
       field_specializations: [taxonomy_term__specializations]
       field_degrees: [taxonomy_term__degrees]
       field_program_variant: taxonomy_term__program_varient_type
       field_program_areas_of_emphasis: [taxonomy_term__programs]
+	  field_test: [paragraph__program_variant_desc]
     }
 	type RelationshipsSpecializations {
 		field_units: [taxonomy_term__units]
