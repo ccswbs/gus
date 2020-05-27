@@ -10,15 +10,15 @@ const IndexPage = ({ data }) => (
 				<p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
 				<h2>Pages</h2>
 				<ul>
-					{data.allNodePage.edges.map(edge => (
-						<li><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
+					{data.allNodePage.edges.map((edge, index) => (
+						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
 					))}
 				</ul>
 
 				<h2>Programs</h2>
 				<ul>
-					{data.programs.edges.map(edge => (
-						<li><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
+					{data.programs.edges.map((edge, index) => (
+						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
 					))}
 				</ul>
         </Layout>
