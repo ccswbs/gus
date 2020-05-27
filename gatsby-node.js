@@ -8,43 +8,75 @@ const path = require(`path`)
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
+
   const typeDefs = `
-    type node__page implements Node {
+    union relatedTaxonomyUnion =
+      taxonomy_term__tags
+      | taxonomy_term__specializations
+      | taxonomy_term__programs
+      | taxonomy_term__degrees
+
+    interface TaxonomyInterface @nodeInterface {
+      id: ID!
       drupal_id: String
-      drupal_internal__tid: Int
-      body: BodyField
-      fields: FieldsPathAlias
+      name: String
     }
-    type taxonomy_term__programs implements Node {
+    type taxonomy_term__programs implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
-      relationships: RelationshipsPrograms
+      relationships: taxonomy_term__programsRelationships
       fields: FieldsPathAlias
     }
-    type taxonomy_term__specializations implements Node {
+    type taxonomy_term__programsRelationships {
+      field_specializations: [taxonomy_term__specializations]
+      field_degrees: [taxonomy_term__degrees]
+      field_program_variant: taxonomy_term__program_variant_type
+      field_program_areas_of_emphasis: [taxonomy_term__programs]
+    }
+    type taxonomy_term__tags implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+      description: TaxonomyDescription
+    }
+    type taxonomy_term__specializations implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       field_specialization_acronym: String
       name: String
       description: TaxonomyDescription
     }
-    type taxonomy_term__degrees implements Node {
+    type taxonomy_term__degrees implements Node & TaxonomyInterface{
       drupal_id: String
       drupal_internal__tid: Int
       field_degree_acronym: String
       name: String
       description: TaxonomyDescription
     }
-    type taxonomy_term__program_varient_type implements Node {
+    type taxonomy_term__program_variant_type implements Node {
       name: String
     }
-    type RelationshipsPrograms {
-      field_specializations: [taxonomy_term__specializations]
-      field_degrees: [taxonomy_term__degrees]
-      field_program_variant: taxonomy_term__program_varient_type
-      field_program_areas_of_emphasis: [taxonomy_term__programs]
+    type node__page implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      body: BodyField
+      relationships: node__pageRelationships
+      fields: FieldsPathAlias
+    }
+    type node__pageRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__call_to_action implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      field_call_to_action_link: FieldLink
+      relationships: node__call_to_actionRelationships
+    }
+    type node__call_to_actionRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type FieldsPathAlias {
       alias: PathAlias
@@ -63,12 +95,24 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
     }
+    type FieldLink {
+      title: String
+      uri: String
+    }
   `
   createTypes(typeDefs)
 }
 
 exports.onCreateNode = ({ node, createNodeId, actions }) => {
   const { createNodeField } = actions
+
+  if (node.internal.type === `node__call_to_action`){
+    createNodeField({
+      node,
+      name: `tags`,
+      value: node.relationships.field_tags___NODE,
+    })
+  }
 
   if (node.internal.type === `node__page` || 
       node.internal.type === `taxonomy_term__programs`) {
@@ -117,6 +161,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
       pages: allNodePage {
         edges {
           node {
+            id
             drupal_id
             title
           }
@@ -126,6 +171,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         edges {
           node {
             name
+            id
             drupal_id
             relationships {
               field_program_variant {
@@ -162,15 +208,15 @@ function processPages(dataType, functionToRetrieveAlias, template, helpers){
   dataType.forEach(({ node }, index) => {
     const alias = functionToRetrieveAlias(node);
     createNodeAlias(node, alias, helpers);
+
     helpers.createPage({
       path: alias,
       component: template,
       context: {
-        id: node.drupal_id,
+        id: node.id,
       },
     })
   })
-
 }
 
 function createNodeAlias(node, alias, helpers){
