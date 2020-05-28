@@ -15,6 +15,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       | taxonomy_term__specializations
       | taxonomy_term__programs
       | taxonomy_term__degrees
+      | taxonomy_term__units
 
     interface TaxonomyInterface @nodeInterface {
       id: ID!
@@ -46,16 +47,24 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__tid: Int
       field_specialization_acronym: String
       name: String
+	  relationships: RelationshipsSpecializations
       description: TaxonomyDescription
     }
-    type taxonomy_term__degrees implements Node & TaxonomyInterface{
+    type taxonomy_term__degrees implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       field_degree_acronym: String
       name: String
       description: TaxonomyDescription
     }
-    type taxonomy_term__program_variant_type implements Node {
+	type taxonomy_term__units implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      field_unit_acronym: String
+      name: String
+      description: TaxonomyDescription
+    }
+    type taxonomy_term__program_varient_type implements Node {
       name: String
     }
     type node__page implements Node {
@@ -78,6 +87,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__call_to_actionRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+	type RelationshipsSpecializations {
+		field_units: [taxonomy_term__units]
+	}
     type FieldsPathAlias {
       alias: PathAlias
     }

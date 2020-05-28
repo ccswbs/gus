@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Degrees from '../components/degrees'
+import Units from '../components/units'
 import CallToAction from '../components/callToAction'
 
 
@@ -10,10 +11,11 @@ export default ({data, location}) => {
   var pageData;
   var degreesData;
   var callToActionData;
+  var specData;	
 
-  if(data.programs.edges[0] !== undefined){
-    pageData = data.programs.edges[0].node;
-  }
+	if(data.programs.edges[0] !== undefined){
+		pageData = data.programs.edges[0].node;
+	}
 
   if(data.ctas.edges[0] !== undefined){
     callToActionData = data.ctas.edges;
@@ -26,7 +28,10 @@ export default ({data, location}) => {
 	const acronym = (pageData.acronym !== undefined && pageData.acronym !== null ? `(` + pageData.acronym + `)`: ``);
 
 	// set degree info  
-  degreesData = pageData.relationships.field_degrees;
+	degreesData = pageData.relationships.field_degrees;
+	
+	// set unit info by pulling specialization data first
+	specData = pageData.relationships.field_specializations;
 
 	return (
 		<Layout>
@@ -34,7 +39,8 @@ export default ({data, location}) => {
 		  <h1>{title} {acronym}</h1>
 		  <div dangerouslySetInnerHTML={{ __html: description }}  />
 		  <Degrees degreesData={degreesData} />
-
+      <Units unitData={specData} />
+      
       {callToActionData.map((cta, index) => (
         <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
             goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
@@ -42,7 +48,6 @@ export default ({data, location}) => {
           {cta.node.field_call_to_action_link.title}
         </CallToAction>
       ))}
-      
 		</Layout>
 	)
 }
@@ -62,6 +67,14 @@ export const query = graphql`
             field_degrees {
               name
               field_degree_acronym
+            }
+            field_specializations {
+              relationships {
+                field_units {
+                  field_unit_acronym
+                  name
+                }
+              }
             }
           }
         }

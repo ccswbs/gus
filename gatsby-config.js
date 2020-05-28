@@ -11,6 +11,7 @@ if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['description'] = "Description of the site";
   metaConfig['author'] = "Author of site";
   metaConfig['GAtrackingID'] = "";
+  metaConfig['IGuser'] = "";
 }
 
 module.exports = {
@@ -47,6 +48,20 @@ module.exports = {
          baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `src`,
+        path: `${__dirname}/src/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-instagram`,
+      options: {
+        username: metaConfig['IGuser'],
+        
+      },
     },
   ],
   mapping: {
