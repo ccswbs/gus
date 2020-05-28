@@ -48,8 +48,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__tid: Int
       field_specialization_acronym: String
       name: String
-	  relationships: RelationshipsSpecializations
+      relationships: taxonomy_term__specializationsRelationships
       description: TaxonomyDescription
+    }
+    type taxonomy_term__specializationsRelationships {
+      field_units: [taxonomy_term__units]
     }
     type taxonomy_term__degrees implements Node & TaxonomyInterface {
       drupal_id: String
@@ -88,9 +91,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__call_to_actionRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-	type RelationshipsSpecializations {
-		field_units: [taxonomy_term__units]
-	}
     type FieldsPathAlias {
       alias: PathAlias
     }
