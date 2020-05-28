@@ -10,7 +10,7 @@ import CallToAction from '../components/callToAction'
 export default ({data, location}) => {
   var pageData;
   var degreesData;
-  var callToActionData;
+  var callToActionData = [];
   var specData;	
 
 	if(data.programs.edges[0] !== undefined){
