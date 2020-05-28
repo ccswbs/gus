@@ -25,6 +25,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__programs implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
+      body: BodyField
       name: String
       description: TaxonomyDescription
       relationships: taxonomy_term__programsRelationships
