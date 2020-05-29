@@ -12,3 +12,9 @@ terminus ssh-key:add ~/.ssh/id_rsa.pub </dev/null
 
 # Update test environment if GatsbySource is set to test environment
 terminus env:clone-content --cc --updatedb -y -- bovey.live test </dev/null
+
+# Remove SSH key from Pantheon
+terminus ssh-key:remove `terminus ssh-key:list --format=list </dev/null | tail -1` </dev/null
+
+# Log out of Pantheon
+terminus auth:logout </dev/null
