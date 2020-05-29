@@ -2,6 +2,7 @@ import React from 'react'
 import { graphql, Link } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import Instagram from '../components/instag'
 
 const IndexPage = ({ data }) => (
         <Layout>
@@ -21,6 +22,8 @@ const IndexPage = ({ data }) => (
 						<li><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
 					))}
 				</ul>
+
+				<Instagram />
         </Layout>
 	)
 
