@@ -74,6 +74,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
     }
+    type InstaNode implements Node {
+      original: String
+      caption: String
+    }
   `
   createTypes(typeDefs)
 }
