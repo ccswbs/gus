@@ -13,7 +13,6 @@ export default function Profile() {
                     processed
                 }
                 title
-                field_program_year
                 field_picture {
                     alt
                 }
