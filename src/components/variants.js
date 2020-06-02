@@ -6,8 +6,8 @@ function Variants ({ progvarData }) {
 	var progvarList = "";
     if (progvarData !== null) {
 		progvarData.forEach(variant => {
-			const heading = (variant.relationships.field_heading.name !== undefined && variant.relationships.field_heading.name !== null ? "<h3>" + variant.relationships.field_heading.name + "</h3>": "");
-			const description = (variant.field_description.value !== undefined && variant.field_description.value !== null ? variant.field_description.value: "");
+			const heading = (variant.relationships.field_variant_name.name !== undefined && variant.relationships.field_variant_name.name !== null ? "<h3>" + variant.relationships.field_variant_name.name + "</h3>": "");
+			const description = (variant.field_variant_info.value !== undefined && variant.field_variant_info.value !== null ? variant.field_variant_info.value: "");
 			progvar += heading + description;
 		});
 		if (progvar !== "") {

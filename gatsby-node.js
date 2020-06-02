@@ -45,28 +45,26 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
-    type taxonomy_term__program_varient_type implements Node {
-      name: String
-    }
-	type paragraph__program_variant_desc implements Node {
-		field_description: paragraph__program_variant_descField_description
-		relationships: paragraph__program_variant_descRelationships
+	type taxonomy_term__program_variant_type implements Node {
+		name: String
 	}
-	type paragraph__program_variant_descField_description {
+	type paragraph__program_variants implements Node {
+		field_variant_info: paragraph__program_variantsField_variant_info
+		relationships: paragraph__program_variantsRelationships
+	}
+	type paragraph__program_variantsField_variant_info {
 		value: String
 		format: String
 		processed: String
-		summary: String
 	}
-	type paragraph__program_variant_descRelationships {
-		field_heading: taxonomy_term__program_variant_type
+	type paragraph__program_variantsRelationships {
+		field_variant_name: taxonomy_term__program_variant_type
 	}
-    type RelationshipsPrograms {
+	type RelationshipsPrograms {
       field_specializations: [taxonomy_term__specializations]
       field_degrees: [taxonomy_term__degrees]
-      field_program_variant: taxonomy_term__program_varient_type
       field_program_areas_of_emphasis: [taxonomy_term__programs]
-	  field_test: [paragraph__program_variant_desc]
+	  field_program_variants: [paragraph__program_variants]
     }
 	type RelationshipsSpecializations {
 		field_units: [taxonomy_term__units]
@@ -153,9 +151,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             name
             drupal_id
             relationships {
-              field_program_variant {
-                name
-              }
               field_specializations {
                 name
               }
@@ -227,31 +222,25 @@ function createPageAlias(node){
 }
 
 /****** 
-* Creates Program alias path using pattern of `/programs/specialization-name/variant-type`
+* Creates Program alias path using pattern of `/programs/specialization-name`
 * If no specialization is available, uses pattern of `/programs/program-name`
 ********/
 function createProgramAlias(node){
   var alias = `/programs/`;
   var specializations = node.relationships.field_specializations;
-  var variants = node.relationships.field_program_variant;
 
-  // if specialization exists, add `specialization-name/variant-type` to alias
-  if(specializations !== null){
+  // if specialization exists, add `specialization-name` to alias
+  if (specializations !== null) {
     specializations.forEach(element => {
       alias += (slugify(element.name));
-      if(specializations.length > 1){
+      if (specializations.length > 1) {
         alias += `-`;
       }
     });
-    if(variants !== null){
-      alias += (`-` + slugify(variants.name));
-    }
-
-  }else{
+  } else {
     // otherwise, add `program-name` to alias
     alias += (slugify(node.name));
   }
-
   return alias;
 }
 

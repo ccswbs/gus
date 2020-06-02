@@ -31,7 +31,7 @@ export default ({data, location}) => {
 	specData = pageData.relationships.field_specializations;
 	
 	// set program variant data
-	progvarData = pageData.relationships.field_test;
+	progvarData = pageData.relationships.field_program_variants;
 
 	return (
 		<Layout>
@@ -70,14 +70,14 @@ export const query = graphql`
                 }
               }
             }
-			field_test {
-			  field_description {
-				value
-			  }
+			field_program_variants {
 			  relationships {
-				field_heading {
+				field_variant_name {
 				  name
 				}
+			  }
+			  field_variant_info {
+				value
 			  }
 			}
           }
