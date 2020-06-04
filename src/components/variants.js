@@ -19,10 +19,10 @@ function Variants ({ progvarData }) {
 }
 
 Variants.propTypes = {
-    progvarData: PropTypes.arrayOf(PropTypes.string),
+    progvarData: PropTypes.array,
 }
 Variants.defaultProps = {
     progvarData: null,
-  }
+}
   
 export default Variants
