@@ -45,6 +45,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
+	type taxonomy_term__tags implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+      description: TaxonomyDescription		
+	}
 	type taxonomy_term__program_variant_type implements Node {
 		name: String
 	}
@@ -65,6 +71,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_degrees: [taxonomy_term__degrees]
       field_program_areas_of_emphasis: [taxonomy_term__programs]
 	  field_program_variants: [paragraph__program_variants]
+	  field_tags: [taxonomy_term__tags]
     }
 	type RelationshipsSpecializations {
 		field_units: [taxonomy_term__units]

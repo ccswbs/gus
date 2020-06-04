@@ -5,6 +5,7 @@ import SEO from '../components/seo'
 import Degrees from '../components/degrees'
 import Units from '../components/units'
 import Variants from '../components/variants'
+import Tags from '../components/tags'
 import CallToAction from '../components/callToAction'
 
 export default ({data, location}) => {
@@ -13,6 +14,7 @@ export default ({data, location}) => {
 	var degreesData;
 	var specData;
 	var progvarData;
+	var tagData;
 
 	if(data.programs.edges[0] !== undefined){
 		pageData = data.programs.edges[0].node;
@@ -32,11 +34,15 @@ export default ({data, location}) => {
 	
 	// set program variant data
 	progvarData = pageData.relationships.field_program_variants;
+	
+	// set tag info
+	tagData = pageData.relationships.field_tags;
 
 	return (
 		<Layout>
 		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 		  <h1>{title} {acronym}</h1>
+		  <Tags tagData={tagData} />
 		  <div dangerouslySetInnerHTML={{ __html: description }}  />
 		  <Degrees degreesData={degreesData} />	
 		  <Variants progvarData={progvarData} />		  
@@ -80,6 +86,9 @@ export const query = graphql`
 				value
 			  }
 			}
+			field_tags {
+              name
+            }
           }
         }
       }
