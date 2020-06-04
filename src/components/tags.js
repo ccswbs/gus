@@ -6,7 +6,6 @@ function Tags ({ tagData }) {
 	var tagsList = "";
     if (tagData !== null) {
 		tagData.forEach(tag => {
-			//const heading = (tag.name !== undefined && tag.name !== null ? "#" + tag.name + " ": "");
 			tagsList += "#" + tag.name + " ";
 		});
 		if (tagsList !== "") {
