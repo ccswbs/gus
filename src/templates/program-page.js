@@ -40,14 +40,17 @@ export default ({data, location}) => {
 
 	return (
 		<Layout>
-		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-		  <h1>{title} {acronym}</h1>
-		  <Tags tagData={tagData} />
-		  <div dangerouslySetInnerHTML={{ __html: description }}  />
-		  <Degrees degreesData={degreesData} />	
-		  <Variants progvarData={progvarData} />		  
-		  <Units unitData={specData} />
-		  <CallToAction href='#'>Apply</CallToAction>
+			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+			<h1 class="container">{title} {acronym}</h1>
+			<Tags tagData={tagData} />
+			<div className="container page-container">
+				<h2>Program Overview</h2>
+				<div dangerouslySetInnerHTML={{ __html: description }}  />
+				<Degrees degreesData={degreesData} />	
+				<Variants progvarData={progvarData} />		  
+				<Units unitData={specData} />
+				<CallToAction href='#'>Apply</CallToAction>
+			</div>
 		</Layout>
 	)
 }

@@ -3,15 +3,14 @@ import PropTypes from 'prop-types'
 import SkipLink from './skiplink'
 import Header from './header'
 import Footer from './footer'
+import "../styles/global.css"
 
 const Layout = ({ children }) => (
       <>
         <SkipLink mainContent="#content"/>
         <Header />
 		<main className="main-container">
-			<div className="container page-container">
-				{children}
-			</div>
+			{children}
 		</main>
         <Footer />
       </>
