@@ -9,8 +9,8 @@ function Tags ({ tagData }) {
 			tagsList += "#" + tag.name + " ";
 		});
 		if (tagsList !== "") {
-			tags = "<strong>Tags:</strong> " + tagsList;
-			return <div dangerouslySetInnerHTML={{__html: tags}} />
+			tags = tagsList;
+			return <div id="tags"><div class="container" dangerouslySetInnerHTML={{__html: tags}} /></div>
 		}		
     }
     return null;
