@@ -18,7 +18,7 @@ function Degrees ({ degreesData }) {
 }
 
 Degrees.propTypes = {
-	degreesData: PropTypes.arrayOf(PropTypes.string),
+	degreesData: PropTypes.array,
 }
 Degrees.defaultProps = {
     degreesData: null,
