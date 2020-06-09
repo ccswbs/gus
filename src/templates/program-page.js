@@ -41,7 +41,7 @@ export default ({data, location}) => {
 	return (
 		<Layout>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-			<h1 className="container">{title} {acronym}</h1>
+			<div className="container"><h1>{title} {acronym}</h1></div>
 			<Tags tagData={tagData} />
 			<div className="container page-container">
 				<h2>Program Overview</h2>
