@@ -42,7 +42,12 @@ export default ({data, location}) => {
 		<Layout>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			<div className="container"><h1>{title} {acronym}</h1></div>
-			<Tags tagData={tagData} />
+			{tagData.length > 0 ?  
+				(<div id="tags">
+					<div className="container"><Tags tagData={tagData} /></div>
+				</div>)
+				: null
+			}			
 			<div className="container page-container">
 				<h2>Program Overview</h2>
 				<div dangerouslySetInnerHTML={{ __html: description }}  />
