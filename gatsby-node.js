@@ -22,6 +22,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       name: String
     }
+
     type taxonomy_term__programs implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -32,17 +33,36 @@ exports.createSchemaCustomization = ({ actions }) => {
       fields: FieldsPathAlias
     }
     type taxonomy_term__programsRelationships {
-      field_specializations: [taxonomy_term__specializations]
       field_degrees: [taxonomy_term__degrees]
-      field_program_variant: taxonomy_term__program_variant_type
-      field_program_areas_of_emphasis: [taxonomy_term__programs]
+      field_specializations: [taxonomy_term__specializations]
+      field_program_variants: [paragraph__program_variants]
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+
+    type taxonomy_term__program_variant_type implements Node {
+      name: String
+    }
+
+    type paragraph__program_variants implements Node {
+      field_variant_info: paragraph__program_variantsField_variant_info
+      relationships: paragraph__program_variantsRelationships
+    }
+    type paragraph__program_variantsField_variant_info {
+      value: String
+      format: String
+      processed: String
+    }
+    type paragraph__program_variantsRelationships {
+      field_variant_name: taxonomy_term__program_variant_type
+    }
+
     type taxonomy_term__tags implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
     }
+
     type taxonomy_term__specializations implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -54,6 +74,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__specializationsRelationships {
       field_units: [taxonomy_term__units]
     }
+
     type taxonomy_term__degrees implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -61,16 +82,22 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
-	type taxonomy_term__units implements Node & TaxonomyInterface {
+
+    type taxonomy_term__units implements Node & TaxonomyInterface {
+        drupal_id: String
+        drupal_internal__tid: Int
+        field_unit_acronym: String
+        name: String
+        description: TaxonomyDescription
+      }
+
+    type taxonomy_term__goals implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
-      field_unit_acronym: String
       name: String
-      description: TaxonomyDescription
+      field_goal_action: String
     }
-    type taxonomy_term__program_varient_type implements Node {
-      name: String
-    }
+
     type node__page implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -81,6 +108,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__pageRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+
     type node__call_to_action implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -89,8 +117,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: node__call_to_actionRelationships
     }
     type node__call_to_actionRelationships implements Node {
+      field_call_to_action_goal: taxonomy_term__goals
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+
     type FieldsPathAlias {
       alias: PathAlias
     }
@@ -111,6 +141,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     type FieldLink {
       title: String
       uri: String
+    }
+    type InstaNode implements Node {
+      original: String
+      caption: String
     }
   `
   createTypes(typeDefs)
@@ -187,9 +221,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             id
             drupal_id
             relationships {
-              field_program_variant {
-                name
-              }
               field_specializations {
                 name
               }
@@ -261,31 +292,25 @@ function createPageAlias(node){
 }
 
 /****** 
-* Creates Program alias path using pattern of `/programs/specialization-name/variant-type`
+* Creates Program alias path using pattern of `/programs/specialization-name`
 * If no specialization is available, uses pattern of `/programs/program-name`
 ********/
 function createProgramAlias(node){
   var alias = `/programs/`;
   var specializations = node.relationships.field_specializations;
-  var variants = node.relationships.field_program_variant;
 
-  // if specialization exists, add `specialization-name/variant-type` to alias
-  if(specializations.length > 0){
+  // if specialization exists, add `specialization-name` to alias
+  if (specializations !== null) {
     specializations.forEach(element => {
       alias += (slugify(element.name));
-      if(specializations.length > 1){
+      if (specializations.length > 1) {
         alias += `-`;
       }
     });
-    if(variants !== null){
-      alias += (`-` + slugify(variants.name));
-    }
-
-  }else{
+  } else {
     // otherwise, add `program-name` to alias
     alias += (slugify(node.name));
   }
-
   return alias;
 }
 

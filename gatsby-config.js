@@ -4,7 +4,8 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+// let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+let metaConfig = require('./config/sites/ugconthub.js');
 
 if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['title'] = "Gatsby UG Starter Template";
@@ -45,7 +46,8 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-         baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+        //  baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+         baseUrl: `https://cta-drupal-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
