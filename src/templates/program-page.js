@@ -88,17 +88,17 @@ export const query = graphql`
                 }
               }
             }
-			field_program_variants {
-			  relationships {
-          field_variant_name {
-            name
-          }
-          }
-          field_variant_info {
-          value
-          }
-			}
-			field_tags {
+            field_program_variants {
+              relationships {
+                field_variant_name {
+                  name
+                }
+                }
+                field_variant_info {
+                  value
+                }
+            }
+            field_tags {
               name
             }
           }

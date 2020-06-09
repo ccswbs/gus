@@ -36,11 +36,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_degrees: [taxonomy_term__degrees]
       field_specializations: [taxonomy_term__specializations]
       field_program_variants: [paragraph__program_variants]
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-
-    type taxonomy_term__program_variant_type implements Node {
-      name: String
+      field_tags: [taxonomy_term__tags]
     }
 
     type paragraph__program_variants implements Node {
@@ -54,6 +50,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type paragraph__program_variantsRelationships {
       field_variant_name: taxonomy_term__program_variant_type
+    }
+    type taxonomy_term__program_variant_type implements Node {
+      name: String
     }
 
     type taxonomy_term__tags implements Node & TaxonomyInterface {
@@ -84,12 +83,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type taxonomy_term__units implements Node & TaxonomyInterface {
-        drupal_id: String
-        drupal_internal__tid: Int
-        field_unit_acronym: String
-        name: String
-        description: TaxonomyDescription
-      }
+      drupal_id: String
+      drupal_internal__tid: Int
+      field_unit_acronym: String
+      name: String
+      description: TaxonomyDescription
+    }
 
     type taxonomy_term__goals implements Node & TaxonomyInterface {
       drupal_id: String
@@ -115,10 +114,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       field_call_to_action_link: FieldLink
       relationships: node__call_to_actionRelationships
+      fields: node__call_to_actionFields
     }
     type node__call_to_actionRelationships implements Node {
       field_call_to_action_goal: taxonomy_term__goals
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__call_to_actionFields implements Node {
+      tags: [String]
     }
 
     type FieldsPathAlias {
