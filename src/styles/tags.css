@@ -1,0 +1,15 @@
+#tags {
+	background: #333;
+	color: #eee;
+	padding: 3em 0 3em 0;
+	margin-top: 2em;
+}
+#tags ul {
+	margin: 0;
+	padding: 0;
+}
+#tags li {
+	list-style-type: none;
+	display: inline;
+	padding-right: 0.5em;
+}

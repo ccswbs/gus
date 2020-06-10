@@ -1,16 +1,15 @@
 import React from "react"
 import PropTypes from "prop-types"
+import "../styles/tags.css"
 
 function Tags ({ tagData }) {
-	var tags = "";
 	var tagsList = "";
     if (tagData !== null) {
 		tagData.forEach(tag => {
-			tagsList += "#" + tag.name + " ";
+			tagsList += "<li>" + "#" + tag.name + "</li>";
 		});
 		if (tagsList !== "") {
-			tags = "<strong>Tags:</strong> " + tagsList;
-			return <div dangerouslySetInnerHTML={{__html: tags}} />
+			return <ul dangerouslySetInnerHTML={{ __html: tagsList }}  />
 		}		
     }
     return null;

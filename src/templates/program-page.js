@@ -45,21 +45,28 @@ export default ({data, location}) => {
 
 	return (
 		<Layout>
-		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-		  <h1>{title} {acronym}</h1>
-		  <Tags tagData={tagData} />
-		  <div dangerouslySetInnerHTML={{ __html: description }}  />
-		  <Degrees degreesData={degreesData} />	
-      <Variants progvarData={progvarData} />	
-      <Units unitData={specData} />
-      
-      {callToActionData.map((cta, index) => (
-        <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-            goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
-            goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} >
-          {cta.node.field_call_to_action_link.title}
-        </CallToAction>
-      ))}
+			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+			<div className="container"><h1>{title} {acronym}</h1></div>
+			{tagData.length > 0 ?  
+				(<div id="tags">
+					<div className="container"><Tags tagData={tagData} /></div>
+				</div>)
+				: null
+			}			
+			<div className="container page-container">
+				<h2>Program Overview</h2>
+				<div dangerouslySetInnerHTML={{ __html: description }}  />
+				<Degrees degreesData={degreesData} />	
+				<Variants progvarData={progvarData} />		  
+				<Units unitData={specData} />
+				{callToActionData.map((cta, index) => (
+					<CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+						goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
+						goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} >
+					{cta.node.field_call_to_action_link.title}
+					</CallToAction>
+				))}
+			</div>
 		</Layout>
 	)
 }

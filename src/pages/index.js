@@ -6,6 +6,7 @@ import SEO from '../components/seo'
 const IndexPage = ({ data }) => (
         <Layout>
 			<SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+				<div className="container page-container">
 				<h1>Gatsby UG Starter Theme</h1>
 				<p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
 				<h2>Pages</h2>
@@ -21,6 +22,7 @@ const IndexPage = ({ data }) => (
 						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
 					))}
 				</ul>
+				</div>
         </Layout>
 	)
 
