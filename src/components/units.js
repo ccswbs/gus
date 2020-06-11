@@ -15,7 +15,7 @@ function Units ({ unitData }) {
             }			
         });
         if (unitList !== ""){
-            units = "<h2>Associcated Departments</h2><ul>" + unitList + "</ul>";
+            units = "<h2>Associated Units</h2><ul>" + unitList + "</ul>";
             return <div dangerouslySetInnerHTML={{__html: units}}/>
         }
         
@@ -24,7 +24,7 @@ function Units ({ unitData }) {
 }
 
 Units.propTypes = {
-    unitData: PropTypes.arrayOf(PropTypes.string),
+    unitData: PropTypes.array,
 }
 Units.defaultProps = {
     unitData: null,

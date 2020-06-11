@@ -8,18 +8,23 @@ import Variants from '../components/variants'
 import Tags from '../components/tags'
 import CallToAction from '../components/callToAction'
 
+
 export default ({data, location}) => {
-	// determine source of query
 	var pageData;
 	var degreesData;
 	var specData;
 	var progvarData;
-	var tagData;
+  var tagData;
+  var callToActionData = [];
 
 	if(data.programs.edges[0] !== undefined){
 		pageData = data.programs.edges[0].node;
 	}
 
+  if(data.ctas.edges[0] !== undefined){
+    callToActionData = data.ctas.edges;
+  }
+  
 	// set program info
 	const title = pageData.name;
 	const description = (pageData.description !== undefined 
@@ -54,15 +59,21 @@ export default ({data, location}) => {
 				<Degrees degreesData={degreesData} />	
 				<Variants progvarData={progvarData} />		  
 				<Units unitData={specData} />
-				<CallToAction href='#'>Apply</CallToAction>
+				{callToActionData.map((cta, index) => (
+					<CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+						goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
+						goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} >
+					{cta.node.field_call_to_action_link.title}
+					</CallToAction>
+				))}
 			</div>
 		</Layout>
 	)
 }
 
 export const query = graphql`
-  query ($id: String!) {
-    programs: allTaxonomyTermPrograms(filter: {drupal_id: {eq: $id}}) {
+  query ($id: String) {
+    programs: allTaxonomyTermPrograms(filter: {id: {eq: $id}}) {
       edges {
         node {
           drupal_id
@@ -84,18 +95,43 @@ export const query = graphql`
                 }
               }
             }
-			field_program_variants {
-			  relationships {
-				field_variant_name {
-				  name
-				}
-			  }
-			  field_variant_info {
-				value
-			  }
-			}
-			field_tags {
+            field_program_variants {
+              relationships {
+                field_variant_name {
+                  name
+                }
+                }
+                field_variant_info {
+                  value
+                }
+            }
+            field_tags {
               name
+            }
+          }
+        }
+      }
+    }
+
+    ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          field_call_to_action_link {
+            title
+            uri
+          }
+          relationships {
+            field_call_to_action_goal {
+              name
+              field_goal_action
+            }
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
             }
           }
         }
@@ -103,3 +139,4 @@ export const query = graphql`
     }
   }
 `
+
