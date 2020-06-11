@@ -47,7 +47,7 @@ export default ({data, location}) => {
 		<Layout>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			<div className="container"><h1>{title} {acronym}</h1></div>
-			{tagData.length > 0 ?  
+			{tagData && tagData.length > 0 ?  
 				(<div id="tags">
 					<div className="container"><Tags tagData={tagData} /></div>
 				</div>)
