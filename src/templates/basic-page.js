@@ -19,17 +19,14 @@ export default ({data}) => {
 //export default BasicPage
 
 export const query = graphql`
-  query ($id: String!) {
-	pages: allNodePage(filter: {drupal_id: {eq: $id}}) {
+  query ($id: String) {
+	pages: allNodePage(filter: {id: {eq: $id}}) {
 		edges {
 			node {
 				drupal_id
 				title
 				path {
 					alias
-				}
-				field_imageurl {
-					uri
 				}
 				body {
 					value
