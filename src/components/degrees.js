@@ -5,18 +5,22 @@ function Degrees ({ degreesData }) {
 	var degrees;
 	var degreesList="";
 	if (degreesData !== null) {
-		for (var i=0; i < degreesData.length; i++) {
-				degreesList += "<li>" + degreesData[i].name + " (" + degreesData[i].field_degree_acronym + ")</li>";
-			}
-		degrees = "<h2>Degrees Offered</h2><ul>" + degreesList + "</ul>";
-		return <div dangerouslySetInnerHTML={{__html: degrees}}/>
-	} else {
-		return null
+		degreesData.forEach(degree => {
+			const acronym = (degree.field_degree_acronym !== undefined && degree.field_degree_acronym !== null ? ` (` + degree.field_degree_acronym + `)`: ``);
+            degreesList += "<li>" + degree.name + acronym + "</li>";
+		});
+		if (degreesList !== "") {
+			degrees = "<h2>Degrees Offered</h2><ul>" + degreesList + "</ul>";
+			return <div dangerouslySetInnerHTML={{__html: degrees}}/>
+		}		
 	}
+	return null;
 }
 
 Degrees.propTypes = {
-	degreesData: PropTypes.arrayOf(PropTypes.string),
+	degreesData: PropTypes.array,
 }
-
+Degrees.defaultProps = {
+    degreesData: null,
+}
 export default Degrees
