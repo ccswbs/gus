@@ -5,7 +5,7 @@ class Instagram extends React.Component {
     render () {
       return (
         <React.Fragment>
-          {this.props.instaNodes.edges && (
+          {this.props.instaNodes.edges.length > 0 && (
             <ul className="ug-instagram">
               {this.props.instaNodes.edges.map((edge, index) => {
                 return <li key={index}><img src={edge.node.original} alt="" width="250" height="250" /> {edge.node.caption} </li>
