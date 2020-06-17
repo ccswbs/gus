@@ -23,6 +23,7 @@ const IndexPage = ({ data }) => (
 						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
 					))}
 				</ul>
+				<h2>Instagram</h2>
 				<Instagram />
 			</div>
         </Layout>
