@@ -48,16 +48,6 @@ export default ({data, location}) => {
       //<h2>profile title: {data.profiles.nodes[1].title} </h2>
 	return (
 		<Layout>
-<<<<<<< HEAD
-		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-		  <h1>{title} {acronym}</h1>
-		  <div dangerouslySetInnerHTML={{ __html: description }}  />
-		  <Degrees degreesData={degreesData} />
-      <CallToAction href='#'>Apply</CallToAction>
-      <h2>Testimonials</h2>
-      <Testimonials testimonialData={data.profiles.nodes} />
-      
-=======
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			<div className="container"><h1>{title} {acronym}</h1></div>
 			{tagData && tagData.length > 0 ?  
@@ -80,7 +70,6 @@ export default ({data, location}) => {
 					</CallToAction>
 				))}
 			</div>
->>>>>>> develop
 		</Layout>
 	)
 }

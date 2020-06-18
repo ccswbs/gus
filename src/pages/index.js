@@ -2,11 +2,8 @@ import React from 'react'
 import { graphql, Link } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-<<<<<<< HEAD
 import Profile from '../components/profile'
-=======
 import Instagram from '../components/instag'
->>>>>>> develop
 
 const IndexPage = ({ data }) => (
         <Layout>
