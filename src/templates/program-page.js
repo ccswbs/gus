@@ -143,7 +143,7 @@ export const query = graphql`
       }
     }
     
-    profiles: allNodeStudentProfile(filter: {relationships: {field_program: {drupal_id: {eq: $id}}}})  {
+    profiles: allNodeStudentProfile(filter: {relationships: {field_program: {id: {eq: $id}}}})  {
       nodes {
           body {
               value
