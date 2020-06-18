@@ -4,7 +4,8 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+//let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+let metaConfig = require('./config/sites/ugconthub.js');
 
 if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['title'] = "Gatsby UG Starter Template";
@@ -50,6 +51,7 @@ module.exports = {
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
+    
     {
       resolve: `gatsby-source-instagram`,
       options: {

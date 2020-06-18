@@ -4,6 +4,7 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Degrees from '../components/degrees'
 import CallToAction from '../components/callToAction'
+import Testimonials from '../components/testimonial'
 
 export default ({data, location}) => {
   // determine source of query
@@ -23,6 +24,8 @@ export default ({data, location}) => {
 	// set degree info  
 	degreesData = pageData.relationships.field_degrees;
 
+  //<h2>profile title: {data.profiles.nodes[0].title} </h2>
+      //<h2>profile title: {data.profiles.nodes[1].title} </h2>
 	return (
 		<Layout>
 		  <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
@@ -30,6 +33,9 @@ export default ({data, location}) => {
 		  <div dangerouslySetInnerHTML={{ __html: description }}  />
 		  <Degrees degreesData={degreesData} />
       <CallToAction href='#'>Apply</CallToAction>
+      <h2>Testimonials</h2>
+      <Testimonials testimonialData={data.profiles.nodes} />
+      
 		</Layout>
 	)
 }
@@ -52,6 +58,33 @@ export const query = graphql`
             }
           }
         }
+      }
+    }
+    
+    profiles: allNodeStudentProfile(filter: {relationships: {field_program: {drupal_id: {eq: $id}}}})  {
+      nodes {
+          body {
+              value
+              processed
+          }
+          title
+          field_picture {
+              alt
+          }
+          relationships {
+              field_picture {
+        
+                  localFile {
+                      url
+                      childImageSharp {
+                          fluid(maxWidth: 400, maxHeight: 250) {
+                              originalImg
+                              ...GatsbyImageSharpFluid
+                          }
+                      }
+                  }
+              }
+          }
       }
     }
   }

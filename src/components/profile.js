@@ -41,7 +41,8 @@ export default function Profile() {
     <h2>Student Profiles</h2>  
     
     {data.allNodeStudentProfile.nodes.map(node => (
-      <div>
+        <div>
+        {console.log(node)}
 
           {node.title} <br></br>
           <Img fluid={node.relationships.field_picture.localFile.childImageSharp.fluid} alt="" />
@@ -51,6 +52,7 @@ export default function Profile() {
           
       </div> 
     ))}
+    
     
     </div>
   )
