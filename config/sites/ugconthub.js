@@ -3,7 +3,7 @@ var metaConfig = {
     description: "University of Guelph Content Hub.",
     author: "@uofg",
     GAtrackingID: "UA-106745064-4",
-    IGuser: "uofgccs",
+    IGuser: "5851379098",
 };
 
 module.exports = metaConfig;

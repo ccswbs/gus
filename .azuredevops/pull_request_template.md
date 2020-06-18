@@ -18,7 +18,7 @@
    - [ ] User documentation is updated
    - [ ] User training is updated
 
-### Are there Upstream Code changes?
+### Are there (Drupal) Upstream Code changes?
 - [ ] No
 - [ ] If yes, then:
    - [ ] Code is complete and commented.
@@ -39,6 +39,8 @@
 - [ ] If yes, then:
    - [ ] Code is complete and commented.
    - [ ] Code is secure to the best of our knowledge
+   - [ ] Remove or limit console errors and warnings
+   - [ ] Gatsby page renders whether affilitaed Drupal content exists or not (ensure there is an appropriate schema for the content)
    - Is a test necessary?
       - [ ] No
       - [ ] If yes, then:

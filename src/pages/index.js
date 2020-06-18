@@ -2,17 +2,22 @@ import React from 'react'
 import { graphql, Link } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+<<<<<<< HEAD
 import Profile from '../components/profile'
+=======
+import Instagram from '../components/instag'
+>>>>>>> develop
 
 const IndexPage = ({ data }) => (
         <Layout>
 			<SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+			<div className="container page-container">
 				<h1>Gatsby UG Starter Theme</h1>
 				<p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
 				<h2>Pages</h2>
 				<ul>
-					{data.allNodePage.edges.map(edge => (
-						<li><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
+					{data.allNodePage.edges.map((edge, index) => (
+						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
 					))}
 				</ul>
 
@@ -20,10 +25,13 @@ const IndexPage = ({ data }) => (
 				
 				<h2>Programs</h2>
 				<ul>
-					{data.programs.edges.map(edge => (
-						<li><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
+					{data.programs.edges.map((edge, index) => (
+						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
 					))}
 				</ul>
+				<h2>Instagram</h2>
+				<Instagram />
+			</div>
         </Layout>
 	)
 

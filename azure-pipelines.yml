@@ -38,6 +38,10 @@ steps:
 - script: ./.ci/env/set
   displayName: 'Initialize build environment'
 
+- script: ./.ci/env/update-source
+  displayName: 'If applicable, update GatsbySource test environment'
+  condition: eq(variables._gatsby_source, 'test')
+
 - script: 'npm install --only=dev gatsby-cli'
   displayName: 'Install Gatsby-CLI'
 
