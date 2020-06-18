@@ -69,6 +69,8 @@ export default ({data, location}) => {
 					{cta.node.field_call_to_action_link.title}
 					</CallToAction>
 				))}
+        <h2>Testimonials</h2>
+        <Testimonials testimonialData={data.profiles.nodes} />
 			</div>
 		</Layout>
 	)
