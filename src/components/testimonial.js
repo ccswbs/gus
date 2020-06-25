@@ -3,21 +3,17 @@ import PropTypes from 'prop-types'
 import Img from "gatsby-image"
 
 function Testimonials ({ testimonialData }) {
-	console.log(testimonialData);
-	var testimonial;
-	var testimonialList="";
+	
 	if (testimonialData !== null) {
-		for (var i=0; i < testimonialData.length; i++) {
-			    console.log(testimonialData[i]);
-				testimonialList += 
-				// "<li key=" + i + ">" + testimonialData[i].title +  "<br>" + testimonialData[i].body.value + "</li>" ;
-				<Img fluid={testimonialData[i].relationships.field_picture.localFile.childImageSharp.fluid} alt="" />;
-				
-		}
 		
-		testimonial = "<ul>" + testimonialList + "</ul>";
+		return (
+			<ul className="ug-testimonial">
+              {testimonialData.map((node, index) => {
+                return <li key={index}><Img fluid={node.relationships.field_picture.localFile.childImageSharp.fluid} alt="" /> {node.title} <div dangerouslySetInnerHTML={{__html: node.body.value}} /></li>
+              })}
+            </ul>
+		)
 
-		return <div dangerouslySetInnerHTML={{__html: testimonial}}/>
 	} else {
 		return null
 	}
