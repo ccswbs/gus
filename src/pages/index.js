@@ -2,7 +2,6 @@ import React from 'react'
 import { graphql, Link } from "gatsby"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-import Profile from '../components/profile'
 import Instagram from '../components/instag'
 
 const IndexPage = ({ data }) => (
@@ -18,8 +17,6 @@ const IndexPage = ({ data }) => (
 					))}
 				</ul>
 
-				<Profile />
-				
 				<h2>Programs</h2>
 				<ul>
 					{data.programs.edges.map((edge, index) => (

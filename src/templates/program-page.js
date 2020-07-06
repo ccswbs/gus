@@ -44,9 +44,7 @@ export default ({data, location}) => {
 	// set tag info
 	tagData = pageData.relationships.field_tags;
 
-  //<h2>profile title: {data.profiles.nodes[0].title} </h2>
-      //<h2>profile title: {data.profiles.nodes[1].title} </h2>
-	return (
+  return (
 		<Layout>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			<div className="container"><h1>{title} {acronym}</h1></div>
