@@ -68,7 +68,7 @@ export default ({data, location}) => {
 					</CallToAction>
 				))}
         <h2>Testimonials</h2>
-        <Testimonials testimonialData={data.profiles.nodes} />
+        <Testimonials testimonialData={data.testimonials.nodes} />
 			</div>
 		</Layout>
 	)
@@ -141,7 +141,7 @@ export const query = graphql`
       }
     }
     
-    profiles: allNodeStudentProfile(filter: {relationships: {field_program: {id: {eq: $id}}}})  {
+    testimonials: allNodeTestimonial(filter: {fields: {tags: {in: [$id] }}}) {
       nodes {
           body {
               value
@@ -152,18 +152,26 @@ export const query = graphql`
               alt
           }
           relationships {
-              field_picture {
-        
-                  localFile {
-                      url
-                      childImageSharp {
-                          fluid(maxWidth: 400, maxHeight: 250) {
-                              originalImg
-                              ...GatsbyImageSharpFluid
-                          }
-                      }
-                  }
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
               }
+            }
+
+            field_picture {
+                localFile {
+                    url
+                    childImageSharp {
+                        fluid(maxWidth: 400, maxHeight: 250) {
+                            originalImg
+                            ...GatsbyImageSharpFluid
+                        }
+                    }
+                }
+            }
           }
       }
     }
