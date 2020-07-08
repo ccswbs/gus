@@ -119,7 +119,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       fields: node__testimonialFields
     }
     type node__testimonialRelationships implements Node {
-      field_picture: testimonialFieldPicture
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__testimonialFields implements Node {
@@ -127,7 +126,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type testimonialFieldPicture implements Node {
       alt: String
-      localFile: File @link(from: "field_picture___NODE")
     }
 
     type node__call_to_action implements Node {
