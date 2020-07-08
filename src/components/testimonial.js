@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import Img from "gatsby-image"
 
 function Testimonials ({ testimonialData }) {
-	console.log(testimonialData);
-
 	if ((testimonialData !== null) && (testimonialData !== undefined)) {
 		return (
 			<ul className="ug-testimonial">
