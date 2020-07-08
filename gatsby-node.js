@@ -4,10 +4,6 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-// working here: https://www.gatsbyjs.org/docs/preprocessing-external-images/
-// figure out schema for image
-
-
 const path = require(`path`)
 
 exports.createSchemaCustomization = ({ actions }) => {
