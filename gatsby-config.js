@@ -49,6 +49,7 @@ module.exports = {
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
+    
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -56,6 +57,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
+    
     {
       resolve: `gatsby-source-instagram`,
       options: {

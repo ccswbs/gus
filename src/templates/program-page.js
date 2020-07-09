@@ -7,6 +7,7 @@ import Units from '../components/units'
 import Variants from '../components/variants'
 import Tags from '../components/tags'
 import CallToAction from '../components/callToAction'
+import Testimonials from '../components/testimonial'
 
 
 export default ({data, location}) => {
@@ -15,11 +16,16 @@ export default ({data, location}) => {
 	var specData;
 	var progvarData;
   var tagData;
+  var testimonialData;
   var callToActionData = [];
 
 	if(data.programs.edges[0] !== undefined){
 		pageData = data.programs.edges[0].node;
-	}
+  }
+  
+  if(data.testimonials.edges[0] !== undefined){
+    testimonialData = data.testimonials.edges;
+  }
 
   if(data.ctas.edges[0] !== undefined){
     callToActionData = data.ctas.edges;
@@ -41,9 +47,9 @@ export default ({data, location}) => {
 	progvarData = pageData.relationships.field_program_variants;
 	
 	// set tag info
-	tagData = pageData.relationships.field_tags;
+  tagData = pageData.relationships.field_tags;
 
-	return (
+  return (
 		<Layout>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			<div className="container"><h1>{title} {acronym}</h1></div>
@@ -66,6 +72,8 @@ export default ({data, location}) => {
 					{cta.node.field_call_to_action_link.title}
 					</CallToAction>
 				))}
+        {testimonialData && <h2>Testimonials</h2>}
+        <Testimonials testimonialData={testimonialData} />
 			</div>
 		</Layout>
 	)
@@ -132,6 +140,43 @@ export const query = graphql`
                 id
                 name
               }
+            }
+          }
+        }
+      }
+    }
+    
+    testimonials: allNodeTestimonial(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          body {
+              value
+              processed
+          }
+          title
+          field_picture {
+              alt
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+
+            field_picture {
+                localFile {
+                    url
+                    childImageSharp {
+                        fluid(maxWidth: 400, maxHeight: 250) {
+                            originalImg
+                            ...GatsbyImageSharpFluid
+                        }
+                    }
+                }
             }
           }
         }

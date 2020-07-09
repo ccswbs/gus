@@ -108,6 +108,26 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
 
+    type node__testimonial implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      body: BodyField
+      field_testimonial_person_desc: String
+      field_picture: testimonialFieldPicture
+      relationships: node__testimonialRelationships
+      fields: node__testimonialFields
+    }
+    type node__testimonialRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__testimonialFields implements Node {
+      tags: [String]
+    }
+    type testimonialFieldPicture implements Node {
+      alt: String
+    }
+
     type node__call_to_action implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -156,7 +176,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 exports.onCreateNode = ({ node, createNodeId, actions }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `node__call_to_action`){
+  if (node.internal.type === `node__call_to_action` ||
+      node.internal.type === `node__testimonial`) {
     createNodeField({
       node,
       name: `tags`,
