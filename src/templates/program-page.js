@@ -16,11 +16,16 @@ export default ({data, location}) => {
 	var specData;
 	var progvarData;
   var tagData;
+  var testimonialData;
   var callToActionData = [];
 
 	if(data.programs.edges[0] !== undefined){
 		pageData = data.programs.edges[0].node;
-	}
+  }
+  
+  if(data.testimonials.edges[0] !== undefined){
+    testimonialData = data.testimonials.edges;
+  }
 
   if(data.ctas.edges[0] !== undefined){
     callToActionData = data.ctas.edges;
@@ -42,7 +47,7 @@ export default ({data, location}) => {
 	progvarData = pageData.relationships.field_program_variants;
 	
 	// set tag info
-	tagData = pageData.relationships.field_tags;
+  tagData = pageData.relationships.field_tags;
 
   return (
 		<Layout>
@@ -67,8 +72,8 @@ export default ({data, location}) => {
 					{cta.node.field_call_to_action_link.title}
 					</CallToAction>
 				))}
-        <h2>Testimonials</h2>
-        <Testimonials testimonialData={data.profiles.nodes} />
+        {testimonialData && <h2>Testimonials</h2>}
+        <Testimonials testimonialData={testimonialData} />
 			</div>
 		</Layout>
 	)
@@ -141,8 +146,9 @@ export const query = graphql`
       }
     }
     
-    profiles: allNodeStudentProfile(filter: {relationships: {field_program: {id: {eq: $id}}}})  {
-      nodes {
+    testimonials: allNodeTestimonial(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
           body {
               value
               processed
@@ -152,19 +158,28 @@ export const query = graphql`
               alt
           }
           relationships {
-              field_picture {
-        
-                  localFile {
-                      url
-                      childImageSharp {
-                          fluid(maxWidth: 400, maxHeight: 250) {
-                              originalImg
-                              ...GatsbyImageSharpFluid
-                          }
-                      }
-                  }
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
               }
+            }
+
+            field_picture {
+                localFile {
+                    url
+                    childImageSharp {
+                        fluid(maxWidth: 400, maxHeight: 250) {
+                            originalImg
+                            ...GatsbyImageSharpFluid
+                        }
+                    }
+                }
+            }
           }
+        }
       }
     }
   }
