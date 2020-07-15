@@ -1,5 +1,5 @@
 import React from 'react'
-import { graphql } from "gatsby"
+import { graphql } from 'gatsby'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Degrees from '../components/degrees'
@@ -8,10 +8,12 @@ import Variants from '../components/variants'
 import Tags from '../components/tags'
 import CallToAction from '../components/callToAction'
 import Testimonials from '../components/testimonial'
+import { Helmet } from 'react-helmet'
+import '../styles/program-page.css'
 
 
 export default ({data, location}) => {
-	var pageData;
+	var progData;
 	var degreesData;
 	var specData;
 	var progvarData;
@@ -19,38 +21,30 @@ export default ({data, location}) => {
   var testimonialData;
   var callToActionData = [];
 
-	if(data.programs.edges[0] !== undefined){
-		pageData = data.programs.edges[0].node;
-  }
+  // set data
+	if(data.programs.edges[0] !== undefined){ progData = data.programs.edges[0].node; }
+  if(data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
+  if(data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
   
-  if(data.testimonials.edges[0] !== undefined){
-    testimonialData = data.testimonials.edges;
-  }
+	// set program details
+	const title = progData.name;
+	const description = (progData.description !== undefined 
+	&& progData.description !== null ? progData.description.processed:``);
+  const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
+  const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
-  if(data.ctas.edges[0] !== undefined){
-    callToActionData = data.ctas.edges;
-  }
-  
-	// set program info
-	const title = pageData.name;
-	const description = (pageData.description !== undefined 
-	&& pageData.description !== null ? pageData.description.processed:``);
-	const acronym = (pageData.acronym !== undefined && pageData.acronym !== null ? `(` + pageData.acronym + `)`: ``);
-
-	// set degree info  
-	degreesData = pageData.relationships.field_degrees;
-	
-	// set unit info by pulling specialization data first
-	specData = pageData.relationships.field_specializations;
-	
-	// set program variant data
-	progvarData = pageData.relationships.field_program_variants;
-	
-	// set tag info
-  tagData = pageData.relationships.field_tags;
+	// set degree, unit, variant, and tag info  
+	degreesData = progData.relationships.field_degrees;
+	specData = progData.relationships.field_specializations;
+	progvarData = progData.relationships.field_program_variants;
+  tagData = progData.relationships.field_tags;
 
   return (
 		<Layout>
+      <Helmet bodyAttributes={{
+          class: 'program'
+      }}
+      />
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			<div className="container"><h1>{title} {acronym}</h1></div>
 			{tagData && tagData.length > 0 ?  
@@ -72,9 +66,11 @@ export default ({data, location}) => {
 					{cta.node.field_call_to_action_link.title}
 					</CallToAction>
 				))}
-        {testimonialData && <h2>Testimonials</h2>}
-        <Testimonials testimonialData={testimonialData} />
 			</div>
+      {testimonialData && 
+            <Testimonials testimonialData={testimonialData} heading={testimonialHeading} />
+        }
+
 		</Layout>
 	)
 }
@@ -90,6 +86,7 @@ export const query = graphql`
           description {
             processed
           }
+          field_program_acronym
           relationships {
             field_degrees {
               name
@@ -154,6 +151,7 @@ export const query = graphql`
               processed
           }
           title
+          field_testimonial_person_desc
           field_picture {
               alt
           }
@@ -171,7 +169,7 @@ export const query = graphql`
                 localFile {
                     url
                     childImageSharp {
-                        fluid(maxWidth: 400, maxHeight: 250) {
+                        fluid(maxWidth: 400, maxHeight: 400) {
                             originalImg
                             ...GatsbyImageSharpFluid
                         }
