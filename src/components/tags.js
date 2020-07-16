@@ -6,10 +6,13 @@ function Tags ({ tagData }) {
 	var tagsList = "";
     if (tagData !== null) {
 		tagData.forEach(tag => {
-			tagsList += "<li>#" + tag.name + "</li>";
+			// space after list item is intentional (helps css wrap)
+			tagsList += "<li>#" + tag.name + "</li> ";
 		});
 		if (tagsList !== "") {
-			return <ul dangerouslySetInnerHTML={{ __html: tagsList }}  />
+			return <div id="tags">
+						<ul className="lead" dangerouslySetInnerHTML={{ __html: tagsList }}  />
+					</div>
 		}		
     }
     return null;

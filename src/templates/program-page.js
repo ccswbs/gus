@@ -46,27 +46,49 @@ export default ({data, location}) => {
       }}
       />
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-			<div className="container"><h1>{title}</h1></div>
-			{tagData && tagData.length > 0 ?  
-				(<div id="tags">
-					<div className="container"><Tags tagData={tagData} /></div>
-				</div>)
-				: null
-			}			
+
+      <div id="rotator">
+
+        <div className="container ft-container">
+          <h1 class="fancy-title">{title}</h1>
+        </div>
+      </div>
+
+      <div class="full-width-container bg-dark">
+          <div class="container page-container">
+              <section class="row row-with-vspace site-content">
+                  <div class="col-md-9 content-area">
+                    {tagData && tagData.length > 0 ?  
+                      (<Tags tagData={tagData} />)
+                      : null
+                    }	
+                  </div>
+                  <div class="col-md-3"></div>
+              </section>
+          </div>
+      </div>
+
+		
+
 			<div className="container page-container">
-				<h2>Program Overview</h2>
-				<div dangerouslySetInnerHTML={{ __html: description }}  />
-				<Degrees degreesData={degreesData} />	
-				<Variants progvarData={progvarData} />		  
-				<Units unitData={specData} />
-				{callToActionData.map((cta, index) => (
-					<CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-						goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
-						goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} >
-					{cta.node.field_call_to_action_link.title}
-					</CallToAction>
-				))}
-			</div>
+        <div class="row row-with-vspace site-content">
+          <section class="col-md-9 content-area">
+            <h2>Program Overview</h2>
+            <div dangerouslySetInnerHTML={{ __html: description }}  />
+            <Degrees degreesData={degreesData} />	
+            <Variants progvarData={progvarData} />		  
+            <Units unitData={specData} />
+            {callToActionData.map((cta, index) => (
+              <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+                goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
+                goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} >
+              {cta.node.field_call_to_action_link.title}
+              </CallToAction>
+            ))}
+          </section>
+        </div>
+      </div>
+
       {testimonialData && 
             <Testimonials testimonialData={testimonialData} heading={testimonialHeading} />
         }
