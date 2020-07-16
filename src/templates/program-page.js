@@ -50,29 +50,27 @@ export default ({data, location}) => {
       <div id="rotator">
 
         <div className="container ft-container">
-          <h1 class="fancy-title">{title}</h1>
+          <h1 className="fancy-title">{title}</h1>
         </div>
       </div>
 
-      <div class="full-width-container bg-dark">
-          <div class="container page-container">
-              <section class="row row-with-vspace site-content">
-                  <div class="col-md-9 content-area">
+      <div className="full-width-container bg-dark">
+          <div className="container page-container">
+              <section className="row row-with-vspace site-content">
+                  <div className="col-md-9 content-area">
                     {tagData && tagData.length > 0 ?  
                       (<Tags tagData={tagData} />)
                       : null
                     }	
                   </div>
-                  <div class="col-md-3"></div>
+                  <div className="col-md-3"></div>
               </section>
           </div>
       </div>
 
-		
-
 			<div className="container page-container">
-        <div class="row row-with-vspace site-content">
-          <section class="col-md-9 content-area">
+        <div className="row row-with-vspace site-content">
+          <section className="col-md-9 content-area">
             <h2>Program Overview</h2>
             <div dangerouslySetInnerHTML={{ __html: description }}  />
             <Degrees degreesData={degreesData} />	
