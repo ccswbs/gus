@@ -7,6 +7,37 @@ import "../styles/testimonial.css"
 function Testimonials ({ testimonialData, heading }) {
 
 	if ((testimonialData !== null) && (testimonialData !== undefined)) {
+
+		const numPerRow = 2;
+		var testimonialRow = [];
+
+		const testimonialUnits = testimonialData.map((testimonial, index) => {
+			var testimonialContent = stripHTMLTags(testimonial.node.body.value);
+			var testimonialClass = ((index % 2 === 0) ? `left` : `right`);
+			var testimonialPicture = testimonial.node.relationships.field_picture;
+			return <div className={testimonialClass} key={testimonial.node.drupal_id}>
+				{testimonialPicture && <Img fluid={testimonialPicture.localFile.childImageSharp.fluid} alt={testimonial.node.relationships.field_picture.alt} />}
+				<blockquote dangerouslySetInnerHTML={{__html: testimonialContent}} />
+				<p className="tagline">
+					<strong>{testimonial.node.title}</strong>
+					<br />
+					<span>{testimonial.node.field_testimonial_person_desc}</span>
+				</p>
+			</div>
+		})
+
+		for (var i = 0; i < testimonialUnits.length; i+=numPerRow) {
+			const testimonialRowClasses = (i === 0) ? "carousel-item active" : "carousel-item";
+			testimonialRow.push(
+				<div key={`testimonial-row-id-` + i} className={testimonialRowClasses}>
+					<div className="testimonial-wrapper">
+						{testimonialUnits[i]}
+						{testimonialUnits[i+1]}
+					</div>
+				</div>
+			)
+		 }
+
 		return (
 			<div className="ug-testimonial">
 				<div className="full-width-container bg-light">
@@ -14,33 +45,12 @@ function Testimonials ({ testimonialData, heading }) {
 						<div id="content" className="row row-with-vspace site-content">
 							<div className="col-md-12 content-area" id="main-column">
 								<h3 className="carousel-header">{heading}</h3>
-								<div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+								<div id="carouselExampleControls" className="carousel slide" data-interval="false">
 									
 									<div className="carousel-inner">
-										
-										<div className="carousel-item active">
-											<div className="testimonial-wrapper">
-												{testimonialData.map((testimonial, index) => {
-													var testimonialContent = stripHTMLTags(testimonial.node.body.value);
-													var testimonialClass = ((index % 2 === 0) ? `left` : `right`);
-													var testimonialPicture = testimonial.node.relationships.field_picture;
-													return <div className={testimonialClass} key={index}>
-																{/* <li key={index}> */}
-																	{testimonialPicture && <Img fluid={testimonialPicture.localFile.childImageSharp.fluid} alt={testimonial.node.relationships.field_picture.alt} />}
-																	<blockquote dangerouslySetInnerHTML={{__html: testimonialContent}} />
-																	<p className="tagline">
-																		<strong>{testimonial.node.title}</strong>
-																		<br />
-																		<span>{testimonial.node.field_testimonial_person_desc}</span>
-																	</p>
-																	
-
-																{/* </li> */}
-															</div>
-												})}
-											</div>
-										</div>
-
+										{testimonialRow.map((row) => {
+											return row
+										})}
 									</div>
 									<a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
 										<span className="carousel-control-prev-icon" aria-hidden="true"></span>

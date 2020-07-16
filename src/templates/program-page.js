@@ -46,7 +46,7 @@ export default ({data, location}) => {
       }}
       />
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-			<div className="container"><h1>{title} {acronym}</h1></div>
+			<div className="container"><h1>{title}</h1></div>
 			{tagData && tagData.length > 0 ?  
 				(<div id="tags">
 					<div className="container"><Tags tagData={tagData} /></div>
@@ -143,9 +143,10 @@ export const query = graphql`
       }
     }
     
-    testimonials: allNodeTestimonial(filter: {fields: {tags: {in: [$id] }}}) {
+    testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
+          drupal_id
           body {
               value
               processed
