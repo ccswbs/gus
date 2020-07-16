@@ -6,7 +6,7 @@ function Tags ({ tagData }) {
 	var tagsList = "";
     if (tagData !== null) {
 		tagData.forEach(tag => {
-			tagsList += "<li>" + "#" + tag.name + "</li>";
+			tagsList += "<li>#" + tag.name + "</li>";
 		});
 		if (tagsList !== "") {
 			return <ul dangerouslySetInnerHTML={{ __html: tagsList }}  />
