@@ -40,7 +40,7 @@
    - [ ] Code is complete and commented.
    - [ ] Code is secure to the best of our knowledge
    - [ ] Remove or limit console errors and warnings
-   - [ ] Gatsby page renders whether affilitaed Drupal content exists or not (ensure there is an appropriate schema for the content)
+   - [ ] Gatsby page renders whether affiliated Drupal content exists or not (ensure there is an appropriate schema for the content)
    - Is a test necessary?
       - [ ] No
       - [ ] If yes, then:
