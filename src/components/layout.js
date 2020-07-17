@@ -9,9 +9,9 @@ const Layout = ({ children }) => (
       <>
         <SkipLink mainContent="#content"/>
         <Header />
-		<main className="main-container">
-			{children}
-		</main>
+        <main className="main-container">
+          {children}
+        </main>
         <Footer />
       </>
 )
