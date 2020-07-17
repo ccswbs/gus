@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from "gatsby"
 import Layout from '../components/layout'
+import Img from "gatsby-image"
 import SEO from '../components/seo'
 import Degrees from '../components/degrees'
 import Units from '../components/units'
@@ -11,7 +12,8 @@ import Testimonials from '../components/testimonial'
 
 
 export default ({data, location}) => {
-	var pageData;
+  var pageData;
+  var imageData;
 	var degreesData;
 	var specData;
 	var progvarData;
@@ -30,8 +32,13 @@ export default ({data, location}) => {
   if(data.ctas.edges[0] !== undefined){
     callToActionData = data.ctas.edges;
   }
+
+  if(data.images.edges[0] !== undefined){
+    imageData = data.images.edges[0];
+  }
   
-	// set program info
+  // set program info
+  const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
 	const title = pageData.name;
 	const description = (pageData.description !== undefined 
 	&& pageData.description !== null ? pageData.description.processed:``);
@@ -52,7 +59,10 @@ export default ({data, location}) => {
   return (
 		<Layout>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-			<div className="container"><h1>{title} {acronym}</h1></div>
+
+      {headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={imageData.node.field_media_image.alt} />}
+			<div className="container">
+        <h1>{title} {acronym}</h1></div>
 			{tagData && tagData.length > 0 ?  
 				(<div id="tags">
 					<div className="container"><Tags tagData={tagData} /></div>
@@ -115,6 +125,30 @@ export const query = graphql`
             }
             field_tags {
               name
+            }
+          }
+        }
+      }
+    }
+
+    images: allMediaImage(limit: 1, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          name
+          drupal_id
+          field_media_image {
+            alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid {
+                      originalImg
+                      ...GatsbyImageSharpFluid
+                  }
+              }
+              }
             }
           }
         }
