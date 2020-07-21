@@ -29,6 +29,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       body: BodyField
       name: String
       description: TaxonomyDescription
+      field_program_acronym: String
       relationships: taxonomy_term__programsRelationships
       fields: FieldsPathAlias
     }
