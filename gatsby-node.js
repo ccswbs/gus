@@ -119,16 +119,13 @@ exports.createSchemaCustomization = ({ actions }) => {
         relationships: node__testimonialRelationships
         fields: node__testimonialFields
       }
-      type node__testimonialRelationships {
-        field_picture: file__file @link(from: "field_picture___NODE")
-        field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-      }
-      type node__testimonialFields implements Node {
-        tags: [String]
-      }
-      type PictureField implements Node {
-        alt: String
-      }
+    type node__testimonialRelationships {
+      field_picture: file__file @link(from: "field_picture___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__testimonialFields implements Node {
+      tags: [String]
+    }
 
     type node__call_to_action implements Node {
       drupal_id: String
@@ -146,6 +143,24 @@ exports.createSchemaCustomization = ({ actions }) => {
       tags: [String]
     }
 
+    type media__image implements Node {
+      drupal_id: String
+      name: String
+      field_media_image: PictureField
+      fields: media__imageFields
+      relationships: media__imageRelationships
+    }
+    type media__imageRelationships implements Node {
+      field_media_image: file__file @link(from: "field_media_image___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type media__imageFields implements Node {
+      tags: [String]
+    }
+
+    type PictureField implements Node {
+      alt: String
+    }
     type FieldsPathAlias {
       alias: PathAlias
     }
@@ -180,7 +195,8 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 
   // Handle nodes that point to multiple tag vocabularies
   if (node.internal.type === `node__call_to_action` ||
-      node.internal.type === `node__testimonial`) {
+      node.internal.type === `node__testimonial` ||
+      node.internal.type === `media__image`) {
     createNodeField({
       node,
       name: `tags`,

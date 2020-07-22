@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import Layout from '../components/layout'
+import Img from "gatsby-image"
 import SEO from '../components/seo'
 import Degrees from '../components/degrees'
 import Units from '../components/units'
@@ -13,6 +14,7 @@ import '../styles/program-page.css'
 
 
 export default ({data, location}) => {
+  var imageData;
 	var progData;
 	var degreesData;
 	var specData;
@@ -25,8 +27,10 @@ export default ({data, location}) => {
 	if(data.programs.edges[0] !== undefined){ progData = data.programs.edges[0].node; }
   if(data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
   if(data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
+  if(data.images.edges[0] !== undefined){ imageData = data.images.edges[0]; }
   
-	// set program details
+  // set program details
+  const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
 	const title = progData.name;
 	const description = (progData.description !== undefined 
 	&& progData.description !== null ? progData.description.processed:``);
@@ -48,7 +52,7 @@ export default ({data, location}) => {
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 
       <div id="rotator">
-
+        {headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={imageData.node.field_media_image.alt} />}
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
@@ -132,6 +136,30 @@ export const query = graphql`
             }
             field_tags {
               name
+            }
+          }
+        }
+      }
+    }
+
+    images: allMediaImage(limit: 1, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          name
+          drupal_id
+          field_media_image {
+            alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid {
+                      originalImg
+                      ...GatsbyImageSharpFluid
+                  }
+              }
+              }
             }
           }
         }
