@@ -105,7 +105,7 @@ export default ({data, location}) => {
                       <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
                         goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
                         goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
-                        classNameNames='btn btn-uogRed apply' >
+                        classNames='btn btn-uogRed apply' >
                       {cta.node.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
