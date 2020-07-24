@@ -42,7 +42,7 @@ function Testimonials ({ testimonialData, heading }) {
 			<div className="ug-testimonial">
 				<div className="full-width-container bg-light">
 					<div className="container page-container">
-						<div id="content" className="row row-with-vspace site-content">
+						<div className="row row-with-vspace site-content">
 							<div className="col-md-12 content-area" id="main-column">
 								<h3 className="carousel-header">{heading}</h3>
 								<div id="carouselExampleControls" className="carousel slide" data-interval="false">
