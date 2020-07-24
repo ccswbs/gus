@@ -29,7 +29,9 @@ body.program .full-width-container.bg-light {
     background-color: #f5f5f5 !important;
     color: #999;
     padding: 2rem 0;
-}/* Hashtags and Download Program Button */
+}
+
+/* Hashtags and Download Program Button */
 
 body.program .full-width-container.bg-dark {
     background-color: #333 !important;
@@ -67,6 +69,12 @@ body.program a.btn.btn-uogRed:hover {
     border-bottom: 0rem !important;
 }
 
+body.program a.btn.btn-uogRed {
+    width: 100%;
+    font-size: 3rem;
+    text-align: center;
+}
+
 body.program a.btn.btn-uogRed span {
     font-size: 2.1rem;
     font-weight: 700;
@@ -77,6 +85,9 @@ body.program a.btn.btn-uogRed img {
     float: left;
     margin-right: 10%;
 }
+
+
+/* Program stats (with icons) */
 
 body.program .uog-card {
     width: 30%;
@@ -112,6 +123,8 @@ body.program hr {
     width: 100%;
     background: linear-gradient(to right, #69A3B9 0%, #69A3B9 30%, transparent 30%, transparent 35%, #FFC72A 35%, #FFC72A 65%, transparent 65%, transparent 70%, #c20430 70%, #c20430 100%);
 }
+
+/* Program Info */
 
 body.program .nav-pills {
     border-bottom: 0.5rem solid #FFC72A !important;
@@ -156,6 +169,37 @@ body.program table th {
     color: #000;
 }
 
+body.program .employer-wrapper img {
+    width: 20%;
+    margin-right: 5%;
+    float: left;
+}
+
+body.program .employer-wrapper p {
+    float: left;
+}
+
+body.program .employer-wrapper strong {
+    color: #000;
+}
+
+/* Pre Footer */
+
+body.program .apply-footer a.btn {
+    /* width: 30%; */
+    text-align: center;
+    margin: 0 auto 7rem auto !important;
+    display: block;
+}
+
+body.program .apply-footer h3 {
+    text-align: center;
+}
+
+body.program .apply-footer h3 span {
+    font-weight: 400;
+}
+
 body.program .pre-footer h6 {
     color: #000;
     font-size: 2rem;
@@ -172,3 +216,4 @@ body.program .pre-footer a:hover {
 body.program .pre-footer img {
     width: 80%;
 }
+
