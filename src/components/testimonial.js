@@ -27,6 +27,7 @@ function Testimonials ({ testimonialData, heading }) {
 		nextArrow: <CarouselArrow type="next" />,
 		prevArrow: <CarouselArrow type="prev" />,
 		dots: false,
+		infinite: true,
 		slidesToShow: 2,
 		slidesToScroll: 1,
 		responsive: [

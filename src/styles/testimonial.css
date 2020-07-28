@@ -18,14 +18,6 @@
         left: 6%;
     }
 
-    .ug-testimonial .slick-active .ug-slick-item * {
-        display: block !important;
-    }
-
-    .ug-testimonial .slick-slide .ug-slick-item * {
-        display: none;
-    }
-
     .ug-testimonial .testimonial-wrapper img,
     .ug-testimonial .testimonial-wrapper .gatsby-image-wrapper {
         width: 25%;
