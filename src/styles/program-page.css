@@ -62,7 +62,8 @@ body.program a.btn.btn-uogRed {
     border-bottom: 0rem !important;
 }
 
-body.program a.btn.btn-uogRed:hover {
+body.program a.btn.btn-uogRed:hover,
+body.program a.btn.btn-uogRed:focus {
     background: #69A3B9 !important;
     color: #fff !important;
     outline: none !important;
@@ -140,7 +141,8 @@ body.program .nav-pills .nav-link {
     border-bottom: 0.5rem solid #fff !important;
 }
 
-body.program .nav-pills .nav-link:hover {
+body.program .nav-pills .nav-link:hover,
+body.program .nav-pills .nav-link:focus {
     background-color: #ddd;
 }
 
@@ -155,7 +157,8 @@ body.program .tab-content {
     padding: 2rem 0;
 }
 
-body.program table a:hover {
+body.program table a:hover,
+body.program table a:focus {
     text-decoration: underline;
 }
 
@@ -209,7 +212,8 @@ body.program .pre-footer h6.no-top-margin {
     margin-top: 0;
 }
 
-body.program .pre-footer a:hover {
+body.program .pre-footer a:hover,
+body.program .pre-footer a:focus {
     text-decoration: underline;
 }
 
