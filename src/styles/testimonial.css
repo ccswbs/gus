@@ -9,24 +9,14 @@
         margin-bottom: 5rem;
     }
 
-    .ug-testimonial .ug-slick-carousel {
-        margin-bottom: 1rem;
-    }
-
-    .ug-testimonial .slick-list {
-        width: 90%;
-        left: 6%;
-    }
-
-    .ug-testimonial .testimonial-wrapper img,
-    .ug-testimonial .testimonial-wrapper .gatsby-image-wrapper {
+    .ug-testimonial .testimonial-wrapper .testimonial-pic {
         width: 25%;
         margin-right: 5%;
         float: left;
         border-radius: 50%;
     }
 
-    .ug-testimonial .testimonial-wrapper blockquote {
+    .ug-testimonial .testimonial-wrapper blockquote.testimonial-quote {
         width: 65%;
         margin-right: 5%;
         float: right;
@@ -42,109 +32,24 @@
         background: transparent;
     }
 
-    .ug-testimonial .testimonial-wrapper blockquote::before, 
-    .ug-testimonial .testimonial-wrapper blockquote::after {
+    .ug-testimonial .testimonial-wrapper blockquote.testimonial-quote::before, 
+    .ug-testimonial .testimonial-wrapper blockquote.testimonial-quote::after {
         left: 0;
         bottom: 0;
         border: 0;
         width: 0;
     }
 
-    .ug-testimonial .testimonial-wrapper p {
+    .ug-testimonial .testimonial-wrapper p.testimonial-tagline {
         width: 65%;
         margin-right: 5%;
         float: right;
     }
 
-    .ug-testimonial .testimonial-wrapper strong {
+    .ug-testimonial .testimonial-wrapper strong.testimonial-title {
         color: #000;
     }
 
-    .ug-testimonial .testimonial-wrapper p span {
+    .ug-testimonial .testimonial-wrapper p.testimonial-tagline span.testimonial-person-desc {
         color: #4C9BB2;
     }
-
-    .ug-testimonial .testimonial-wrapper .left, 
-    .ug-testimonial .testimonial-wrapper .right {
-        width: 50%;
-        float: left;
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-arrow {
-        background: none!important;
-        border: none;
-        display: block;
-        height: 30%;
-        padding: 0!important;
-        cursor: pointer;
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-arrow {
-        width: 5%;
-        color: #FFC72A;
-        font-size: 6rem;
-        font-weight: 300;
-        opacity: 1;
-        top: 10%;
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-prev {
-        position: absolute;
-        left: 0%;
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-next {
-        position: absolute;
-        right: 0%;
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-arrow-icon::before {
-        content: '';
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-arrow-icon {
-        border-style: solid;
-        border-width: 0.1em 0.1em 0 0;
-        content: '';
-        display: inline-block;
-        vertical-align: top;
-        position: absolute;
-        color: #FFC72A;
-        top: 20%;
-        left: 10%;
-        width: 0.7em;
-        height: 0.7em;
-        transform: rotate(225deg);
-        transition: all 0.15s ease;
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-next-icon {
-        transform: rotate(45deg);
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-prev-icon {
-        left: 20%;
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-arrow-icon:hover {
-        text-decoration: none !important;
-    }
-
-@media only screen and (max-width: 1024px) {
-    .ug-testimonial .carousel-control-prev-icon, 
-    .ug-testimonial .carousel-control-next-icon,
-    .ug-testimonial .ug-slick-carousel-control-arrow-icon {
-        border-width: 0.07em 0.07em 0 0;
-        width: 0.5em;
-        height: 0.5em;
-    }
-
-    .ug-testimonial .ug-slick-carousel-control-arrow {
-        width: 10%;
-    }
-
-    .ug-testimonial .slick-list {
-        width: 78%;
-        left: 12%;
-    }
-}
