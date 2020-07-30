@@ -59,7 +59,7 @@ export default ({data, location}) => {
       </div>
 
       <div className="full-width-container bg-dark">
-          <div className="container page-container">
+          <div className="container">
               <section className="row row-with-vspace site-content">
                   <div className="col-md-9 content-area">
                     {tagData && tagData.length > 0 ?  
@@ -67,7 +67,16 @@ export default ({data, location}) => {
                       : null
                     }	
                   </div>
-                  <div className="col-md-3"></div>
+                  <div className="col-md-3">
+                    {callToActionData.map((cta, index) => (
+                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+                        goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
+                        goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
+                        classNames='btn btn-uogRed apply' >
+                      {cta.node.field_call_to_action_link.title}
+                      </CallToAction>
+                    ))}
+                  </div>
               </section>
           </div>
       </div>
@@ -80,20 +89,29 @@ export default ({data, location}) => {
             <Degrees degreesData={degreesData} />	
             <Variants progvarData={progvarData} />		  
             <Units unitData={specData} />
-            {callToActionData.map((cta, index) => (
-              <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
-                goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} >
-              {cta.node.field_call_to_action_link.title}
-              </CallToAction>
-            ))}
           </section>
         </div>
       </div>
 
       {testimonialData && 
-            <Testimonials testimonialData={testimonialData} heading={testimonialHeading} />
-        }
+        <Testimonials testimonialData={testimonialData} heading={testimonialHeading} />
+      }
+
+      <div className="container page-container apply-footer">
+          <section className="row row-with-vspace site-content">
+              <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
+                  <h3><span>Are you ready to</span> Improve Life?</h3>
+                  {callToActionData.map((cta, index) => (
+                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+                        goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
+                        goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
+                        classNames='btn btn-uogRed apply' >
+                      {cta.node.field_call_to_action_link.title}
+                      </CallToAction>
+                    ))}
+              </div>
+          </section>
+      </div>
 
 		</Layout>
 	)

@@ -9,19 +9,14 @@
         margin-bottom: 5rem;
     }
 
-    .ug-testimonial .carousel {
-        margin-bottom: 1rem;
-    }
-
-    .ug-testimonial .testimonial-wrapper img,
-    .ug-testimonial .testimonial-wrapper .gatsby-image-wrapper {
+    .ug-testimonial .testimonial-wrapper .testimonial-pic {
         width: 25%;
         margin-right: 5%;
         float: left;
         border-radius: 50%;
     }
 
-    .ug-testimonial .testimonial-wrapper blockquote {
+    .ug-testimonial .testimonial-wrapper blockquote.testimonial-quote {
         width: 65%;
         margin-right: 5%;
         float: right;
@@ -37,71 +32,24 @@
         background: transparent;
     }
 
-    .ug-testimonial .testimonial-wrapper blockquote::before, .ug-testimonial .testimonial-wrapper blockquote::after {
+    .ug-testimonial .testimonial-wrapper blockquote.testimonial-quote::before, 
+    .ug-testimonial .testimonial-wrapper blockquote.testimonial-quote::after {
         left: 0;
         bottom: 0;
         border: 0;
         width: 0;
     }
 
-    .ug-testimonial .testimonial-wrapper p.tagline {
+    .ug-testimonial .testimonial-wrapper p.testimonial-tagline {
         width: 65%;
         margin-right: 5%;
         float: right;
     }
 
-    .ug-testimonial .testimonial-wrapper strong {
+    .ug-testimonial .testimonial-wrapper strong.testimonial-title {
         color: #000;
     }
 
-    .ug-testimonial .testimonial-wrapper p span {
+    .ug-testimonial .testimonial-wrapper p.testimonial-tagline span.testimonial-person-desc {
         color: #4C9BB2;
-    }
-
-    .ug-testimonial .testimonial-wrapper .left, .ug-testimonial .testimonial-wrapper .right {
-        width: 50%;
-        float: left;
-    }
-
-    .ug-testimonial .carousel-control-prev, .ug-testimonial .carousel-control-next {
-        width: 5%;
-        color: #FFC72A;
-        font-size: 6rem;
-        font-weight: 300;
-        opacity: 1;
-    }
-
-    .ug-testimonial .carousel-control-prev {
-        position: absolute;
-        left: -5%;
-    }
-
-    .ug-testimonial .carousel-control-next {
-        position: absolute;
-        right: -5%;
-    }
-
-    .ug-testimonial .carousel-control-prev-icon::before, .ug-testimonial .carousel-control-next-icon::before {
-        content: '';
-    }
-
-    .ug-testimonial .carousel-control-prev-icon, .ug-testimonial .carousel-control-next-icon {
-        border-style: solid;
-        border-width: 0.1em 0.1em 0 0;
-        content: '';
-        display: inline-block;
-        vertical-align: top;
-        position: absolute;
-        color: #FFC72A;
-        top: 40%;
-        left: 10%;
-        width: 0.7em;
-        height: 0.7em;
-        transform: rotate(225deg);
-        transition: all 0.15s ease;
-    }
-
-    .ug-testimonial .carousel-control-next-icon {
-        left: 29%;
-        transform: rotate(45deg);
     }

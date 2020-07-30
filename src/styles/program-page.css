@@ -29,7 +29,9 @@ body.program .full-width-container.bg-light {
     background-color: #f5f5f5 !important;
     color: #999;
     padding: 2rem 0;
-}/* Hashtags and Download Program Button */
+}
+
+/* Hashtags and Download Program Button */
 
 body.program .full-width-container.bg-dark {
     background-color: #333 !important;
@@ -60,11 +62,18 @@ body.program a.btn.btn-uogRed {
     border-bottom: 0rem !important;
 }
 
-body.program a.btn.btn-uogRed:hover {
+body.program a.btn.btn-uogRed:hover,
+body.program a.btn.btn-uogRed:focus {
     background: #69A3B9 !important;
     color: #fff !important;
     outline: none !important;
     border-bottom: 0rem !important;
+}
+
+body.program a.btn.btn-uogRed {
+    width: 100%;
+    font-size: 3rem;
+    text-align: center;
 }
 
 body.program a.btn.btn-uogRed span {
@@ -77,6 +86,9 @@ body.program a.btn.btn-uogRed img {
     float: left;
     margin-right: 10%;
 }
+
+
+/* Program stats (with icons) */
 
 body.program .uog-card {
     width: 30%;
@@ -113,6 +125,8 @@ body.program hr {
     background: linear-gradient(to right, #69A3B9 0%, #69A3B9 30%, transparent 30%, transparent 35%, #FFC72A 35%, #FFC72A 65%, transparent 65%, transparent 70%, #c20430 70%, #c20430 100%);
 }
 
+/* Program Info */
+
 body.program .nav-pills {
     border-bottom: 0.5rem solid #FFC72A !important;
 }
@@ -127,7 +141,8 @@ body.program .nav-pills .nav-link {
     border-bottom: 0.5rem solid #fff !important;
 }
 
-body.program .nav-pills .nav-link:hover {
+body.program .nav-pills .nav-link:hover,
+body.program .nav-pills .nav-link:focus {
     background-color: #ddd;
 }
 
@@ -142,7 +157,8 @@ body.program .tab-content {
     padding: 2rem 0;
 }
 
-body.program table a:hover {
+body.program table a:hover,
+body.program table a:focus {
     text-decoration: underline;
 }
 
@@ -156,6 +172,37 @@ body.program table th {
     color: #000;
 }
 
+body.program .employer-wrapper img {
+    width: 20%;
+    margin-right: 5%;
+    float: left;
+}
+
+body.program .employer-wrapper p {
+    float: left;
+}
+
+body.program .employer-wrapper strong {
+    color: #000;
+}
+
+/* Pre Footer */
+
+body.program .apply-footer a.btn {
+    /* width: 30%; */
+    text-align: center;
+    margin: 0 auto 7rem auto !important;
+    display: block;
+}
+
+body.program .apply-footer h3 {
+    text-align: center;
+}
+
+body.program .apply-footer h3 span {
+    font-weight: 400;
+}
+
 body.program .pre-footer h6 {
     color: #000;
     font-size: 2rem;
@@ -165,10 +212,126 @@ body.program .pre-footer h6.no-top-margin {
     margin-top: 0;
 }
 
-body.program .pre-footer a:hover {
+body.program .pre-footer a:hover,
+body.program .pre-footer a:focus {
     text-decoration: underline;
 }
 
 body.program .pre-footer img {
     width: 80%;
+}
+
+/* media breakpoints */
+
+@media only screen and (max-width: 1024px) {
+    body.program .lead {
+        font-size: 3rem;
+        line-height: 4rem;
+    }
+
+    body.program a.btn.btn-uogRed span {
+        font-size: 1.7rem;
+    }
+
+    body.program .social-wrapper a {
+        width: 40px;
+        height: 40px;
+    }
+
+    body.program .uog-card h6 {
+        font-size: 4rem;
+    }
+
+    body.program .student-tips img {
+        width: 110%;
+        float: right;
+    }
+
+    body.program .cta-text {
+        width: 37%;
+        padding: 0rem 3rem;
+    }
+
+    body.program .cta-text h6 {
+        font-size: 3rem;
+    }
+
+    body.program .cta-text a {
+        font-size: 2rem;
+        padding: 1rem 2rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    body.program .event-card {
+        background: linear-gradient(to right, #4C9BB2 0%, #4C9BB2 20%, #f5f5f5 20%, #f5f5f5 100%);
+    }
+
+    body.program .event-card.yellow {
+        background: linear-gradient(to right, #FFC72A 0%, #FFC72A 20%, #f5f5f5 20%, #f5f5f5 100%);
+    }
+
+    body.program .event-card.red {
+        background: linear-gradient(to right, #c20430 0%, #c20430 20%, #f5f5f5 20%, #f5f5f5 100%);
+    }
+
+    body.program .event-date {
+        width: 20%;
+    }
+
+    body.program .student-tips img {
+        width: 130%;
+        float: right;
+    }
+
+    body.program .cta-text {
+        width: 50%;
+        padding: 0rem 3rem;
+    }
+
+    body.program .cta-text h6 {
+        font-size: 2.5rem;
+    }
+
+    body.program .cta-text p {
+        margin-bottom: 2.25rem;
+    }
+
+    body.program .cta-text a {
+        font-size: 1.7rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    body.program .pre-footer img {
+        width: 30%;
+        margin-bottom: 2rem;
+    }
+
+    body.program .pre-footer h6 {
+        margin-top: 1rem;
+    }
+
+    body.program .employer-wrapper img {
+        width: 40%;
+    }
+
+    body.program .uog-card {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    body.program .uog-card h6 {
+        font-size: 3rem;
+        margin-top: 2rem;
+    }
+
+    body.program .uog-card p {
+        font-size: 1.7rem;
+        font-weight: 400;
+        margin-top: 0;
+    }
+
+    body.program .bg-img hr {
+        margin: 1rem 0;
+    }
 }
