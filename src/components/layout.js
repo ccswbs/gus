@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SkipLink from './skiplink'
 import Header from './header'
-import DateModified from './datemodified'
+import DateModified from './dateModified'
 import Footer from './footer'
 import "../styles/global.css"
 
