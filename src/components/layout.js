@@ -12,8 +12,8 @@ const Layout = ({ children, date }) => (
         <Header />
         <main className="main-container">
           {children}
+          <DateModified date={date}/>
         </main>
-        <DateModified date={date}/>
         <Footer />
       </>
 )
