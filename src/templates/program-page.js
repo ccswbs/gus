@@ -59,7 +59,7 @@ export default ({data, location}) => {
       </div>
 
       <div className="full-width-container bg-dark">
-          <div className="container page-container">
+          <div className="container">
               <section className="row row-with-vspace site-content">
                   <div className="col-md-9 content-area">
                     {tagData && tagData.length > 0 ?  

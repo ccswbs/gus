@@ -25,3 +25,10 @@
 #tags li:before {
 	content: "";
 }
+
+@media only screen and (max-width: 1024px) {
+	#tags ul.lead li {
+		font-size: 3rem;
+		line-height: 4rem;
+	}
+}
