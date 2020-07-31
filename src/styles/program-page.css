@@ -21,10 +21,6 @@ body.program .full-width-container {
     display: flex;
 }
 
-/* body.program .full-width-container.bg-img {
-    background-image: url("img/stats-bg.jpg");
-} */
-
 body.program .full-width-container.bg-light {
     background-color: #f5f5f5 !important;
     color: #999;
@@ -259,6 +255,12 @@ body.program .pre-footer img {
     body.program .cta-text a {
         font-size: 2rem;
         padding: 1rem 2rem;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    body.program #rotator img {
+        width: calc(100% + 10rem) !important;
     }
 }
 
