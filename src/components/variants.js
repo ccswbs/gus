@@ -15,7 +15,7 @@ function Variants ({ progvarData }) {
 			progvar += heading + description;
 		});
 		if (progvar !== "") {
-			progvarList = "<h2>Program Variants</h2>" + progvar;
+			progvarList = "<h2>Program Information</h2>" + progvar;
 			return <div dangerouslySetInnerHTML={{__html: progvarList}} />
 		}		
     }
