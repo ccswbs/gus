@@ -36,15 +36,17 @@ export default ({data, location}) => {
 	&& progData.description !== null ? progData.description.processed:``);
   const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
   const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+  const lastModified = progData.changed;
 
 	// set degree, unit, variant, and tag info  
 	degreesData = progData.relationships.field_degrees;
 	specData = progData.relationships.field_specializations;
 	progvarData = progData.relationships.field_program_variants;
   tagData = progData.relationships.field_tags;
+  
 
   return (
-		<Layout>
+		<Layout date={lastModified}>
       <Helmet bodyAttributes={{
           class: 'program'
       }}
@@ -122,6 +124,7 @@ export const query = graphql`
     programs: allTaxonomyTermPrograms(filter: {id: {eq: $id}}) {
       edges {
         node {
+          changed(formatString: "MMMM D, YYYY HH:mm z")
           drupal_id
           drupal_internal__tid
           name
