@@ -12,7 +12,6 @@ import Testimonials from '../components/testimonial'
 import { Helmet } from 'react-helmet'
 import '../styles/program-page.css'
 
-
 export default ({data, location}) => {
   var imageData;
 	var progData;
@@ -124,7 +123,7 @@ export const query = graphql`
     programs: allTaxonomyTermPrograms(filter: {id: {eq: $id}}) {
       edges {
         node {
-          changed(formatString: "MMMM D, YYYY HH:mm z")
+          changed
           drupal_id
           drupal_internal__tid
           name
