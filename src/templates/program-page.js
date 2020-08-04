@@ -106,7 +106,7 @@ export const query = graphql`
     programs: allTaxonomyTermPrograms(filter: {id: {eq: $id}}) {
       edges {
         node {
-          changed(formatString: "MMMM D, YYYY HH:mm")
+          changed(formatString: "MMMM D, YYYY HH:mm z")
           drupal_id
           drupal_internal__tid
           name
