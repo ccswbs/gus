@@ -1,16 +1,19 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import Layout from '../components/layout'
-import Img from "gatsby-image"
-import SEO from '../components/seo'
-import Degrees from '../components/degrees'
-import Units from '../components/units'
-import Variants from '../components/variants'
-import Tags from '../components/tags'
-import CallToAction from '../components/callToAction'
-import Testimonials from '../components/testimonial'
-import { Helmet } from 'react-helmet'
-import '../styles/program-page.css'
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { graphql } from 'gatsby';
+import Layout from '../components/layout';
+import Img from 'gatsby-image';
+import SEO from '../components/seo';
+import Degrees from '../components/degrees';
+import Units from '../components/units';
+import Variants from '../components/variants';
+import Tags from '../components/tags';
+import CallToAction from '../components/callToAction';
+import Testimonials from '../components/testimonial';
+import NavTabs from '../components/navTabs';
+import NavTabHeading from '../components/navTabHeading';
+import NavTabContent from '../components/navTabContent';
+import '../styles/program-page.css';
 
 export default ({data, location}) => {
   var imageData;
@@ -40,7 +43,7 @@ export default ({data, location}) => {
 	// set degree, unit, variant, and tag info  
 	degreesData = progData.relationships.field_degrees;
 	specData = progData.relationships.field_specializations;
-	progvarData = progData.relationships.field_program_variants;
+  progvarData = progData.relationships.field_program_variants;
   tagData = progData.relationships.field_tags;
   
 
@@ -88,10 +91,26 @@ export default ({data, location}) => {
             <h2>Program Overview</h2>
             <div dangerouslySetInnerHTML={{ __html: description }}  />
             <Degrees degreesData={degreesData} />	
-            <Variants progvarData={progvarData} />		  
             <Units unitData={specData} />
           </section>
         </div>
+      </div>
+
+      <div class="container page-container">
+        <section class="row row-with-vspace site-content">
+          <div class="col-md-12 content-area">
+            <h2>Program Information</h2>
+            <NavTabs headings={
+              <>
+                <NavTabHeading active={true} heading="Courses" controls="pills-courses" />
+                <NavTabHeading heading="Certificates" controls="pills-certificates" />
+              </>
+            }>
+              <NavTabContent active={true} id="pills-courses" content={"Insert Course content"} />
+              <NavTabContent id="pills-certificates" content={<Variants progvarData={progvarData} />} />
+            </NavTabs>
+          </div>
+        </section>
       </div>
 
       {testimonialData && 

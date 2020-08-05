@@ -10,7 +10,7 @@ function Degrees ({ degreesData }) {
             degreesList += "<li>" + degree.name + acronym + "</li>";
 		});
 		if (degreesList !== "") {
-			degrees = "<h2>Degrees Offered</h2><ul>" + degreesList + "</ul>";
+			degrees = "<h3>Degrees Offered</h3><ul>" + degreesList + "</ul>";
 			return <div dangerouslySetInnerHTML={{__html: degrees}}/>
 		}		
 	}

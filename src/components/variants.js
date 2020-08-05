@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 
 function Variants ({ progvarData }) {
 	var progvar = "";
-	var progvarList = "";
     if (progvarData !== null) {
 		progvarData.forEach(variant => {
 			const variantName = variant.relationships.field_variant_name;
@@ -15,8 +14,7 @@ function Variants ({ progvarData }) {
 			progvar += heading + description;
 		});
 		if (progvar !== "") {
-			progvarList = "<h2>Program Information</h2>" + progvar;
-			return <div dangerouslySetInnerHTML={{__html: progvarList}} />
+			return <div dangerouslySetInnerHTML={{__html: progvar}} />
 		}		
     }
     return null;
