@@ -7,6 +7,7 @@ import Degrees from '../components/degrees'
 import Units from '../components/units'
 import Variants from '../components/variants'
 import Tags from '../components/tags'
+import Courses from '../components/courses'
 import CallToAction from '../components/callToAction'
 import Testimonials from '../components/testimonial'
 import { Helmet } from 'react-helmet'
@@ -14,36 +15,38 @@ import '../styles/program-page.css'
 
 
 export default ({data, location}) => {
-  var imageData;
+	var imageData;
 	var progData;
 	var degreesData;
 	var specData;
 	var progvarData;
-  var tagData;
-  var testimonialData;
-  var callToActionData = [];
+	var tagData;
+	var courseData;
+	var testimonialData;
+	var callToActionData = [];
 
   // set data
 	if(data.programs.edges[0] !== undefined){ progData = data.programs.edges[0].node; }
-  if(data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
-  if(data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
-  if(data.images.edges[0] !== undefined){ imageData = data.images.edges[0]; }
-  
-  // set program details
-  const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
+	if(data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
+	if(data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
+	if(data.images.edges[0] !== undefined){ imageData = data.images.edges[0]; }
+
+	// set program details
+	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
 	const title = progData.name;
 	const description = (progData.description !== undefined 
 	&& progData.description !== null ? progData.description.processed:``);
-  const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
-  const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
-  const lastModified = progData.changed;
+	const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
+	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+	const lastModified = progData.changed;
 
-	// set degree, unit, variant, and tag info  
+	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
 	specData = progData.relationships.field_specializations;
 	progvarData = progData.relationships.field_program_variants;
-  tagData = progData.relationships.field_tags;
-  
+	tagData = progData.relationships.field_tags;
+	courseData = progData.relationships.field_courses;
+
 
   return (
 		<Layout date={lastModified}>
@@ -91,6 +94,7 @@ export default ({data, location}) => {
             <Degrees degreesData={degreesData} />	
             <Variants progvarData={progvarData} />		  
             <Units unitData={specData} />
+			<Courses courseData={courseData} />
           </section>
         </div>
       </div>
@@ -150,12 +154,30 @@ export const query = graphql`
                 field_variant_name {
                   name
                 }
+				field_courses {
+                  name
+				  field_code
+				  field_course_url {
+                    uri
+                  }
+				  field_credits
+                  field_year
                 }
-                field_variant_info {
-                  value
-                }
+              }
+              field_variant_info {
+                value
+              }
             }
             field_tags {
+              name
+            }
+			field_courses {
+              field_course_url {
+                uri
+              }
+              field_code
+              field_credits
+              field_year
               name
             }
           }

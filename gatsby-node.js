@@ -38,6 +38,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_specializations: [taxonomy_term__specializations]
       field_program_variants: [paragraph__program_variants]
       field_tags: [taxonomy_term__tags]
+	  field_courses: [taxonomy_term__courses]
     }
 
     type paragraph__program_variants implements Node {
@@ -51,18 +52,28 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type paragraph__program_variantsRelationships {
       field_variant_name: taxonomy_term__program_variant_type
+	  field_courses: [taxonomy_term__courses]
     }
     type taxonomy_term__program_variant_type implements Node {
       name: String
     }
-
     type taxonomy_term__tags implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
     }
-
+	type taxonomy_term__courses implements Node {
+		name: String
+		field_code: String
+		field_course_url: taxonomy_term__coursesField_course_url
+		field_credits: String
+		field_year: String
+	}
+	type taxonomy_term__coursesField_course_url implements Node {
+		uri: String
+		title: String
+	}
     type taxonomy_term__specializations implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
