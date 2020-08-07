@@ -24,7 +24,7 @@ function NavTabContent (props) {
     }
 
     return(
-        <div class={classes} id={props.id} role="tabpanel" aria-labelledby={arialabel}>
+        <div className={classes} id={props.id} role="tabpanel" aria-labelledby={arialabel}>
             {props.content}
         </div>
     )

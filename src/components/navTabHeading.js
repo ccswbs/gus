@@ -25,7 +25,7 @@ function NavTabHeading (props) {
     }
 
     return(
-            <a class={classes} 
+            <a className={classes} 
                 id={id} 
                 href={href} 
                 role="tab" 

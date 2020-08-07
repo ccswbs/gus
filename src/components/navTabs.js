@@ -21,10 +21,10 @@ function NavTabs (props) {
 
     return(
         <>
-            <nav class={classes}>
+            <nav className={classes}>
                 {props.headings}
             </nav>
-            <div class="tab-content" id="pills-tabContent">
+            <div className="tab-content" id="pills-tabContent">
                 {props.children}
             </div>
         </>
@@ -34,7 +34,7 @@ function NavTabs (props) {
 NavTabs.propTypes = {
     children: PropTypes.node.isRequired,
     classNames: PropTypes.string,
-    headings: PropTypes.array,
+    headings: PropTypes.object,
 }
   
 NavTabs.defaultProps = {

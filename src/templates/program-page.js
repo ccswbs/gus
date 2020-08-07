@@ -96,9 +96,9 @@ export default ({data, location}) => {
         </div>
       </div>
 
-      <div class="container page-container">
-        <section class="row row-with-vspace site-content">
-          <div class="col-md-12 content-area">
+      <div className="container page-container">
+        <section className="row row-with-vspace site-content">
+          <div className="col-md-12 content-area">
             <h2>Program Information</h2>
             <NavTabs headings={
               <>
@@ -164,11 +164,16 @@ export const query = graphql`
               }
             }
             field_program_variants {
+              drupal_id
+              field_variant_title
+              field_variant_link {
+                uri
+              }
               relationships {
-                field_variant_name {
+                field_variant_type {
                   name
                 }
-                }
+              }
                 field_variant_info {
                   value
                 }
