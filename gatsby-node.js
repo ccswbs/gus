@@ -41,6 +41,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type paragraph__program_variants implements Node {
+      field_variant_title: String
+      field_variant_link: FieldLink
       field_variant_info: paragraph__program_variantsField_variant_info
       relationships: paragraph__program_variantsRelationships
     }
@@ -50,7 +52,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       processed: String
     }
     type paragraph__program_variantsRelationships {
-      field_variant_name: taxonomy_term__program_variant_type
+      field_variant_type: taxonomy_term__program_variant_type
     }
     type taxonomy_term__program_variant_type implements Node {
       name: String
