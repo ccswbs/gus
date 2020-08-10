@@ -15,10 +15,25 @@ function Variants ({ progvarData }) {
 			var description = "";
 			if (courses !== null) {
 				courses.forEach(course => {
-					courseList += "<li>" + course.title + " (" + course.field_code + ")</li>";
+					//courseList += <tr><td>{course.year}</td> <td>{course.title}</td> <td>{course.field_code}</td> <td>{course.field_credits}</td></tr>;
+					courseList += 
+					"<tr>" 
+					+ "<td>" + course.field_level + "</td>"
+					+ "<td>" + course.title + "</td>" 
+					+ "<td>" + course.field_code + "</td>"
+					+ "<td>" + course.field_credits + "</td>"
+					+ "</tr>";
 				});
 				if (courseList !== "") {
-					classes = "<h3>Classes</h3><ul>" + courseList + "</ul>";
+					classes = "<h3>Courses</h3>"
+					+ "<table class='table table-borderless'>" 
+					+ "<tr>"
+					+ "<th scope='col'>Year</th>"
+                    + "<th scope='col'>Class</th>"
+                    + "<th scope='col'>Code</th>"
+                    + "<th scope='col'>Credits</th>"
+                    + "</tr>"					
+					+ courseList + "</table>";
 				}
 			}
 			heading = (variantName !== undefined && variantName !== null ? "<h3>" + variantName.name + "</h3>" : "");
