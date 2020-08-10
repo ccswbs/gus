@@ -163,19 +163,28 @@ export const query = graphql`
               }
             }
             field_program_variants {
-              drupal_id
-              field_variant_title
-              field_variant_link {
-                uri
-              }
-              relationships {
-                field_variant_type {
-                  name
+              __typename
+              ... on paragraph__general_text {
+                drupal_id
+                field_general_text {
+                  value
                 }
               }
+              ... on paragraph__program_variants {
+                drupal_id
+                field_variant_title
+                field_variant_link {
+                  uri
+                }
                 field_variant_info {
                   value
                 }
+                relationships {
+                  field_variant_type {
+                    name
+                  }
+                }
+              }
             }
             field_tags {
               name

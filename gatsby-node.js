@@ -17,6 +17,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       | taxonomy_term__degrees
       | taxonomy_term__units
 
+    union relatedParagraphUnion = 
+      paragraph__program_variants
+      | paragraph__general_text
+
     interface TaxonomyInterface @nodeInterface {
       id: ID!
       drupal_id: String
@@ -26,7 +30,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__programs implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
-      body: BodyField
+      body: BodyFieldWithSummary
       name: String
       description: TaxonomyDescription
       field_program_acronym: String
@@ -36,20 +40,19 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__programsRelationships {
       field_degrees: [taxonomy_term__degrees]
       field_specializations: [taxonomy_term__specializations]
-      field_program_variants: [paragraph__program_variants]
+      field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
       field_tags: [taxonomy_term__tags]
+    }
+
+    type paragraph__general_text implements Node {
+      field_general_text: BodyField
     }
 
     type paragraph__program_variants implements Node {
       field_variant_title: String
       field_variant_link: FieldLink
-      field_variant_info: paragraph__program_variantsField_variant_info
+      field_variant_info: BodyField
       relationships: paragraph__program_variantsRelationships
-    }
-    type paragraph__program_variantsField_variant_info {
-      value: String
-      format: String
-      processed: String
     }
     type paragraph__program_variantsRelationships {
       field_variant_type: taxonomy_term__program_variant_type
@@ -103,7 +106,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__page implements Node {
       drupal_id: String
       drupal_internal__tid: Int
-      body: BodyField
+      body: BodyFieldWithSummary
       relationships: node__pageRelationships
       fields: FieldsPathAlias
     }
@@ -115,7 +118,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         drupal_id: String
         drupal_internal__tid: Int
         title: String
-        body: BodyField
+        body: BodyFieldWithSummary
         field_testimonial_person_desc: String
         field_picture: PictureField
         relationships: node__testimonialRelationships
@@ -170,6 +173,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
     }
     type BodyField {
+      processed: String
+      value: String
+      format: String
+      summary: String
+    }
+    type BodyFieldWithSummary {
       processed: String
       value: String
       format: String
