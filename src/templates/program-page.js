@@ -87,7 +87,7 @@ export default ({data, location}) => {
           </div>
       </div>
 
-			<div className="container page-container">
+	<div className="container page-container">
         <div className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
             <h2>Program Overview</h2>
@@ -98,7 +98,7 @@ export default ({data, location}) => {
 			<Courses courseData={courseData} />
           </section>
         </div>
-      </div>
+    </div>
 
       {testimonialData && 
         <Testimonials testimonialData={testimonialData} heading={testimonialHeading} />

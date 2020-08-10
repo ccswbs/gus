@@ -6,6 +6,7 @@ function Variants ({ progvarData }) {
 	var progvarList = "";
 	var courseList = "";
 	var classes = "";
+	var courseURL;
     if (progvarData !== null) {
 		progvarData.forEach(variant => {
 			const variantName = variant.relationships.field_variant_name;
@@ -15,24 +16,13 @@ function Variants ({ progvarData }) {
 			var description = "";
 			if (courses !== null) {
 				courses.forEach(course => {
-					courseList += 
-					"<tr>" 
-					+ "<td>" + course.field_level + "</td>"
-					+ "<td>" + course.title + "</td>" 
-					+ "<td>" + course.field_code + "</td>"
-					+ "<td>" + course.field_credits + "</td>"
-					+ "</tr>";
+					var courseTitle = course.title;
+					courseURL = (course.field_course_url !== undefined && course.field_course_url !== null ? courseURL = course.field_course_url.uri : "");
+					courseTitle = (courseURL !== "" ? "<a href='" + courseURL + "'>" + courseTitle + "</a>" : courseTitle);
+					courseList += "<tr><td>" + course.field_level + "</td><td>" + courseTitle + "</td><td>" + course.field_code + "</td><td>" + course.field_credits + "</td></tr>";
 				});
 				if (courseList !== "") {
-					classes = "<h3>Courses</h3>"
-					+ "<table class='table table-borderless'>" 
-					+ "<tr>"
-					+ "<th scope='col'>Year</th>"
-                    + "<th scope='col'>Class</th>"
-                    + "<th scope='col'>Code</th>"
-                    + "<th scope='col'>Credits</th>"
-                    + "</tr>"					
-					+ courseList + "</table>";
+					classes = "<h3>Courses</h3><table class='table table-borderless'><tr><th scope='col'>Year</th><th scope='col'>Class</th><th scope='col'>Code</th><th scope='col'>Credits</th></tr>" + courseList + "</table>";
 				}
 			}
 			heading = (variantName !== undefined && variantName !== null ? "<h3>" + variantName.name + "</h3>" : "");
