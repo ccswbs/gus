@@ -21,15 +21,16 @@ export default ({data, location}) => {
 	var specData;
 	var progvarData;
 	var tagData;
-	var courseData;
 	var testimonialData;
 	var callToActionData = [];
+	var courseData;
 
   // set data
 	if(data.programs.edges[0] !== undefined){ progData = data.programs.edges[0].node; }
 	if(data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
 	if(data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
 	if(data.images.edges[0] !== undefined){ imageData = data.images.edges[0]; }
+	if(data.courses.edges[0] !== undefined){ courseData = data.courses.edges; }
 
 	// set program details
 	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
@@ -45,7 +46,7 @@ export default ({data, location}) => {
 	specData = progData.relationships.field_specializations;
 	progvarData = progData.relationships.field_program_variants;
 	tagData = progData.relationships.field_tags;
-	courseData = progData.relationships.field_courses;
+
 
 
   return (
@@ -155,13 +156,13 @@ export const query = graphql`
                   name
                 }
 				field_courses {
-                  name
+                  title
 				  field_code
 				  field_course_url {
                     uri
                   }
 				  field_credits
-                  field_year
+                  field_level
                 }
               }
               field_variant_info {
@@ -169,15 +170,6 @@ export const query = graphql`
               }
             }
             field_tags {
-              name
-            }
-			field_courses {
-              field_course_url {
-                uri
-              }
-              field_code
-              field_credits
-              field_year
               name
             }
           }
@@ -272,6 +264,31 @@ export const query = graphql`
         }
       }
     }
+	
+	courses: allNodeCourse(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+          }
+		  field_code
+          field_course_url {
+            uri
+          }
+          field_credits
+          field_level
+          title
+        }
+      }
+    }
+	
   }
 `
 

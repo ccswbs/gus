@@ -15,7 +15,7 @@ function Variants ({ progvarData }) {
 			var description = "";
 			if (courses !== null) {
 				courses.forEach(course => {
-					courseList += "<li>" + course.name + " (" + course.field_code + ")</li>";
+					courseList += "<li>" + course.title + " (" + course.field_code + ")</li>";
 				});
 				if (courseList !== "") {
 					classes = "<h3>Classes</h3><ul>" + courseList + "</ul>";
