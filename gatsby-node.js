@@ -150,7 +150,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 		title: String
 	}
 	type node__courseRelationships implements Node {
-		field_tags: [taxonomy_term__programs]
+		field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
 		paragraph__program_variants: [paragraph__program_variants]
 	}
 	type node__courseFields implements Node {
