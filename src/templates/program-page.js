@@ -90,7 +90,6 @@ export default ({data, location}) => {
           <section className="col-md-9 content-area">
             <h2>Program Overview</h2>
             <div dangerouslySetInnerHTML={{ __html: description }}  />
-            <Degrees degreesData={degreesData} />	
             <Units unitData={specData} />
           </section>
         </div>
