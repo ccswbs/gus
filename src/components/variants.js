@@ -15,7 +15,6 @@ function Variants ({ progvarData }) {
 			var description = "";
 			if (courses !== null) {
 				courses.forEach(course => {
-					//courseList += <tr><td>{course.year}</td> <td>{course.title}</td> <td>{course.field_code}</td> <td>{course.field_credits}</td></tr>;
 					courseList += 
 					"<tr>" 
 					+ "<td>" + course.field_level + "</td>"

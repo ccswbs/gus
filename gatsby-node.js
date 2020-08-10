@@ -151,7 +151,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 	}
 	type node__courseRelationships implements Node {
 		field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-		paragraph__program_variants: [paragraph__program_variants]
 	}
 	type node__courseFields implements Node {
       tags: [String]
@@ -208,7 +207,8 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   // Handle nodes that point to multiple tag vocabularies
   if (node.internal.type === `node__call_to_action` ||
       node.internal.type === `node__testimonial` ||
-      node.internal.type === `media__image`) {
+      node.internal.type === `media__image` ||
+	  node.internal.type === `node__course`) {
     createNodeField({
       node,
       name: `tags`,
