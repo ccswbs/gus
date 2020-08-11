@@ -1,30 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Variants ( { progvarData } ) {
+function Variants ( { variantData } ) {
 
 		var displayElements = [];
 		var displayProgVariants;
 		var trackPreviousElement;
-
-		progvarData.map((edge) => {
+		
+		for(let i=0;i<variantData.length;i++){
 			if(trackPreviousElement !== "paragraph__program_variants"){
 				displayProgVariants = [];
 			}
 			// display program variants as lists
-			if(edge.__typename === "paragraph__program_variants"){
-				let variantElement = (edge.field_variant_link !== null) ? <a href={edge.field_variant_link.uri}>{edge.field_variant_title}</a> : edge.field_variant_title;
-				displayProgVariants.push(<li key={edge.drupal_id}>{variantElement}</li>);
+			if(variantData[i].__typename === "paragraph__program_variants"){
+				let variantElement = (variantData[i].field_variant_link !== null) ? <a href={variantData[i].field_variant_link.uri}>{variantData[i].field_variant_title}</a> : variantData[i].field_variant_title;
+				displayProgVariants.push(<li key={variantData[i].drupal_id}>{variantElement}</li>);
+
+				// add nested list if last display element is a program variant
+				if(i === (variantData.length - 1)){
+					displayElements.push(<ul key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
+				}
 
 			// display other paragraph elements as HTML
 			}else{
+				// add nested list if next display element is not a program variant
 				if(trackPreviousElement === "paragraph__program_variants"){
-					displayElements.push(<ul>{displayProgVariants}</ul>);
+					displayElements.push(<ul key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
 				}
-				displayElements.push(<div dangerouslySetInnerHTML={{__html: edge.field_general_text.value}}/>);
+				displayElements.push(<div key={variantData[i].drupal_id} dangerouslySetInnerHTML={{__html: variantData[i].field_general_text.value}}/>);
 			}
-			trackPreviousElement = edge.__typename;
-		});
+			trackPreviousElement = variantData[i].__typename;
+		};
 
 		return (
 			<React.Fragment>
@@ -40,10 +46,10 @@ function Variants ( { progvarData } ) {
 }
 
 Variants.propTypes = {
-    progvarData: PropTypes.array,
+    variantData: PropTypes.array,
 }
 Variants.defaultProps = {
-    progvarData: null,
+    variantData: null,
 }
   
 export default Variants

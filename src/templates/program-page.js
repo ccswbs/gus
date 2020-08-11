@@ -4,8 +4,8 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import Img from 'gatsby-image';
 import SEO from '../components/seo';
-import Degrees from '../components/degrees';
-import Units from '../components/units';
+// import Degrees from '../components/degrees';
+// import Units from '../components/units';
 import Variants from '../components/variants';
 import Tags from '../components/tags';
 import CallToAction from '../components/callToAction';
@@ -15,12 +15,42 @@ import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import '../styles/program-page.css';
 
+function prepareVariantHeading (variantData) {
+  let labels = [];
+  // prepare variant data labels
+  variantData.forEach((edge) => {
+    if(edge.__typename === "paragraph__program_variants"){
+      labels.push(edge.relationships.field_variant_type.name);
+    }
+  });
+
+  const uniqueLabelSet = new Set(labels);
+  const uniqueLabels = [...uniqueLabelSet];
+  var variantHeading = "";
+
+  for(let i=0; i<uniqueLabels.length; i++){
+    if (i > 0) { 
+      if (uniqueLabels.length > 2){
+        variantHeading += ",";
+      }
+      variantHeading += " ";
+      if (i === (uniqueLabels.length - 1)){
+        variantHeading += "and ";
+      }
+    }
+
+    variantHeading += uniqueLabels[i];
+  }
+  
+  return variantHeading;
+}
+
 export default ({data, location}) => {
   var imageData;
 	var progData;
-	var degreesData;
-	var specData;
-	var progvarData;
+	// var degreesData;
+	// var specData;
+	var variantData;
   var tagData;
   var testimonialData;
   var callToActionData = [];
@@ -41,11 +71,11 @@ export default ({data, location}) => {
   const lastModified = progData.changed;
 
 	// set degree, unit, variant, and tag info  
-	degreesData = progData.relationships.field_degrees;
-	specData = progData.relationships.field_specializations;
-  progvarData = progData.relationships.field_program_variants;
+	// degreesData = progData.relationships.field_degrees;
+	// specData = progData.relationships.field_specializations;
   tagData = progData.relationships.field_tags;
-  
+  variantData = progData.relationships.field_program_variants;
+  const variantDataHeading = prepareVariantHeading(variantData);
 
   return (
 		<Layout date={lastModified}>
@@ -90,7 +120,6 @@ export default ({data, location}) => {
           <section className="col-md-9 content-area">
             <h2>Program Overview</h2>
             <div dangerouslySetInnerHTML={{ __html: description }}  />
-            <Units unitData={specData} />
           </section>
         </div>
       </div>
@@ -102,11 +131,11 @@ export default ({data, location}) => {
             <NavTabs headings={
               <>
                 <NavTabHeading active={true} heading="Courses" controls="pills-courses" />
-                <NavTabHeading heading="Certificates" controls="pills-certificates" />
+                <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />
               </>
             }>
               <NavTabContent active={true} id="pills-courses" content={"Insert Course content"} />
-              <NavTabContent id="pills-certificates" content={<Variants progvarData={progvarData} />} />
+              <NavTabContent id="pills-certificates" content={<Variants variantData={variantData} />} />
             </NavTabs>
           </div>
         </section>
