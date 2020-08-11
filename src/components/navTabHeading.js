@@ -32,7 +32,7 @@ function NavTabHeading (props) {
                 data-toggle="pill" 
                 aria-controls={props.controls} 
                 aria-selected={props.active}>
-                {props.heading}
+                {props.heading.toUpperCase()}
             </a>
     )
 }
