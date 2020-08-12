@@ -355,17 +355,18 @@ function createProgramAlias(node){
   var specializations = node.relationships.field_specializations;
 
   // if specialization exists, add `specialization-name` to alias
-  if (specializations !== null) {
-    specializations.forEach(element => {
-      alias += (slugify(element.name));
-      if (specializations.length > 1) {
+  if ((specializations !== null) && (specializations.length !== 0)) {
+    for(let i=0;i<specializations.length;i++){
+      alias += (slugify(specializations[i].name));
+      if ((specializations.length > 1) && (i < (specializations.length - 1))) {
         alias += `-`;
       }
-    });
-  } else {
-    // otherwise, add `program-name` to alias
-    alias += (slugify(node.name));
+    }
+    alias += (`/`);
   }
+
+  // add `program-name` to alias
+  alias += (slugify(node.name));
   return alias;
 }
 
