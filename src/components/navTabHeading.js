@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 
 /* 
 Example Usage:
@@ -32,7 +32,7 @@ function NavTabHeading (props) {
                 data-toggle="pill" 
                 aria-controls={props.controls} 
                 aria-selected={props.active}>
-                {props.heading.toUpperCase()}
+                    {props.heading.toUpperCase()}
             </a>
     )
 }
@@ -40,11 +40,13 @@ function NavTabHeading (props) {
 NavTabHeading.propTypes = {
     children: PropTypes.node.isRequired,
     classNames: PropTypes.string,
+    controls: PropTypes.string,
 }
   
 NavTabHeading.defaultProps = {
     children: ``,
     classNames: ``,
+    controls: ``,
   }
 
 export default NavTabHeading
