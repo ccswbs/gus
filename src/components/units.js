@@ -1,33 +1,37 @@
-import React from "react"
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { setHeadingLevel } from '../utils/ug-utils';
 
-function Units ({ unitData }) {
-    var units;
-    var unitList="";
-    if (unitData !== null) {
-        unitData.forEach(element => {
-            const field_units = element.relationships.field_units; 
-			if (field_units !== null) {
-				field_units.forEach(unit => {
-					const acronym = (unit.field_unit_acronym !== undefined && unit.field_unit_acronym !== null ? ` (` + unit.field_unit_acronym + `)`: ``);
-					unitList += "<li>" + unit.name + acronym + "</li>";
-				});
-            }			
-        });
-        if (unitList !== ""){
-            units = "<h2>Associated Units</h2><ul>" + unitList + "</ul>";
-            return <div dangerouslySetInnerHTML={{__html: units}}/>
-        }
-        
-    }
-    return null;
+function Units (props) {
+    let Heading = setHeadingLevel(props.headingLevel);
+
+	return (
+		<React.Fragment>
+			{props.specData.length !== 0 && <>
+				<Heading>Associated Units</Heading>
+				<ul>
+					{props.specData.map (element => {
+                        let field_units = element.relationships.field_units; 
+                        return (
+                            field_units.map (unit => {
+                                let acronym = (unit.field_unit_acronym !== undefined && unit.field_unit_acronym !== null ? ` (` + unit.field_unit_acronym + `)`: ``);
+                                return <li key={unit.drupal_id}>{unit.name} {acronym}</li>
+                            })
+                        )
+					})}
+				</ul>
+			</>}
+		</React.Fragment>
+	)
 }
 
 Units.propTypes = {
-    unitData: PropTypes.array,
+    specData: PropTypes.array,
+    headingLevel: PropTypes.string,
 }
 Units.defaultProps = {
-    unitData: null,
+    specData: null,
+    headingLevel: `p`,
   }
   
 export default Units

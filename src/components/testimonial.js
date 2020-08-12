@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Img from 'gatsby-image';
 import SliderResponsive from './sliderResponsive';
-import { stripHTMLTags } from '../utils/ug-utils.js';
+import { stripHTMLTags, setHeadingLevel } from '../utils/ug-utils.js';
 import '../styles/testimonial.css';
 
-function Testimonials ({ testimonialData, heading }) {
+function Testimonials (props) {
+	let Heading = setHeadingLevel(props.headingLevel);
 
-	if ((testimonialData !== null) && (testimonialData !== undefined)) {
-		const testimonialUnits  = () => testimonialData.map((testimonial, index) => {
+	if ((props.testimonialData !== null) && (props.testimonialData !== undefined)) {
+		const testimonialUnits  = () => props.testimonialData.map((testimonial, index) => {
 			var testimonialContent = stripHTMLTags(testimonial.node.body.value);
 			var testimonialPicture = testimonial.node.relationships.field_picture;
 			return <div key={testimonial.node.drupal_id}>
@@ -28,7 +29,7 @@ function Testimonials ({ testimonialData, heading }) {
 					<div className="container page-container">
 						<section className="row row-with-vspace site-content">
 							<div className="col-md-12 content-area" id="main-column">
-								<h3 className="carousel-header">{heading}</h3>
+								<Heading className="carousel-header">{props.heading}</Heading>
 								<div className="testimonial-wrapper">
 									<SliderResponsive addToControlLabel="Testimonial">{testimonialUnits()}</SliderResponsive>
 								</div>

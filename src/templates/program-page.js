@@ -4,8 +4,8 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import Img from 'gatsby-image';
 import SEO from '../components/seo';
-// import Degrees from '../components/degrees';
-// import Units from '../components/units';
+import Degrees from '../components/degrees';
+import Units from '../components/units';
 import Variants from '../components/variants';
 import Tags from '../components/tags';
 import CallToAction from '../components/callToAction';
@@ -50,8 +50,8 @@ function prepareVariantHeading (variantData) {
 export default ({data, location}) => {
   var imageData;
 	var progData;
-	// var degreesData;
-	// var specData;
+	var degreesData;
+	var specData;
 	var variantData;
   var tagData;
   var testimonialData;
@@ -73,8 +73,8 @@ export default ({data, location}) => {
   const lastModified = progData.changed;
 
 	// set degree, unit, variant, and tag info  
-	// degreesData = progData.relationships.field_degrees;
-	// specData = progData.relationships.field_specializations;
+	degreesData = progData.relationships.field_degrees;
+	specData = progData.relationships.field_specializations;
   tagData = progData.relationships.field_tags;
   variantData = progData.relationships.field_program_variants;
   const variantDataHeading = prepareVariantHeading(variantData);
@@ -125,6 +125,8 @@ export default ({data, location}) => {
           <section className="col-md-9 content-area">
             <h2>Program Overview</h2>
             <div dangerouslySetInnerHTML={{ __html: description }}  />
+            <Degrees degreesData={degreesData} headingLevel='h3' />
+            <Units specData={specData} headingLevel='h3' />
           </section>
         </div>
       </div>
@@ -136,7 +138,7 @@ export default ({data, location}) => {
             <h2>Program Information</h2>
             <NavTabs headings={
               <>
-                <NavTabHeading active={true} heading="Courses" controls="pills-courses" />
+                <NavTabHeading active={true} heading="Courses" headingLevel="h3" controls="pills-courses" />
                 {variantDataHeading !== '' && <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />}
               </>
             }>
@@ -149,7 +151,7 @@ export default ({data, location}) => {
 
       { /**** Testimonials ****/ }
       {testimonialData && 
-        <Testimonials testimonialData={testimonialData} heading={testimonialHeading} />
+        <Testimonials testimonialData={testimonialData} heading={testimonialHeading} headingLevel='h3' />
       }
 
       { /**** Call to Actions ****/ }
@@ -190,12 +192,14 @@ export const query = graphql`
           field_program_acronym
           relationships {
             field_degrees {
+              drupal_id
               name
               field_degree_acronym
             }
             field_specializations {
               relationships {
                 field_units {
+                  drupal_id
                   field_unit_acronym
                   name
                 }
