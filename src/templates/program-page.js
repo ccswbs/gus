@@ -17,9 +17,11 @@ import '../styles/program-page.css';
 
 function prepareVariantHeading (variantData) {
   let labels = [];
+
   // prepare variant data labels
   variantData.forEach((edge) => {
-    if(edge.__typename === "paragraph__program_variants"){
+    if((edge.__typename === "paragraph__program_variants") 
+    && (edge.relationships.field_variant_type !== null)) {
       labels.push(edge.relationships.field_variant_type.name);
     }
   });
@@ -85,6 +87,7 @@ export default ({data, location}) => {
       />
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 
+      { /**** Header and Title ****/ }
       <div id="rotator">
         {headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={imageData.node.field_media_image.alt} />}
         <div className="container ft-container">
@@ -92,6 +95,7 @@ export default ({data, location}) => {
         </div>
       </div>
 
+      { /**** Tags and Call to Action Button ****/ }
       <div className="full-width-container bg-dark">
           <div className="container">
               <section className="row row-with-vspace site-content">
@@ -115,6 +119,7 @@ export default ({data, location}) => {
           </div>
       </div>
 
+      { /**** Program Overview ****/ }
 			<div className="container page-container">
         <div className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
@@ -124,6 +129,7 @@ export default ({data, location}) => {
         </div>
       </div>
 
+      { /**** Program Information Tabs ****/ }
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
@@ -131,21 +137,24 @@ export default ({data, location}) => {
             <NavTabs headings={
               <>
                 <NavTabHeading active={true} heading="Courses" controls="pills-courses" />
-                <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />
+                {variantDataHeading !== '' && <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />}
               </>
             }>
               <NavTabContent active={true} id="pills-courses" content={"Insert Course content"} />
-              <NavTabContent id="pills-certificates" content={<Variants variantData={variantData} />} />
+              {variantDataHeading !== '' && <NavTabContent id="pills-certificates" content={<Variants variantData={variantData} />} />}
             </NavTabs>
           </div>
         </section>
       </div>
 
+      { /**** Testimonials ****/ }
       {testimonialData && 
         <Testimonials testimonialData={testimonialData} heading={testimonialHeading} />
       }
 
-      <div className="container page-container apply-footer">
+      { /**** Call to Actions ****/ }
+      {callToActionData.length !== 0 &&
+        <div className="container page-container apply-footer">
           <section className="row row-with-vspace site-content">
               <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
                   <h3><span>Are you ready to</span> Improve Life?</h3>
@@ -159,7 +168,8 @@ export default ({data, location}) => {
                     ))}
               </div>
           </section>
-      </div>
+        </div>
+      }
 
 		</Layout>
 	)
