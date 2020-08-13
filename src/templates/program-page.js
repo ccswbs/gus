@@ -10,6 +10,7 @@ import Variants from '../components/variants';
 import Tags from '../components/tags';
 import CallToAction from '../components/callToAction';
 import Testimonials from '../components/testimonial';
+import Courses from '../components/courses';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
@@ -20,7 +21,7 @@ function prepareVariantHeading (variantData) {
 
   // prepare variant data labels
   variantData.forEach((edge) => {
-    if((edge.__typename === "paragraph__program_variants") 
+    if ((edge.__typename === "paragraph__program_variants") 
     && (edge.relationships.field_variant_type !== null)) {
       labels.push(edge.relationships.field_variant_type.name);
     }
@@ -30,17 +31,16 @@ function prepareVariantHeading (variantData) {
   const uniqueLabels = [...uniqueLabelSet];
   var variantHeading = "";
 
-  for(let i=0; i<uniqueLabels.length; i++){
+  for (let i=0; i<uniqueLabels.length; i++) {
     if (i > 0) { 
       if (uniqueLabels.length > 2){
         variantHeading += ",";
       }
       variantHeading += " ";
-      if (i === (uniqueLabels.length - 1)){
+      if (i === (uniqueLabels.length - 1)) {
         variantHeading += "and ";
       }
     }
-
     variantHeading += uniqueLabels[i];
   }
   
@@ -59,11 +59,11 @@ export default ({data, location}) => {
 	var callToActionData = [];
 
 	// set data
-	if (data.programs.edges[0] !== undefined){ progData = data.programs.edges[0].node; }
-	if (data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
-	if (data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
-	if (data.images.edges[0] !== undefined){ imageData = data.images.edges[0]; }
-	if (data.courses.edges[0] !== undefined){ courseData = data.courses.edges; }
+	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
+	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
+	if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
 
 	// set program details
 	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
@@ -144,7 +144,7 @@ export default ({data, location}) => {
                 {variantDataHeading !== '' && <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />}
               </>
             }>
-              <NavTabContent active={true} id="pills-courses" content={"Insert Course content"} />
+              <NavTabContent active={true} id="pills-courses" content={<Courses courseData={courseData} />} />
               {variantDataHeading !== '' && <NavTabContent id="pills-certificates" content={<Variants variantData={variantData} />} />}
             </NavTabs>
           </div>
