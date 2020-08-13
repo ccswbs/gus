@@ -1,7 +1,8 @@
 import React from 'react';
 
-const Header = () => (
-    <>
+/****
+ * Sample Usage with Dropdowns:
+ * 
         <div id="header-breakpoint"></div>
         <uofg-header  class="unloaded">
             <a href="#">Apply</a>
@@ -17,6 +18,14 @@ const Header = () => (
                 </ul>
             </uofg-dropdown-menu>
         </uofg-header>
+ * 
+ * 
+ */
+
+const Header = () => (
+    <>
+        <div id="header-breakpoint"></div>
+        <uofg-header  class="unloaded"></uofg-header>
     </>
 )
 

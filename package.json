@@ -24,6 +24,7 @@
     "gatsby-source-filesystem": "^2.3.11",
     "gatsby-source-instagram": "^0.8.0",
     "gatsby-transformer-sharp": "^2.5.5",
+    "moment-timezone": "^0.5.31",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
