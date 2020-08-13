@@ -140,11 +140,15 @@ export default ({data, location}) => {
             <h2>Program Information</h2>
             <NavTabs headings={
               <>
-                <NavTabHeading active={true} heading="Courses" headingLevel="h3" controls="pills-courses" />
+			    {courseData && courseData.length  > 0 ?
+				  (<NavTabHeading active={true} heading="Courses" headingLevel="h3" controls="pills-courses" />)
+				: null}
                 {variantDataHeading !== '' && <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />}
               </>
             }>
-              <NavTabContent active={true} id="pills-courses" content={<Courses courseData={courseData} />} />
+			  {courseData && courseData.length  > 0 ?
+                (<NavTabContent active={true} id="pills-courses" content={<Courses courseData={courseData} />} />)
+			  : null}
               {variantDataHeading !== '' && <NavTabContent id="pills-certificates" content={<Variants variantData={variantData} />} />}
             </NavTabs>
           </div>
@@ -327,7 +331,7 @@ export const query = graphql`
       }
     }
 	
-	courses: allNodeCourse(filter: {fields: {tags: {in: [$id] }}}) {
+	courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           relationships {
