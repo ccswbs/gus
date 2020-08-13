@@ -50,6 +50,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type paragraph__program_variants implements Node {
+      drupal_id: String
       field_variant_title: String
       field_variant_link: FieldLink
       field_variant_info: BodyField
