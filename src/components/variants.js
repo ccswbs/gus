@@ -1,47 +1,55 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function Variants ({ progvarData }) {
-	var progvar = "";
-	var progvarList = "";
-	var courseList = "";
-	var classes = "";
-	var courseURL;
-    if (progvarData !== null) {
-		progvarData.forEach(variant => {
-			const variantName = variant.relationships.field_variant_name;
-			const variantInfo = variant.field_variant_info;
-			var courses = variant.relationships.field_courses;
-			var heading = "";
-			var description = "";
-			if (courses !== null) {
-				courses.forEach(course => {
-					var courseTitle = course.title;
-					courseURL = (course.field_course_url !== undefined && course.field_course_url !== null ? courseURL = course.field_course_url.uri : "");
-					courseTitle = (courseURL !== "" ? "<a href='" + courseURL + "'>" + courseTitle + "</a>" : courseTitle);
-					courseList += "<tr><td>" + course.field_level + "</td><td>" + courseTitle + "</td><td>" + course.field_code + "</td><td>" + course.field_credits + "</td></tr>";
-				});
-				if (courseList !== "") {
-					classes = "<h3>Courses</h3><table class='table table-borderless'><tr><th scope='col'>Year</th><th scope='col'>Class</th><th scope='col'>Code</th><th scope='col'>Credits</th></tr>" + courseList + "</table>";
-				}
+function Variants ( { variantData } ) {
+
+	var displayElements = [];
+	var displayProgVariants;
+	var trackPreviousElement;
+	
+	for (let i=0;i<variantData.length;i++) {
+		if (trackPreviousElement !== "paragraph__program_variants"){
+			displayProgVariants = [];
+		}
+		// display program variants as lists
+		if (variantData[i].__typename === "paragraph__program_variants") {
+			let variantElement = (variantData[i].field_variant_link !== null) ? <a href={variantData[i].field_variant_link.uri}>{variantData[i].field_variant_title}</a> : variantData[i].field_variant_title;
+			displayProgVariants.push(<li key={variantData[i].drupal_id}>{variantElement}</li>);
+
+			// add nested list if last display element is a program variant
+			if (i === (variantData.length - 1)) {
+				displayElements.push(<ul key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
 			}
-			heading = (variantName !== undefined && variantName !== null ? "<h3>" + variantName.name + "</h3>" : "");
-			description = (variantInfo !== undefined && variantInfo !== null ? variantInfo.value: "");
-			progvar += heading + description + classes;
-		});
-		if (progvar !== "") {
-			progvarList = "<h2>Program Information</h2>" + progvar;
-			return <div dangerouslySetInnerHTML={{__html: progvarList}} />
-		}		
-    }
-    return null;
+
+		// display other paragraph elements as HTML
+		} else {
+			// add nested list if next display element is not a program variant
+			if(trackPreviousElement === "paragraph__program_variants"){
+				displayElements.push(<ul key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
+			}
+			displayElements.push(<div key={variantData[i].drupal_id} dangerouslySetInnerHTML={{__html: variantData[i].field_general_text.value}}/>);
+		}
+		trackPreviousElement = variantData[i].__typename;
+	};
+
+	return (
+		<React.Fragment>
+			{displayElements.length > 0 && (
+				<div>
+					{displayElements.map((element) => {
+						return element;
+					})}
+				</div>
+			)}
+		</React.Fragment>
+	)
 }
 
 Variants.propTypes = {
-    progvarData: PropTypes.array,
+    variantData: PropTypes.array,
 }
 Variants.defaultProps = {
-    progvarData: null,
+    variantData: null,
 }
   
 export default Variants

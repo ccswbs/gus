@@ -1,36 +1,69 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import Layout from '../components/layout'
-import Img from "gatsby-image"
-import SEO from '../components/seo'
-import Degrees from '../components/degrees'
-import Units from '../components/units'
-import Variants from '../components/variants'
-import Tags from '../components/tags'
-import Courses from '../components/courses'
-import CallToAction from '../components/callToAction'
-import Testimonials from '../components/testimonial'
-import { Helmet } from 'react-helmet'
-import '../styles/program-page.css'
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { graphql } from 'gatsby';
+import Layout from '../components/layout';
+import Img from 'gatsby-image';
+import SEO from '../components/seo';
+import Degrees from '../components/degrees';
+import Units from '../components/units';
+import Variants from '../components/variants';
+import Tags from '../components/tags';
+import CallToAction from '../components/callToAction';
+import Testimonials from '../components/testimonial';
+import NavTabs from '../components/navTabs';
+import NavTabHeading from '../components/navTabHeading';
+import NavTabContent from '../components/navTabContent';
+import '../styles/program-page.css';
 
+function prepareVariantHeading (variantData) {
+  let labels = [];
+
+  // prepare variant data labels
+  variantData.forEach((edge) => {
+    if((edge.__typename === "paragraph__program_variants") 
+    && (edge.relationships.field_variant_type !== null)) {
+      labels.push(edge.relationships.field_variant_type.name);
+    }
+  });
+
+  const uniqueLabelSet = new Set(labels);
+  const uniqueLabels = [...uniqueLabelSet];
+  var variantHeading = "";
+
+  for(let i=0; i<uniqueLabels.length; i++){
+    if (i > 0) { 
+      if (uniqueLabels.length > 2){
+        variantHeading += ",";
+      }
+      variantHeading += " ";
+      if (i === (uniqueLabels.length - 1)){
+        variantHeading += "and ";
+      }
+    }
+
+    variantHeading += uniqueLabels[i];
+  }
+  
+  return variantHeading;
+}
 
 export default ({data, location}) => {
 	var imageData;
 	var progData;
 	var degreesData;
 	var specData;
-	var progvarData;
+	var courseData;
+	var variantData;
 	var tagData;
 	var testimonialData;
 	var callToActionData = [];
-	var courseData;
 
-  // set data
-	if(data.programs.edges[0] !== undefined){ progData = data.programs.edges[0].node; }
-	if(data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
-	if(data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
-	if(data.images.edges[0] !== undefined){ imageData = data.images.edges[0]; }
-	if(data.courses.edges[0] !== undefined){ courseData = data.courses.edges; }
+	// set data
+	if (data.programs.edges[0] !== undefined){ progData = data.programs.edges[0].node; }
+	if (data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
+	if (data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
+	if (data.images.edges[0] !== undefined){ imageData = data.images.edges[0]; }
+	if (data.courses.edges[0] !== undefined){ courseData = data.courses.edges; }
 
 	// set program details
 	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
@@ -44,19 +77,19 @@ export default ({data, location}) => {
 	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
 	specData = progData.relationships.field_specializations;
-	progvarData = progData.relationships.field_program_variants;
 	tagData = progData.relationships.field_tags;
-
-
+	variantData = progData.relationships.field_program_variants;
+	const variantDataHeading = prepareVariantHeading(variantData);
 
   return (
-		<Layout date={lastModified}>
+	<Layout date={lastModified}>
       <Helmet bodyAttributes={{
           class: 'program'
       }}
-      />
-			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+    />
+	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 
+      { /**** Header and Title ****/ }
       <div id="rotator">
         {headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={imageData.node.field_media_image.alt} />}
         <div className="container ft-container">
@@ -64,6 +97,7 @@ export default ({data, location}) => {
         </div>
       </div>
 
+      { /**** Tags and Call to Action Button ****/ }
       <div className="full-width-container bg-dark">
           <div className="container">
               <section className="row row-with-vspace site-content">
@@ -87,24 +121,44 @@ export default ({data, location}) => {
           </div>
       </div>
 
+    { /**** Program Overview ****/ }
 	<div className="container page-container">
         <div className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
             <h2>Program Overview</h2>
-            <div dangerouslySetInnerHTML={{ __html: description }}  />
-            <Degrees degreesData={degreesData} />	
-            <Variants progvarData={progvarData} />		  
-            <Units unitData={specData} />
-			<Courses courseData={courseData} />
+            <div dangerouslySetInnerHTML={{ __html: description }}  />			
+            <Degrees degreesData={degreesData} headingLevel='h3' />
+            <Units specData={specData} headingLevel='h3' />
           </section>
         </div>
     </div>
 
+      { /**** Program Information Tabs ****/ }
+      <div className="container page-container">
+        <section className="row row-with-vspace site-content">
+          <div className="col-md-12 content-area">
+            <h2>Program Information</h2>
+            <NavTabs headings={
+              <>
+                <NavTabHeading active={true} heading="Courses" headingLevel="h3" controls="pills-courses" />
+                {variantDataHeading !== '' && <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />}
+              </>
+            }>
+              <NavTabContent active={true} id="pills-courses" content={"Insert Course content"} />
+              {variantDataHeading !== '' && <NavTabContent id="pills-certificates" content={<Variants variantData={variantData} />} />}
+            </NavTabs>
+          </div>
+        </section>
+      </div>
+
+      { /**** Testimonials ****/ }
       {testimonialData && 
-        <Testimonials testimonialData={testimonialData} heading={testimonialHeading} />
+        <Testimonials testimonialData={testimonialData} heading={testimonialHeading} headingLevel='h3' />
       }
 
-      <div className="container page-container apply-footer">
+      { /**** Call to Actions ****/ }
+      {callToActionData.length !== 0 &&
+        <div className="container page-container apply-footer">
           <section className="row row-with-vspace site-content">
               <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
                   <h3><span>Are you ready to</span> Improve Life?</h3>
@@ -118,7 +172,8 @@ export default ({data, location}) => {
                     ))}
               </div>
           </section>
-      </div>
+        </div>
+      }
 
 		</Layout>
 	)
@@ -129,7 +184,7 @@ export const query = graphql`
     programs: allTaxonomyTermPrograms(filter: {id: {eq: $id}}) {
       edges {
         node {
-          changed(formatString: "MMMM D, YYYY HH:mm z")
+          changed
           drupal_id
           drupal_internal__tid
           name
@@ -139,34 +194,41 @@ export const query = graphql`
           field_program_acronym
           relationships {
             field_degrees {
+              drupal_id
               name
               field_degree_acronym
             }
             field_specializations {
               relationships {
                 field_units {
+                  drupal_id
                   field_unit_acronym
                   name
                 }
               }
             }
             field_program_variants {
-              relationships {
-                field_variant_name {
-                  name
-                }
-				field_courses {
-                  title
-				  field_code
-				  field_course_url {
-                    uri
-                  }
-				  field_credits
-                  field_level
+              __typename
+              ... on paragraph__general_text {
+                drupal_id
+                field_general_text {
+                  value
                 }
               }
-              field_variant_info {
-                value
+              ... on paragraph__program_variants {
+                drupal_id
+                field_variant_title
+                field_variant_link {
+                  uri
+                }
+                field_variant_info {
+                  value
+                }
+                relationships {
+                  field_variant_type {
+                    name
+                  }
+                }
               }
             }
             field_tags {

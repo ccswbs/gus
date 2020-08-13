@@ -1,5 +1,6 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from 'react'
+import PropTypes from 'prop-types'
+import SkipLink from './components/skiplink'
 
 export default function HTML(props) {
   return (
@@ -12,12 +13,16 @@ export default function HTML(props) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         {props.headComponents}
+        <script defer src="/UofGHeader.js"></script>
+        <link rel="stylesheet" href="/UofGHeader.css"></link>
       </head>
       <body {...props.bodyAttributes}>
+        <SkipLink mainContent="#content"/>
         {props.preBodyComponents}
         <noscript key="noscript" id="gatsby-noscript">
           This app works best with JavaScript enabled.
         </noscript>
+        {/* <Header /> */}
         <div
           key={`body`}
           id="___gatsby"
@@ -27,7 +32,6 @@ export default function HTML(props) {
         <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" crossOrigin="anonymous"></script>
         <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossOrigin="anonymous"></script>
         <script defer type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" crossOrigin="anonymous"></script>
-
       </body>
     </html>
   )
