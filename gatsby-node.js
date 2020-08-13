@@ -45,6 +45,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type paragraph__general_text implements Node {
+      drupal_id: String
       field_general_text: BodyField
     }
 
