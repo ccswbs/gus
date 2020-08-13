@@ -7,7 +7,7 @@ import '../styles/global.css'
 
 const Layout = ({ children, date }) => (
       <>
-        <main className="main-container">
+        <main id="content" className="main-container">
           {children}
           <DateModified date={date}/>
         </main>

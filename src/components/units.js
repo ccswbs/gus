@@ -7,7 +7,7 @@ function Units (props) {
 
 	return (
 		<React.Fragment>
-			{props.specData.length !== 0 && <>
+			{props.specData !== null && props.specData.length !== 0 && <>
 				<Heading>Associated Units</Heading>
 				<ul>
 					{props.specData.map (element => {

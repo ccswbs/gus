@@ -44,9 +44,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [taxonomy_term__tags]
     }
     type paragraph__general_text implements Node {
+      drupal_id: String
       field_general_text: BodyField
     }
     type paragraph__program_variants implements Node {
+      drupal_id: String
       field_variant_title: String
       field_variant_link: FieldLink
       field_variant_info: BodyField
