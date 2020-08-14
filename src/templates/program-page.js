@@ -28,8 +28,17 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
       (courseData !== null && courseData !== undefined && courseData.length > 0 )){
     activeTab = true;
     checkIfContentAvailable = true;
-    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeTab} heading="Courses" headingLevel="h3" controls="pills-courses" />);
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} active={activeTab} id="pills-courses" content={<Courses courseData={courseData} courseNotes={courseNotes} />} />);
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                        active={activeTab} 
+                                        heading="Courses" 
+                                        controls="pills-courses" />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeTab} 
+                                      heading="Courses" 
+                                      headingLevel="h3" 
+                                      id="pills-courses" 
+                                      content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} />);
     key++;
   }
 
@@ -37,8 +46,17 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
   if( variantDataHeading !== '') {
     activeTab = (activeTab === false) ? true : false;
     checkIfContentAvailable = true;
-    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeTab} heading={variantDataHeading} controls="pills-certificates" />);
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} active={activeTab} id="pills-certificates" content={<Variants variantData={variantData} />} />);
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                      active={activeTab} 
+                                      heading={variantDataHeading} 
+                                      controls="pills-certificates" />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeTab} 
+                                      heading={variantDataHeading} 
+                                      headingLevel="h3" 
+                                      id="pills-certificates" 
+                                      content={<Variants variantData={variantData} />} />);
   }
 
   if(checkIfContentAvailable === true){

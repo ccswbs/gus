@@ -13,7 +13,7 @@
     color: #000;
 }
 
-#pills-courses h3.course-notes-heading {
+#pills-courses .course-notes-heading {
     font-size: 1.6rem;
     line-height: 1.5rem;
     padding-top: 0.75rem;

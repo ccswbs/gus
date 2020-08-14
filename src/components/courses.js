@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { setHeadingLevel } from '../utils/ug-utils';
 import '../styles/courses.css';
 
-function Courses ({ courseData, courseNotes }) {
+function Courses ({ courseData, courseNotes, headingLevel }) {
 	var courses;
 	var courseURL;
 	var courseList="";
@@ -11,7 +12,7 @@ function Courses ({ courseData, courseNotes }) {
 
 	if ((courseData !== null) && (courseData !== undefined)) {
 		courseData.forEach(course => {
-			var courseTitle = course.node.title;
+			let courseTitle = course.node.title;
 			let displayLevel = "";
 			if(trackCourseLevel !== course.node.field_level){
 				trackCourseLevel = course.node.field_level;
@@ -35,7 +36,7 @@ function Courses ({ courseData, courseNotes }) {
 	}
 
 	if (courseNotes !== null) {
-		coursesDisplay += "<div class='col-lg-6'><h3 class='course-notes-heading'>Notes</h3>" + courseNotes + "</div>";
+		coursesDisplay += "<div class='col-lg-6'><" + headingLevel + " class='course-notes-heading'>Notes</" + headingLevel + ">" + courseNotes + "</div>";
 	}
 
 	coursesDisplay += "</section>";

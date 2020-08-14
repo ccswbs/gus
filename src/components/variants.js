@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Variants ( { variantData } ) {
-
 	var displayElements = [];
 	var displayProgVariants;
 	var trackPreviousElement;
