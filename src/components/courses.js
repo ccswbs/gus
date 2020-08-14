@@ -29,13 +29,13 @@ function Courses ({ courseData, courseNotes }) {
 			courseList += "</tr>";
 		});
 		if (courseList !== "") {
-			courses = "<div class='col-md-6'><table class='table table-borderless'><thead><tr><th scope='col'>Year</th><th scope='col'>Class</th><th scope='col'>Code</th><th scope='col'>Credits</th></tr></thead><tbody>" + courseList + "</tbody></table></div>";
+			courses = "<div class='col-lg-6'><table class='table table-borderless'><thead><tr><th scope='col'>Year</th><th scope='col'>Class</th><th scope='col'>Code</th><th scope='col'>Credits</th></tr></thead><tbody>" + courseList + "</tbody></table></div>";
 			coursesDisplay += courses;
 		}		
 	}
 
 	if (courseNotes !== null) {
-		coursesDisplay += "<div class='col-md-6'><h3 class='course-notes-heading'>Notes</h3>" + courseNotes + "</div>";
+		coursesDisplay += "<div class='col-lg-6'><h3 class='course-notes-heading'>Notes</h3>" + courseNotes + "</div>";
 	}
 
 	coursesDisplay += "</section>";
