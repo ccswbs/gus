@@ -7,7 +7,7 @@ function Courses ({ courseData, courseNotes }) {
 	var courseURL;
 	var courseList="";
 	var trackCourseLevel="";
-	var coursesDisplay="<div class='container'><section class='row row-with-vspace'>";
+	var coursesDisplay="<section class='row row-with-vspace'>";
 
 	if ((courseData !== null) && (courseData !== undefined)) {
 		courseData.forEach(course => {
@@ -38,9 +38,9 @@ function Courses ({ courseData, courseNotes }) {
 		coursesDisplay += "<div class='col-md-6'><h3 class='course-notes-heading'>Notes</h3>" + courseNotes + "</div>";
 	}
 
-	coursesDisplay += "</section></div>";
+	coursesDisplay += "</section>";
 
-	return <div dangerouslySetInnerHTML={{__html: coursesDisplay}}/>
+	return <div className="container" dangerouslySetInnerHTML={{__html: coursesDisplay}}/>
 }
 
 Courses.propTypes = {
