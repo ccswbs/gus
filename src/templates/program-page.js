@@ -24,11 +24,12 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
   let key = 0;
 
   // prep courses tab
-  if((courseNotes !== null) || (courseData !== null && courseData !== undefined && courseData.length > 0 )){
+  if((courseNotes !== null && courseNotes !== "") || 
+      (courseData !== null && courseData !== undefined && courseData.length > 0 )){
     activeTab = true;
     checkIfContentAvailable = true;
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeTab} heading="Courses" headingLevel="h3" controls="pills-courses" />);
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} active={activeTab} id="pills-courses" content={<Courses courseData={courseData} />} />);
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} active={activeTab} id="pills-courses" content={<Courses courseData={courseData} courseNotes={courseNotes} />} />);
     key++;
   }
 
