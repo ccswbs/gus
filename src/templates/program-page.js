@@ -16,6 +16,46 @@ import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import '../styles/program-page.css';
 
+function renderProgramInfo (courseData, variantDataHeading, variantData) {
+  let activeTab = false;
+  let checkIfContentAvailable = false;
+  let navTabHeadings = [];
+  let navTabContent = [];
+
+  // prep courses tab
+  if( courseData !== null && courseData !== undefined && courseData.length > 0 ){
+    activeTab = true;
+    checkIfContentAvailable = true;
+    navTabHeadings.push(<NavTabHeading active={activeTab} heading="Courses" headingLevel="h3" controls="pills-courses" />);
+    navTabContent.push(<NavTabContent active={activeTab} id="pills-courses" content={<Courses courseData={courseData} />} />);
+  }
+
+  // prep variants tab
+  if( variantDataHeading !== '') {
+    activeTab = (activeTab === false) ? true : false;
+    checkIfContentAvailable = true;
+    navTabHeadings.push(<NavTabHeading active={activeTab} heading={variantDataHeading} controls="pills-certificates" />);
+    navTabContent.push(<NavTabContent active={activeTab} id="pills-certificates" content={<Variants variantData={variantData} />} />);
+  }
+
+  if(checkIfContentAvailable === true){
+    return <React.Fragment>
+              <h2>Program Information</h2>
+              <NavTabs headings={
+                navTabHeadings.map((heading) => {
+                  return heading;
+                })
+              }>
+              {navTabContent.map((content) => {
+                return content;
+              })}
+              </NavTabs>
+            </React.Fragment>
+  }
+
+  return null;
+}
+
 function prepareVariantHeading (variantData) {
   let labels = [];
 
@@ -137,20 +177,7 @@ export default ({data, location}) => {
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
-            <h2>Program Information</h2>
-            <NavTabs headings={
-              <>
-			    {courseData && courseData.length  > 0 ?
-				  (<NavTabHeading active={true} heading="Courses" headingLevel="h3" controls="pills-courses" />)
-				: null}
-                {variantDataHeading !== '' && <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />}
-              </>
-            }>
-			  {courseData && courseData.length  > 0 ?
-                (<NavTabContent active={true} id="pills-courses" content={<Courses courseData={courseData} />} />)
-			  : null}
-              {variantDataHeading !== '' && <NavTabContent id="pills-certificates" content={<Variants variantData={variantData} />} />}
-            </NavTabs>
+            {renderProgramInfo(courseData,variantDataHeading, variantData)}
           </div>
         </section>
       </div>
