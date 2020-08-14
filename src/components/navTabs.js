@@ -35,7 +35,7 @@ function NavTabs (props) {
 NavTabs.propTypes = {
     children: PropTypes.node.isRequired,
     classNames: PropTypes.string,
-    headings: PropTypes.object,
+    headings: PropTypes.array,
 }
   
 NavTabs.defaultProps = {

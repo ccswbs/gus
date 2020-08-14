@@ -16,26 +16,28 @@ import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import '../styles/program-page.css';
 
-function renderProgramInfo (courseData, variantDataHeading, variantData) {
+function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData) {
   let activeTab = false;
   let checkIfContentAvailable = false;
   let navTabHeadings = [];
   let navTabContent = [];
+  let key = 0;
 
   // prep courses tab
-  if( courseData !== null && courseData !== undefined && courseData.length > 0 ){
+  if((courseNotes !== null) || (courseData !== null && courseData !== undefined && courseData.length > 0 )){
     activeTab = true;
     checkIfContentAvailable = true;
-    navTabHeadings.push(<NavTabHeading active={activeTab} heading="Courses" headingLevel="h3" controls="pills-courses" />);
-    navTabContent.push(<NavTabContent active={activeTab} id="pills-courses" content={<Courses courseData={courseData} />} />);
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeTab} heading="Courses" headingLevel="h3" controls="pills-courses" />);
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} active={activeTab} id="pills-courses" content={<Courses courseData={courseData} />} />);
+    key++;
   }
 
   // prep variants tab
   if( variantDataHeading !== '') {
     activeTab = (activeTab === false) ? true : false;
     checkIfContentAvailable = true;
-    navTabHeadings.push(<NavTabHeading active={activeTab} heading={variantDataHeading} controls="pills-certificates" />);
-    navTabContent.push(<NavTabContent active={activeTab} id="pills-certificates" content={<Variants variantData={variantData} />} />);
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeTab} heading={variantDataHeading} controls="pills-certificates" />);
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} active={activeTab} id="pills-certificates" content={<Variants variantData={variantData} />} />);
   }
 
   if(checkIfContentAvailable === true){
@@ -179,7 +181,7 @@ export default ({data, location}) => {
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData,variantDataHeading, variantData)}
+            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData)}
           </div>
         </section>
       </div>
