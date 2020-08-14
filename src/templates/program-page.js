@@ -112,7 +112,9 @@ export default ({data, location}) => {
 	&& progData.description !== null ? progData.description.processed:``);
 	const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
-	const lastModified = progData.changed;
+  const lastModified = progData.changed;
+  const courseNotes = (progData.field_course_notes !== undefined 
+    && progData.field_course_notes !== null ? progData.field_course_notes.processed:``);
 
 	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
@@ -223,6 +225,9 @@ export const query = graphql`
             processed
           }
           field_program_acronym
+          field_course_notes {
+            processed
+          }
           relationships {
             field_degrees {
               drupal_id

@@ -34,6 +34,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
       field_program_acronym: String
+      field_course_notes: BodyField
       relationships: taxonomy_term__programsRelationships
       fields: FieldsPathAlias
     }
