@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react';
-import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 /* 
 Example Usage:

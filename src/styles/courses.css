@@ -1,0 +1,21 @@
+#pills-courses .container {
+    padding-left: 0;
+    padding-right: 0;
+}
+#pills-courses table {
+    color: #555;
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+}
+
+#pills-courses table th,
+#pills-courses .course-field-level {
+    color: #000;
+}
+
+#pills-courses .course-notes-heading {
+    font-size: 1.6rem;
+    line-height: 1.5rem;
+    padding-top: 0.75rem;
+    margin-top: 4px;
+}

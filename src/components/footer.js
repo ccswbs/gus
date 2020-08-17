@@ -11,15 +11,15 @@ const Footer = () => (
 							<img src="https://www.uoguelph.ca/img/improve-life.svg" alt="Improve Life" className="footer-tagline" />
 						</a>
 						<ul id="socialicons" className="nav navbar-nav navbar-left col-md-4 col-sm-12">
-							<li><a alt="Twitter" aria-label="twitter" href="http://twitter.com/uofg">
-								<i className="fab fa-twitter" aria-hidden="true"></i></a></li>
-							<li><a alt="Facebook" aria-label="facebook" href="https://www.facebook.com/uofguelph">
+							<li><a aria-label="twitter" href="http://twitter.com/uofg">
+								<i className="fab fa-twitter" aria-hidden="true"></i><span className="sr-only">Twitter</span></a></li>
+							<li><a aria-label="facebook" href="https://www.facebook.com/uofguelph">
 								<i className="fab fa-facebook" aria-hidden="true"></i><span className="sr-only">Facebook</span></a></li>
-							<li><a alt="Instagram" aria-label="instagram" href="https://instagram.com/uofguelph/">
+							<li><a aria-label="instagram" href="https://instagram.com/uofguelph/">
 								<i className="fab fa-instagram" aria-hidden="true"></i><span className="sr-only">Instagram</span></a></li>
-							<li><a alt="Youtube" aria-label="youtube" href="https://www.youtube.com/uofguelph">
+							<li><a aria-label="youtube" href="https://www.youtube.com/uofguelph">
 								<i className="fab fa-youtube" aria-hidden="true"></i><span className="sr-only">YouTube</span></a></li>
-							<li><a alt="LinkedIn" aria-label="linkedin" href="https://www.linkedin.com/company/university-of-guelph">
+							<li><a aria-label="linkedin" href="https://www.linkedin.com/company/university-of-guelph">
 								<i className="fab fa-linkedin" aria-hidden="true"></i><span className="sr-only">LinkedIn</span></a></li>
 							<li className="smdirectory"><a href="http://www.uoguelph.ca/web/socialmedia/">Social Media Directory</a></li>
 						</ul>
