@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { setHeadingLevel } from '../utils/ug-utils';
 import '../styles/courses.css';
 
 function Courses ({ courseData, courseNotes, headingLevel }) {
@@ -30,7 +29,7 @@ function Courses ({ courseData, courseNotes, headingLevel }) {
 			courseList += "</tr>";
 		});
 		if (courseList !== "") {
-			courses = "<div class='col-lg-6'><table class='table table-borderless'><thead><tr><th scope='col'>Year</th><th scope='col'>Class</th><th scope='col'>Code</th><th scope='col'>Credits</th></tr></thead><tbody>" + courseList + "</tbody></table></div>";
+			courses = "<div class='col-lg-6'><div class='table-responsive'><table class='table table-borderless'><thead><tr><th scope='col'>Year</th><th scope='col'>Class</th><th scope='col'>Code</th><th scope='col'>Credits</th></tr></thead><tbody>" + courseList + "</tbody></table></div></div>";
 			coursesDisplay += courses;
 		}		
 	}
