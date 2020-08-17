@@ -10,17 +10,79 @@ import Variants from '../components/variants';
 import Tags from '../components/tags';
 import CallToAction from '../components/callToAction';
 import Testimonials from '../components/testimonial';
+import Courses from '../components/courses';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import '../styles/program-page.css';
+
+function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData) {
+  let activeTab = false;
+  let checkIfContentAvailable = false;
+  let navTabHeadings = [];
+  let navTabContent = [];
+  let key = 0;
+
+  // prep courses tab
+  if((courseNotes !== null && courseNotes !== "") || 
+      (courseData !== null && courseData !== undefined && courseData.length > 0 )){
+    activeTab = true;
+    checkIfContentAvailable = true;
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                        active={activeTab} 
+                                        heading="Courses" 
+                                        controls="pills-courses" />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeTab} 
+                                      heading="Courses" 
+                                      headingLevel="h3" 
+                                      id="pills-courses" 
+                                      content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} />);
+    key++;
+  }
+
+  // prep variants tab
+  if( variantDataHeading !== '') {
+    activeTab = (activeTab === false) ? true : false;
+    checkIfContentAvailable = true;
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                      active={activeTab} 
+                                      heading={variantDataHeading} 
+                                      controls="pills-certificates" />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeTab} 
+                                      heading={variantDataHeading} 
+                                      headingLevel="h3" 
+                                      id="pills-certificates" 
+                                      content={<Variants variantData={variantData} />} />);
+  }
+
+  if(checkIfContentAvailable === true){
+    return <React.Fragment>
+              <h2>Program Information</h2>
+              <NavTabs headings={
+                navTabHeadings.map((heading) => {
+                  return heading;
+                })
+              }>
+              {navTabContent.map((content) => {
+                return content;
+              })}
+              </NavTabs>
+            </React.Fragment>
+  }
+
+  return null;
+}
 
 function prepareVariantHeading (variantData) {
   let labels = [];
 
   // prepare variant data labels
   variantData.forEach((edge) => {
-    if((edge.__typename === "paragraph__program_variants") 
+    if ((edge.__typename === "paragraph__program_variants") 
     && (edge.relationships.field_variant_type !== null)) {
       labels.push(edge.relationships.field_variant_type.name);
     }
@@ -30,17 +92,16 @@ function prepareVariantHeading (variantData) {
   const uniqueLabels = [...uniqueLabelSet];
   var variantHeading = "";
 
-  for(let i=0; i<uniqueLabels.length; i++){
+  for (let i=0; i<uniqueLabels.length; i++) {
     if (i > 0) { 
       if (uniqueLabels.length > 2){
         variantHeading += ",";
       }
       variantHeading += " ";
-      if (i === (uniqueLabels.length - 1)){
+      if (i === (uniqueLabels.length - 1)) {
         variantHeading += "and ";
       }
     }
-
     variantHeading += uniqueLabels[i];
   }
   
@@ -48,44 +109,48 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-  var imageData;
+	var imageData;
 	var progData;
 	var degreesData;
 	var specData;
+	var courseData;
 	var variantData;
-  var tagData;
-  var testimonialData;
-  var callToActionData = [];
+	var tagData;
+	var testimonialData;
+	var callToActionData = [];
 
-  // set data
-	if(data.programs.edges[0] !== undefined){ progData = data.programs.edges[0].node; }
-  if(data.testimonials.edges[0] !== undefined){ testimonialData = data.testimonials.edges; }
-  if(data.ctas.edges[0] !== undefined){ callToActionData = data.ctas.edges; }
-  if(data.images.edges[0] !== undefined){ imageData = data.images.edges[0]; }
-  
-  // set program details
-  const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
+	// set data
+	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
+	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
+	if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
+
+	// set program details
+	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
 	const title = progData.name;
 	const description = (progData.description !== undefined 
 	&& progData.description !== null ? progData.description.processed:``);
-  const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
-  const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+	const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
+	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
   const lastModified = progData.changed;
+  const courseNotes = (progData.field_course_notes !== undefined 
+    && progData.field_course_notes !== null ? progData.field_course_notes.processed:``);
 
-	// set degree, unit, variant, and tag info  
+	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
 	specData = progData.relationships.field_specializations;
-  tagData = progData.relationships.field_tags;
-  variantData = progData.relationships.field_program_variants;
-  const variantDataHeading = prepareVariantHeading(variantData);
+	tagData = progData.relationships.field_tags;
+	variantData = progData.relationships.field_program_variants;
+	const variantDataHeading = prepareVariantHeading(variantData);
 
   return (
-		<Layout date={lastModified}>
+	<Layout date={lastModified}>
       <Helmet bodyAttributes={{
           class: 'program'
       }}
-      />
-			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+    />
+	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 
       { /**** Header and Title ****/ }
       <div id="rotator">
@@ -119,32 +184,23 @@ export default ({data, location}) => {
           </div>
       </div>
 
-      { /**** Program Overview ****/ }
-			<div className="container page-container">
+    { /**** Program Overview ****/ }
+	<div className="container page-container">
         <div className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
             <h2>Program Overview</h2>
-            <div dangerouslySetInnerHTML={{ __html: description }}  />
+            <div dangerouslySetInnerHTML={{ __html: description }}  />			
             <Degrees degreesData={degreesData} headingLevel='h3' />
             <Units specData={specData} headingLevel='h3' />
           </section>
         </div>
-      </div>
+    </div>
 
       { /**** Program Information Tabs ****/ }
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
-            <h2>Program Information</h2>
-            <NavTabs headings={
-              <>
-                <NavTabHeading active={true} heading="Courses" headingLevel="h3" controls="pills-courses" />
-                {variantDataHeading !== '' && <NavTabHeading heading={variantDataHeading} controls="pills-certificates" />}
-              </>
-            }>
-              <NavTabContent active={true} id="pills-courses" content={"Insert Course content"} />
-              {variantDataHeading !== '' && <NavTabContent id="pills-certificates" content={<Variants variantData={variantData} />} />}
-            </NavTabs>
+            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData)}
           </div>
         </section>
       </div>
@@ -190,6 +246,9 @@ export const query = graphql`
             processed
           }
           field_program_acronym
+          field_course_notes {
+            processed
+          }
           relationships {
             field_degrees {
               drupal_id
@@ -324,6 +383,31 @@ export const query = graphql`
         }
       }
     }
+	
+	courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+          }
+		  field_code
+          field_course_url {
+            uri
+          }
+          field_credits
+          field_level
+          title
+        }
+      }
+    }
+	
   }
 `
 

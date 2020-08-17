@@ -123,21 +123,6 @@ body.program hr {
 
 /* Program Info */
 
-body.program table a:hover,
-body.program table a:focus {
-    text-decoration: underline;
-}
-
-body.program table {
-    width: 50%;
-    float: left;
-    color: #555;
-}
-
-body.program table th {
-    color: #000;
-}
-
 body.program .employer-wrapper img {
     width: 20%;
     margin-right: 5%;

@@ -34,6 +34,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
       field_program_acronym: String
+      field_course_notes: BodyField
       relationships: taxonomy_term__programsRelationships
       fields: FieldsPathAlias
     }
@@ -43,12 +44,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
       field_tags: [taxonomy_term__tags]
     }
-
     type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
     }
-
     type paragraph__program_variants implements Node {
       drupal_id: String
       field_variant_title: String
@@ -57,19 +56,18 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: paragraph__program_variantsRelationships
     }
     type paragraph__program_variantsRelationships {
+      field_variant_name: taxonomy_term__program_variant_type
       field_variant_type: taxonomy_term__program_variant_type
     }
     type taxonomy_term__program_variant_type implements Node {
       name: String
     }
-
     type taxonomy_term__tags implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
     }
-
     type taxonomy_term__specializations implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -81,7 +79,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__specializationsRelationships {
       field_units: [taxonomy_term__units]
     }
-
     type taxonomy_term__degrees implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -89,7 +86,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
-
     type taxonomy_term__units implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -97,14 +93,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
-
     type taxonomy_term__goals implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
       field_goal_action: String
     }
-
     type node__page implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -115,7 +109,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__pageRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-
     type node__testimonial implements Node {
         drupal_id: String
         drupal_internal__tid: Int
@@ -125,7 +118,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         field_picture: PictureField
         relationships: node__testimonialRelationships
         fields: node__testimonialFields
-      }
+    }
     type node__testimonialRelationships {
       field_picture: file__file @link(from: "field_picture___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
@@ -133,7 +126,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialFields implements Node {
       tags: [String]
     }
-
     type node__call_to_action implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -149,7 +141,27 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__call_to_actionFields implements Node {
       tags: [String]
     }
-
+	type node__course implements Node {
+		drupal_id: String
+		drupal_internal__tid: Int
+		title: String
+		field_code: String
+		field_course_url: node__courseField_course_url
+		field_credits: String
+		field_level: Int
+		relationships: node__courseRelationships
+		fields: node__courseFields
+	}
+	type node__courseField_course_url implements Node {
+		uri: String
+		title: String
+	}
+	type node__courseRelationships implements Node {
+		field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+	}
+	type node__courseFields implements Node {
+      tags: [String]
+    }
     type media__image implements Node {
       drupal_id: String
       name: String
@@ -164,7 +176,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type media__imageFields implements Node {
       tags: [String]
     }
-
     type PictureField implements Node {
       alt: String
     }
@@ -209,7 +220,8 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   // Handle nodes that point to multiple tag vocabularies
   if (node.internal.type === `node__call_to_action` ||
       node.internal.type === `node__testimonial` ||
-      node.internal.type === `media__image`) {
+      node.internal.type === `media__image` ||
+	  node.internal.type === `node__course`) {
     createNodeField({
       node,
       name: `tags`,
