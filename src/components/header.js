@@ -4,7 +4,7 @@ import React from 'react';
  * Sample Usage with Dropdowns:
  * 
         <div id="header-breakpoint"></div>
-        <uofg-header  class="unloaded">
+        <uofg-header class="unloaded">
             <a href="#">Apply</a>
             <uofg-dropdown-menu>
             <span className="opener">Dropdown Example</span>
@@ -25,7 +25,7 @@ import React from 'react';
 const Header = () => (
     <>
         <div id="header-breakpoint"></div>
-        <uofg-header  class="unloaded"></uofg-header>
+        <uofg-header class="unloaded"></uofg-header>
     </>
 )
 
