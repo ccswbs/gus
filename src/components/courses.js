@@ -8,6 +8,7 @@ function Courses ({ courseData, courseNotes, headingLevel }) {
 	var courseList="";
 	var trackCourseLevel="";
 	var coursesDisplay="<section class='row row-with-vspace'>";
+	var columnSetting = ((courseNotes === null || courseNotes === "") || (courseData === null || courseData === undefined)) ? "col-lg-12" : "col-lg-6";
 
 	if ((courseData !== null) && (courseData !== undefined)) {
 		courseData.forEach(course => {
@@ -28,14 +29,15 @@ function Courses ({ courseData, courseNotes, headingLevel }) {
 			courseList += "<td>" + course.node.field_credits + "</td>";
 			courseList += "</tr>";
 		});
+		
 		if (courseList !== "") {
-			courses = "<div class='col-lg-6'><div class='table-responsive'><table class='table table-borderless'><thead><tr><th scope='col'>Year</th><th scope='col'>Class</th><th scope='col'>Code</th><th scope='col'>Credits</th></tr></thead><tbody>" + courseList + "</tbody></table></div></div>";
+			courses = "<div class='" + columnSetting + "'><div class='table-responsive'><table class='table table-borderless'><thead><tr><th scope='col'>Year</th><th scope='col'>Class</th><th scope='col'>Code</th><th scope='col'>Credits</th></tr></thead><tbody>" + courseList + "</tbody></table></div></div>";
 			coursesDisplay += courses;
 		}		
 	}
 
-	if (courseNotes !== null) {
-		coursesDisplay += "<div class='col-lg-6'><" + headingLevel + " class='course-notes-heading'>Notes</" + headingLevel + ">" + courseNotes + "</div>";
+	if ((courseNotes !== null) && (courseNotes !== "")) {
+		coursesDisplay += "<div class='" + columnSetting + "'><" + headingLevel + " class='course-notes-heading'>Notes</" + headingLevel + ">" + courseNotes + "</div>";
 	}
 
 	coursesDisplay += "</section>";
