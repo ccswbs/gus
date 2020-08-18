@@ -1,12 +1,19 @@
-
-
 .ug-slick-slider {
     margin-bottom: 1rem;
+    overflow: hidden;
 }
 
 .ug-slick-slider .slick-list {
     width: 90%;
     left: 6%;
+}
+
+.ug-slick-slider .trans-gradient {
+    position:absolute; 
+    z-index:2; 
+    left: 6%;
+    height:inherit; 
+    width: 90%; 
 }
 
 /***********
@@ -34,15 +41,41 @@
 .ug-slick-slider .ug-slick-slider-control-prev {
     position: absolute;
     left: 0%;
+    transition: all 0.15s ease;
 }
 
 .ug-slick-slider .ug-slick-slider-control-next {
     position: absolute;
     right: 0%;
+    transition: all 0.15s ease;
+}
+
+.ug-slick-slider .ug-slick-slider-control-prev:hover,
+.ug-slick-slider .ug-slick-slider-control-prev:focus {
+    border-bottom: none !important;
+    outline: none !important;
+    
+}
+
+.ug-slick-slider .ug-slick-slider-control-prev:hover,
+.ug-slick-slider .ug-slick-slider-control-prev:focus {
+    left: -7px;
+    position: absolute;
+}
+
+.ug-slick-slider .ug-slick-slider-control-next:hover,
+.ug-slick-slider .ug-slick-slider-control-next:focus {
+    position: absolute;
+    right: -7px;
 }
 
 .ug-slick-slider .ug-slick-slider-control-arrow-icon::before {
     content: '';
+}
+
+.ug-slick-slider .ug-slick-slider-control-arrow:hover .ug-slick-slider-control-arrow-icon,
+.ug-slick-slider .ug-slick-slider-control-arrow:focus .ug-slick-slider-control-arrow-icon {
+    color: #000;
 }
 
 .ug-slick-slider .ug-slick-slider-control-arrow-icon {
@@ -87,5 +120,10 @@
     .ug-slick-slider .slick-list {
         width: 78%;
         left: 12%;
+    }
+
+    .ug-slick-slider .trans-gradient {
+        left: 12%;
+        width:78%; 
     }
 }
