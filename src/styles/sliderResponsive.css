@@ -1,6 +1,5 @@
 .ug-slick-slider {
     margin-bottom: 1rem;
-    overflow: hidden;
 }
 
 .ug-slick-slider .slick-list {
@@ -46,27 +45,25 @@
 
 .ug-slick-slider .ug-slick-slider-control-next {
     position: absolute;
-    right: 0%;
+    right: 1%;
     transition: all 0.15s ease;
 }
 
-.ug-slick-slider .ug-slick-slider-control-prev:hover,
-.ug-slick-slider .ug-slick-slider-control-prev:focus {
-    border-bottom: none !important;
+.ug-slick-slider .ug-slick-slider-control-arrow:focus {
     outline: none !important;
-    
+    border-bottom: 0rem !important;
 }
 
 .ug-slick-slider .ug-slick-slider-control-prev:hover,
 .ug-slick-slider .ug-slick-slider-control-prev:focus {
-    left: -7px;
+    left: -3px;
     position: absolute;
 }
 
 .ug-slick-slider .ug-slick-slider-control-next:hover,
 .ug-slick-slider .ug-slick-slider-control-next:focus {
     position: absolute;
-    right: -7px;
+    right: 7px;
 }
 
 .ug-slick-slider .ug-slick-slider-control-arrow-icon::before {
@@ -99,7 +96,7 @@
 }
 
 .ug-slick-slider .ug-slick-slider-control-prev-icon {
-    left: 20%;
+    left: 25%;
 }
 
 .ug-slick-slider .ug-slick-slider-control-arrow-icon:hover {
@@ -115,6 +112,14 @@
 
     .ug-slick-slider .ug-slick-slider-control-arrow {
         width: 10%;
+    }
+
+    .ug-slick-slider .ug-slick-slider-control-next {
+        right: 0%;
+    }
+    .ug-slick-slider .ug-slick-slider-control-next:hover, 
+    .ug-slick-slider .ug-slick-slider-control-next:focus {
+        right: -3px;
     }
 
     .ug-slick-slider .slick-list {
