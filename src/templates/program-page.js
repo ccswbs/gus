@@ -195,7 +195,6 @@ export default ({data, location}) => {
   const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
   
   // set last modified date
-
   let allModifiedDates = sortLastModifiedDates([
                           progData.changed,
                           retrieveLastModifiedDates(progDescData),
