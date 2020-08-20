@@ -99,28 +99,26 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
   return null;
 }
 
-function prepareProgramDescription (progDescData) {
-  let stickyDescriptions = [];
-  let allDescriptions = [];
+// combine multiple body values and place sticky values at the top
+function combineAndSortBodyFields (content) {
+  let stickyContent = [];
+  let allContent = [];
 
-  if(contentIsNullOrEmpty(progDescData)) {
-    return "";
-  }
+  if(contentIsNullOrEmpty(content)) { return ""; }
 
-  // place sticky descriptions at the top
-  progDescData.forEach((edge) => {
-    if (!contentIsNullOrEmpty(edge.node.body.value)){
+  content.forEach((edge) => {
+    if (!contentIsNullOrEmpty(edge.node.body.processed)){
       if(edge.node.sticky === true) {
-        stickyDescriptions.push(edge.node.body.value);
+        stickyContent.push(edge.node.body.processed);
       } else {
-        allDescriptions.push(edge.node.body.value);
+        allContent.push(edge.node.body.processed);
       }
     }
   })
 
-  allDescriptions.unshift(stickyDescriptions);
+  allContent.unshift(stickyContent);
 
-  return allDescriptions.join("");
+  return allContent.join("");
 }
 
 function prepareVariantHeading (variantData) {
@@ -159,7 +157,8 @@ export default ({data, location}) => {
   var progData;
   var progDescData;
 	var degreesData;
-	var specData;
+  var specData;
+  var courseNotesData;
 	var courseData;
 	var variantData;
 	var tagData;
@@ -169,6 +168,7 @@ export default ({data, location}) => {
 	// set data
   if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
   if (data.descriptions.edges[0] !== undefined) { progDescData = data.descriptions.edges; }
+  if (data.course_notes.edges[0] !== undefined) { courseNotesData = data.course_notes.edges; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
@@ -177,12 +177,12 @@ export default ({data, location}) => {
 	// set program details
 	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
   const title = progData.name;
-  const description = prepareProgramDescription(progDescData);
-	const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
+  const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
+  const description = combineAndSortBodyFields(progDescData);
+  const courseNotes = combineAndSortBodyFields(courseNotesData);
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
   const lastModified = progData.changed;
-  const courseNotes = (progData.field_course_notes !== undefined 
-    && progData.field_course_notes !== null ? progData.field_course_notes.processed:``);
+  
 
 	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
@@ -223,7 +223,7 @@ export default ({data, location}) => {
                         goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
                         goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
                         classNames='btn btn-uogRed apply' >
-                      {cta.node.field_call_to_action_link.title}
+                        {cta.node.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
                   </div>
@@ -287,9 +287,6 @@ export const query = graphql`
           drupal_internal__tid
           name
           field_program_acronym
-          field_course_notes {
-            processed
-          }
           relationships {
             field_degrees {
               drupal_id
@@ -310,7 +307,7 @@ export const query = graphql`
               ... on paragraph__general_text {
                 drupal_id
                 field_general_text {
-                  value
+                  processed
                 }
               }
               ... on paragraph__program_variants {
@@ -320,7 +317,7 @@ export const query = graphql`
                   uri
                 }
                 field_variant_info {
-                  value
+                  processed
                 }
                 relationships {
                   field_variant_type {
@@ -343,7 +340,6 @@ export const query = graphql`
           title
           drupal_id
           body {
-            value
             processed
           }
           sticky
@@ -412,7 +408,6 @@ export const query = graphql`
         node {
           drupal_id
           body {
-              value
               processed
           }
           title
@@ -445,8 +440,28 @@ export const query = graphql`
         }
       }
     }
-	
-	courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
+  
+    course_notes: allNodeProgramCourseNotes(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
+      edges {
+        node {
+          title
+          drupal_id
+          body {
+            processed
+          }
+          sticky
+          relationships {
+            field_tags {
+              drupal_id
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+    
+    courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           relationships {
@@ -459,7 +474,7 @@ export const query = graphql`
               }
             }
           }
-		  field_code
+          field_code
           field_course_url {
             uri
           }

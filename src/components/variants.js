@@ -26,7 +26,7 @@ function Variants ( { variantData } ) {
 			if(trackPreviousElement === "paragraph__program_variants"){
 				displayElements.push(<ul key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
 			}
-			displayElements.push(<div key={variantData[i].drupal_id} dangerouslySetInnerHTML={{__html: variantData[i].field_general_text.value}}/>);
+			displayElements.push(<div key={variantData[i].drupal_id} dangerouslySetInnerHTML={{__html: variantData[i].field_general_text.processed}}/>);
 		}
 		trackPreviousElement = variantData[i].__typename;
 	};

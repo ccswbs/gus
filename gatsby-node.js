@@ -32,7 +32,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__tid: Int
       name: String
       field_program_acronym: String
-      field_course_notes: BodyField
       relationships: taxonomy_term__programsRelationships
       fields: FieldsPathAlias
     }
@@ -60,6 +59,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__program_variant_type implements Node {
       name: String
     }
+
     type taxonomy_term__tags implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -120,6 +120,16 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [taxonomy_term__programs]
     }
 
+    type node__program_course_notes implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      body: BodyField
+      relationships: node__program_course_notesRelationships
+    }
+    type node__program_course_notesRelationships implements Node {
+      field_tags: [taxonomy_term__programs]
+    }
 
     type node__testimonial implements Node {
         drupal_id: String
@@ -138,6 +148,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialFields implements Node {
       tags: [String]
     }
+
     type node__call_to_action implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -153,6 +164,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__call_to_actionFields implements Node {
       tags: [String]
     }
+
     type node__course implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -174,6 +186,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__courseFields implements Node {
       tags: [String]
     }
+
     type media__image implements Node {
       drupal_id: String
       name: String
@@ -258,11 +271,11 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
     /* Set content field for search */
     /*    - return body of content */
     if (typeof node.body !== 'undefined' && node.body !== null) {
-        content = `${node.body.value}`
+        content = `${node.body.processed}`
     }
     /*    - return description of taxonomy */
     else if (typeof node.description !== 'undefined' && node.description !== null) {
-        content = `${node.description.value}`
+        content = `${node.description.processed}`
     }
     /*    - set default content */
     else {
