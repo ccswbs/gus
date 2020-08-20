@@ -202,8 +202,6 @@ export default ({data, location}) => {
                           retrieveLastModifiedDates(courseNotesData),
                           retrieveLastModifiedDates(courseData)]);
   let lastModified = allModifiedDates[allModifiedDates.length - 1];
-  console.log(allModifiedDates);
-  
 
 	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
