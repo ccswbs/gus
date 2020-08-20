@@ -9,4 +9,13 @@ function setHeadingLevel(headingLevel) {
   return selectedHeading;
 }
 
-export { stripHTMLTags, setHeadingLevel };
+function contentIsNullOrEmpty(content) {
+  if(content === null || content === undefined || content === "" || 
+    (Array.isArray(content) && (content.length === 0))){
+    return true;
+  }
+
+  return false;
+}
+
+export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty };

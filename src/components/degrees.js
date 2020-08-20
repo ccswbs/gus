@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { setHeadingLevel } from '../utils/ug-utils';
+import { setHeadingLevel, contentIsNullOrEmpty } from '../utils/ug-utils';
 
 
 function Degrees (props) {
@@ -8,7 +8,7 @@ function Degrees (props) {
 
 	return (
 		<React.Fragment>
-			{props.degreesData.length !== 0 && <>
+			{!contentIsNullOrEmpty(props.degreesData) && <>
 				<Heading>Degrees Offered</Heading>
 				<ul>
 					{props.degreesData.map (degree => {

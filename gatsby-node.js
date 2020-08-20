@@ -30,9 +30,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__programs implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
-      body: BodyFieldWithSummary
       name: String
-      description: TaxonomyDescription
       field_program_acronym: String
       field_course_notes: BodyField
       relationships: taxonomy_term__programsRelationships
@@ -99,6 +97,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       field_goal_action: String
     }
+
     type node__page implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -109,6 +108,19 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__pageRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+
+    type node__program_description implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      body: BodyFieldWithSummary
+      relationships: node__program_descriptionRelationships
+    }
+    type node__program_descriptionRelationships implements Node {
+      field_tags: [taxonomy_term__programs]
+    }
+
+
     type node__testimonial implements Node {
         drupal_id: String
         drupal_internal__tid: Int
@@ -141,25 +153,25 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__call_to_actionFields implements Node {
       tags: [String]
     }
-	type node__course implements Node {
-		drupal_id: String
-		drupal_internal__tid: Int
-		title: String
-		field_code: String
-		field_course_url: node__courseField_course_url
-		field_credits: String
-		field_level: Int
-		relationships: node__courseRelationships
-		fields: node__courseFields
-	}
-	type node__courseField_course_url implements Node {
-		uri: String
-		title: String
-	}
-	type node__courseRelationships implements Node {
-		field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-	}
-	type node__courseFields implements Node {
+    type node__course implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      field_code: String
+      field_course_url: node__courseField_course_url
+      field_credits: String
+      field_level: Int
+      relationships: node__courseRelationships
+      fields: node__courseFields
+    }
+    type node__courseField_course_url implements Node {
+      uri: String
+      title: String
+    }
+    type node__courseRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__courseFields implements Node {
       tags: [String]
     }
     type media__image implements Node {
@@ -220,8 +232,8 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   // Handle nodes that point to multiple tag vocabularies
   if (node.internal.type === `node__call_to_action` ||
       node.internal.type === `node__testimonial` ||
-      node.internal.type === `media__image` ||
-	  node.internal.type === `node__course`) {
+      node.internal.type === `media__image` || 
+      node.internal.type === `node__course`) {
     createNodeField({
       node,
       name: `tags`,
