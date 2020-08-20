@@ -14,7 +14,7 @@ import Courses from '../components/courses';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
-import { contentIsNullOrEmpty } from '../utils/ug-utils';
+import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import '../styles/program-page.css';
 
 function renderProgramOverview(description, degreesData, specData) {
@@ -99,6 +99,18 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
   return null;
 }
 
+function retrieveLastModifiedDates (content) {
+  let dates = [];
+
+  if(!contentIsNullOrEmpty(content)){  
+    content.forEach((edge) => {
+        dates.push(edge.node.changed);
+    })
+  }
+
+  return dates;
+}
+
 // combine multiple body values and place sticky values at the top
 function combineAndSortBodyFields (content) {
   let stickyContent = [];
@@ -163,7 +175,7 @@ export default ({data, location}) => {
 	var variantData;
 	var tagData;
 	var testimonialData;
-	var callToActionData = [];
+  var callToActionData = [];
 
 	// set data
   if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
@@ -180,8 +192,17 @@ export default ({data, location}) => {
   const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
   const description = combineAndSortBodyFields(progDescData);
   const courseNotes = combineAndSortBodyFields(courseNotesData);
-	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
-  const lastModified = progData.changed;
+  const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+  
+  // set last modified date
+
+  let allModifiedDates = sortLastModifiedDates([
+                          progData.changed,
+                          retrieveLastModifiedDates(progDescData),
+                          retrieveLastModifiedDates(courseNotesData),
+                          retrieveLastModifiedDates(courseData)]);
+  let lastModified = allModifiedDates[allModifiedDates.length - 1];
+  console.log(allModifiedDates);
   
 
 	// set degree, unit, variant, tag, and course info  
@@ -342,6 +363,7 @@ export const query = graphql`
           body {
             processed
           }
+          changed
           sticky
           relationships {
             field_tags {
@@ -446,6 +468,7 @@ export const query = graphql`
         node {
           title
           drupal_id
+          changed
           body {
             processed
           }
@@ -464,6 +487,7 @@ export const query = graphql`
     courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
+          changed
           relationships {
             field_tags {
               __typename

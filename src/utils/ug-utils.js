@@ -18,4 +18,8 @@ function contentIsNullOrEmpty(content) {
   return false;
 }
 
-export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty };
+function sortLastModifiedDates(dates) {
+  return dates.slice().flat().sort();
+}
+
+export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates };
