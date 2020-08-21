@@ -115,6 +115,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       body: BodyFieldWithSummary
       relationships: node__program_descriptionRelationships
+      changed: Date
+      sticky: Boolean
     }
     type node__program_descriptionRelationships implements Node {
       field_tags: [taxonomy_term__programs]
@@ -126,6 +128,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       body: BodyField
       relationships: node__program_course_notesRelationships
+      changed: Date
+      sticky: Boolean
     }
     type node__program_course_notesRelationships implements Node {
       field_tags: [taxonomy_term__programs]
