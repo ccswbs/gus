@@ -43,6 +43,7 @@ export default class ResponsiveSlider extends React.Component {
 		  };
       return (
 		<div className="ug-slick-slider">
+			<div className="trans-gradient"></div>
 			<Slider {...sliderSettings}>
 				{this.props.children}
 			</Slider>

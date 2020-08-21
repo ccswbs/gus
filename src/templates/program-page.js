@@ -14,7 +14,29 @@ import Courses from '../components/courses';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
+import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import '../styles/program-page.css';
+
+function renderProgramOverview(description, degreesData, specData) {
+  let checkIfContentAvailable = false;
+
+  if (!contentIsNullOrEmpty(description) || 
+      !contentIsNullOrEmpty(degreesData) || 
+      !contentIsNullOrEmpty(specData)) {
+        checkIfContentAvailable = true;
+  }
+
+  if(checkIfContentAvailable === true){
+    return <React.Fragment>
+          <h2>Program Overview</h2>
+          <div dangerouslySetInnerHTML={{ __html: description }}  />
+          <Degrees degreesData={degreesData} headingLevel='h3' />
+          <Units specData={specData} headingLevel='h3' />
+        </React.Fragment>
+  }
+
+  return null;
+}
 
 function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData) {
   let activeTab = false;
@@ -77,6 +99,40 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
   return null;
 }
 
+function retrieveLastModifiedDates (content) {
+  let dates = [];
+
+  if(!contentIsNullOrEmpty(content)){  
+    content.forEach((edge) => {
+        dates.push(edge.node.changed);
+    })
+  }
+
+  return dates;
+}
+
+// combine multiple body values and place sticky values at the top
+function combineAndSortBodyFields (content) {
+  let stickyContent = [];
+  let allContent = [];
+
+  if(contentIsNullOrEmpty(content)) { return ""; }
+
+  content.forEach((edge) => {
+    if (!contentIsNullOrEmpty(edge.node.body.processed)){
+      if(edge.node.sticky === true) {
+        stickyContent.push(edge.node.body.processed);
+      } else {
+        allContent.push(edge.node.body.processed);
+      }
+    }
+  })
+
+  allContent.unshift(stickyContent);
+
+  return allContent.join("");
+}
+
 function prepareVariantHeading (variantData) {
   let labels = [];
 
@@ -110,32 +166,41 @@ function prepareVariantHeading (variantData) {
 
 export default ({data, location}) => {
 	var imageData;
-	var progData;
+  var progData;
+  var progDescData;
 	var degreesData;
-	var specData;
+  var specData;
+  var courseNotesData;
 	var courseData;
 	var variantData;
 	var tagData;
 	var testimonialData;
-	var callToActionData = [];
+  var callToActionData = [];
 
 	// set data
-	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+  if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+  if (data.descriptions.edges[0] !== undefined) { progDescData = data.descriptions.edges; }
+  if (data.course_notes.edges[0] !== undefined) { courseNotesData = data.course_notes.edges; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
-	if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
+  if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
 
 	// set program details
 	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
-	const title = progData.name;
-	const description = (progData.description !== undefined 
-	&& progData.description !== null ? progData.description.processed:``);
-	const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
-	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
-  const lastModified = progData.changed;
-  const courseNotes = (progData.field_course_notes !== undefined 
-    && progData.field_course_notes !== null ? progData.field_course_notes.processed:``);
+  const title = progData.name;
+  const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
+  const description = combineAndSortBodyFields(progDescData);
+  const courseNotes = combineAndSortBodyFields(courseNotesData);
+  const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+  
+  // set last modified date
+  let allModifiedDates = sortLastModifiedDates([
+                          progData.changed,
+                          retrieveLastModifiedDates(progDescData),
+                          retrieveLastModifiedDates(courseNotesData),
+                          retrieveLastModifiedDates(courseData)]);
+  let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
 	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
@@ -176,7 +241,7 @@ export default ({data, location}) => {
                         goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
                         goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
                         classNames='btn btn-uogRed apply' >
-                      {cta.node.field_call_to_action_link.title}
+                        {cta.node.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
                   </div>
@@ -188,10 +253,7 @@ export default ({data, location}) => {
 	<div className="container page-container">
         <div className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
-            <h2>Program Overview</h2>
-            <div dangerouslySetInnerHTML={{ __html: description }}  />			
-            <Degrees degreesData={degreesData} headingLevel='h3' />
-            <Units specData={specData} headingLevel='h3' />
+            {renderProgramOverview(description, degreesData, specData)}
           </section>
         </div>
     </div>
@@ -242,13 +304,7 @@ export const query = graphql`
           drupal_id
           drupal_internal__tid
           name
-          description {
-            processed
-          }
           field_program_acronym
-          field_course_notes {
-            processed
-          }
           relationships {
             field_degrees {
               drupal_id
@@ -269,7 +325,7 @@ export const query = graphql`
               ... on paragraph__general_text {
                 drupal_id
                 field_general_text {
-                  value
+                  processed
                 }
               }
               ... on paragraph__program_variants {
@@ -279,7 +335,7 @@ export const query = graphql`
                   uri
                 }
                 field_variant_info {
-                  value
+                  processed
                 }
                 relationships {
                   field_variant_type {
@@ -289,6 +345,27 @@ export const query = graphql`
               }
             }
             field_tags {
+              name
+            }
+          }
+        }
+      }
+    }
+
+    descriptions: allNodeProgramDescription(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
+      edges {
+        node {
+          title
+          drupal_id
+          body {
+            processed
+          }
+          changed
+          sticky
+          relationships {
+            field_tags {
+              drupal_id
+              id
               name
             }
           }
@@ -350,7 +427,6 @@ export const query = graphql`
         node {
           drupal_id
           body {
-              value
               processed
           }
           title
@@ -383,10 +459,32 @@ export const query = graphql`
         }
       }
     }
-	
-	courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
+  
+    course_notes: allNodeProgramCourseNotes(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
       edges {
         node {
+          title
+          drupal_id
+          changed
+          body {
+            processed
+          }
+          sticky
+          relationships {
+            field_tags {
+              drupal_id
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+    
+    courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          changed
           relationships {
             field_tags {
               __typename
@@ -397,7 +495,7 @@ export const query = graphql`
               }
             }
           }
-		  field_code
+          field_code
           field_course_url {
             uri
           }

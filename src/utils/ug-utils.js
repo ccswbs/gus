@@ -9,4 +9,17 @@ function setHeadingLevel(headingLevel) {
   return selectedHeading;
 }
 
-export { stripHTMLTags, setHeadingLevel };
+function contentIsNullOrEmpty(content) {
+  if(content === null || content === undefined || content === "" || 
+    (Array.isArray(content) && (content.length === 0))){
+    return true;
+  }
+
+  return false;
+}
+
+function sortLastModifiedDates(dates) {
+  return dates.slice().flat().sort();
+}
+
+export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates };
