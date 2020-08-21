@@ -19,7 +19,9 @@ for (let [key, value] of Object.entries(pathsToTest)) {
         referenceUrl: liveURL + value,
         readySelector: "",
         hideSelectors: [],
-        removeSelectors: [],
+        removeSelectors: [
+            ".ug-instagram",
+        ],
         hoverSelector: "",
         clickSelector: "",
         postInteractionWait: 0,
