@@ -6,7 +6,7 @@ import SEO from '../components/seo'
 export default ({data}) => {
 	const pageData = data.pages.edges[0].node;
 	const title = pageData.title;
-	const body = (pageData.body !== null ? pageData.body.value:``);
+	const body = (pageData.body !== null ? pageData.body.processed:``);
 	return (
 		<Layout>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
@@ -29,7 +29,7 @@ export const query = graphql`
 					alias
 				}
 				body {
-					value
+					processed
 				}
 		  	}
 		}
