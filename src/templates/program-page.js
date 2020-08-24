@@ -14,6 +14,7 @@ import Courses from '../components/courses';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
+import ColumnLists from '../components/columnLists';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import '../styles/program-page.css';
 
@@ -38,47 +39,80 @@ function renderProgramOverview(description, degreesData, specData) {
   return null;
 }
 
-function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData) {
-  let activeTab = false;
+function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, aspirationData) {
+  let activeValue = true;
+  let activeTabExists = false;
   let checkIfContentAvailable = false;
   let navTabHeadings = [];
   let navTabContent = [];
   let key = 0;
 
-  // prep courses tab
-  if((courseNotes !== null && courseNotes !== "") || 
-      (courseData !== null && courseData !== undefined && courseData.length > 0 )){
-    activeTab = true;
+  // prep TAB 1 - Courses
+  if(!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)){
+    const courseHeading = "Courses";
+    const courseID = "pills-courses";
+    activeTabExists = true;
     checkIfContentAvailable = true;
+    key++;
+
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                        active={activeTab} 
-                                        heading="Courses" 
-                                        controls="pills-courses" />);
+                                        active={activeValue} 
+                                        heading={courseHeading} 
+                                        controls={courseID} />);
 
     navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeTab} 
-                                      heading="Courses" 
+                                      active={activeValue} 
+                                      heading={courseHeading} 
                                       headingLevel="h3" 
-                                      id="pills-courses" 
+                                      id={courseID} 
                                       content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} />);
-    key++;
   }
 
-  // prep variants tab
+  // prep TAB 2 - Variants
   if( variantDataHeading !== '') {
-    activeTab = (activeTab === false) ? true : false;
+    const variantID = "pills-variants";
+    activeValue = (activeTabExists === true) ? false : true;
     checkIfContentAvailable = true;
+    key++;
+
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                      active={activeTab} 
+                                      active={activeValue} 
                                       heading={variantDataHeading} 
-                                      controls="pills-certificates" />);
+                                      controls={variantID} />);
 
     navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeTab} 
+                                      active={activeValue} 
                                       heading={variantDataHeading} 
                                       headingLevel="h3" 
-                                      id="pills-certificates" 
+                                      id={variantID} 
                                       content={<Variants variantData={variantData} />} />);
+  }
+
+  // prep TAB 3 - Careers
+  if(!contentIsNullOrEmpty(aspirationData)) {
+    activeValue = (activeTabExists === true) ? false : true;
+    checkIfContentAvailable = true;
+    const careersHeading = "Careers";
+    const careersID = "pills-careers";
+    key++;
+
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                      active={activeValue} 
+                                      heading={careersHeading} 
+                                      controls={careersID} />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeValue} 
+                                      heading={careersHeading} 
+                                      headingLevel="h3" 
+                                      id={careersID} 
+                                      content={
+                                        <ColumnLists numColumns={3}>
+                                          {aspirationData.map (unit => {
+                                            return <li key={unit.node.drupal_id}>{unit.node.title}</li>
+                                          })}
+                                        </ColumnLists>
+                                      } />);
   }
 
   if(checkIfContentAvailable === true){
@@ -146,7 +180,7 @@ function prepareVariantHeading (variantData) {
 
   const uniqueLabelSet = new Set(labels);
   const uniqueLabels = [...uniqueLabelSet];
-  var variantHeading = "";
+  let variantHeading = "";
 
   for (let i=0; i<uniqueLabels.length; i++) {
     if (i > 0) { 
@@ -165,26 +199,24 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-	var imageData;
-  var progData;
-  var progDescData;
-	var degreesData;
-  var specData;
-  var courseNotesData;
-	var courseData;
-	var variantData;
-	var tagData;
-	var testimonialData;
-  var callToActionData = [];
+  let progData;
+  let progDescData;
+	let imageData;
+  let courseNotesData;
+  let courseData;  
+  let testimonialData;
+  let aspirationData;
+  let callToActionData = [];
 
 	// set data
   if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
   if (data.descriptions.edges[0] !== undefined) { progDescData = data.descriptions.edges; }
+  if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
   if (data.course_notes.edges[0] !== undefined) { courseNotesData = data.course_notes.edges; }
+  if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
+  if (data.aspirations.edges[0] !== undefined) { aspirationData = data.aspirations.edges; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
-  if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
 
 	// set program details
 	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
@@ -193,21 +225,22 @@ export default ({data, location}) => {
   const description = combineAndSortBodyFields(progDescData);
   const courseNotes = combineAndSortBodyFields(courseNotesData);
   const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+  const allProgramTags = progData.relationships.field_tags;
   
   // set last modified date
-  let allModifiedDates = sortLastModifiedDates([
+  const allModifiedDates = sortLastModifiedDates([
                           progData.changed,
                           retrieveLastModifiedDates(progDescData),
                           retrieveLastModifiedDates(courseNotesData),
                           retrieveLastModifiedDates(courseData)]);
-  let lastModified = allModifiedDates[allModifiedDates.length - 1];
+  const lastModified = allModifiedDates[allModifiedDates.length - 1];
 
-	// set degree, unit, variant, tag, and course info  
-	degreesData = progData.relationships.field_degrees;
-	specData = progData.relationships.field_specializations;
-	tagData = progData.relationships.field_tags;
-	variantData = progData.relationships.field_program_variants;
-	const variantDataHeading = prepareVariantHeading(variantData);
+	// set degree, unit, variant, tag, and careers info  
+	const degreesData = progData.relationships.field_degrees;
+	const specData = progData.relationships.field_specializations;
+	const variantData = progData.relationships.field_program_variants;
+  const variantDataHeading = prepareVariantHeading(variantData);
+  const tagData = allProgramTags.filter(tag => tag.__typename === 'taxonomy_term__tags');
 
   return (
 	<Layout date={lastModified}>
@@ -262,7 +295,7 @@ export default ({data, location}) => {
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData)}
+            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, aspirationData)}
           </div>
         </section>
       </div>
@@ -345,7 +378,12 @@ export const query = graphql`
               }
             }
             field_tags {
-              name
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
             }
           }
         }
@@ -481,7 +519,7 @@ export const query = graphql`
       }
     }
     
-    courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
+    courses: allNodeCourse(sort: {fields: [field_level], order: ASC}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           changed
@@ -502,6 +540,29 @@ export const query = graphql`
           field_credits
           field_level
           title
+        }
+      }
+    }
+
+    aspirations: allNodeAspiration(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          title
+          drupal_id
+          changed
+          body {
+            processed
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+          }
         }
       }
     }

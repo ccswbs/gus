@@ -109,6 +109,17 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
 
+    type node__aspiration implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      body: BodyFieldWithSummary
+      relationships: node__aspirationRelationships
+      fields: FieldsPathAlias
+    }
+    type node__aspirationRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+
     type node__program_description implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -250,7 +261,8 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   if (node.internal.type === `node__call_to_action` ||
       node.internal.type === `node__testimonial` ||
       node.internal.type === `media__image` || 
-      node.internal.type === `node__course`) {
+      node.internal.type === `node__course` || 
+      node.internal.type === `node__aspiration`) {
     createNodeField({
       node,
       name: `tags`,
