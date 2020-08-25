@@ -39,7 +39,7 @@ function renderProgramOverview(description, degreesData, specData) {
   return null;
 }
 
-function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, aspirationData) {
+function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData) {
   let activeValue = true;
   let activeTabExists = false;
   let checkIfContentAvailable = false;
@@ -89,7 +89,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
   }
 
   // prep TAB 3 - Careers
-  if(!contentIsNullOrEmpty(aspirationData)) {
+  if(!contentIsNullOrEmpty(careerData)) {
     activeValue = (activeTabExists === true) ? false : true;
     checkIfContentAvailable = true;
     const careersHeading = "Careers";
@@ -108,7 +108,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                       id={careersID} 
                                       content={
                                         <ColumnLists numColumns={3}>
-                                          {aspirationData.map (unit => {
+                                          {careerData.map (unit => {
                                             return <li key={unit.node.drupal_id}>{unit.node.title}</li>
                                           })}
                                         </ColumnLists>
@@ -205,7 +205,7 @@ export default ({data, location}) => {
   let courseNotesData;
   let courseData;  
   let testimonialData;
-  let aspirationData;
+  let careerData;
   let callToActionData = [];
 
 	// set data
@@ -214,7 +214,7 @@ export default ({data, location}) => {
   if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
   if (data.course_notes.edges[0] !== undefined) { courseNotesData = data.course_notes.edges; }
   if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
-  if (data.aspirations.edges[0] !== undefined) { aspirationData = data.aspirations.edges; }
+  if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 
@@ -295,7 +295,7 @@ export default ({data, location}) => {
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, aspirationData)}
+            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData)}
           </div>
         </section>
       </div>
@@ -544,7 +544,7 @@ export const query = graphql`
       }
     }
 
-    aspirations: allNodeAspiration(filter: {fields: {tags: {in: [$id] }}}) {
+    careers: allNodeCareer(sort: {fields: [title], order: ASC}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           title
