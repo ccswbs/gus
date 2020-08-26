@@ -226,6 +226,8 @@ export default ({data, location}) => {
   const courseNotes = combineAndSortBodyFields(courseNotesData);
   const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
   const allProgramTags = progData.relationships.field_tags;
+
+  console.log(testimonialData);
   
   // set last modified date
   const allModifiedDates = sortLastModifiedDates([
@@ -469,7 +471,7 @@ export const query = graphql`
           }
           title
           field_testimonial_person_desc
-          field_picture {
+          field_image {
               alt
           }
           relationships {
@@ -482,7 +484,7 @@ export const query = graphql`
               }
             }
 
-            field_picture {
+            field_image {
                 localFile {
                     url
                     childImageSharp {
