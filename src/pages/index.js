@@ -13,14 +13,14 @@ const IndexPage = ({ data }) => (
 				<h2>Pages</h2>
 				<ul>
 					{data.allNodePage.edges.map((edge, index) => (
-						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
+						<li key={index}><Link to={edge.node.fields.alias}>{edge.node.title}</Link></li>
 					))}
 				</ul>
 
 				<h2>Programs</h2>
 				<ul>
 					{data.programs.edges.map((edge, index) => (
-						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
+						<li key={index}><Link to={edge.node.fields.alias}>{edge.node.title}</Link></li>
 					))}
 				</ul>
 				<h2>Instagram</h2>
@@ -39,27 +39,20 @@ export const query = graphql`
 			title
 			drupal_id
 			fields {
-				alias {
-					value
-				}
+				alias 
 			}
 		  }
 		}
 	  }
 
-	  programs: allTaxonomyTermPrograms {
+	  programs: allNodeProgram {
 		edges {
 		  node {
 			drupal_id
-			drupal_internal__tid
-			name
-			description {
-			  processed
-			}
+			drupal_internal__nid
+			title
 			fields {
-				alias {
-					value
-				}
+				alias 
 			}
 		  }
 		}
