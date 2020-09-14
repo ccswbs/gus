@@ -188,8 +188,8 @@ export default ({data, location}) => {
 
 	// set program details
 	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
-  const title = progData.name;
-  const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
+  const title = progData.title;
+  const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
   const description = combineAndSortBodyFields(progDescData);
   const courseNotes = combineAndSortBodyFields(courseNotesData);
   const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
@@ -297,28 +297,21 @@ export default ({data, location}) => {
 
 export const query = graphql`
   query ($id: String) {
-    programs: allTaxonomyTermPrograms(filter: {id: {eq: $id}}) {
+    programs: allNodeProgram(filter: {id: {eq: $id}}) {
       edges {
         node {
           changed
           drupal_id
-          drupal_internal__tid
-          name
-          field_program_acronym
+          drupal_internal__nid
+          title
           relationships {
+			field_program_acronym {
+			  name
+            }
             field_degrees {
               drupal_id
               name
               field_degree_acronym
-            }
-            field_specializations {
-              relationships {
-                field_units {
-                  drupal_id
-                  field_unit_acronym
-                  name
-                }
-              }
             }
             field_program_variants {
               __typename
@@ -343,9 +336,6 @@ export const query = graphql`
                   }
                 }
               }
-            }
-            field_tags {
-              name
             }
           }
         }

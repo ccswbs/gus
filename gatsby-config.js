@@ -47,8 +47,8 @@ module.exports = {
        options: {
          //baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
 		 //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
-		 baseUrl: `http://stats2-bovey.pantheonsite.io/`,
-		 //baseUrl: `http://prognode-bovey.pantheonsite.io/`,
+		 //baseUrl: `http://stats2-bovey.pantheonsite.io/`,
+		 baseUrl: `http://prognode-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },    
@@ -74,8 +74,8 @@ module.exports = {
 	  },
 	}
   ],
-/*   mapping: {
+  mapping: {
     "node__page.fields.alias": `PathAlias`,
-    "node__program.fields.alias": `PathAlias`, 
-  }, */
+    /* "node__program.path": `PathAlias`,  */
+  },
 }
