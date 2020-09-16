@@ -9,14 +9,7 @@ const path = require(`path`)
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
-  const typeDefs = `
-    
-	interface TaxonomyInterface @nodeInterface {
-      id: ID!
-      drupal_id: String
-      name: String
-    }
-	
+  const typeDefs = `    
 	union relatedParagraphUnion = 
       paragraph__program_variants
       | paragraph__general_text
@@ -28,6 +21,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       | taxonomy_term__degrees
       | taxonomy_term__units
 	
+	interface TaxonomyInterface @nodeInterface {
+      id: ID!
+      drupal_id: String
+      name: String
+    }	
+
 	type BodyField {
       processed: String
       value: String
@@ -106,7 +105,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__page implements Node {
       drupal_id: String
-      drupal_internal__tid: Int
+      drupal_internal__nid: Int
       body: BodyFieldWithSummary
       relationships: node__pageRelationships
       fields: FieldsPathAlias
@@ -114,6 +113,19 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__pageRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+	
+	type node__program implements Node {
+		drupal_id: String
+		drupal_internal__nid: Int
+		title: String
+		changed: Date
+		relationships: node__programRelationships
+	}
+	type node__programRelationships implements Node {
+		field_course_notes: node__program_course_notes
+		field_program_acronym: taxonomy_term__programs
+	}
+	
     type node__program_course_notes implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -317,6 +329,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             title
             id
             drupal_id
+			path {
+			  alias
+			}
           }
         }
       }
@@ -388,7 +403,7 @@ function createPageAlias(node){
 * If no specialization is available, uses pattern of `/programs/program-name`
 ********/
 function createProgramAlias(node){
-  var alias = `/programs/` + slugify(node.title);
+  var alias = `/programs/` + slugify(node.path.alias);
   return alias;
 }
 

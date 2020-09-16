@@ -46,8 +46,8 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
   let key = 0;
 
   // prep courses tab
-  if((courseNotes !== null && courseNotes !== "") || 
-      (courseData !== null && courseData !== undefined && courseData.length > 0 )){
+  if ((courseNotes !== null && courseNotes !== "") || 
+      (courseData !== null && courseData !== undefined && courseData.length > 0 )) {
     activeTab = true;
     checkIfContentAvailable = true;
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
@@ -65,7 +65,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
   }
 
   // prep variants tab
-  if( variantDataHeading !== '') {
+  if (variantDataHeading !== '') {
     activeTab = (activeTab === false) ? true : false;
     checkIfContentAvailable = true;
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
@@ -81,7 +81,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                       content={<Variants variantData={variantData} />} />);
   }
 
-  if(checkIfContentAvailable === true){
+  if (checkIfContentAvailable === true) {
     return <React.Fragment>
               <h2>Program Information</h2>
               <NavTabs headings={
@@ -102,10 +102,14 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 function retrieveLastModifiedDates (content) {
   let dates = [];
 
-  if(!contentIsNullOrEmpty(content)){  
+/*   if (!contentIsNullOrEmpty(content)) {  
     content.forEach((edge) => {
         dates.push(edge.node.changed);
     })
+  } */
+  
+  if (!contentIsNullOrEmpty(content)) { 
+	dates.push(content.changed);
   }
 
   return dates;
@@ -166,40 +170,42 @@ function prepareVariantHeading (variantData) {
 
 export default ({data, location}) => {
 	var imageData;
-  var progData;
-  var progDescData;
+	var progData;
+	var progDescData;
 	var degreesData;
-  var specData;
-  var courseNotesData;
+	var specData;
+	var courseNotesData;
 	var courseData;
 	var variantData;
 	var tagData;
 	var testimonialData;
-  var callToActionData = [];
+	var callToActionData = [];
 
 	// set data
-  if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-  if (data.descriptions.edges[0] !== undefined) { progDescData = data.descriptions.edges; }
-  if (data.course_notes.edges[0] !== undefined) { courseNotesData = data.course_notes.edges; }
+	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+	if (progData.relationships.field_program_overview !== undefined) { progDescData = progData.relationships.field_program_overview; }
+	if (progData.relationships.field_course_notes !== undefined) { courseNotesData = progData.relationships.field_course_notes; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
-  if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
+	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
 
 	// set program details
 	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
   const title = progData.title;
   const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
-  const description = combineAndSortBodyFields(progDescData);
-  const courseNotes = combineAndSortBodyFields(courseNotesData);
+  //const description = combineAndSortBodyFields(progDescData);
+  const description = progDescData.body.processed;
+  //const courseNotes = combineAndSortBodyFields(courseNotesData);
+  const courseNotes = courseNotesData.body.processed;
   const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
   
   // set last modified date
   let allModifiedDates = sortLastModifiedDates([
                           progData.changed,
-                          retrieveLastModifiedDates(progDescData),
-                          retrieveLastModifiedDates(courseNotesData),
-                          retrieveLastModifiedDates(courseData)]);
+                          retrieveLastModifiedDates(progDescData)]);
+                          //retrieveLastModifiedDates(courseNotesData),
+                          //retrieveLastModifiedDates(courseData)]);
   let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
 	// set degree, unit, variant, tag, and course info  
@@ -253,7 +259,7 @@ export default ({data, location}) => {
 	<div className="container page-container">
         <div className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
-            {renderProgramOverview(description, degreesData, specData)}
+            {renderProgramOverview(progDescData.body.processed, degreesData, specData)}
           </section>
         </div>
     </div>
@@ -308,10 +314,40 @@ export const query = graphql`
 			field_program_acronym {
 			  name
             }
+			field_program_overview {
+				title
+				drupal_id
+				  body {
+					processed
+				  }
+				  changed
+				  sticky
+			}	
             field_degrees {
               drupal_id
               name
               field_degree_acronym
+            }
+			field_course_notes {
+				id
+				body {
+				  processed
+				}
+				changed
+				sticky
+			  }
+			field_courses {
+			  changed
+			  field_credits
+			  field_level
+			  field_code
+			  title
+			  field_course_url {
+				uri
+			  }
+			}
+			field_tags {
+              name
             }
             field_program_variants {
               __typename
