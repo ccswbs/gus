@@ -10,15 +10,15 @@ function Testimonials (props) {
 
 	if ((props.testimonialData !== null) && (props.testimonialData !== undefined)) {
 		const testimonialUnits  = () => props.testimonialData.map((testimonial, index) => {
-			var testimonialContent = stripHTMLTags(testimonial.node.body.processed);
-			var testimonialPicture = testimonial.node.relationships.field_picture;
-			return <div key={testimonial.node.drupal_id}>
-				{testimonialPicture && <Img className="testimonial-pic" fluid={testimonialPicture.localFile.childImageSharp.fluid} alt={testimonial.node.relationships.field_picture.alt} />}
+			var testimonialContent = stripHTMLTags(testimonial.body.processed);
+			var testimonialPicture = testimonial.relationships.field_picture;
+			return <div key={testimonial.drupal_id}>
+				{testimonialPicture && <Img className="testimonial-pic" fluid={testimonialPicture.localFile.childImageSharp.fluid} alt={testimonial.relationships.field_picture.alt} />}
 				<blockquote className="testimonial-quote" dangerouslySetInnerHTML={{__html: testimonialContent}} />
 				<p className="testimonial-tagline">
-					<strong className="testimonial-title">{testimonial.node.title}</strong>
+					<strong className="testimonial-title">{testimonial.title}</strong>
 					<br />
-					<span className="testimonial-person-desc">{testimonial.node.field_testimonial_person_desc}</span>
+					<span className="testimonial-person-desc">{testimonial.field_testimonial_person_desc}</span>
 				</p>
 			</div>
 		})

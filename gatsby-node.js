@@ -122,8 +122,11 @@ exports.createSchemaCustomization = ({ actions }) => {
 		relationships: node__programRelationships
 	}
 	type node__programRelationships implements Node {
+		field_call_to_action: [node__call_to_action]
 		field_course_notes: node__program_course_notes
 		field_program_acronym: taxonomy_term__programs
+		field_program_overview: node__program_description
+		field_testimonials: [node__testimonial]
 	}
 	
     type node__program_course_notes implements Node {

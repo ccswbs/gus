@@ -15,7 +15,32 @@ import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
+import { useImageData } from '../utils/fetch-images';
 import '../styles/program-page.css';
+
+function renderHeaderImage(imageData) {
+	let checkIfContentAvailable = false;
+	
+	if (!contentIsNullOrEmpty(imageData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		var headerImage;
+		var altText;
+		for (let i = 0; i < imageData.length; i++) {
+			altText = imageData[i].node.field_media_image.alt;
+			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
+				if (imageData[i].node.relationships.field_tags[j].name === "img-header") {
+					headerImage = imageData[i].node.relationships.field_media_image;
+				}
+			}
+		}
+		return <React.Fragment>{headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={altText} />}</React.Fragment>
+	}
+	
+	return null;
+}
 
 function renderProgramOverview(description, degreesData, specData) {
   let checkIfContentAvailable = false;
@@ -169,7 +194,7 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-	var imageData;
+	//var imageData;
 	var progData;
 	var progDescData;
 	var degreesData;
@@ -185,21 +210,22 @@ export default ({data, location}) => {
 	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
 	if (progData.relationships.field_program_overview !== undefined) { progDescData = progData.relationships.field_program_overview; }
 	if (progData.relationships.field_course_notes !== undefined) { courseNotesData = progData.relationships.field_course_notes; }
-	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
-	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
+	if (progData.relationships.field_testimonials !== undefined) { testimonialData = progData.relationships.field_testimonials; }
+	if (progData.relationships.field_call_to_action !== undefined) { callToActionData = progData.relationships.field_call_to_action; }
+	//if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
 	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
-
+	
 	// set program details
-	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
-  const title = progData.title;
-  const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
+	//const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
+	const imageData = useImageData();
+	const title = progData.title;
+	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
   //const description = combineAndSortBodyFields(progDescData);
-  const description = progDescData.body.processed;
+	const description = progDescData.body.processed;
   //const courseNotes = combineAndSortBodyFields(courseNotesData);
-  const courseNotes = courseNotesData.body.processed;
-  const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
-  
+	const courseNotes = courseNotesData.body.processed;
+	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+
   // set last modified date
   let allModifiedDates = sortLastModifiedDates([
                           progData.changed,
@@ -225,7 +251,7 @@ export default ({data, location}) => {
 
       { /**** Header and Title ****/ }
       <div id="rotator">
-        {headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={imageData.node.field_media_image.alt} />}
+		{renderHeaderImage(imageData)}
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
@@ -243,11 +269,11 @@ export default ({data, location}) => {
                   </div>
                   <div className="col-md-3">
                     {callToActionData.map((cta, index) => (
-                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
-                        goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
+                      <CallToAction key={index} href={cta.field_call_to_action_link.uri} 
+                        goalEventCategory={cta.relationships.field_call_to_action_goal.name} 
+                        goalEventAction={cta.relationships.field_call_to_action_goal.field_goal_action} 
                         classNames='btn btn-uogRed apply' >
-                        {cta.node.field_call_to_action_link.title}
+                        {cta.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
                   </div>
@@ -255,28 +281,28 @@ export default ({data, location}) => {
           </div>
       </div>
 
-    { /**** Program Overview ****/ }
+	{ /**** Program Overview ****/ }
 	<div className="container page-container">
-        <div className="row row-with-vspace site-content">
-          <section className="col-md-9 content-area">
-            {renderProgramOverview(progDescData.body.processed, degreesData, specData)}
-          </section>
-        </div>
-    </div>
+		<div className="row row-with-vspace site-content">
+			<section className="col-md-9 content-area">
+				{renderProgramOverview(description, degreesData, specData)}
+			</section>
+		</div>
+	</div>
 
-      { /**** Program Information Tabs ****/ }
-      <div className="container page-container">
-        <section className="row row-with-vspace site-content">
-          <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData)}
-          </div>
-        </section>
-      </div>
+	{ /**** Program Information Tabs ****/ }
+	<div className="container page-container">
+		<section className="row row-with-vspace site-content">
+			<div className="col-md-12 content-area">
+				{renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData)}
+			</div>
+		</section>
+	</div>
 
-      { /**** Testimonials ****/ }
-      {testimonialData && 
-        <Testimonials testimonialData={testimonialData} heading={testimonialHeading} headingLevel='h3' />
-      }
+	{ /**** Testimonials ****/ }
+	{testimonialData && 
+		<Testimonials testimonialData={testimonialData} heading={testimonialHeading} headingLevel='h3' />
+	}
 
       { /**** Call to Actions ****/ }
       {callToActionData.length !== 0 &&
@@ -285,11 +311,11 @@ export default ({data, location}) => {
               <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
                   <h3><span>Are you ready to</span> Improve Life?</h3>
                   {callToActionData.map((cta, index) => (
-                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
-                        goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
+                      <CallToAction key={index} href={cta.field_call_to_action_link.uri} 
+                        goalEventCategory={cta.relationships.field_call_to_action_goal.name} 
+                        goalEventAction={cta.relationships.field_call_to_action_goal.field_goal_action} 
                         classNames='btn btn-uogRed apply' >
-                      {cta.node.field_call_to_action_link.title}
+                      {cta.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
               </div>
@@ -311,43 +337,79 @@ export const query = graphql`
           drupal_internal__nid
           title
           relationships {
-			field_program_acronym {
-			  name
+            field_program_acronym {
+              name
             }
-			field_program_overview {
-				title
-				drupal_id
-				  body {
-					processed
-				  }
-				  changed
-				  sticky
-			}	
+            field_program_overview {
+              title
+              drupal_id
+              body {
+                processed
+              }
+              changed
+              sticky
+            }
             field_degrees {
               drupal_id
               name
               field_degree_acronym
             }
-			field_course_notes {
-				id
-				body {
-				  processed
-				}
-				changed
-				sticky
-			  }
-			field_courses {
-			  changed
-			  field_credits
-			  field_level
-			  field_code
-			  title
-			  field_course_url {
-				uri
-			  }
-			}
-			field_tags {
+            field_course_notes {
+              id
+              body {
+                processed
+              }
+              changed
+              sticky
+            }
+            field_courses {
+              changed
+              field_credits
+              field_level
+              field_code
+              title
+              field_course_url {
+                uri
+              }
+            }
+            field_tags {
               name
+            }
+            field_testimonials {
+              drupal_id
+              body {
+                processed
+              }
+              title
+              field_testimonial_person_desc
+              field_picture {
+                alt
+              }
+              relationships {
+                field_picture {
+                  localFile {
+                    url
+                    childImageSharp {
+                      fluid(maxWidth: 400, maxHeight: 400) {
+                        originalImg
+                        ...GatsbyImageSharpFluid
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            field_call_to_action {
+              field_call_to_action_link {
+                title
+                uri
+              }
+              relationships {
+                field_call_to_action_goal {
+                  name
+                  field_goal_action
+                }
+              }
             }
             field_program_variants {
               __typename
@@ -377,161 +439,6 @@ export const query = graphql`
         }
       }
     }
-
-    descriptions: allNodeProgramDescription(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
-      edges {
-        node {
-          title
-          drupal_id
-          body {
-            processed
-          }
-          changed
-          sticky
-          relationships {
-            field_tags {
-              drupal_id
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-
-    images: allMediaImage(limit: 1, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          name
-          drupal_id
-          field_media_image {
-            alt
-          }
-          relationships {
-            field_media_image {
-              localFile {
-                childImageSharp {
-                  fluid {
-                      originalImg
-                      ...GatsbyImageSharpFluid
-                  }
-              }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          field_call_to_action_link {
-            title
-            uri
-          }
-          relationships {
-            field_call_to_action_goal {
-              name
-              field_goal_action
-            }
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-    
-    testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          drupal_id
-          body {
-              processed
-          }
-          title
-          field_testimonial_person_desc
-          field_picture {
-              alt
-          }
-          relationships {
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-
-            field_picture {
-                localFile {
-                    url
-                    childImageSharp {
-                        fluid(maxWidth: 400, maxHeight: 400) {
-                            originalImg
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
-                }
-            }
-          }
-        }
-      }
-    }
-  
-    course_notes: allNodeProgramCourseNotes(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
-      edges {
-        node {
-          title
-          drupal_id
-          changed
-          body {
-            processed
-          }
-          sticky
-          relationships {
-            field_tags {
-              drupal_id
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-    
-    courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          changed
-          relationships {
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-          }
-          field_code
-          field_course_url {
-            uri
-          }
-          field_credits
-          field_level
-          title
-        }
-      }
-    }
-	
   }
 `
 
