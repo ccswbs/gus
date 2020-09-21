@@ -125,6 +125,24 @@ exports.createSchemaCustomization = ({ actions }) => {
       tags: [String]
     }
 
+
+    type node__employer implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      body: BodyFieldWithSummary
+      field_image: ImageField
+      relationships: node__employerRelationships
+      fields: node__employerFields
+    }
+    type node__employerRelationships {
+      field_image: file__file @link(from: "field_image___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__employerFields implements Node {
+      tags: [String]
+    }
+
     type node__program_description implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -267,7 +285,8 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
       node.internal.type === `node__testimonial` ||
       node.internal.type === `media__image` || 
       node.internal.type === `node__course` || 
-      node.internal.type === `node__career`) {
+      node.internal.type === `node__career` || 
+      node.internal.type === `node__employer`) {
     createNodeField({
       node,
       name: `tags`,

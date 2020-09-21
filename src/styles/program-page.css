@@ -123,7 +123,8 @@ body.program hr {
 
 /* Program Info */
 
-body.program .employer-wrapper img {
+body.program .employer-wrapper img,
+body.program .employer-wrapper .gatsby-image-wrapper {
     width: 20%;
     margin-right: 5%;
     float: left;
@@ -268,7 +269,8 @@ body.program .pre-footer img {
         margin-top: 1rem;
     }
 
-    body.program .employer-wrapper img {
+    body.program .employer-wrapper img,
+    body.program .employer-wrapper .gatsby-image-wrapper {
         width: 40%;
     }
 

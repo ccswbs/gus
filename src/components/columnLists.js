@@ -5,7 +5,7 @@ import '../styles/columnLists.css';
 function ColumnLists (props) {
 	return (
         <div className="container">
-            <ul className={props.columnClass + ' column-lists-' + props.numColumns}>
+            <ul className={'column-lists column-lists-' + props.numColumns + ' ' + props.columnClass}>
                 {props.children}
             </ul>
         </div>
@@ -20,7 +20,7 @@ ColumnLists.propTypes = {
 ColumnLists.defaultProps = {
     children: ``,
     numColumns: 3,
-    columnClass: 'column-lists',
+    columnClass: '',
   }
   
 export default ColumnLists
