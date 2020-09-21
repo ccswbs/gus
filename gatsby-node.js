@@ -119,7 +119,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 		drupal_internal__nid: Int
 		title: String
 		changed: Date
-		relationships: node__programRelationships
+    relationships: node__programRelationships
+    fields: FieldsPathAlias
 	}
 	type node__programRelationships implements Node {
 		field_call_to_action: [node__call_to_action]
@@ -332,9 +333,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             title
             id
             drupal_id
-			path {
-			  alias
-			}
           }
         }
       }
@@ -401,12 +399,8 @@ function createPageAlias(node){
   return alias;
 }
 
-/****** 
-
-* If no specialization is available, uses pattern of `/programs/program-name`
-********/
 function createProgramAlias(node){
-  var alias = `/programs/` + slugify(node.path.alias);
+  var alias = `/programs/` + slugify(node.title);
   return alias;
 }
 
