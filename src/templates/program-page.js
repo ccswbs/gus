@@ -15,7 +15,6 @@ import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
-import FetchImages from '../utils/fetch-images';
 import '../styles/program-page.css';
 
 function renderHeaderImage(imageData) {
@@ -194,7 +193,7 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-	//var imageData;
+	var imageData;
 	var progData;
 	var progDescData;
 	var degreesData;
@@ -213,12 +212,10 @@ export default ({data, location}) => {
 	if (progData.relationships.field_course_notes !== undefined) { courseNotesData = progData.relationships.field_course_notes; }
 	if (progData.relationships.field_testimonials !== undefined) { testimonialData = progData.relationships.field_testimonials; }
 	if (progData.relationships.field_call_to_action !== undefined) { callToActionData = progData.relationships.field_call_to_action; }
-	//if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
+	if (data.images.edges !== undefined) { imageData = data.images.edges; }
 	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
 	
 	// set program details
-	//const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
-	//const imageData = useImageData();
 	const title = progData.title;
 	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
   //const description = combineAndSortBodyFields(progDescData);
@@ -226,8 +223,6 @@ export default ({data, location}) => {
   //const courseNotes = combineAndSortBodyFields(courseNotesData);
 	const courseNotes = courseNotesData.body.processed;
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
-	
-	imageTags = (acronym !== `` ? [acronym,"img-header"] : null);
 
   // set last modified date
   let allModifiedDates = sortLastModifiedDates([
@@ -254,7 +249,8 @@ export default ({data, location}) => {
 
       { /**** Header and Title ****/ }
       <div id="rotator">
-		<FetchImages tags={imageTags} />
+	  {/* <FetchImages tags={imageTags} /> */}
+		{renderHeaderImage(imageData)}
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
@@ -332,7 +328,7 @@ export default ({data, location}) => {
 
 export const query = graphql`
   query ($id: String) {
-    programs: allNodeProgram(filter: {id: {eq: $id}}) {
+    programs: allNodeProgram(filter: {relationships: {field_program_acronym: {id: {eq: $id}}}}) {
       edges {
         node {
           changed
@@ -442,6 +438,35 @@ export const query = graphql`
         }
       }
     }
+	images: allMediaImage(filter: {fields: {tags: {eq: $id}}}) {
+	  edges {
+		node {
+		  field_media_image {
+			alt
+		  }
+		  relationships {
+			field_media_image {
+			  localFile {
+				childImageSharp {
+				  fluid {
+					originalImg
+					...GatsbyImageSharpFluid
+				  }
+				}
+				extension
+			  }
+			}
+			field_tags {
+			__typename
+			... on TaxonomyInterface {
+				name
+			  }
+			}
+		  }
+		}
+	  }
+	}
+
   }
 `
 

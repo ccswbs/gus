@@ -333,6 +333,12 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             title
             id
             drupal_id
+            relationships {
+              field_program_acronym {
+                id
+                name
+              }
+            }
           }
         }
       }
@@ -351,7 +357,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
 
     if(result.data.programs !== undefined){
       const programs = result.data.programs.edges;
-      processPages(programs, createProgramAlias, programTemplate, helpers);
+      processPrograms(programs, createProgramAlias, programTemplate, helpers);
     }
   }
 }
@@ -366,6 +372,23 @@ function processPages(dataType, functionToRetrieveAlias, template, helpers){
       component: template,
       context: {
         id: node.id,
+      },
+    })
+  })
+}
+
+function processPrograms(dataType, functionToRetrieveAlias, template, helpers){
+  dataType.forEach(({ node }, index) => {
+    const alias = functionToRetrieveAlias(node);
+    createNodeAlias(node, alias, helpers);
+
+    console.log("TEST");
+
+    helpers.createPage({
+      path: alias,
+      component: template,
+      context: {
+        id: node.relationships.field_program_acronym.id,
       },
     })
   })
