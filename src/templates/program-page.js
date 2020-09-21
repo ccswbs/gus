@@ -15,7 +15,7 @@ import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
-import { useImageData } from '../utils/fetch-images';
+import FetchImages from '../utils/fetch-images';
 import '../styles/program-page.css';
 
 function renderHeaderImage(imageData) {
@@ -43,22 +43,22 @@ function renderHeaderImage(imageData) {
 }
 
 function renderProgramOverview(description, degreesData, specData) {
-  let checkIfContentAvailable = false;
+	let checkIfContentAvailable = false;
 
-  if (!contentIsNullOrEmpty(description) || 
-      !contentIsNullOrEmpty(degreesData) || 
-      !contentIsNullOrEmpty(specData)) {
-        checkIfContentAvailable = true;
-  }
+	if (!contentIsNullOrEmpty(description) || 
+		!contentIsNullOrEmpty(degreesData) || 
+		!contentIsNullOrEmpty(specData)) {
+		checkIfContentAvailable = true;
+	}
 
-  if(checkIfContentAvailable === true){
-    return <React.Fragment>
-          <h2>Program Overview</h2>
-          <div dangerouslySetInnerHTML={{ __html: description }}  />
-          <Degrees degreesData={degreesData} headingLevel='h3' />
-          <Units specData={specData} headingLevel='h3' />
-        </React.Fragment>
-  }
+	if (checkIfContentAvailable === true) {
+		return <React.Fragment>
+			<h2>Program Overview</h2>
+			<div dangerouslySetInnerHTML={{ __html: description }}  />
+			<Degrees degreesData={degreesData} headingLevel='h3' />
+			<Units specData={specData} headingLevel='h3' />
+		</React.Fragment>
+	}
 
   return null;
 }
@@ -205,6 +205,7 @@ export default ({data, location}) => {
 	var tagData;
 	var testimonialData;
 	var callToActionData = [];
+	var imageTags = [];
 
 	// set data
 	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
@@ -217,7 +218,7 @@ export default ({data, location}) => {
 	
 	// set program details
 	//const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
-	const imageData = useImageData();
+	//const imageData = useImageData();
 	const title = progData.title;
 	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
   //const description = combineAndSortBodyFields(progDescData);
@@ -225,6 +226,8 @@ export default ({data, location}) => {
   //const courseNotes = combineAndSortBodyFields(courseNotesData);
 	const courseNotes = courseNotesData.body.processed;
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+	
+	imageTags = (acronym !== `` ? [acronym,"img-header"] : null);
 
   // set last modified date
   let allModifiedDates = sortLastModifiedDates([
@@ -251,7 +254,7 @@ export default ({data, location}) => {
 
       { /**** Header and Title ****/ }
       <div id="rotator">
-		{renderHeaderImage(imageData)}
+		<FetchImages tags={imageTags} />
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
