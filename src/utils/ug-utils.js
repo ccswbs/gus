@@ -22,4 +22,26 @@ function sortLastModifiedDates(dates) {
   return dates.slice().flat().sort();
 }
 
-export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates };
+// combine multiple body values and place sticky values at the top
+function combineAndSortBodyFields (content) {
+  let stickyContent = [];
+  let allContent = [];
+
+  if(contentIsNullOrEmpty(content)) { return ""; }
+
+  content.forEach((edge) => {
+    if (!contentIsNullOrEmpty(edge.node.body.processed)){
+      if(edge.node.sticky === true) {
+        stickyContent.push(edge.node.body.processed);
+      } else {
+        allContent.push(edge.node.body.processed);
+      }
+    }
+  })
+
+  allContent.unshift(stickyContent);
+
+  return allContent.join("");
+}
+
+export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates, combineAndSortBodyFields };
