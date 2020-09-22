@@ -76,6 +76,6 @@ module.exports = {
   ],
   mapping: {
     "node__page.fields.alias": `PathAlias`,
-    /* "node__program.path": `PathAlias`,  */
+    "node__program.fields.alias": `PathAlias`,
   },
 }
