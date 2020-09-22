@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import Img from 'gatsby-image';
+import BackgroundImage from 'gatsby-background-image'
 import SEO from '../components/seo';
 import Degrees from '../components/degrees';
 import Units from '../components/units';
@@ -41,6 +42,28 @@ function renderHeaderImage(imageData) {
 	return null;
 }
 
+function fetchBackgroundImage(imageData) {
+	let checkIfContentAvailable = false;
+	
+	if (!contentIsNullOrEmpty(imageData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		var bgImage;
+		for (let i = 0; i < imageData.length; i++) {
+			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
+				if (imageData[i].node.relationships.field_tags[j].name === "img-background") {
+					bgImage = imageData[i].node.relationships.field_media_image;
+				}
+			}
+		}
+		return bgImage.localFile.childImageSharp.fluid
+	}
+	
+	return null;	
+}
+
 function renderProgramOverview(description, specData) {
 	let checkIfContentAvailable = false;
 
@@ -60,7 +83,7 @@ function renderProgramOverview(description, specData) {
   return null;
 }
 
-function renderProgramStats(degreesData, statsData) {
+function renderProgramStats(degreesData, statsData, imageData) {
 	let checkIfContentAvailable = false;
 	
 	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
@@ -69,7 +92,7 @@ function renderProgramStats(degreesData, statsData) {
 	
 	if (checkIfContentAvailable === true) {
 		return <React.Fragment>
-		<div className="full-width-container bg-img">
+		<BackgroundImage Tag="div" className="full-width-container" fluid={fetchBackgroundImage(imageData)}>
 			<div className="container page-container">
 				<section className="row row-with-vspace site-content">
 					<div className="col-md-12 content-area">
@@ -81,7 +104,7 @@ function renderProgramStats(degreesData, statsData) {
 					</div>
 				</section>
 			</div>
-        </div>
+        </BackgroundImage>
 		</React.Fragment>
 	}
 	
@@ -283,7 +306,7 @@ export default ({data, location}) => {
 	</div>
 	
 	{ /**** Program Stats ****/ }
-	{renderProgramStats(degreesData, statsData)}
+	{renderProgramStats(degreesData, statsData, imageData)}
 
 	{ /**** Program Information Tabs ****/ }
 	<div className="container page-container">
@@ -415,7 +438,7 @@ export const query = graphql`
       }
     }
 
-	images: allMediaImage(limit: 1, filter: {fields: {tags: {in: [$id] }}}) {
+	images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
 	  edges {
 		node {
 		  field_media_image {
