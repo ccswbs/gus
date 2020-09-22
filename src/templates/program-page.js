@@ -41,11 +41,10 @@ function renderHeaderImage(imageData) {
 	return null;
 }
 
-function renderProgramOverview(description, degreesData, specData) {
+function renderProgramOverview(description, specData) {
 	let checkIfContentAvailable = false;
 
 	if (!contentIsNullOrEmpty(description) || 
-		!contentIsNullOrEmpty(degreesData) || 
 		!contentIsNullOrEmpty(specData)) {
 		checkIfContentAvailable = true;
 	}
@@ -54,12 +53,39 @@ function renderProgramOverview(description, degreesData, specData) {
 		return <React.Fragment>
 			<h2>Program Overview</h2>
 			<div dangerouslySetInnerHTML={{ __html: description }}  />
-			<Degrees degreesData={degreesData} headingLevel='h3' />
 			<Units specData={specData} headingLevel='h3' />
 		</React.Fragment>
 	}
 
   return null;
+}
+
+function renderProgramStats(degreesData, statsData) {
+	let checkIfContentAvailable = false;
+	
+	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		return <React.Fragment>
+		<div className="full-width-container bg-img">
+			<div className="container page-container">
+				<section className="row row-with-vspace site-content">
+					<div className="col-md-12 content-area">
+						<h2 className="sr-only">Program Statistics</h2>
+						<dl className="d-flex flex-wrap flex-fill justify-content-center">
+							<Degrees degreesData={degreesData} />
+							{/* <Stats statsData={statsData} /> */}
+						</dl>
+					</div>
+				</section>
+			</div>
+        </div>
+		</React.Fragment>
+	}
+	
+	return null;
 }
 
 function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData) {
@@ -126,16 +152,12 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 function retrieveLastModifiedDates (content) {
   let dates = [];
 
-/*   if (!contentIsNullOrEmpty(content)) {  
+  if (!contentIsNullOrEmpty(content)) {  
     content.forEach((edge) => {
         dates.push(edge.node.changed);
     })
-  } */
-  
-  if (!contentIsNullOrEmpty(content)) { 
-	dates.push(content.changed);
   }
-
+  
   return dates;
 }
 
@@ -171,22 +193,21 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-	var imageData;
-	var progData;
-	var degreesData;
-	var specData;
+	var callToActionData = [];
 	var courseData;
-	var variantData;
+	var degreesData;
+	var imageData;
+	var progData;	
+	var specData;
+	var statsData;
 	var tagData;
 	var testimonialData;
-	var callToActionData = [];
-	var imageTags = [];
+	var variantData;
 
 	// set data
 	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-	if (progData.relationships.field_testimonials !== undefined) { testimonialData = progData.relationships.field_testimonials; }
-	if (progData.relationships.field_call_to_action !== undefined) { callToActionData = progData.relationships.field_call_to_action; }
 	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 	if (data.images.edges !== undefined) { imageData = data.images.edges; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 	
@@ -198,13 +219,13 @@ export default ({data, location}) => {
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
 	// set last modified date
-	/* let allModifiedDates = sortLastModifiedDates([
-                          progData.changed,
-                          retrieveLastModifiedDates(progDescData)]); */
-	//let lastModified = allModifiedDates[allModifiedDates.length - 1];
+	let allModifiedDates = sortLastModifiedDates(
+		[progData.changed,
+		retrieveLastModifiedDates(callToActionData),
+		retrieveLastModifiedDates(testimonialData)
+		]);
+	let lastModified = allModifiedDates[allModifiedDates.length - 1];
 	
-	let lastModified = progData.changed;
-
 	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
 	specData = progData.relationships.field_specializations;
@@ -240,11 +261,11 @@ export default ({data, location}) => {
                   </div>
                   <div className="col-md-3">
                     {callToActionData.map((cta, index) => (
-                      <CallToAction key={index} href={cta.field_call_to_action_link.uri} 
-                        goalEventCategory={cta.relationships.field_call_to_action_goal.name} 
-                        goalEventAction={cta.relationships.field_call_to_action_goal.field_goal_action} 
+                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+                        goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
+                        goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
                         classNames='btn btn-uogRed apply' >
-                        {cta.field_call_to_action_link.title}
+                        {cta.node.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
                   </div>
@@ -256,10 +277,13 @@ export default ({data, location}) => {
 	<div className="container page-container">
 		<div className="row row-with-vspace site-content">
 			<section className="col-md-9 content-area">
-				{renderProgramOverview(description, degreesData, specData)}
+				{renderProgramOverview(description, specData)}
 			</section>
 		</div>
 	</div>
+	
+	{ /**** Program Stats ****/ }
+	{renderProgramStats(degreesData, statsData)}
 
 	{ /**** Program Information Tabs ****/ }
 	<div className="container page-container">
@@ -282,11 +306,11 @@ export default ({data, location}) => {
               <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
                   <h3><span>Are you ready to</span> Improve Life?</h3>
                   {callToActionData.map((cta, index) => (
-                      <CallToAction key={index} href={cta.field_call_to_action_link.uri} 
-                        goalEventCategory={cta.relationships.field_call_to_action_goal.name} 
-                        goalEventAction={cta.relationships.field_call_to_action_goal.field_goal_action} 
+                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+                        goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
+                        goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
                         classNames='btn btn-uogRed apply' >
-                      {cta.field_call_to_action_link.title}
+                      {cta.node.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
               </div>
@@ -336,18 +360,6 @@ export const query = graphql`
             field_tags {
               name
             }
-            field_call_to_action {
-              field_call_to_action_link {
-                title
-                uri
-              }
-              relationships {
-                field_call_to_action_goal {
-                  name
-                  field_goal_action
-                }
-              }
-            }
             field_program_variants {
               __typename
               ... on paragraph__general_text {
@@ -370,6 +382,32 @@ export const query = graphql`
                     name
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    }
+	
+	ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          changed
+		  field_call_to_action_link {
+            title
+            uri
+          }
+          relationships {
+            field_call_to_action_goal {
+              name
+              field_goal_action
+            }
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
               }
             }
           }
@@ -409,14 +447,15 @@ export const query = graphql`
 	testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
-          drupal_id
+          changed
+		  drupal_id
           body {
-              processed
+            processed
           }
           title
           field_testimonial_person_desc
           field_picture {
-              alt
+            alt
           }
           relationships {
             field_tags {
@@ -428,15 +467,15 @@ export const query = graphql`
               }
             }
             field_picture {
-                localFile {
-                    url
-                    childImageSharp {
-                        fluid(maxWidth: 400, maxHeight: 400) {
-                            originalImg
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
+              localFile {
+                url
+                childImageSharp {
+                  fluid(maxWidth: 400, maxHeight: 400) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
                 }
+              }
             }
           }
         }

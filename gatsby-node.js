@@ -134,7 +134,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  processed: String		
 	}	
 	type node__programRelationships implements Node {
-	  field_call_to_action: [node__call_to_action]
 	  field_program_acronym: taxonomy_term__programs
 	}	
     type node__testimonial implements Node {

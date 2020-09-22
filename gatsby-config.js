@@ -65,14 +65,6 @@ module.exports = {
         username: metaConfig['IGuser'],        
       },
     },	
-/* 	{
-	  resolve: `gatsby-plugin-react-svg`,
-	  options: {
-		rule: {
-		  include: `/\.inline\.svg$/`
-		}
-	  },
-	} */
   ],
   mapping: {
     "node__page.fields.alias": `PathAlias`,

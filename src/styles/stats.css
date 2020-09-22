@@ -1,0 +1,43 @@
+/* Program stats (with icons) */
+
+body.program .uog-card {
+    min-width: 33%; 
+    text-align: center;
+	margin-top: 3rem;
+	/* border: 1px dotted #333; */
+}
+
+body.program dt {
+    font-size: 5rem;
+    color: #000;
+    line-height: 1rem;
+    margin-bottom: 2rem;
+}
+
+body.program .uog-card dt svg {
+    height: 6rem;
+    padding-right: 1.5rem;
+}
+
+body.program dd {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #555;
+    margin-top: 0;
+}
+
+div.uog-card path {
+	fill: #69a3b9;
+}
+
+div.uog-card:nth-of-type(9n+2) path,
+div.uog-card:nth-of-type(9n+4) path,
+div.uog-card:nth-of-type(9n+9) path {
+	fill: #ffc72a;
+}
+
+div.uog-card:nth-of-type(9n+3) path,
+div.uog-card:nth-of-type(9n+5) path,
+div.uog-card:nth-of-type(9n+7) path {
+	fill: #c20430;
+}
