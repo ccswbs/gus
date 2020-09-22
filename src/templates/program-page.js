@@ -217,11 +217,9 @@ export default ({data, location}) => {
 	
 	// set program details
 	const title = progData.title;
-	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
-  //const description = combineAndSortBodyFields(progDescData);
-	const description = progDescData.body.processed;
-  //const courseNotes = combineAndSortBodyFields(courseNotesData);
-	const courseNotes = courseNotesData.body.processed;
+  const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
+	const description = !contentIsNullOrEmpty(progDescData) ? progDescData.body.processed : ``;
+  const courseNotes = !contentIsNullOrEmpty(courseNotesData) ? courseNotesData.body.processed : ``;
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
   // set last modified date
@@ -246,11 +244,10 @@ export default ({data, location}) => {
       }}
     />
 	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-
       { /**** Header and Title ****/ }
       <div id="rotator">
-	  {/* <FetchImages tags={imageTags} /> */}
-		{renderHeaderImage(imageData)}
+        {/* <FetchImages tags={imageTags} /> */}
+        {renderHeaderImage(imageData)}
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
@@ -338,6 +335,7 @@ export const query = graphql`
           relationships {
             field_program_acronym {
               name
+              id
             }
             field_program_overview {
               title
@@ -438,34 +436,38 @@ export const query = graphql`
         }
       }
     }
-	images: allMediaImage(filter: {fields: {tags: {eq: $id}}}) {
+
+	images: allMediaImage(limit: 1, filter: {fields: {tags: {in: [$id] }}}) {
 	  edges {
 		node {
+
 		  field_media_image {
-			alt
+        alt
 		  }
 		  relationships {
-			field_media_image {
-			  localFile {
-				childImageSharp {
-				  fluid {
-					originalImg
-					...GatsbyImageSharpFluid
-				  }
-				}
-				extension
-			  }
-			}
-			field_tags {
-			__typename
-			... on TaxonomyInterface {
-				name
-			  }
-			}
-		  }
-		}
+
+        field_media_image {
+          localFile {
+            childImageSharp {
+              fluid {
+              originalImg
+              ...GatsbyImageSharpFluid
+              }
+            }
+            extension
+          }
+        }
+
+        field_tags {
+          __typename
+          ... on TaxonomyInterface {
+            name
+            }
+          }
+        }
+      }
 	  }
-	}
+  }
 
   }
 `

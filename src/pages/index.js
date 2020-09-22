@@ -20,7 +20,7 @@ const IndexPage = ({ data }) => (
 				<h2>Programs</h2>
 				<ul>
 					{data.programs.edges.map((edge, index) => (
-						<li key={index}><Link to={`programs${edge.node.path.alias}`}>{edge.node.title}</Link></li>
+						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
 					))}
 				</ul>
 				<h2>Instagram</h2>
@@ -52,8 +52,10 @@ export const query = graphql`
 			drupal_id
 			drupal_internal__nid
 			title
-			path {
-			  alias 
+			fields {
+				alias {
+					value
+				}
 			}
 		  }
 		}

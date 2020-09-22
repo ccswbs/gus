@@ -350,48 +350,45 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
   }
 
   if (result.data !== undefined){
+
+    // process page nodes
     if(result.data.pages !== undefined){
       const pages = result.data.pages.edges;
-      processPages(pages, createPageAlias, pageTemplate, helpers);
+      pages.forEach(( { node }, index) => {
+        processPage(node, 
+          node.id, 
+          createPageAlias, 
+          pageTemplate, 
+          helpers);
+      })
     }
 
+    // process program nodes
     if(result.data.programs !== undefined){
       const programs = result.data.programs.edges;
-      processPrograms(programs, createProgramAlias, programTemplate, helpers);
+      programs.forEach(( { node }, index) => {
+        processPage(
+          node, 
+          node.relationships.field_program_acronym.id, 
+          createProgramAlias, 
+          programTemplate, 
+          helpers);
+      })
     }
   }
 }
 
-function processPages(dataType, functionToRetrieveAlias, template, helpers){
-  dataType.forEach(({ node }, index) => {
-    const alias = functionToRetrieveAlias(node);
+function processPage(node, contextID, functionToRetrieveAlias, template, helpers) {
+    let alias = functionToRetrieveAlias(node);
     createNodeAlias(node, alias, helpers);
 
     helpers.createPage({
       path: alias,
       component: template,
       context: {
-        id: node.id,
+        id: contextID,
       },
     })
-  })
-}
-
-function processPrograms(dataType, functionToRetrieveAlias, template, helpers){
-  dataType.forEach(({ node }, index) => {
-    const alias = functionToRetrieveAlias(node);
-    createNodeAlias(node, alias, helpers);
-
-    console.log("TEST");
-
-    helpers.createPage({
-      path: alias,
-      component: template,
-      context: {
-        id: node.relationships.field_program_acronym.id,
-      },
-    })
-  })
 }
 
 function createNodeAlias(node, alias, helpers){
