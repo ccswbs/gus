@@ -112,48 +112,31 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__pageRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-	
+    }	
 	type node__program implements Node {
-		drupal_id: String
-		drupal_internal__nid: Int
-		title: String
-		changed: Date
-    relationships: node__programRelationships
-    fields: FieldsPathAlias
+	  drupal_id: String
+	  drupal_internal__nid: Int
+	  title: String
+	  changed: Date
+	  field_course_notes: node__programField_course_notes
+	  field_program_overview: node__programField_program_overview
+      relationships: node__programRelationships
+      fields: FieldsPathAlias
 	}
+	type node__programField_course_notes implements Node {
+	  value: String
+	  format: String
+	  processed: String
+	}
+	type node__programField_program_overview implements Node {
+	  value: String
+	  format: String
+	  processed: String		
+	}	
 	type node__programRelationships implements Node {
-		field_call_to_action: [node__call_to_action]
-		field_course_notes: node__program_course_notes
-		field_program_acronym: taxonomy_term__programs
-		field_program_overview: node__program_description
-		field_testimonials: [node__testimonial]
-	}
-	
-    type node__program_course_notes implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      title: String
-      body: BodyField
-      relationships: node__program_course_notesRelationships
-      changed: Date
-      sticky: Boolean
-    }
-    type node__program_course_notesRelationships implements Node {
-      field_tags: [taxonomy_term__programs]
-    }
-    type node__program_description implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      title: String
-      body: BodyFieldWithSummary
-      relationships: node__program_descriptionRelationships
-      changed: Date
-      sticky: Boolean
-    }
-    type node__program_descriptionRelationships implements Node {
-      field_tags: [taxonomy_term__programs]
-    }
+	  field_call_to_action: [node__call_to_action]
+	  field_program_acronym: taxonomy_term__programs
+	}	
     type node__testimonial implements Node {
         drupal_id: String
         drupal_internal__tid: Int

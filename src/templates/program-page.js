@@ -173,10 +173,8 @@ function prepareVariantHeading (variantData) {
 export default ({data, location}) => {
 	var imageData;
 	var progData;
-	var progDescData;
 	var degreesData;
 	var specData;
-	var courseNotesData;
 	var courseData;
 	var variantData;
 	var tagData;
@@ -186,27 +184,26 @@ export default ({data, location}) => {
 
 	// set data
 	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-	if (progData.relationships.field_program_overview !== undefined) { progDescData = progData.relationships.field_program_overview; }
-	if (progData.relationships.field_course_notes !== undefined) { courseNotesData = progData.relationships.field_course_notes; }
 	if (progData.relationships.field_testimonials !== undefined) { testimonialData = progData.relationships.field_testimonials; }
 	if (progData.relationships.field_call_to_action !== undefined) { callToActionData = progData.relationships.field_call_to_action; }
-	if (data.images.edges !== undefined) { imageData = data.images.edges; }
 	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+	if (data.images.edges !== undefined) { imageData = data.images.edges; }
+	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 	
 	// set program details
 	const title = progData.title;
-  const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
-	const description = !contentIsNullOrEmpty(progDescData) ? progDescData.body.processed : ``;
-  const courseNotes = !contentIsNullOrEmpty(courseNotesData) ? courseNotesData.body.processed : ``;
+	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
+	const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
+	const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
-  // set last modified date
-  let allModifiedDates = sortLastModifiedDates([
+	// set last modified date
+	/* let allModifiedDates = sortLastModifiedDates([
                           progData.changed,
-                          retrieveLastModifiedDates(progDescData)]);
-                          //retrieveLastModifiedDates(courseNotesData),
-                          //retrieveLastModifiedDates(courseData)]);
-  let lastModified = allModifiedDates[allModifiedDates.length - 1];
+                          retrieveLastModifiedDates(progDescData)]); */
+	//let lastModified = allModifiedDates[allModifiedDates.length - 1];
+	
+	let lastModified = progData.changed;
 
 	// set degree, unit, variant, tag, and course info  
 	degreesData = progData.relationships.field_degrees;
@@ -310,32 +307,21 @@ export const query = graphql`
           drupal_id
           drupal_internal__nid
           title
+		  field_program_overview {
+            processed
+          }
+		  field_course_notes {
+            processed
+          }
           relationships {
             field_program_acronym {
               name
               id
-            }
-            field_program_overview {
-              title
-              drupal_id
-              body {
-                processed
-              }
-              changed
-              sticky
-            }
+            }        
             field_degrees {
               drupal_id
               name
               field_degree_acronym
-            }
-            field_course_notes {
-              id
-              body {
-                processed
-              }
-              changed
-              sticky
             }
             field_courses {
               changed
@@ -349,30 +335,6 @@ export const query = graphql`
             }
             field_tags {
               name
-            }
-            field_testimonials {
-              drupal_id
-              body {
-                processed
-              }
-              title
-              field_testimonial_person_desc
-              field_picture {
-                alt
-              }
-              relationships {
-                field_picture {
-                  localFile {
-                    url
-                    childImageSharp {
-                      fluid(maxWidth: 400, maxHeight: 400) {
-                        originalImg
-                        ...GatsbyImageSharpFluid
-                      }
-                    }
-                  }
-                }
-              }
             }
             field_call_to_action {
               field_call_to_action_link {
@@ -418,34 +380,68 @@ export const query = graphql`
 	images: allMediaImage(limit: 1, filter: {fields: {tags: {in: [$id] }}}) {
 	  edges {
 		node {
-
 		  field_media_image {
-        alt
+            alt
 		  }
 		  relationships {
-
-        field_media_image {
-          localFile {
-            childImageSharp {
-              fluid {
-              originalImg
-              ...GatsbyImageSharpFluid
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+                extension
               }
             }
-            extension
+            field_tags {
+            __typename
+            ... on TaxonomyInterface {
+                name
+              }
+            }
           }
         }
-
-        field_tags {
-          __typename
-          ... on TaxonomyInterface {
-            name
+	  }
+	}
+	
+	testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          drupal_id
+          body {
+              processed
+          }
+          title
+          field_testimonial_person_desc
+          field_picture {
+              alt
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+            field_picture {
+                localFile {
+                    url
+                    childImageSharp {
+                        fluid(maxWidth: 400, maxHeight: 400) {
+                            originalImg
+                            ...GatsbyImageSharpFluid
+                        }
+                    }
+                }
             }
           }
         }
       }
-	  }
-  }
+    }
 
   }
 `
