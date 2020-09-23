@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import Img from 'gatsby-image';
-import BackgroundImage from 'gatsby-background-image'
 import SEO from '../components/seo';
 import Degrees from '../components/degrees';
 import Units from '../components/units';
@@ -92,7 +91,7 @@ function renderProgramStats(degreesData, statsData, imageData) {
 	
 	if (checkIfContentAvailable === true) {
 		return <React.Fragment>
-		<BackgroundImage Tag="div" className="full-width-container" fluid={fetchBackgroundImage(imageData)}>
+		<div className="full-width-container">
 			<div className="container page-container">
 				<section className="row row-with-vspace site-content">
 					<div className="col-md-12 content-area">
@@ -104,7 +103,7 @@ function renderProgramStats(degreesData, statsData, imageData) {
 					</div>
 				</section>
 			</div>
-        </BackgroundImage>
+        </div>
 		</React.Fragment>
 	}
 	
