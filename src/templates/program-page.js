@@ -39,7 +39,7 @@ function renderProgramOverview(description, degreesData, specData) {
   return null;
 }
 
-function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData) {
+function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
   let activeValue = true;
   let activeTabExists = false;
   let checkIfContentAvailable = false;
@@ -115,6 +115,48 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                       } />);
   }
 
+  // prep TAB 4 - Employers
+  if(!contentIsNullOrEmpty(employerData)) {
+    activeValue = (activeTabExists === true) ? false : true;
+    checkIfContentAvailable = true;
+    const employerHeading = "Employers";
+    const employerID = "pills-employer";
+    key++;
+
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                      active={activeValue} 
+                                      heading={employerHeading} 
+                                      controls={employerID} />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeValue} 
+                                      heading={employerHeading} 
+                                      headingLevel="h3" 
+                                      id={employerID} 
+                                      content={
+                                        <div className="container">
+                                          <div className="row">
+                                            {employerData.map (unit => {
+                                              let employerImage = unit.node.relationships.field_image;
+                                              let employerSummary = unit.node.field_employer_summary;
+                                              let employerJobPostingsLink = !contentIsNullOrEmpty(unit.node.field_link) ? unit.node.field_link.uri : null;
+                                              return <div className="col-4" key={unit.node.drupal_id}>
+                                                        <div className="employer-wrapper">
+                                                          {employerImage && <div className="employer-pic">
+                                                            <Img fluid={employerImage.localFile.childImageSharp.fluid} imgStyle={{ objectFit: 'contain' }} alt={unit.node.relationships.field_image.alt} />
+                                                          </div>}
+                                                          <div className="employer-info">
+                                                            <h4 className="employer-name">{unit.node.title}</h4>
+                                                            {employerSummary && <div dangerouslySetInnerHTML={{__html: employerSummary.processed}} />}
+                                                            {employerJobPostingsLink && <p><a href={unit.node.field_link.uri}>Current Job Postings<span className="sr-only"> for {unit.node.title}</span></a></p>}
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                            })}
+                                          </div>
+                                        </div>
+                                      } />);
+  }
   if(checkIfContentAvailable === true){
     return <React.Fragment>
               <h2>Program Information</h2>
@@ -205,6 +247,7 @@ export default ({data, location}) => {
   let courseNotesData;
   let courseData;  
   let testimonialData;
+  let employerData;
   let careerData;
   let callToActionData = [];
 
@@ -215,6 +258,7 @@ export default ({data, location}) => {
   if (data.course_notes.edges[0] !== undefined) { courseNotesData = data.course_notes.edges; }
   if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
   if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
+  if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 
@@ -226,8 +270,6 @@ export default ({data, location}) => {
   const courseNotes = combineAndSortBodyFields(courseNotesData);
   const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
   const allProgramTags = progData.relationships.field_tags;
-
-  console.log(testimonialData);
   
   // set last modified date
   const allModifiedDates = sortLastModifiedDates([
@@ -297,7 +339,7 @@ export default ({data, location}) => {
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData)}
+            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
           </div>
         </section>
       </div>
@@ -473,6 +515,46 @@ export const query = graphql`
           field_testimonial_person_desc
           field_image {
               alt
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+
+            field_image {
+                localFile {
+                    url
+                    childImageSharp {
+                        fluid(maxWidth: 400, maxHeight: 400) {
+                            originalImg
+                            ...GatsbyImageSharpFluid
+                        }
+                    }
+                }
+            }
+          }
+        }
+      }
+    }
+
+    employers: allNodeEmployer(sort: {fields: title}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          drupal_id
+          field_employer_summary {
+              processed
+          }
+          title
+          field_image {
+              alt
+          }
+          field_link {
+            uri
           }
           relationships {
             field_tags {

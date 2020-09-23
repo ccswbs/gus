@@ -22,4 +22,25 @@ function sortLastModifiedDates(dates) {
   return dates.slice().flat().sort();
 }
 
-export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates };
+// Source: https://flaviocopes.com/how-to-divide-array-js/
+function divideIntoColumns(data, numColumns) {
+  let dividedData = [];
+  let itemsPerRow = Math.ceil(data.length / numColumns);
+
+  for(let i=0;i<numColumns;i++){
+    dividedData.push([]);
+  }
+
+  for (let row = 0; row < numColumns; row++) {
+      for (let i = 0; i < itemsPerRow; i++) {
+          const value = data[i + row * itemsPerRow]
+          if (!value) continue //avoid adding "undefined" values
+          dividedData[row].push(value)
+      }
+  }
+
+  return dividedData;
+
+}
+
+export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates, divideIntoColumns };
