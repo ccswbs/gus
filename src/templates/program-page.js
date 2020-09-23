@@ -15,7 +15,6 @@ import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import ColumnLists from '../components/columnLists';
-import ColumnBlocks from '../components/columnBlocks';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import '../styles/program-page.css';
 
@@ -135,21 +134,27 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                       headingLevel="h3" 
                                       id={employerID} 
                                       content={
-                                        <ColumnBlocks numColumns={3} data={employerData} />
-                                          
-                                          {/* {employerData.map (unit => {
-                                            let employerImage = unit.node.relationships.field_image;
-                                            let employerBody = unit.node.body;
-                                            return <div className="employer-wrapper" key={unit.node.drupal_id}>
-                                                      {employerImage && <Img className="employer-pic" fluid={employerImage.localFile.childImageSharp.fluid} alt={unit.node.relationships.field_image.alt} />}
-                                                      <p>
-                                                        <strong>{unit.node.title}</strong>
-                                                        <br />
-                                                        {employerBody && <span dangerouslySetInnerHTML={{__html: employerBody.summary}} />}
-                                                      </p>
-                                                    </div>
-                                          })} */}
-                                        // </ColumnBlocks>
+                                        <div className="container">
+                                          <div className="row">
+                                            {employerData.map (unit => {
+                                              let employerImage = unit.node.relationships.field_image;
+                                              let employerSummary = unit.node.field_employer_summary;
+                                              let employerJobPostingsLink = !contentIsNullOrEmpty(unit.node.field_link) ? unit.node.field_link.uri : null;
+                                              return <div className="col-4" key={unit.node.drupal_id}>
+                                                        <div className="employer-wrapper">
+                                                          {employerImage && <div className="employer-pic">
+                                                            <Img fluid={employerImage.localFile.childImageSharp.fluid} imgStyle={{ objectFit: 'contain' }} alt={unit.node.relationships.field_image.alt} />
+                                                          </div>}
+                                                          <div className="employer-info">
+                                                            <h4 className="employer-name">{unit.node.title}</h4>
+                                                            {employerSummary && <div dangerouslySetInnerHTML={{__html: employerSummary.processed}} />}
+                                                            {employerJobPostingsLink && <p><a href={unit.node.field_link.uri}>Current Job Postings<span className="sr-only"> for {unit.node.title}</span></a></p>}
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                            })}
+                                          </div>
+                                        </div>
                                       } />);
   }
   if(checkIfContentAvailable === true){
@@ -541,13 +546,15 @@ export const query = graphql`
       edges {
         node {
           drupal_id
-          body {
-              summary
+          field_employer_summary {
               processed
           }
           title
           field_image {
               alt
+          }
+          field_link {
+            uri
           }
           relationships {
             field_tags {

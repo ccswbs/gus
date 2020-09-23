@@ -125,13 +125,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       tags: [String]
     }
 
-
     type node__employer implements Node {
       drupal_id: String
       drupal_internal__tid: Int
       title: String
-      body: BodyFieldWithSummary
+      field_employer_summary: BodyField
       field_image: ImageField
+      field_link: FieldLink
       relationships: node__employerRelationships
       fields: node__employerFields
     }
