@@ -137,10 +137,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_program_acronym: taxonomy_term__programs
       field_courses: [node__course]
       field_degrees: [taxonomy_term__degrees]
-      field_program_statistics: [paragraph__program_statistic]
+      field_program_statistics: [paragraph__program_statistic]	  
       field_specializations: [taxonomy_term__specializations]
       field_tags: [taxonomy_term__tags]
-    }	
+    }
 
     type node__testimonial implements Node {
         drupal_id: String

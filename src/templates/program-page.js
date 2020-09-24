@@ -6,6 +6,7 @@ import Layout from '../components/layout';
 import Img from 'gatsby-image';
 import SEO from '../components/seo';
 import Degrees from '../components/degrees';
+import Stats from '../components/stats'
 //import Units from '../components/units';
 import Variants from '../components/variants';
 import Tags from '../components/tags';
@@ -94,7 +95,7 @@ function renderProgramStats(degreesData, specData, statsData, imageData) {
 	
 	if (checkIfContentAvailable === true) {
 		return <React.Fragment>
-		<div className="full-width-container">
+		<div className="full-width-container stats-bg">
 			<div className="container page-container">
 				<section className="row row-with-vspace site-content">
 					<div className="col-md-12 content-area">
@@ -102,7 +103,7 @@ function renderProgramStats(degreesData, specData, statsData, imageData) {
 						<dl className="d-flex flex-wrap flex-fill justify-content-center">
 							<Degrees degreesData={degreesData} />
 							{CountSpecializedMajors(specData)}
-							{/* <Stats statsData={statsData} /> */}
+							<Stats statsData={statsData} />
 						</dl>
 					</div>
 				</section>
@@ -339,12 +340,13 @@ export default ({data, location}) => {
   
 	// set data
   if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-  if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
-  if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
   if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+  if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
   if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
   if (data.images.edges !== undefined) { imageData = data.images.edges; }
   if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+  if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
+  if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
 
 	// set program details
 	const title = progData.title;
@@ -494,6 +496,26 @@ export const query = graphql`
             }
             field_specializations {
               name
+            }
+			field_program_statistics {
+              drupal_id
+			  field_stat_range
+			  field_stat_time
+			  field_stat_value
+              relationships {
+                field_stat_type {
+                  name
+                }
+                field_stat_icon {
+                  relationships {
+                    field_media_image {
+                      localFile {
+                        publicURL
+                      }
+                    }
+                  }
+                }
+              }
             }
             field_tags {
               name
