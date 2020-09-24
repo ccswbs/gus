@@ -1,5 +1,9 @@
 /* Program stats (with icons) */
 
+body.program .stats-bg {
+	background-color: AliceBlue;
+}
+
 body.program .uog-card {
     min-width: 33%; 
     text-align: center;
