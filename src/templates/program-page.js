@@ -1,11 +1,12 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import SVG from 'react-inlinesvg';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import Img from 'gatsby-image';
 import SEO from '../components/seo';
 import Degrees from '../components/degrees';
-import Units from '../components/units';
+//import Units from '../components/units';
 import Variants from '../components/variants';
 import Tags from '../components/tags';
 import CallToAction from '../components/callToAction';
@@ -15,6 +16,7 @@ import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
+import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
 
 function renderHeaderImage(imageData) {
@@ -75,14 +77,14 @@ function renderProgramOverview(description, specData) {
 		return <React.Fragment>
 			<h2>Program Overview</h2>
 			<div dangerouslySetInnerHTML={{ __html: description }}  />
-			<Units specData={specData} headingLevel='h3' />
+			{/* <Units specData={specData} headingLevel='h3' /> */}
 		</React.Fragment>
 	}
 
   return null;
 }
 
-function renderProgramStats(degreesData, statsData, imageData) {
+function renderProgramStats(degreesData, specData, statsData, imageData) {
 	let checkIfContentAvailable = false;
 	
 	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
@@ -98,12 +100,43 @@ function renderProgramStats(degreesData, statsData, imageData) {
 						<h2 className="sr-only">Program Statistics</h2>
 						<dl className="d-flex flex-wrap flex-fill justify-content-center">
 							<Degrees degreesData={degreesData} />
+							{CountSpecializedMajors(specData)}
 							{/* <Stats statsData={statsData} /> */}
 						</dl>
 					</div>
 				</section>
 			</div>
         </div>
+		</React.Fragment>
+	}
+	
+	return null;
+}
+
+function CountSpecializedMajors(specData) {
+	const specIcon = useIconData();
+	let checkIfContentAvailable = false;
+	
+	if (!contentIsNullOrEmpty(specData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		var iconURL = ``;		
+		if (specIcon !== null && specIcon !== undefined) {
+			for (let i=0; i<specIcon.length; i++) {
+				for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
+					if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
+						iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
+					}
+				}
+			}
+		}
+		return <React.Fragment>
+			<div className="uog-card">
+				<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {specData.length}</dt>
+				<dd>Specialized Majors</dd>
+			</div>
 		</React.Fragment>
 	}
 	
@@ -305,7 +338,7 @@ export default ({data, location}) => {
 	</div>
 	
 	{ /**** Program Stats ****/ }
-	{renderProgramStats(degreesData, statsData, imageData)}
+	{renderProgramStats(degreesData, specData, statsData, imageData)}
 
 	{ /**** Program Information Tabs ****/ }
 	<div className="container page-container">
@@ -378,6 +411,9 @@ export const query = graphql`
               field_course_url {
                 uri
               }
+            }
+			field_specializations {
+              name
             }
             field_tags {
               name
