@@ -120,8 +120,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       changed: Date
       field_course_notes: node__programField_course_notes
       field_program_overview: node__programField_program_overview
-        relationships: node__programRelationships
-        fields: FieldsPathAlias
+      relationships: node__programRelationships
+      fields: FieldsPathAlias
     }
     type node__programField_course_notes implements Node {
       value: String
@@ -135,6 +135,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     }	
     type node__programRelationships implements Node {
       field_program_acronym: taxonomy_term__programs
+      field_courses: [node__course]
+      field_degrees: [taxonomy_term__degrees]
+      field_program_statistics: [paragraph__program_statistic]
+      field_specializations: [taxonomy_term__specializations]
+      field_tags: [taxonomy_term__tags]
     }	
 
     type node__testimonial implements Node {
@@ -191,6 +196,19 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       field_general_text: BodyField
     }
+	type paragraph__program_statistic implements Node {
+	  drupal_id: String
+	  field_stat_range: Boolean
+	  field_stat_time: String
+	  field_stat_value: String
+	  relationships: paragraph__program_statisticRelationships
+	}
+	type paragraph__program_statisticRelationships implements Node {
+	  paragraph_type: paragraphs_type__paragraphs_type
+	  field_stat_icon: media__image
+	  field_stat_type: taxonomy_term__statistic_type
+	  node__program: [node__program]
+	}
     type paragraph__program_variants implements Node {
       drupal_id: String
       field_variant_title: String
