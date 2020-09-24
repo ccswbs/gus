@@ -361,7 +361,7 @@ export default ({data, location}) => {
     ]);
   let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
-	// set degree, unit, variant, tag, and careers info  
+	// set degree, specialization, variant, and tag info  
 	degreesData = progData.relationships.field_degrees;
   specData = progData.relationships.field_specializations;
   tagData = progData.relationships.field_tags;
