@@ -4,7 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+let metaConfig = require('./config/sites/ugconthub.js');
 
 if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['title'] = "Gatsby UG Starter Template";
@@ -45,29 +45,29 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-         baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+         //baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+		 //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
+		 //baseUrl: `http://stats2-bovey.pantheonsite.io/`,
+		 baseUrl: `http://prognode-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
-    },
-    
+    },    
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `src`,
         path: `${__dirname}/src/`,
       },
-    },
-    
+    },    
     {
       resolve: `gatsby-source-instagram`,
       options: {
-        username: metaConfig['IGuser'],
-        
+        username: metaConfig['IGuser'],        
       },
-    },
+    },	
   ],
   mapping: {
     "node__page.fields.alias": `PathAlias`,
-    "taxonomy_term__programs.fields.alias": `PathAlias`,
+    "node__program.fields.alias": `PathAlias`,
   },
 }

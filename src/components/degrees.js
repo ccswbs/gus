@@ -1,21 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { setHeadingLevel, contentIsNullOrEmpty } from '../utils/ug-utils';
-
+import SVG from 'react-inlinesvg';
+import { contentIsNullOrEmpty } from '../utils/ug-utils';
+import { useIconData } from '../utils/fetch-icon';
+import '../styles/stats.css';
 
 function Degrees (props) {
-    let Heading = setHeadingLevel(props.headingLevel);
-
+	var dtValue = ``;
+	var iconURL = ``;
+	const data = useIconData();	
+	
+ 	if (data !== null && data !== undefined) {
+		for (let i=0; i<data.length; i++) {
+			for (let j=0; j<data[i].node.relationships.field_tags.length; j++) {
+				if (data[i].node.relationships.field_tags[j].name === "icon-degree") {
+					iconURL = data[i].node.relationships.field_media_image.localFile.publicURL;
+				}
+			}
+		}
+	}
+	
 	return (
 		<React.Fragment>
-			{!contentIsNullOrEmpty(props.degreesData) && <>
-				<Heading>Degrees Offered</Heading>
-				<ul>
+			{!contentIsNullOrEmpty(props.degreesData) && <>									
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {dtValue = props.degreesData.length === 1 ? "Degree" : "Degrees"}</dt>
 					{props.degreesData.map (degree => {
 						const acronym = (degree.field_degree_acronym !== undefined && degree.field_degree_acronym !== null ? ` (` + degree.field_degree_acronym + `)`: ``);
-						return <li key={degree.drupal_id}>{degree.name} {acronym}</li>
+						return <dd key={degree.drupal_id}>{degree.name} {acronym}</dd>
 					})}
-				</ul>
+				</div>
 			</>}
 		</React.Fragment>
 	)
@@ -23,10 +37,8 @@ function Degrees (props) {
 
 Degrees.propTypes = {
 	degreesData: PropTypes.array,
-	headingLevel: PropTypes.string,
 }
 Degrees.defaultProps = {
 	degreesData: null,
-	headingLevel: `p`,
 }
 export default Degrees
