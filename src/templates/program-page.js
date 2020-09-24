@@ -327,7 +327,7 @@ export default ({data, location}) => {
   // set last modified date
   let allModifiedDates = sortLastModifiedDates(
     [progData.changed,
-    retrieveLastModifiedDates(courseData),
+    // retrieveLastModifiedDates(courseData),
     retrieveLastModifiedDates(callToActionData),
 		retrieveLastModifiedDates(testimonialData)
     ]);
@@ -467,10 +467,12 @@ export const query = graphql`
                 uri
               }
             }
+            field_specializations {
+              name
+            }
             field_tags {
               name
             }
-
             field_program_variants {
               __typename
               ... on paragraph__general_text {
@@ -528,30 +530,30 @@ export const query = graphql`
 
     images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
       edges {
-      node {
-        field_media_image {
-              alt
-        }
-        relationships {
-              field_media_image {
-                localFile {
-                  childImageSharp {
-                    fluid {
-                      originalImg
-                      ...GatsbyImageSharpFluid
-                    }
+        node {
+          field_media_image {
+                alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid {
+                    originalImg
+                    ...GatsbyImageSharpFluid
                   }
-                  extension
                 }
+                extension
               }
-              field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                  name
-                }
+            }
+            field_tags {
+            __typename
+            ... on TaxonomyInterface {
+                name
               }
             }
           }
+        }
       }
     }
 	
@@ -565,7 +567,6 @@ export const query = graphql`
           }
           title
           field_testimonial_person_desc
-
           field_picture {
             alt
           }
@@ -578,17 +579,17 @@ export const query = graphql`
                 name
               }
             }
-
             field_picture {
               localFile {
-                  url
-                  childImageSharp {
-                      fluid(maxWidth: 400, maxHeight: 400) {
-                          originalImg
-                          ...GatsbyImageSharpFluid
-                      }
+                url
+                childImageSharp {
+                  fluid(maxWidth: 400, maxHeight: 400) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
                   }
+                }
               }
+            }
           }
         }
       }
@@ -605,29 +606,29 @@ export const query = graphql`
           field_image {
             alt
           }
-            field_link {
-              uri
+          field_link {
+            uri
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
             }
-            relationships {
-              field_tags {
-                __typename
-                ... on TaxonomyInterface {
-                  drupal_id
-                  id
-                  name
+
+            field_image {
+              localFile {
+                url
+                childImageSharp {
+                  fluid(maxWidth: 400, maxHeight: 400) {
+                      originalImg
+                      ...GatsbyImageSharpFluid
+                  }
                 }
               }
-
-              field_image {
-                localFile {
-                    url
-                    childImageSharp {
-                        fluid(maxWidth: 400, maxHeight: 400) {
-                            originalImg
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
-                }
             }
           }
         }
@@ -658,4 +659,3 @@ export const query = graphql`
     }
   }
 `
-

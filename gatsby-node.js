@@ -143,7 +143,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         title: String
         body: BodyFieldWithSummary
         field_testimonial_person_desc: String
-        field_image: ImageField
+        field_image: PictureField
         relationships: node__testimonialRelationships
         fields: node__testimonialFields
     }
@@ -174,7 +174,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__tid: Int
       title: String
       field_employer_summary: BodyField
-      field_image: ImageField
+      field_image: PictureField
       field_link: FieldLink
       relationships: node__employerRelationships
       fields: node__employerFields
