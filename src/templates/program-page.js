@@ -324,23 +324,27 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-  let progData;
-	let imageData;
-  let courseData;  
-  let testimonialData;
-  let employerData;
-  let careerData;
   let callToActionData = [];
-	var statsData;
+  let careerData;
+  let courseData;
+  let degreesData;
+  let employerData;
+	let imageData;
+  let progData;
+  let specData;
+  var statsData;
+  let tagData;
+  let testimonialData;
+  let variantData;
   
 	// set data
   if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
-  if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
   if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
   if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
-	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
-	if (data.images.edges !== undefined) { imageData = data.images.edges; }
+  if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+  if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
+  if (data.images.edges !== undefined) { imageData = data.images.edges; }
+  if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 
 	// set program details
 	const title = progData.title;
@@ -358,11 +362,11 @@ export default ({data, location}) => {
   let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
 	// set degree, unit, variant, tag, and careers info  
-	let degreesData = progData.relationships.field_degrees;
-	let specData = progData.relationships.field_specializations;
-	let variantData = progData.relationships.field_program_variants;
+	degreesData = progData.relationships.field_degrees;
+  specData = progData.relationships.field_specializations;
+  tagData = progData.relationships.field_tags;
+	variantData = progData.relationships.field_program_variants;
   let variantDataHeading = prepareVariantHeading(variantData);
-  let tagData = progData.relationships.field_tags;
 
   return (
 	<Layout date={lastModified}>
