@@ -324,7 +324,6 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-
   let progData;
 	let imageData;
   let courseData;  
@@ -343,7 +342,7 @@ export default ({data, location}) => {
 	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
 	if (data.images.edges !== undefined) { imageData = data.images.edges; }
 
-	// set program details << incoming
+	// set program details
 	const title = progData.title;
 	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
 	const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
@@ -353,7 +352,6 @@ export default ({data, location}) => {
   // set last modified date
   let allModifiedDates = sortLastModifiedDates(
     [progData.changed,
-    // retrieveLastModifiedDates(courseData),
     retrieveLastModifiedDates(callToActionData),
 		retrieveLastModifiedDates(testimonialData)
     ]);
@@ -365,9 +363,6 @@ export default ({data, location}) => {
 	let variantData = progData.relationships.field_program_variants;
   let variantDataHeading = prepareVariantHeading(variantData);
   let tagData = progData.relationships.field_tags;
-
-  // let allProgramTags = progData.relationships.field_tags;
-  // let tagData = allProgramTags.filter(tag => tag.__typename === 'taxonomy_term__tags');
 
   return (
 	<Layout date={lastModified}>
