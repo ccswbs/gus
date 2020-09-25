@@ -83,6 +83,21 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_call_to_action_goal: taxonomy_term__goals
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+	type node__career implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      changed: Date
+      body: BodyFieldWithSummary
+      relationships: node__careerRelationships
+      fields: node__careerFields
+    }
+	type node__careerFields implements Node {
+      tags: [String]
+    }
+    type node__careerRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
     type node__course implements Node {
       drupal_id: String
       drupal_internal__tid: Int
@@ -101,6 +116,23 @@ exports.createSchemaCustomization = ({ actions }) => {
       uri: String
     }
     type node__courseRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+	type node__employer implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      field_employer_summary: BodyField
+      field_image: PictureField
+      field_link: FieldLink
+      relationships: node__employerRelationships
+      fields: node__employerFields
+    }
+    type node__employerFields implements Node {
+      tags: [String]
+    }
+    type node__employerRelationships {
+      field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__page implements Node {
@@ -141,7 +173,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_specializations: [taxonomy_term__specializations]
       field_tags: [taxonomy_term__tags]
     }
-
     type node__testimonial implements Node {
         drupal_id: String
         drupal_internal__tid: Int
@@ -158,39 +189,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialRelationships {
       field_picture: file__file @link(from: "field_picture___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-    type node__career implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      title: String
-      changed: Date
-      body: BodyFieldWithSummary
-      relationships: node__careerRelationships
-      fields: node__careerFields
-    }
-    type node__careerRelationships implements Node {
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-    type node__careerFields implements Node {
-      tags: [String]
-    }
-    type node__employer implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      title: String
-      field_employer_summary: BodyField
-      field_image: PictureField
-      field_link: FieldLink
-      relationships: node__employerRelationships
-      fields: node__employerFields
-    }
-    type node__employerRelationships {
-      field_image: file__file @link(from: "field_image___NODE")
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-    type node__employerFields implements Node {
-      tags: [String]
-    }
+    }    
 
 	type paragraph__general_text implements Node {
       drupal_id: String
