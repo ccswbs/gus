@@ -11,9 +11,9 @@ function Testimonials (props) {
 	if ((props.testimonialData !== null) && (props.testimonialData !== undefined)) {
 		const testimonialUnits  = () => props.testimonialData.map((testimonial, index) => {
 			let testimonialContent = stripHTMLTags(testimonial.node.body.processed);
-			let testimonialPicture = testimonial.node.relationships.field_picture;
+			let testimonialPicture = testimonial.node.relationships.field_image;
 			return <div key={testimonial.node.drupal_id}>
-				{testimonialPicture && <Img className="testimonial-pic" fluid={testimonialPicture.localFile.childImageSharp.fluid} alt={testimonial.node.relationships.field_picture.alt} />}
+				{testimonialPicture && <Img className="testimonial-pic" fluid={testimonialPicture.localFile.childImageSharp.fluid} alt={testimonial.node.relationships.field_image.alt} />}
 				<blockquote className="testimonial-quote" dangerouslySetInnerHTML={{__html: testimonialContent}} />
 				<p className="testimonial-tagline">
 					<strong className="testimonial-title">{testimonial.node.title}</strong>

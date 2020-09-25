@@ -56,7 +56,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	type media__image implements Node {
       drupal_id: String
       name: String
-      field_media_image: PictureField
+      field_media_image: ImageField
       fields: media__imageFields
       relationships: media__imageRelationships
     }
@@ -148,7 +148,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         title: String
         body: BodyFieldWithSummary
         field_testimonial_person_desc: String
-        field_picture: PictureField
+        field_image: ImageField
         relationships: node__testimonialRelationships
         fields: node__testimonialFields
     }
@@ -156,7 +156,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       tags: [String]
     }
     type node__testimonialRelationships {
-      field_picture: file__file @link(from: "field_picture___NODE")
+      field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__career implements Node {
@@ -179,7 +179,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__tid: Int
       title: String
       field_employer_summary: BodyField
-      field_image: PictureField
+      field_image: ImageField
       field_link: FieldLink
       relationships: node__employerRelationships
       fields: node__employerFields
@@ -226,7 +226,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       alias: String
     }
 	
-    type PictureField implements Node {
+    type ImageField implements Node {
       alt: String
     }
 

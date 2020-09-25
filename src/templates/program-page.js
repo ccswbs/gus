@@ -614,7 +614,7 @@ export const query = graphql`
           }
           title
           field_testimonial_person_desc
-          field_picture {
+          field_image {
             alt
           }
           relationships {
@@ -626,7 +626,7 @@ export const query = graphql`
                 name
               }
             }
-            field_picture {
+            field_image {
               localFile {
                 url
                 childImageSharp {
