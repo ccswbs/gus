@@ -6,8 +6,8 @@ import { useIconData } from '../utils/fetch-icon';
 import '../styles/stats.css';
 
 function Degrees (props) {
-	var dtValue = ``;
-	var iconURL = ``;
+	let dtValue = props.degreesData.length === 1 ? "Degree" : "Degrees";
+	let iconURL = ``;
 	const data = useIconData();	
 	
  	if (data !== null && data !== undefined) {
@@ -24,7 +24,7 @@ function Degrees (props) {
 		<React.Fragment>
 			{!contentIsNullOrEmpty(props.degreesData) && <>									
 				<div className="uog-card">
-					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {dtValue = props.degreesData.length === 1 ? "Degree" : "Degrees"}</dt>
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {dtValue}</dt>
 					{props.degreesData.map (degree => {
 						const acronym = (degree.field_degree_acronym !== undefined && degree.field_degree_acronym !== null ? ` (` + degree.field_degree_acronym + `)`: ``);
 						return <dd key={degree.drupal_id}>{degree.name} {acronym}</dd>
