@@ -16,6 +16,7 @@ import Courses from '../components/courses';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
+import ColumnLists from '../components/columnLists';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
@@ -144,50 +145,125 @@ function CountSpecializedMajors(specData) {
 	return null;
 }
 
-function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData) {
-  let activeTab = false;
+function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
+  let activeValue = true;
+  let activeTabExists = false;
   let checkIfContentAvailable = false;
   let navTabHeadings = [];
   let navTabContent = [];
   let key = 0;
 
-  // prep courses tab
-  if ((courseNotes !== null && courseNotes !== "") || 
-      (courseData !== null && courseData !== undefined && courseData.length > 0 )) {
-    activeTab = true;
+  // prep TAB 1 - Courses
+  if(!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)){
+    const courseHeading = "Courses";
+    const courseID = "pills-courses";
+    activeTabExists = true;
     checkIfContentAvailable = true;
+    key++;
+
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                        active={activeTab} 
-                                        heading="Courses" 
-                                        controls="pills-courses" />);
+                                        active={activeValue} 
+                                        heading={courseHeading} 
+                                        controls={courseID} />);
 
     navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeTab} 
-                                      heading="Courses" 
+                                      active={activeValue} 
+                                      heading={courseHeading} 
                                       headingLevel="h3" 
-                                      id="pills-courses" 
+                                      id={courseID} 
                                       content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} />);
-    key++;
   }
 
-  // prep variants tab
-  if (variantDataHeading !== '') {
-    activeTab = (activeTab === false) ? true : false;
+  // prep TAB 2 - Variants
+  if( variantDataHeading !== '') {
+    const variantID = "pills-variants";
+    activeValue = (activeTabExists === true) ? false : true;
     checkIfContentAvailable = true;
+    key++;
+
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                      active={activeTab} 
+                                      active={activeValue} 
                                       heading={variantDataHeading} 
-                                      controls="pills-certificates" />);
+                                      controls={variantID} />);
 
     navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeTab} 
+                                      active={activeValue} 
                                       heading={variantDataHeading} 
                                       headingLevel="h3" 
-                                      id="pills-certificates" 
+                                      id={variantID} 
                                       content={<Variants variantData={variantData} />} />);
   }
 
-  if (checkIfContentAvailable === true) {
+  // prep TAB 3 - Careers
+  if(!contentIsNullOrEmpty(careerData)) {
+    activeValue = (activeTabExists === true) ? false : true;
+    checkIfContentAvailable = true;
+    const careersHeading = "Careers";
+    const careersID = "pills-careers";
+    key++;
+
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                      active={activeValue} 
+                                      heading={careersHeading} 
+                                      controls={careersID} />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeValue} 
+                                      heading={careersHeading} 
+                                      headingLevel="h3" 
+                                      id={careersID} 
+                                      content={
+                                        <ColumnLists numColumns={3}>
+                                          {careerData.map (unit => {
+                                            return <li key={unit.node.drupal_id}>{unit.node.title}</li>
+                                          })}
+                                        </ColumnLists>
+                                      } />);
+  }
+
+  // prep TAB 4 - Employers
+  if(!contentIsNullOrEmpty(employerData)) {
+    activeValue = (activeTabExists === true) ? false : true;
+    checkIfContentAvailable = true;
+    const employerHeading = "Employers";
+    const employerID = "pills-employer";
+    key++;
+
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                      active={activeValue} 
+                                      heading={employerHeading} 
+                                      controls={employerID} />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeValue} 
+                                      heading={employerHeading} 
+                                      headingLevel="h3" 
+                                      id={employerID} 
+                                      content={
+                                        <div className="container">
+                                          <div className="row">
+                                            {employerData.map (unit => {
+                                              let employerImage = unit.node.relationships.field_image;
+                                              let employerSummary = unit.node.field_employer_summary;
+                                              let employerJobPostingsLink = !contentIsNullOrEmpty(unit.node.field_link) ? unit.node.field_link.uri : null;
+                                              return <div className="col-4" key={unit.node.drupal_id}>
+                                                        <div className="employer-wrapper">
+                                                          {employerImage && <div className="employer-pic">
+                                                            <Img fluid={employerImage.localFile.childImageSharp.fluid} imgStyle={{ objectFit: 'contain' }} alt={unit.node.relationships.field_image.alt} />
+                                                          </div>}
+                                                          <div className="employer-info">
+                                                            <h4 className="employer-name">{unit.node.title}</h4>
+                                                            {employerSummary && <div dangerouslySetInnerHTML={{__html: employerSummary.processed}} />}
+                                                            {employerJobPostingsLink && <p><a href={unit.node.field_link.uri}>Current Job Postings<span className="sr-only"> for {unit.node.title}</span></a></p>}
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                            })}
+                                          </div>
+                                        </div>
+                                      } />);
+  }
+  if(checkIfContentAvailable === true){
     return <React.Fragment>
               <h2>Program Information</h2>
               <NavTabs headings={
@@ -230,7 +306,7 @@ function prepareVariantHeading (variantData) {
 
   const uniqueLabelSet = new Set(labels);
   const uniqueLabels = [...uniqueLabelSet];
-  var variantHeading = "";
+  let variantHeading = "";
 
   for (let i=0; i<uniqueLabels.length; i++) {
     if (i > 0) { 
@@ -249,25 +325,29 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-	var callToActionData = [];
-	var courseData;
-	var degreesData;
-	var imageData;
-	var progData;	
-	var specData;
-	var statsData;
-	var tagData;
-	var testimonialData;
-	var variantData;
-
+  let callToActionData = [];
+  let careerData;
+  let courseData;
+  let degreesData;
+  let employerData;
+	let imageData;
+  let progData;
+  let specData;
+  var statsData;
+  let tagData;
+  let testimonialData;
+  let variantData;
+  
 	// set data
-	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
-	if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
-	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-	if (data.images.edges !== undefined) { imageData = data.images.edges; }
-	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
-	
+  if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+  if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+  if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
+  if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
+  if (data.images.edges !== undefined) { imageData = data.images.edges; }
+  if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+  if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
+  if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
+
 	// set program details
 	const title = progData.title;
 	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
@@ -275,20 +355,20 @@ export default ({data, location}) => {
 	const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
-	// set last modified date
-	let allModifiedDates = sortLastModifiedDates(
-		[progData.changed,
-		retrieveLastModifiedDates(callToActionData),
+  // set last modified date
+  let allModifiedDates = sortLastModifiedDates(
+    [progData.changed,
+    retrieveLastModifiedDates(callToActionData),
 		retrieveLastModifiedDates(testimonialData)
-		]);
-	let lastModified = allModifiedDates[allModifiedDates.length - 1];
-	
-	// set degree, unit, variant, tag, and course info  
+    ]);
+  let lastModified = allModifiedDates[allModifiedDates.length - 1];
+
+	// set degree, specialization, variant, and tag info  
 	degreesData = progData.relationships.field_degrees;
-	specData = progData.relationships.field_specializations;
-	tagData = progData.relationships.field_tags;
+  specData = progData.relationships.field_specializations;
+  tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
-	const variantDataHeading = prepareVariantHeading(variantData);
+  let variantDataHeading = prepareVariantHeading(variantData);
 
   return (
 	<Layout date={lastModified}>
@@ -342,14 +422,14 @@ export default ({data, location}) => {
 	{ /**** Program Stats ****/ }
 	{renderProgramStats(degreesData, specData, statsData, imageData)}
 
-	{ /**** Program Information Tabs ****/ }
-	<div className="container page-container">
-		<section className="row row-with-vspace site-content">
-			<div className="col-md-12 content-area">
-				{renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData)}
-			</div>
-		</section>
-	</div>
+  { /**** Program Information Tabs ****/ }
+    <div className="container page-container">
+      <section className="row row-with-vspace site-content">
+        <div className="col-md-12 content-area">
+          {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
+        </div>
+      </section>
+    </div>                    
 
 	{ /**** Testimonials ****/ }
 	{testimonialData && 
@@ -388,10 +468,10 @@ export const query = graphql`
           drupal_id
           drupal_internal__nid
           title
-		  field_program_overview {
+          field_program_overview {
             processed
           }
-		  field_course_notes {
+          field_course_notes {
             processed
           }
           relationships {
@@ -414,7 +494,7 @@ export const query = graphql`
                 uri
               }
             }
-			field_specializations {
+            field_specializations {
               name
             }
 			field_program_statistics {
@@ -469,7 +549,7 @@ export const query = graphql`
       }
     }
 	
-	ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id] }}}) {
+    ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           changed
@@ -495,13 +575,13 @@ export const query = graphql`
       }
     }
 
-	images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
-	  edges {
-		node {
-		  field_media_image {
-            alt
-		  }
-		  relationships {
+    images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          field_media_image {
+                alt
+          }
+          relationships {
             field_media_image {
               localFile {
                 childImageSharp {
@@ -521,14 +601,14 @@ export const query = graphql`
             }
           }
         }
-	  }
-	}
+      }
+    }
 	
-	testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
+    testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           changed
-		  drupal_id
+          drupal_id
           body {
             processed
           }
@@ -562,6 +642,67 @@ export const query = graphql`
       }
     }
 
+    employers: allNodeEmployer(sort: {fields: title}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          drupal_id
+          field_employer_summary {
+              processed
+          }
+          title
+          field_image {
+            alt
+          }
+          field_link {
+            uri
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+
+            field_image {
+              localFile {
+                url
+                childImageSharp {
+                  fluid(maxWidth: 400, maxHeight: 400) {
+                      originalImg
+                      ...GatsbyImageSharpFluid
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    careers: allNodeCareer(sort: {fields: [title], order: ASC}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          title
+          drupal_id
+          changed
+          body {
+            processed
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `
-

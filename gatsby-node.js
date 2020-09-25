@@ -52,7 +52,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       original: String
       caption: String
     }
-	
+
 	type media__image implements Node {
       drupal_id: String
       name: String
@@ -112,35 +112,36 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__pageRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }	
-	type node__program implements Node {
-	  drupal_id: String
-	  drupal_internal__nid: Int
-	  title: String
-	  changed: Date
-	  field_course_notes: node__programField_course_notes
-	  field_program_overview: node__programField_program_overview
+    }
+    type node__program implements Node {
+      drupal_id: String
+      drupal_internal__nid: Int
+      title: String
+      changed: Date
+      field_course_notes: node__programField_course_notes
+      field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
       fields: FieldsPathAlias
-	}
-	type node__programField_course_notes implements Node {
-	  value: String
-	  format: String
-	  processed: String
-	}
-	type node__programField_program_overview implements Node {
-	  value: String
-	  format: String
-	  processed: String		
-	}	
-	type node__programRelationships implements Node {
-	  field_program_acronym: taxonomy_term__programs
-	  field_courses: [node__course]
-	  field_degrees: [taxonomy_term__degrees]
-	  field_program_statistics: [paragraph__program_statistic]	  
-	  field_specializations: [taxonomy_term__specializations]
-	  field_tags: [taxonomy_term__tags]
-	}	
+    }
+    type node__programField_course_notes implements Node {
+      value: String
+      format: String
+      processed: String
+    }
+    type node__programField_program_overview implements Node {
+      value: String
+      format: String
+      processed: String		
+    }	
+    type node__programRelationships implements Node {
+      field_program_acronym: taxonomy_term__programs
+      field_courses: [node__course]
+      field_degrees: [taxonomy_term__degrees]
+      field_program_statistics: [paragraph__program_statistic]	  
+      field_specializations: [taxonomy_term__specializations]
+      field_tags: [taxonomy_term__tags]
+    }
+
     type node__testimonial implements Node {
         drupal_id: String
         drupal_internal__tid: Int
@@ -157,6 +158,38 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialRelationships {
       field_picture: file__file @link(from: "field_picture___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__career implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      changed: Date
+      body: BodyFieldWithSummary
+      relationships: node__careerRelationships
+      fields: node__careerFields
+    }
+    type node__careerRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__careerFields implements Node {
+      tags: [String]
+    }
+    type node__employer implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      field_employer_summary: BodyField
+      field_image: PictureField
+      field_link: FieldLink
+      relationships: node__employerRelationships
+      fields: node__employerFields
+    }
+    type node__employerRelationships {
+      field_image: file__file @link(from: "field_image___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__employerFields implements Node {
+      tags: [String]
     }
 
 	type paragraph__general_text implements Node {
@@ -190,7 +223,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	
     type PathAlias implements Node {
       value: String
-	  alias: String
+      alias: String
     }
 	
     type PictureField implements Node {
@@ -265,7 +298,9 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   if (node.internal.type === `node__call_to_action` ||
       node.internal.type === `node__testimonial` ||
       node.internal.type === `media__image` || 
-      node.internal.type === `node__course`) {
+      node.internal.type === `node__course` || 
+      node.internal.type === `node__career` || 
+      node.internal.type === `node__employer`) {
     createNodeField({
       node,
       name: `tags`,

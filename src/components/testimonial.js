@@ -10,9 +10,9 @@ function Testimonials (props) {
 
 	if ((props.testimonialData !== null) && (props.testimonialData !== undefined)) {
 		const testimonialUnits  = () => props.testimonialData.map((testimonial, index) => {
-			var testimonialContent = stripHTMLTags(testimonial.node.body.processed);
-			var testimonialPicture = testimonial.node.relationships.field_picture;
-			return <div key={testimonial.drupal_id}>
+			let testimonialContent = stripHTMLTags(testimonial.node.body.processed);
+			let testimonialPicture = testimonial.node.relationships.field_picture;
+			return <div key={testimonial.node.drupal_id}>
 				{testimonialPicture && <Img className="testimonial-pic" fluid={testimonialPicture.localFile.childImageSharp.fluid} alt={testimonial.node.relationships.field_picture.alt} />}
 				<blockquote className="testimonial-quote" dangerouslySetInnerHTML={{__html: testimonialContent}} />
 				<p className="testimonial-tagline">
