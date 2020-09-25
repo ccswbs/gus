@@ -246,7 +246,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                               let employerImage = unit.node.relationships.field_image;
                                               let employerSummary = unit.node.field_employer_summary;
                                               let employerJobPostingsLink = !contentIsNullOrEmpty(unit.node.field_link) ? unit.node.field_link.uri : null;
-                                              return <div className="col-4" key={unit.node.drupal_id}>
+                                              return <div className="col-6 col-md-4" key={unit.node.drupal_id}>
                                                         <div className="employer-wrapper">
                                                           {employerImage && <div className="employer-pic">
                                                             <Img fluid={employerImage.localFile.childImageSharp.fluid} imgStyle={{ objectFit: 'contain' }} alt={unit.node.relationships.field_image.alt} />
