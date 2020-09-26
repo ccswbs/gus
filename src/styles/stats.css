@@ -16,6 +16,7 @@ body.program dt {
     color: #000;
     line-height: 1rem;
     margin-bottom: 2rem;
+	text-transform: capitalize;
 }
 
 body.program .uog-card dt svg {

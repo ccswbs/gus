@@ -502,6 +502,7 @@ export const query = graphql`
 			  field_stat_range
 			  field_stat_time
 			  field_stat_value
+			  field_stat_end_value
               relationships {
                 field_stat_type {
                   name

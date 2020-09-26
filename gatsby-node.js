@@ -204,12 +204,13 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  field_stat_range: Boolean
 	  field_stat_time: String
 	  field_stat_value: String
+	  field_stat_end_value: String
 	  relationships: paragraph__program_statisticRelationships
 	}
 	type paragraph__program_statisticRelationships implements Node {
 	  paragraph_type: paragraphs_type__paragraphs_type
 	  field_stat_icon: media__image
-	  field_stat_type: taxonomy_term__statistic_type
+	  field_stat_type: taxonomy_term__statistic_type	  
 	  node__program: [node__program]
 	}
     type paragraph__program_variants implements Node {

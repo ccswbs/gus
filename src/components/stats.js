@@ -9,15 +9,18 @@ function Stats (props) {
 		<React.Fragment>
 			{!contentIsNullOrEmpty(props.statsData) && props.statsData.length !== 0 && <>
 				{props.statsData.map (stat => {	
-					var statIcon = stat.relationships.field_stat_icon.relationships.field_media_image.localFile;
-					var timePeriod = stat.field_stat_time;
-					return <React.Fragment>
+					let statIcon = stat.relationships.field_stat_icon.relationships.field_media_image.localFile;
+					let statType = stat.relationships.field_stat_type.name;
+					let timePeriod = stat.field_stat_time;
+					return <React.Fragment key={stat.drupal_id}>
 					<div className="uog-card">							
-						<dt style={{textTransform: 'capitalize'}}>
+						<dt>
 							{statIcon !== null && <><SVG src={statIcon.publicURL} /></>} 
+							{statType === "Potential Co-op Earnings" ? "$" : null}
 							{parseFloat(stat.field_stat_value,10)} {timePeriod}
+							{statType === "Job Placement Rate" ? "%" : null}
 						</dt>
-						<dd>{stat.relationships.field_stat_type.name}</dd>
+						<dd>{statType}</dd>
 					</div>
 					</React.Fragment>
 				})}
