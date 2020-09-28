@@ -7,7 +7,6 @@ import Img from 'gatsby-image';
 import SEO from '../components/seo';
 import Degrees from '../components/degrees';
 import Stats from '../components/stats'
-//import Units from '../components/units';
 import Variants from '../components/variants';
 import Tags from '../components/tags';
 import CallToAction from '../components/callToAction';
@@ -45,28 +44,6 @@ function renderHeaderImage(imageData) {
 	return null;
 }
 
-function fetchBackgroundImage(imageData) {
-	let checkIfContentAvailable = false;
-	
-	if (!contentIsNullOrEmpty(imageData)) {
-		checkIfContentAvailable = true;
-	}
-	
-	if (checkIfContentAvailable === true) {
-		var bgImage;
-		for (let i = 0; i < imageData.length; i++) {
-			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
-				if (imageData[i].node.relationships.field_tags[j].name === "img-background") {
-					bgImage = imageData[i].node.relationships.field_media_image;
-				}
-			}
-		}
-		return bgImage.localFile.childImageSharp.fluid
-	}
-	
-	return null;	
-}
-
 function renderProgramOverview(description, specData) {
 	let checkIfContentAvailable = false;
 
@@ -79,14 +56,13 @@ function renderProgramOverview(description, specData) {
 		return <React.Fragment>
 			<h2>Program Overview</h2>
 			<div dangerouslySetInnerHTML={{ __html: description }}  />
-			{/* <Units specData={specData} headingLevel='h3' /> */}
 		</React.Fragment>
 	}
 
   return null;
 }
 
-function renderProgramStats(degreesData, specData, statsData, imageData) {
+function renderProgramStats(degreesData, variantData, statsData, imageData) {
 	let checkIfContentAvailable = false;
 	
 	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
@@ -102,7 +78,7 @@ function renderProgramStats(degreesData, specData, statsData, imageData) {
 						<h2 className="sr-only">Program Statistics</h2>
 						<dl className="d-flex flex-wrap flex-fill justify-content-center">
 							<Degrees degreesData={degreesData} />
-							{CountSpecializedMajors(specData)}
+							{CountProgramVariants(variantData)}
 							<Stats statsData={statsData} />
 						</dl>
 					</div>
@@ -115,11 +91,15 @@ function renderProgramStats(degreesData, specData, statsData, imageData) {
 	return null;
 }
 
-function CountSpecializedMajors(specData) {
+function CountProgramVariants(variantData) {
 	const specIcon = useIconData();
 	let checkIfContentAvailable = false;
+	let majors = [];
+	let minors = [];
+	let certificates = [];
+	let assocDiplomas = [];
 	
-	if (!contentIsNullOrEmpty(specData)) {
+	if (!contentIsNullOrEmpty(variantData)) {
 		checkIfContentAvailable = true;
 	}
 	
@@ -133,13 +113,51 @@ function CountSpecializedMajors(specData) {
 					}
 				}
 			}
-		}
-		return <React.Fragment>
-			<div className="uog-card">
-				<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {specData.length}</dt>
-				<dd>Specialized Majors</dd>
-			</div>
+		}		
+		variantData.forEach((edge) => {
+			if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
+				switch(edge.relationships.field_variant_type.name) {
+					case "Associate Diplomas":
+						assocDiplomas.push(edge.relationships.field_variant_type.name);
+					break;
+					case "Certificates":
+						certificates.push(edge.relationships.field_variant_type.name);
+					break;
+					case "Minors":
+						minors.push(edge.relationships.field_variant_type.name);						
+					break;	
+					default:
+						majors.push(edge.relationships.field_variant_type.name);
+				}
+			}
+		});	
+		return <React.Fragment>		
+			{!contentIsNullOrEmpty(majors) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {majors.length}</dt>
+					<dd>Specialized Majors</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(minors) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {minors.length}</dt>
+					<dd>Specialized Minors</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(assocDiplomas) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {assocDiplomas.length}</dt>
+					<dd>Associate Diplomas</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(certificates) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {certificates.length}</dt>
+					<dd>Optional Certificates</dd>
+				</div>
+			</>}
 		</React.Fragment>
+
 	}
 	
 	return null;
@@ -420,7 +438,7 @@ export default ({data, location}) => {
 	</div>
 	
 	{ /**** Program Stats ****/ }
-	{renderProgramStats(degreesData, specData, statsData, imageData)}
+	{renderProgramStats(degreesData, variantData, statsData, imageData)}
 
   { /**** Program Information Tabs ****/ }
     <div className="container page-container">
