@@ -45,7 +45,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       uri: String
     }
 	type FieldsPathAlias {
-      alias: PathAlias
+      alias: PathAlias @link(from:"alias___NODE")
     }
 	
 	type ImageField implements Node {
@@ -84,14 +84,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       tags: [String]
     }
     type node__call_to_actionRelationships implements Node {
-      field_call_to_action_goal: taxonomy_term__goals
+      field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
 	type node__career implements Node {
       drupal_id: String
       drupal_internal__tid: Int
       title: String
-      changed: Date
+      changed: Date @dateformat
       body: BodyFieldWithSummary
       relationships: node__careerRelationships
       fields: node__careerFields
@@ -153,7 +153,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       drupal_internal__nid: Int
       title: String
-      changed: Date
+      changed: Date @dateformat
       field_course_notes: node__programField_course_notes
       field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
@@ -170,12 +170,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       processed: String		
     }	
     type node__programRelationships implements Node {
-      field_program_acronym: taxonomy_term__programs
-      field_courses: [node__course]
-      field_degrees: [taxonomy_term__degrees]
-      field_program_statistics: [paragraph__program_statistic]	  
-      field_specializations: [taxonomy_term__specializations]
-      field_tags: [taxonomy_term__tags]
+      field_program_acronym: taxonomy_term__programs @link(from: "field_program_acronym___NODE")
+      field_courses: [node__course] @link(from: "field_courses___NODE")
+      field_degrees: [taxonomy_term__degrees] @link(from: "field_degrees___NODE")
+      field_program_statistics: [paragraph__program_statistic] @link(from: "field_program_statistics___NODE")
+      field_specializations: [taxonomy_term__specializations] @link(from: "field_specializations___NODE")
+      field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
     }
     type node__testimonial implements Node {
         drupal_id: String
@@ -208,10 +208,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  relationships: paragraph__program_statisticRelationships
 	}
 	type paragraph__program_statisticRelationships implements Node {
-	  paragraph_type: paragraphs_type__paragraphs_type
-	  field_stat_icon: media__image
-	  field_stat_type: taxonomy_term__statistic_type	  
-	  node__program: [node__program]
+	  field_stat_icon: media__image @link(from: "field_stat_icon___NODE")
+	  field_stat_type: taxonomy_term__statistic_type @link(from: "field_stat_type___NODE")  
 	}
     type paragraph__program_variants implements Node {
       drupal_id: String
@@ -222,7 +220,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type paragraph__program_variantsRelationships {
       field_variant_name: taxonomy_term__program_variant_type
-      field_variant_type: taxonomy_term__program_variant_type
+      field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
     }	
 	
     type PathAlias implements Node {
@@ -249,7 +247,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
     }
     type taxonomy_term__programsRelationships {
-      field_degrees: [taxonomy_term__degrees]
+      field_degrees: [taxonomy_term__degrees] @link(from: "field_degrees___NODE")
       field_specializations: [taxonomy_term__specializations]
       field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
       field_tags: [taxonomy_term__tags]

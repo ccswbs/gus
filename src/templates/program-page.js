@@ -497,30 +497,33 @@ export const query = graphql`
             field_specializations {
               name
             }
-			field_program_statistics {
+
+            field_program_statistics {
               drupal_id
-			  field_stat_range
-			  field_stat_time
-			  field_stat_value
-			  field_stat_end_value
-              relationships {
-                field_stat_type {
-                  name
-                }
-                field_stat_icon {
-                  relationships {
-                    field_media_image {
-                      localFile {
-                        publicURL
+              field_stat_range
+              field_stat_time
+              field_stat_value
+              field_stat_end_value
+                relationships {
+                  field_stat_type {
+                    name
+                  }
+                  field_stat_icon {
+                    relationships {
+                      field_media_image {
+                        localFile {
+                          publicURL
+                        }
                       }
                     }
                   }
                 }
               }
-            }
+            
             field_tags {
               name
             }
+
             field_program_variants {
               __typename
               ... on paragraph__general_text {
@@ -554,7 +557,7 @@ export const query = graphql`
       edges {
         node {
           changed
-		  field_call_to_action_link {
+          field_call_to_action_link {
             title
             uri
           }
