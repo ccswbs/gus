@@ -74,9 +74,7 @@ function FormatMoney({ value }) {
       value={value}
       displayType={'text'}
       thousandSeparator={true}
-	  decimalScale={0}
       prefix={'$'}
-      
     />
   );
 }
