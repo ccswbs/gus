@@ -1,3 +1,6 @@
+import React from "react";
+import NumberFormat from 'react-number-format';
+
 function stripHTMLTags(content) {
   return content !== null ? content.replace(/(<([^>]+)>)/ig,"") : ``;
 }
@@ -65,4 +68,17 @@ function combineAndSortBodyFields (content) {
   return allContent.join("");
 }
 
-export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates, combineAndSortBodyFields, divideIntoColumns };
+function FormatMoney({ value }) {
+  return (
+    <NumberFormat
+      value={value}
+      displayType={'text'}
+      thousandSeparator={true}
+	  decimalScale={0}
+      prefix={'$'}
+      
+    />
+  );
+}
+
+export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates, combineAndSortBodyFields, divideIntoColumns, FormatMoney };

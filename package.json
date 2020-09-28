@@ -31,6 +31,7 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "react-inlinesvg": "^2.1.0",
+    "react-number-format": "^4.4.1",
     "react-slick": "^0.27.1",
     "slick-carousel": "^1.8.1"
   },
