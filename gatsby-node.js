@@ -45,7 +45,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       uri: String
     }
 	type FieldsPathAlias {
-      alias: PathAlias @link(from:"alias___NODE")
+      alias: PathAlias @link
     }
 	
 	type ImageField implements Node {
