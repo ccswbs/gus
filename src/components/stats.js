@@ -14,7 +14,7 @@ function Stats (props) {
 					let statRange = stat.field_stat_range;
 					let statType = stat.relationships.field_stat_type.name;
 					let statValue = parseFloat(stat.field_stat_value,10);
-					let statValueEnd = parseFloat(stat.field_stat_end_value,10);
+					let statValueEnd = parseFloat(stat.field_stat_value_end,10);
 					let timePeriod = stat.field_stat_time;
 					
 					return <React.Fragment key={stat.drupal_id}>
