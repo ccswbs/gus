@@ -62,18 +62,3 @@ export const query = graphql`
 	  }
 	}
 `
-
-/* 	  programs: allNodeProgram {
-		edges {
-		  node {
-			drupal_id
-			drupal_internal__tid
-			name
-			fields {
-				alias {
-					value
-				}
-			}
-		  }
-		}
-	  } */
