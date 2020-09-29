@@ -28,7 +28,13 @@ module.exports = {
       },
     },
     `gatsby-plugin-react-helmet`,
-    `gatsby-transformer-sharp`,
+    {
+      resolve: `gatsby-transformer-sharp`,
+      options: {
+        // defaults to true - changed to false to mute SVG warnings
+        checkSupportedExtensions: false,
+      },
+    },
     {
 	  resolve: `gatsby-plugin-sharp`,
 	  options: {

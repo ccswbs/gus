@@ -489,7 +489,7 @@ export const query = graphql`
           field_program_overview {
             processed
           }
-          field_course_notes {
+		  field_course_notes {
             processed
           }
           relationships {
@@ -497,11 +497,6 @@ export const query = graphql`
               name
               id
             }        
-            field_degrees {
-              drupal_id
-              name
-              field_degree_acronym
-            }
             field_courses {
               changed
               field_credits
@@ -512,10 +507,15 @@ export const query = graphql`
                 uri
               }
             }
+            field_degrees {
+              drupal_id
+              name
+              field_degree_acronym
+            }			
             field_specializations {
               name
             }
-			field_program_statistics {
+            field_program_statistics {
               drupal_id
 			  field_stat_measure
 			  field_stat_range
@@ -531,11 +531,11 @@ export const query = graphql`
                     field_media_image {
                       localFile {
                         publicURL
-                      }
-                    }
-                  }
-                }
-              }
+					  }
+					}
+				  }
+				}
+			  }
             }
             field_tags {
               name
@@ -573,7 +573,7 @@ export const query = graphql`
       edges {
         node {
           changed
-		  field_call_to_action_link {
+          field_call_to_action_link {
             title
             uri
           }
