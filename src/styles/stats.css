@@ -1,20 +1,22 @@
 /* Program stats (with icons) */
 
 body.program .stats-bg {
-	background-color: AliceBlue;
+	background-color: #fff;
+	background-image: url("../../static/stats-bg.jpg");
+	background-repeat: no-repeat;
+    background-position: center;
+	background-size: cover;
 }
 
 body.program .uog-card {
     min-width: 33%; 
     text-align: center;
 	margin-top: 3rem;
-	/* border: 1px dotted #333; */
 }
 
 body.program dt {
     font-size: 5rem;
     color: #000;
-    line-height: 1rem;
     margin-bottom: 2rem;
 	text-transform: capitalize;
 }
@@ -22,6 +24,7 @@ body.program dt {
 body.program .uog-card dt svg {
     height: 6rem;
     padding-right: 1.5rem;
+	vertical-align: text-bottom;
 }
 
 body.program dd {
