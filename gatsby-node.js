@@ -201,9 +201,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 	type paragraph__program_statistic implements Node {
 	  drupal_id: String	  
-	  field_stat_measure: String
 	  field_stat_range: Boolean
-	  field_stat_time: String
 	  field_stat_value: String
 	  field_stat_value_end: String
 	  relationships: paragraph__program_statisticRelationships

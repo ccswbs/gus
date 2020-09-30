@@ -517,9 +517,7 @@ export const query = graphql`
             }
             field_program_statistics {
               drupal_id
-			  field_stat_measure
 			  field_stat_range
-			  field_stat_time
 			  field_stat_value
 			  field_stat_value_end
               relationships {
