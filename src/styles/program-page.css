@@ -156,10 +156,6 @@ body.program .pre-footer img {
         height: 40px;
     }
 
-    body.program .uog-card h6 {
-        font-size: 4rem;
-    }
-
     body.program .student-tips img {
         width: 110%;
         float: right;
@@ -253,22 +249,6 @@ body.program .pre-footer img {
     body.program .employer-wrapper .employer-pic {
         width: 40%;
         height: 40%;
-    }
-
-    body.program .uog-card {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-
-    body.program .uog-card h6 {
-        font-size: 3rem;
-        margin-top: 2rem;
-    }
-
-    body.program .uog-card p {
-        font-size: 1.7rem;
-        font-weight: 400;
-        margin-top: 0;
     }
 
     body.program .bg-img hr {
