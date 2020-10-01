@@ -9,24 +9,26 @@ function Courses ({ courseData, courseNotes, headingLevel }) {
 	var trackCourseLevel="";
 	var coursesDisplay="<section class='row row-with-vspace'>";
 	var columnSetting = ((courseNotes === null || courseNotes === "") || (courseData === null || courseData === undefined)) ? "col-lg-12" : "col-lg-6";
-
+	
+	courseData.sort((a,b) => (a.field_level > b.field_level) ? 1 : (a.field_level === b.field_level) ? ((a.field_code > b.field_code) ? 1 : -1) : -1);
+	
 	if ((courseData !== null) && (courseData !== undefined)) {
 		courseData.forEach(course => {
-			let courseTitle = course.node.title;
+			let courseTitle = course.title;
 			let displayLevel = "";
-			if(trackCourseLevel !== course.node.field_level){
-				trackCourseLevel = course.node.field_level;
+			if(trackCourseLevel !== course.field_level){
+				trackCourseLevel = course.field_level;
 			}else {
 				displayLevel=" class='sr-only'";
 			}
 			
-			courseURL = (course.node.field_course_url !== undefined && course.node.field_course_url !== null ? courseURL = course.node.field_course_url.uri : "");
+			courseURL = (course.field_course_url !== undefined && course.field_course_url !== null ? courseURL = course.field_course_url.uri : "");
 			courseTitle = (courseURL !== "" ? "<a href='" + courseURL + "'>" + courseTitle + "</a>" : courseTitle);
 			courseList += "<tr>";
-			courseList += "<td class='course-field-level'><strong" + displayLevel + ">" + course.node.field_level + "</strong></td>";
+			courseList += "<td class='course-field-level'><strong" + displayLevel + ">" + course.field_level + "</strong></td>";
 			courseList += "<td>" + courseTitle + "</td>";
-			courseList += "<td>" + course.node.field_code + "</td>";
-			courseList += "<td>" + course.node.field_credits + "</td>";
+			courseList += "<td>" + course.field_code + "</td>";
+			courseList += "<td>" + course.field_credits + "</td>";
 			courseList += "</tr>";
 		});
 		

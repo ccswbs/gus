@@ -1,11 +1,12 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import SVG from 'react-inlinesvg';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import Img from 'gatsby-image';
 import SEO from '../components/seo';
 import Degrees from '../components/degrees';
-import Units from '../components/units';
+import Stats from '../components/stats'
 import Variants from '../components/variants';
 import Tags from '../components/tags';
 import CallToAction from '../components/callToAction';
@@ -14,73 +15,272 @@ import Courses from '../components/courses';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
+import ColumnLists from '../components/columnLists';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
+import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
 
-function renderProgramOverview(description, degreesData, specData) {
-  let checkIfContentAvailable = false;
+function renderHeaderImage(imageData) {
+	let checkIfContentAvailable = false;
+	
+	if (!contentIsNullOrEmpty(imageData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		var headerImage;
+		var altText;
+		for (let i = 0; i < imageData.length; i++) {
+			altText = imageData[i].node.field_media_image.alt;
+			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
+				if (imageData[i].node.relationships.field_tags[j].name === "img-header") {
+					headerImage = imageData[i].node.relationships.field_media_image;
+				}
+			}
+		}
+		return <React.Fragment>{headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={altText} />}</React.Fragment>
+	}
+	
+	return null;
+}
 
-  if (!contentIsNullOrEmpty(description) || 
-      !contentIsNullOrEmpty(degreesData) || 
-      !contentIsNullOrEmpty(specData)) {
-        checkIfContentAvailable = true;
-  }
+function renderProgramOverview(description, specData) {
+	let checkIfContentAvailable = false;
 
-  if(checkIfContentAvailable === true){
-    return <React.Fragment>
-          <h2>Program Overview</h2>
-          <div dangerouslySetInnerHTML={{ __html: description }}  />
-          <Degrees degreesData={degreesData} headingLevel='h3' />
-          <Units specData={specData} headingLevel='h3' />
-        </React.Fragment>
-  }
+	if (!contentIsNullOrEmpty(description) || 
+		!contentIsNullOrEmpty(specData)) {
+		checkIfContentAvailable = true;
+	}
+
+	if (checkIfContentAvailable === true) {
+		return <React.Fragment>
+			<h2>Program Overview</h2>
+			<div dangerouslySetInnerHTML={{ __html: description }}  />
+		</React.Fragment>
+	}
 
   return null;
 }
 
-function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData) {
-  let activeTab = false;
+function renderProgramStats(degreesData, variantData, statsData, imageData) {
+	let checkIfContentAvailable = false;
+	
+	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		return <React.Fragment>
+		<div className="full-width-container stats-bg">
+			<div className="container page-container">
+				<section className="row row-with-vspace site-content">
+					<div className="col-md-12 content-area">
+						<h2 className="sr-only">Program Statistics</h2>
+						<dl className="d-flex flex-wrap flex-fill justify-content-center">
+							<Degrees degreesData={degreesData} />
+							{CountProgramVariants(variantData)}
+							<Stats statsData={statsData} />
+						</dl>
+					</div>
+				</section>
+			</div>
+        </div>
+		</React.Fragment>
+	}
+	
+	return null;
+}
+
+function CountProgramVariants(variantData) {
+	const specIcon = useIconData();
+	let checkIfContentAvailable = false;
+	let majors = [];
+	let minors = [];
+	let certificates = [];
+	let assocDiplomas = [];
+	
+	if (!contentIsNullOrEmpty(variantData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		var iconURL = ``;		
+		if (specIcon !== null && specIcon !== undefined) {
+			for (let i=0; i<specIcon.length; i++) {
+				for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
+					if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
+						iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
+					}
+				}
+			}
+		}		
+		variantData.forEach((edge) => {
+			if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
+				switch(edge.relationships.field_variant_type.name) {
+					case "Associate Diplomas":
+						assocDiplomas.push(edge.relationships.field_variant_type.name);
+					break;
+					case "Certificates":
+						certificates.push(edge.relationships.field_variant_type.name);
+					break;
+					case "Minors":
+						minors.push(edge.relationships.field_variant_type.name);						
+					break;	
+					default:
+						majors.push(edge.relationships.field_variant_type.name);
+				}
+			}
+		});	
+		return <React.Fragment>		
+			{!contentIsNullOrEmpty(majors) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {majors.length}</dt>
+					<dd>Specialized Majors</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(minors) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {minors.length}</dt>
+					<dd>Specialized Minors</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(assocDiplomas) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {assocDiplomas.length}</dt>
+					<dd>Associate Diplomas</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(certificates) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {certificates.length}</dt>
+					<dd>Optional Certificates</dd>
+				</div>
+			</>}
+		</React.Fragment>
+
+	}
+	
+	return null;
+}
+
+function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
+  let activeValue = true;
+  let activeTabExists = false;
   let checkIfContentAvailable = false;
   let navTabHeadings = [];
   let navTabContent = [];
   let key = 0;
 
-  // prep courses tab
-  if((courseNotes !== null && courseNotes !== "") || 
-      (courseData !== null && courseData !== undefined && courseData.length > 0 )){
-    activeTab = true;
+  // prep TAB 1 - Courses
+  if(!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)){
+    const courseHeading = "Courses";
+    const courseID = "pills-courses";
+    activeTabExists = true;
     checkIfContentAvailable = true;
+    key++;
+
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                        active={activeTab} 
-                                        heading="Courses" 
-                                        controls="pills-courses" />);
+                                        active={activeValue} 
+                                        heading={courseHeading} 
+                                        controls={courseID} />);
 
     navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeTab} 
-                                      heading="Courses" 
+                                      active={activeValue} 
+                                      heading={courseHeading} 
                                       headingLevel="h3" 
-                                      id="pills-courses" 
+                                      id={courseID} 
                                       content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} />);
-    key++;
   }
 
-  // prep variants tab
+  // prep TAB 2 - Variants
   if( variantDataHeading !== '') {
-    activeTab = (activeTab === false) ? true : false;
+    const variantID = "pills-variants";
+    activeValue = (activeTabExists === true) ? false : true;
     checkIfContentAvailable = true;
+    key++;
+
     navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                      active={activeTab} 
+                                      active={activeValue} 
                                       heading={variantDataHeading} 
-                                      controls="pills-certificates" />);
+                                      controls={variantID} />);
 
     navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeTab} 
+                                      active={activeValue} 
                                       heading={variantDataHeading} 
                                       headingLevel="h3" 
-                                      id="pills-certificates" 
+                                      id={variantID} 
                                       content={<Variants variantData={variantData} />} />);
   }
 
+  // prep TAB 3 - Careers
+  if(!contentIsNullOrEmpty(careerData)) {
+    activeValue = (activeTabExists === true) ? false : true;
+    checkIfContentAvailable = true;
+    const careersHeading = "Careers";
+    const careersID = "pills-careers";
+    key++;
+
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                      active={activeValue} 
+                                      heading={careersHeading} 
+                                      controls={careersID} />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeValue} 
+                                      heading={careersHeading} 
+                                      headingLevel="h3" 
+                                      id={careersID} 
+                                      content={
+                                        <ColumnLists numColumns={3}>
+                                          {careerData.map (unit => {
+                                            return <li key={unit.node.drupal_id}>{unit.node.title}</li>
+                                          })}
+                                        </ColumnLists>
+                                      } />);
+  }
+
+  // prep TAB 4 - Employers
+  if(!contentIsNullOrEmpty(employerData)) {
+    activeValue = (activeTabExists === true) ? false : true;
+    checkIfContentAvailable = true;
+    const employerHeading = "Employers";
+    const employerID = "pills-employer";
+    key++;
+
+    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                      active={activeValue} 
+                                      heading={employerHeading} 
+                                      controls={employerID} />);
+
+    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                      active={activeValue} 
+                                      heading={employerHeading} 
+                                      headingLevel="h3" 
+                                      id={employerID} 
+                                      content={
+                                        <div className="container">
+                                          <div className="row">
+                                            {employerData.map (unit => {
+                                              let employerImage = unit.node.relationships.field_image;
+                                              let employerSummary = unit.node.field_employer_summary;
+                                              let employerJobPostingsLink = !contentIsNullOrEmpty(unit.node.field_link) ? unit.node.field_link.uri : null;
+                                              return <div className="col-6 col-md-4" key={unit.node.drupal_id}>
+                                                        <div className="employer-wrapper">
+                                                          {employerImage && <div className="employer-pic">
+                                                            <Img fluid={employerImage.localFile.childImageSharp.fluid} imgStyle={{ objectFit: 'contain' }} alt={unit.node.relationships.field_image.alt} />
+                                                          </div>}
+                                                          <div className="employer-info">
+                                                            <h4 className="employer-name">{unit.node.title}</h4>
+                                                            {employerSummary && <div dangerouslySetInnerHTML={{__html: employerSummary.processed}} />}
+                                                            {employerJobPostingsLink && <p><a href={unit.node.field_link.uri}>Current Job Postings<span className="sr-only"> for {unit.node.title}</span></a></p>}
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                            })}
+                                          </div>
+                                        </div>
+                                      } />);
+  }
   if(checkIfContentAvailable === true){
     return <React.Fragment>
               <h2>Program Information</h2>
@@ -102,35 +302,13 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 function retrieveLastModifiedDates (content) {
   let dates = [];
 
-  if(!contentIsNullOrEmpty(content)){  
+  if (!contentIsNullOrEmpty(content)) {  
     content.forEach((edge) => {
         dates.push(edge.node.changed);
     })
   }
-
+  
   return dates;
-}
-
-// combine multiple body values and place sticky values at the top
-function combineAndSortBodyFields (content) {
-  let stickyContent = [];
-  let allContent = [];
-
-  if(contentIsNullOrEmpty(content)) { return ""; }
-
-  content.forEach((edge) => {
-    if (!contentIsNullOrEmpty(edge.node.body.processed)){
-      if(edge.node.sticky === true) {
-        stickyContent.push(edge.node.body.processed);
-      } else {
-        allContent.push(edge.node.body.processed);
-      }
-    }
-  })
-
-  allContent.unshift(stickyContent);
-
-  return allContent.join("");
 }
 
 function prepareVariantHeading (variantData) {
@@ -146,7 +324,7 @@ function prepareVariantHeading (variantData) {
 
   const uniqueLabelSet = new Set(labels);
   const uniqueLabels = [...uniqueLabelSet];
-  var variantHeading = "";
+  let variantHeading = "";
 
   for (let i=0; i<uniqueLabels.length; i++) {
     if (i > 0) { 
@@ -165,49 +343,50 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-	var imageData;
-  var progData;
-  var progDescData;
-	var degreesData;
-  var specData;
-  var courseNotesData;
-	var courseData;
-	var variantData;
-	var tagData;
-	var testimonialData;
-  var callToActionData = [];
-
+  let callToActionData = [];
+  let careerData;
+  let courseData;
+  let degreesData;
+  let employerData;
+	let imageData;
+  let progData;
+  let specData;
+  var statsData;
+  let tagData;
+  let testimonialData;
+  let variantData;
+  
 	// set data
   if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-  if (data.descriptions.edges[0] !== undefined) { progDescData = data.descriptions.edges; }
-  if (data.course_notes.edges[0] !== undefined) { courseNotesData = data.course_notes.edges; }
-	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
-	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
-  if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
+  if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+  if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
+  if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
+  if (data.images.edges !== undefined) { imageData = data.images.edges; }
+  if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+  if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
+  if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
 
 	// set program details
-	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
-  const title = progData.name;
-  const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
-  const description = combineAndSortBodyFields(progDescData);
-  const courseNotes = combineAndSortBodyFields(courseNotesData);
-  const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
-  
+	const title = progData.title;
+	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
+	const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
+	const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
+	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+
   // set last modified date
-  let allModifiedDates = sortLastModifiedDates([
-                          progData.changed,
-                          retrieveLastModifiedDates(progDescData),
-                          retrieveLastModifiedDates(courseNotesData),
-                          retrieveLastModifiedDates(courseData)]);
+  let allModifiedDates = sortLastModifiedDates(
+    [progData.changed,
+    retrieveLastModifiedDates(callToActionData),
+		retrieveLastModifiedDates(testimonialData)
+    ]);
   let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
-	// set degree, unit, variant, tag, and course info  
+	// set degree, specialization, variant, and tag info  
 	degreesData = progData.relationships.field_degrees;
-	specData = progData.relationships.field_specializations;
-	tagData = progData.relationships.field_tags;
+  specData = progData.relationships.field_specializations;
+  tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
-	const variantDataHeading = prepareVariantHeading(variantData);
+  let variantDataHeading = prepareVariantHeading(variantData);
 
   return (
 	<Layout date={lastModified}>
@@ -216,10 +395,10 @@ export default ({data, location}) => {
       }}
     />
 	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-
       { /**** Header and Title ****/ }
       <div id="rotator">
-        {headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={imageData.node.field_media_image.alt} />}
+        {/* <FetchImages tags={imageTags} /> */}
+        {renderHeaderImage(imageData)}
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
@@ -249,28 +428,31 @@ export default ({data, location}) => {
           </div>
       </div>
 
-    { /**** Program Overview ****/ }
+	{ /**** Program Overview ****/ }
 	<div className="container page-container">
-        <div className="row row-with-vspace site-content">
-          <section className="col-md-9 content-area">
-            {renderProgramOverview(description, degreesData, specData)}
-          </section>
+		<div className="row row-with-vspace site-content">
+			<section className="col-md-9 content-area">
+				{renderProgramOverview(description, specData)}
+			</section>
+		</div>
+	</div>
+	
+	{ /**** Program Stats ****/ }
+	{renderProgramStats(degreesData, variantData, statsData, imageData)}
+
+  { /**** Program Information Tabs ****/ }
+    <div className="container page-container">
+      <section className="row row-with-vspace site-content">
+        <div className="col-md-12 content-area">
+          {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
         </div>
-    </div>
+      </section>
+    </div>                    
 
-      { /**** Program Information Tabs ****/ }
-      <div className="container page-container">
-        <section className="row row-with-vspace site-content">
-          <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData)}
-          </div>
-        </section>
-      </div>
-
-      { /**** Testimonials ****/ }
-      {testimonialData && 
-        <Testimonials testimonialData={testimonialData} heading={testimonialHeading} headingLevel='h3' />
-      }
+	{ /**** Testimonials ****/ }
+	{testimonialData && 
+		<Testimonials testimonialData={testimonialData} heading={testimonialHeading} headingLevel='h3' />
+	}
 
       { /**** Call to Actions ****/ }
       {callToActionData.length !== 0 &&
@@ -297,28 +479,64 @@ export default ({data, location}) => {
 
 export const query = graphql`
   query ($id: String) {
-    programs: allTaxonomyTermPrograms(filter: {id: {eq: $id}}) {
+    programs: allNodeProgram(filter: {relationships: {field_program_acronym: {id: {eq: $id}}}}) {
       edges {
         node {
           changed
           drupal_id
-          drupal_internal__tid
-          name
-          field_program_acronym
+          drupal_internal__nid
+          title
+          field_program_overview {
+            processed
+          }
+		  field_course_notes {
+            processed
+          }
           relationships {
+            field_program_acronym {
+              name
+              id
+            }        
+            field_courses {
+              changed
+              field_credits
+              field_level
+              field_code
+              title
+              field_course_url {
+                uri
+              }
+            }
             field_degrees {
               drupal_id
               name
               field_degree_acronym
-            }
+            }			
             field_specializations {
+              name
+            }
+            field_program_statistics {
+              drupal_id
+			  field_stat_range
+			  field_stat_value
+			  field_stat_value_end
               relationships {
-                field_units {
-                  drupal_id
-                  field_unit_acronym
+                field_stat_type {
                   name
                 }
-              }
+                field_stat_icon {
+                  relationships {
+                    field_media_image {
+                      localFile {
+                        publicURL
+					  }
+					}
+				  }
+				}
+			  }
+            }
+            field_tags {
+              name
             }
             field_program_variants {
               __typename
@@ -344,62 +562,15 @@ export const query = graphql`
                 }
               }
             }
-            field_tags {
-              name
-            }
           }
         }
       }
     }
-
-    descriptions: allNodeProgramDescription(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
-      edges {
-        node {
-          title
-          drupal_id
-          body {
-            processed
-          }
-          changed
-          sticky
-          relationships {
-            field_tags {
-              drupal_id
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-
-    images: allMediaImage(limit: 1, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          name
-          drupal_id
-          field_media_image {
-            alt
-          }
-          relationships {
-            field_media_image {
-              localFile {
-                childImageSharp {
-                  fluid {
-                      originalImg
-                      ...GatsbyImageSharpFluid
-                  }
-              }
-              }
-            }
-          }
-        }
-      }
-    }
-
+	
     ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
+          changed
           field_call_to_action_link {
             title
             uri
@@ -421,18 +592,87 @@ export const query = graphql`
         }
       }
     }
-    
+
+    images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          field_media_image {
+                alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 1920) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+                extension
+              }
+            }
+            field_tags {
+            __typename
+            ... on TaxonomyInterface {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+	
     testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
+          changed
           drupal_id
           body {
-              processed
+            processed
           }
           title
           field_testimonial_person_desc
-          field_picture {
-              alt
+          field_image {
+            alt
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+            field_image {
+              localFile {
+                url
+                childImageSharp {
+                  fluid(maxWidth: 400, maxHeight: 400) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    employers: allNodeEmployer(sort: {fields: title}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          drupal_id
+          field_employer_summary {
+              processed
+          }
+          title
+          field_image {
+            alt
+          }
+          field_link {
+            uri
           }
           relationships {
             field_tags {
@@ -444,23 +684,23 @@ export const query = graphql`
               }
             }
 
-            field_picture {
-                localFile {
-                    url
-                    childImageSharp {
-                        fluid(maxWidth: 400, maxHeight: 400) {
-                            originalImg
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
+            field_image {
+              localFile {
+                url
+                childImageSharp {
+                  fluid(maxWidth: 400, maxHeight: 400) {
+                      originalImg
+                      ...GatsbyImageSharpFluid
+                  }
                 }
+              }
             }
           }
         }
       }
     }
-  
-    course_notes: allNodeProgramCourseNotes(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
+
+    careers: allNodeCareer(sort: {fields: [title], order: ASC}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           title
@@ -469,22 +709,6 @@ export const query = graphql`
           body {
             processed
           }
-          sticky
-          relationships {
-            field_tags {
-              drupal_id
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-    
-    courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          changed
           relationships {
             field_tags {
               __typename
@@ -495,17 +719,8 @@ export const query = graphql`
               }
             }
           }
-          field_code
-          field_course_url {
-            uri
-          }
-          field_credits
-          field_level
-          title
         }
       }
     }
-	
   }
 `
-

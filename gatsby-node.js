@@ -9,42 +9,207 @@ const path = require(`path`)
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
-  const typeDefs = `
-    union relatedTaxonomyUnion =
+  const typeDefs = `    
+	union relatedParagraphUnion = 
+      paragraph__program_variants
+      | paragraph__general_text
+	
+	union relatedTaxonomyUnion =
       taxonomy_term__tags
       | taxonomy_term__specializations
       | taxonomy_term__programs
       | taxonomy_term__degrees
       | taxonomy_term__units
-
-    union relatedParagraphUnion = 
-      paragraph__program_variants
-      | paragraph__general_text
-
-    interface TaxonomyInterface @nodeInterface {
+	
+	interface TaxonomyInterface @nodeInterface {
       id: ID!
       drupal_id: String
       name: String
+    }	
+
+	type BodyField {
+      processed: String
+      value: String
+      format: String
+      summary: String
+    }
+    type BodyFieldWithSummary {
+      processed: String
+      value: String
+      format: String
+      summary: String
+    }
+	
+	type FieldLink {
+      title: String
+      uri: String
+    }
+	type FieldsPathAlias {
+      alias: PathAlias @link
+    }
+	
+	type ImageField implements Node {
+      alt: String
+    }
+	
+	type InstaNode implements Node {
+      original: String
+      caption: String
     }
 
-    type taxonomy_term__programs implements Node & TaxonomyInterface {
+	type media__image implements Node {
+      drupal_id: String
+      name: String
+      field_media_image: ImageField
+      fields: media__imageFields
+      relationships: media__imageRelationships
+    }
+    type media__imageFields implements Node {
+      tags: [String]
+    }
+    type media__imageRelationships implements Node {
+      field_media_image: file__file @link(from: "field_media_image___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+
+	type node__call_to_action implements Node {
       drupal_id: String
       drupal_internal__tid: Int
-      name: String
-      field_program_acronym: String
-      relationships: taxonomy_term__programsRelationships
+      title: String
+      field_call_to_action_link: FieldLink
+      relationships: node__call_to_actionRelationships
+      fields: node__call_to_actionFields
+    }
+    type node__call_to_actionFields implements Node {
+      tags: [String]
+    }
+    type node__call_to_actionRelationships implements Node {
+      field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+	type node__career implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      changed: Date @dateformat
+      body: BodyFieldWithSummary
+      relationships: node__careerRelationships
+      fields: node__careerFields
+    }
+	type node__careerFields implements Node {
+      tags: [String]
+    }
+    type node__careerRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__course implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      field_code: String
+      field_course_url: node__courseField_course_url
+      field_credits: String
+      field_level: Int
+      relationships: node__courseRelationships
+      fields: node__courseFields
+    }
+    type node__courseFields implements Node {
+      tags: [String]
+    }
+    type node__courseField_course_url implements Node {
+      uri: String
+    }
+    type node__courseRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+	type node__employer implements Node {
+      drupal_id: String
+      drupal_internal__tid: Int
+      title: String
+      field_employer_summary: BodyField
+      field_image: ImageField
+      field_link: FieldLink
+      relationships: node__employerRelationships
+      fields: node__employerFields
+    }
+    type node__employerFields implements Node {
+      tags: [String]
+    }
+    type node__employerRelationships {
+      field_image: file__file @link(from: "field_image___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__page implements Node {
+      drupal_id: String
+      drupal_internal__nid: Int
+      body: BodyFieldWithSummary
+      relationships: node__pageRelationships
       fields: FieldsPathAlias
     }
-    type taxonomy_term__programsRelationships {
-      field_degrees: [taxonomy_term__degrees]
-      field_specializations: [taxonomy_term__specializations]
-      field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
-      field_tags: [taxonomy_term__tags]
+    type node__pageRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-    type paragraph__general_text implements Node {
+    type node__program implements Node {
+      drupal_id: String
+      drupal_internal__nid: Int
+      title: String
+      changed: Date @dateformat
+      field_course_notes: node__programField_course_notes
+      field_program_overview: node__programField_program_overview
+      relationships: node__programRelationships
+      fields: FieldsPathAlias
+    }
+    type node__programField_course_notes implements Node {
+      value: String
+      format: String
+      processed: String
+    }
+    type node__programField_program_overview implements Node {
+      value: String
+      format: String
+      processed: String		
+    }	
+    type node__programRelationships implements Node {
+      field_program_acronym: taxonomy_term__programs @link(from: "field_program_acronym___NODE")
+      field_courses: [node__course] @link(from: "field_courses___NODE")
+      field_degrees: [taxonomy_term__degrees] @link(from: "field_degrees___NODE")
+      field_program_statistics: [paragraph__program_statistic] @link(from: "field_program_statistics___NODE")
+      field_specializations: [taxonomy_term__specializations] @link(from: "field_specializations___NODE")
+      field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
+    }
+    type node__testimonial implements Node {
+        drupal_id: String
+        drupal_internal__tid: Int
+        title: String
+        body: BodyFieldWithSummary
+        field_testimonial_person_desc: String
+        field_image: ImageField
+        relationships: node__testimonialRelationships
+        fields: node__testimonialFields
+    }
+    type node__testimonialFields implements Node {
+      tags: [String]
+    }
+    type node__testimonialRelationships {
+      field_image: file__file @link(from: "field_image___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }    
+
+	type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
     }
+	type paragraph__program_statistic implements Node {
+	  drupal_id: String	  
+	  field_stat_range: Boolean
+	  field_stat_value: String
+	  field_stat_value_end: String
+	  relationships: paragraph__program_statisticRelationships
+	}
+	type paragraph__program_statisticRelationships implements Node {
+	  field_stat_icon: media__image @link(from: "field_stat_icon___NODE")
+	  field_stat_type: taxonomy_term__statistic_type @link(from: "field_stat_type___NODE")  
+	}
     type paragraph__program_variants implements Node {
       drupal_id: String
       field_variant_title: String
@@ -54,17 +219,40 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type paragraph__program_variantsRelationships {
       field_variant_name: taxonomy_term__program_variant_type
-      field_variant_type: taxonomy_term__program_variant_type
-    }
-    type taxonomy_term__program_variant_type implements Node {
-      name: String
+      field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
+    }	
+	
+    type PathAlias implements Node {
+      value: String
+      alias: String
     }
 
-    type taxonomy_term__tags implements Node & TaxonomyInterface {
+    type taxonomy_term__degrees implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      field_degree_acronym: String
+      name: String
+      description: TaxonomyDescription
+    }
+    type taxonomy_term__goals implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
-      description: TaxonomyDescription
+      field_goal_action: String
+    }
+    type taxonomy_term__programs implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+    }
+    type taxonomy_term__programsRelationships {
+      field_degrees: [taxonomy_term__degrees] @link(from: "field_degrees___NODE")
+      field_specializations: [taxonomy_term__specializations]
+      field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
+      field_tags: [taxonomy_term__tags]
+    }
+    type taxonomy_term__program_variant_type implements Node {
+      name: String
     }
     type taxonomy_term__specializations implements Node & TaxonomyInterface {
       drupal_id: String
@@ -77,10 +265,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__specializationsRelationships {
       field_units: [taxonomy_term__units]
     }
-    type taxonomy_term__degrees implements Node & TaxonomyInterface {
+    type taxonomy_term__tags implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
-      field_degree_acronym: String
       name: String
       description: TaxonomyDescription
     }
@@ -91,153 +278,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
-    type taxonomy_term__goals implements Node & TaxonomyInterface {
-      drupal_id: String
-      drupal_internal__tid: Int
-      name: String
-      field_goal_action: String
-    }
 
-    type node__page implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      body: BodyFieldWithSummary
-      relationships: node__pageRelationships
-      fields: FieldsPathAlias
-    }
-    type node__pageRelationships implements Node {
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-
-    type node__program_description implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      title: String
-      body: BodyFieldWithSummary
-      relationships: node__program_descriptionRelationships
-      changed: Date
-      sticky: Boolean
-    }
-    type node__program_descriptionRelationships implements Node {
-      field_tags: [taxonomy_term__programs]
-    }
-
-    type node__program_course_notes implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      title: String
-      body: BodyField
-      relationships: node__program_course_notesRelationships
-      changed: Date
-      sticky: Boolean
-    }
-    type node__program_course_notesRelationships implements Node {
-      field_tags: [taxonomy_term__programs]
-    }
-
-    type node__testimonial implements Node {
-        drupal_id: String
-        drupal_internal__tid: Int
-        title: String
-        body: BodyFieldWithSummary
-        field_testimonial_person_desc: String
-        field_picture: PictureField
-        relationships: node__testimonialRelationships
-        fields: node__testimonialFields
-    }
-    type node__testimonialRelationships {
-      field_picture: file__file @link(from: "field_picture___NODE")
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-    type node__testimonialFields implements Node {
-      tags: [String]
-    }
-
-    type node__call_to_action implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      title: String
-      field_call_to_action_link: FieldLink
-      relationships: node__call_to_actionRelationships
-      fields: node__call_to_actionFields
-    }
-    type node__call_to_actionRelationships implements Node {
-      field_call_to_action_goal: taxonomy_term__goals
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-    type node__call_to_actionFields implements Node {
-      tags: [String]
-    }
-
-    type node__course implements Node {
-      drupal_id: String
-      drupal_internal__tid: Int
-      title: String
-      field_code: String
-      field_course_url: node__courseField_course_url
-      field_credits: String
-      field_level: Int
-      relationships: node__courseRelationships
-      fields: node__courseFields
-    }
-    type node__courseField_course_url implements Node {
-      uri: String
-      title: String
-    }
-    type node__courseRelationships implements Node {
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-    type node__courseFields implements Node {
-      tags: [String]
-    }
-
-    type media__image implements Node {
-      drupal_id: String
-      name: String
-      field_media_image: PictureField
-      fields: media__imageFields
-      relationships: media__imageRelationships
-    }
-    type media__imageRelationships implements Node {
-      field_media_image: file__file @link(from: "field_media_image___NODE")
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-    type media__imageFields implements Node {
-      tags: [String]
-    }
-    type PictureField implements Node {
-      alt: String
-    }
-    type FieldsPathAlias {
-      alias: PathAlias
-    }
-    type PathAlias implements Node {
-      value: String
-    }
-    type BodyField {
-      processed: String
-      value: String
-      format: String
-      summary: String
-    }
-    type BodyFieldWithSummary {
-      processed: String
-      value: String
-      format: String
-      summary: String
-    }
     type TaxonomyDescription {
       processed: String
       value: String
       format: String
-    }
-    type FieldLink {
-      title: String
-      uri: String
-    }
-    type InstaNode implements Node {
-      original: String
-      caption: String
     }
   `
   createTypes(typeDefs)
@@ -250,7 +295,9 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   if (node.internal.type === `node__call_to_action` ||
       node.internal.type === `node__testimonial` ||
       node.internal.type === `media__image` || 
-      node.internal.type === `node__course`) {
+      node.internal.type === `node__course` || 
+      node.internal.type === `node__career` || 
+      node.internal.type === `node__employer`) {
     createNodeField({
       node,
       name: `tags`,
@@ -260,7 +307,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 
   // Handle nodes that require page aliases
   if (node.internal.type === `node__page` || 
-      node.internal.type === `taxonomy_term__programs`) {
+      node.internal.type === `node__program`) {
         
     /* Create page path */
     const aliasID = createNodeId(`alias-${node.drupal_id}`);
@@ -312,14 +359,15 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           }
         }
       }
-      programs: allTaxonomyTermPrograms {
+      programs: allNodeProgram {
         edges {
           node {
-            name
+            title
             id
             drupal_id
             relationships {
-              field_specializations {
+              field_program_acronym {
+                id
                 name
               }
             }
@@ -334,31 +382,45 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
   }
 
   if (result.data !== undefined){
+
+    // process page nodes
     if(result.data.pages !== undefined){
       const pages = result.data.pages.edges;
-      processPages(pages, createPageAlias, pageTemplate, helpers);
+      pages.forEach(( { node }, index) => {
+        processPage(node, 
+          node.id, 
+          createPageAlias, 
+          pageTemplate, 
+          helpers);
+      })
     }
 
+    // process program nodes
     if(result.data.programs !== undefined){
       const programs = result.data.programs.edges;
-      processPages(programs, createProgramAlias, programTemplate, helpers);
+      programs.forEach(( { node }, index) => {
+        processPage(
+          node, 
+          node.relationships.field_program_acronym.id, 
+          createProgramAlias, 
+          programTemplate, 
+          helpers);
+      })
     }
   }
 }
 
-function processPages(dataType, functionToRetrieveAlias, template, helpers){
-  dataType.forEach(({ node }, index) => {
-    const alias = functionToRetrieveAlias(node);
+function processPage(node, contextID, functionToRetrieveAlias, template, helpers) {
+    let alias = functionToRetrieveAlias(node);
     createNodeAlias(node, alias, helpers);
 
     helpers.createPage({
       path: alias,
       component: template,
       context: {
-        id: node.id,
+        id: contextID,
       },
     })
-  })
 }
 
 function createNodeAlias(node, alias, helpers){
@@ -389,27 +451,8 @@ function createPageAlias(node){
   return alias;
 }
 
-/****** 
-* Creates Program alias path using pattern of `/programs/specialization-name`
-* If no specialization is available, uses pattern of `/programs/program-name`
-********/
 function createProgramAlias(node){
-  var alias = `/programs/`;
-  var specializations = node.relationships.field_specializations;
-
-  // if specialization exists, add `specialization-name` to alias
-  if ((specializations !== null) && (specializations.length !== 0)) {
-    for(let i=0;i<specializations.length;i++){
-      alias += (slugify(specializations[i].name));
-      if ((specializations.length > 1) && (i < (specializations.length - 1))) {
-        alias += `-`;
-      }
-    }
-    alias += (`/`);
-  }
-
-  // add `program-name` to alias
-  alias += (slugify(node.name));
+  var alias = `/programs/` + slugify(node.title);
   return alias;
 }
 

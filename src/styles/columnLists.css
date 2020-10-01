@@ -1,0 +1,27 @@
+ul.column-lists {
+    columns: 1;
+}
+
+ul.column-lists li {
+    margin-left: 20px;
+    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+    page-break-inside: avoid; /* Firefox */
+    break-inside: avoid; /* IE 10+ */
+    backface-visibility: hidden;
+}
+
+@media only screen and (min-width: 576px) {
+    ul.column-lists {
+        columns: 2;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    ul.column-lists-3 {
+        columns: 3;
+    }
+
+    ul.column-lists-4 {
+        columns: 4;
+    }
+}

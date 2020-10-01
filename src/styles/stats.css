@@ -1,0 +1,71 @@
+/* Program stats (with icons) */
+
+body.program .stats-bg {
+	background-color: #fff;
+	background-image: url("../../static/stats-bg.jpg");
+	background-repeat: no-repeat;
+    background-position: center;
+	background-size: cover;
+}
+
+body.program .uog-card {
+    min-width: 33%; 
+    text-align: center;
+	margin-top: 3rem;
+}
+
+body.program dt {
+    font-size: 5rem;
+    color: #000;
+    margin-bottom: 2rem;
+}
+
+body.program .uog-card dt svg {
+    height: 6rem;
+    padding-right: 1.5rem;
+	vertical-align: text-bottom;
+}
+
+body.program dd {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #555;
+    margin-top: 0;
+}
+
+div.uog-card path {
+	fill: #69a3b9;
+}
+
+div.uog-card:nth-of-type(9n+2) path,
+div.uog-card:nth-of-type(9n+4) path,
+div.uog-card:nth-of-type(9n+9) path {
+	fill: #ffc72a;
+}
+
+div.uog-card:nth-of-type(9n+3) path,
+div.uog-card:nth-of-type(9n+5) path,
+div.uog-card:nth-of-type(9n+7) path {
+	fill: #c20430;
+}
+
+@media only screen and (max-width: 768px) {
+	body.program .uog-card {
+		min-width: 50%; 
+		text-align: center;
+		margin-top: 0;
+		margin-bottom: 3rem;
+	}
+	body.program dt {
+		font-size: 3.5rem;
+		color: #000;
+		margin-bottom: 0.5rem;
+	}
+	body.program .uog-card dt svg {
+		height: 4rem;
+	}
+	body.program dd {
+		font-weight: 600;
+		font-size: 1.4rem;
+	}
+}

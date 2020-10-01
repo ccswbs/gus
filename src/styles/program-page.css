@@ -83,58 +83,25 @@ body.program a.btn.btn-uogRed img {
     margin-right: 10%;
 }
 
-
-/* Program stats (with icons) */
-
-body.program .uog-card {
-    width: 30%;
-    margin-right: 5%;
-    text-align: center;
-}
-
-body.program .uog-card.red {
-    margin-right: 0;
-}
-
-body.program .uog-card h6 {
-    font-size: 5rem;
-    color: #000;
-    line-height: 1rem;
-    margin-bottom: 1rem;
-}
-
-body.program .uog-card h6 img {
-    height: 6rem;
-    padding-right: 2rem;
-}
-
-body.program .uog-card p {
-    text-transform: uppercase;
-    font-weight: 700;
-    color: #555;
-    margin-top: 2rem;
-}
-
-body.program hr {
-    height: 4px;
-    width: 100%;
-    background: linear-gradient(to right, #69A3B9 0%, #69A3B9 30%, transparent 30%, transparent 35%, #FFC72A 35%, #FFC72A 65%, transparent 65%, transparent 70%, #c20430 70%, #c20430 100%);
-}
-
 /* Program Info */
 
-body.program .employer-wrapper img {
-    width: 20%;
-    margin-right: 5%;
-    float: left;
+body.program .employer-wrapper {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 20% auto;
 }
 
-body.program .employer-wrapper p {
-    float: left;
+body.program .employer-wrapper .employer-info {
+    grid-column: 1 / span 2;
 }
 
-body.program .employer-wrapper strong {
+body.program .employer-wrapper .employer-pic + .employer-info {
+    grid-column: 2;
+}
+
+body.program .employer-wrapper .employer-name {
     color: #000;
+    margin: 0;
 }
 
 /* Pre Footer */
@@ -187,10 +154,6 @@ body.program .pre-footer img {
     body.program .social-wrapper a {
         width: 40px;
         height: 40px;
-    }
-
-    body.program .uog-card h6 {
-        font-size: 4rem;
     }
 
     body.program .student-tips img {
@@ -268,24 +231,24 @@ body.program .pre-footer img {
         margin-top: 1rem;
     }
 
-    body.program .employer-wrapper img {
+    body.program .employer-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+    }
+
+    body.program .employer-wrapper .employer-info {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+    
+    body.program .employer-wrapper .employer-pic + .employer-info {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    body.program .employer-wrapper .employer-pic {
         width: 40%;
-    }
-
-    body.program .uog-card {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-
-    body.program .uog-card h6 {
-        font-size: 3rem;
-        margin-top: 2rem;
-    }
-
-    body.program .uog-card p {
-        font-size: 1.7rem;
-        font-weight: 400;
-        margin-top: 0;
+        height: 40%;
     }
 
     body.program .bg-img hr {
