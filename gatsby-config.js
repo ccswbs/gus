@@ -5,8 +5,8 @@
  */
 
 let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
-// uncomment the line below for dev purposes:
-//let metaConfig = require('./config/sites/ugconthub.js');
+// uncomment the line below (and comment out the line above) for dev purposes:
+// let metaConfig = require('./config/sites/ugconthub.js');
 
 if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['title'] = "Gatsby UG Starter Template";
@@ -59,7 +59,7 @@ module.exports = {
        resolve: `gatsby-source-drupal`,
        options: {
          baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
-		 // uncomment the line below for dev purposes:
+		 // uncomment the line below (and comment out the line above) for dev purposes:
 		 //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },

@@ -174,6 +174,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_courses: [node__course] @link(from: "field_courses___NODE")
       field_degrees: [taxonomy_term__degrees] @link(from: "field_degrees___NODE")
       field_program_statistics: [paragraph__program_statistic] @link(from: "field_program_statistics___NODE")
+      field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
       field_specializations: [taxonomy_term__specializations] @link(from: "field_specializations___NODE")
       field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
     }
@@ -264,6 +265,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type taxonomy_term__specializationsRelationships {
       field_units: [taxonomy_term__units]
+    }
+    type taxonomy_term__statistic_type implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
     }
     type taxonomy_term__tags implements Node & TaxonomyInterface {
       drupal_id: String
