@@ -4,7 +4,7 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 export default ({data}) => {
-	const pageData = data.pages.edges[0].node;
+	const pageData = data.articles.edges[0].node;
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	return (
@@ -20,7 +20,7 @@ export default ({data}) => {
 
 export const query = graphql`
   query ($id: String) {
-	pages: allNodePage(filter: {id: {eq: $id}}) {
+	articles: allNodeArticle(filter: {id: {eq: $id}}) {
 		edges {
 			node {
 				drupal_id

@@ -71,10 +71,22 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-
-	type node__call_to_action implements Node {
+  type node__article implements Node {
       drupal_id: String
-      drupal_internal__tid: Int
+      drupal_internal__nid: Int
+      title: String
+      body: BodyFieldWithSummary
+      field_image: ImageField
+      relationships: node__articleRelationships
+      fields: FieldsPathAlias
+    }
+    type node__articleRelationships implements Node {
+      field_image: file__file @link(from: "field_image___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type node__call_to_action implements Node {
+      drupal_id: String
+      drupal_internal__nid: Int
       title: String
       field_call_to_action_link: FieldLink
       relationships: node__call_to_actionRelationships
@@ -87,16 +99,16 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-	type node__career implements Node {
+    type node__career implements Node {
       drupal_id: String
-      drupal_internal__tid: Int
+      drupal_internal__nid: Int
       title: String
       changed: Date @dateformat
       body: BodyFieldWithSummary
       relationships: node__careerRelationships
       fields: node__careerFields
     }
-	type node__careerFields implements Node {
+    type node__careerFields implements Node {
       tags: [String]
     }
     type node__careerRelationships implements Node {
@@ -104,7 +116,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__course implements Node {
       drupal_id: String
-      drupal_internal__tid: Int
+      drupal_internal__nid: Int
       title: String
       field_code: String
       field_course_url: node__courseField_course_url
@@ -122,9 +134,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__courseRelationships implements Node {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-	type node__employer implements Node {
+    type node__employer implements Node {
       drupal_id: String
-      drupal_internal__tid: Int
+      drupal_internal__nid: Int
       title: String
       field_employer_summary: BodyField
       field_image: ImageField
@@ -313,6 +325,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 
   // Handle nodes that require page aliases
   if (node.internal.type === `node__page` || 
+      node.internal.type === `node__article` || 
       node.internal.type === `node__program`) {
         
     /* Create page path */
@@ -348,6 +361,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 
 exports.createPages = async ({ graphql, actions, createContentDigest, createNodeId, reporter }) => {
   const pageTemplate = path.resolve('./src/templates/basic-page.js');
+  const articleTemplate = path.resolve('./src/templates/article-page.js');
   const programTemplate = path.resolve('src/templates/program-page.js');
   const helpers = Object.assign({}, actions, {
     createContentDigest,
@@ -357,6 +371,15 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
   const result = await graphql(`
     {
       pages: allNodePage {
+        edges {
+          node {
+            id
+            drupal_id
+            title
+          }
+        }
+      }
+      articles: allNodeArticle {
         edges {
           node {
             id
@@ -393,10 +416,24 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     if(result.data.pages !== undefined){
       const pages = result.data.pages.edges;
       pages.forEach(( { node }, index) => {
-        processPage(node, 
+        processPage(
+          node, 
           node.id, 
           createPageAlias, 
           pageTemplate, 
+          helpers);
+      })
+    }
+
+    // process article nodes
+    if(result.data.articles !== undefined){
+      const articles = result.data.articles.edges;
+      articles.forEach(( { node }, index) => {
+        processPage(
+          node, 
+          node.id, 
+          createArticleAlias, 
+          articleTemplate, 
           helpers);
       })
     }
@@ -452,13 +489,23 @@ function createNodeAlias(node, alias, helpers){
   helpers.createNode(aliasNode);
 }
 
-function createPageAlias(node){
-  var alias = `/` + slugify(node.title);
+function createPageAlias(node, prepend = ''){
+  let alias = `/` + slugify(node.title);
+
+  if(prepend !== '') {
+    alias = `/` + slugify(prepend) + alias;
+  }
+
   return alias;
 }
 
 function createProgramAlias(node){
-  var alias = `/programs/` + slugify(node.title);
+  let alias = createPageAlias(node, `programs`)
+  return alias;
+}
+
+function createArticleAlias(node){
+  let alias = createPageAlias(node, `news`)
   return alias;
 }
 
