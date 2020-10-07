@@ -12,6 +12,13 @@ function setHeadingLevel(headingLevel) {
   return selectedHeading;
 }
 
+function getNextHeadingLevel(headingLevel) {
+  let level = parseInt(headingLevel.replace(/[^\d.]/g,'')) + 1;
+  let nextHeadingLevel = setHeadingLevel('h' + level);
+  return nextHeadingLevel;
+
+}
+
 function contentIsNullOrEmpty(content) {
   if(content === null || content === undefined || content === "" || 
     (Array.isArray(content) && (content.length === 0))){
@@ -79,4 +86,4 @@ function FormatMoney({ value }) {
   );
 }
 
-export { stripHTMLTags, setHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates, combineAndSortBodyFields, divideIntoColumns, FormatMoney };
+export { stripHTMLTags, setHeadingLevel, getNextHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates, combineAndSortBodyFields, divideIntoColumns, FormatMoney };

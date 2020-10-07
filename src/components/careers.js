@@ -12,11 +12,13 @@ function Careers (props) {
 }
 
 Careers.propTypes = {
-	careerData: PropTypes.array,
+    careerData: PropTypes.array,
+    numColumns: PropTypes.number,
 }
 
 Careers.defaultProps = {
     careerData: null,
+    numColumns: 3,
 }
 
 export default Careers

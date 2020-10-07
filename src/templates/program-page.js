@@ -704,12 +704,18 @@ export const query = graphql`
       }
     }
 
-    news: allNodeArticle (sort: {fields: title}, filter: {fields: {tags: {in: [$id] }}}) {
+    news: allNodeArticle (limit: 4, sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           title
           drupal_id
           changed
+          created
+          fields {
+            alias {
+              value
+            }
+          }
           body {
             processed
           }

@@ -112,6 +112,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
   type node__article implements Node {
       changed: Date @dateformat
+      created: Date @dateformat
       drupal_id: String
       drupal_internal__nid: Int
       title: String

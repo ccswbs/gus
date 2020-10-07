@@ -23,8 +23,8 @@ function Employers (props) {
                             </div>
                             </div>
                         </div>
-                })}
-            </div>
+                    })}
+                </div>
             </div>
         )
 }
