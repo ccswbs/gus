@@ -1,7 +1,8 @@
 import CallToAction from '../components/callToAction';
-import ColumnLists from '../components/columnLists';
+import Careers from '../components/careers';
 import Courses from '../components/courses';
 import Degrees from '../components/degrees';
+import Employers from '../components/employers';
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
 import NavTabs from '../components/navTabs';
@@ -231,13 +232,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                       heading={careersHeading} 
                                       headingLevel="h3" 
                                       id={careersID} 
-                                      content={
-                                        <ColumnLists numColumns={3}>
-                                          {careerData.map (unit => {
-                                            return <li key={unit.node.drupal_id}>{unit.node.title}</li>
-                                          })}
-                                        </ColumnLists>
-                                      } />);
+                                      content={<Careers careerData={careerData} numColumns={3} />} />);
   }
 
   // prep TAB 4 - Employers
@@ -258,29 +253,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                       heading={employerHeading} 
                                       headingLevel="h3" 
                                       id={employerID} 
-                                      content={
-                                        <div className="container">
-                                          <div className="row">
-                                            {employerData.map (unit => {
-                                              let employerImage = unit.node.relationships.field_image;
-                                              let employerSummary = unit.node.field_employer_summary;
-                                              let employerJobPostingsLink = !contentIsNullOrEmpty(unit.node.field_link) ? unit.node.field_link.uri : null;
-                                              return <div className="col-6 col-md-4" key={unit.node.drupal_id}>
-                                                        <div className="employer-wrapper">
-                                                          {employerImage && <div className="employer-pic">
-                                                            <Img fluid={employerImage.localFile.childImageSharp.fluid} imgStyle={{ objectFit: 'contain' }} alt={unit.node.relationships.field_image.alt} />
-                                                          </div>}
-                                                          <div className="employer-info">
-                                                            <h4 className="employer-name">{unit.node.title}</h4>
-                                                            {employerSummary && <div dangerouslySetInnerHTML={{__html: employerSummary.processed}} />}
-                                                            {employerJobPostingsLink && <p><a href={unit.node.field_link.uri}>Current Job Postings<span className="sr-only"> for {unit.node.title}</span></a></p>}
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                            })}
-                                          </div>
-                                        </div>
-                                      } />);
+                                      content={<Employers employerData={employerData} />} />);
   }
   if(checkIfContentAvailable === true){
     return <React.Fragment>
