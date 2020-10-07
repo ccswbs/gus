@@ -16,8 +16,6 @@ export default ({data}) => {
 	)
 }
 
-//export default BasicPage
-
 export const query = graphql`
   query ($id: String) {
 	articles: allNodeArticle(filter: {id: {eq: $id}}) {
