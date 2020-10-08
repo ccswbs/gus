@@ -32,7 +32,6 @@ function NewsGrid (props) {
                         <section className="row row-with-vspace site-content">
                             <div className="col-md-12 content-area">
                                 <Heading>{props.heading}</Heading>
-                                <a class="video-watch-all" href="#">More News<span class="chevron"></span></a>
                             </div>
                             {newsItems()}
                         </section>
