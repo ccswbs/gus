@@ -46,17 +46,17 @@
 See https://www.gatsbyjs.com/blog/2019-05-17-improvements-to-schema-customization/#migrating-your-code
 
 After adding a new field to the schema, you may see the following:
-- warn Deprecation warning - adding inferred resolver for <field name>
+```warn Deprecation warning - adding inferred resolver for <field name>```
 
 In this case, you'll want to add one of 3 inferred resolvers to your field schema:
 - @dateformat (for dates)
-- @link (for things like taxonomy fields, images, etc.)
-- @fileByRelativePath (for files)
+- @link (for things like taxonomy fields, images, etc. - typically you'll need a from value for this as well)
+- @fileByRelativePath
 
 For example:
 
 changed: Date @dateformat
-field_news_category: [taxonomy_term__news_category] @link
+field_name: [taxonomy_term__vocabulary_name] @link(from: "field_name___NODE")
 
 **/
 
@@ -140,7 +140,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__articleRelationships implements Node {
       field_image: file__file @link(from: "field_image___NODE")
-      field_news_category: [taxonomy_term__news_category] @link
+      field_news_category: [taxonomy_term__news_category] @link(from: "field_news_category___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__articleFields implements Node {
