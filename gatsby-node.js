@@ -123,7 +123,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__articleRelationships implements Node {
       field_image: file__file @link(from: "field_image___NODE")
-      field_news_category: [taxonomy_term__news_category]
+      field_news_category: [taxonomy_term__news_category] @link
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__articleFields implements Node {
