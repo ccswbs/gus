@@ -19,7 +19,8 @@ function NewsGrid (props) {
 
 			return <div key={newsItem.node.drupal_id} className={props.columnClass + " content-area news-item"}>
                 <Link to={newsItem.node.fields.alias.value}>
-                    {image && <div className="img-container"><Img fluid={image.localFile.childImageSharp.fluid} alt={newsItem.node.relationships.field_image.alt} /></div>}
+                    {/* Use null alt atribute for linked image, title combo */}
+                    {image && <div className="img-container"><Img fluid={image.localFile.childImageSharp.fluid} alt="" /></div>}
                     <NextHeading>{title}</NextHeading>
                     {category && <p className="category">{category.name}</p>}
                 </Link>
