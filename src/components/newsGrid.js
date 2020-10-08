@@ -15,14 +15,14 @@ function NewsGrid (props) {
 		const newsItems  = () => props.newsData.map((newsItem) => {
 			let title = newsItem.node.title;
             let image = newsItem.node.relationships.field_image;
-            let category = newsItem.node.relationships.field_news_category[0];
+            let categories = Array.prototype.map.call(newsItem.node.relationships.field_news_category, s => s.name).join(', ');
 
 			return <div key={newsItem.node.drupal_id} className={props.columnClass + " content-area news-item"}>
                 <Link to={newsItem.node.fields.alias.value}>
                     {/* Use null alt atribute for linked image, title combo */}
                     {image && <div className="img-container"><Img fluid={image.localFile.childImageSharp.fluid} alt="" /></div>}
                     <NextHeading>{title}</NextHeading>
-                    {category && <p className="category">{category.name}</p>}
+                    {categories && <p className="category">{categories}</p>}
                 </Link>
 			</div>
 		})
