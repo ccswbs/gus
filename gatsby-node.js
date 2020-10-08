@@ -41,6 +41,23 @@
       alias: PathAlias @link
       tags: [String]
     }
+
+# Deprecation Warnings
+See https://www.gatsbyjs.com/blog/2019-05-17-improvements-to-schema-customization/#migrating-your-code
+
+After adding a new field to the schema, you may see the following:
+- warn Deprecation warning - adding inferred resolver for <field name>
+
+In this case, you'll want to add one of 3 inferred resolvers to your field schema:
+- @dateformat (for dates)
+- @link (for things like taxonomy fields, images, etc.)
+- @fileByRelativePath (for files)
+
+For example:
+
+changed: Date @dateformat
+field_news_category: [taxonomy_term__news_category] @link
+
 **/
 
 const path = require(`path`)
