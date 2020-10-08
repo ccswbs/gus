@@ -13,16 +13,16 @@ body.program p.category {
     letter-spacing: 0.2rem;
 }
 
-body.program .news-item:nth-of-type(1n) p.category {
-    color: #4C9BB2;
+body.program .news-item p.category {
+	color: #000000;
 }
 
-body.program .news-item:nth-of-type(2n) p.category {
+body.program .news-item:nth-of-type(2n+2) p.category {
     color: #c20430;
 }
 
-body.program .news-item:nth-of-type(3n) p.category {
-	color: #000000;
+body.program .news-item:nth-of-type(3n+2) p.category {
+    color: #4C9BB2;
 }
 
 body.program .news .img-container {
