@@ -83,26 +83,6 @@ body.program a.btn.btn-uogRed img {
     margin-right: 10%;
 }
 
-/* Program Info */
-
-body.program .employer-wrapper {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: 20% auto;
-}
-
-body.program .employer-wrapper .employer-info {
-    grid-column: 1 / span 2;
-}
-
-body.program .employer-wrapper .employer-pic + .employer-info {
-    grid-column: 2;
-}
-
-body.program .employer-wrapper .employer-name {
-    color: #000;
-    margin: 0;
-}
 
 /* Pre Footer */
 
@@ -229,26 +209,6 @@ body.program .pre-footer img {
 
     body.program .pre-footer h6 {
         margin-top: 1rem;
-    }
-
-    body.program .employer-wrapper {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr auto;
-    }
-
-    body.program .employer-wrapper .employer-info {
-        grid-column: 1;
-        grid-row: 1 / span 2;
-    }
-    
-    body.program .employer-wrapper .employer-pic + .employer-info {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    body.program .employer-wrapper .employer-pic {
-        width: 40%;
-        height: 40%;
     }
 
     body.program .bg-img hr {
