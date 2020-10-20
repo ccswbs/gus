@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet';
 import { graphql } from "gatsby"
 import Img from 'gatsby-image';
 import Layout from '../components/layout'
@@ -14,7 +15,10 @@ export default ({data}) => {
 	
 	return (
 		<Layout>
-		
+			<Helmet bodyAttributes={{
+				class: 'basic-page'
+			}}
+			/>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			
 			{ /**** Header and Title ****/ }
