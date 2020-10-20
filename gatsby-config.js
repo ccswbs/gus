@@ -5,7 +5,7 @@
  */
 
 let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
-// uncomment the line below (and comment out the line above) for dev purposes:
+// For dev purposes, comment the line above and uncomment the line below:
 // let metaConfig = require('./config/sites/ugconthub.js');
 
 if((metaConfig == null) || (metaConfig == undefined)) {
@@ -59,8 +59,9 @@ module.exports = {
        resolve: `gatsby-source-drupal`,
        options: {
          baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
-		 // uncomment the line below (and comment out the line above) for dev purposes:
+		 // For dev purposes, comment the line above and uncomment the appropriate line below:
 		 //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
+		 //baseUrl: `http://multidevname-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },    
