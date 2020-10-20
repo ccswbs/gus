@@ -355,6 +355,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__tags implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
+      field_generate_page: Boolean
       name: String
       description: TaxonomyDescription
     }
@@ -439,7 +440,8 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
   // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
   const pageTemplate = path.resolve('./src/templates/basic-page.js');
   const articleTemplate = path.resolve('./src/templates/article-page.js');
-  const programTemplate = path.resolve('src/templates/program-page.js');
+  const programTemplate = path.resolve('./src/templates/program-page.js');
+  const landingTemplate = path.resolve('./src/templates/landing-page.js');
   const helpers = Object.assign({}, actions, {
     createContentDigest,
     createNodeId,
@@ -481,6 +483,19 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           }
         }
       }
+
+      landing_tags: allTaxonomyTermTags (filter: {field_generate_page: {eq: true}}) {
+        edges {
+          node {
+            drupal_id
+            drupal_internal__tid
+            id
+            name
+            
+          }
+        }
+      }
+      
     }
   `)
 
@@ -531,6 +546,19 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           helpers);
       })
     }
+
+    // process landing page tags
+    if(result.data.landing_tags !== undefined){
+      const landing_pages = result.data.landing_tags.edges;
+      landing_pages.forEach(( { node }, index) => {
+        processPage(
+          node, 
+          node.id, 
+          createTagAlias, 
+          landingTemplate, 
+          helpers);
+      })
+    }
   }
 }
 
@@ -570,6 +598,7 @@ function createNodeAlias(node, alias, helpers){
   helpers.createNode(aliasNode);
 }
 
+// use for content types
 function createPageAlias(node, prepend = ''){
   let alias = `/` + slugify(node.title);
 
@@ -577,6 +606,12 @@ function createPageAlias(node, prepend = ''){
     alias = `/` + slugify(prepend) + alias;
   }
 
+  return alias;
+}
+
+// use for taxonomy
+function createTagAlias(node){
+  let alias = `/tags/` + slugify(node.name);
   return alias;
 }
 
