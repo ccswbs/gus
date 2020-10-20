@@ -573,48 +573,15 @@ export const query = graphql`
         }
       }
     }
-
-    images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          field_media_image {
-                alt
-          }
-          relationships {
-            field_media_image {
-              localFile {
-                childImageSharp {
-                  fluid(maxWidth: 1920) {
-                    originalImg
-                    ...GatsbyImageSharpFluid
-                  }
-                }
-                extension
-              }
-            }
-            field_tags {
-            __typename
-            ... on TaxonomyInterface {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
 	
-    testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
+    careers: allNodeCareer(sort: {fields: [title], order: ASC}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
-          changed
+          title
           drupal_id
+          changed
           body {
             processed
-          }
-          title
-          field_testimonial_person_desc
-          field_image {
-            alt
           }
           relationships {
             field_tags {
@@ -623,17 +590,6 @@ export const query = graphql`
                 drupal_id
                 id
                 name
-              }
-            }
-            field_image {
-              localFile {
-                url
-                childImageSharp {
-                  fluid(maxWidth: 400, maxHeight: 400) {
-                    originalImg
-                    ...GatsbyImageSharpFluid
-                  }
-                }
               }
             }
           }
@@ -680,22 +636,28 @@ export const query = graphql`
         }
       }
     }
-
-    careers: allNodeCareer(sort: {fields: [title], order: ASC}, filter: {fields: {tags: {in: [$id] }}}) {
+	
+    images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
-          title
-          drupal_id
-          changed
-          body {
-            processed
+          field_media_image {
+                alt
           }
           relationships {
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 1920) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+                extension
+              }
+            }
             field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
+            __typename
+            ... on TaxonomyInterface {
                 name
               }
             }
@@ -703,7 +665,7 @@ export const query = graphql`
         }
       }
     }
-
+	
     news: allNodeArticle (limit: 4, sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
@@ -751,5 +713,44 @@ export const query = graphql`
         }
       }
     }
+	
+    testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          changed
+          drupal_id
+          body {
+            processed
+          }
+          title
+          field_testimonial_person_desc
+          field_image {
+            alt
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+            field_image {
+              localFile {
+                url
+                childImageSharp {
+                  fluid(maxWidth: 400, maxHeight: 400) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
   }
 `
