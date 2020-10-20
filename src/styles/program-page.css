@@ -156,12 +156,6 @@ body.program .pre-footer img {
     }
 }
 
-@media only screen and (max-width: 992px) {
-    body.program #rotator img {
-        width: calc(100% + 10rem) !important;
-    }
-}
-
 @media only screen and (max-width: 768px) {
     body.program .event-card {
         background: linear-gradient(to right, #4C9BB2 0%, #4C9BB2 20%, #f5f5f5 20%, #f5f5f5 100%);

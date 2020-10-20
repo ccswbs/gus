@@ -218,10 +218,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
+	  field_image: ImageField
       relationships: node__pageRelationships
       fields: FieldsPathAlias
     }
     type node__pageRelationships implements Node {
+	  field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__program implements Node {
