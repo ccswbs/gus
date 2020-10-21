@@ -127,7 +127,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-  type node__article implements Node {
+    type node__article implements Node {
       changed: Date @dateformat
       created: Date @dateformat
       drupal_id: String
@@ -218,12 +218,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
-	  field_image: ImageField
+	  field_hero_image: ImageField
       relationships: node__pageRelationships
       fields: FieldsPathAlias
     }
     type node__pageRelationships implements Node {
-	  field_image: file__file @link(from: "field_image___NODE")
+	  field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__program implements Node {
@@ -300,12 +300,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
     }	
 
-  type PathAlias implements Node {
-    value: String
-    alias: String
+    type PathAlias implements Node {
+      value: String
+      alias: String
     }
 
-  type taxonomy_term__news_category implements Node & TaxonomyInterface {
+    type taxonomy_term__news_category implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
