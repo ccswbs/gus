@@ -75,6 +75,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       | taxonomy_term__specializations
       | taxonomy_term__programs
       | taxonomy_term__degrees
+      | taxonomy_term__topics
       | taxonomy_term__units
 	
 	interface TaxonomyInterface @nodeInterface {
