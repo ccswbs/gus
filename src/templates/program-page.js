@@ -3,7 +3,6 @@ import Careers from '../components/careers';
 import Courses from '../components/courses';
 import Degrees from '../components/degrees';
 import Employers from '../components/employers';
-import Img from 'gatsby-image';
 import Layout from '../components/layout';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
@@ -13,6 +12,7 @@ import React from 'react';
 import SEO from '../components/seo';
 import Stats from '../components/stats'
 import SVG from 'react-inlinesvg';
+import Hero from '../components/hero';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
@@ -30,17 +30,15 @@ function renderHeaderImage(imageData) {
 	}
 	
 	if (checkIfContentAvailable === true) {
-		var headerImage;
-		var altText;
+		let imgData = [];
 		for (let i = 0; i < imageData.length; i++) {
-			altText = imageData[i].node.field_media_image.alt;
 			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
 				if (imageData[i].node.relationships.field_tags[j].name === "img-header") {
-					headerImage = imageData[i].node.relationships.field_media_image;
+					imgData.push(imageData[i]);
 				}
 			}
 		}
-		return <React.Fragment>{headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={altText} />}</React.Fragment>
+		return <Hero imgData={imgData} />
 	}
 	
 	return null;

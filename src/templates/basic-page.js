@@ -10,7 +10,7 @@ export default ({data}) => {
 	const pageData = data.pages.edges[0].node;
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
-	const imageData = pageData.relationships.field_hero_image;
+	const imageData = data.images.edges;
 	
 	return (
 		<Layout>
@@ -22,7 +22,7 @@ export default ({data}) => {
 			
 			{ /**** Header and Title ****/ }
 			<div id="rotator">
-				<Hero imageData={imageData} />				
+				<Hero imgData={imageData} />				
 				<div className="container ft-container">
 					<h1 className="fancy-title">{title}</h1>
 				</div>
@@ -55,23 +55,6 @@ export const query = graphql`
 			processed
 		  }
 		  relationships {
-			field_hero_image {
-			  field_media_image {
-				alt
-              }
-			  relationships {
-                field_media_image {
-				  localFile {
-					childImageSharp {
-					  fluid(maxWidth: 1920) {
-						originalImg
-						...GatsbyImageSharpFluid
-					  }
-					}
-				  }
-				}
-			  }
-			}
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {
@@ -82,5 +65,32 @@ export const query = graphql`
 		}
 	  }
 	}
+	images: allMediaImage(filter: {relationships: {node__page: {elemMatch: {id: {eq: $id}}}}}) {
+      edges {
+        node {
+          field_media_image {
+                alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 1920) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+              }
+            }
+            field_tags {
+            __typename
+            ... on TaxonomyInterface {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `

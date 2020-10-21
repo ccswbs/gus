@@ -4,28 +4,25 @@ import PropTypes from "prop-types"
 import { contentIsNullOrEmpty } from '../utils/ug-utils';
 import "../styles/hero.css"
 
-function Hero ({ imageData }) {
-	let checkIfContentAvailable = false;
-	
-	if (!contentIsNullOrEmpty(imageData)) {
-		checkIfContentAvailable = true;
-	}
-	
-	if (checkIfContentAvailable === true) {
-		let heroImage = imageData.relationships.field_media_image;
-		let altText = imageData.field_media_image.alt;
-
-		return <React.Fragment><Img fluid={heroImage.localFile.childImageSharp.fluid} alt={altText} /></React.Fragment>
-	}
-	
-	return null;
+function Hero (props) {
+	return (
+		<React.Fragment>
+			{!contentIsNullOrEmpty(props.imgData) && props.imgData.length !== 0 && <>
+				{props.imgData.map (img => {	
+					let heroImage = img.node.relationships.field_media_image.localFile;
+					let altText = img.node.field_media_image.alt;					
+					return <React.Fragment><Img fluid={heroImage.childImageSharp.fluid} alt={altText} /></React.Fragment>
+				})}
+			</>}
+		</React.Fragment>
+	)
 }
 
 Hero.propTypes = {
-    imageData: PropTypes.array,
+    imgData: PropTypes.array,
 }
 Hero.defaultProps = {
-    imageData: null,
+    imgData: null,
 }
   
 export default Hero
