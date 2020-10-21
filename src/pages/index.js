@@ -1,8 +1,8 @@
-import React from 'react'
-import { graphql, Link } from "gatsby"
-import Layout from '../components/layout'
-import SEO from '../components/seo'
-import Instagram from '../components/instag'
+import { graphql, Link } from 'gatsby';
+import Instagram from '../components/instag';
+import Layout from '../components/layout';
+import React from 'react';
+import SEO from '../components/seo';
 
 const IndexPage = ({ data }) => (
         <Layout>

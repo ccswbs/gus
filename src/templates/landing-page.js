@@ -1,13 +1,22 @@
-import React from 'react';
+import { graphql, Link } from 'gatsby';
+import Grid from '../components/grid';
+import GridCell from '../components/gridCell';
 import { Helmet } from 'react-helmet';
-import { graphql } from 'gatsby';
 import Layout from '../components/layout';
+import React from 'react';
 import SEO from '../components/seo';
 
 export default ({data}) => {
-	const tagData = data.tags.edges[0].node;
-	const title = tagData.name;
-	const body = (tagData.description !== null ? tagData.description.processed:``);
+	let pageData;
+	let topicData;
+
+	// set data
+	if (data.topics.edges[0] !== undefined) { topicData = data.topics.edges[0].node; }
+	if (data.pages.edges !== undefined) { pageData = data.pages.edges; }
+
+	// set landing page details
+	const title = topicData.name;
+	const body = (topicData.description !== null ? topicData.description.processed:``);
 
 	return (
 		<Layout>
@@ -34,16 +43,26 @@ export default ({data}) => {
 
 			{ /**** Grid content ****/ }
 			<div className="container page-container">
+				<Grid>
+					{pageData.map((page)  => {
+						let headerImage = (page.node.relationships.field_image !== null ? page.node.relationships.field_image :``);
+						let altText = (page.node.field_image !== null ? page.node.field_image.alt :``);
 
+						return(
+							<GridCell key={page.node.drupal_id} >
+								<Link to={page.node.fields.alias.value}>{page.node.title}</Link>
+							</GridCell>
+							)
+						})}
+				</Grid>
 			</div>
-
 		</Layout>
 	)
 }
 
 export const query = graphql`
   query ($id: String) {
-	tags: allTaxonomyTermTopics(filter: {id: {eq: $id}}) {
+	topics: allTaxonomyTermTopics(filter: {id: {eq: $id}}) {
 		edges {
 			node {
 				drupal_id
@@ -52,8 +71,40 @@ export const query = graphql`
 				description {
 					processed
 				}
+
 		  	}
 		}
 	}
+	
+	pages: allNodePage(filter: {fields: {tags: {in: [$id] }}}) {
+		edges {
+		  node {
+			drupal_id
+			title
+			field_image {
+			  alt
+			}
+			fields {
+				alias {
+					value
+				}
+			}
+			relationships {
+			  field_image {
+				localFile {
+				  childImageSharp {
+					fluid(maxWidth: 1920) {
+					  originalImg
+					  ...GatsbyImageSharpFluid
+					}
+				  }
+				  extension
+				}
+			  }
+			}
+		  }
+		}
+	  }
+
   }
 `

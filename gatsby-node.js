@@ -395,7 +395,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 exports.onCreateNode = ({ node, createNodeId, actions }) => {
   const { createNodeField } = actions
 
-  // Handle nodes that point to multiple tag vocabularies
+  // Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
   // INSTRUCTION: If you've added a new content-type and it contains a field that references
   // multiple vocabularies, then add it to the if statement
   if (node.internal.type === `media__image` || 
@@ -403,7 +403,8 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
       node.internal.type === `node__call_to_action` ||
       node.internal.type === `node__career` || 
       node.internal.type === `node__course` || 
-      node.internal.type === `node__employer` || 
+      node.internal.type === `node__employer` ||
+      node.internal.type === `node__page` || 
       node.internal.type === `node__testimonial`
     ) {
     createNodeField({
@@ -501,7 +502,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         }
       }
 
-      landing_tags: allTaxonomyTermTopics {
+      landing_topics: allTaxonomyTermTopics {
         edges {
           node {
             drupal_id
@@ -531,7 +532,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         processPage(
           node, 
           node.id, 
-          createPageAlias, 
+          createContentTypeAlias, 
           pageTemplate, 
           helpers);
       })
@@ -563,14 +564,14 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
       })
     }
 
-    // process landing page tags
-    if(result.data.landing_tags !== undefined){
-      const landing_pages = result.data.landing_tags.edges;
+    // process landing page topics
+    if(result.data.landing_topics !== undefined){
+      const landing_pages = result.data.landing_topics.edges;
       landing_pages.forEach(( { node }, index) => {
         processPage(
           node, 
           node.id, 
-          createTaxonomyAlias, 
+          createTopicAlias, 
           landingTemplate, 
           helpers);
       })
@@ -615,7 +616,7 @@ function createNodeAlias(node, alias, helpers){
 }
 
 // use for content types
-function createPageAlias(node, prepend = ''){
+function createContentTypeAlias(node, prepend = ''){
   let alias = `/` + slugify(node.title);
 
   if(prepend !== '') {
@@ -637,12 +638,17 @@ function createTaxonomyAlias(node, prepend = ''){
 }
 
 function createProgramAlias(node){
-  let alias = createPageAlias(node, `programs`)
+  let alias = createContentTypeAlias(node, `programs`)
   return alias;
 }
 
 function createArticleAlias(node){
-  let alias = createPageAlias(node, `news`)
+  let alias = createContentTypeAlias(node, `news`)
+  return alias;
+}
+
+function createTopicAlias(node){
+  let alias = createTaxonomyAlias(node, `topics`)
   return alias;
 }
 
