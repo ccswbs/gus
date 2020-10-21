@@ -19,9 +19,15 @@
   - For the path alias, you will also need to:
     - Add "node__contenttype.fields.alias": `PathAlias`, to the mapping in gatsby-config.js
     - Update exports.onCreateNode
+  - Use THREE underscores when referencing nodes that do not exist yet (i.e. ___NODE)
 
+  Excellent Reading Material:
+  https://www.jamesdflynn.com/development/gatsbyjs-drupal-create-custom-graphql-schema-empty-fields
    
   SAMPLE SCHEMA
+  Note: for taxonomy, you would use 
+  ```type taxonomy_term__vocabularyname implements Node & TaxonomyInterface```
+  ---
 
     type node__contenttype implements Node {
       body: BodyFieldWithSummary
@@ -29,7 +35,7 @@
       drupal_id: String
       drupal_internal__nid: Int
       field_image: ImageField
-      fields: node__contenttypeFields
+      fields: node__contenttypeFields   // Note - you could also point to FieldsPathAlias instead of node__contenttypeFields if it's just an alias that you need
       relationships: node__contenttypeRelationships
       title: String
     }
@@ -364,9 +370,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__topics implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
+      fields: FieldsPathAlias
       name: String
       description: TaxonomyDescription
     }
+
     type taxonomy_term__units implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -410,7 +418,8 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   // then add it to the following if statement
   if (node.internal.type === `node__article` || 
       node.internal.type === `node__page` || 
-      node.internal.type === `node__program`) {
+      node.internal.type === `node__program` || 
+      node.internal.type === `taxonomy_term__topics` ) {
         
     /* Create page path */
     const aliasID = createNodeId(`alias-${node.drupal_id}`);

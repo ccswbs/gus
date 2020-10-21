@@ -23,6 +23,14 @@ const IndexPage = ({ data }) => (
 						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
 					))}
 				</ul>
+
+				<h2>Landing Pages</h2>
+				<ul>
+					{data.landing_pages.edges.map((edge, index) => (
+						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
+					))}
+				</ul>
+
 				<h2>Instagram</h2>
 				<Instagram />
 			</div>
@@ -32,33 +40,47 @@ const IndexPage = ({ data }) => (
 export default IndexPage
 
 export const query = graphql`
-  query {
-	  allNodePage {
-		edges {
-		  node {
-			title
-			drupal_id
-			fields {
-				alias {
-					value
+	query {
+		allNodePage {
+			edges {
+				node {
+					title
+					drupal_id
+					fields {
+						alias {
+							value
+						}
+					}
 				}
 			}
-		  }
 		}
-	  }
-	programs: allNodeProgram {
-		edges {
-		  node {
-			drupal_id
-			drupal_internal__nid
-			title
-			fields {
-				alias {
-					value
+		programs: allNodeProgram {
+			edges {
+				node {
+					drupal_id
+					drupal_internal__nid
+					title
+					fields {
+						alias {
+							value
+						}
+					}
 				}
 			}
-		  }
 		}
-	  }
+		landing_pages: allTaxonomyTermTopics {
+			edges {
+				node {
+					drupal_id
+					drupal_internal__tid
+					name
+					fields {
+						alias {
+							value
+						}
+					}
+				}
+			}
+		}
 	}
 `

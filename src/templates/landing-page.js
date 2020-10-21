@@ -31,6 +31,12 @@ export default ({data}) => {
 					</section>
 				</div>
 			</div>
+
+			{ /**** Grid content ****/ }
+			<div className="container page-container">
+
+			</div>
+
 		</Layout>
 	)
 }
