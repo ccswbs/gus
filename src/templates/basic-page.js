@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { Helmet } from 'react-helmet';
-import { graphql } from "gatsby"
+import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from '../components/layout';
+import SEO from '../components/seo';
 
 export default ({data}) => {
 	

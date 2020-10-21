@@ -357,7 +357,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     type taxonomy_term__tags implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
-      field_generate_page: Boolean
+      name: String
+      description: TaxonomyDescription
+    }
+    type taxonomy_term__topics implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
     }
@@ -486,14 +491,13 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         }
       }
 
-      landing_tags: allTaxonomyTermTags (filter: {field_generate_page: {eq: true}}) {
+      landing_tags: allTaxonomyTermTopics {
         edges {
           node {
             drupal_id
             drupal_internal__tid
             id
             name
-            
           }
         }
       }
@@ -556,7 +560,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         processPage(
           node, 
           node.id, 
-          createTagAlias, 
+          createTaxonomyAlias, 
           landingTemplate, 
           helpers);
       })
@@ -611,9 +615,14 @@ function createPageAlias(node, prepend = ''){
   return alias;
 }
 
-// use for taxonomy
-function createTagAlias(node){
-  let alias = `/tags/` + slugify(node.name);
+// use for taxonomies
+function createTaxonomyAlias(node, prepend = ''){
+  let alias = `/` + slugify(node.name);
+
+  if(prepend !== '') {
+    alias = `/` + slugify(prepend) + alias;
+  }
+
   return alias;
 }
 
