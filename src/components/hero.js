@@ -2,6 +2,7 @@ import React from 'react'
 import Img from 'gatsby-image';
 import PropTypes from "prop-types"
 import { contentIsNullOrEmpty } from '../utils/ug-utils';
+import "../styles/hero.css"
 
 function Hero ({ imageData }) {
 	let checkIfContentAvailable = false;
