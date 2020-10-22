@@ -3,7 +3,6 @@ import Careers from '../components/careers';
 import Courses from '../components/courses';
 import Degrees from '../components/degrees';
 import Employers from '../components/employers';
-import Img from 'gatsby-image';
 import Layout from '../components/layout';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
@@ -13,6 +12,7 @@ import React from 'react';
 import SEO from '../components/seo';
 import Stats from '../components/stats'
 import SVG from 'react-inlinesvg';
+import Hero from '../components/hero';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
@@ -23,26 +23,17 @@ import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
 
 function renderHeaderImage(imageData) {
-	let checkIfContentAvailable = false;
-	
 	if (!contentIsNullOrEmpty(imageData)) {
-		checkIfContentAvailable = true;
-	}
-	
-	if (checkIfContentAvailable === true) {
-		var headerImage;
-		var altText;
+		let imgData = [];
 		for (let i = 0; i < imageData.length; i++) {
-			altText = imageData[i].node.field_media_image.alt;
 			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
 				if (imageData[i].node.relationships.field_tags[j].name === "img-header") {
-					headerImage = imageData[i].node.relationships.field_media_image;
+					imgData.push(imageData[i]);
 				}
 			}
 		}
-		return <React.Fragment>{headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={altText} />}</React.Fragment>
-	}
-	
+		return <Hero imgData={imgData} />
+	}	
 	return null;
 }
 
@@ -61,7 +52,7 @@ function renderProgramOverview(description, specData) {
 		</React.Fragment>
 	}
 
-  return null;
+	return null;
 }
 
 function renderProgramStats(degreesData, variantData, statsData, imageData) {
@@ -86,7 +77,7 @@ function renderProgramStats(degreesData, variantData, statsData, imageData) {
 					</div>
 				</section>
 			</div>
-        </div>
+		</div>
 		</React.Fragment>
 	}
 	
@@ -166,123 +157,131 @@ function CountProgramVariants(variantData) {
 }
 
 function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
-  let activeValue = true;
-  let activeTabExists = false;
-  let checkIfContentAvailable = false;
-  let navTabHeadings = [];
-  let navTabContent = [];
-  let key = 0;
+	let activeValue = true;
+	let activeTabExists = false;
+	let checkIfContentAvailable = false;
+	let navTabHeadings = [];
+	let navTabContent = [];
+	let key = 0;
 
-  // prep TAB 1 - Courses
-  if(!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)){
-    const courseHeading = "Courses";
-    const courseID = "pills-courses";
-    activeTabExists = true;
-    checkIfContentAvailable = true;
-    key++;
+	// prep TAB 1 - Courses
+	if (!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)) {
+		const courseHeading = "Courses";
+		const courseID = "pills-courses";
+		activeTabExists = true;
+		checkIfContentAvailable = true;
+		key++;
 
-    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                        active={activeValue} 
-                                        heading={courseHeading} 
-                                        controls={courseID} />);
+		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+										   active={activeValue} 
+										   heading={courseHeading} 
+										   controls={courseID} 
+							/>);
 
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeValue} 
-                                      heading={courseHeading} 
-                                      headingLevel="h3" 
-                                      id={courseID} 
-                                      content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} />);
-  }
+		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+										  active={activeValue} 
+										  heading={courseHeading} 
+										  headingLevel="h3" 
+										  id={courseID} 
+										  content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} 
+							/>);
+	}
 
-  // prep TAB 2 - Variants
-  if( variantDataHeading !== '') {
-    const variantID = "pills-variants";
-    activeValue = (activeTabExists === true) ? false : true;
-    checkIfContentAvailable = true;
-    key++;
+	// prep TAB 2 - Variants
+	if (variantDataHeading !== '') {
+		const variantID = "pills-variants";
+		activeValue = (activeTabExists === true) ? false : true;
+		checkIfContentAvailable = true;
+		key++;
 
-    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                      active={activeValue} 
-                                      heading={variantDataHeading} 
-                                      controls={variantID} />);
+		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+										   active={activeValue} 
+										   heading={variantDataHeading} 
+										   controls={variantID} 
+							/>);
 
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeValue} 
-                                      heading={variantDataHeading} 
-                                      headingLevel="h3" 
-                                      id={variantID} 
-                                      content={<Variants variantData={variantData} />} />);
-  }
+		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+										  active={activeValue} 
+										  heading={variantDataHeading} 
+										  headingLevel="h3" 
+										  id={variantID} 
+										  content={<Variants variantData={variantData} />} 
+							/>);
+	}
 
-  // prep TAB 3 - Careers
-  if(!contentIsNullOrEmpty(careerData)) {
-    activeValue = (activeTabExists === true) ? false : true;
-    checkIfContentAvailable = true;
-    const careersHeading = "Careers";
-    const careersID = "pills-careers";
-    key++;
+	// prep TAB 3 - Careers
+	if (!contentIsNullOrEmpty(careerData)) {
+		activeValue = (activeTabExists === true) ? false : true;
+		checkIfContentAvailable = true;
+		const careersHeading = "Careers";
+		const careersID = "pills-careers";
+		key++;
 
-    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                      active={activeValue} 
-                                      heading={careersHeading} 
-                                      controls={careersID} />);
+		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+										   active={activeValue} 
+										   heading={careersHeading} 
+										   controls={careersID} 
+							/>);
 
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeValue} 
-                                      heading={careersHeading} 
-                                      headingLevel="h3" 
-                                      id={careersID} 
-                                      content={<Careers careerData={careerData} numColumns={3} />} />);
-  }
+		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+										  active={activeValue} 
+										  heading={careersHeading} 
+										  headingLevel="h3" 
+										  id={careersID} 
+										  content={<Careers careerData={careerData} numColumns={3} />} 
+							/>);
+	}
+	
+	// prep TAB 4 - Employers
+	if (!contentIsNullOrEmpty(employerData)) {
+		activeValue = (activeTabExists === true) ? false : true;
+		checkIfContentAvailable = true;
+		const employerHeading = "Employers";
+		const employerID = "pills-employer";
+		key++;
 
-  // prep TAB 4 - Employers
-  if(!contentIsNullOrEmpty(employerData)) {
-    activeValue = (activeTabExists === true) ? false : true;
-    checkIfContentAvailable = true;
-    const employerHeading = "Employers";
-    const employerID = "pills-employer";
-    key++;
+		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+										   active={activeValue} 
+										   heading={employerHeading} 
+										   controls={employerID} 
+							/>);
 
-    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                      active={activeValue} 
-                                      heading={employerHeading} 
-                                      controls={employerID} />);
+		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+										  active={activeValue} 
+										  heading={employerHeading} 
+										  headingLevel="h3" 
+										  id={employerID} 
+										  content={<Employers employerData={employerData} />} 
+							/>);
+	}
+	if (checkIfContentAvailable === true) {
+		return <React.Fragment>
+				<h2>Program Information</h2>
+				<NavTabs headings={
+					navTabHeadings.map((heading) => {
+						return heading;
+						})
+					}>
+					{navTabContent.map((content) => {
+						return content;
+					})}
+				</NavTabs>
+			</React.Fragment>
+	}
 
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeValue} 
-                                      heading={employerHeading} 
-                                      headingLevel="h3" 
-                                      id={employerID} 
-                                      content={<Employers employerData={employerData} />} />);
-  }
-  if(checkIfContentAvailable === true){
-    return <React.Fragment>
-              <h2>Program Information</h2>
-              <NavTabs headings={
-                navTabHeadings.map((heading) => {
-                  return heading;
-                })
-              }>
-              {navTabContent.map((content) => {
-                return content;
-              })}
-              </NavTabs>
-            </React.Fragment>
-  }
-
-  return null;
+	return null;
 }
 
 function retrieveLastModifiedDates (content) {
-  let dates = [];
+	let dates = [];
 
-  if (!contentIsNullOrEmpty(content)) {  
-    content.forEach((edge) => {
-        dates.push(edge.node.changed);
-    })
-  }
-  
-  return dates;
+	if (!contentIsNullOrEmpty(content)) {  
+		content.forEach((edge) => {
+			dates.push(edge.node.changed);
+		})
+	}
+
+	return dates;
 }
 
 function prepareVariantHeading (variantData) {
@@ -317,30 +316,30 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-  let callToActionData = [];
-  let careerData;
-  let courseData;
-  let degreesData;
-  let employerData;
+	let callToActionData = [];
+	let careerData;
+	let courseData;
+	let degreesData;
+	let employerData;
 	let imageData;
-  let progData;
-  let newsData;
-  let specData;
-  var statsData;
-  let tagData;
-  let testimonialData;
-  let variantData;
-  
+	let progData;
+	let newsData;
+	let specData;
+	var statsData;
+	let tagData;
+	let testimonialData;
+	let variantData;
+
 	// set data
-  if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
-  if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-  if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
-  if (data.images.edges !== undefined) { imageData = data.images.edges; }
-  if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
-  if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-    if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
-    if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
-  if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+	if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
+	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
+	if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
+	if (data.images.edges !== undefined) { imageData = data.images.edges; }
+	if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
+	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+	if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
+	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 
 	// set program details
 	const title = progData.title;
@@ -349,36 +348,34 @@ export default ({data, location}) => {
 	const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
 	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
-  // set last modified date
-  let allModifiedDates = sortLastModifiedDates(
-    [progData.changed,
-    retrieveLastModifiedDates(callToActionData),
-		retrieveLastModifiedDates(testimonialData)
-    ]);
-  let lastModified = allModifiedDates[allModifiedDates.length - 1];
+	// set last modified date
+	let allModifiedDates = sortLastModifiedDates(
+		[progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
+		);
+	let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
 	// set degree, specialization, variant, and tag info  
 	degreesData = progData.relationships.field_degrees;
-  specData = progData.relationships.field_specializations;
-  tagData = progData.relationships.field_tags;
+	specData = progData.relationships.field_specializations;
+	tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
-  let variantDataHeading = prepareVariantHeading(variantData);
+	let variantDataHeading = prepareVariantHeading(variantData);
 
-  return (
+	return (
 	<Layout date={lastModified}>
-      <Helmet bodyAttributes={{
-          class: 'program'
-      }}
-    />
+	  <Helmet bodyAttributes={{
+		  class: 'program'
+	  }}
+	/>
 	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-      { /**** Header and Title ****/ }
-      <div id="rotator">
-        {/* <FetchImages tags={imageTags} /> */}
-        {renderHeaderImage(imageData)}
-        <div className="container ft-container">
-          <h1 className="fancy-title">{title}</h1>
-        </div>
-      </div>
+	  { /**** Header and Title ****/ }
+	  <div id="rotator">
+		{/* <FetchImages tags={imageTags} /> */}
+		{renderHeaderImage(imageData)}
+		<div className="container ft-container">
+		  <h1 className="fancy-title">{title}</h1>
+		</div>
+	  </div>
 
       { /**** Tags and Call to Action Button ****/ }
       <div className="full-width-container bg-dark">
@@ -454,7 +451,7 @@ export default ({data, location}) => {
         </div>
       }
 
-		</Layout>
+	</Layout>
 	)
 }
 
@@ -681,21 +678,25 @@ export const query = graphql`
           body {
             processed
           }
-          field_image {
-            alt
-          }
           relationships {
-            field_image {
-              localFile {
-                url
-                childImageSharp {
-                  fluid(maxWidth: 400) {
-                      originalImg
-                      ...GatsbyImageSharpFluid
-                  }
-                }
+			field_hero_image {
+			  field_media_image {
+				alt
               }
-            }
+			  relationships {
+			    field_media_image {
+				  localFile {
+				    url
+				    childImageSharp {
+					  fluid(maxWidth: 400) {
+					    originalImg
+					    ...GatsbyImageSharpFluid
+					  }
+				    }
+				  }
+			    }
+			  }
+			}
             field_news_category {
               drupal_id
               id
@@ -724,27 +725,31 @@ export const query = graphql`
           }
           title
           field_testimonial_person_desc
-          field_image {
-            alt
-          }
           relationships {
-            field_tags {
+            field_hero_image {
+			  field_media_image {
+				alt
+              }
+			  relationships {
+			    field_media_image {
+				  localFile {
+				    url
+				    childImageSharp {
+					  fluid(maxWidth: 400, maxHeight: 400) {
+					    originalImg
+					    ...GatsbyImageSharpFluid
+					  }
+				    }
+				  }
+			    }
+			  }
+			}			
+			field_tags {
               __typename
               ... on TaxonomyInterface {
                 drupal_id
                 id
                 name
-              }
-            }
-            field_image {
-              localFile {
-                url
-                childImageSharp {
-                  fluid(maxWidth: 400, maxHeight: 400) {
-                    originalImg
-                    ...GatsbyImageSharpFluid
-                  }
-                }
               }
             }
           }

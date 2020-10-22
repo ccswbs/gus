@@ -1,17 +1,16 @@
 import React from 'react'
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet'
 import { graphql } from "gatsby"
-import Img from 'gatsby-image';
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import Hero from '../components/hero'
 
 export default ({data}) => {
 	
 	const pageData = data.pages.edges[0].node;
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
-	const headerImage = (pageData.relationships.field_image !== null ? pageData.relationships.field_image :``);
-	const altText = (pageData.field_image !== null ? pageData.field_image.alt :``);
+	const imageData = data.images.edges;
 	
 	return (
 		<Layout>
@@ -23,10 +22,7 @@ export default ({data}) => {
 			
 			{ /**** Header and Title ****/ }
 			<div id="rotator">
-				{headerImage && altText ?  
-					(<Img fluid={headerImage.localFile.childImageSharp.fluid} alt={altText} />)
-					: null
-                }				
+				<Hero imgData={imageData} />				
 				<div className="container ft-container">
 					<h1 className="fancy-title">{title}</h1>
 				</div>
@@ -58,21 +54,7 @@ export const query = graphql`
 		  body {
 			processed
 		  }
-		  field_image {
-            alt
-          }
 		  relationships {
-			field_image {
-			  localFile {
-				childImageSharp {
-				  fluid(maxWidth: 1920) {
-					originalImg
-					...GatsbyImageSharpFluid
-				  }
-				}
-				extension
-			  }
-			}
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {
@@ -83,5 +65,32 @@ export const query = graphql`
 		}
 	  }
 	}
+	images: allMediaImage(filter: {relationships: {node__page: {elemMatch: {id: {eq: $id}}}}}) {
+      edges {
+        node {
+          field_media_image {
+                alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 1920) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+              }
+            }
+            field_tags {
+            __typename
+            ... on TaxonomyInterface {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `
