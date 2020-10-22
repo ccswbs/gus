@@ -14,7 +14,7 @@ function NewsGrid (props) {
 	if (!contentIsNullOrEmpty(props.newsData)) {
 		const newsItems  = () => props.newsData.map((newsItem) => {
 			let title = newsItem.node.title;
-            let image = newsItem.node.relationships.field_image;
+            let image = newsItem.node.relationships.field_hero_image.relationships.field_media_image;
             let categories = Array.prototype.map.call(newsItem.node.relationships.field_news_category, s => s.name).join(', ');
 
 			return <div key={newsItem.node.drupal_id} className={props.columnClass + " content-area news-item"}>

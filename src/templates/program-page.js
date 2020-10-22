@@ -679,21 +679,25 @@ export const query = graphql`
           body {
             processed
           }
-          field_image {
-            alt
-          }
           relationships {
-            field_image {
-              localFile {
-                url
-                childImageSharp {
-                  fluid(maxWidth: 400) {
-                      originalImg
-                      ...GatsbyImageSharpFluid
-                  }
-                }
+			field_hero_image {
+			  field_media_image {
+				alt
               }
-            }
+			  relationships {
+			    field_media_image {
+				  localFile {
+				    url
+				    childImageSharp {
+					  fluid(maxWidth: 400) {
+					    originalImg
+					    ...GatsbyImageSharpFluid
+					  }
+				    }
+				  }
+			    }
+			  }
+			}
             field_news_category {
               drupal_id
               id

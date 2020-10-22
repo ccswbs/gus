@@ -134,12 +134,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__nid: Int
       title: String
       body: BodyFieldWithSummary
-      field_image: ImageField
+      field_hero_image: ImageField
       relationships: node__articleRelationships
       fields: node__articleFields
     }
     type node__articleRelationships implements Node {
-      field_image: file__file @link(from: "field_image___NODE")
+      field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_news_category: [taxonomy_term__news_category] @link(from: "field_news_category___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
