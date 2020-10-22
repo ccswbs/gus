@@ -261,7 +261,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         title: String
         body: BodyFieldWithSummary
         field_testimonial_person_desc: String
-        field_image: ImageField
+        field_hero_image: ImageField
         relationships: node__testimonialRelationships
         fields: node__testimonialFields
     }
@@ -269,7 +269,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       tags: [String]
     }
     type node__testimonialRelationships {
-      field_image: file__file @link(from: "field_image___NODE")
+      field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }    
 

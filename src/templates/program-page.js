@@ -726,27 +726,31 @@ export const query = graphql`
           }
           title
           field_testimonial_person_desc
-          field_image {
-            alt
-          }
           relationships {
-            field_tags {
+            field_hero_image {
+			  field_media_image {
+				alt
+              }
+			  relationships {
+			    field_media_image {
+				  localFile {
+				    url
+				    childImageSharp {
+					  fluid(maxWidth: 400, maxHeight: 400) {
+					    originalImg
+					    ...GatsbyImageSharpFluid
+					  }
+				    }
+				  }
+			    }
+			  }
+			}			
+			field_tags {
               __typename
               ... on TaxonomyInterface {
                 drupal_id
                 id
                 name
-              }
-            }
-            field_image {
-              localFile {
-                url
-                childImageSharp {
-                  fluid(maxWidth: 400, maxHeight: 400) {
-                    originalImg
-                    ...GatsbyImageSharpFluid
-                  }
-                }
               }
             }
           }
