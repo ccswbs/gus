@@ -8,15 +8,13 @@ import SEO from '../components/seo';
 
 export default ({data}) => {
 	let pageData;
-	let topicData;
 
 	// set data
-	if (data.topics.edges[0] !== undefined) { topicData = data.topics.edges[0].node; }
-	if (data.pages.edges !== undefined) { pageData = data.pages.edges; }
+	if (data.pages.edges[0] !== undefined) { pageData = data.pages.edges[0].node; }
 
 	// set landing page details
-	const title = topicData.name;
-	const body = (topicData.description !== null ? topicData.description.processed:``);
+	const title = pageData.title;
+	const body = (pageData.body !== null ? pageData.body.processed:``);
 
 	return (
 		<Layout>
@@ -42,7 +40,7 @@ export default ({data}) => {
 			</div>
 
 			{ /**** Grid content ****/ }
-			<div className="container page-container">
+			{/* <div className="container page-container">
 				<Grid>
 					{pageData.map((page)  => {
 						let headerImage = (page.node.relationships.field_image !== null ? page.node.relationships.field_image :``);
@@ -55,52 +53,25 @@ export default ({data}) => {
 							)
 						})}
 				</Grid>
-			</div>
+			</div> */}
 		</Layout>
 	)
 }
 
 export const query = graphql`
-  query ($id: String) {
-	topics: allTaxonomyTermTopics(filter: {id: {eq: $id}}) {
-		edges {
-			node {
-				drupal_id
-				drupal_internal__tid
-				name
-				description {
-					processed
-				}
-
-		  	}
-		}
-	}
-	
-	pages: allNodePage(filter: {fields: {tags: {in: [$id] }}}) {
+  query ($id: String) {	
+	pages: allNodeLandingPage(filter: {id: {eq: $id}}) {
 		edges {
 		  node {
+			body {
+				processed
+			}
 			drupal_id
 			title
-			field_image {
-			  alt
-			}
 			fields {
 				alias {
 					value
 				}
-			}
-			relationships {
-			  field_image {
-				localFile {
-				  childImageSharp {
-					fluid(maxWidth: 1920) {
-					  originalImg
-					  ...GatsbyImageSharpFluid
-					}
-				  }
-				  extension
-				}
-			  }
 			}
 		  }
 		}

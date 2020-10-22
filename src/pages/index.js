@@ -27,7 +27,7 @@ const IndexPage = ({ data }) => (
 				<h2>Landing Pages</h2>
 				<ul>
 					{data.landing_pages.edges.map((edge, index) => (
-						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.name}</Link></li>
+						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
 					))}
 				</ul>
 
@@ -68,12 +68,12 @@ export const query = graphql`
 				}
 			}
 		}
-		landing_pages: allTaxonomyTermTopics {
+		landing_pages: allNodeLandingPage {
 			edges {
 				node {
 					drupal_id
-					drupal_internal__tid
-					name
+					drupal_internal__nid
+					title
 					fields {
 						alias {
 							value

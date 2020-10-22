@@ -83,6 +83,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       | taxonomy_term__degrees
       | taxonomy_term__topics
       | taxonomy_term__units
+
+  union relatedPagesUnion =
+      node__page
+      | node__landing_page
 	
 	interface TaxonomyInterface @nodeInterface {
       id: ID!
@@ -221,16 +225,30 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+
+    type node__landing_page implements Node {
+      drupal_id: String
+      drupal_internal__nid: Int
+      body: BodyFieldWithSummary
+      relationships: node__landing_pageRelationships
+      fields: FieldsPathAlias
+    }
+    type node__landing_pageRelationships implements Node {
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+      field_related_pages: [paragraph__related_pages] @link(from: "field_related_pages___NODE")
+    }
+
     type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
-	  field_image: ImageField
+      field_image: ImageField
       relationships: node__pageRelationships
       fields: FieldsPathAlias
     }
     type node__pageRelationships implements Node {
-	  field_image: file__file @link(from: "field_image___NODE")
+      field_image: file__file @link(from: "field_image___NODE")
+      field_related_pages: [paragraph__related_pages] @link(from: "field_related_pages___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__program implements Node {
@@ -264,7 +282,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__testimonial implements Node {
         drupal_id: String
-        drupal_internal__tid: Int
+        drupal_internal__nid: Int
         title: String
         body: BodyFieldWithSummary
         field_testimonial_person_desc: String
@@ -305,6 +323,14 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__program_variantsRelationships {
       field_variant_name: taxonomy_term__program_variant_type
       field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
+    }	
+
+    type paragraph__related_pages implements Node {
+      drupal_id: String
+      relationships: paragraph__related_pagesRelationships
+    }
+    type paragraph__related_pagesRelationships {
+      field_related_pages: [relatedPagesUnion] @link(from: "field_related_pages___NODE")
     }	
 
   type PathAlias implements Node {
@@ -405,6 +431,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
       node.internal.type === `node__course` || 
       node.internal.type === `node__employer` ||
       node.internal.type === `node__page` || 
+      node.internal.type === `node__landing_page` || 
       node.internal.type === `node__testimonial`
     ) {
     createNodeField({
@@ -418,9 +445,9 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   // INSTRUCTION: If you've added a new content-type and need each node to generate a page
   // then add it to the following if statement
   if (node.internal.type === `node__article` || 
+      node.internal.type === `node__landing_page` || 
       node.internal.type === `node__page` || 
-      node.internal.type === `node__program` || 
-      node.internal.type === `taxonomy_term__topics` ) {
+      node.internal.type === `node__program` ) {
         
     /* Create page path */
     const aliasID = createNodeId(`alias-${node.drupal_id}`);
@@ -502,13 +529,13 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         }
       }
 
-      landing_topics: allTaxonomyTermTopics {
+      landing_pages: allNodeLandingPage {
         edges {
           node {
             drupal_id
-            drupal_internal__tid
+            drupal_internal__nid
             id
-            name
+            title
           }
         }
       }
@@ -565,13 +592,13 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     }
 
     // process landing page topics
-    if(result.data.landing_topics !== undefined){
-      const landing_pages = result.data.landing_topics.edges;
+    if(result.data.landing_pages !== undefined){
+      const landing_pages = result.data.landing_pages.edges;
       landing_pages.forEach(( { node }, index) => {
         processPage(
           node, 
           node.id, 
-          createTopicAlias, 
+          createLandingAlias, 
           landingTemplate, 
           helpers);
       })
@@ -647,8 +674,8 @@ function createArticleAlias(node){
   return alias;
 }
 
-function createTopicAlias(node){
-  let alias = createTaxonomyAlias(node, `topics`)
+function createLandingAlias(node){
+  let alias = createContentTypeAlias(node, `topics`)
   return alias;
 }
 
