@@ -87,12 +87,19 @@ exports.createSchemaCustomization = ({ actions }) => {
   union relatedPagesUnion =
       node__page
       | node__landing_page
+
+  interface RelatedPagesInterface @nodeInterface {
+    id: ID!
+    drupal_id: String
+    title: String
+    fields: FieldsPathAlias
+  }
 	
 	interface TaxonomyInterface @nodeInterface {
       id: ID!
       drupal_id: String
       name: String
-    }	
+    }
 
 	type BodyField {
       processed: String
@@ -226,7 +233,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
 
-    type node__landing_page implements Node {
+    type node__landing_page implements Node & RelatedPagesInterface {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
@@ -238,7 +245,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_related_pages: [paragraph__related_pages] @link(from: "field_related_pages___NODE")
     }
 
-    type node__page implements Node {
+    type node__page implements Node & RelatedPagesInterface {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
