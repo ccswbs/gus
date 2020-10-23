@@ -13,7 +13,7 @@ export default ({data}) => {
 
 	// set data
 	if (data.pages.edges[0] !== undefined) { pageData = data.pages.edges[0].node; }
-	if (pageData.relationships.field_related_pages !== undefined) { relatedPageData = pageData.relationships.field_related_pages; }
+	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 
 	// set landing page details
 	const title = pageData.title;
@@ -44,8 +44,8 @@ export default ({data}) => {
 						{ /**** Grid content ****/ }
 						<Grid>
 							{relatedPageData.map (paragraph  => {
-								if(!contentIsNullOrEmpty(paragraph.relationships.field_related_pages)){
-									let relatedPages = paragraph.relationships.field_related_pages
+								if(!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)){
+									let relatedPages = paragraph.relationships.field_list_pages;
 									
 									return( relatedPages.map(page => {
 											// let featureImage = (page.node.relationships.field_image !== null ? page.node.relationships.field_image :``);
@@ -85,9 +85,9 @@ export const query = graphql`
 				}
 
 				relationships {
-					field_related_pages {
+					field_related_content {
 					  relationships {
-						field_related_pages {
+						field_list_pages {
 						  ... on node__page {
 							drupal_id
 							id

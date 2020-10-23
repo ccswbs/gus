@@ -8,14 +8,6 @@
     margin-top: 0 !important;
 }
 
-/* This will eventually be moved to a hero image component CSS file */
-@media only screen and (max-width: 992px) {
-    body.program #rotator img,
-	body.basic-page #rotator img {
-        width: calc(100% + 10rem) !important;
-    }
-}
-
 @media (max-width: 575.98px){
     .main-container {
         padding-top: 0 !important;

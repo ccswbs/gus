@@ -145,19 +145,19 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-  type node__article implements Node {
+    type node__article implements Node {
       changed: Date @dateformat
       created: Date @dateformat
       drupal_id: String
       drupal_internal__nid: Int
       title: String
       body: BodyFieldWithSummary
-      field_image: ImageField
+      field_hero_image: ImageField
       relationships: node__articleRelationships
       fields: node__articleFields
     }
     type node__articleRelationships implements Node {
-      field_image: file__file @link(from: "field_image___NODE")
+      field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_news_category: [taxonomy_term__news_category] @link(from: "field_news_category___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
@@ -237,25 +237,27 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
+      field_hero_image: ImageField
       relationships: node__landing_pageRelationships
       fields: FieldsPathAlias
     }
     type node__landing_pageRelationships implements Node {
+      field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-      field_related_pages: [paragraph__related_pages] @link(from: "field_related_pages___NODE")
+      field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
     }
 
     type node__page implements Node & RelatedPagesInterface {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
-      field_image: ImageField
+      field_hero_image: ImageField
       relationships: node__pageRelationships
       fields: FieldsPathAlias
     }
     type node__pageRelationships implements Node {
-      field_image: file__file @link(from: "field_image___NODE")
-      field_related_pages: [paragraph__related_pages] @link(from: "field_related_pages___NODE")
+      field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__program implements Node {
@@ -293,7 +295,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         title: String
         body: BodyFieldWithSummary
         field_testimonial_person_desc: String
-        field_image: ImageField
+        field_hero_image: ImageField
         relationships: node__testimonialRelationships
         fields: node__testimonialFields
     }
@@ -301,7 +303,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       tags: [String]
     }
     type node__testimonialRelationships {
-      field_image: file__file @link(from: "field_image___NODE")
+      field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }    
 
@@ -332,17 +334,17 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
     }	
 
-    type paragraph__related_pages implements Node {
+    type paragraph__related_content implements Node {
       drupal_id: String
-      relationships: paragraph__related_pagesRelationships
+      relationships: paragraph__related_contentRelationships
     }
-    type paragraph__related_pagesRelationships {
-      field_related_pages: [relatedPagesUnion] @link(from: "field_related_pages___NODE")
+    type paragraph__related_contentRelationships {
+      field_list_pages: [relatedPagesUnion] @link(from: "field_list_pages___NODE")
     }	
 
   type PathAlias implements Node {
-    value: String
-    alias: String
+      value: String
+      alias: String
     }
 
   type taxonomy_term__news_category implements Node & TaxonomyInterface {
