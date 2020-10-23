@@ -1,17 +1,21 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import Hero from '../components/hero';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
+import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
-import Hero from '../components/hero';
 
 export default ({data}) => {
-	
+
 	const pageData = data.pages.edges[0].node;
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
+	let relatedPageData;
+
+	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	
 	return (
 		<Layout>
@@ -34,6 +38,8 @@ export default ({data}) => {
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
 						<div dangerouslySetInnerHTML={{ __html: body}} />
+
+						<RelatedPages pageData={relatedPageData} displayType={'list'} />
 					</section>
 				</div>
 			</div>
@@ -56,6 +62,24 @@ export const query = graphql`
 			processed
 		  }
 		  relationships {
+
+			field_related_content {
+				relationships {
+				  field_list_pages {
+					... on node__page {
+					  drupal_id
+					  id
+					  title
+					  fields {
+						  alias {
+							  value
+						  }
+					  }
+					}
+				  }
+				}
+			  }
+
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {

@@ -7,10 +7,10 @@ import { contentIsNullOrEmpty } from '../utils/ug-utils';
 
 function RelatedPages (props) {
 
-    if(props.displayType === 'grid'){
-        return (
-            <GridParent>
-                {!contentIsNullOrEmpty(props.pageData) && <>
+    if(!contentIsNullOrEmpty(props.pageData) && props.pageData.length !== 0){
+        if(props.displayType === 'grid') {
+            return (
+                <GridParent>
                     {props.pageData.map (paragraph  => {
                         if(!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)){
                             let relatedPages = paragraph.relationships.field_list_pages;
@@ -27,12 +27,30 @@ function RelatedPages (props) {
                         }
                         return null;
                     })}
-                </>}
-            </GridParent>
-        )
-    }else {
-        return null;
+                </GridParent>
+            )
+        }else {
+
+            return (
+                <ul>
+                    {props.pageData.map (paragraph  => {
+                        if(!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)){
+                            let relatedPages = paragraph.relationships.field_list_pages;
+                            return(relatedPages.map(page => {
+                                return <li key={page.drupal_id} >
+                                        <Link to={page.fields.alias.value}>{page.title}</Link>
+                                    </li>
+                                })
+                            )
+                        }
+                        return null;
+                    })}
+                </ul>
+            )
+        }
     }
+
+    return null;
 
 }
 
@@ -43,7 +61,7 @@ RelatedPages.propTypes = {
   
 RelatedPages.defaultProps = {
     pageData: ``,
-    displayType: `grid`,
+    displayType: `list`,
   }
 
 export default RelatedPages
