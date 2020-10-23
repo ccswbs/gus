@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import Img from 'gatsby-image';
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { contentIsNullOrEmpty } from '../utils/ug-utils';
-import "../styles/hero.css"
+import '../styles/hero.css';
 
 function Hero (props) {
 	return (

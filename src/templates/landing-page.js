@@ -1,10 +1,10 @@
 import { graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
-import Hero from '../components/hero';
 import Layout from '../components/layout';
 import React from 'react';
 import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
+import Hero from '../components/hero';
 
 export default ({data}) => {
 	let pageData;
