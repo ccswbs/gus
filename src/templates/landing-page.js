@@ -1,11 +1,10 @@
-import { graphql, Link } from 'gatsby';
-import Grid from '../components/grid';
-import GridCell from '../components/gridCell';
+import { graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
+import Hero from '../components/hero';
 import Layout from '../components/layout';
 import React from 'react';
+import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
-import { contentIsNullOrEmpty } from '../utils/ug-utils';
 
 export default ({data}) => {
 	let pageData;
@@ -16,6 +15,7 @@ export default ({data}) => {
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 
 	// set landing page details
+	const imageData = data.images.edges;
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 
@@ -28,6 +28,7 @@ export default ({data}) => {
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			{ /**** Header and Title ****/ }
 			<div id="rotator">
+				<Hero imgData={imageData} />
 				<div className="container ft-container">
 					<h1 className="fancy-title">{title}</h1>
 				</div>
@@ -42,25 +43,7 @@ export default ({data}) => {
 						<div dangerouslySetInnerHTML={{ __html: body}} />
 
 						{ /**** Grid content ****/ }
-						<Grid>
-							{relatedPageData.map (paragraph  => {
-								if(!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)){
-									let relatedPages = paragraph.relationships.field_list_pages;
-									
-									return( relatedPages.map(page => {
-											// let featureImage = (page.node.relationships.field_image !== null ? page.node.relationships.field_image :``);
-											// let altText = (page.node.field_image !== null ? page.node.field_image.alt :``);
-
-											return <GridCell key={page.drupal_id} >
-													<Link to={page.fields.alias.value}>{page.title}</Link>
-												</GridCell>
-											
-										})
-									)
-								}
-							})}
-						</Grid>
-
+						<RelatedPages pageData={relatedPageData} displayType={'grid'} />
 					</section>
 				</div>
 			</div>
@@ -106,6 +89,34 @@ export const query = graphql`
 			}
 		}
 	}
+
+	images: allMediaImage(filter: {relationships: {node__landing_page: {elemMatch: {id: {eq: $id}}}}}) {
+		edges {
+		  node {
+			field_media_image {
+				  alt
+			}
+			relationships {
+			  field_media_image {
+				localFile {
+				  childImageSharp {
+					fluid(maxWidth: 1920) {
+					  originalImg
+					  ...GatsbyImageSharpFluid
+					}
+				  }
+				}
+			  }
+			  field_tags {
+			  __typename
+			  ... on TaxonomyInterface {
+				  name
+				}
+			  }
+			}
+		  }
+		}
+	  }
 
 }
 `

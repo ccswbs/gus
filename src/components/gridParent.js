@@ -3,14 +3,14 @@ import React from 'react';
 
 /* 
 Example Usage:
-    <Grid classNames="my-grid">
+    <GridParent classNames="my-grid">
         <GridCell content={<div>Test 1</div>} classNames="my-class" />
         <GridCell content={<div>Test 2</div>} classNames="my-class" />
         <GridCell content={<div>Test 3</div>} classNames="my-class" />
-    </Grid>
+    </GridParent>
 */
 
-const Grid = ({ children, classNames }) => {
+const GridParent = ({ children, classNames }) => {
     const classes = `${classNames}`
 
     return(
@@ -20,14 +20,14 @@ const Grid = ({ children, classNames }) => {
     )
 }
 
-Grid.propTypes = {
+GridParent.propTypes = {
     children: PropTypes.node.isRequired,
     classNames: PropTypes.string,
 }
   
-  Grid.defaultProps = {
+GridParent.defaultProps = {
     children: ``,
     classNames: ``,
   }
 
-export default Grid
+export default GridParent
