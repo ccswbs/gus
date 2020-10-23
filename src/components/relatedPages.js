@@ -16,9 +16,6 @@ function RelatedPages (props) {
                             let relatedPages = paragraph.relationships.field_list_pages;
                             
                             return(relatedPages.map(page => {
-                                // let featureImage = (page.node.relationships.field_image !== null ? page.node.relationships.field_image :``);
-                                // let altText = (page.node.field_image !== null ? page.node.field_image.alt :``);
-
                                 return <GridCell key={page.drupal_id} >
                                         <Link to={page.fields.alias.value}>{page.title}</Link>
                                     </GridCell>
