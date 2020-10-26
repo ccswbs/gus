@@ -19,9 +19,15 @@
   - For the path alias, you will also need to:
     - Add "node__contenttype.fields.alias": `PathAlias`, to the mapping in gatsby-config.js
     - Update exports.onCreateNode
+  - Use THREE underscores when referencing nodes that do not exist yet (i.e. ___NODE)
 
+  Excellent Reading Material:
+  https://www.jamesdflynn.com/development/gatsbyjs-drupal-create-custom-graphql-schema-empty-fields
    
   SAMPLE SCHEMA
+  Note: for taxonomy, you would use 
+  ```type taxonomy_term__vocabularyname implements Node & TaxonomyInterface```
+  ---
 
     type node__contenttype implements Node {
       body: BodyFieldWithSummary
@@ -29,7 +35,7 @@
       drupal_id: String
       drupal_internal__nid: Int
       field_image: ImageField
-      fields: node__contenttypeFields
+      fields: node__contenttypeFields   // Note - you could also point to FieldsPathAlias instead of node__contenttypeFields if it's just an alias that you need
       relationships: node__contenttypeRelationships
       title: String
     }
@@ -75,13 +81,25 @@ exports.createSchemaCustomization = ({ actions }) => {
       | taxonomy_term__specializations
       | taxonomy_term__programs
       | taxonomy_term__degrees
+      | taxonomy_term__topics
       | taxonomy_term__units
+
+  union relatedPagesUnion =
+      node__page
+      | node__landing_page
+
+  interface RelatedPagesInterface @nodeInterface {
+    id: ID!
+    drupal_id: String
+    title: String
+    fields: FieldsPathAlias
+  }
 	
 	interface TaxonomyInterface @nodeInterface {
       id: ID!
       drupal_id: String
       name: String
-    }	
+    }
 
 	type BodyField {
       processed: String
@@ -214,16 +232,32 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-    type node__page implements Node {
+
+    type node__landing_page implements Node & RelatedPagesInterface {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
-	  field_hero_image: ImageField
+      field_hero_image: ImageField
+      relationships: node__landing_pageRelationships
+      fields: FieldsPathAlias
+    }
+    type node__landing_pageRelationships implements Node {
+      field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+      field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
+    }
+
+    type node__page implements Node & RelatedPagesInterface {
+      drupal_id: String
+      drupal_internal__nid: Int
+      body: BodyFieldWithSummary
+      field_hero_image: ImageField
       relationships: node__pageRelationships
       fields: FieldsPathAlias
     }
     type node__pageRelationships implements Node {
-	  field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__program implements Node {
@@ -257,7 +291,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__testimonial implements Node {
         drupal_id: String
-        drupal_internal__tid: Int
+        drupal_internal__nid: Int
         title: String
         body: BodyFieldWithSummary
         field_testimonial_person_desc: String
@@ -300,12 +334,20 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
     }	
 
-    type PathAlias implements Node {
+    type paragraph__related_content implements Node {
+      drupal_id: String
+      relationships: paragraph__related_contentRelationships
+    }
+    type paragraph__related_contentRelationships {
+      field_list_pages: [relatedPagesUnion] @link(from: "field_list_pages___NODE")
+    }	
+
+  type PathAlias implements Node {
       value: String
       alias: String
     }
 
-    type taxonomy_term__news_category implements Node & TaxonomyInterface {
+  type taxonomy_term__news_category implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
@@ -360,6 +402,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
+    type taxonomy_term__topics implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      fields: FieldsPathAlias
+      name: String
+      description: TaxonomyDescription
+    }
+
     type taxonomy_term__units implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -380,7 +430,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 exports.onCreateNode = ({ node, createNodeId, actions }) => {
   const { createNodeField } = actions
 
-  // Handle nodes that point to multiple tag vocabularies
+  // Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
   // INSTRUCTION: If you've added a new content-type and it contains a field that references
   // multiple vocabularies, then add it to the if statement
   if (node.internal.type === `media__image` || 
@@ -388,7 +438,9 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
       node.internal.type === `node__call_to_action` ||
       node.internal.type === `node__career` || 
       node.internal.type === `node__course` || 
-      node.internal.type === `node__employer` || 
+      node.internal.type === `node__employer` ||
+      node.internal.type === `node__page` || 
+      node.internal.type === `node__landing_page` || 
       node.internal.type === `node__testimonial`
     ) {
     createNodeField({
@@ -402,8 +454,9 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
   // INSTRUCTION: If you've added a new content-type and need each node to generate a page
   // then add it to the following if statement
   if (node.internal.type === `node__article` || 
+      node.internal.type === `node__landing_page` || 
       node.internal.type === `node__page` || 
-      node.internal.type === `node__program`) {
+      node.internal.type === `node__program` ) {
         
     /* Create page path */
     const aliasID = createNodeId(`alias-${node.drupal_id}`);
@@ -441,7 +494,8 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
   // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
   const pageTemplate = path.resolve('./src/templates/basic-page.js');
   const articleTemplate = path.resolve('./src/templates/article-page.js');
-  const programTemplate = path.resolve('src/templates/program-page.js');
+  const programTemplate = path.resolve('./src/templates/program-page.js');
+  const landingTemplate = path.resolve('./src/templates/landing-page.js');
   const helpers = Object.assign({}, actions, {
     createContentDigest,
     createNodeId,
@@ -483,6 +537,18 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           }
         }
       }
+
+      landing_pages: allNodeLandingPage {
+        edges {
+          node {
+            drupal_id
+            drupal_internal__nid
+            id
+            title
+          }
+        }
+      }
+      
     }
   `)
 
@@ -502,7 +568,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         processPage(
           node, 
           node.id, 
-          createPageAlias, 
+          createContentTypeAlias, 
           pageTemplate, 
           helpers);
       })
@@ -530,6 +596,19 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           node.relationships.field_program_acronym.id, 
           createProgramAlias, 
           programTemplate, 
+          helpers);
+      })
+    }
+
+    // process landing page topics
+    if(result.data.landing_pages !== undefined){
+      const landing_pages = result.data.landing_pages.edges;
+      landing_pages.forEach(( { node }, index) => {
+        processPage(
+          node, 
+          node.id, 
+          createLandingAlias, 
+          landingTemplate, 
           helpers);
       })
     }
@@ -572,7 +651,8 @@ function createNodeAlias(node, alias, helpers){
   helpers.createNode(aliasNode);
 }
 
-function createPageAlias(node, prepend = ''){
+// use for content types
+function createContentTypeAlias(node, prepend = ''){
   let alias = `/` + slugify(node.title);
 
   if(prepend !== '') {
@@ -582,13 +662,29 @@ function createPageAlias(node, prepend = ''){
   return alias;
 }
 
+// use for taxonomies
+function createTaxonomyAlias(node, prepend = ''){
+  let alias = `/` + slugify(node.name);
+
+  if(prepend !== '') {
+    alias = `/` + slugify(prepend) + alias;
+  }
+
+  return alias;
+}
+
 function createProgramAlias(node){
-  let alias = createPageAlias(node, `programs`)
+  let alias = createContentTypeAlias(node, `programs`)
   return alias;
 }
 
 function createArticleAlias(node){
-  let alias = createPageAlias(node, `news`)
+  let alias = createContentTypeAlias(node, `news`)
+  return alias;
+}
+
+function createLandingAlias(node){
+  let alias = createContentTypeAlias(node, `topics`)
   return alias;
 }
 
