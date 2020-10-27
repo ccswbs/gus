@@ -80,6 +80,31 @@ export const query = graphql`
 									value
 								}
 							}
+							
+
+							relationships {
+								field_hero_image {
+									field_media_image {
+									  alt
+									}
+									relationships {
+										field_media_image {
+											localFile {
+											  url
+											  childImageSharp {
+												fluid(maxWidth: 400) {
+												  originalImg
+												  ...GatsbyImageSharpFluid
+												}
+											  }
+											}
+										  }
+
+
+									}
+								}
+							}
+
 						  }
 						}
 					  }
