@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import GridCell from './gridCell';
 import GridParent from './gridParent';
+import Img from 'gatsby-image';
 import { Link } from 'gatsby';
 import { contentIsNullOrEmpty } from '../utils/ug-utils';
 
@@ -16,8 +17,14 @@ function RelatedPages (props) {
                             let relatedPages = paragraph.relationships.field_list_pages;
                             
                             return(relatedPages.map(page => {
+
+                                let image = (!contentIsNullOrEmpty(page.relationships.field_hero_image)) ? page.relationships.field_hero_image.relationships.field_media_image : null;
+                                console.log(image);
                                 return <GridCell key={page.drupal_id} >
-                                        <Link to={page.fields.alias.value}>{page.title}</Link>
+                                        <Link to={page.fields.alias.value}>
+                                            {image && <div className="img-container"><Img fluid={image.localFile.childImageSharp.fluid} alt="" /></div>}
+                                            {page.title}
+                                        </Link>
                                     </GridCell>
                                 })
                             )
