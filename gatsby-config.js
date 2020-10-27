@@ -59,9 +59,9 @@ module.exports = {
        resolve: `gatsby-source-drupal`,
        options: {
          baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
-		 // For dev purposes, comment the line above and uncomment the appropriate line below:
-		 //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
-		 //baseUrl: `http://multidevname-bovey.pantheonsite.io/`,
+        // For dev purposes, comment the line above and uncomment the appropriate line below:
+        // baseUrl: `https://api.devugconthub.uoguelph.dev/`,
+        // baseUrl: `http://multidev-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },    
@@ -80,6 +80,8 @@ module.exports = {
     },	
   ],
   mapping: {
+    "node__article.fields.alias": `PathAlias`,
+    "node__landing_page.fields.alias": `PathAlias`,
     "node__page.fields.alias": `PathAlias`,
     "node__program.fields.alias": `PathAlias`,
   },
