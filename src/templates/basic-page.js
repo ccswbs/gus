@@ -6,6 +6,7 @@ import Layout from '../components/layout';
 import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import Sidebar from '../components/sidebar';
 
 export default ({data}) => {
 
@@ -14,7 +15,6 @@ export default ({data}) => {
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
 	let relatedPageData;
-
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	
 	return (
@@ -41,9 +41,9 @@ export default ({data}) => {
 
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
 					</section>
+					<Sidebar menuData={relatedPageData} />
 				</div>
-			</div>
-			
+			</div>			
 		</Layout>
 	)
 	

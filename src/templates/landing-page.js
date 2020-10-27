@@ -5,6 +5,7 @@ import React from 'react';
 import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import Sidebar from '../components/sidebar';
 
 export default ({data}) => {
 	let pageData;
@@ -45,8 +46,10 @@ export default ({data}) => {
 						{ /**** Grid content ****/ }
 						<RelatedPages pageData={relatedPageData} displayType={'grid'} />
 					</section>
+					<Sidebar menuData={relatedPageData} />
 				</div>
 			</div>
+			
 		</Layout>
 	)
 }
