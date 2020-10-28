@@ -101,7 +101,7 @@ GridCell.propTypes = {
   }
   
   GridCell.defaultProps = {
-    children: ``,
+    children: null,
     extraClasses: ``,
     heading: ``,
     headingLevel: 'h3',

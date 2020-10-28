@@ -47,12 +47,14 @@ function Grid (props) {
 }
 
 Grid.propTypes = {
+    children: PropTypes.node.isRequired,
     columnClass: PropTypes.string,
     heading: PropTypes.string,
     headingLevel: PropTypes.string,
 }
 
 Grid.defaultProps = {
+    children: null,
     columnClass: 'col-md-3 col-sm-6',
     heading: ``,
     headingLevel: 'h2',
