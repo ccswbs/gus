@@ -13,6 +13,7 @@ Example Usage:
             heading={my-content.title}
             headingLevel="h3" 
             text="my summary text" 
+            numColumns={3}
             extraClasses="my-classes" />
 
         <GridCell key={my-content.drupal_id}>
@@ -24,8 +25,22 @@ Example Usage:
     </Grid>
 */
 
+function setColumnClasses(numColumns) {
+    switch(numColumns) {
+        case 2:
+            return 'col-sm-6';
+        case 3:
+            return 'col-md-4 col-sm-6';
+        case 4:
+            return 'col-md-3 col-sm-6';
+        default:
+            return 'col-md-3 col-sm-6';
+      }
+}
+
 const GridCell = (props) => {
-    const classes = `grid-cell ${props.extraClasses}`
+    const columnClasses = setColumnClasses(props.numColumns);
+    const classes = `grid-cell ${columnClasses} ${props.extraClasses}`
     const Tag = props.tag;
 
     // General Scenario: heading, image and text below (link and text optional)
@@ -48,7 +63,7 @@ const GridCell = (props) => {
         if(contentExists(props.url)){
             return(
                 <Tag className={classes}>
-                    <Link to={props.url}>{gridContent()}</Link>
+                    <Link to={props.url} className="news-link">{gridContent()}</Link>
                 </Tag>
             )
         }
@@ -80,16 +95,18 @@ GridCell.propTypes = {
     heading: PropTypes.string,
     headingLevel: PropTypes.string,
     image: PropTypes.object,
+    numColumns: PropTypes.number,
     tag: PropTypes.string,
     text: PropTypes.string,
   }
   
   GridCell.defaultProps = {
     children: ``,
-    extraClasses: 'col-md-3 col-sm-6',
+    extraClasses: ``,
     heading: ``,
     headingLevel: 'h3',
     image: null,
+    numColumns: 4,
     tag: 'li',
     text: ``,
   }

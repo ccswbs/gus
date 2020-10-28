@@ -31,11 +31,10 @@ function Grid (props) {
 	if (contentExists(props.children)) {
 		return (<div className="full-width-container bg-light grid">
                     <div className="container page-container">
-                        {props.heading && <div className="col-md-12 content-area">
-                            <Heading>{props.heading}</Heading>
-                        </div>}
-
                         <GridParent extraClasses="row row-with-vspace site-content content-area">
+                            {props.heading && <div className="col-md-12 content-area">
+                                <Heading>{props.heading}</Heading>
+                            </div>}
                             {props.children}
                         </GridParent>
                     </div>

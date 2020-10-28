@@ -91,9 +91,8 @@ export const query = graphql`
 											localFile {
 											  url
 											  childImageSharp {
-												fluid(maxWidth: 400) {
-												  originalImg
-												  ...GatsbyImageSharpFluid
+												resize(width: 400, height: 300, , cropFocus: CENTER) {
+												  src
 												}
 											  }
 											}
