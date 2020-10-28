@@ -68,42 +68,43 @@ export const query = graphql`
 
 				relationships {
 					field_related_content {
-					  relationships {
-						field_list_pages {
-						  ... on node__page {
-							drupal_id
-							id
-							title
-							fields {
-								alias {
-									value
-								}
-							}
-							
-
-							relationships {
-								field_hero_image {
-									field_media_image {
-									  alt
+						drupal_id
+					  	relationships {
+							field_list_pages {
+							... on node__page {
+								drupal_id
+								id
+								title
+								fields {
+									alias {
+										value
 									}
-									relationships {
+								}
+								
+
+								relationships {
+									field_hero_image {
 										field_media_image {
-											localFile {
-											  url
-											  childImageSharp {
-												resize(width: 400, height: 300, , cropFocus: CENTER) {
-												  src
+										alt
+										}
+										relationships {
+											field_media_image {
+												localFile {
+												url
+												childImageSharp {
+													resize(width: 400, height: 300, , cropFocus: CENTER) {
+													src
+													}
 												}
-											  }
+												}
 											}
-										  }
 
 
+										}
 									}
 								}
-							}
 
-						  }
+							}
 						}
 					  }
 					}
@@ -116,6 +117,7 @@ export const query = graphql`
 	images: allMediaImage(filter: {relationships: {node__landing_page: {elemMatch: {id: {eq: $id}}}}}) {
 		edges {
 		  node {
+			drupal_id
 			field_media_image {
 				  alt
 			}

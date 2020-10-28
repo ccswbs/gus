@@ -39,7 +39,7 @@ GridParent.propTypes = {
 }
   
 GridParent.defaultProps = {
-    children: null,
+    children: ``,
     extraClasses: ``,
     tag: 'ul',
   }

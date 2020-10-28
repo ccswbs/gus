@@ -97,11 +97,11 @@ GridCell.propTypes = {
     image: PropTypes.object,
     numColumns: PropTypes.number,
     tag: PropTypes.string,
-    text: PropTypes.string,
+    text: PropTypes.node,
   }
   
   GridCell.defaultProps = {
-    children: null,
+    children: ``,
     extraClasses: ``,
     heading: ``,
     headingLevel: 'h3',

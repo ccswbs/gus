@@ -54,7 +54,7 @@ Grid.propTypes = {
 }
 
 Grid.defaultProps = {
-    children: null,
+    children: ``,
     columnClass: 'col-md-3 col-sm-6',
     heading: ``,
     headingLevel: 'h2',

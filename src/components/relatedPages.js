@@ -15,7 +15,7 @@ function RelatedPages (props) {
                         if(contentExists(paragraph.relationships.field_list_pages)){
                             let relatedPages = paragraph.relationships.field_list_pages;
                             return(
-                                <Grid>
+                                <Grid key={paragraph.drupal_id}>
                                     {relatedPages.map(page => {
                                     const image = (contentExists(page.relationships.field_hero_image)) ? page.relationships.field_hero_image.relationships.field_media_image : null;
                                     const imageFile = (contentExists(image)) ? <img src={image.localFile.childImageSharp.resize.src} alt="" /> : null;
@@ -41,7 +41,7 @@ function RelatedPages (props) {
                         if(contentExists(paragraph.relationships.field_list_pages)){
                             let relatedPages = paragraph.relationships.field_list_pages;
                             return(
-                                <ul>
+                                <ul key={paragraph.drupal_id}>
                                     {relatedPages.map(page => {
                                     return <li key={page.drupal_id} >
                                             <Link to={page.fields.alias.value}>{page.title}</Link>

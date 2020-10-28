@@ -637,6 +637,7 @@ export const query = graphql`
     images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
+          drupal_id
           field_media_image {
                 alt
           }
@@ -727,22 +728,22 @@ export const query = graphql`
           field_testimonial_person_desc
           relationships {
             field_hero_image {
-			  field_media_image {
-				alt
+            field_media_image {
+              alt
+            }
+            relationships {
+              field_media_image {
+              localFile {
+                url
+                childImageSharp {
+                fluid(maxWidth: 400, maxHeight: 400) {
+                  originalImg
+                  ...GatsbyImageSharpFluid
+                }
+                }
               }
-			  relationships {
-			    field_media_image {
-				  localFile {
-				    url
-				    childImageSharp {
-					  fluid(maxWidth: 400, maxHeight: 400) {
-					    originalImg
-					    ...GatsbyImageSharpFluid
-					  }
-				    }
-				  }
-			    }
-			  }
+              }
+            }
 			}			
 			field_tags {
               __typename
