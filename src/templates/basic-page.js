@@ -15,6 +15,7 @@ export default ({data}) => {
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
 	let relatedPageData;
+	
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	
 	return (
@@ -41,7 +42,7 @@ export default ({data}) => {
 
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
 					</section>
-					<Sidebar menuData={relatedPageData} />
+					<Sidebar relatedContent={relatedPageData} />
 				</div>
 			</div>			
 		</Layout>

@@ -2,42 +2,63 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import { contentIsNullOrEmpty } from '../utils/ug-utils';
+import { useMenuData } from '../utils/fetch-menu';
 import '../styles/sidebar.css';
 
 function Sidebar (props) {
 	
-	if (!contentIsNullOrEmpty(props.menuData)) {
-		return (
+	const menuData = useMenuData();	
+	let checkIfContentAvailable = false;
+	
+	if (!contentIsNullOrEmpty(props.relatedContent) || !contentIsNullOrEmpty(menuData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		
+		return (<>
 			<nav id="sidebar">
-				<div>
-					<h2>Related Pages</h2>
-					<ul className="sidebar-sub-container">
-						{props.menuData.map (paragraph  => {
-							if (!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)) {
-								let relatedPages = paragraph.relationships.field_list_pages;
-								return(relatedPages.map(page => {
-									return <li key={page.drupal_id} >
-											<Link to={page.fields.alias.value}>{page.title}</Link>
-										</li>
-									})
-								)
-							}
-							return null;
-						})}					
-					</ul>
-				</div>
+			
+			{!contentIsNullOrEmpty(menuData) && menuData.length !== 0 && <>
+				<h2>Menu: {menuData[0].node.menu_name}</h2>
+				<ul className="sidebar-sub-container">
+					{menuData.map (menuItem => {
+						return <li><Link to={menuItem.node.url}>{menuItem.node.title}</Link></li>
+					})}					
+				</ul>
+			</>}
+			
+			{!contentIsNullOrEmpty(props.relatedContent) && props.relatedContent.length !== 0 && <>
+				<h2>Related Content</h2>
+				<ul className="sidebar-sub-container">
+				{props.relatedContent.map (paragraph  => {
+					if (!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)) {
+						let relatedContent = paragraph.relationships.field_list_pages;
+						return(relatedContent.map(page => {
+							return <li key={page.drupal_id}>
+									<Link to={page.fields.alias.value}>{page.title}</Link>
+								</li>
+							})
+						)
+					}
+					return null;
+					})
+				}
+				</ul>
+			</>}
+			
 			</nav>
-		)
+		</>)
 	}
 	return null;
 }
 
 Sidebar.propTypes = {
-	menuData: PropTypes.array,
+	relatedContent: PropTypes.array,
 }
 
 Sidebar.defaultProps = {
-    menuData: null,
+    relatedContent: null,
 }
 
 export default Sidebar

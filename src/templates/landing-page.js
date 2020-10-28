@@ -46,7 +46,7 @@ export default ({data}) => {
 						{ /**** Grid content ****/ }
 						<RelatedPages pageData={relatedPageData} displayType={'grid'} />
 					</section>
-					<Sidebar menuData={relatedPageData} />
+					<Sidebar relatedContent={relatedPageData} />
 				</div>
 			</div>
 			

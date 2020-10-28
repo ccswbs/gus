@@ -4,9 +4,9 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+//let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
 // For dev purposes, comment the line above and uncomment the line below:
-// let metaConfig = require('./config/sites/ugconthub.js');
+ let metaConfig = require('./config/sites/ugconthub.js');
 
 if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['title'] = "Gatsby UG Starter Template";
@@ -58,12 +58,20 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-         baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+         //baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
 		 // For dev purposes, comment the line above and uncomment the appropriate line below:
 		 //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
-		 //baseUrl: `http://multidevname-bovey.pantheonsite.io/`,
+		 baseUrl: `http://druauth-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
+    },
+	{
+      resolve: `gatsby-source-drupal-menu-links`,
+      options: {
+        baseUrl: `http://druauth-bovey.pantheonsite.io/`,
+        apiBase: `jsonapi`, // optional, defaults to `jsonapi`
+        menus: ["main"], // Which menus to fetch, there are the menu IDs.
+      },
     },    
     {
       resolve: `gatsby-source-filesystem`,
