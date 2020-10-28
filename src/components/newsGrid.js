@@ -4,6 +4,7 @@ import Img from 'gatsby-image';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { contentExists, getNextHeadingLevel } from '../utils/ug-utils.js';
+import '../styles/news.css';
 
 function NewsGrid (props) {
     let nextHeadingLevel = getNextHeadingLevel(props.headingLevel);
@@ -21,7 +22,8 @@ function NewsGrid (props) {
                         image={<Img fluid={image.localFile.childImageSharp.fluid} alt="" />}
                         heading={title}
                         headingLevel={nextHeadingLevel} 
-                        text={categoryElement} />
+                        text={categoryElement}
+                        extraClasses="news-item" />
 		})
 
 		return (<Grid heading={props.heading} headingLevel={props.headingLevel}>
