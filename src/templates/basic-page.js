@@ -6,6 +6,7 @@ import Layout from '../components/layout';
 import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import Breadcrumbs from '../components/breadcrumbs';
 import Sidebar from '../components/sidebar';
 
 export default ({data}) => {
@@ -33,6 +34,8 @@ export default ({data}) => {
 					<h1 className="fancy-title">{title}</h1>
 				</div>
 			</div>
+			
+			<Breadcrumbs activePage={pageData} />
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">

@@ -35,6 +35,7 @@ export default ({data}) => {
 				</div>
 			</div>
 			
+			<Breadcrumbs activePage={pageData} />
 			
 			<div className="container page-container">
 				<div className="row row-with-vspace site-content">
