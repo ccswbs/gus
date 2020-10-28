@@ -14,22 +14,6 @@
 .grid-cell a:focus .grid-heading {
     color: #0074C1;
 }
-/* 
-.grid-cell p.category {
-    color: #000000;
-    font-size: 1.4rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.2rem;
-}
-
-.grid-cell:nth-of-type(2n+2) p.category {
-    color: #c20430;
-}
-
-.grid-cell:nth-of-type(3n+2) p.category {
-    color: #4C9BB2;
-} */
 
 /* --- Images --- */
 
