@@ -37,16 +37,15 @@ export default ({data}) => {
 			
 			<div className="container page-container">
 				<div className="row row-with-vspace site-content">
+					{ /**** Body content ****/ }
 					<section className="col-md-9 content-area">
-
-						{ /**** Body content ****/ }
 						<div dangerouslySetInnerHTML={{ __html: body}} />
-
-						{ /**** Grid content ****/ }
-						<RelatedPages pageData={relatedPageData} displayType={'grid'} />
 					</section>
 				</div>
 			</div>
+
+			{ /**** Grid content ****/ }
+			<RelatedPages pageData={relatedPageData} displayType={'grid'} />
 		</Layout>
 	)
 }

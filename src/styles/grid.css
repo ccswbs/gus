@@ -1,0 +1,50 @@
+/* Grid */
+
+.grid-cell {
+    display: block;
+}
+
+.grid-cell .h3,
+.grid-cell .h4,
+.grid-cell .h5 {
+    color: #000000;
+}
+
+.grid-cell.col-md-3 img,
+.grid-cell.col-md-3 .gatsby-image-wrapper {
+    width: 100%;
+    height: auto;
+}
+
+.grid-cell p.category {
+    color: #000000;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+}
+
+.grid-cell:nth-of-type(2n+2) p.category {
+    color: #c20430;
+}
+
+.grid-cell:nth-of-type(3n+2) p.category {
+    color: #4C9BB2;
+}
+
+.grid .img-container {
+    overflow: hidden;
+}
+
+.grid a img,
+.grid a .gatsby-image-wrapper {
+    transition: all 0.15s ease-in-out !important;
+}
+
+.grid a:hover img,
+.grid a:focus img,
+.grid a:hover .gatsby-image-wrapper img,
+.grid a:focus .gatsby-image-wrapper img {
+    opacity: 0.75 !important;
+    transform: scale(1.03) !important;
+}

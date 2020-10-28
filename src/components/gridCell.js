@@ -10,8 +10,8 @@ Example Usage:
     </Grid>
 */
 
-const GridCell = ({ children, classNames, tag }) => {
-    const classes = `${classNames}`
+const GridCell = ({ children, extraClasses, tag }) => {
+    const classes = `grid-cell ${extraClasses}`
     const Tag = tag;
 
     return(
@@ -21,15 +21,17 @@ const GridCell = ({ children, classNames, tag }) => {
     )
 }
 
+// content-area news-item col-md-3 col-sm-6
+
 GridCell.propTypes = {
     children: PropTypes.node.isRequired,
-    classNames: PropTypes.string,
+    extraClasses: PropTypes.string,
     tag: PropTypes.string,
   }
   
   GridCell.defaultProps = {
     children: ``,
-    classNames: ``,
+    extraClasses: 'col-md-3 col-sm-6',
     tag: 'li',
   }
 

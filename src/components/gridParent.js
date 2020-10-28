@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { setHeadingLevel } from '../utils/ug-utils.js';
 
 /* 
 Example Usage:
@@ -10,24 +11,23 @@ Example Usage:
     </GridParent>
 */
 
-const GridParent = ({ children, classNames }) => {
-    const classes = `${classNames}`
+const GridParent = ({ children, extraClasses }) => {
+    const classes = `${extraClasses}`;
 
-    return(
-        <ul className={classes}>
-            {children}
-        </ul>
+    return(<ul className={classes}>
+                {children}
+            </ul>
     )
 }
 
 GridParent.propTypes = {
     children: PropTypes.node.isRequired,
-    classNames: PropTypes.string,
+    extraClasses: PropTypes.string,
 }
   
 GridParent.defaultProps = {
     children: ``,
-    classNames: ``,
+    extraClasses: ``,
   }
 
 export default GridParent
