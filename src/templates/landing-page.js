@@ -5,6 +5,7 @@ import React from 'react';
 import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import Breadcrumbs from '../components/breadcrumbs';
 import Sidebar from '../components/sidebar';
 
 export default ({data}) => {
