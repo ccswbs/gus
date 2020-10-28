@@ -1,16 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GridParent from '../components/gridParent';
-import { contentIsNullOrEmpty, setHeadingLevel } from '../utils/ug-utils.js';
+import { contentExists, setHeadingLevel } from '../utils/ug-utils.js';
 import '../styles/grid.css';
+
+/* 
+Example Usage:
+    <Grid extraClasses="my-grid">
+
+        <GridCell key={my-content.drupal_id} 
+            url={value} 
+            image={imageFile}
+            heading={my-content.title}
+            headingLevel="h3" 
+            text="my summary text" 
+            extraClasses="my-classes" />
+
+        <GridCell key={my-content.drupal_id}>
+            <h3>This is my unique content that potentially has no image associated with it</h3>
+            <p>In this case, I can put anything I want in the grid cell</p>
+            <p>The children are just passed straight through as is</p>
+        </GridCell>
+
+    </Grid>
+*/
 
 function Grid (props) {
     let Heading = setHeadingLevel(props.headingLevel);
 
-	if (!contentIsNullOrEmpty(props.children)) {
+	if (contentExists(props.children)) {
 		return (<div className="full-width-container bg-light grid">
                     <div className="container page-container">
-
                         {props.heading && <div className="col-md-12 content-area">
                             <Heading>{props.heading}</Heading>
                         </div>}
@@ -29,14 +49,12 @@ function Grid (props) {
 
 Grid.propTypes = {
     columnClass: PropTypes.string,
-    gridData: PropTypes.array,
     heading: PropTypes.string,
     headingLevel: PropTypes.string,
 }
 
 Grid.defaultProps = {
     columnClass: 'col-md-3 col-sm-6',
-    gridData: null,
     heading: ``,
     headingLevel: 'h2',
 }

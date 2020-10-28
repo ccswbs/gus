@@ -28,6 +28,14 @@ function contentIsNullOrEmpty(content) {
   return false;
 }
 
+function contentExists(content) {
+  if(!contentIsNullOrEmpty(content)){
+    return true;
+  }
+
+  return false;
+}
+
 function sortLastModifiedDates(dates) {
   return dates.slice().flat().sort();
 }
@@ -86,4 +94,13 @@ function FormatMoney({ value }) {
   );
 }
 
-export { stripHTMLTags, setHeadingLevel, getNextHeadingLevel, contentIsNullOrEmpty, sortLastModifiedDates, combineAndSortBodyFields, divideIntoColumns, FormatMoney };
+export { 
+  stripHTMLTags, 
+  setHeadingLevel, 
+  getNextHeadingLevel, 
+  contentIsNullOrEmpty, 
+  contentExists, 
+  sortLastModifiedDates, 
+  combineAndSortBodyFields, 
+  divideIntoColumns, 
+  FormatMoney };

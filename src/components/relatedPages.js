@@ -4,28 +4,27 @@ import Grid from './grid';
 import GridCell from './gridCell';
 import Img from 'gatsby-image';
 import { Link } from 'gatsby';
-import { contentIsNullOrEmpty } from '../utils/ug-utils';
+import { contentIsNullOrEmpty, contentExists } from '../utils/ug-utils';
 
 function RelatedPages (props) {
 
-    if(!contentIsNullOrEmpty(props.pageData) && props.pageData.length !== 0){
+    if(contentExists(props.pageData) && props.pageData.length !== 0){
         if(props.displayType === 'grid') {
             
             return (
                 <Grid>
                     {props.pageData.map (paragraph  => {
-                        if(!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)){
+                        if(contentExists(paragraph.relationships.field_list_pages)){
                             let relatedPages = paragraph.relationships.field_list_pages;
-                            
                             return(relatedPages.map(page => {
-                                let image = (!contentIsNullOrEmpty(page.relationships.field_hero_image)) ? page.relationships.field_hero_image.relationships.field_media_image : null;
-                                
-                                return <GridCell key={page.drupal_id}>
-                                        <Link to={page.fields.alias.value}>
-                                            {image && <div className="img-container"><Img fluid={image.localFile.childImageSharp.fluid} alt="" /></div>}
-                                            <span className="h3">{page.title}</span>
-                                        </Link>
-                                    </GridCell>
+                                const image = (contentExists(page.relationships.field_hero_image)) ? page.relationships.field_hero_image.relationships.field_media_image : null;
+                                const imageFile = (contentExists(image)) ? <Img fluid={image.localFile.childImageSharp.fluid} alt="" /> : null;
+
+                                return <GridCell key={page.drupal_id} 
+                                            url={page.fields.alias.value} 
+                                            image={imageFile}
+                                            heading={page.title}
+                                            headingLevel="h3" />
                                 })
                             )
                         }
