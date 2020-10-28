@@ -5,6 +5,8 @@
  */
 
 let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+// For dev purposes, comment the line above and uncomment the line below:
+// let metaConfig = require('./config/sites/ugconthub.js');
 
 if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['title'] = "Gatsby UG Starter Template";
@@ -28,8 +30,19 @@ module.exports = {
       },
     },
     `gatsby-plugin-react-helmet`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-sharp`,
+      options: {
+        // defaults to true - changed to false to mute SVG warnings
+        checkSupportedExtensions: false,
+      },
+    },
+    {
+	  resolve: `gatsby-plugin-sharp`,
+	  options: {
+		defaultQuality: 90,
+	  },
+	},
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -46,28 +59,30 @@ module.exports = {
        resolve: `gatsby-source-drupal`,
        options: {
          baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+        // For dev purposes, comment the line above and uncomment the appropriate line below:
+        // baseUrl: `https://api.devugconthub.uoguelph.dev/`,
+        // baseUrl: `http://multidev-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
-    },
-    
+    },    
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `src`,
         path: `${__dirname}/src/`,
       },
-    },
-    
+    },    
     {
       resolve: `gatsby-source-instagram`,
       options: {
-        username: metaConfig['IGuser'],
-        
+        username: metaConfig['IGuser'],        
       },
-    },
+    },	
   ],
   mapping: {
+    "node__article.fields.alias": `PathAlias`,
+    "node__landing_page.fields.alias": `PathAlias`,
     "node__page.fields.alias": `PathAlias`,
-    "taxonomy_term__programs.fields.alias": `PathAlias`,
+    "node__program.fields.alias": `PathAlias`,
   },
 }

@@ -1,0 +1,41 @@
+
+.employer-wrapper {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 20% auto;
+}
+
+.employer-wrapper .employer-info {
+    grid-column: 1 / span 2;
+}
+
+.employer-wrapper .employer-pic + .employer-info {
+    grid-column: 2;
+}
+
+body.program .employer-wrapper .employer-name {
+    color: #000;
+    margin: 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .employer-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+    }
+
+    .employer-wrapper .employer-info {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+    
+    .employer-wrapper .employer-pic + .employer-info {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    body.program .employer-wrapper .employer-pic {
+        width: 40%;
+        height: 40%;
+    }
+}

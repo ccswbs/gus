@@ -1,136 +1,287 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import { graphql } from 'gatsby';
-import Layout from '../components/layout';
-import Img from 'gatsby-image';
-import SEO from '../components/seo';
-import Degrees from '../components/degrees';
-import Units from '../components/units';
-import Variants from '../components/variants';
-import Tags from '../components/tags';
 import CallToAction from '../components/callToAction';
-import Testimonials from '../components/testimonial';
+import Careers from '../components/careers';
 import Courses from '../components/courses';
+import Degrees from '../components/degrees';
+import Employers from '../components/employers';
+import Layout from '../components/layout';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
+import NewsGrid from '../components/newsGrid';
+import React from 'react';
+import SEO from '../components/seo';
+import Stats from '../components/stats'
+import SVG from 'react-inlinesvg';
+import Hero from '../components/hero';
+import Tags from '../components/tags';
+import Testimonials from '../components/testimonial';
+import Variants from '../components/variants';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
+import { graphql } from 'gatsby';
+import { Helmet } from 'react-helmet';
+import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
 
-function renderProgramOverview(description, degreesData, specData) {
-  let checkIfContentAvailable = false;
-
-  if (!contentIsNullOrEmpty(description) || 
-      !contentIsNullOrEmpty(degreesData) || 
-      !contentIsNullOrEmpty(specData)) {
-        checkIfContentAvailable = true;
-  }
-
-  if(checkIfContentAvailable === true){
-    return <React.Fragment>
-          <h2>Program Overview</h2>
-          <div dangerouslySetInnerHTML={{ __html: description }}  />
-          <Degrees degreesData={degreesData} headingLevel='h3' />
-          <Units specData={specData} headingLevel='h3' />
-        </React.Fragment>
-  }
-
-  return null;
+function renderHeaderImage(imageData) {
+	if (!contentIsNullOrEmpty(imageData)) {
+		let imgData = [];
+		for (let i = 0; i < imageData.length; i++) {
+			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
+				if (imageData[i].node.relationships.field_tags[j].name === "img-header") {
+					imgData.push(imageData[i]);
+				}
+			}
+		}
+		return <Hero imgData={imgData} />
+	}	
+	return null;
 }
 
-function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData) {
-  let activeTab = false;
-  let checkIfContentAvailable = false;
-  let navTabHeadings = [];
-  let navTabContent = [];
-  let key = 0;
+function renderProgramOverview(description, specData) {
+	let checkIfContentAvailable = false;
 
-  // prep courses tab
-  if((courseNotes !== null && courseNotes !== "") || 
-      (courseData !== null && courseData !== undefined && courseData.length > 0 )){
-    activeTab = true;
-    checkIfContentAvailable = true;
-    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                        active={activeTab} 
-                                        heading="Courses" 
-                                        controls="pills-courses" />);
+	if (!contentIsNullOrEmpty(description) || 
+		!contentIsNullOrEmpty(specData)) {
+		checkIfContentAvailable = true;
+	}
 
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeTab} 
-                                      heading="Courses" 
-                                      headingLevel="h3" 
-                                      id="pills-courses" 
-                                      content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} />);
-    key++;
-  }
+	if (checkIfContentAvailable === true) {
+		return <React.Fragment>
+			<h2>Program Overview</h2>
+			<div dangerouslySetInnerHTML={{ __html: description }}  />
+		</React.Fragment>
+	}
 
-  // prep variants tab
-  if( variantDataHeading !== '') {
-    activeTab = (activeTab === false) ? true : false;
-    checkIfContentAvailable = true;
-    navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                      active={activeTab} 
-                                      heading={variantDataHeading} 
-                                      controls="pills-certificates" />);
+	return null;
+}
 
-    navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                      active={activeTab} 
-                                      heading={variantDataHeading} 
-                                      headingLevel="h3" 
-                                      id="pills-certificates" 
-                                      content={<Variants variantData={variantData} />} />);
-  }
+function renderProgramStats(degreesData, variantData, statsData, imageData) {
+	let checkIfContentAvailable = false;
+	
+	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		return <React.Fragment>
+		<div className="full-width-container stats-bg">
+			<div className="container page-container">
+				<section className="row row-with-vspace site-content">
+					<div className="col-md-12 content-area">
+						<h2 className="sr-only">Program Statistics</h2>
+						<dl className="d-flex flex-wrap flex-fill justify-content-center">
+							<Degrees degreesData={degreesData} />
+							{CountProgramVariants(variantData)}
+							<Stats statsData={statsData} />
+						</dl>
+					</div>
+				</section>
+			</div>
+		</div>
+		</React.Fragment>
+	}
+	
+	return null;
+}
 
-  if(checkIfContentAvailable === true){
-    return <React.Fragment>
-              <h2>Program Information</h2>
-              <NavTabs headings={
-                navTabHeadings.map((heading) => {
-                  return heading;
-                })
-              }>
-              {navTabContent.map((content) => {
-                return content;
-              })}
-              </NavTabs>
-            </React.Fragment>
-  }
+function CountProgramVariants(variantData) {
+	const specIcon = useIconData();
+	let checkIfContentAvailable = false;
+	let majors = [];
+	let minors = [];
+	let certificates = [];
+	let assocDiplomas = [];
+	
+	if (!contentIsNullOrEmpty(variantData)) {
+		checkIfContentAvailable = true;
+	}
+	
+	if (checkIfContentAvailable === true) {
+		var iconURL = ``;		
+		if (specIcon !== null && specIcon !== undefined) {
+			for (let i=0; i<specIcon.length; i++) {
+				for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
+					if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
+						iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
+					}
+				}
+			}
+		}		
+		variantData.forEach((edge) => {
+			if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
+				switch(edge.relationships.field_variant_type.name) {
+					case "Associate Diplomas":
+						assocDiplomas.push(edge.relationships.field_variant_type.name);
+					break;
+					case "Certificates":
+						certificates.push(edge.relationships.field_variant_type.name);
+					break;
+					case "Minors":
+						minors.push(edge.relationships.field_variant_type.name);						
+					break;	
+					default:
+						majors.push(edge.relationships.field_variant_type.name);
+				}
+			}
+		});	
+		return <React.Fragment>		
+			{!contentIsNullOrEmpty(majors) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {majors.length}</dt>
+					<dd>Specialized Majors</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(minors) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {minors.length}</dt>
+					<dd>Specialized Minors</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(assocDiplomas) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {assocDiplomas.length}</dt>
+					<dd>Associate Diplomas</dd>
+				</div>
+			</>}
+			{!contentIsNullOrEmpty(certificates) && <>
+				<div className="uog-card">
+					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {certificates.length}</dt>
+					<dd>Optional Certificates</dd>
+				</div>
+			</>}
+		</React.Fragment>
 
-  return null;
+	}
+	
+	return null;
+}
+
+function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
+	let activeValue = true;
+	let activeTabExists = false;
+	let checkIfContentAvailable = false;
+	let navTabHeadings = [];
+	let navTabContent = [];
+	let key = 0;
+
+	// prep TAB 1 - Courses
+	if (!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)) {
+		const courseHeading = "Courses";
+		const courseID = "pills-courses";
+		activeTabExists = true;
+		checkIfContentAvailable = true;
+		key++;
+
+		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+										   active={activeValue} 
+										   heading={courseHeading} 
+										   controls={courseID} 
+							/>);
+
+		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+										  active={activeValue} 
+										  heading={courseHeading} 
+										  headingLevel="h3" 
+										  id={courseID} 
+										  content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} 
+							/>);
+	}
+
+	// prep TAB 2 - Variants
+	if (variantDataHeading !== '') {
+		const variantID = "pills-variants";
+		activeValue = (activeTabExists === true) ? false : true;
+		checkIfContentAvailable = true;
+		key++;
+
+		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+										   active={activeValue} 
+										   heading={variantDataHeading} 
+										   controls={variantID} 
+							/>);
+
+		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+										  active={activeValue} 
+										  heading={variantDataHeading} 
+										  headingLevel="h3" 
+										  id={variantID} 
+										  content={<Variants variantData={variantData} />} 
+							/>);
+	}
+
+	// prep TAB 3 - Careers
+	if (!contentIsNullOrEmpty(careerData)) {
+		activeValue = (activeTabExists === true) ? false : true;
+		checkIfContentAvailable = true;
+		const careersHeading = "Careers";
+		const careersID = "pills-careers";
+		key++;
+
+		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+										   active={activeValue} 
+										   heading={careersHeading} 
+										   controls={careersID} 
+							/>);
+
+		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+										  active={activeValue} 
+										  heading={careersHeading} 
+										  headingLevel="h3" 
+										  id={careersID} 
+										  content={<Careers careerData={careerData} numColumns={3} />} 
+							/>);
+	}
+	
+	// prep TAB 4 - Employers
+	if (!contentIsNullOrEmpty(employerData)) {
+		activeValue = (activeTabExists === true) ? false : true;
+		checkIfContentAvailable = true;
+		const employerHeading = "Employers";
+		const employerID = "pills-employer";
+		key++;
+
+		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+										   active={activeValue} 
+										   heading={employerHeading} 
+										   controls={employerID} 
+							/>);
+
+		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+										  active={activeValue} 
+										  heading={employerHeading} 
+										  headingLevel="h3" 
+										  id={employerID} 
+										  content={<Employers employerData={employerData} />} 
+							/>);
+	}
+	if (checkIfContentAvailable === true) {
+		return <React.Fragment>
+				<h2>Program Information</h2>
+				<NavTabs headings={
+					navTabHeadings.map((heading) => {
+						return heading;
+						})
+					}>
+					{navTabContent.map((content) => {
+						return content;
+					})}
+				</NavTabs>
+			</React.Fragment>
+	}
+
+	return null;
 }
 
 function retrieveLastModifiedDates (content) {
-  let dates = [];
+	let dates = [];
 
-  if(!contentIsNullOrEmpty(content)){  
-    content.forEach((edge) => {
-        dates.push(edge.node.changed);
-    })
-  }
+	if (!contentIsNullOrEmpty(content)) {  
+		content.forEach((edge) => {
+			dates.push(edge.node.changed);
+		})
+	}
 
-  return dates;
-}
-
-// combine multiple body values and place sticky values at the top
-function combineAndSortBodyFields (content) {
-  let stickyContent = [];
-  let allContent = [];
-
-  if(contentIsNullOrEmpty(content)) { return ""; }
-
-  content.forEach((edge) => {
-    if (!contentIsNullOrEmpty(edge.node.body.processed)){
-      if(edge.node.sticky === true) {
-        stickyContent.push(edge.node.body.processed);
-      } else {
-        allContent.push(edge.node.body.processed);
-      }
-    }
-  })
-
-  allContent.unshift(stickyContent);
-
-  return allContent.join("");
+	return dates;
 }
 
 function prepareVariantHeading (variantData) {
@@ -146,7 +297,7 @@ function prepareVariantHeading (variantData) {
 
   const uniqueLabelSet = new Set(labels);
   const uniqueLabels = [...uniqueLabelSet];
-  var variantHeading = "";
+  let variantHeading = "";
 
   for (let i=0; i<uniqueLabels.length; i++) {
     if (i > 0) { 
@@ -165,65 +316,66 @@ function prepareVariantHeading (variantData) {
 }
 
 export default ({data, location}) => {
-	var imageData;
-  var progData;
-  var progDescData;
-	var degreesData;
-  var specData;
-  var courseNotesData;
-	var courseData;
-	var variantData;
-	var tagData;
-	var testimonialData;
-  var callToActionData = [];
+	let callToActionData = [];
+	let careerData;
+	let courseData;
+	let degreesData;
+	let employerData;
+	let imageData;
+	let progData;
+	let newsData;
+	let specData;
+	var statsData;
+	let tagData;
+	let testimonialData;
+	let variantData;
 
 	// set data
-  if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-  if (data.descriptions.edges[0] !== undefined) { progDescData = data.descriptions.edges; }
-  if (data.course_notes.edges[0] !== undefined) { courseNotesData = data.course_notes.edges; }
-	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+	if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-	if (data.images.edges[0] !== undefined) { imageData = data.images.edges[0]; }
-  if (data.courses.edges[0] !== undefined) { courseData = data.courses.edges; }
+	if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
+	if (data.images.edges !== undefined) { imageData = data.images.edges; }
+	if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
+	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+	if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
+	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 
 	// set program details
-	const headerImage = (imageData !== undefined && imageData !== null ? imageData.node.relationships.field_media_image : null);
-  const title = progData.name;
-  const acronym = (progData.field_program_acronym !== undefined && progData.field_program_acronym !== null ? progData.field_program_acronym : ``);
-  const description = combineAndSortBodyFields(progDescData);
-  const courseNotes = combineAndSortBodyFields(courseNotesData);
-  const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
-  
-  // set last modified date
-  let allModifiedDates = sortLastModifiedDates([
-                          progData.changed,
-                          retrieveLastModifiedDates(progDescData),
-                          retrieveLastModifiedDates(courseNotesData),
-                          retrieveLastModifiedDates(courseData)]);
-  let lastModified = allModifiedDates[allModifiedDates.length - 1];
+	const title = progData.title;
+	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
+	const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
+	const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
+	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
-	// set degree, unit, variant, tag, and course info  
+	// set last modified date
+	let allModifiedDates = sortLastModifiedDates(
+		[progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
+		);
+	let lastModified = allModifiedDates[allModifiedDates.length - 1];
+
+	// set degree, specialization, variant, and tag info  
 	degreesData = progData.relationships.field_degrees;
 	specData = progData.relationships.field_specializations;
 	tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
-	const variantDataHeading = prepareVariantHeading(variantData);
+	let variantDataHeading = prepareVariantHeading(variantData);
 
-  return (
+	return (
 	<Layout date={lastModified}>
-      <Helmet bodyAttributes={{
-          class: 'program'
-      }}
-    />
+	  <Helmet bodyAttributes={{
+		  class: 'program'
+	  }}
+	/>
 	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-
-      { /**** Header and Title ****/ }
-      <div id="rotator">
-        {headerImage && <Img fluid={headerImage.localFile.childImageSharp.fluid} alt={imageData.node.field_media_image.alt} />}
-        <div className="container ft-container">
-          <h1 className="fancy-title">{title}</h1>
-        </div>
-      </div>
+	  { /**** Header and Title ****/ }
+	  <div id="rotator">
+		{/* <FetchImages tags={imageTags} /> */}
+		{renderHeaderImage(imageData)}
+		<div className="container ft-container">
+		  <h1 className="fancy-title">{title}</h1>
+		</div>
+	  </div>
 
       { /**** Tags and Call to Action Button ****/ }
       <div className="full-width-container bg-dark">
@@ -249,27 +401,35 @@ export default ({data, location}) => {
           </div>
       </div>
 
-    { /**** Program Overview ****/ }
-	<div className="container page-container">
+      { /**** Program Overview ****/ }
+      <div className="container page-container">
         <div className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
-            {renderProgramOverview(description, degreesData, specData)}
+            {renderProgramOverview(description, specData)}
           </section>
         </div>
-    </div>
+      </div>
+	
+      { /**** Program Stats ****/ }
+      {renderProgramStats(degreesData, variantData, statsData, imageData)}
 
       { /**** Program Information Tabs ****/ }
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData)}
+            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
           </div>
         </section>
-      </div>
+      </div>                    
 
       { /**** Testimonials ****/ }
       {testimonialData && 
         <Testimonials testimonialData={testimonialData} heading={testimonialHeading} headingLevel='h3' />
+      }
+
+      { /*** News ****/}
+      {newsData && 
+        <NewsGrid newsData={newsData} heading="Program News" headingLevel='h2' />
       }
 
       { /**** Call to Actions ****/ }
@@ -291,34 +451,70 @@ export default ({data, location}) => {
         </div>
       }
 
-		</Layout>
+	</Layout>
 	)
 }
 
 export const query = graphql`
   query ($id: String) {
-    programs: allTaxonomyTermPrograms(filter: {id: {eq: $id}}) {
+    programs: allNodeProgram(filter: {relationships: {field_program_acronym: {id: {eq: $id}}}}) {
       edges {
         node {
           changed
           drupal_id
-          drupal_internal__tid
-          name
-          field_program_acronym
+          drupal_internal__nid
+          title
+          field_program_overview {
+            processed
+          }
+          field_course_notes {
+            processed
+          }
           relationships {
+            field_program_acronym {
+              name
+              id
+            }        
+            field_courses {
+              changed
+              field_credits
+              field_level
+              field_code
+              title
+              field_course_url {
+                uri
+              }
+            }
             field_degrees {
               drupal_id
               name
               field_degree_acronym
-            }
+            }			
             field_specializations {
+              name
+            }
+            field_program_statistics {
+              drupal_id
+              field_stat_range
+              field_stat_value
+              field_stat_value_end
               relationships {
-                field_units {
-                  drupal_id
-                  field_unit_acronym
+                field_stat_type {
                   name
                 }
+                field_stat_icon {
+                  relationships {
+                    field_media_image {
+                      localFile {
+                        publicURL
+                      }
+                    }
+                  }
+                }
               }
+            }
+            field_tags {
+              name
             }
             field_program_variants {
               __typename
@@ -344,62 +540,15 @@ export const query = graphql`
                 }
               }
             }
-            field_tags {
-              name
-            }
           }
         }
       }
     }
-
-    descriptions: allNodeProgramDescription(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
-      edges {
-        node {
-          title
-          drupal_id
-          body {
-            processed
-          }
-          changed
-          sticky
-          relationships {
-            field_tags {
-              drupal_id
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-
-    images: allMediaImage(limit: 1, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          name
-          drupal_id
-          field_media_image {
-            alt
-          }
-          relationships {
-            field_media_image {
-              localFile {
-                childImageSharp {
-                  fluid {
-                      originalImg
-                      ...GatsbyImageSharpFluid
-                  }
-              }
-              }
-            }
-          }
-        }
-      }
-    }
-
+	
     ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
+          changed
           field_call_to_action_link {
             title
             uri
@@ -421,46 +570,8 @@ export const query = graphql`
         }
       }
     }
-    
-    testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          drupal_id
-          body {
-              processed
-          }
-          title
-          field_testimonial_person_desc
-          field_picture {
-              alt
-          }
-          relationships {
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-
-            field_picture {
-                localFile {
-                    url
-                    childImageSharp {
-                        fluid(maxWidth: 400, maxHeight: 400) {
-                            originalImg
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
-                }
-            }
-          }
-        }
-      }
-    }
-  
-    course_notes: allNodeProgramCourseNotes(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
+	
+    careers: allNodeCareer(sort: {fields: [title], order: ASC}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
           title
@@ -469,22 +580,6 @@ export const query = graphql`
           body {
             processed
           }
-          sticky
-          relationships {
-            field_tags {
-              drupal_id
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-    
-    courses: allNodeCourse(sort: {fields: [field_level], order: ASC} filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          changed
           relationships {
             field_tags {
               __typename
@@ -495,17 +590,172 @@ export const query = graphql`
               }
             }
           }
-          field_code
-          field_course_url {
+        }
+      }
+    }
+
+    employers: allNodeEmployer(sort: {fields: title}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          drupal_id
+          field_employer_summary {
+              processed
+          }
+          title
+          field_image {
+            alt
+          }
+          field_link {
             uri
           }
-          field_credits
-          field_level
-          title
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+
+            field_image {
+              localFile {
+                url
+                childImageSharp {
+                  fluid(maxWidth: 400, maxHeight: 400) {
+                      originalImg
+                      ...GatsbyImageSharpFluid
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
 	
+    images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          field_media_image {
+                alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 1920) {
+                    originalImg
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+                extension
+              }
+            }
+            field_tags {
+            __typename
+            ... on TaxonomyInterface {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+	
+    news: allNodeArticle (limit: 4, sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          title
+          drupal_id
+          changed
+          created
+          fields {
+            alias {
+              value
+            }
+          }
+          body {
+            processed
+          }
+          relationships {
+			field_hero_image {
+			  field_media_image {
+				alt
+              }
+			  relationships {
+			    field_media_image {
+				  localFile {
+				    url
+				    childImageSharp {
+					  fluid(maxWidth: 400) {
+					    originalImg
+					    ...GatsbyImageSharpFluid
+					  }
+				    }
+				  }
+			    }
+			  }
+			}
+            field_news_category {
+              drupal_id
+              id
+              name
+            }
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+	
+    testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
+      edges {
+        node {
+          changed
+          drupal_id
+          body {
+            processed
+          }
+          title
+          field_testimonial_person_desc
+          relationships {
+            field_hero_image {
+			  field_media_image {
+				alt
+              }
+			  relationships {
+			    field_media_image {
+				  localFile {
+				    url
+				    childImageSharp {
+					  fluid(maxWidth: 400, maxHeight: 400) {
+					    originalImg
+					    ...GatsbyImageSharpFluid
+					  }
+				    }
+				  }
+			    }
+			  }
+			}			
+			field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+
   }
 `
-
