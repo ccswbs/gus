@@ -10,6 +10,8 @@ function Breadcrumbs (props) {
 	const menuData = useMenuData();
 
 	if (!contentIsNullOrEmpty(menuData)) {
+		
+		let homeIcon = "H";
 	
 		return (<>
 			{!contentIsNullOrEmpty(menuData) && menuData.length !== 0 && <>
@@ -19,8 +21,14 @@ function Breadcrumbs (props) {
 						<div className="col-sm-12">
 							<div className="site-breadcrumbs">			
 							<ol className="breadcrumb breadcrumb-right-tag">
+								
 								{menuData.map (menuItem => {
-									return <li className="breadcrumb-item"><Link to={menuItem.node.url}>{menuItem.node.title}</Link></li>
+									return (
+									<li className="breadcrumb-item">
+										<Link to={menuItem.node.url}>
+										{menuItem.node.title==="Home" ? <i className='fa fa-home'><span className='sr-only'>Home</span></i> : menuItem.node.title}
+										</Link>
+									</li>)
 								})}					
 							</ol>
 							</div>
