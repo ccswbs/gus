@@ -1,0 +1,41 @@
+/* Grid */
+
+.grid-cell {
+    display: block;
+}
+
+/* --- Text --- */
+
+.grid-cell .grid-heading {
+    color: #000000;
+}
+
+.grid-cell a:hover .grid-heading, 
+.grid-cell a:focus .grid-heading {
+    color: #0074C1;
+}
+
+/* --- Images --- */
+
+.grid .img-container {
+    overflow: hidden;
+}
+
+.grid-cell.col-md-3 img,
+.grid-cell.col-md-3 .gatsby-image-wrapper {
+    width: 100%;
+    height: auto;
+}
+
+.grid a img,
+.grid a .gatsby-image-wrapper {
+    transition: all 0.15s ease-in-out !important;
+}
+
+.grid a:hover img,
+.grid a:focus img,
+.grid a:hover .gatsby-image-wrapper img,
+.grid a:focus .gatsby-image-wrapper img {
+    opacity: 0.75 !important;
+    transform: scale(1.03) !important;
+}

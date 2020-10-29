@@ -11,7 +11,7 @@ function Hero (props) {
 				{props.imgData.map (img => {	
 					let heroImage = img.node.relationships.field_media_image.localFile;
 					let altText = img.node.field_media_image.alt;					
-					return <React.Fragment><Img fluid={heroImage.childImageSharp.fluid} alt={altText} /></React.Fragment>
+					return <React.Fragment key={img.node.drupal_id}><Img fluid={heroImage.childImageSharp.fluid} alt={altText} /></React.Fragment>
 				})}
 			</>}
 		</React.Fragment>
