@@ -11,6 +11,23 @@ export const useMenuData = () => {
 			  menu_name
 			  title
 			  url
+			  childMenuItems {
+				title
+				url
+				route {
+				  parameters {
+					node
+				  }
+				}
+			  }
+			  parent {
+				id
+			  }
+			  route {
+				parameters {
+				  node
+				}
+			  }
 			}
 		  }
 		}

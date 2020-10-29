@@ -8,10 +8,9 @@ import { useMenuData } from '../utils/fetch-menu';
 function Breadcrumbs (props) {
 
 	const menuData = useMenuData();
+	const currentPage = String(props.activePage);
 
 	if (!contentIsNullOrEmpty(menuData)) {
-		
-		let homeIcon = "H";
 	
 		return (<>
 			{!contentIsNullOrEmpty(menuData) && menuData.length !== 0 && <>
@@ -21,14 +20,18 @@ function Breadcrumbs (props) {
 						<div className="col-sm-12">
 							<div className="site-breadcrumbs">			
 							<ol className="breadcrumb breadcrumb-right-tag">
-								
+								<li className="breadcrumb-item">
+									<Link to="/"><i className='fa fa-home'><span className='sr-only'>Home</span></i></Link>
+								</li>
 								{menuData.map (menuItem => {
-									return (
-									<li className="breadcrumb-item">
-										<Link to={menuItem.node.url}>
-										{menuItem.node.title==="Home" ? <i className='fa fa-home'><span className='sr-only'>Home</span></i> : menuItem.node.title}
-										</Link>
-									</li>)
+									let menuNode = (!contentIsNullOrEmpty(menuItem.node.route.parameters.node) ? menuItem.node.route.parameters.node : ``);
+									let menuChild = (!contentIsNullOrEmpty(menuItem.node.childMenuItems) ? menuItem.node.childMenuItems.route.parameters.node : ``);
+									return (<React.Fragment key={menuItem.node.id}>
+									{!contentIsNullOrEmpty(menuItem.node.childMenuItems) && menuChild === currentPage ? 
+										<li className="breadcrumb-item"><Link to={menuItem.node.url}>{menuItem.node.title}</Link></li> 
+									: ``}
+									{menuNode === currentPage ? <li className="breadcrumb-item">{menuItem.node.title}</li> : ``}
+									</React.Fragment>)
 								})}					
 							</ol>
 							</div>
@@ -45,7 +48,7 @@ function Breadcrumbs (props) {
 }
 
 Breadcrumbs.propTypes = {
-	activePage: PropTypes.array,
+	activePage: PropTypes.number,
 }
 
 Breadcrumbs.defaultProps = {

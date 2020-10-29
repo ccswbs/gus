@@ -12,6 +12,7 @@ import Sidebar from '../components/sidebar';
 export default ({data}) => {
 
 	const pageData = data.pages.edges[0].node;
+	const nodeID = pageData.drupal_internal__nid;
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
@@ -35,7 +36,7 @@ export default ({data}) => {
 				</div>
 			</div>
 			
-			<Breadcrumbs activePage={pageData} />
+			<Breadcrumbs activePage={nodeID} />
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">
@@ -61,6 +62,7 @@ export const query = graphql`
 	  edges {
 		node {
 		  drupal_id
+		  drupal_internal__nid
 		  title
 		  body {
 			processed

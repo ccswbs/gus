@@ -23,7 +23,7 @@ function Sidebar (props) {
 				<h2>Menu: {menuData[0].node.menu_name}</h2>
 				<ul className="sidebar-sub-container">
 					{menuData.map (menuItem => {
-						return <li><Link to={menuItem.node.url}>{menuItem.node.title}</Link></li>
+						return <li key={menuItem.node.id}><Link to={menuItem.node.url}>{menuItem.node.title}</Link></li>
 					})}					
 				</ul>
 			</>}
