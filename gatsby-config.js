@@ -88,6 +88,8 @@ module.exports = {
     },	
   ],
   mapping: {
+    "node__article.fields.alias": `PathAlias`,
+    "node__landing_page.fields.alias": `PathAlias`,
     "node__page.fields.alias": `PathAlias`,
     "node__program.fields.alias": `PathAlias`,
   },

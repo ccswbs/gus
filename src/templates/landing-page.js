@@ -40,18 +40,17 @@ export default ({data}) => {
 			
 			<div className="container page-container">
 				<div className="row row-with-vspace site-content">
+					{ /**** Body content ****/ }
 					<section className="col-md-9 content-area">
-
-						{ /**** Body content ****/ }
 						<div dangerouslySetInnerHTML={{ __html: body}} />
-
-						{ /**** Grid content ****/ }
-						<RelatedPages pageData={relatedPageData} displayType={'grid'} />
 					</section>
 					<Sidebar relatedContent={relatedPageData} />
 				</div>
 			</div>
-			
+
+			{ /**** Grid content ****/ }
+			<RelatedPages pageData={relatedPageData} displayType={'grid'} />
+
 		</Layout>
 	)
 }
@@ -74,18 +73,43 @@ export const query = graphql`
 
 				relationships {
 					field_related_content {
-					  relationships {
-						field_list_pages {
-						  ... on node__page {
-							drupal_id
-							id
-							title
-							fields {
-								alias {
-									value
+						drupal_id
+					  	relationships {
+							field_list_pages {
+							... on node__page {
+								drupal_id
+								id
+								title
+								fields {
+									alias {
+										value
+									}
 								}
+								
+
+								relationships {
+									field_hero_image {
+										field_media_image {
+										alt
+										}
+										relationships {
+											field_media_image {
+												localFile {
+												url
+												childImageSharp {
+													resize(width: 400, height: 300, , cropFocus: CENTER) {
+													src
+													}
+												}
+												}
+											}
+
+
+										}
+									}
+								}
+
 							}
-						  }
 						}
 					  }
 					}
@@ -98,6 +122,7 @@ export const query = graphql`
 	images: allMediaImage(filter: {relationships: {node__landing_page: {elemMatch: {id: {eq: $id}}}}}) {
 		edges {
 		  node {
+			drupal_id
 			field_media_image {
 				  alt
 			}
