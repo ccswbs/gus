@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
-import { contentIsNullOrEmpty } from '../utils/ug-utils';
+import { contentExists } from '../utils/ug-utils';
 import { useMenuData } from '../utils/fetch-menu';
 import '../styles/sidebar.css';
 
@@ -10,7 +10,7 @@ function Sidebar (props) {
 	const menuData = useMenuData();	
 	let checkIfContentAvailable = false;
 	
-	if (!contentIsNullOrEmpty(props.relatedContent) || !contentIsNullOrEmpty(menuData)) {
+	if (contentExists(props.relatedContent) || contentExists(menuData)) {
 		checkIfContentAvailable = true;
 	}
 	
@@ -19,7 +19,7 @@ function Sidebar (props) {
 		return (<>
 			<nav id="sidebar">
 			
-			{!contentIsNullOrEmpty(menuData) && menuData.length !== 0 && <>
+			{contentExists(menuData) && menuData.length !== 0 && <>
 				<h2>Menu: {menuData[0].node.menu_name}</h2>
 				<ul className="sidebar-sub-container">
 					{menuData.map (menuItem => {
@@ -28,11 +28,11 @@ function Sidebar (props) {
 				</ul>
 			</>}
 			
-			{!contentIsNullOrEmpty(props.relatedContent) && props.relatedContent.length !== 0 && <>
+			{contentExists(props.relatedContent) && props.relatedContent.length !== 0 && <>
 				<h2>Related Content</h2>
 				<ul className="sidebar-sub-container">
 				{props.relatedContent.map (paragraph  => {
-					if (!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)) {
+					if (contentExists(paragraph.relationships.field_list_pages)) {
 						let relatedContent = paragraph.relationships.field_list_pages;
 						return(relatedContent.map(page => {
 							return <li key={page.drupal_id}>

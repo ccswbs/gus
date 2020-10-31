@@ -12,7 +12,7 @@ import Sidebar from '../components/sidebar';
 export default ({data}) => {
 
 	const pageData = data.pages.edges[0].node;
-	const nodeID = pageData.drupal_internal__nid;
+	const nodeID = pageData.drupal_internal__nid;	
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
@@ -36,7 +36,7 @@ export default ({data}) => {
 				</div>
 			</div>
 			
-			<Breadcrumbs activePage={nodeID} />
+			<Breadcrumbs nodeID={nodeID} />
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">
@@ -46,7 +46,7 @@ export default ({data}) => {
 
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
 					</section>
-					<Sidebar relatedContent={relatedPageData} />
+					{ /* <Sidebar relatedContent={relatedPageData} />  */ }
 				</div>
 			</div>			
 		</Layout>
@@ -68,25 +68,23 @@ export const query = graphql`
 			processed
 		  }
 		  relationships {
-
 			field_related_content {
-				drupal_id
-				relationships {
-				  field_list_pages {
-					... on node__page {
-					  drupal_id
-					  id
-					  title
-					  fields {
-						  alias {
-							  value
-						  }
+			  drupal_id
+			  relationships {
+			    field_list_pages {
+				  ... on node__page {
+					drupal_id
+					id
+					title
+					fields {
+					  alias {
+						value
 					  }
 					}
 				  }
-				}
+			    }
 			  }
-
+			}
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {
@@ -100,26 +98,26 @@ export const query = graphql`
 	images: allMediaImage(filter: {relationships: {node__page: {elemMatch: {id: {eq: $id}}}}}) {
       edges {
         node {
-			drupal_id
+		  drupal_id
+		  field_media_image {
+			alt
+		  }
+		  relationships {
 			field_media_image {
-					alt
+			  localFile {
+				childImageSharp {
+				  fluid(maxWidth: 1920) {
+					originalImg
+					...GatsbyImageSharpFluid
+				  }
+				}
+			  }
 			}
-			relationships {
-				field_media_image {
-				localFile {
-					childImageSharp {
-					fluid(maxWidth: 1920) {
-						originalImg
-						...GatsbyImageSharpFluid
-					}
-					}
-				}
-				}
-				field_tags {
-				__typename
-				... on TaxonomyInterface {
-					name
-				}
+			field_tags {
+			  __typename
+			  ... on TaxonomyInterface {
+				name
+			  }
             }
           }
         }
