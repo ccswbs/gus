@@ -34,21 +34,14 @@ function Breadcrumbs (props) {
 	if (contentExists(data)) {
 		
 		let menuData = data.menuItems.edges;
-		let menuParent = ``;
-		let menuChild = ``;
+		let menuParent;
 		let menuParentID;
 		
-		for (let i=0; i<menuData.length; i++) {
-			
+		for (let i=0; i<menuData.length; i++) {			
 			if (contentExists(menuData[i].node.childMenuItems) && menuData[i].node.childMenuItems.route.parameters.node === currentPage) {
 				menuParent = menuData[i].node.title
 				menuParentID = menuData[i].node.route.parameters.node				
-			}
-			
-			if (menuData[i].node.route.parameters.node === currentPage) {
-				menuChild = menuData[i].node.title
-			}
-			
+			}	
 		}
 	
 		return (<>
@@ -63,7 +56,7 @@ function Breadcrumbs (props) {
 									<Link to="/"><i className='fa fa-home'><span className='sr-only'>Home</span></i></Link>
 								</li>
 								{FetchLink(menuParent, menuParentID)}
-								<li className="breadcrumb-item">{menuChild}</li>
+								<li className="breadcrumb-item">{props.nodeTitle}</li>
 							</ol>
 							</div>
 						</div>
@@ -84,6 +77,7 @@ Breadcrumbs.propTypes = {
 
 Breadcrumbs.defaultProps = {
     nodeID: null,
+	nodeTitle: ``,
 }
 
 export default Breadcrumbs

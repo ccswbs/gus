@@ -6,7 +6,7 @@ import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
-import Sidebar from '../components/sidebar';
+//import Sidebar from '../components/sidebar';
 
 export default ({data}) => {
 	let pageData;
@@ -20,6 +20,7 @@ export default ({data}) => {
 	const imageData = data.images.edges;
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
+	const nodeID = pageData.drupal_internal__nid;
 
 	return (
 		<Layout>
@@ -36,7 +37,7 @@ export default ({data}) => {
 				</div>
 			</div>
 			
-			<Breadcrumbs activePage={pageData} />
+			<Breadcrumbs nodeID={nodeID} nodeTitle={title} />
 			
 			<div className="container page-container">
 				<div className="row row-with-vspace site-content">
@@ -44,7 +45,7 @@ export default ({data}) => {
 					<section className="col-md-9 content-area">
 						<div dangerouslySetInnerHTML={{ __html: body}} />
 					</section>
-					<Sidebar relatedContent={relatedPageData} />
+					{ /*<Sidebar relatedContent={relatedPageData} />*/ }
 				</div>
 			</div>
 
@@ -64,6 +65,7 @@ export const query = graphql`
 					processed
 				}
 				drupal_id
+				drupal_internal__nid
 				title
 				fields {
 					alias {

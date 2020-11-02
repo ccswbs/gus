@@ -7,7 +7,7 @@ import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
-import Sidebar from '../components/sidebar';
+//import Sidebar from '../components/sidebar';
 
 export default ({data}) => {
 
@@ -36,7 +36,7 @@ export default ({data}) => {
 				</div>
 			</div>
 			
-			<Breadcrumbs nodeID={nodeID} />
+			<Breadcrumbs nodeID={nodeID} nodeTitle={title} />
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">
