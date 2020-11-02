@@ -64,6 +64,7 @@ export const query = graphql`
 		  relationships {
 
 			field_related_content {
+				drupal_id
 				relationships {
 				  field_list_pages {
 					... on node__page {
@@ -93,25 +94,26 @@ export const query = graphql`
 	images: allMediaImage(filter: {relationships: {node__page: {elemMatch: {id: {eq: $id}}}}}) {
       edges {
         node {
-          field_media_image {
-                alt
-          }
-          relationships {
-            field_media_image {
-              localFile {
-                childImageSharp {
-                  fluid(maxWidth: 1920) {
-                    originalImg
-                    ...GatsbyImageSharpFluid
-                  }
-                }
-              }
-            }
-            field_tags {
-            __typename
-            ... on TaxonomyInterface {
-                name
-              }
+			drupal_id
+			field_media_image {
+					alt
+			}
+			relationships {
+				field_media_image {
+				localFile {
+					childImageSharp {
+					fluid(maxWidth: 1920) {
+						originalImg
+						...GatsbyImageSharpFluid
+					}
+					}
+				}
+				}
+				field_tags {
+				__typename
+				... on TaxonomyInterface {
+					name
+				}
             }
           }
         }

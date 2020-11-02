@@ -1,48 +1,58 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Grid from './grid';
 import GridCell from './gridCell';
-import GridParent from './gridParent';
 import { Link } from 'gatsby';
-import { contentIsNullOrEmpty } from '../utils/ug-utils';
+import { contentExists } from '../utils/ug-utils';
 
 function RelatedPages (props) {
 
-    if(!contentIsNullOrEmpty(props.pageData) && props.pageData.length !== 0){
+    if(contentExists(props.pageData) && props.pageData.length !== 0){
         if(props.displayType === 'grid') {
             return (
-                <GridParent>
+                <React.Fragment>
                     {props.pageData.map (paragraph  => {
-                        if(!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)){
+                        if(contentExists(paragraph.relationships.field_list_pages)){
                             let relatedPages = paragraph.relationships.field_list_pages;
-                            
-                            return(relatedPages.map(page => {
-                                return <GridCell key={page.drupal_id} >
-                                        <Link to={page.fields.alias.value}>{page.title}</Link>
-                                    </GridCell>
-                                })
+                            return(
+                                <Grid key={paragraph.drupal_id}>
+                                    {relatedPages.map(page => {
+                                    const image = (contentExists(page.relationships.field_hero_image)) ? page.relationships.field_hero_image.relationships.field_media_image : null;
+                                    const imageFile = (contentExists(image)) ? <img src={image.localFile.childImageSharp.resize.src} alt="" /> : null;
+
+                                    return <GridCell key={page.drupal_id} 
+                                                url={page.fields.alias.value} 
+                                                image={imageFile}
+                                                heading={page.title}
+                                                headingLevel="h3" />
+                                    })}
+                                </Grid>
                             )
                         }
                         return null;
                     })}
-                </GridParent>
+                </React.Fragment>
             )
         }else {
 
             return (
-                <ul>
+                <React.Fragment>
                     {props.pageData.map (paragraph  => {
-                        if(!contentIsNullOrEmpty(paragraph.relationships.field_list_pages)){
+                        if(contentExists(paragraph.relationships.field_list_pages)){
                             let relatedPages = paragraph.relationships.field_list_pages;
-                            return(relatedPages.map(page => {
-                                return <li key={page.drupal_id} >
-                                        <Link to={page.fields.alias.value}>{page.title}</Link>
-                                    </li>
-                                })
+                            return(
+                                <ul key={paragraph.drupal_id}>
+                                    {relatedPages.map(page => {
+                                    return <li key={page.drupal_id} >
+                                            <Link to={page.fields.alias.value}>{page.title}</Link>
+                                        </li>
+                                    })}
+                                </ul>
                             )
                         }
                         return null;
                     })}
-                </ul>
+                </React.Fragment>
             )
         }
     }

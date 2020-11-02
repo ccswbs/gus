@@ -1,43 +1,35 @@
+import Grid from './grid';
+import GridCell from './gridCell';
 import Img from 'gatsby-image';
-import { Link } from 'gatsby';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { contentIsNullOrEmpty, setHeadingLevel, getNextHeadingLevel } from '../utils/ug-utils.js';
+import { contentExists, getNextHeadingLevel } from '../utils/ug-utils.js';
 import '../styles/news.css';
 
 function NewsGrid (props) {
-    let Heading = setHeadingLevel(props.headingLevel);
-    let NextHeading = getNextHeadingLevel(props.headingLevel);
-
+    let nextHeadingLevel = getNextHeadingLevel(props.headingLevel);
     getNextHeadingLevel(props.headingLevel);
 
-	if (!contentIsNullOrEmpty(props.newsData)) {
+	if (contentExists(props.newsData)) {
 		const newsItems  = () => props.newsData.map((newsItem) => {
-			let title = newsItem.node.title;
-            let image = newsItem.node.relationships.field_hero_image.relationships.field_media_image;
-            let categories = Array.prototype.map.call(newsItem.node.relationships.field_news_category, s => s.name).join(', ');
+			const title = newsItem.node.title;
+            const image = newsItem.node.relationships.field_hero_image.relationships.field_media_image;
+            const categories = Array.prototype.map.call(newsItem.node.relationships.field_news_category, s => s.name).join(', ');
+            const categoryElement = (contentExists(categories)) ? <p className="category">{categories}</p> : null;
 
-			return <div key={newsItem.node.drupal_id} className={props.columnClass + " content-area news-item"}>
-                <Link to={newsItem.node.fields.alias.value}>
-                    {/* Use null alt atribute for linked image, title combo */}
-                    {image && <div className="img-container"><Img fluid={image.localFile.childImageSharp.fluid} alt="" /></div>}
-                    <NextHeading>{title}</NextHeading>
-                    {categories && <p className="category">{categories}</p>}
-                </Link>
-			</div>
+			return <GridCell key={newsItem.node.drupal_id} 
+                        url={newsItem.node.fields.alias.value} 
+                        image={<Img fluid={image.localFile.childImageSharp.fluid} alt="" />}
+                        heading={title}
+                        headingLevel={nextHeadingLevel} 
+                        text={categoryElement}
+                        extraClasses="news-item" />
 		})
 
-		return (<div className="full-width-container bg-light news">
-                    <div className="container page-container">
-                        <section className="row row-with-vspace site-content">
-                            <div className="col-md-12 content-area">
-                                <Heading>{props.heading}</Heading>
-                            </div>
-                            {newsItems()}
-                        </section>
-                    </div>
-                </div>
-                )
+		return (<Grid heading={props.heading} headingLevel={props.headingLevel}>
+                    {newsItems()}
+                </Grid>
+            )
 
 	} else {
 		return null
@@ -46,12 +38,10 @@ function NewsGrid (props) {
 
 NewsGrid.propTypes = {
     newsData: PropTypes.array,
-    columnClass: PropTypes.string,
 }
 
 NewsGrid.defaultProps = {
     newsData: null,
-    columnClass: 'col-md-3 col-sm-6',
 }
 
 export default NewsGrid

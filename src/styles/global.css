@@ -4,8 +4,37 @@
     z-index: 1001;
 }
 
+.site-content {
+    min-height: 0rem !important;
+}
+
 .main-container {
     margin-top: 0 !important;
+}
+
+.full-width-container {
+    width: 100%;
+    height: auto;
+    content: "";
+    clear: both;
+    display: table;
+    display: flex;
+}
+
+.full-width-container.bg-light {
+    background-color: #f5f5f5 !important;
+    color: #999;
+    padding: 2rem 0;
+}
+
+.full-width-container.bg-dark {
+    background-color: #333 !important;
+    color: #999 !important;
+    padding: 2rem 0;
+}
+
+.full-width-container .site-content {
+    background: transparent !important;
 }
 
 @media (max-width: 575.98px){
