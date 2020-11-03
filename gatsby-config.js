@@ -73,7 +73,7 @@ module.exports = {
 		baseUrl: `https://api.devugconthub.uoguelph.dev/`,
 		//baseUrl: `http://multidevname-bovey.pantheonsite.io/`,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
-        menus: ["main"], // Which menus to fetch, there are the menu IDs.
+        menus: ["place-to-grow"], // Which menus to fetch, there are the menu IDs.
       },
     },    
     {

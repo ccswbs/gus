@@ -4,29 +4,35 @@ export const useMenuData = () => {
   const data = useStaticQuery(
     graphql`
       query {
-        menuItems: allMenuItems {
+        menus: allMenuItems {
 		  edges {
 			node {
 			  id
 			  menu_name
 			  title
-			  url
-			  childMenuItems {
+			  childrenMenuItems {
 				title
-				url
 				route {
 				  parameters {
 					node
 				  }
 				}
-			  }
-			  parent {
-				id
+				childrenMenuItems {
+				  title
+				  route {
+					parameters {
+					  node
+					}
+				  }
+			    }
 			  }
 			  route {
 				parameters {
 				  node
 				}
+			  }
+			  parent {
+				id
 			  }
 			}
 		  }
