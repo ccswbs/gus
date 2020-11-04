@@ -573,12 +573,15 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             childrenMenuItems {
               id
               url
+              title
               childrenMenuItems {
                 id
                 url
+                title
                 childrenMenuItems {
                   id
                   url
+                  title
                   route {
                     parameters {
                       node
@@ -700,8 +703,9 @@ function processMenuItem(node, aliases){
     const menuNode = {
       id: node.id,
       drupal_id: drupalID,
-      children: processMenuItemChildren(node.childrenMenuItems, aliases),
       alias: gatsbyAlias,
+      title: node.title,
+      children: processMenuItemChildren(node.childrenMenuItems, aliases),
     } 
     return menuNode;
   }
