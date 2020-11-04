@@ -148,7 +148,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-    type node__article implements Node {
+  type node__article implements Node {
       changed: Date @dateformat
       created: Date @dateformat
       drupal_id: String
@@ -570,21 +570,32 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                 node
               }
             }
-            childrenMenuItems {
-              id
-              url
-              title
-              childrenMenuItems {
+            children {
+              ... on MenuItems {
                 id
                 url
                 title
-                childrenMenuItems {
-                  id
-                  url
-                  title
-                  route {
-                    parameters {
-                      node
+                children {
+                  ... on MenuItems {
+                    id
+                    url
+                    title
+                    children {
+                      ... on MenuItems {
+                        id
+                        url
+                        title
+                        route {
+                          parameters {
+                            node
+                          }
+                        }
+                      }
+                    }
+                    route {
+                      parameters {
+                        node
+                      }
                     }
                   }
                 }
@@ -594,11 +605,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                   }
                 }
               }
-              route {
-                parameters {
-                  node
-                }
-              }
             }
           }
         }
@@ -606,6 +612,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
       
     }
   `)
+
+  // INSTRUCTION: Query for menu content here
+
 
   if (result.errors) {
     reporter.panicOnBuild('ERROR: Loading "createPages" query')
@@ -705,7 +714,7 @@ function processMenuItem(node, aliases){
       drupal_id: drupalID,
       alias: gatsbyAlias,
       title: node.title,
-      children: processMenuItemChildren(node.childrenMenuItems, aliases),
+      children: processMenuItemChildren(node.children, aliases),
     } 
     return menuNode;
   }

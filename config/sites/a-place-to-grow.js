@@ -4,7 +4,7 @@ var metaConfig = {
     author: "@uofg",
     GAtrackingID: "UA-106745064-4",
     IGuser: "5851379098",
-    menu: "place-to-grow",
+    menus: ["place-to-grow"],
 };
 
 module.exports = metaConfig;

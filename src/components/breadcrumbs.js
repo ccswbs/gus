@@ -71,7 +71,7 @@ function Breadcrumbs (props) {
 		let menuParentID;
 		let menuTop = data.menus.edges[0].node.title;
 		let menuTopID = data.menus.edges[0].node.route.parameters;
-		let menuChildren = data.menus.edges[0].node.childrenMenuItems;
+		let menuChildren = data.menus.edges[0].node.children;
 		let endCrumb;
 		let endCrumbID;
 		//let midCrumb;

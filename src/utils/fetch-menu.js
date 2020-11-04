@@ -10,21 +10,25 @@ export const useMenuData = () => {
 			  id
 			  menu_name
 			  title
-			  childrenMenuItems {
-				title
-				route {
-				  parameters {
-					node
-				  }
-				}
-				childrenMenuItems {
-				  title
-				  route {
+			  children {
+				... on MenuItems {
+					title
+					route {
 					parameters {
-					  node
+						node
 					}
-				  }
-			    }
+					}
+					children {
+						... on MenuItems {
+							title
+							route {
+								parameters {
+								node
+								}
+							}
+						}
+					}
+				}
 			  }
 			  route {
 				parameters {
