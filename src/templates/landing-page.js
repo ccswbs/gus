@@ -1,5 +1,6 @@
 import { graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
+import GridItems from '../components/griditems';
 import Layout from '../components/layout';
 import React from 'react';
 import RelatedPages from '../components/relatedPages';
@@ -9,10 +10,14 @@ import Hero from '../components/hero';
 export default ({data}) => {
 	let pageData;
 	let relatedPageData;
+	let gridItemsData;
+
 
 	// set data
 	if (data.pages.edges[0] !== undefined) { pageData = data.pages.edges[0].node; }
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
+	if (pageData.relationships.field_grid_items !== undefined) { gridItemsData = pageData.relationships.field_grid_items; }
+
 
 	// set landing page details
 	const imageData = data.images.edges;
@@ -46,6 +51,10 @@ export default ({data}) => {
 
 			{ /**** Grid content ****/ }
 			<RelatedPages pageData={relatedPageData} displayType={'grid'} />
+			
+			{ /**** Grid Items content ****/ }
+			<GridItems pageData={gridItemsData} displayType={'grid'} />
+
 		</Layout>
 	)
 }
@@ -108,6 +117,46 @@ export const query = graphql`
 						}
 					  }
 					}
+					field_grid_items {
+						drupal_id
+						relationships {
+							paragraph_type {
+								drupal_id
+								id
+								relationships {
+									paragraph__grid_items {
+										drupal_id
+										field_grid_link {
+											title
+											uri
+										}
+										relationships {
+											field_grid_image {
+												field_media_image {
+												alt
+												}
+												relationships {
+													field_media_image {
+														localFile {
+															id
+															url
+															childImageSharp {
+																resize (width: 400, height: 300, , cropFocus: CENTER) {
+																src
+																}
+															}
+														}
+													}
+
+												}
+											}
+										}
+										
+									}
+								}
+							}
+						}
+					}
 				}
 				
 			}
@@ -143,5 +192,6 @@ export const query = graphql`
 		}
 	  }
 
-}
+	}
+
 `
