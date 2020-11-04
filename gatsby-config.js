@@ -6,7 +6,8 @@
 
 //let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
 // For dev purposes, comment the line above and uncomment the line below:
- let metaConfig = require('./config/sites/ugconthub.js');
+ let metaConfig = require('./config/sites/a-place-to-grow.js');
+//  let metaConfig = require('./config/sites/ugconthub.js');
 
 if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['title'] = "Gatsby UG Starter Template";
@@ -14,6 +15,7 @@ if((metaConfig == null) || (metaConfig == undefined)) {
   metaConfig['author'] = "Author of site";
   metaConfig['GAtrackingID'] = "";
   metaConfig['IGuser'] = "";
+  metaConfig['menus'] = "";
 }
 
 module.exports = {
@@ -73,7 +75,7 @@ module.exports = {
 		baseUrl: `https://api.devugconthub.uoguelph.dev/`,
 		//baseUrl: `http://multidevname-bovey.pantheonsite.io/`,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
-        menus: ["place-to-grow"], // Which menus to fetch, there are the menu IDs.
+        menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },
     },    
     {
