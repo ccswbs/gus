@@ -67,6 +67,9 @@ field_name: [taxonomy_term__vocabulary_name] @link(from: "field_name___NODE")
 **/
 
 const path = require(`path`)
+const fs = require('fs');
+const yaml = require('js-yaml');
+const util = require('util');
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
@@ -509,6 +512,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           node {
             id
             drupal_id
+            drupal_internal__nid
             title
           }
         }
@@ -518,6 +522,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           node {
             id
             drupal_id
+            drupal_internal__nid
             title
           }
         }
@@ -528,6 +533,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             title
             id
             drupal_id
+            drupal_internal__nid
             relationships {
               field_program_acronym {
                 id
@@ -548,6 +554,52 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           }
         }
       }
+
+      menus: allMenuItems {
+        edges {
+          node {
+            title
+            menu_name
+            id
+            parent {
+              id
+            }
+            url
+            route {
+              parameters {
+                node
+              }
+            }
+            childrenMenuItems {
+              id
+              url
+              childrenMenuItems {
+                id
+                url
+                childrenMenuItems {
+                  id
+                  url
+                  route {
+                    parameters {
+                      node
+                    }
+                  }
+                }
+                route {
+                  parameters {
+                    node
+                  }
+                }
+              }
+              route {
+                parameters {
+                  node
+                }
+              }
+            }
+          }
+        }
+      }
       
     }
   `)
@@ -561,11 +613,13 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     // INSTRUCTION: Create a page for each node by processing the results of your query here
     // Each content type should have its own if statement code snippet
 
+    let aliases = {};
+
     // process page nodes
     if(result.data.pages !== undefined){
       const pages = result.data.pages.edges;
       pages.forEach(( { node }, index) => {
-        processPage(
+        aliases[node.drupal_internal__nid] = processPage(
           node, 
           node.id, 
           createContentTypeAlias, 
@@ -578,7 +632,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     if(result.data.articles !== undefined){
       const articles = result.data.articles.edges;
       articles.forEach(( { node }, index) => {
-        processPage(
+        aliases[node.drupal_internal__nid] = processPage(
           node, 
           node.id, 
           createArticleAlias, 
@@ -591,7 +645,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     if(result.data.programs !== undefined){
       const programs = result.data.programs.edges;
       programs.forEach(( { node }, index) => {
-        processPage(
+        aliases[node.drupal_internal__nid] = processPage(
           node, 
           node.relationships.field_program_acronym.id, 
           createProgramAlias, 
@@ -604,7 +658,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     if(result.data.landing_pages !== undefined){
       const landing_pages = result.data.landing_pages.edges;
       landing_pages.forEach(( { node }, index) => {
-        processPage(
+        aliases[node.drupal_internal__nid] = processPage(
           node, 
           node.id, 
           createLandingAlias, 
@@ -612,7 +666,56 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
           helpers);
       })
     }
+
+    // process menu nodes and pass through aliases
+    if(result.data.menus !== undefined){
+      const menus = result.data.menus.edges;
+      createSitemap(menus, aliases);
+    }
   }
+}
+
+function createSitemap(menus, aliases) {
+  let sitemap = [];
+  const sitemapFile = 'config/sitemaps/' + menus[0].node.menu_name + '.yml';
+
+  menus.forEach(( { node }, index) => {
+    if(node.parent === null) {
+      sitemap.push(processMenuItem( node, aliases ));
+    }
+  })
+
+  // console.log(util.inspect(sitemap, {showHidden: false, depth: null}));
+
+  let yamlStr = yaml.safeDump(sitemap);
+  fs.writeFileSync(sitemapFile, yamlStr, 'utf8');
+  
+}
+
+function processMenuItem(node, aliases){
+  if(node !== undefined){
+    const drupalID = node.route.parameters.node;
+    const gatsbyAlias = (aliases[drupalID] !== null && aliases[drupalID] !== undefined) ? aliases[drupalID] : '';
+
+    const menuNode = {
+      id: node.id,
+      drupal_id: drupalID,
+      children: processMenuItemChildren(node.childrenMenuItems, aliases),
+      alias: gatsbyAlias,
+    } 
+    return menuNode;
+  }
+  return null;
+}
+
+function processMenuItemChildren(children, aliases) {
+  let childrenMenuItems = [];  
+  if(children !== undefined){ 
+    children.forEach((child, index ) => {
+      childrenMenuItems.push(processMenuItem(child, aliases));
+    })
+  }
+  return childrenMenuItems;
 }
 
 function processPage(node, contextID, functionToRetrieveAlias, template, helpers) {
@@ -626,6 +729,8 @@ function processPage(node, contextID, functionToRetrieveAlias, template, helpers
         id: contextID,
       },
     })
+
+    return alias;
 }
 
 function createNodeAlias(node, alias, helpers){
