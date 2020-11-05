@@ -18,7 +18,7 @@ export default ({data}) => {
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	if (pageData.relationships.field_grid_items !== undefined) { gridItemsData = pageData.relationships.field_grid_items; }
 
-
+	
 	// set landing page details
 	const imageData = data.images.edges;
 	const title = pageData.title;
@@ -54,7 +54,6 @@ export default ({data}) => {
 			
 			{ /**** Grid Items content ****/ }
 			<GridItems pageData={gridItemsData} displayType={'grid'} />
-
 		</Layout>
 	)
 }
@@ -141,13 +140,25 @@ export const query = graphql`
 															id
 															url
 															childImageSharp {
-																resize (width: 400, height: 300, , cropFocus: CENTER) {
+																resize (width: 400, height: 300, cropFocus: CENTER) {
 																src
 																}
 															}
 														}
 													}
 
+												}
+											}
+											field_grid_page {
+												... on node__page {
+													id
+													title
+													drupal_id
+													fields {
+														alias {
+															value
+														}
+													}
 												}
 											}
 										}

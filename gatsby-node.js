@@ -256,7 +256,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type paragraph__grid_itemsRelationships{
       field_grid_link: FieldLink
-      field_grid_page: [relatedPagesUnion] @link(from: "field_grid_page___NODE")
+      field_grid_page: relatedPagesUnion @link(from: "field_grid_page___NODE")
       field_grid_image: media__image @link(from: "field_grid_image___NODE")
     }
 
