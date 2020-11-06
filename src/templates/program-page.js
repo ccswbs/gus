@@ -57,7 +57,9 @@ function renderProgramOverview(description, specData) {
 
 function renderProgramStats(degreesData, variantData, statsData, imageData) {
 	let checkIfContentAvailable = false;
-	
+console.log(statsData)
+console.log(degreesData)
+console.log(variantData)
 	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
 		checkIfContentAvailable = true;
 	}
@@ -359,8 +361,8 @@ export default ({data, location}) => {
 	specData = progData.relationships.field_specializations;
 	tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
-	let variantDataHeading = prepareVariantHeading(variantData);
-
+  let variantDataHeading = prepareVariantHeading(variantData);
+  
 	return (
 	<Layout date={lastModified}>
 	  <Helmet bodyAttributes={{

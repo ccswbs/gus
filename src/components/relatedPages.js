@@ -6,11 +6,10 @@ import { Link } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 
 function RelatedPages (props) {
-console.log("log-relatedPages");
-console.log(props);
 
     if(contentExists(props.pageData) && props.pageData.length !== 0){
         if(props.displayType === 'grid') {
+
             return (
                 <React.Fragment>
                     {props.pageData.map (paragraph  => {
