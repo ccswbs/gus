@@ -2,96 +2,55 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
-import { useMenuData } from '../utils/fetch-menu';
 //import '../styles/breadcrumbs.css';
+import menuData from '../../config/sitemaps/place-to-grow.yml';
 
-function FetchLink(menuParent, menuParentID) {
-	
-	const getData = useMenuData();
-	let pageID = parseInt(menuParentID);
-	let pageAlias;
-	let landingID = parseInt(menuParentID);
-	let landingAlias;
-	let menuParentLink;
-	
-	if (contentExists(getData)) {
-		let pageData = getData.pages.edges;
-		let landingData = getData.landing.edges;
-		
-		if (contentExists(menuParent) && contentExists(menuParentID)) {
-			
-			for (let i=0; i<pageData.length; i++) {
-				if (pageData[i].node.drupal_internal__nid === pageID) {
-					pageAlias = pageData[i].node.fields.alias.value
-				}
-			}
-			for (let i=0; i<landingData.length; i++) {
-				if (landingData[i].node.drupal_internal__nid === landingID) {
-					landingAlias = landingData[i].node.fields.alias.value
-				}
-			}
-			
-			if (contentExists(pageAlias)) {
-				menuParentLink = pageAlias;
-			} else if (contentExists(landingAlias)) {
-				menuParentLink = landingAlias;
-			}
-			
-		return <><li className="breadcrumb-item">{menuParent} {menuParentLink}</li></>
-		}
-	}
-	return null;
-}
 
-function FetchParent(menuData, midCrumbID) {	
+function test(currentPage) {
 	
-	let test1;
-	let test2;
+	let crumb1;
+	let crumb1id;
+	let crumb1url;
+	let crumb2;
+	let crumb2id;
+	let crumb2url;
+	let crumb3;
 	
 	for (let i=0; i<menuData.length; i++) {
-		if (contentExists(midCrumbID) && midCrumbID === menuData[i].node.id) {
-			test1 = menuData[i].node.title;
-			test2 = menuData[i].node.route.parameters.node;
-			
-			return FetchLink(test1, test2)
+		
+		crumb1 = menuData[i].title;
+		crumb1id = menuData[i].drupal_id;
+		crumb1url = menuData[i].alias;
+		
+		if (contentExists(menuData[i].children)) {
+			for (let j=0; j<menuData[i].children.length; j++) {
+				crumb2 = menuData[i].children[j].title;
+				crumb2id = menuData[i].children[j].drupal_id;
+				crumb2url = menuData[i].children[j].alias;
+				if (contentExists(menuData[i].children[j].children)) {
+					for (let k=0; j<menuData[i].children[j].children.length; k++) {
+						crumb3 = menuData[i].children[j].children[k].title;
+					}
+				}
+			}
 		}
-		return null;
 	}
+	return (
+		<>{crumb1id === currentPage ? <li className="breadcrumb-item">{crumb1}</li> 
+		: <><li className="breadcrumb-item"><Link to={crumb1url}>{crumb1}</Link></li>
+		<li className="breadcrumb-item">{crumb2id === currentPage ? crumb2 : currentPage}</li> </>
+		}</>
+	)
 }
+
 
 function Breadcrumbs (props) {
 
-	const data = useMenuData();
 	const currentPage = String(props.nodeID);
 
-	if (contentExists(data)) {
-		
-		let menuData = data.menus.edges;
-		let menuParent;
-		let menuParentID;
-		let menuTop = data.menus.edges[0].node.title;
-		let menuTopID = data.menus.edges[0].node.route.parameters;
-		let menuChildren = data.menus.edges[0].node.children;
-		let endCrumb;
-		let endCrumbID;
-		//let midCrumb;
-		let midCrumbID;
-
-		
-		for (let i=0; i<menuData.length; i++) {
-			if (currentPage === menuData[i].node.route.parameters.node) {
-				endCrumb = menuData[i].node.title
-				endCrumbID = menuData[i].node.id
-			}			
-		}
-		for (let i=0; i<menuData.length; i++) {
-			if (menuData[i].node.parent != null && menuData[i].node.id === endCrumbID) {
-				midCrumbID = menuData[i].node.parent.id
-			}
-		}
-		
-		
-		
+//console.log(menuData[0].title, menuData[0].children[0].title);	
+	
+	if (contentExists(currentPage)) {		
 		return (<>
 			<div className="breadcrumbs loaded">
 				<div className="container">
@@ -102,9 +61,7 @@ function Breadcrumbs (props) {
 								<li className="breadcrumb-item">
 									<Link to="/"><i className='fa fa-home'><span className='sr-only'>Home</span></i></Link>
 								</li>
-								{FetchParent(menuData, midCrumbID)}	
-								<li className="breadcrumb-item">{contentExists(endCrumb) ? endCrumb : props.nodeTitle}</li>
-								<li className="breadcrumb-item">{midCrumbID}</li>
+								{test(currentPage)}								
 							</ol>
 							</div>
 						</div>
