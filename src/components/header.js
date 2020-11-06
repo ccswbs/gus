@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'gatsby';
+import menuData from '../../config/sitemaps/place-to-grow.yml';
 
 /****
  * Sample Usage with Dropdowns:
@@ -17,15 +19,40 @@ import React from 'react';
                     <li><a href="#">Menu item 6</a></li>
                 </ul>
             </uofg-dropdown-menu>
-        </uofg-header>
+        </uofg-header>		
  * 
  * 
  */
+ 
+const pageSpecificMenu = menuData[0].children.map(item => {
+	
+	let submenu = item.children;
+	let submenuItems = [];
+	
+	if (submenu !== null && submenu.length > 0) {
+		for (let i=0; i<submenu.length; i++) {
+			submenuItems.push(<li key={submenu[i].id}><Link to={submenu[i].alias}>{submenu[i].title}</Link></li>);
+		}
+	}
+	
+	return (<>		
+		{submenu !== null && submenu.length > 0 ?  
+			<><uofg-dropdown-menu>
+			<span className="opener">{item.title}</span>
+			<ul>
+				<li key={item.id}><Link to={item.alias}>{item.title}</Link></li>
+				{submenuItems}
+			</ul>
+			</uofg-dropdown-menu></>
+		: <li key={item.id}><Link to={item.alias}>{item.title}</Link></li>}
+
+	</>)
+})
 
 const Header = () => (
     <>
         <div id="header-breakpoint"></div>
-        <uofg-header class="unloaded"></uofg-header>
+        <uofg-header className="unloaded">{pageSpecificMenu}</uofg-header>
     </>
 )
 
