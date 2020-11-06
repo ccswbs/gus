@@ -252,14 +252,14 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type paragraph__grid_items implements Node {
       drupal_id: String
+      field_grid_link: FieldLink
       relationships: paragraph__grid_itemsRelationships
     }
-    type paragraph__grid_itemsRelationships{
-      field_grid_link: FieldLink
+
+    type paragraph__grid_itemsRelationships implements Node {
       field_grid_page: relatedPagesUnion @link(from: "field_grid_page___NODE")
       field_grid_image: media__image @link(from: "field_grid_image___NODE")
     }
-
 
 
     type node__page implements Node & RelatedPagesInterface {
