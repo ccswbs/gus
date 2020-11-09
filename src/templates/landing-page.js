@@ -3,21 +3,18 @@ import { Helmet } from 'react-helmet';
 import GridItems from '../components/griditems';
 import Layout from '../components/layout';
 import React from 'react';
-import RelatedPages from '../components/relatedPages';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
 import '../styles/program-page.css';
 
 export default ({data}) => {
 	let pageData;
-	let relatedPageData;
 	var gridItemsData;
 	let imageData;
 
 
 	// set data
 	if (data.pages.edges[0] !== undefined) { pageData = data.pages.edges[0].node; }
-	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	if (pageData.relationships.field_grid_items !== undefined) { gridItemsData = pageData.relationships.field_grid_items; }
 
 	// set landing page details
@@ -51,8 +48,6 @@ export default ({data}) => {
 				</div>
 			</div>
 
-			{ /**** Grid content ****/ }
-			<RelatedPages pageData={relatedPageData} displayType={'grid'} />
 			
 			{ /**** Grid Items content ****/ }
 			<GridItems pageData={gridItemsData}/>
@@ -81,10 +76,7 @@ export const query = graphql`
 				relationships {
 					field_grid_items{
 						drupal_id
-						field_grid_link {
-							title
-							uri
-						}
+						
 						relationships {
 							field_grid_image {
 								relationships {
@@ -112,47 +104,6 @@ export const query = graphql`
 								}
 							}
 						}
-					}
-					field_related_content {
-						drupal_id
-					  	relationships {
-							field_list_pages {
-							... on node__page {
-								drupal_id
-								id
-								title
-								fields {
-									alias {
-										value
-									}
-								}
-								
-
-								relationships {
-									field_hero_image {
-										field_media_image {
-										alt
-										}
-										relationships {
-											field_media_image {
-												localFile {
-												url
-												childImageSharp {
-													resize(width: 400, height: 300, , cropFocus: CENTER) {
-													src
-													}
-												}
-												}
-											}
-
-
-										}
-									}
-								}
-
-							}
-						}
-					  }
 					}
 					
 				}

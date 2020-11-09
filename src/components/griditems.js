@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Grid from './grid';
 import GridCell from './gridCell';
-import { Link } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 
 function GridItems (props) {
@@ -13,16 +12,12 @@ function GridItems (props) {
 				{props.pageData.map (paragraph  => {
 					if(contentExists(paragraph.relationships)){
 						let gridItem = paragraph.relationships;
-						console.log(gridItem)
-						console.log(gridItem.field_grid_image)
-						console.log(gridItem.field_grid_image.relationships.field_media_image)
-							
 						const image = (contentExists(gridItem.field_grid_image)) ? gridItem.field_grid_image.relationships.field_media_image : null;
 						const imageFile = (contentExists(image)) ? <img src={image.localFile.childImageSharp.resize.src} alt="" /> : null;
-						return <GridCell key={gridItem.drupal_id} 
-									// url={gridItem.fields.alias.value} 
+						return <GridCell key={paragraph.drupal_id} 
+									url={gridItem.field_grid_page.fields.alias.value} 
 									image={imageFile} 
-									heading={gridItem.title}
+									heading={gridItem.field_grid_page.title}
 									headingLevel="h3" />
 						
 						
