@@ -1,17 +1,16 @@
-import { graphql } from 'gatsby';
-import { Helmet } from 'react-helmet';
-import GridItems from '../components/griditems';
-import Layout from '../components/layout';
 import React from 'react';
+import Layout from '../components/layout';
+import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import GridItems from '../components/griditems';
+import { graphql } from 'gatsby';
 import '../styles/program-page.css';
 
 export default ({data}) => {
 	let pageData;
 	var gridItemsData;
 	let imageData;
-
 
 	// set data
 	if (data.pages.edges[0] !== undefined) { pageData = data.pages.edges[0].node; }
