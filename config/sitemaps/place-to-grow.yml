@@ -1,34 +1,46 @@
-- id: 'menu-items-menu_link_content:cfc0db20-b487-429e-9f4b-93811c68e866'
-  drupal_id: '39'
-  alias: /topics/a-place-to-grow
-  title: A Place to Grow
+- id: 'menu-items-menu_link_content:f90e3319-35e6-42ca-be92-9817dc9d0d3b'
+  drupal_id: '27'
+  alias: /recruitment
+  title: Recruitment
   parent: null
   children:
-    - id: 'menu-items-menu_link_content:cb52465c-d9c6-4565-a86d-7faef60805c2'
-      drupal_id: '38'
-      alias: /soil-health
-      title: Soil Health
+    - id: 'menu-items-menu_link_content:228d344a-9446-409d-a171-f08edff75ec3'
+      drupal_id: '22'
+      alias: /study-food
+      title: Study Food
       parent:
-        id: 'menu-items-menu_link_content:cfc0db20-b487-429e-9f4b-93811c68e866'
+        id: 'menu-items-menu_link_content:f90e3319-35e6-42ca-be92-9817dc9d0d3b'
       children: []
-    - id: 'menu-items-menu_link_content:c52c1365-748b-4dbc-a68f-04088031dd57'
-      drupal_id: '42'
-      alias: /one-health
-      title: One Health
+    - id: 'menu-items-menu_link_content:de8671f5-955c-46c7-96ca-ba6c5d7ea956'
+      drupal_id: '23'
+      alias: /study-the-environment
+      title: Study the Environment
       parent:
-        id: 'menu-items-menu_link_content:cfc0db20-b487-429e-9f4b-93811c68e866'
+        id: 'menu-items-menu_link_content:f90e3319-35e6-42ca-be92-9817dc9d0d3b'
       children: []
-    - id: 'menu-items-menu_link_content:9e7d100e-55aa-4e79-90b2-501f5df370b0'
-      drupal_id: '44'
-      alias: /recruitment
-      title: Recruitment
+    - id: 'menu-items-menu_link_content:1514c856-cd58-468d-aa63-6646de8815c4'
+      drupal_id: '25'
+      alias: /study-animals
+      title: Study Animals
       parent:
-        id: 'menu-items-menu_link_content:cfc0db20-b487-429e-9f4b-93811c68e866'
-      children:
-        - id: 'menu-items-menu_link_content:23cb4249-81c4-4b8f-8ba9-e614da2d0dc7'
-          drupal_id: '46'
-          alias: /sub-page-of-recruitment
-          title: Sub-page of Recruitment
-          parent:
-            id: 'menu-items-menu_link_content:9e7d100e-55aa-4e79-90b2-501f5df370b0'
-          children: []
+        id: 'menu-items-menu_link_content:f90e3319-35e6-42ca-be92-9817dc9d0d3b'
+      children: []
+    - id: 'menu-items-menu_link_content:24a79fc8-1820-4d03-bb3c-de0b7dff7d2f'
+      drupal_id: '24'
+      alias: /study-stem
+      title: Study STEM
+      parent:
+        id: 'menu-items-menu_link_content:f90e3319-35e6-42ca-be92-9817dc9d0d3b'
+      children: []
+- id: 'menu-items-menu_link_content:ab27146f-e01e-4cbd-9de2-8101021d992e'
+  drupal_id: '20'
+  alias: /soil-health
+  title: Soil Health
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:db345dee-4a03-42b9-999a-5f72527e1555'
+  drupal_id: '26'
+  alias: /one-health
+  title: One Health
+  parent: null
+  children: []

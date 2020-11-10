@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import menuData from '../../config/sitemaps/place-to-grow.yml';
+//import menuData from '../../config/sitemaps/place-to-grow.yml';
 
 /****
  * Sample Usage with Dropdowns:
@@ -24,7 +24,9 @@ import menuData from '../../config/sitemaps/place-to-grow.yml';
  * 
  */
  
-const pageSpecificMenu = menuData[0].children.map(item => {
+const menuData = require('../../config/sitemaps/place-to-grow.yml');
+ 
+const pageSpecificMenu = menuData.map(item => {
 	
 	let submenu = item.children;
 	let submenuItems = [];
