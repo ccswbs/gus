@@ -93,7 +93,10 @@ module.exports = {
       options: {
         username: metaConfig['IGuser'],        
       },
-    },	
+    },
+    {
+      resolve: `gatsby-plugin-asset-path`,
+    }
   ],
   mapping: {
     "node__article.fields.alias": `PathAlias`,
@@ -101,4 +104,5 @@ module.exports = {
     "node__page.fields.alias": `PathAlias`,
     "node__program.fields.alias": `PathAlias`,
   },
+  assetPrefix: "/assets/",
 }

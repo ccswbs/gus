@@ -65,7 +65,7 @@ steps:
 
 # Build Gatsby
 - script: |
-    npx gatsby build
+    npx gatsby build --prefix-paths
   displayName: 'Gatsby build'
 
 # Publish artifact
