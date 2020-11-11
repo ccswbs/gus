@@ -2,19 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
+import { useMenuData } from '../utils/fetch-menu';
 
-const menuData = require('../../config/sitemaps/place-to-grow.yml');
+//const menuData = require('../../config/sitemaps/place-to-grow.yml');
+
+
+
 
 function Breadcrumbs (props) {
 
 	const currentPage = String(props.nodeID);
 	const pageTitle = props.nodeTitle;
 	
+	const data = useMenuData();
+	let menus;
+	
+	if (contentExists(data)) {
+		menus = data[0];
+	}
+	
+	const menuData = require('../../config/sitemaps/' + menus + '.yml');
+	
 	if (contentExists(currentPage)) {
 
 		let endCrumb;
 		let midCrumb;
 		let midCrumbURL;
+		console.log(menus);
 		
 		for (let i=0; i<menuData.length; i++) {
 			if (menuData[i].drupal_id === currentPage) {
@@ -44,13 +58,13 @@ function Breadcrumbs (props) {
 								</li>
 								{contentExists(midCrumb) ? <li className="breadcrumb-item"><Link to={midCrumbURL}>{midCrumb}</Link></li> : null}
 								<li className="breadcrumb-item">{contentExists(endCrumb) ? endCrumb : pageTitle}</li>							
-							</ol>
+							</ol>							
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</>)
+			</div>			
+		</>)		
 	}
 	return null;
 }

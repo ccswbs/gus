@@ -23,6 +23,7 @@ module.exports = {
     title: metaConfig['title'],
     description: metaConfig['description'],
     author: metaConfig['author'],
+	menus: metaConfig['menus'],
   },
   plugins: [
     {
