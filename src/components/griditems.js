@@ -13,7 +13,7 @@ function GridItems (props) {
 					if(contentExists(paragraph.relationships)){
 						let gridItem = paragraph.relationships;
 						const image = (contentExists(gridItem.field_grid_image)) ? gridItem.field_grid_image.relationships.field_media_image : null;
-						const imageFile = (contentExists(image)) ? <img src={image.localFile.childImageSharp.resize.src} alt="" /> : null;
+						const imageFile = (contentExists(image) && contentExists(image.localFile.childImageSharp)) ? <img src={image.localFile.childImageSharp.resize.src} alt="" /> : null;
 						return <GridCell key={paragraph.drupal_id} 
 									url={gridItem.field_grid_page.fields.alias.value} 
 									image={imageFile} 
