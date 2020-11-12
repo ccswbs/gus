@@ -46,7 +46,7 @@ const pageSpecificMenu = menuData.map(item => {
 				{submenuItems}
 			</ul>
 			</uofg-dropdown-menu></>
-		: <li key={item.id}><Link to={item.alias}>{item.title}</Link></li>}
+		: <Link to={item.alias}>{item.title}</Link>}
 
 	</>)
 })
