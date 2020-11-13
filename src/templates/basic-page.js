@@ -1,13 +1,12 @@
-
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import { graphql } from 'gatsby';
 import Layout from '../components/layout';
-import RelatedPages from '../components/relatedPages';
+import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 //import Sidebar from '../components/sidebar';
+import RelatedPages from '../components/relatedPages';
+import { graphql } from 'gatsby';
 
 export default ({data}) => {
 

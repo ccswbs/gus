@@ -9,6 +9,7 @@ function RelatedPages (props) {
 
     if(contentExists(props.pageData) && props.pageData.length !== 0){
         if(props.displayType === 'grid') {
+
             return (
                 <React.Fragment>
                     {props.pageData.map (paragraph  => {

@@ -1,26 +1,28 @@
-import { graphql } from 'gatsby';
-import { Helmet } from 'react-helmet';
-import Layout from '../components/layout';
 import React from 'react';
-import RelatedPages from '../components/relatedPages';
+import Layout from '../components/layout';
+import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 //import Sidebar from '../components/sidebar';
+import GridItems from '../components/griditems';
+import { graphql } from 'gatsby';
+import '../styles/program-page.css';
 
 export default ({data}) => {
 	let pageData;
-	let relatedPageData;
+	var gridItemsData;
+	let imageData;
 
 	// set data
 	if (data.pages.edges[0] !== undefined) { pageData = data.pages.edges[0].node; }
-	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
+	if (pageData.relationships.field_grid_items !== undefined) { gridItemsData = pageData.relationships.field_grid_items; }
 
 	// set landing page details
-	const imageData = data.images.edges;
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const nodeID = pageData.drupal_internal__nid;
+	if (data.images.edges !== undefined) { imageData = data.images.edges; }
 
 	return (
 		<Layout>
@@ -49,9 +51,8 @@ export default ({data}) => {
 				</div>
 			</div>
 
-			{ /**** Grid content ****/ }
-			<RelatedPages pageData={relatedPageData} displayType={'grid'} />
-
+			{ /**** Grid Items content ****/ }
+			<GridItems pageData={gridItemsData}/>
 		</Layout>
 	)
 }
@@ -64,6 +65,7 @@ export const query = graphql`
 				body {
 					processed
 				}
+				changed
 				drupal_id
 				drupal_internal__nid
 				title
@@ -74,47 +76,38 @@ export const query = graphql`
 				}
 
 				relationships {
-					field_related_content {
+					field_grid_items{
 						drupal_id
-					  	relationships {
-							field_list_pages {
-							... on node__page {
-								drupal_id
-								id
-								title
-								fields {
-									alias {
-										value
-									}
-								}
-								
-
+						
+						relationships {
+							field_grid_image {
 								relationships {
-									field_hero_image {
-										field_media_image {
-										alt
-										}
-										relationships {
-											field_media_image {
-												localFile {
-												url
+									field_media_image {
+										localFile {
+											publicURL
 												childImageSharp {
-													resize(width: 400, height: 300, , cropFocus: CENTER) {
+												resize (width: 400, height: 300, cropFocus: ENTROPY) {
 													src
-													}
-												}
 												}
 											}
-
-
+										}	
+									}
+								}
+							}
+							field_grid_page {
+								... on node__page {
+									drupal_id
+									title
+									fields {
+										alias {
+											value
 										}
 									}
 								}
-
 							}
 						}
-					  }
 					}
+					
 				}
 				
 			}
@@ -150,5 +143,6 @@ export const query = graphql`
 		}
 	  }
 
-}
+	}
+
 `

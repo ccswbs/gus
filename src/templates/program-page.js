@@ -1,24 +1,24 @@
+import React from 'react';
+import Layout from '../components/layout';
+import { Helmet } from 'react-helmet';
+import SEO from '../components/seo';
+import Hero from '../components/hero';
 import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
 import Courses from '../components/courses';
 import Degrees from '../components/degrees';
 import Employers from '../components/employers';
-import Layout from '../components/layout';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import NewsGrid from '../components/newsGrid';
-import React from 'react';
-import SEO from '../components/seo';
 import Stats from '../components/stats'
 import SVG from 'react-inlinesvg';
-import Hero from '../components/hero';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import { graphql } from 'gatsby';
-import { Helmet } from 'react-helmet';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
 
@@ -57,7 +57,7 @@ function renderProgramOverview(description, specData) {
 
 function renderProgramStats(degreesData, variantData, statsData, imageData) {
 	let checkIfContentAvailable = false;
-	
+
 	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
 		checkIfContentAvailable = true;
 	}
@@ -359,8 +359,8 @@ export default ({data, location}) => {
 	specData = progData.relationships.field_specializations;
 	tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
-	let variantDataHeading = prepareVariantHeading(variantData);
-
+  let variantDataHeading = prepareVariantHeading(variantData);
+  
 	return (
 	<Layout date={lastModified}>
 	  <Helmet bodyAttributes={{
