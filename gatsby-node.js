@@ -436,81 +436,82 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.onCreateNode = ({ node, createNodeId, actions }) => {
-  const { createNodeField } = actions
+	const { createNodeField } = actions
 
-  // Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
-  // INSTRUCTION: If you've added a new content-type and it contains a field that references
-  // multiple vocabularies, then add it to the if statement
-  if (node.internal.type === `media__image` || 
-      node.internal.type === `node__article` || 
-      node.internal.type === `node__call_to_action` ||
-      node.internal.type === `node__career` || 
-      node.internal.type === `node__course` || 
-      node.internal.type === `node__employer` ||
-      node.internal.type === `node__page` || 
-      node.internal.type === `node__landing_page` || 
-      node.internal.type === `node__testimonial`
-    ) {
-    createNodeField({
-      node,
-      name: `tags`,
-      value: node.relationships.field_tags___NODE,
-    })
-  }
+	// Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
+	// INSTRUCTION: If you've added a new content-type and it contains a field that references
+	// multiple vocabularies, then add it to the if statement
+	if (node.internal.type === `media__image` || 
+		node.internal.type === `node__article` || 
+		node.internal.type === `node__call_to_action` ||
+		node.internal.type === `node__career` || 
+		node.internal.type === `node__course` || 
+		node.internal.type === `node__employer` ||
+		node.internal.type === `node__page` || 
+		node.internal.type === `node__landing_page` || 
+		node.internal.type === `node__testimonial`
+	) {
+	createNodeField({
+		node,
+		name: `tags`,
+		value: node.relationships.field_tags___NODE,
+		})
+	}
 
-  // Handle nodes that require page aliases
-  // INSTRUCTION: If you've added a new content-type and need each node to generate a page
-  // then add it to the following if statement
-  if (node.internal.type === `node__article` || 
-      node.internal.type === `node__landing_page` || 
-      node.internal.type === `node__page` || 
-      node.internal.type === `node__program` ) {
+	// Handle nodes that require page aliases
+	// INSTRUCTION: If you've added a new content-type and need each node to generate a page
+	// then add it to the following if statement
+	if (node.internal.type === `node__article` || 
+		node.internal.type === `node__landing_page` || 
+		node.internal.type === `node__page` || 
+		node.internal.type === `node__program` ) {
         
-    /* Create page path */
-    const aliasID = createNodeId(`alias-${node.drupal_id}`);
+		/* Create page path */
+		const aliasID = createNodeId(`alias-${node.drupal_id}`);
 
-    // add  mapped alias node as a field
-    createNodeField({
-      node,
-      name: "alias",
-      value: aliasID,
-    })
+		// add  mapped alias node as a field
+		createNodeField({
+			node,
+			name: "alias",
+			value: aliasID,
+		})
 
-    /* Set content field for search */
-    /*    - return body of content */
-    if (typeof node.body !== 'undefined' && node.body !== null) {
-        content = `${node.body.processed}`
-    }
-    /*    - return description of taxonomy */
-    else if (typeof node.description !== 'undefined' && node.description !== null) {
-        content = `${node.description.processed}`
-    }
-    /*    - set default content */
-    else {
-        content = ''
-    }
-    createNodeField({
-        node,
-        name: `content`,
-        value: content,
-    })
-  }
+		/* Set content field for search */
+		/*    - return body of content */
+		if (typeof node.body !== 'undefined' && node.body !== null) {
+			content = `${node.body.processed}`
+		}
+		/*    - return description of taxonomy */
+		else if (typeof node.description !== 'undefined' && node.description !== null) {
+			content = `${node.description.processed}`
+		}
+		/*    - set default content */
+		else {
+			content = ''
+		}
+		createNodeField({
+			node,
+			name: `content`,
+			value: content,
+		})
+	}
 }
 
 exports.createPages = async ({ graphql, actions, createContentDigest, createNodeId, reporter }) => {
 
-  // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
-  const pageTemplate = path.resolve('./src/templates/basic-page.js');
-  const articleTemplate = path.resolve('./src/templates/article-page.js');
-  const programTemplate = path.resolve('./src/templates/program-page.js');
-  const landingTemplate = path.resolve('./src/templates/landing-page.js');
-  const helpers = Object.assign({}, actions, {
-    createContentDigest,
-    createNodeId,
-  })
+	// INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
+	const pageTemplate = path.resolve('./src/templates/basic-page.js');
+	const articleTemplate = path.resolve('./src/templates/article-page.js');
+	const programTemplate = path.resolve('./src/templates/program-page.js');
+	const landingTemplate = path.resolve('./src/templates/landing-page.js');
+	const helpers = Object.assign({}, actions, {
+		createContentDigest,
+		createNodeId,
+	})
 
-  // INSTRUCTION: Query for page template content here
-  const result = await graphql(`
+	// INSTRUCTION: Query for menu and page template content here
+
+	const result = await graphql(`
     {
       pages: allNodePage {
         edges {
@@ -622,83 +623,83 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             }
           }
         }
-      }
-      
+      }      
     }
   `)
 
-  // INSTRUCTION: Query for menu content here
+	if (result.errors) {
+		reporter.panicOnBuild('ERROR: Loading "createPages" query')
+	}
 
+	if (result.data !== undefined) {
 
-  if (result.errors) {
-    reporter.panicOnBuild('ERROR: Loading "createPages" query')
-  }
+		// INSTRUCTION: Create a page for each node by processing the results of your query here
+		// Each content type should have its own if statement code snippet
 
-  if (result.data !== undefined){
+		let aliases = {};
 
-    // INSTRUCTION: Create a page for each node by processing the results of your query here
-    // Each content type should have its own if statement code snippet
+		// process page nodes
+		if (result.data.pages !== undefined) {
+			const pages = result.data.pages.edges;
+			pages.forEach(( { node }, index) => {
+				aliases[node.drupal_internal__nid] = processPage(
+					node, 
+					node.id, 
+					createContentTypeAlias, 
+					pageTemplate, 
+					helpers
+				);
+			})
+		}
 
-    let aliases = {};
+		// process article nodes
+		if (result.data.articles !== undefined) {
+			const articles = result.data.articles.edges;
+			articles.forEach(( { node }, index) => {
+				aliases[node.drupal_internal__nid] = processPage(
+					node, 
+					node.id, 
+					createArticleAlias, 
+					articleTemplate, 
+					helpers
+				);
+			})
+		}
 
-    // process page nodes
-    if(result.data.pages !== undefined){
-      const pages = result.data.pages.edges;
-      pages.forEach(( { node }, index) => {
-        aliases[node.drupal_internal__nid] = processPage(
-          node, 
-          node.id, 
-          createContentTypeAlias, 
-          pageTemplate, 
-          helpers);
-      })
-    }
+		// process program nodes
+		if (result.data.programs !== undefined) {
+			const programs = result.data.programs.edges;
+			programs.forEach(( { node }, index) => {
+				aliases[node.drupal_internal__nid] = processPage(
+					node, 
+					node.relationships.field_program_acronym.id, 
+					createProgramAlias, 
+					programTemplate, 
+					helpers
+				);
+			})
+		}
 
-    // process article nodes
-    if(result.data.articles !== undefined){
-      const articles = result.data.articles.edges;
-      articles.forEach(( { node }, index) => {
-        aliases[node.drupal_internal__nid] = processPage(
-          node, 
-          node.id, 
-          createArticleAlias, 
-          articleTemplate, 
-          helpers);
-      })
-    }
+		// process landing page topics
+		if (result.data.landing_pages !== undefined) {
+			const landing_pages = result.data.landing_pages.edges;
+			landing_pages.forEach(( { node }, index) => {
+				aliases[node.drupal_internal__nid] = processPage(
+					node, 
+					node.id, 
+					createLandingAlias, 
+					landingTemplate, 
+					helpers
+				);
+			})
+		}
 
-    // process program nodes
-    if(result.data.programs !== undefined){
-      const programs = result.data.programs.edges;
-      programs.forEach(( { node }, index) => {
-        aliases[node.drupal_internal__nid] = processPage(
-          node, 
-          node.relationships.field_program_acronym.id, 
-          createProgramAlias, 
-          programTemplate, 
-          helpers);
-      })
-    }
-
-    // process landing page topics
-    if(result.data.landing_pages !== undefined){
-      const landing_pages = result.data.landing_pages.edges;
-      landing_pages.forEach(( { node }, index) => {
-        aliases[node.drupal_internal__nid] = processPage(
-          node, 
-          node.id, 
-          createLandingAlias, 
-          landingTemplate, 
-          helpers);
-      })
-    }
-
-    // process menu nodes and pass through aliases
-    if(result.data.menus !== undefined){
-      const menus = result.data.menus.edges;
-      createSitemap(menus, aliases);
-    }
-  }
+		// process menu nodes and pass through aliases
+		if (result.data.menus !== undefined) {
+			const menus = result.data.menus.edges;
+			createSitemap(menus, aliases);
+		}
+	}
 }
 
 function createSitemap(menus, aliases) {
