@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'gatsby';
 
 /****
  * Sample Usage with Dropdowns:
@@ -34,7 +33,10 @@ const pageSpecificMenu = menuData.map(item => {
 	
 	if (submenu !== null && submenu.length > 0) {
 		for (let i=0; i<submenu.length; i++) {
-			submenuItems.push(<li key={submenu[i].id}><Link to={submenu[i].alias}>{submenu[i].title}</Link></li>);
+			submenuItems.push(<li key={submenu[i].id}>
+				<a href={submenu[i].alias !== "" ? submenu[i].alias : submenu[i].url}>{submenu[i].title}</a>
+				</li>
+			);
 		}
 	}
 
@@ -43,11 +45,11 @@ const pageSpecificMenu = menuData.map(item => {
 			<><uofg-dropdown-menu>
 			<span className="opener">{item.title}</span>
 			<ul>
-				<li key={item.id}><Link to={item.alias}>{item.title}</Link></li>
+				<li key={item.id}><a href={item.alias !== "" ? item.alias : item.url}>{item.title}</a></li>
 				{submenuItems}
 			</ul>
 			</uofg-dropdown-menu></>
-		: <React.Fragment key={item.id}><Link to={item.alias}>{item.title}</Link></React.Fragment>}
+		: <React.Fragment key={item.id}><a href={item.alias !== "" ? item.alias : item.url}>{item.title}</a></React.Fragment>}
 
 	</>)
 })

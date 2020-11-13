@@ -149,6 +149,24 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
 	
+	type MenuItems implements Node {
+	  parent: Node
+	  enabled: Boolean
+	  menu_name: String
+	  route: MenuItemsRoute
+	  title: String
+	  url: String
+	  weight: Int
+	  childrenMenuItems: [MenuItems]
+	}
+	type MenuItemsRoute implements Node {
+	  name: String
+	  parameters: MenuItemsRouteParameters
+	}
+	type MenuItemsRouteParameters implements Node {
+	  node: String
+	}
+	
 	type node__article implements Node {
       changed: Date @dateformat
       created: Date @dateformat
@@ -703,48 +721,49 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
 }
 
 function createSitemap(menus, aliases) {
-  let sitemap = [];
-  const sitemapFile = 'config/sitemaps/' + menus[0].node.menu_name + '.yml';
+	let sitemap = [];
+	const sitemapFile = 'config/sitemaps/' + menus[0].node.menu_name + '.yml';
 
-  menus.forEach(( { node }, index) => {
-    if(node.parent === null) {
-      sitemap.push(processMenuItem( node, aliases ));
-    }
-  })
+	menus.forEach(( { node }, index) => {
+		if (node.parent === null) {
+			sitemap.push(processMenuItem( node, aliases ));
+		}
+	})
 
-  // console.log(util.inspect(sitemap, {showHidden: false, depth: null}));
+	// console.log(util.inspect(sitemap, {showHidden: false, depth: null}));
 
-  let yamlStr = yaml.safeDump(sitemap);
-  fs.writeFileSync(sitemapFile, yamlStr, 'utf8');
-  
+	let yamlStr = yaml.safeDump(sitemap);
+	fs.writeFileSync(sitemapFile, yamlStr, 'utf8');  
 }
 
 function processMenuItem(node, aliases){
-  if(node !== undefined){
-    const drupalID = node.route.parameters.node;
-    const gatsbyAlias = (aliases[drupalID] !== null && aliases[drupalID] !== undefined) ? aliases[drupalID] : '';
+	if (node !== undefined) {
+		const drupalID = (node.route.parameters !== null && node.route.parameters !== undefined) ? node.route.parameters.node : '';
+		const gatsbyAlias = (aliases[drupalID] !== null && aliases[drupalID] !== undefined) ? aliases[drupalID] : '';
+		const menuURL = node.url;
 
-    const menuNode = {
-      id: node.id,
-      drupal_id: drupalID,
-      alias: gatsbyAlias,
-      title: node.title,
-	  parent: node.parent,
-      children: processMenuItemChildren(node.children, aliases),
-    } 
-    return menuNode;
-  }
-  return null;
+		const menuNode = {
+			id: node.id,
+			drupal_id: drupalID,
+			alias: gatsbyAlias,
+			url: menuURL,
+			title: node.title,
+			parent: node.parent,
+			children: processMenuItemChildren(node.children, aliases),
+		} 
+		return menuNode;
+	}
+	return null;
 }
 
 function processMenuItemChildren(children, aliases) {
-  let childrenMenuItems = [];  
-  if(children !== undefined){ 
-    children.forEach((child, index ) => {
-      childrenMenuItems.push(processMenuItem(child, aliases));
-    })
-  }
-  return childrenMenuItems;
+	let childrenMenuItems = [];  
+	if (children !== undefined) { 
+		children.forEach((child, index ) => {
+			childrenMenuItems.push(processMenuItem(child, aliases));
+		})
+	}
+	return childrenMenuItems;
 }
 
 function processPage(node, contextID, functionToRetrieveAlias, template, helpers) {
@@ -763,77 +782,76 @@ function processPage(node, contextID, functionToRetrieveAlias, template, helpers
 }
 
 function createNodeAlias(node, alias, helpers){
-  const aliasID = helpers.createNodeId(`alias-${node.drupal_id}`);
-  const aliasData = {
-    key: aliasID,
-    value: alias,
-  }
-  const aliasContent = JSON.stringify(aliasData);
-  const aliasMeta = {
-    id: aliasID,
-    parent: null,
-    children: [],
-    internal: {
-      type: `PathAlias`,
-      mediaType: `text/html`,
-      content: aliasContent,
-      contentDigest: helpers.createContentDigest(aliasData)
-    }
-  }
-
-  const aliasNode = Object.assign({}, aliasData, aliasMeta);
-  helpers.createNode(aliasNode);
+	const aliasID = helpers.createNodeId(`alias-${node.drupal_id}`);
+	const aliasData = {
+		key: aliasID,
+		value: alias,
+	}
+	const aliasContent = JSON.stringify(aliasData);
+	const aliasMeta = {
+		id: aliasID,
+		parent: null,
+		children: [],
+		internal: {
+			type: `PathAlias`,
+			mediaType: `text/html`,
+			content: aliasContent,
+			contentDigest: helpers.createContentDigest(aliasData)
+		}
+	}
+	const aliasNode = Object.assign({}, aliasData, aliasMeta);
+	helpers.createNode(aliasNode);
 }
 
 // use for content types
-function createContentTypeAlias(node, prepend = ''){
-  let alias = `/` + slugify(node.title);
+function createContentTypeAlias(node, prepend = '') {
+	let alias = `/` + slugify(node.title);
 
-  if(prepend !== '') {
-    alias = `/` + slugify(prepend) + alias;
-  }
-
-  return alias;
+	if (prepend !== '') {
+		alias = `/` + slugify(prepend) + alias;
+	}
+	
+	return alias;
 }
 
 // use for taxonomies
-function createTaxonomyAlias(node, prepend = ''){
-  let alias = `/` + slugify(node.name);
+function createTaxonomyAlias(node, prepend = '') {
+	let alias = `/` + slugify(node.name);
 
-  if(prepend !== '') {
-    alias = `/` + slugify(prepend) + alias;
-  }
+	if (prepend !== '') {
+		alias = `/` + slugify(prepend) + alias;
+	}
 
-  return alias;
+	return alias;
 }
 
-function createProgramAlias(node){
-  let alias = createContentTypeAlias(node, `programs`)
-  return alias;
+function createProgramAlias(node) {
+	let alias = createContentTypeAlias(node, `programs`)
+	return alias;
 }
 
-function createArticleAlias(node){
-  let alias = createContentTypeAlias(node, `news`)
-  return alias;
+function createArticleAlias(node) {
+	let alias = createContentTypeAlias(node, `news`)
+	return alias;
 }
 
-function createLandingAlias(node){
-  let alias = createContentTypeAlias(node, `topics`)
-  return alias;
+function createLandingAlias(node) {
+	let alias = createContentTypeAlias(node, `topics`)
+	return alias;
 }
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function slugify(string) {
-  const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
-  const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
-  const p = new RegExp(a.split('').join('|'), 'g')
+	const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
+	const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
+	const p = new RegExp(a.split('').join('|'), 'g')
 
-  return string.toString().toLowerCase()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, '') // Trim - from end of text
+	return string.toString().toLowerCase()
+	.replace(/\s+/g, '-') // Replace spaces with -
+	.replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+	.replace(/&/g, '-and-') // Replace & with 'and'
+	.replace(/[^\w\-]+/g, '') // Remove all non-word characters
+	.replace(/\-\-+/g, '-') // Replace multiple - with single -
+	.replace(/^-+/, '') // Trim - from start of text
+	.replace(/-+$/, '') // Trim - from end of text
 }
