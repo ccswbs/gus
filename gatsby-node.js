@@ -72,31 +72,31 @@ const yaml = require('js-yaml');
 const util = require('util');
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+	const { createTypes } = actions
 
-  const typeDefs = `    
+	const typeDefs = `    
 	union relatedParagraphUnion = 
-      paragraph__program_variants
-      | paragraph__general_text
-	
+	  paragraph__program_variants
+	  | paragraph__general_text
+
 	union relatedTaxonomyUnion =
-      taxonomy_term__tags
-      | taxonomy_term__specializations
-      | taxonomy_term__programs
-      | taxonomy_term__degrees
-      | taxonomy_term__topics
-      | taxonomy_term__units
+	  taxonomy_term__tags
+	  | taxonomy_term__specializations
+	  | taxonomy_term__programs
+	  | taxonomy_term__degrees
+	  | taxonomy_term__topics
+	  | taxonomy_term__units
 
-  union relatedPagesUnion =
-      node__page
-      | node__landing_page
+	union relatedPagesUnion =
+	  node__page
+	  | node__landing_page
 
-  interface RelatedPagesInterface @nodeInterface {
-    id: ID!
-    drupal_id: String
-    title: String
-    fields: FieldsPathAlias
-  }
+	interface RelatedPagesInterface @nodeInterface {
+	  id: ID!
+	  drupal_id: String
+	  title: String
+	  fields: FieldsPathAlias
+	}
 	
 	interface TaxonomyInterface @nodeInterface {
       id: ID!
@@ -148,7 +148,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-  type node__article implements Node {
+	
+	type node__article implements Node {
       changed: Date @dateformat
       created: Date @dateformat
       drupal_id: String
@@ -235,7 +236,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-
     type node__landing_page implements Node & RelatedPagesInterface {
       drupal_id: String
       drupal_internal__nid: Int
@@ -249,18 +249,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
       field_grid_items: [paragraph__grid_items] @link(from: "field_grid_items___NODE")
     }
-
-    type paragraph__grid_items implements Node {
-      drupal_id: String
-      relationships: paragraph__grid_itemsRelationships
-    }
-
-    type paragraph__grid_itemsRelationships implements Node {
-      field_grid_page: relatedPagesUnion @link(from: "field_grid_page___NODE")
-      field_grid_image: media__image @link(from: "field_grid_image___NODE")
-    }
-
-
     type node__page implements Node & RelatedPagesInterface {
       drupal_id: String
       drupal_internal__nid: Int
@@ -319,11 +307,19 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }    
+    }
 
 	type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
+    }
+	type paragraph__grid_items implements Node {
+      drupal_id: String
+      relationships: paragraph__grid_itemsRelationships
+    }
+    type paragraph__grid_itemsRelationships implements Node {
+      field_grid_page: relatedPagesUnion @link(from: "field_grid_page___NODE")
+      field_grid_image: media__image @link(from: "field_grid_image___NODE")
     }
     type paragraph__program_statistic implements Node {
       drupal_id: String	  
@@ -346,8 +342,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__program_variantsRelationships {
       field_variant_name: taxonomy_term__program_variant_type
       field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
-    }	
-
+    }
     type paragraph__related_content implements Node {
       drupal_id: String
       relationships: paragraph__related_contentRelationships
@@ -356,17 +351,17 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_list_pages: [relatedPagesUnion] @link(from: "field_list_pages___NODE")
     }	
 
-  type PathAlias implements Node {
+	type PathAlias implements Node {
       value: String
       alias: String
     }
-
-  type taxonomy_term__news_category implements Node & TaxonomyInterface {
-      drupal_id: String
-      drupal_internal__tid: Int
-      name: String
-      description: TaxonomyDescription
+	
+	type TaxonomyDescription {
+      processed: String
+      value: String
+      format: String
     }
+
     type taxonomy_term__degrees implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -379,6 +374,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__tid: Int
       name: String
       field_goal_action: String
+    }
+	type taxonomy_term__news_category implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+      description: TaxonomyDescription
     }
     type taxonomy_term__programs implements Node & TaxonomyInterface {
       drupal_id: String
@@ -423,19 +424,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
-
     type taxonomy_term__units implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       field_unit_acronym: String
       name: String
       description: TaxonomyDescription
-    }
-
-    type TaxonomyDescription {
-      processed: String
-      value: String
-      format: String
     }
   `
   createTypes(typeDefs)
