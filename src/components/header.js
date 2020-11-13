@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'gatsby';
-//import menuData from '../../config/sitemaps/place-to-grow.yml';
 
 /****
  * Sample Usage with Dropdowns:
@@ -24,7 +23,9 @@ import { Link } from 'gatsby';
  * 
  */
  
-const menuData = require('../../config/sitemaps/place-to-grow.yml');
+const config = require('../../gatsby-config');
+const menuName = config.siteMetadata.menus[0]; 
+const menuData = require('../../config/sitemaps/' + menuName + '.yml');
  
 const pageSpecificMenu = menuData.map(item => {
 	
@@ -36,7 +37,7 @@ const pageSpecificMenu = menuData.map(item => {
 			submenuItems.push(<li key={submenu[i].id}><Link to={submenu[i].alias}>{submenu[i].title}</Link></li>);
 		}
 	}
-	
+
 	return (<>		
 		{submenu !== null && submenu.length > 0 ?  
 			<><uofg-dropdown-menu>
@@ -46,7 +47,7 @@ const pageSpecificMenu = menuData.map(item => {
 				{submenuItems}
 			</ul>
 			</uofg-dropdown-menu></>
-		: <Link to={item.alias}>{item.title}</Link>}
+		: <React.Fragment key={item.id}><Link to={item.alias}>{item.title}</Link></React.Fragment>}
 
 	</>)
 })
