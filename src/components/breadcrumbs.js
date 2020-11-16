@@ -7,15 +7,20 @@ import { useMenuData } from '../utils/fetch-menu';
 function Breadcrumbs (props) {
 
 	const currentPage = String(props.nodeID);
-	const pageTitle = props.nodeTitle;	
-	const data = useMenuData();
+	const pageTitle = props.nodeTitle;
+	
+	const config = require('../../gatsby-config');
+	const menuName = config.siteMetadata.menus[0]; 
+	const menuData = require('../../config/sitemaps/' + menuName + '.yml');
+	
+	/* const data = useMenuData();
 	let menu;
 	
 	if (contentExists(data)) {
 		menu = data[0];
-	}
+	} 
 	
-	const menuData = require('../../config/sitemaps/' + menu + '.yml');
+	const menuData = require('../../config/sitemaps/' + menu + '.yml');*/
 	
 	if (contentExists(currentPage)) {
 
