@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
-import { useMenuData } from '../utils/fetch-menu';
 
 function Breadcrumbs (props) {
 
@@ -12,15 +11,6 @@ function Breadcrumbs (props) {
 	const config = require('../../gatsby-config');
 	const menuName = config.siteMetadata.menus[0]; 
 	const menuData = require('../../config/sitemaps/' + menuName + '.yml');
-	
-	/* const data = useMenuData();
-	let menu;
-	
-	if (contentExists(data)) {
-		menu = data[0];
-	} 
-	
-	const menuData = require('../../config/sitemaps/' + menu + '.yml');*/
 	
 	if (contentExists(currentPage)) {
 
