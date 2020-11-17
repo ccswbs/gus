@@ -1,3 +1,10 @@
+- id: menu-items-standard.front_page
+  drupal_id: null
+  alias: ''
+  url: /
+  title: Home
+  parent: null
+  children: []
 - id: 'menu-items-menu_link_content:b3562135-a0b1-4079-8b7e-08396aaab519'
   drupal_id: null
   alias: ''

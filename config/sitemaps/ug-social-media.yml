@@ -1,42 +1,42 @@
-- id: 'menu-items-menu_link_content:27b7a5fe-72ad-4893-ad44-eabc03b434a5'
+- id: 'menu-items-menu_link_content:33af1efb-2eb3-404b-9564-dbb5ec7d9ca7'
   drupal_id: null
   alias: ''
   url: 'https://twitter.com/uofg'
   title: Twitter
   parent: null
   children: []
-- id: 'menu-items-menu_link_content:9b072561-5ef1-41f1-92d5-e21bd1099fcf'
+- id: 'menu-items-menu_link_content:a14dfdbd-36df-4e17-a3a4-e49157774818'
   drupal_id: null
   alias: ''
   url: 'https://www.facebook.com/uofguelph'
   title: Facebook
   parent: null
   children: []
-- id: 'menu-items-menu_link_content:e40d420e-9c20-4fa6-9adb-a7701dc63a6a'
+- id: 'menu-items-menu_link_content:66f66970-8b35-4a46-a032-80a5d3a3488e'
   drupal_id: null
   alias: ''
   url: 'https://instagram.com/uofguelph/'
   title: Instagram
   parent: null
   children: []
-- id: 'menu-items-menu_link_content:878f4b6a-d103-45fe-9a16-06f259127700'
+- id: 'menu-items-menu_link_content:cac8a22c-f8e5-4198-930f-d48fb2a4bb07'
   drupal_id: null
   alias: ''
   url: 'https://www.youtube.com/uofguelph'
   title: YouTube
   parent: null
   children: []
-- id: 'menu-items-menu_link_content:3bfd34d3-d87f-4beb-968a-82bd7c9e023c'
+- id: 'menu-items-menu_link_content:dcf8a5ae-cfff-4804-9c03-61539310de2d'
   drupal_id: null
   alias: ''
   url: 'https://www.linkedin.com/company/university-of-guelph'
   title: LinkedIn
   parent: null
   children: []
-- id: 'menu-items-menu_link_content:00f5b7ee-5c23-4e94-8ff0-7391838529c1'
+- id: 'menu-items-menu_link_content:88c68324-5a5b-4f80-935e-62de8859207d'
   drupal_id: null
   alias: ''
-  url: 'https://www.uoguelph.ca/web/socialmedia/'
+  url: 'http://www.uoguelph.ca/web/socialmedia/'
   title: Social Media Directory
   parent: null
   children: []

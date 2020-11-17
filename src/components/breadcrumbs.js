@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
-import { contentExists } from '../utils/ug-utils';
+import { contentExists, fetchMenuMain } from '../utils/ug-utils';
 
 function Breadcrumbs (props) {
 
 	const currentPage = String(props.nodeID);
 	const pageTitle = props.nodeTitle;
 	
-	const config = require('../../gatsby-config');
-	const menuName = config.siteMetadata.menus[0]; 
-	const menuData = require('../../config/sitemaps/' + menuName + '.yml');
+	const menuData = require('../../config/sitemaps/' + fetchMenuMain() + '.yml');
 	
 	if (contentExists(currentPage)) {
 
@@ -18,16 +16,18 @@ function Breadcrumbs (props) {
 		let midCrumb;
 		let midCrumbURL;
 		
-		for (let i=0; i<menuData.length; i++) {
-			if (menuData[i].drupal_id === currentPage) {
-				endCrumb = menuData[i].title;
-			} else {
-				if (menuData[i].children !== null) {
-					for (let j=0; j<menuData[i].children.length; j++) {
-						if (menuData[i].children[j].drupal_id === currentPage) {
-							endCrumb = menuData[i].children[j].title;
-							midCrumb = menuData[i].title;
-							midCrumbURL = menuData[i].alias;
+		if (contentExists(menuData)) {
+			for (let i=0; i<menuData.length; i++) {
+				if (menuData[i].drupal_id === currentPage) {
+					endCrumb = menuData[i].title;
+				} else {
+					if (menuData[i].children !== null) {
+						for (let j=0; j<menuData[i].children.length; j++) {
+							if (menuData[i].children[j].drupal_id === currentPage) {
+								endCrumb = menuData[i].children[j].title;
+								midCrumb = menuData[i].title;
+								midCrumbURL = menuData[i].alias;
+							}
 						}
 					}
 				}

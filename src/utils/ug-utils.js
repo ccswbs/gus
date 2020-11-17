@@ -1,5 +1,3 @@
-import React from 'react';
-
 // combine multiple body values and place sticky values at the top
 function combineAndSortBodyFields (content) {
 	let stickyContent = [];
@@ -56,6 +54,28 @@ function divideIntoColumns(data, numColumns) {
 	return dividedData;
 }
 
+function fetchMenu(whichMenu) {
+	if (contentExists(whichMenu)) {
+		try {
+			var menuData = require('../../config/sitemaps/' + whichMenu + '.yml');
+			return menuData;
+		} catch (e) {
+			if (e instanceof Error && e.code === "MODULE_NOT_FOUND") {
+				console.log("Can't load " + menuData);
+			} else {
+				throw e;
+			}
+		}
+	}
+	return null;
+}
+
+function fetchMenuMain() {
+	const config = require('../../gatsby-config');
+	const mainMenu = config.siteMetadata.menus[0];
+	return mainMenu;
+}
+
 function getNextHeadingLevel(headingLevel) {
 	let level = parseInt(headingLevel.replace(/[^\d.]/g,'')) + 1;
 	let nextHeadingLevel = setHeadingLevel('h' + level);
@@ -78,11 +98,14 @@ function stripHTMLTags(content) {
 }
 
 export { 
-  stripHTMLTags, 
-  setHeadingLevel, 
-  getNextHeadingLevel, 
-  contentIsNullOrEmpty, 
-  contentExists, 
-  sortLastModifiedDates, 
-  combineAndSortBodyFields, 
-  divideIntoColumns };
+	combineAndSortBodyFields,
+	contentExists,
+	contentIsNullOrEmpty,
+	divideIntoColumns,
+	fetchMenu,
+	fetchMenuMain,
+	getNextHeadingLevel,
+	setHeadingLevel,
+	sortLastModifiedDates,
+	stripHTMLTags
+   };
