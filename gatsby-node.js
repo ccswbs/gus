@@ -713,24 +713,24 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
 		}
 
 		// process menu nodes and pass through aliases
-		if (result.data.menus !== undefined) {
+		if (result.data.menus !== undefined) {			
 			const menus = result.data.menus.edges;
-			createSitemap(menus, aliases);
+			const config = require('./gatsby-config');
+			const menuNames = config.siteMetadata.menus;			
+			menuNames.forEach(element => createSitemap(menus, element, aliases));
 		}
 	}
 }
 
-function createSitemap(menus, aliases) {
+function createSitemap(menus, whichMenu, aliases) {
 	let sitemap = [];
-	const sitemapFile = 'config/sitemaps/' + menus[0].node.menu_name + '.yml';
+	const sitemapFile = 'config/sitemaps/' + whichMenu + '.yml';
 
 	menus.forEach(( { node }, index) => {
-		if (node.parent === null) {
+		if (node.parent === null && node.menu_name === whichMenu) {
 			sitemap.push(processMenuItem( node, aliases ));
 		}
 	})
-
-	// console.log(util.inspect(sitemap, {showHidden: false, depth: null}));
 
 	let yamlStr = yaml.safeDump(sitemap);
 	fs.writeFileSync(sitemapFile, yamlStr, 'utf8');  

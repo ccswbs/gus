@@ -6,8 +6,8 @@
 
 //let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
 /** For dev purposes, comment the line above and uncomment the line below: **/
- let metaConfig = require('./config/sites/a-place-to-grow.js');
-// let metaConfig = require('./config/sites/ugconthub.js');
+// let metaConfig = require('./config/sites/a-place-to-grow.js');
+ let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
 	metaConfig['title'] = "Gatsby UG Starter Template";

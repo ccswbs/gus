@@ -1,43 +1,28 @@
-- id: menu-items-standard.front_page
+- id: 'menu-items-menu_link_content:b3562135-a0b1-4079-8b7e-08396aaab519'
   drupal_id: null
   alias: ''
-  url: /
-  title: Home
+  url: 'https://www2.uoguelph.ca/choose-u-of-g'
+  title: Choose U of G
   parent: null
   children: []
-- id: 'menu-items-menu_link_content:0e271628-af49-452a-b4b8-57321caec4f6'
-  drupal_id: '45'
-  alias: ''
-  url: /careers
-  title: Careers
-  parent: null
-  children: []
-- id: 'menu-items-menu_link_content:36a14f1d-8c92-4524-ac43-b4444d2ff7b7'
-  drupal_id: '44'
-  alias: ''
-  url: /recruitment
-  title: Recruitment
-  parent: null
-  children:
-    - id: 'menu-items-menu_link_content:6d2ecc3d-5586-4863-a6aa-9222fd24c320'
-      drupal_id: '46'
-      alias: ''
-      url: /sub-page-recruitment
-      title: Sub-page of Recruitment
-      parent:
-        id: 'menu-items-menu_link_content:36a14f1d-8c92-4524-ac43-b4444d2ff7b7'
-      children: []
-- id: 'menu-items-menu_link_content:ae2b8c75-1369-4e3f-85a3-d9f2f41d7457'
-  drupal_id: '38'
-  alias: ''
-  url: /soil-health
-  title: Soil Health
-  parent: null
-  children: []
-- id: 'menu-items-menu_link_content:e87140ba-5247-448c-add2-48257117e4da'
+- id: 'menu-items-menu_link_content:236ab3ba-4e75-4ba6-9dcf-eb08815a758c'
   drupal_id: null
   alias: ''
-  url: 'https://indigenous.uoguelph.ca'
-  title: External URL
+  url: 'https://www.uoguelph.ca/improve-life/'
+  title: Improve Life
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:ac7b120b-0645-44c8-8c76-bfb5d3ccdc7e'
+  drupal_id: null
+  alias: ''
+  url: 'https://news.uoguelph.ca/'
+  title: News
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:a1185af5-0087-44fb-a6ee-d42d027ac113'
+  drupal_id: null
+  alias: ''
+  url: 'https://porticomagazine.ca/'
+  title: Portico Magazine
   parent: null
   children: []

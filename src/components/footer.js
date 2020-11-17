@@ -1,8 +1,25 @@
 import React from 'react';
+import { contentExists } from '../utils/ug-utils';
 
-const Footer = () => (
-    
-	<div className="footer-wrapper">
+//const menuData = require('../../config/sitemaps/' + getSocial(menus) + '.yml');
+
+function Footer() {
+	
+	const config = require('../../gatsby-config');
+	const menus = config.siteMetadata.menus;
+	let socialMenu;
+	
+	if (contentExists(menus)) {
+		for (let i=0; i<menus.length; i++) {
+			if (menus[i] === "ug-social-media") {
+				socialMenu = menus[i];
+			}
+		}
+		const menuData = require('../../config/sitemaps/' + socialMenu + '.yml');
+		console.log(menuData);
+	}
+		
+	return (<div className="footer-wrapper">
 		<div className="container">
 			<footer className="navbar navbar-default">
 				<div className="row">
@@ -59,8 +76,8 @@ const Footer = () => (
 				</div>
 			</footer>
 		</div>
-	</div>
+	</div>)
 
-)
+}
 
 export default Footer
