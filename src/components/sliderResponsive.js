@@ -22,12 +22,13 @@ function SliderArrow (props) {
 
 export default class ResponsiveSlider extends React.Component {
     render() {
+		let maxSlidesToShow = (this.props.children.length===1) ? 1:2;		
 		const sliderSettings = {
 			nextArrow: <SliderArrow type="next" addToControlLabel={this.props.addToControlLabel} />,
 			prevArrow: <SliderArrow type="prev"addToControlLabel={this.props.addToControlLabel} />,
 			dots: false,
 			infinite: true,
-			slidesToShow: 2,
+			slidesToShow: maxSlidesToShow,
 			slidesToScroll: 1,
 			responsive: [
 				{
