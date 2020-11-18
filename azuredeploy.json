@@ -51,6 +51,9 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "addDNSRecord",
+      "dependsOn": [
+        "[resourceId(variables('dnsResourceGroup'),'Microsoft.Resources/deployments', 'addDNSRecord_API')]"
+      ],
       "resourceGroup": "[variables('dnsResourceGroup')]",
       "properties": {
         "mode": "Incremental",
