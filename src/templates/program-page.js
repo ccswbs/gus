@@ -167,7 +167,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 
 	// prep TAB 1 - Courses
 	if (!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)) {
-		const courseHeading = "Courses";
+		const courseHeading = "Selected Courses";
 		const courseID = "pills-courses";
 		activeTabExists = true;
 		checkIfContentAvailable = true;
