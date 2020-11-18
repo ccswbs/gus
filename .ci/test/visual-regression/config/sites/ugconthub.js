@@ -5,6 +5,9 @@ const liveURL = "https://liveugconthubstorage.z13.web.core.windows.net";
 const testURL = "https://testugconthubstorage.z13.web.core.windows.net";
 const pathsToTest = {
     'Homepage': '/',
+    'Choose U of G': '/choose-u-of-g',
+    'Landing Page - A Place to Grow':'/topics/a-place-to-grow',
+    'Basic Page - Study STEM': '/study-stem',
 }
 /*********************************/
 
