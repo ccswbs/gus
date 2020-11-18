@@ -3,6 +3,7 @@
   alias: /soil-health
   url: /soil-health
   title: Soil Health
+  description: null
   parent: null
   children: []
 - id: 'menu-items-menu_link_content:24e5808f-4922-46ae-a318-3aa3d587d267'
@@ -10,6 +11,7 @@
   alias: /one-health
   url: /one-health
   title: One Health
+  description: null
   parent: null
   children: []
 - id: 'menu-items-menu_link_content:e5374eb1-709b-49b7-84ab-1b3b6b75e05e'
@@ -17,6 +19,7 @@
   alias: /recruitment
   url: /recruitment
   title: Recruitment
+  description: null
   parent: null
   children:
     - id: 'menu-items-menu_link_content:0e0f22f7-01a3-497b-9b0f-59586c7e4f97'
@@ -24,6 +27,7 @@
       alias: /study-food
       url: /study-food
       title: Study Food
+      description: null
       parent:
         id: 'menu-items-menu_link_content:e5374eb1-709b-49b7-84ab-1b3b6b75e05e'
       children: []
@@ -32,6 +36,7 @@
       alias: /study-the-environment
       url: /study-environment
       title: Study the Environment
+      description: null
       parent:
         id: 'menu-items-menu_link_content:e5374eb1-709b-49b7-84ab-1b3b6b75e05e'
       children: []
@@ -40,6 +45,7 @@
       alias: /study-animals
       url: /study-animals
       title: Study Animals
+      description: null
       parent:
         id: 'menu-items-menu_link_content:e5374eb1-709b-49b7-84ab-1b3b6b75e05e'
       children: []
@@ -48,6 +54,7 @@
       alias: /study-stem
       url: /study-stem
       title: Study STEM
+      description: null
       parent:
         id: 'menu-items-menu_link_content:e5374eb1-709b-49b7-84ab-1b3b6b75e05e'
       children: []

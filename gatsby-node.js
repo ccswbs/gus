@@ -155,6 +155,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  menu_name: String
 	  route: MenuItemsRoute
 	  title: String
+	  description: String
 	  url: String
 	  weight: Int
 	  childrenMenuItems: [MenuItems]
@@ -583,6 +584,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         edges {
           node {
             title
+			description
             menu_name
             id
             parent {
@@ -599,6 +601,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                 id
                 url
                 title
+				description
 				parent {
 				  id
 				}
@@ -607,6 +610,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                     id
                     url
                     title
+					description
 					parent {
 					  id
 					}
@@ -615,6 +619,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                         id
                         url
                         title
+						description
 						parent {
 						  id
 						}
@@ -748,6 +753,7 @@ function processMenuItem(node, aliases){
 			alias: gatsbyAlias,
 			url: menuURL,
 			title: node.title,
+			description: node.description,
 			parent: node.parent,
 			children: processMenuItemChildren(node.children, aliases),
 		} 

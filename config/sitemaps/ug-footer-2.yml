@@ -1,0 +1,40 @@
+- id: 'menu-items-menu_link_content:998dd77c-a893-468f-a9e8-2cbda9fd7328'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.uoguelph.ca/hr/careers-guelph/current-opportunities'
+  title: Careers
+  description: far fa-briefcase
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:c91e4c2c-6769-41f5-83b8-947fd9932db1'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.uoguelph.ca/registrar/calendars/undergraduate/current/'
+  title: Undergraduate Calendar
+  description: far fa-calendar-alt
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:406642e2-aabd-4594-8f76-f590fe460bae'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.uoguelph.ca/registrar/calendars/graduate/current/'
+  title: Graduate Calendar
+  description: far fa-calendar-alt
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:861254db-7127-43bc-af87-1f5908978e8e'
+  drupal_id: null
+  alias: ''
+  url: 'https://admission.uoguelph.ca/programs'
+  title: Program Plans
+  description: fas fa-list
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:060284e9-0c7d-4ebb-a693-f2c8f166000a'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.alumni.uoguelph.ca/give-to-guelph/how-to-give'
+  title: Give to U of G
+  description: fas fa-hand-holding-heart
+  parent: null
+  children: []

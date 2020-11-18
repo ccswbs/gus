@@ -1,0 +1,41 @@
+- id: 'menu-items-menu_link_content:ca40e3f5-d302-4bfb-9cf4-94adb8799e16'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.uoguelph.ca/accessibility/'
+  title: Accessibility
+  description: far fa-universal-access
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:5c0e56c4-e4aa-4f58-af74-a4ab6648abce'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.uoguelph.ca/web/privacy/'
+  title: Privacy
+  description: fas fa-key
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:2127a5a9-655c-4d6e-9c70-3b550c43f73b'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.uoguelph.ca/sitemap/'
+  title: Sitemap
+  description: far fa-sitemap
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:c90fbf67-e701-4d3a-9f5c-8b6cd24cda9f'
+  drupal_id: null
+  alias: ''
+  url: 'https://uoguelph.statuspage.io/'
+  title: Status Page
+  description: fas fa-shield-check
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:b8c4bda5-eeed-4ed5-beb6-79f38caf39e7'
+  drupal_id: null
+  alias: ''
+  url: >-
+    https://www.uoguelph.ca/studentexperience/aboriginal/territorial-acknowledgement
+  title: Territorial Acknowledgement
+  description: fal fa-trees
+  parent: null
+  children: []
