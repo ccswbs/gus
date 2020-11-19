@@ -51,3 +51,4 @@
    - [ ] PR has a summary of changes
    - [ ] PR is peer reviewed and meets team standards.
    - [ ] PR builds without error
+   - [ ] gatsby-config.js does not include hard-coded values in metaConfig or gatsby-drupal-source (baseURL)
