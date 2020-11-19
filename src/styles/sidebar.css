@@ -43,6 +43,9 @@
 	display: flex;
 	align-items: center
 }
+#content #sidebar .sidebar-sub-container li a.current {
+	font-weight: bold;
+}
 
 #content #sidebar .sidebar-sub-container li:before {
 	content: "" !important;

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
-//import Sidebar from '../components/sidebar';
+import Sidebar from '../components/sidebar';
 import RelatedPages from '../components/relatedPages';
 import { graphql } from 'gatsby';
 
@@ -45,7 +45,7 @@ export default ({data}) => {
 
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
 					</section>
-					{ /* <Sidebar relatedContent={relatedPageData} />  */ }
+					<Sidebar nodeID={nodeID} />
 				</div>
 			</div>			
 		</Layout>

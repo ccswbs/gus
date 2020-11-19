@@ -1,52 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
-import { contentExists } from '../utils/ug-utils';
-import { useMenuData } from '../utils/fetch-menu';
+import { contentExists, fetchMenuMain } from '../utils/ug-utils';
 import '../styles/sidebar.css';
+
+function getSubmenu(submenu, currentPage) {
+	let submenuItems = [];
+	if (contentExists(submenu)) {
+		submenu.forEach(submenuItem => {
+			if (submenuItem.drupal_id === currentPage) {
+				submenuItems.push(<li key={submenuItem.id}>
+					<a className="current" href={submenuItem.alias !== "" ? submenuItem.alias : submenuItem.url}>{submenuItem.title}</a>
+				</li>);
+			} else {
+				submenuItems.push(<li key={submenuItem.id}>
+					<a href={submenuItem.alias !== "" ? submenuItem.alias : submenuItem.url}>{submenuItem.title}</a>
+				</li>);
+			}
+		})
+		return <ul>{submenuItems}</ul>
+	}
+	return null;
+}
 
 function Sidebar (props) {
 	
-	const menuData = useMenuData();	
-	let checkIfContentAvailable = false;
+	const currentPage = String(props.nodeID);
+	const menuData = require('../../config/sitemaps/' + fetchMenuMain() + '.yml');
 	
-	if (contentExists(props.relatedContent) || contentExists(menuData)) {
-		checkIfContentAvailable = true;
-	}
-	
-	if (checkIfContentAvailable === true) {
-		
+	if (contentExists(currentPage) && contentExists(menuData)) {
 		return (<>
 			<nav id="sidebar">
-			
-			{contentExists(menuData) && menuData.length !== 0 && <>
-				<h2>Menu: {menuData[0].node.menu_name}</h2>
+				<h2>Menu</h2>
 				<ul className="sidebar-sub-container">
 					{menuData.map (menuItem => {
-						return <li key={menuItem.node.id}><Link to={menuItem.node.url}>{menuItem.node.title}</Link></li>
+						let submenu = menuItem.children;						
+						if (menuItem.drupal_id === currentPage) {
+							return (
+							<li key={menuItem.id}>
+								<a className="current" href={menuItem.alias !== "" ? menuItem.alias : menuItem.url}>{menuItem.title}</a>
+								{getSubmenu(submenu, currentPage)}
+							</li>
+							)
+						} else {
+							return (
+							<li key={menuItem.id}>
+								<a href={menuItem.alias !== "" ? menuItem.alias : menuItem.url}>{menuItem.title}</a>
+								{getSubmenu(submenu, currentPage)}
+							</li>								
+							)
+						}						
 					})}					
 				</ul>
-			</>}
-			
-			{contentExists(props.relatedContent) && props.relatedContent.length !== 0 && <>
-				<h2>Related Content</h2>
-				<ul className="sidebar-sub-container">
-				{props.relatedContent.map (paragraph  => {
-					if (contentExists(paragraph.relationships.field_list_pages)) {
-						let relatedContent = paragraph.relationships.field_list_pages;
-						return(relatedContent.map(page => {
-							return <li key={page.drupal_id}>
-									<Link to={page.fields.alias.value}>{page.title}</Link>
-								</li>
-							})
-						)
-					}
-					return null;
-					})
-				}
-				</ul>
-			</>}
-			
 			</nav>
 		</>)
 	}
@@ -54,11 +58,11 @@ function Sidebar (props) {
 }
 
 Sidebar.propTypes = {
-	relatedContent: PropTypes.array,
+	nodeID: PropTypes.number,
 }
 
 Sidebar.defaultProps = {
-    relatedContent: null,
+    nodeID: null,
 }
 
 export default Sidebar
