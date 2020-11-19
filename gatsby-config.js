@@ -4,9 +4,9 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-//let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
 /** For dev purposes, comment the line above and uncomment the line below: **/
- let metaConfig = require('./config/sites/a-place-to-grow.js');
+// let metaConfig = require('./config/sites/a-place-to-grow.js');
 // let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
@@ -63,22 +63,20 @@ module.exports = {
        options: {
          //baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
 		 /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
-         //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
+         baseUrl: `https://api.devugconthub.uoguelph.dev/`,
          //baseUrl: `https://api.liveugconthub.uoguelph.dev/`,
          //baseUrl: `http://multidev-bovey.pantheonsite.io/`,
-		 baseUrl: `http://menus-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
 	{
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
-		//baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE,
+		baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE,
 		/** For dev purposes, comment the line above and uncomment the appropriate line below: **/
 		//baseUrl: `https://api.devugconthub.uoguelph.dev`,
 		//baseUrl: `https://api.liveugconthub.uoguelph.dev`,
 		//baseUrl: `http://multidev-bovey.pantheonsite.io/`,
-		baseUrl: `http://menus-bovey.pantheonsite.io`,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
         menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },
