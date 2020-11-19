@@ -76,7 +76,7 @@ module.exports = {
 		/** For dev purposes, comment the line above and uncomment the appropriate line below: **/
 		//baseUrl: `https://api.devugconthub.uoguelph.dev`,
 		//baseUrl: `https://api.liveugconthub.uoguelph.dev`,
-		//baseUrl: `http://multidev-bovey.pantheonsite.io/`,
+		//baseUrl: `http://multidev-bovey.pantheonsite.io`,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
         menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },
