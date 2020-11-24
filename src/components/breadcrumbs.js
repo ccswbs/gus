@@ -15,9 +15,13 @@ function Breadcrumbs (props) {
 		let endCrumb;
 		let midCrumb;
 		let midCrumbURL;
+		let topCrumbURL;
 		
 		if (contentExists(menuData)) {
 			for (let i=0; i<menuData.length; i++) {
+				if (menuData[i].title === "Home") {
+					topCrumbURL = menuData[i].alias;
+				}
 				if (menuData[i].drupal_id === currentPage) {
 					endCrumb = menuData[i].title;
 				} else {
@@ -40,9 +44,11 @@ function Breadcrumbs (props) {
 					<div className="row">
 						<div className="col-sm-12">
 							<div className="site-breadcrumbs">			
-							<ol className="breadcrumb breadcrumb-right-tag">
-								<li className="breadcrumb-item">
-									<Link to="/"><i className='fa fa-home'><span className='sr-only'>Home</span></i></Link>
+							<ol className="breadcrumb breadcrumb-right-tag">								
+								<li className="breadcrumb-item">									
+									<a href={contentExists(topCrumbURL) ? topCrumbURL : "https://www.uoguelph.ca"}>
+										<i className='fa fa-home'><span className='sr-only'>Home</span></i>
+									</a>
 								</li>
 								{contentExists(midCrumb) ? <li className="breadcrumb-item"><Link to={midCrumbURL}>{midCrumb}</Link></li> : null}
 								<li className="breadcrumb-item">{contentExists(endCrumb) ? endCrumb : pageTitle}</li>							
