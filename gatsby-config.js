@@ -4,7 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
+let metaConfig = require('./config/sites/ugconthub.js');
 // For dev purposes, comment the line above and uncomment the line below:
 // let metaConfig = require('./config/sites/ugconthub.js');
 
@@ -58,7 +58,7 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-         baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
+         baseUrl: `https://api.liveugconthub.uoguelph.dev/`,
         // For dev purposes, comment the line above and uncomment the appropriate line below:
         // baseUrl: `https://api.devugconthub.uoguelph.dev/`,
         // baseUrl: `https://api.liveugconthub.uoguelph.dev/`,
