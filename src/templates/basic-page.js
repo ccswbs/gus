@@ -45,7 +45,6 @@ export default ({data}) => {
 
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
 					</section>
-					<Sidebar nodeID={nodeID} />
 				</div>
 			</div>			
 		</Layout>
