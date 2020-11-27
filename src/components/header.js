@@ -1,5 +1,5 @@
 import React from 'react';
-import { contentExists, fetchMenuMain } from '../utils/ug-utils';
+import { contentExists } from '../utils/ug-utils';
 
 /****
  * Sample Usage with Dropdowns:
@@ -23,7 +23,7 @@ import { contentExists, fetchMenuMain } from '../utils/ug-utils';
  * 
  */
  
-const menuData = require('../../config/sitemaps/' + fetchMenuMain() + '.yml');
+const menuData = require('../../config/sitemaps/main.yml');
 let pageSpecificMenu;
 
 if (contentExists(menuData)) {
