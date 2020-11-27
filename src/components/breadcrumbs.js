@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
-import { contentExists, fetchMenuMain } from '../utils/ug-utils';
+import { contentExists } from '../utils/ug-utils';
 
 function Breadcrumbs (props) {
 
 	const currentPage = String(props.nodeID);
 	const pageTitle = props.nodeTitle;
 	
-	const menuData = require('../../config/sitemaps/' + fetchMenuMain() + '.yml');
+	const menuData = require('../../config/sitemaps/main.yml');
 	
 	if (contentExists(currentPage)) {
 
