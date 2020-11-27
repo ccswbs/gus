@@ -72,7 +72,9 @@ function fetchMenu(whichMenu) {
 
 function fetchMenuMain() {
 	const config = require('../../gatsby-config');
-	const mainMenu = config.siteMetadata.menus[0];
+	// Commenting this out due to build error on pipeline
+	//const mainMenu = config.siteMetadata.menus[0];
+	const mainMenu = "main";
 	return mainMenu;
 }
 
