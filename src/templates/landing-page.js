@@ -3,6 +3,8 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import Breadcrumbs from '../components/breadcrumbs';
+//import Sidebar from '../components/sidebar';
 import GridItems from '../components/griditems';
 import { graphql } from 'gatsby';
 import '../styles/program-page.css';
@@ -19,8 +21,8 @@ export default ({data}) => {
 	// set landing page details
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
+	const nodeID = pageData.drupal_internal__nid;
 	if (data.images.edges !== undefined) { imageData = data.images.edges; }
-
 
 	return (
 		<Layout>
@@ -37,6 +39,7 @@ export default ({data}) => {
 				</div>
 			</div>
 			
+			<Breadcrumbs nodeID={nodeID} nodeTitle={title} />
 			
 			<div className="container page-container">
 				<div className="row row-with-vspace site-content">
@@ -44,10 +47,10 @@ export default ({data}) => {
 					<section className="col-md-9 content-area">
 						<div dangerouslySetInnerHTML={{ __html: body}} />
 					</section>
+					{ /*<Sidebar relatedContent={relatedPageData} />*/ }
 				</div>
 			</div>
 
-			
 			{ /**** Grid Items content ****/ }
 			<GridItems pageData={gridItemsData}/>
 		</Layout>
