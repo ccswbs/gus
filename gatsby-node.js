@@ -279,7 +279,23 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
+      field_widgets: [paragraph__links_items] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+    type paragraph__links_items implements Node {
+      drupal_id: String
+      field_link_description: String
+      field_link_url: node__link_url
+      relationships: paragraph__links_itemsRelationships
+      
+    }
+    
+    type paragraph__links_itemsRelationships implements Node {
+      field_link_image: media__image @link(from: "field_link_image___NODE")
+    }
+    type node__link_url implements Node {
+      title: String
+      uri: String
     }
     type node__program implements Node {
       drupal_id: String
@@ -723,7 +739,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
 			const config = require('./gatsby-config');
 			const menuNames = config.siteMetadata.menus;			
 			menuNames.forEach(element => createSitemap(menus, element, aliases));
-		}
+    }
+    // proces aliases for each page/node
+    createAliasFile(aliases);
 	}
 }
 
@@ -771,7 +789,12 @@ function processMenuItemChildren(children, aliases) {
 	}
 	return childrenMenuItems;
 }
-
+function createAliasFile(aliases) {
+  const aliasFile = 'config/aliases/aliasfile.yml';
+  let yamlStr = yaml.safeDump(aliases);
+  fs.writeFileSync(aliasFile, yamlStr, 'utf8'); 
+ }
+ 
 function processPage(node, contextID, functionToRetrieveAlias, template, helpers) {
     let alias = functionToRetrieveAlias(node);
     createNodeAlias(node, alias, helpers);

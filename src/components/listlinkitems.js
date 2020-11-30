@@ -38,7 +38,7 @@ function setColumnClasses(numColumns) {
       }
 }
 
-const GridCell = (props) => {
+const ListLinkItems = (props) => {
     const columnClasses = setColumnClasses(props.numColumns);
     const classes = `grid-cell ${columnClasses} ${props.extraClasses}`
     const Tag = props.tag;
@@ -61,44 +61,35 @@ const GridCell = (props) => {
 
         // If link exists, add optional link
         if(contentExists(props.url)){
-            if (props.url.includes("http")){
-            
-                return(
-                    <Tag className={classes}>
-                    <a href={props.url} className="news-link">{gridContent()}</a>
-                </Tag>
-                )
-            }else { 
-                return(
-                    <Tag className={classes}>
-                        <Link to={props.url} className="news-link">{gridContent()}</Link>
-                    </Tag>
-                )}
-        } else {
-    
-        // Else return gridContent as is NOTE: will need to add alt to this image
-            return (
-                <Tag className={classes}>
-                    {gridContent()}
-                </Tag>
-            )
-        }
-        }
-
-        // Fallback Scenario: For gridCells that contain something other than an image and heading,
-        // Just return the children
-        if(contentExists(props.children)){
             return(
                 <Tag className={classes}>
-                    {props.children}
+                    <Link to={props.url} className="news-link">{gridContent()}</Link>
                 </Tag>
             )
         }
-    
+
+        // Else return gridContent as is
+        return (
+            <Tag className={classes}>
+                {gridContent()}
+            </Tag>
+        )
+    }
+
+    // Fallback Scenario: For gridCells that contain something other than an image and heading,
+    // Just return the children
+    if(contentExists(props.children)){
+        return(
+            <Tag className={classes}>
+                {props.children}
+            </Tag>
+        )
+    }
+
     return null;
 }
 
-GridCell.propTypes = {
+ListLinkItems.propTypes = {
     children: PropTypes.node.isRequired,
     extraClasses: PropTypes.string,
     heading: PropTypes.string,
@@ -109,7 +100,7 @@ GridCell.propTypes = {
     text: PropTypes.node,
   }
   
-  GridCell.defaultProps = {
+  ListLinkItems.defaultProps = {
     children: ``,
     extraClasses: ``,
     heading: ``,
@@ -120,4 +111,4 @@ GridCell.propTypes = {
     text: ``,
   }
 
-export default GridCell
+export default ListLinkItems
