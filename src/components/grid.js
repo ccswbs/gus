@@ -27,7 +27,7 @@ Example Usage:
 
 function Grid (props) {
     let Heading = setHeadingLevel(props.headingLevel);
-
+// console.log(props, "grid.js")
 	if (contentExists(props.children)) {
 		return (<div className="full-width-container bg-light grid">
                     <div className="container page-container">
@@ -57,7 +57,7 @@ Grid.defaultProps = {
     children: ``,
     columnClass: 'col-md-3 col-sm-6',
     heading: ``,
-    headingLevel: 'h2',
+    headingLevel: '',
 }
 
 export default Grid

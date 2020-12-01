@@ -51,8 +51,8 @@ export default ({data}) => {
 				</div>
 			</div>	
 			{ /**** Links Items conent ****/}
-			<LinksItems pageData={linksData} displayType={'grid'} headingLevel={'h2'} numColumns={4}/>		
-			<LinksItems pageData={linksData} displayType={'list'} headingLevel={'h2'} numColumns={4}/>	
+			<LinksItems pageData={linksData} heading={"Grid"} displayType={'grid'} headingLevel={'h2'} numColumns={4}/>		
+			<LinksItems pageData={linksData} heading={"List"} displayType={'list'} headingLevel={'h3'} numColumns={4}/>	
 		</Layout>
 	)
 	

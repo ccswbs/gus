@@ -42,13 +42,13 @@ const GridCell = (props) => {
     const columnClasses = setColumnClasses(props.numColumns);
     const classes = `grid-cell ${columnClasses} ${props.extraClasses}`
     const Tag = props.tag;
-
+    
     // General Scenario: heading, image and text below (link and text optional)
-    if(contentExists(props.heading) && contentExists(props.image)){
-        const Heading = setHeadingLevel(props.headingLevel);
+    if(contentExists(props.headingLink) && contentExists(props.image)){
+        const levelHeading = setHeadingLevel(props.headingLinkLevel);
         const HeadingElement = (contentExists(props.text)) 
-            ? <Heading className="grid-heading">{props.heading}</Heading> 
-            : <span className={`grid-heading ${Heading}`}>{props.heading}</span>;
+            ? <levelHeading className="grid-heading">{props.headingLink}</levelHeading> 
+            : <span className={`grid-heading ${levelHeading}`}>{props.headingLink}</span>;
 
         const gridContent = () => {
             return(<React.Fragment>
@@ -61,8 +61,9 @@ const GridCell = (props) => {
 
         // If link exists, add optional link
         if(contentExists(props.url)){
+            // check to see if url is external - i.e. it contains http to use <a href..> ... </a> 
+            // otherwise use the gatsby Link comand for internal links
             if (props.url.includes("http")){
-            
                 return(
                     <Tag className={classes}>
                     <a href={props.url} className="news-link">{gridContent()}</a>
@@ -75,8 +76,7 @@ const GridCell = (props) => {
                     </Tag>
                 )}
         } else {
-    
-        // Else return gridContent as is NOTE: will need to add alt to this image
+            // Else return gridContent as is NOTE: will need to add alt to this image
             return (
                 <Tag className={classes}>
                     {gridContent()}
@@ -101,8 +101,8 @@ const GridCell = (props) => {
 GridCell.propTypes = {
     children: PropTypes.node.isRequired,
     extraClasses: PropTypes.string,
-    heading: PropTypes.string,
-    headingLevel: PropTypes.string,
+    headingLink: PropTypes.string,
+    headingLinkLevel: PropTypes.string,
     image: PropTypes.object,
     numColumns: PropTypes.number,
     tag: PropTypes.string,
@@ -112,8 +112,8 @@ GridCell.propTypes = {
   GridCell.defaultProps = {
     children: ``,
     extraClasses: ``,
-    heading: ``,
-    headingLevel: 'h3',
+    headingLink: ``,
+    headingLinkLevel: 'h2',
     image: null,
     numColumns: 4,
     tag: 'li',
