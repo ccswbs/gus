@@ -67,3 +67,7 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+
+# yaml files in config
+config/aliases/*
+config/sitemaps/*
