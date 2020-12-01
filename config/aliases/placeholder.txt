@@ -1,1 +1,0 @@
-This file is to keep the directory during a commit - add config/aliases/*.yml to .gitignore
