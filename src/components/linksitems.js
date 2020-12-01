@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Grid from './grid';
 import GridCell from './gridCell';
-import ListLinkItems from './listlinkitems';
+
 import { contentExists } from '../utils/ug-utils';
 
 function LinksItems (props) {
@@ -43,14 +43,14 @@ function LinksItems (props) {
 		//  console.log("list")
 		 if(contentExists(props.pageData) && props.pageData.length !== 0){
 			//  console.log(props.pageData)
-			 return(
-				 <Grid key={props.pageData.drupal_id}>
-				 	{props.pageData.map(paragraph =>{ 
-						//  console.log(paragraph)
+			//  return(
+			// 	 <Grid key={props.pageData.drupal_id}>
+			// 	 	{props.pageData.map(paragraph =>{ 
+			// 			//  console.log(paragraph)
 
-				})}
-				 </Grid>
-			 )
+			// 	})}
+			// 	 </Grid>
+			//  )
 			}
 		
     } else if(props.displayType==='smallGrid') {
