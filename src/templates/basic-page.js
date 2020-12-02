@@ -112,6 +112,15 @@ export const query = graphql`
 						}
 					}
 				}
+				... on paragraph__call_to_action {
+					id
+					field_cta_description
+					field_cta_primary_link {
+					  title
+					  uri
+					}
+				}	
+				
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {
