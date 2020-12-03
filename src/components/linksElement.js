@@ -3,28 +3,6 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { setHeadingLevel, contentExists } from '../utils/ug-utils.js';
 
-/* 
-Example Usage:
-    <Grid extraClasses="my-grid">
-
-        <GridCell key={my-content.drupal_id} 
-            url={value} 
-            image={imageFile}
-            heading={my-content.title}
-            headingLevel="h3" 
-            text="my summary text" 
-            numColumns={3}
-            extraClasses="my-classes" />
-
-        <GridCell key={my-content.drupal_id}>
-            <h3>This is my unique content that potentially has no image associated with it</h3>
-            <p>In this case, I can put anything I want in the grid cell</p>
-            <p>The children are just passed straight through as is</p>
-        </GridCell>
-
-    </Grid>
-*/
-
 function setColumnClasses(numColumns) {
     switch(numColumns) {
         case 2:
@@ -37,18 +15,42 @@ function setColumnClasses(numColumns) {
             return 'col-md-3 col-sm-6';
       }
 }
+function setElementClass(displayType) {
+    switch(displayType) {
+        case 'list':
+            return 'list-element';
+        case 'small-grid':
+            return 'small-grid-cell';
+        default:
+            return 'grid-cell';
+      }
+}
 
-const GridCell = (props) => {
+function setHeadingClass(displayType) {
+    switch(displayType) {
+        case 'list':
+            return 'list-heading';
+        case 'small-grid':
+            return 'small-grid-heading';
+        default:
+            return 'grid-heading';
+      }
+}
+
+const LinksElement = (props) => {
     const columnClasses = setColumnClasses(props.numColumns);
-    const classes = `grid-cell ${columnClasses} ${props.extraClasses}`
+    const elementClass = setElementClass(props.displayType);
+    const headingClass = setHeadingClass(props.displayType);
+    const classes = `${elementClass} ${columnClasses} ${props.extraClasses}`
     const Tag = props.tag;
+    console.log(props.displayType)
 console.log(columnClasses, ",", classes, ",", Tag, "Classes")
     // General Scenario: heading, image and text below (link and text optional)
     if(contentExists(props.headingLink) && contentExists(props.image)){
         const levelHeading = setHeadingLevel(props.headingLinkLevel);
         const HeadingElement = (contentExists(props.text)) 
             ? <levelHeading className="grid-heading">{props.headingLink}</levelHeading> 
-            : <span className={`grid-heading ${levelHeading}`}>{props.headingLink}</span>;
+            : <span className={`${headingClass} ${levelHeading}`}>{props.headingLink}</span>;
 
         const gridContent = () => {
             return(<React.Fragment>
@@ -86,7 +88,7 @@ console.log(columnClasses, ",", classes, ",", Tag, "Classes")
         }
         }
 
-        // Fallback Scenario: For gridCells that contain something other than an image and heading,
+        // Fallback Scenario: For LinksElements that contain something other than an image and heading,
         // Just return the children
         if(contentExists(props.children)){
             return(
@@ -99,7 +101,7 @@ console.log(columnClasses, ",", classes, ",", Tag, "Classes")
     return null;
 }
 
-GridCell.propTypes = {
+LinksElement.propTypes = {
     children: PropTypes.node.isRequired,
     extraClasses: PropTypes.string,
     headingLink: PropTypes.string,
@@ -110,7 +112,7 @@ GridCell.propTypes = {
     text: PropTypes.node,
   }
   
-  GridCell.defaultProps = {
+  LinksElement.defaultProps = {
     children: ``,
     extraClasses: ``,
     headingLink: ``,
@@ -121,4 +123,4 @@ GridCell.propTypes = {
     text: ``,
   }
 
-export default GridCell
+export default LinksElement

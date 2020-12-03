@@ -1,0 +1,43 @@
+/* List */
+
+.list-element {
+    display: block;
+}
+
+/* --- Text --- */
+
+.list-element .list-heading {
+    color: #000000;
+}
+
+.list-element a:hover .list-heading, 
+.list-element a:focus .list-heading {
+    color: #0074C1;
+}
+
+/* --- Images
+
+.list .img-container {
+    overflow: hidden;
+}
+
+.list-element.col-md-3 img,
+.list-element.col-md-3 .gatsby-image-wrapper {
+    width: 100%;
+    height: auto;
+}
+
+.list a img,
+.list a .gatsby-image-wrapper {
+    transition: all 0.15s ease-in-out !important;
+}
+
+.list a:hover img,
+.list a:focus img,
+.list a:hover .gatsby-image-wrapper img,
+.list a:focus .gatsby-image-wrapper img {
+    opacity: 0.75 !important;
+    transform: scale(1.03) !important;
+
+    
+} --- */
