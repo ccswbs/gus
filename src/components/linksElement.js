@@ -5,6 +5,8 @@ import { setHeadingLevel, contentExists } from '../utils/ug-utils.js';
 
 function setColumnClasses(numColumns) {
     switch(numColumns) {
+        case 1:
+            return 'col-sm-12';
         case 2:
             return 'col-sm-6';
         case 3:
@@ -43,23 +45,39 @@ const LinksElement = (props) => {
     const headingClass = setHeadingClass(props.displayType);
     const classes = `${elementClass} ${columnClasses} ${props.extraClasses}`
     const Tag = props.tag;
-    console.log(props.displayType)
-console.log(columnClasses, ",", classes, ",", Tag, "Classes")
+
+
     // General Scenario: heading, image and text below (link and text optional)
     if(contentExists(props.headingLink) && contentExists(props.image)){
         const levelHeading = setHeadingLevel(props.headingLinkLevel);
         const HeadingElement = (contentExists(props.text)) 
-            ? <levelHeading className="grid-heading">{props.headingLink}</levelHeading> 
+            ? <levelHeading className="linkswidget-heading">{props.headingLink}</levelHeading> 
             : <span className={`${headingClass} ${levelHeading}`}>{props.headingLink}</span>;
 
-        const gridContent = () => {
-            return(<React.Fragment>
+        const linksContent = () => {
+            switch(props.displayType){
+                case 'list':
+                    return(<React.Fragment>
+                        {HeadingElement}
+                        {contentExists(props.text) && <span className="list-text">{props.text}</span>}
+                    </React.Fragment>
+                    )
+                case 'small-grid':
+                    return(<React.Fragment>
+                        {HeadingElement}
+                        {contentExists(props.text) && <span className="small-grid-text">{props.text}</span>}
+                    </React.Fragment>
+                    )
+                default: 
+                    return(<React.Fragment>
                         {props.image && <div className="img-container">{props.image}</div>}
                         {HeadingElement}
                         {contentExists(props.text) && <span className="grid-text">{props.text}</span>}
                     </React.Fragment>
-            )
+                    )
+            }           
         }
+       
 
         // If link exists, add optional link
         if(contentExists(props.url)){
@@ -68,21 +86,21 @@ console.log(columnClasses, ",", classes, ",", Tag, "Classes")
             if (props.url.includes("http")){
                 return(
                     <Tag className={classes}>
-                    <a href={props.url} className="news-link">{gridContent()}</a>
+                    <a href={props.url} className="news-link">{linksContent()}</a>
                 </Tag>
                 )
             }else { 
      
                 return(
                     <Tag className={classes}>
-                        <Link to={props.url} className="news-link">{gridContent()}</Link>
+                        <Link to={props.url} className="news-link">{linksContent()}</Link>
                     </Tag>
                 )}
         } else {
-            // Else return gridContent as is NOTE: will need to add alt to this image
+            // Else return linksContent as is
             return (
                 <Tag className={classes}>
-                    {gridContent()}
+                    {linksContent()}
                 </Tag>
             )
         }
@@ -110,6 +128,7 @@ LinksElement.propTypes = {
     numColumns: PropTypes.number,
     tag: PropTypes.string,
     text: PropTypes.node,
+    displayType: PropTypes.string,
   }
   
   LinksElement.defaultProps = {
@@ -121,6 +140,7 @@ LinksElement.propTypes = {
     numColumns: 4,
     tag: 'li',
     text: ``,
+    displayType: `grid`
   }
 
 export default LinksElement
