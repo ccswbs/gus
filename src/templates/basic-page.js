@@ -6,6 +6,7 @@ import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
 import LinksItems from '../components/linksitems';
+import ctaPara from '../components/ctaPara';
 import { graphql } from 'gatsby';
 
 export default ({data}) => {
@@ -17,9 +18,11 @@ export default ({data}) => {
 	const imageData = data.images.edges;
 	let relatedPageData;
 	var linksData;
+	var ctaParaData;
 	
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	if (pageData.relationships.field_widgets !== undefined) { linksData = pageData.relationships.field_widgets; }
+    if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
 
 	return (
 		<Layout>
@@ -99,7 +102,7 @@ export const query = graphql`
 					}
 				}	
 			}
-				
+
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {
