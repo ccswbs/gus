@@ -5,7 +5,8 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
-import LinksItems from '../components/linksitems';
+import LinksItems from '../components/linksItems';
+import LinksWidget from '../components/linksWidget';
 import { graphql } from 'gatsby';
 
 export default ({data}) => {
@@ -50,7 +51,7 @@ export default ({data}) => {
 				</div>
 			</div>	
 			{ /**** Links Items conent ****/}
-			<LinksItems pageData={linksData} heading={"Grid"} displayType={'grid'} headingLevel={'h2'} numColumns={4}/>		
+			<LinksWidget pageData={pageData} heading={"Grid"} displayType={'grid'} headingLevel={'h2'} numColumns={4}/>		
 			<LinksItems pageData={linksData} heading={"List"} displayType={'list'} headingLevel={'h2'} numColumns={1}/>	
 			<LinksItems pageData={linksData} heading={"Small Grid"} displayType={'small-grid'} headingLevel={'h2'} numColumns={2}/>	
 		</Layout>
@@ -90,27 +91,62 @@ export const query = graphql`
 			  }
 			}
 			field_widgets {
-				drupal_id
-				field_link_description
-				field_link_url {
-					title
-					uri
-					}
-					relationships {
-						field_link_image {
+				__typename
+					... on paragraph__links_items {
+						drupal_id
+						field_link_description
+						field_link_url {
+							title
+							uri
+							}
 							relationships {
-								field_media_image {
-									localFile {
-										publicURL
-										childImageSharp {
-											resize(width: 400, height: 300, cropFocus: CENTER) {
-											src
+								field_link_image {
+									relationships {
+										field_media_image {
+											localFile {
+												publicURL
+												childImageSharp {
+													resize(width: 400, height: 300, cropFocus: CENTER) {
+													src
+													}
+												}
 											}
 										}
 									}
 								}
 							}
 						}
+					... on paragraph__links_widget {
+						drupal_id
+						field_link_items_title
+						field_link_items_description
+						relationships {
+							field_link_items {
+								drupal_id
+								field_link_description
+								field_link_url {
+									title
+									uri
+									}
+									relationships {
+										field_link_image {
+											relationships {
+												field_media_image {
+													localFile {
+														publicURL
+														childImageSharp {
+															resize(width: 400, height: 300, cropFocus: CENTER) {
+															src
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+							}
+						}
+
 					}
 				}
 			field_tags {
