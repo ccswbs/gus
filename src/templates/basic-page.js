@@ -89,29 +89,7 @@ export const query = graphql`
 			  }
 			}
 			field_widgets {
-				drupal_id
-				field_link_description
-				field_link_url {
-					title
-					uri
-					}
-					relationships {
-						field_link_image {
-							relationships {
-								field_media_image {
-									localFile {
-										publicURL
-										childImageSharp {
-											resize(width: 400, height: 300, cropFocus: CENTER) {
-											src
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				__typename
 				... on paragraph__call_to_action {
 					id
 					field_cta_description
@@ -120,6 +98,7 @@ export const query = graphql`
 					  uri
 					}
 				}	
+			}
 				
 			field_tags {
 			  __typename
