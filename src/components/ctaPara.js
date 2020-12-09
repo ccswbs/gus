@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
+import '../styles/cta.css';
 
 function ctaPara (props) {
 
@@ -13,12 +14,11 @@ function ctaPara (props) {
                     if(contentExists(cta)){
                             
                         return(
-                           <div>
-                                <h3>{cta.field_cta_description}</h3>
-                                <Link to={cta.field_cta_primary_link.uri}>{cta.field_cta_primary_link.title}</Link>      					                        
+                           <div class="cta border border-dark">
+                                <h3>{cta.field_cta_title}</h3>
+						        {cta.field_cta_description} <br />
+					            <a href={cta.field_cta_primary_link.uri} class="btn btn-uogRed">{cta.field_cta_primary_link.title}</a>      					                        
                             </div>
-                                    
-                                
                         )
                     }
                         return null;
