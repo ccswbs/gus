@@ -103,6 +103,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
     }
 
+  union widgetParagraphUnion =
+    paragraph__link_item
+    | paragraph__links_items
+    | paragraph__call_to_action
+    | paragraph__section
+    | paragraph__links_widget
+
 	interface RelatedPagesInterface @nodeInterface {
 	  id: ID!
 	  drupal_id: String
@@ -396,6 +403,18 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type paragraph__related_contentRelationships {
       field_list_pages: [relatedPagesUnion] @link(from: "field_list_pages___NODE")
+    }
+
+    type paragraph__call_to_action implements Node {
+      drupal_id: String
+      field_cta_title: String
+      field_cta_description: String
+      field_cta_primary_link: FieldLink
+      field_cta_secondary_link: FieldLink
+      relationships: paragraph__call_to_actionRelationships
+    }
+    type paragraph__call_to_actionRelationships {
+      field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
     }	
 
 	type PathAlias implements Node {

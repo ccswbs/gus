@@ -1,0 +1,37 @@
+div.cta { padding: 25px; width: 50% }
+
+div.cta a.btn.btn-uogRed {
+    background: #c20430 !important;
+    color: #fff !important;
+    text-align: left;
+    text-transform: none;
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 2rem 2rem 1.5rem 2rem;
+    border-bottom: 0rem !important;
+}
+
+div.cta a.btn.btn-uogRed:hover,
+div.cta a.btn.btn-uogRed:focus {
+    background: #69A3B9 !important;
+    color: #fff !important;
+    outline: none !important;
+    border-bottom: 0rem !important;
+}
+
+div.cta a.btn.btn-uogRed {
+    width: 50%;
+    font-size: 3rem;
+    text-align: center;
+}
+
+div.cta a.btn.btn-uogRed span {
+    font-size: 2.1rem;
+    font-weight: 700;
+}
+
+div.cta a.btn.btn-uogRed img {
+    width: 14%;
+    float: left;
+    margin-right: 10%;
+}
