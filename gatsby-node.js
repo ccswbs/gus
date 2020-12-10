@@ -91,9 +91,12 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  node__page
 	  | node__landing_page
 
-  union widgetParagraphsUnion = 
-      paragraph__links_items
-      | paragraph__call_to_action
+  union widgetParagraphUnion =
+    paragraph__link_item
+    | paragraph__links_items
+    | paragraph__call_to_action
+    | paragraph__section
+    | paragraph__links_widget
 
 	interface RelatedPagesInterface @nodeInterface {
 	  id: ID!
@@ -283,7 +286,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
-      field_widgets: [widgetParagraphsUnion] @link(from:"field_widgets___NODE")
+      field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type paragraph__links_items implements Node {
