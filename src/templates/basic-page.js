@@ -18,10 +18,10 @@ export default ({data}) => {
 	const imageData = data.images.edges;
 	let relatedPageData;
 	var linksData;
-		
+	
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	if (pageData.relationships.field_widgets !== undefined) { linksData = pageData.relationships.field_widgets; }
-    
+
 	return (
 		<Layout>
 			<Helmet bodyAttributes={{
@@ -92,7 +92,6 @@ export const query = graphql`
 			}
 			field_widgets {
 				__typename
-				    
 					... on paragraph__links_items {
 						drupal_id
 						field_link_description
