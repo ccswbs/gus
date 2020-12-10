@@ -5,9 +5,8 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
-import LinksItems from '../components/linksitems';
+import LinksItems from '../components/linksItems';
 import LinksWidget from '../components/linksWidget';
-import ctaPara from '../components/ctaPara';
 import { graphql } from 'gatsby';
 
 export default ({data}) => {
@@ -19,11 +18,9 @@ export default ({data}) => {
 	const imageData = data.images.edges;
 	let relatedPageData;
 	var linksData;
-	var ctaParaData;
 	
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	if (pageData.relationships.field_widgets !== undefined) { linksData = pageData.relationships.field_widgets; }
-    if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
 
 	return (
 		<Layout>
@@ -95,30 +92,23 @@ export const query = graphql`
 			}
 			field_widgets {
 				__typename
-				... on paragraph__call_to_action {
-					id
-					field_cta_description
-					field_cta_primary_link {
-					  title
-					  uri
-					}
-				}
-				... on paragraph__links_items {
-					drupal_id
-					field_link_description
-					field_link_url {
-						title
-						uri
-					}
-						relationships {
-							field_link_image {
-								relationships {
-									field_media_image {
-										localFile {
-											publicURL
-											childImageSharp {
-												resize(width: 400, height: 300, cropFocus: CENTER) {
-												src
+					... on paragraph__links_items {
+						drupal_id
+						field_link_description
+						field_link_url {
+							title
+							uri
+							}
+							relationships {
+								field_link_image {
+									relationships {
+										field_media_image {
+											localFile {
+												publicURL
+												childImageSharp {
+													resize(width: 400, height: 300, cropFocus: CENTER) {
+													src
+													}
 												}
 											}
 										}
@@ -126,7 +116,6 @@ export const query = graphql`
 								}
 							}
 						}
-				}
 					... on paragraph__links_widget {
 						drupal_id
 						field_link_items_title
@@ -158,9 +147,8 @@ export const query = graphql`
 							}
 						}
 
-					}	
-			}
-
+					}
+				}
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {
