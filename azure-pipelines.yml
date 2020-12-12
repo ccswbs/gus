@@ -21,13 +21,6 @@ variables:
   _gatsby_source: $(GatsbySource)
   _pantheonsitelabel: $(PantheonSiteLabel)
 
-trigger:
-  batch: true
-  branches:
-    include:
-    - master
-    - develop
-
 pool:
   vmImage: 'Ubuntu 16.04'
   demands: npm
@@ -70,9 +63,9 @@ steps:
 
 # Publish artifact
 - task: ArchiveFiles@2
-  displayName: 'Archive $(Build.SourcesDirectory)'
+  displayName: 'Archive Gatsby public folder'
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    rootFolderOrFile: '$(Build.SourcesDirectory)/$(_gatsby_public_folder)'
     includeRootFolder: false
 
 - task: PublishBuildArtifacts@1
