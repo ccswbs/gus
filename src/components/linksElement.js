@@ -46,53 +46,75 @@ const LinksElement = (props) => {
     const classes = `${elementClass} ${columnClasses} ${props.extraClasses}`
     const Tag = props.tag;
 
-
     // General Scenario: heading, image and text below (link and text optional)
-    if(contentExists(props.headingLink) && contentExists(props.image)){
+    if(contentExists(props.headingLink)){
         const levelHeading = setHeadingLevel(props.headingLinkLevel);
         const HeadingElement = (contentExists(props.text)) 
             ? <levelHeading className="linkswidget-heading">{props.headingLink}</levelHeading> 
             : <span className={`${headingClass} ${levelHeading}`}>{props.headingLink}</span>;
-
+        const imageLinkClass = (contentExists(props.image))? "news-link": "";
         const linksContent = () => {
-            switch(props.displayType){
-                case 'list':
-                    return(<React.Fragment>
-                        {HeadingElement}
-                        {contentExists(props.text) && <span className="list-text">{props.text}</span>}
-                    </React.Fragment>
-                    )
-                case 'small-grid':
-                    return(<React.Fragment>
-                        {HeadingElement}
-                        {contentExists(props.text) && <span className="small-grid-text">{props.text}</span>}
-                    </React.Fragment>
-                    )
-                default: 
-                    return(<React.Fragment>
-                        {props.image && <div className="img-container">{props.image}</div>}
-                        {HeadingElement}
-                        {contentExists(props.text) && <span className="grid-text">{props.text}</span>}
-                    </React.Fragment>
-                    )
-            }           
-        }
+            if (contentExists(props.image)){
+                return(<React.Fragment>
+                    {props.image && <div className="img-container">{props.image}</div>}
+                    {HeadingElement}
+                    {contentExists(props.text) && <span className="grid-text">{props.text}</span>}
+                </React.Fragment>
+                )
+            } else {
+                return(<React.Fragment>
+                    {HeadingElement}
+                    {contentExists(props.text) && <span className="list-text">{props.text}</span>}
+                </React.Fragment>
+                )
+            }
 
+    
+            // switch(props.displayType){
+            //     case 'list':
+            //         return(<React.Fragment>
+            //             {HeadingElement}
+            //             {contentExists(props.text) && <span className="list-text">{props.text}</span>}
+            //         </React.Fragment>
+            //         )
+            //     case 'small-grid':
+            //         return(<React.Fragment>
+            //             {HeadingElement}
+            //             {contentExists(props.text) && <span className="small-grid-text">{props.text}</span>}
+            //         </React.Fragment>
+            //         )
+            //     case 'grid':
+            //         return(<React.Fragment>
+            //             {props.image && <div className="img-container">{props.image}</div>}
+            //             {HeadingElement}
+            //             {contentExists(props.text) && <span className="grid-text">{props.text}</span>}
+            //         </React.Fragment>
+            //         )
+            //     default: 
+            //         return(<React.Fragment>
+            //             {props.image && <div className="img-container">{props.image}</div>}
+            //             {HeadingElement}
+            //             {contentExists(props.text) && <span className="grid-text">{props.text}</span>}
+            //         </React.Fragment>
+            //         )
+            // }           
+        }
         // If link exists, add optional link
         if(contentExists(props.url)){
+            console.log(props.url,'url')
             // check to see if url is external - i.e. it contains http to use <a href..> ... </a> 
             // otherwise use the gatsby Link comand for internal links
             if (props.url.includes("http")){
                 return(
                     <Tag className={classes}>
-                    <a href={props.url} className="news-link">{linksContent()}</a>
+                    <a href={props.url} className={imageLinkClass}>{linksContent()}</a>
                 </Tag>
                 )
             }else { 
      
                 return(
                     <Tag className={classes}>
-                        <Link to={props.url} className="news-link">{linksContent()}</Link>
+                        <Link to={props.url} className={imageLinkClass}>{linksContent()}</Link>
                     </Tag>
                 )}
         } else {

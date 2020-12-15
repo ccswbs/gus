@@ -55,20 +55,15 @@ export default ({data}) => {
 						<div dangerouslySetInnerHTML={{ __html: body}} />
 						{ /**** Related Page conent - to be removed before release (only used for the old A Place To Grow Recruitment) >****/}
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
-						{ /**** Links Items conent ****/}
-						<LinksWidget pageData={linksData} />
 					</section>
 	
 				</div>
-				
+				{ /**** Links Items conent ****/}	
+				<LinksWidget pageData={linksData} />
 
 
 			</div>	
 			
-			
-			{ /**** <LinksItems pageData={linksData} heading={"grid"} displayType={'list'} headingLevel={'h2'} numColumns={1}/>	
-			<LinksItems pageData={linksData} heading={"Small Grid"} displayType={'small-grid'} headingLevel={'h2'} numColumns={2}/>	>****/}
-		
 		</Layout>
 	)
 	
