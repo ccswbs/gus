@@ -7,12 +7,16 @@ import '../styles/list.css';
 
 
 function LinksOuter (props) {
+
+
+    const setExtraClasses = (props.displayType==='grid')? "row row-with-vspace site-content content-area": "site-content content-area";
+    const setBackGroundClass = (props.displayType==='grid')? "full-width-container bg-light grid":"row row-with-vspace site-content full-width-container list";
+
     let Heading = setHeadingLevel(props.headingLevel);
-console.log(props)
 	if (contentExists(props.children)) {
-		return (<div className="full-width-container bg-light linkspara">
+		return (<div className={setBackGroundClass}>
                     <div className="container page-container">
-                        <GridParent extraClasses="row row-with-vspace site-content content-area">
+                        <GridParent extraClasses={setExtraClasses}>
                             {props.heading && <div className="col-md-12 content-area">
                                 <Heading>{props.heading}</Heading>
                                 <div className="">
@@ -26,7 +30,7 @@ console.log(props)
             )
 
 	} else {
-		return null
+		return null;
 	}
 }
 
@@ -36,14 +40,15 @@ LinksOuter.propTypes = {
     heading: PropTypes.string,
     headingLevel: PropTypes.string,
     description: PropTypes.string,
+    displayType: PropTypes.string,
 }
-
 LinksOuter.defaultProps = {
     children: ``,
     columnClass: 'col-md-3 col-sm-6',
     heading: ``,
     headingLevel: ``,
     description: ``,
+    displayType: `grid`,
 }
 
 export default LinksOuter
