@@ -5,10 +5,10 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
-import LinksItems from '../components/linksItems';
 import LinksWidget from '../components/linksWidget';
 import ctaPara from '../components/ctaPara';
 import { graphql } from 'gatsby';
+import { contentExists } from '../utils/ug-utils';
 
 export default ({data}) => {
 
@@ -24,7 +24,14 @@ export default ({data}) => {
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 	if (pageData.relationships.field_widgets !== undefined) { linksData = pageData.relationships.field_widgets; }
     if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
+	// var linksData;
+	
+	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 
+	// set linksData if field_widgets contains at least one entry for "paragraph__links_widget" 
+	const linksData = (contentExists(pageData.relationships.field_widgets) && 
+		pageData.relationships.field_widgets[0].__typename === 'paragraph__links_widget')? 
+		pageData.relationships.field_widgets: null;
 	return (
 		<Layout>
 			<Helmet bodyAttributes={{
@@ -48,15 +55,22 @@ export default ({data}) => {
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
 						<div dangerouslySetInnerHTML={{ __html: body}} />
-
+						{ /**** Related Page conent - to be removed before release (only used for the old A Place To Grow Recruitment) >****/}
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
+						{ /**** Links Items conent ****/}
+						<LinksWidget pageData={linksData} />
 					</section>
+	
 				</div>
+				
+
+
 			</div>	
-			{ /**** Links Items conent ****/}
-			<LinksWidget pageData={pageData} heading={"Grid"} displayType={'grid'} headingLevel={'h2'} numColumns={4}/>		
-			<LinksItems pageData={linksData} heading={"List"} displayType={'list'} headingLevel={'h2'} numColumns={1}/>	
-			<LinksItems pageData={linksData} heading={"Small Grid"} displayType={'small-grid'} headingLevel={'h2'} numColumns={2}/>	
+			
+			
+			{ /**** <LinksItems pageData={linksData} heading={"grid"} displayType={'list'} headingLevel={'h2'} numColumns={1}/>	
+			<LinksItems pageData={linksData} heading={"Small Grid"} displayType={'small-grid'} headingLevel={'h2'} numColumns={2}/>	>****/}
+		
 		</Layout>
 	)
 	
@@ -138,23 +152,23 @@ export const query = graphql`
 								field_link_url {
 									title
 									uri
-									}
-									relationships {
-										field_link_image {
-											relationships {
-												field_media_image {
-													localFile {
-														publicURL
-														childImageSharp {
-															resize(width: 400, height: 300, cropFocus: CENTER) {
-															src
-															}
+								}
+								relationships {
+									field_link_image {
+										relationships {
+											field_media_image {
+												localFile {
+													publicURL
+													childImageSharp {
+														resize(width: 400, height: 300, cropFocus: CENTER) {
+														src
 														}
 													}
 												}
 											}
 										}
 									}
+								}
 							}
 						}
 

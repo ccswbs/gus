@@ -77,7 +77,6 @@ const LinksElement = (props) => {
                     )
             }           
         }
-       
 
         // If link exists, add optional link
         if(contentExists(props.url)){
@@ -138,7 +137,7 @@ LinksElement.propTypes = {
     headingLinkLevel: 'h2',
     image: null,
     numColumns: 4,
-    tag: 'li',
+    tag: 'ul',
     text: ``,
     displayType: `grid`
   }

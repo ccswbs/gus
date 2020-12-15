@@ -23,9 +23,9 @@ Example Usage:
 */
 
 const GridParent = (props) => {
+    console.log(props)
     const classes = `${props.extraClasses}`;
     const Tag = props.tag;
-
     return(<Tag className={classes}>
                 {props.children}
             </Tag>
