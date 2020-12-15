@@ -18,11 +18,9 @@ export default ({data}) => {
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
 	let relatedPageData;
-	var linksData;
 	var ctaParaData;
 	
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
-	if (pageData.relationships.field_widgets !== undefined) { linksData = pageData.relationships.field_widgets; }
     if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
 	// var linksData;
 	
