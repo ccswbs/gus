@@ -27,7 +27,7 @@ Example Usage:
 
 function Grid (props) {
     let Heading = setHeadingLevel(props.headingLevel);
-    console.log(props, "grid")
+   
 	if (contentExists(props.children)) {
 		return (<div className="full-width-container bg-light grid">
                     <div className="container page-container">
