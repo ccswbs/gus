@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import Breadcrumbs from '../components/breadcrumbs';
 import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
 import Courses from '../components/courses';
@@ -342,6 +343,7 @@ export default ({data, location}) => {
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
 
 	// set program details
+	const nodeID = progData.drupal_internal__nid;
 	const title = progData.title;
 	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
 	const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
@@ -400,6 +402,8 @@ export default ({data, location}) => {
               </section>
           </div>
       </div>
+	  
+	  <Breadcrumbs nodeID={nodeID} nodeTitle={title} />
 
       { /**** Program Overview ****/ }
       <div className="container page-container">
