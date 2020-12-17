@@ -2,7 +2,20 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'gatsby';
 import { setHeadingLevel, contentExists } from '../utils/ug-utils.js';
+/*
+LinksElement.propTypes = {
+    children: PropTypes.node.isRequired, - to pass through any childredn
+    extraClasses: PropTypes.string, - extra classes that are needed
+    headingLink: PropTypes.string, - Title of the link 
+    headingLinkLevel: PropTypes.string, - heading level to use for the links
+    image: PropTypes.object, - optional image (if image exists Grid is default, otherwise List)
+    numColumns: PropTypes.number, - number of columns to use for grid - list will not be in a column 
+    tag: PropTypes.string, - outer tag to use 
+    text: PropTypes.node,?
+    displayType: PropTypes.string, - display type for Grid or List
+  }
 
+*/
 function setColumnClasses(numColumns) {
     switch(numColumns) {
         case 1:
@@ -67,41 +80,10 @@ const LinksElement = (props) => {
                     {contentExists(props.text) && <span className="list-text">{props.text}</span>}
                 </React.Fragment>
                 )
-            }
-
-    
-            // switch(props.displayType){
-            //     case 'list':
-            //         return(<React.Fragment>
-            //             {HeadingElement}
-            //             {contentExists(props.text) && <span className="list-text">{props.text}</span>}
-            //         </React.Fragment>
-            //         )
-            //     case 'small-grid':
-            //         return(<React.Fragment>
-            //             {HeadingElement}
-            //             {contentExists(props.text) && <span className="small-grid-text">{props.text}</span>}
-            //         </React.Fragment>
-            //         )
-            //     case 'grid':
-            //         return(<React.Fragment>
-            //             {props.image && <div className="img-container">{props.image}</div>}
-            //             {HeadingElement}
-            //             {contentExists(props.text) && <span className="grid-text">{props.text}</span>}
-            //         </React.Fragment>
-            //         )
-            //     default: 
-            //         return(<React.Fragment>
-            //             {props.image && <div className="img-container">{props.image}</div>}
-            //             {HeadingElement}
-            //             {contentExists(props.text) && <span className="grid-text">{props.text}</span>}
-            //         </React.Fragment>
-            //         )
-            // }           
+            }        
         }
         // If link exists, add optional link
         if(contentExists(props.url)){
-            console.log(props.url,'url')
             // check to see if url is external - i.e. it contains http to use <a href..> ... </a> 
             // otherwise use the gatsby Link comand for internal links
             if (props.url.includes("http")){

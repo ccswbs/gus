@@ -17,14 +17,12 @@ export default ({data}) => {
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
 	let relatedPageData;
-	// var linksData;
+
+	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget validate that the correct items are selected
+	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your componeent.
 	
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
-
-	// set linksData if field_widgets contains at least one entry for "paragraph__links_widget" 
-	const linksData = (contentExists(pageData.relationships.field_widgets) && 
-		pageData.relationships.field_widgets[0].__typename === 'paragraph__links_widget')? 
-		pageData.relationships.field_widgets: null;
+	const widgetsData = (contentExists(pageData.relationships.field_widgets)) ? pageData.relationships.field_widgets: null;
 	return (
 		<Layout>
 			<Helmet bodyAttributes={{
@@ -51,10 +49,9 @@ export default ({data}) => {
 						{ /**** Related Page conent - to be removed before release (only used for the old A Place To Grow Recruitment) >****/}
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
 					</section>
-	
 				</div>
 				{ /**** Links Items conent ****/}	
-				<LinksWidget pageData={linksData} />
+				<LinksWidget pageData={widgetsData} />
 
 
 			</div>	

@@ -2,9 +2,41 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import LinksOuter from './linksOuter'
 import LinksElement from './linksElement'
-import { Link } from 'gatsby';
 
 import { contentExists } from '../utils/ug-utils';
+/*
+
+LinksItems.propTypes = {
+    pageData: PropTypes.array, - should contain only the Links Widget data in field_widgets
+	displayType: PropTypes.string, - indicates if the links should be displayed as a grid or a list (Default List)
+	heading: PropTypes.string, - optional - overall header - if exists it will be displayed
+	headingLevel: PropTypes.string, - heading level for the optional header (Defalt h2)
+	description: PropTypes.string, - optional - description to be displayed before the list or grid
+	numColumns: PropTypes.number, - number of columns to use if there is a grid (default is 4)
+}
+
+LinksOuter -	sets the outer container, places the Links Widget Heading, if there is one - at headingLevel passed to it (default - h2)
+				can add any Extra Classes, Links Widget Heading, Links Widget Description, and Display Type.
+				
+	LinksElement - returns the individual element for the Links (grid or list) - Needs: Link URL, Heading for the Link, Display Type
+					optionally Image, Link Heading Level, numColumns, and outer tag (note inner tags will be set based on display type)
+	
+
+Example Usage:
+    <LinksOuter extraClasses="my-grid", heading="my-links-heading", description="my-links-description", displayType="grid (or List)">
+
+	LinksElement key={my-content.drupal_id} 
+				url={urlLink} 
+				image={imageFile} 
+				headingLink={paragraph.field_link_url.title}
+				headingLinkLevel= {nextHeadingLevel}
+				numColumns={4} 
+				displayType={grid}
+				tag={"ul"}/>	
+      
+
+    </LinksElement>
+*/
 
 function LinksItems (props) {
 	
@@ -30,7 +62,7 @@ function LinksItems (props) {
 						// set heading level to one lower based on the heading level of the header, if header does not exists set to h2
 						const nextHeadingLevel = (props.displayType ==='grid')? (contentExists(props.heading))? (props.headingLevel === "h2")? "h3": 
 										(props.headingLevel==="h3") ? "h4" : "h5": "h2": '';
-						const setTag = (props.displayType === 'list') ? 'li': 'li';
+						const setTag = (props.displayType === 'list') ? 'li': 'ul';
 						return <LinksElement key={paragraph.drupal_id} 
 									url={urlLink} 
 									image={imageFile} 
@@ -38,7 +70,7 @@ function LinksItems (props) {
 									headingLinkLevel= {nextHeadingLevel}
 									numColumns={props.numColumns} 
 									displayType={props.displayType}
-									tag={setTag}/>
+									tag={setTag}/> 
 						}
 						return null;
 					})}
@@ -63,7 +95,7 @@ LinksItems.defaultProps = {
     pageData: ``,
 	displayType: `list`,
 	heading: ``,
-	headingLevel: ``,
+	headingLevel: `h2`,
 	description: ``,
 	numColumns: 4,
 

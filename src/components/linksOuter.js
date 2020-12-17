@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GridParent from './gridParent';
+import LinksParent from './linksParent';
 import { contentExists, setHeadingLevel } from '../utils/ug-utils.js';
 import '../styles/list.css';
 
@@ -16,7 +16,7 @@ function LinksOuter (props) {
 	if (contentExists(props.children)) {
 		return (<div className={setBackGroundClass}>
                     <div className="container page-container">
-                        <GridParent extraClasses={setExtraClasses}>
+                        <LinksParent extraClasses={setExtraClasses}>
                             {props.heading && <div className="col-md-12 content-area">
                                 <Heading>{props.heading}</Heading>
                                 <div className="">
@@ -24,7 +24,7 @@ function LinksOuter (props) {
                                 </div>
                             </div>}
                             {props.children}
-                        </GridParent>
+                        </LinksParent>
                     </div>
                 </div>
             )
