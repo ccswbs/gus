@@ -19,10 +19,11 @@ function LinksWidget (props) {
 
 if(contentExists(props.pageData)&& props.pageData.length !==0){
    return( props.pageData.map(linksWidgetData => {
-     const linksDisplayType = (contentExists(linksWidgetData.relationships.field_link_items[0].relationships.field_link_image))? 'grid': 'list';
-     const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
-     const numColumns = (linksDisplayType === 'grid')? 4: null;
-     if (linksWidgetData.__typename==="paragraph__links_widget") {
+      if (linksWidgetData.__typename==="paragraph__links_widget") {
+        const linksDisplayType = (contentExists(linksWidgetData.relationships.field_link_items[0].relationships.field_link_image))? 'grid': 'list';
+        const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
+        const numColumns = (linksDisplayType === 'grid')? 4: null;
+    
         return <LinksItems  key={linksWidgetData.drupal_id}
                             pageData={linksWidgetData.relationships.field_link_items} 
                             displayType={linksDisplayType} 
