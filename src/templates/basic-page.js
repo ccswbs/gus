@@ -9,6 +9,7 @@ import LinksWidget from '../components/linksWidget';
 import ctaPara from '../components/ctaPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
+import Widgets from '../components/widgets'
 
 export default ({data}) => {
 
@@ -22,11 +23,13 @@ export default ({data}) => {
 	
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
     if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
+	// related content - will be deleted once widgets are implemented.
+	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
 
 	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget validate that the correct items are selected
 	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your componeent.
 	
-	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
+	
 	const widgetsData = (contentExists(pageData.relationships.field_widgets)) ? pageData.relationships.field_widgets: null;
 	return (
 		<Layout>
@@ -56,8 +59,8 @@ export default ({data}) => {
 					</section>
 				</div>
 				{ /**** Links Items conent ****/}	
-				<LinksWidget pageData={widgetsData} />
-
+		
+				<Widgets pageData={widgetsData} />
 
 			</div>	
 			
