@@ -12,12 +12,13 @@ let metaConfig = require('./config/sites/' + _site + '.js');
 // For dev purposes, comment the line above and uncomment the line below:
 // let metaConfig = require('./config/sites/ugconthub.js');
 
-if((metaConfig == null) || (metaConfig == undefined)) {
-  metaConfig['title'] = "Gatsby UG Starter Template";
-  metaConfig['description'] = "Description of the site";
-  metaConfig['author'] = "Author of site";
-  metaConfig['GAtrackingID'] = "";
-  metaConfig['IGuser'] = "";
+if ((metaConfig === null) || (metaConfig === undefined)) {
+	metaConfig['title'] = "Gatsby UG Starter Template";
+	metaConfig['description'] = "Description of the site";
+	metaConfig['author'] = "Author of site";
+	metaConfig['GAtrackingID'] = "";
+	metaConfig['IGuser'] = "";
+	metaConfig['menus'] = "";
 }
 
 module.exports = {
@@ -25,6 +26,7 @@ module.exports = {
     title: metaConfig['title'],
     description: metaConfig['description'],
     author: metaConfig['author'],
+	menus: metaConfig['menus'],
   },
   plugins: [
     {
@@ -69,6 +71,18 @@ module.exports = {
         // baseUrl: `http://multidev-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
+    },
+	{
+      resolve: `gatsby-source-drupal-menu-links`,
+      options: {
+		baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE,
+		/** For dev purposes, comment the line above and uncomment the appropriate line below: **/
+		//baseUrl: `https://api.devugconthub.uoguelph.dev`,
+		//baseUrl: `https://api.liveugconthub.uoguelph.dev`,
+		//baseUrl: `http://multidev-bovey.pantheonsite.io`,
+        apiBase: `jsonapi`, // optional, defaults to `jsonapi`
+        menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
+      },
     },    
     {
       resolve: `gatsby-source-filesystem`,
