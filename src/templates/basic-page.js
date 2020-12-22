@@ -7,7 +7,8 @@ import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
 import LinksItems from '../components/linksItems';
 import LinksWidget from '../components/linksWidget';
-import ctaPara from '../components/ctaPara';
+import CtaPara from '../components/ctaPara';
+import LeadPara from '../components/leadPara';
 import { graphql } from 'gatsby';
 
 export default ({data}) => {
@@ -47,9 +48,12 @@ export default ({data}) => {
 			<div className="container page-container">
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
+						<LeadPara pageData={ctaParaData} />
 						<div dangerouslySetInnerHTML={{ __html: body}} />
 
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
+						<CtaPara pageData={ctaParaData} />
+						
 					</section>
 				</div>
 			</div>	
@@ -97,12 +101,19 @@ export const query = graphql`
 				__typename
 					... on paragraph__call_to_action {
 						id
+						field_cta_title
 						field_cta_description
 						field_cta_primary_link {
 					  		title
 					  		uri
 						}
-					}	
+					}
+					... on paragraph__lead_paragraph {
+             					id
+              					field_lead_paratext {
+                					value
+              					}
+            				}	
 					... on paragraph__links_items {
 						drupal_id
 						field_link_description

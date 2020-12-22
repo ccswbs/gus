@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Implement Gatsby's Node APIs in this file.
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
@@ -95,7 +95,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     paragraph__link_item
     | paragraph__links_items
     | paragraph__call_to_action
-    | paragraph__section
     | paragraph__links_widget
     | paragraph__lead_paragraph
 
