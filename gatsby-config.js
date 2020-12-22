@@ -75,7 +75,7 @@ module.exports = {
 	{
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
-		baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE,
+		baseUrl: `https://api.` + _env + _site + `.` + _zone,
 		/** For dev purposes, comment the line above and uncomment the appropriate line below: **/
 		//baseUrl: `https://api.devugconthub.uoguelph.dev`,
 		//baseUrl: `https://api.liveugconthub.uoguelph.dev`,
