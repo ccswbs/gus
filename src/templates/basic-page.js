@@ -7,6 +7,7 @@ import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
 import LinksWidget from '../components/linksWidget';
 import ctaPara from '../components/ctaPara';
+import MediaText from '../components/mediaText';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 
@@ -55,9 +56,12 @@ export default ({data}) => {
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
 					</section>
 				</div>
-				{ /**** Links Items conent ****/}	
+				
+				{/**** Links Items content ****/}	
 				<LinksWidget pageData={widgetsData} />
-
+				
+				{/**** Media and Text content ****/}
+				<MediaText widgetData={widgetsData} />
 
 			</div>	
 			
@@ -98,72 +102,99 @@ export const query = graphql`
 			  }
 			}
 			field_widgets {
-				__typename
-					... on paragraph__call_to_action {
-						id
-						field_cta_description
-						field_cta_primary_link {
-					  		title
-					  		uri
-						}
-					}	
-					... on paragraph__links_items {
-						drupal_id
-						field_link_description
-						field_link_url {
-							title
-							uri
+			  __typename
+				... on paragraph__call_to_action {
+				  id
+				  field_cta_description
+				  field_cta_primary_link {
+					title
+					uri
+				  }
+				}	
+				... on paragraph__links_items {
+				  drupal_id
+				  field_link_description
+				  field_link_url {
+					title
+					uri
+				  }
+				  relationships {
+					field_link_image {
+					  relationships {
+						field_media_image {
+						  localFile {
+							publicURL
+							childImageSharp {
+							  resize(width: 400, height: 300, cropFocus: CENTER) {
+								src
+							  }
 							}
-							relationships {
-								field_link_image {
-									relationships {
-										field_media_image {
-											localFile {
-												publicURL
-												childImageSharp {
-													resize(width: 400, height: 300, cropFocus: CENTER) {
-													src
-													}
-												}
-											}
-										}
-									}
-								}
-							}
+						  }
 						}
-					... on paragraph__links_widget {
-						drupal_id
-						field_link_items_title
-						field_link_items_description
-						relationships {
-							field_link_items {
-								drupal_id
-								field_link_description
-								field_link_url {
-									title
-									uri
-								}
-								relationships {
-									field_link_image {
-										relationships {
-											field_media_image {
-												localFile {
-													publicURL
-													childImageSharp {
-														resize(width: 400, height: 300, cropFocus: CENTER) {
-														src
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-
+					  }
 					}
+				  }
 				}
+				... on paragraph__links_widget {
+				  drupal_id
+				  field_link_items_title
+				  field_link_items_description
+				  relationships {
+					field_link_items {
+					  drupal_id
+					  field_link_description
+					  field_link_url {
+						title
+						uri
+					  }
+					  relationships {
+						field_link_image {
+						  relationships {
+							field_media_image {
+							  localFile {
+								publicURL
+								childImageSharp {
+								  resize(width: 400, height: 300, cropFocus: CENTER) {
+									src
+								  }
+								}
+							  }
+							}
+						  }
+						}
+					  }
+					}
+				  }
+				}
+				... on paragraph__media_text {
+				  field_media_text_title
+				  field_media_text_desc {
+					processed
+				  }
+				  field_media_text_links {
+					title
+					uri
+				  }
+				  relationships {
+					field_media_text_media {
+					  ... on media__image {
+						name
+						relationships {
+						  field_media_image {
+							localFile {
+							  url
+							}
+						  }
+						}
+					  }
+					  ... on media__remote_video {
+						name
+						field_media_oembed_video
+					  }
+					}
+				  }
+				}
+			}
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {

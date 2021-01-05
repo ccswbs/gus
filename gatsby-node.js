@@ -92,6 +92,10 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  fields: FieldsPathAlias
 	}
 
+	union media__imagemedia__remote_videoUnion =
+	  media__image
+	  | media__remote_video
+	  
 	union relatedParagraphUnion = 
 	  paragraph__program_variants
 	  | paragraph__general_text
@@ -383,11 +387,10 @@ exports.createSchemaCustomization = ({ actions }) => {
 	type paragraph__media_text implements Node {
 	  field_media_text_title: String
 	  field_media_text_desc: BodyField
-	  relationships: paragraph__media_textRelationships
+	  field_media_text_links: [FieldLink]
+	  field_media_text_media: media__imagemedia__remote_videoUnion
 	}
-	type paragraph__media_textRelationships implements Node {
-	  field_media_text_media: media__remote_video
-	}
+
     type paragraph__program_statistic implements Node {
       drupal_id: String	  
       field_stat_range: Boolean
