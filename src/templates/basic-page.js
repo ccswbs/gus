@@ -5,7 +5,7 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
-import LinksWidget from '../components/linksWidget';
+import LinksWidget from '../components/linkswidget';
 import ctaPara from '../components/ctaPara';
 import MediaText from '../components/mediaText';
 import { graphql } from 'gatsby';

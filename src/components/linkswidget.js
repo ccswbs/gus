@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import LinksItems from './linksItems';
+import LinksItems from './linksitems';
 
 import { contentExists } from '../utils/ug-utils';
 
