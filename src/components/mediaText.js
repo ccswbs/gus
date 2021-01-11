@@ -18,6 +18,7 @@ function MediaText (props) {
 			return null;     
 		}))     
 	}
+	return null;
 }
 
 MediaText.propTypes = {
