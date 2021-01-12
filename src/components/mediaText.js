@@ -15,10 +15,14 @@ function MediaText (props) {
 				const imageURL = (mediatext.relationships.field_media_text_media.relationships !== undefined ? mediatext.relationships.field_media_text_media.relationships.field_media_image.localFile.url : ``);
 				
 				if (contentExists(mediatext.relationships.field_media_text_media.field_media_oembed_video)) {
+					
 					const videoURL = mediatext.relationships.field_media_text_media.field_media_oembed_video;
+					const videoID = videoURL.substr(videoURL.length - 11);
+					
 					return (<>
 					<h2>Video {mediaTitle} Exists</h2>
-					<Video videoSrc={videoURL} videoTitle={mediaTitle} />
+					<Video videoSrc={videoID} videoTitle={mediaTitle} />
+					<p>Video URL is {videoURL} and video ID is {videoID}</p>
 					</>)
 					
 				} else if (contentExists(imageURL)) {					

@@ -1,17 +1,18 @@
 import React from 'react';
+import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types';
-//import { setHeadingLevel } from '../utils/ug-utils';
 
 function Video (props) {
 	
 	//let Heading = setHeadingLevel(props.headingLevel);
 	//let vimeoURL = "https://player.vimeo.com/video/";
 	//let youtubeURL = "https://www.youtube.com/embed/";
-	let videoSrc = props.videoURL;
+	let videoSrc = "https://www.youtube.com/embed/" + props.videoSrc;
 	let videoTitle = props.videoTitle;
 	
 	return (
 		<React.Fragment>
+		<Helmet><script defer type="text/javascript" src="/assets/uog-media-player.js"></script></Helmet>
 		 <div className="col-lg-6 col-md-12">
             <div id="youtube-embed">
                 <h3 className="sub-section-header">{videoTitle}</h3>
@@ -28,9 +29,11 @@ function Video (props) {
 	)
 }
 Video.propTypes = {
-	videoData: PropTypes.array,
+	videoTitle: PropTypes.string,
+	videoSrc: PropTypes.string,
 }
 Video.defaultProps = {
-	videoData: null,
+	videoTitle: ``,
+	videoSrc: ``,
 }
 export default Video
