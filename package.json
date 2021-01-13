@@ -22,7 +22,7 @@
     "gatsby-plugin-manifest": "^2.4.11",
     "gatsby-plugin-react-helmet": "^3.3.4",
     "gatsby-plugin-sharp": "^2.6.36",
-    "gatsby-source-drupal": "^3.5.12",
+    "gatsby-source-drupal": "^3.12.0-next.1",
     "gatsby-source-drupal-menu-links": "^1.0.3",
     "gatsby-source-filesystem": "^2.3.11",
     "gatsby-source-instagram": "^0.8.0",
