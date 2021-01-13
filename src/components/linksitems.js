@@ -39,7 +39,6 @@ Example Usage:
 */
 
 function LinksItems (props) {
-	console.log(props, "linksItem")
 	const aliasData = require('../../config/aliases/aliasfile.yml');
 
 		if(contentExists(props.pageData) && props.pageData.length !== 0){

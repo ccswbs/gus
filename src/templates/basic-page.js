@@ -5,8 +5,8 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
-import LinksWidget from '../components/linksWidget';
-import ctaPara from '../components/ctaPara';
+// import LinksWidget from '../components/linksWidget';
+// import ctaPara from '../components/ctaPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
@@ -20,6 +20,7 @@ export default ({data}) => {
 	const imageData = data.images.edges;
 	let relatedPageData;
 	var ctaParaData;
+
 	
 	if (pageData.relationships.field_related_content !== undefined) { relatedPageData = pageData.relationships.field_related_content; }
     if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
@@ -28,9 +29,11 @@ export default ({data}) => {
 
 	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget validate that the correct items are selected
 	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your componeent.
-	
-	
+
+
 	const widgetsData = (contentExists(pageData.relationships.field_widgets)) ? pageData.relationships.field_widgets: null;
+
+
 	return (
 		<Layout>
 			<Helmet bodyAttributes={{

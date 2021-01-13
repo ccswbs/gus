@@ -14,7 +14,7 @@ import { contentExists } from '../utils/ug-utils';
 //
 
 function Widgets (props) {
-console.log(props, "props")
+// console.log(props, "props")
 if (contentExists(props.pageData) && props.pageData.length !== 0){
     return (props.pageData.map(widgetData => {
         if (widgetData.__typename==="paragraph__links_widget") {
@@ -22,7 +22,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
             const gridFirstHeadingLevel = "h2";
             const listFirstHeadingLevel = "h2";
            
-            console.log("paragraph__links_widget")
+            // console.log("paragraph__links_widget")
 
     // if there is at least one links widget (paragarph__links_widget) - step through each one to display links 
     // if there are link items on the page display them using LinksItems
@@ -47,7 +47,12 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
         else if (widgetData.__typename==="paragraph__call_to_action") {
             console.log("Paragraph__call_to_action")
             return(<p>This is Paragraph_call_to_action</p>)
+       } 
+       else if (widgetData.__typename==="paragraph__new_widget") {
+        console.log("Paragraph__new_widget")
+        return(<p>This is Paragraph_new_widget</p>)
        }
+       return null;
     }
         ))
 }
