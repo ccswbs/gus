@@ -61,20 +61,17 @@ function Footer() {
 		<div className="container">
 			<footer className="navbar navbar-default">
 				<div className="row">
-					<div className="col-md-4 col-lg-3 col-sm-12">
+					<div className="col-md-3 col-sm-12">
 						<a href="https://uoguelph.ca/improve-life" className="il-link">
 							<img src="https://www.uoguelph.ca/img/improve-life.svg" alt="Improve Life" className="footer-tagline" />
 						</a>
 						{getSocialMenu("ug-social-media")}					
 						<a href="//www.uoguelph.ca/web/" className="copyright">&copy; {(new Date().getFullYear())} University of Guelph</a>
 					</div>
-					<div className="col-md-4 col-lg-3 col-sm-12">
+					<div className="col-md-6 col-sm-12">
 						{fetchFooterMenu("ug-footer-1")}
 					</div>
-					<div className="col-md-4 col-lg-3 col-sm-12">
-						{fetchFooterMenu("ug-footer-2")}
-					</div>
-					<div className="col-md-4 col-lg-3 col-sm-12">
+					<div className="col-md-3 col-sm-12">
 						<address>
 							<strong>University of Guelph</strong><br />
 							50 Stone Road East,<br />

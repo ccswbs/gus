@@ -4,9 +4,13 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-// let metaConfig = require('./config/sites/' + process.env._SITE + '.js');
-/** For dev purposes, comment the line above and uncomment the line below: **/
-let metaConfig = require('./config/sites/ugconthub.js');
+let _site = process.env._SITE || "ugconthub";
+let _env  = process.env._GATSBY_SOURCE || "live";
+let _zone = process.env._ZONE || "uoguelph.dev";
+
+let metaConfig = require('./config/sites/' + _site + '.js');
+// For dev purposes, comment the line above and uncomment the line below:
+// let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
 	metaConfig['title'] = "Gatsby UG Starter Template";
@@ -60,19 +64,18 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-        //  baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE + `/`,
-		 /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
-         //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
-         //baseUrl: `https://api.liveugconthub.uoguelph.dev/`,
-         //baseUrl: `http://multidev-bovey.pantheonsite.io/`,
-         baseUrl: `http://widgets-bovey.pantheonsite.io/`,
+         baseUrl: `https://api.` + _env + _site + `.` + _zone + `/`,
+        // For dev purposes, comment the line above and uncomment the appropriate line below:
+        // baseUrl: `https://api.devugconthub.uoguelph.dev/`,
+        // baseUrl: `https://api.liveugconthub.uoguelph.dev/`,
+        // baseUrl: `http://multidev-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
 	{
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
-		// baseUrl: `https://api.` + process.env._GATSBY_SOURCE + process.env._SITE + `.` + process.env._ZONE,
+		baseUrl: `https://api.` + _env + _site + `.` + _zone,
 		/** For dev purposes, comment the line above and uncomment the appropriate line below: **/
 		//baseUrl: `https://api.devugconthub.uoguelph.dev`,
 		//baseUrl: `https://api.liveugconthub.uoguelph.dev`,
@@ -97,7 +100,14 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-asset-path`,
-    }
+    },
+    {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: "GTM-NRSSDKW",
+        includeInDevelopment: false,
+      },
+    },
   ],
   mapping: {
     "node__article.fields.alias": `PathAlias`,
