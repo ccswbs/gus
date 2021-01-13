@@ -9,8 +9,6 @@ let _env  = process.env._GATSBY_SOURCE || "live";
 let _zone = process.env._ZONE || "uoguelph.dev";
 
 let metaConfig = require('./config/sites/' + _site + '.js');
-// For dev purposes, comment the line above and uncomment the line below:
-// let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
 	metaConfig['title'] = "Gatsby UG Starter Template";
@@ -36,6 +34,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-preact`,
     {
       resolve: `gatsby-transformer-sharp`,
       options: {
