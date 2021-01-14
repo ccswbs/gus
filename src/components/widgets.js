@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import LinksItems from './linksItems';
-
+import CtaPara from './ctaPara'
 import { contentExists } from '../utils/ug-utils';
 
 // 
@@ -45,8 +45,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
         }
 
         else if (widgetData.__typename==="paragraph__call_to_action") {
-            console.log("Paragraph__call_to_action")
-            return(<p>This is Paragraph_call_to_action</p>)
+            return(<CtaPara pageData={props.pageData} />)
        } 
        else if (widgetData.__typename==="paragraph__new_widget") {
         console.log("Paragraph__new_widget")

@@ -13,10 +13,14 @@ function ctaPara (props) {
                     if(contentExists(cta) && cta.__typename === 'paragraph__call_to_action'){
                             
                         return(
-                           <div class="cta border border-dark">
-                                <h3>{cta.field_cta_title}</h3>
-						        {cta.field_cta_description} <br />
-                                <a href={cta.field_cta_primary_link.uri} class="btn btn-uogRed">{cta.field_cta_primary_link.title}</a>    					                        
+                            <div class="row row-with-vspace site-content">
+                                <section class="col-md-9 content-area">
+                                    <div class="cta border border-dark">
+                                        <h3>{cta.field_cta_title}</h3>
+                                        {cta.field_cta_description} <br />
+                                        <a href={cta.field_cta_primary_link.uri} class="btn btn-uogRed">{cta.field_cta_primary_link.title}</a>    					                        
+                                    </div>
+                                </section>
                             </div>
                         )
                     }
