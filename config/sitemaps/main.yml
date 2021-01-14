@@ -1,0 +1,24 @@
+- id: 'menu-items-menu_link_content:b3562135-a0b1-4079-8b7e-08396aaab519'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.uoguelph.ca/choose-u-of-g'
+  title: Choose U of G
+  description: null
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:236ab3ba-4e75-4ba6-9dcf-eb08815a758c'
+  drupal_id: null
+  alias: ''
+  url: 'https://www.uoguelph.ca/improve-life/'
+  title: Improve Life
+  description: null
+  parent: null
+  children: []
+- id: 'menu-items-menu_link_content:ac7b120b-0645-44c8-8c76-bfb5d3ccdc7e'
+  drupal_id: null
+  alias: ''
+  url: 'https://news.uoguelph.ca/'
+  title: News
+  description: null
+  parent: null
+  children: []
