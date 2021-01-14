@@ -95,7 +95,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     paragraph__link_item
     | paragraph__links_items
     | paragraph__call_to_action
-    | paragraph__section
     | paragraph__links_widget
 
 	interface RelatedPagesInterface @nodeInterface {
