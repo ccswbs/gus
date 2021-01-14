@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Implement Gatsby's Node APIs in this file.
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
@@ -96,6 +96,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     | paragraph__links_items
     | paragraph__call_to_action
     | paragraph__links_widget
+    | paragraph__lead_paragraph
 
   interface WidgetParagraphInterface @nodeInterface {
       id: ID!
@@ -414,6 +415,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__call_to_actionRelationships {
       field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
     }	
+
+    type paragraph__lead_paragraph implements Node {
+      drupal_id: String
+      field_lead_paratext: BodyField
+    }
 
 	type PathAlias implements Node {
       value: String

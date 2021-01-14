@@ -7,6 +7,8 @@ import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
 // import LinksItems from '../components/linksItems';
 // import LinksWidget from '../components/linksWidget';
+import CtaPara from '../components/ctaPara';
+import LeadPara from '../components/leadPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
@@ -54,9 +56,12 @@ export default ({data}) => {
 			<div className="container page-container">
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
+						<LeadPara pageData={ctaParaData} />
 						<div dangerouslySetInnerHTML={{ __html: body}} />
 						{ /**** Related Page conent - to be removed before release (only used for the old A Place To Grow Recruitment) >****/}
 						<RelatedPages pageData={relatedPageData} displayType={'list'} />
+						<CtaPara pageData={ctaParaData} />
+						
 					</section>
 				</div>
 				{ /**** Links Items conent ****/}	
@@ -105,12 +110,19 @@ export const query = graphql`
 				__typename
 					... on paragraph__call_to_action {
 						id
+						field_cta_title
 						field_cta_description
 						field_cta_primary_link {
 					  		title
 					  		uri
 						}
-					}	
+					}
+					... on paragraph__lead_paragraph {
+             					id
+              					field_lead_paratext {
+                					value
+              					}
+            				}	
 					... on paragraph__links_items {
 						drupal_id
 						field_link_description
