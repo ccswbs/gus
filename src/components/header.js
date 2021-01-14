@@ -42,10 +42,10 @@ if (contentExists(menuData)) {
 
 			return (<>		
 				{submenu !== null && submenu.length > 0 ?  
-					<><uofg-dropdown-menu>
+					<><uofg-dropdown-menu key={item.id}>
 					<span className="opener">{item.title}</span>
 					<ul>
-						<li key={item.id}><a href={item.alias !== "" ? item.alias : item.url}>{item.title}</a></li>
+						<li><a href={item.alias !== "" ? item.alias : item.url}>{item.title}</a></li>
 						{submenuItems}
 					</ul>
 					</uofg-dropdown-menu></>
