@@ -102,7 +102,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
     }
 
-  interface RelatedPagesInterface @nodeInterface {
   union widgetParagraphUnion =
     paragraph__link_item
     | paragraph__links_items

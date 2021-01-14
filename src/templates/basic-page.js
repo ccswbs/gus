@@ -5,8 +5,8 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import RelatedPages from '../components/relatedPages';
-import LinksItems from '../components/linksItems';
-import LinksWidget from '../components/linksWidget';
+// import LinksItems from '../components/linksItems';
+// import LinksWidget from '../components/linksWidget';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
@@ -30,9 +30,7 @@ export default ({data}) => {
 	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget validate that the correct items are selected
 	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your componeent.
 
-
 	const widgetsData = (contentExists(pageData.relationships.field_widgets)) ? pageData.relationships.field_widgets: null;
-
 
 	return (
 		<Layout>
@@ -167,37 +165,7 @@ export const query = graphql`
 								}
 							}
 						}
-					... on paragraph__links_widget {
-						drupal_id
-						field_link_items_title
-						field_link_items_description
-						relationships {
-							field_link_items {
-								drupal_id
-								field_link_description
-								field_link_url {
-									title
-									uri
-									}
-									relationships {
-										field_link_image {
-											relationships {
-												field_media_image {
-													localFile {
-														publicURL
-														childImageSharp {
-															resize(width: 400, height: 300, cropFocus: CENTER) {
-															src
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-							}
-						}
-
+						
 					}
 				}
 			field_tags {
