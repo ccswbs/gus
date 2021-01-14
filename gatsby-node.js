@@ -103,6 +103,13 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
   interface RelatedPagesInterface @nodeInterface {
+  union widgetParagraphUnion =
+    paragraph__link_item
+    | paragraph__links_items
+    | paragraph__call_to_action
+    | paragraph__links_widget
+
+	interface RelatedPagesInterface @nodeInterface {
 	  id: ID!
 	  drupal_id: String
 	  title: String
