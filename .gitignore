@@ -71,3 +71,5 @@ yarn-error.log
 # yaml files in config
 config/aliases/*.yml
 config/sitemaps/*.yml
+# Auto-generated sitemaps
+config/sitemaps/
