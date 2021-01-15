@@ -5,6 +5,7 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import LeadPara from '../components/leadPara';
+import MediaText from '../components/mediaText';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
@@ -56,6 +57,9 @@ export default ({data}) => {
 				{ /**** Links Items conent ****/}	
 		
 				<Widgets pageData={widgetsData} />
+				
+				{/**** Media and Text content ****/}
+				<MediaText widgetData={widgetsData} />
 
 			</div>	
 			
@@ -149,9 +153,36 @@ export const query = graphql`
 								}
 							}
 						}
-						
 					}
+				... on paragraph__media_text {
+				  field_media_text_title
+				  field_media_text_desc {
+					processed
+				  }
+				  field_media_text_links {
+					title
+					uri
+				  }
+				  relationships {
+					field_media_text_media {
+					  ... on media__image {
+						name
+						relationships {
+						  field_media_image {
+							localFile {
+							  url
+							}
+						  }
+						}
+					  }
+					  ... on media__remote_video {
+						name
+						field_media_oembed_video
+					  }
+					}
+				  }
 				}
+			}
 			field_tags {
 			  __typename
 				... on TaxonomyInterface {
