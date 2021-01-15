@@ -34,6 +34,7 @@ export default ({data}) => {
 				class: 'basic-page'
 			}}
 			/>
+			<Helmet><script defer type="text/javascript" src="/assets/uog-media-player.js"></script></Helmet>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			
 			{ /**** Header and Title ****/ }
@@ -178,6 +179,13 @@ export const query = graphql`
 					  ... on media__remote_video {
 						name
 						field_media_oembed_video
+						relationships {
+						  field_media_file {
+                            localFile {
+							  publicURL
+                            }
+						  }
+						}
 					  }
 					}
 				  }

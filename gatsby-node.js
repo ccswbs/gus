@@ -112,6 +112,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       paragraph__link_item
       | paragraph__links_items
       | paragraph__call_to_action
+	  | paragraph__lead_paragraph
       | paragraph__links_widget
 	  | paragraph__media_text
 
@@ -163,6 +164,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+	type media__remote_video implements Node {
+	  name: String
+	  field_media_oembed_video: String
+	  relationships: media__remote_videoRelationships
+	}
+	type media__remote_videoRelationships implements Node {
+	  field_media_file: file__file
+	}
 	
 	type MenuItems implements Node {
 	  parent: Node
