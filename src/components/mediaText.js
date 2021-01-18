@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Img from 'gatsby-image';
 import Video from '../components/video';
 import { contentExists } from '../utils/ug-utils';
 
@@ -14,26 +15,28 @@ function MediaText (props) {
 				const mediaTitle = widget.field_media_text_title;
 				const mediaDescription = widget.field_media_text_desc.processed;
 				const mediaRelationships = widget.relationships.field_media_text_media.relationships;
-				const playerID = i;
 				
 				const videoURL = (contentExists(widget.relationships.field_media_text_media.field_media_oembed_video) ? widget.relationships.field_media_text_media.field_media_oembed_video : ``);
 				
-				const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile.url : ``);
+				const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);
 
-				const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);			
-		
-				if (contentExists(videoURL)) {
-					
-					const videoID = videoURL.substr(videoURL.length - 11);					
-					return (<>
-					<h2>Video {mediaTitle} Exists</h2>
-					<Video playerID={i} videoSrc={videoID} videoTitle={mediaTitle} videoTranscript={videoTranscript} />
-					<p>Video URL is {videoURL} and video ID is {videoID} and video transcript is {videoTranscript}</p>
-					</>)
-					
-				} else if (contentExists(imageURL)) {					
-					return <><h2>Image {mediaTitle} Exists:</h2><p>{imageURL}</p></>					
-				}
+				const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
+
+				return (
+					<>
+					<div className="row row-with-vspace">
+						<section className="col-md-6">
+						{contentExists(videoURL) ?
+						<Video playerID={i} videoURL={videoURL} videoTranscript={videoTranscript} />
+						: ``}
+						{contentExists(imageURL) ? <Img fluid={imageURL.childImageSharp.fluid} alt="placeholder" /> : ``}
+						</section>
+						<section className="col-md-6">
+							<h3>{mediaTitle}</h3>
+							<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
+						</section>
+					</div>
+				</>)
 			} 
 			return null;     
 		}))     

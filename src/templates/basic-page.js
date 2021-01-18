@@ -171,7 +171,13 @@ export const query = graphql`
 						relationships {
 						  field_media_image {
 							localFile {
-							  url
+							  publicURL
+							  childImageSharp {
+								fluid(maxWidth: 800) {
+								  originalImg
+								  ...GatsbyImageSharpFluid
+								}
+							  }
 							}
 						  }
 						}

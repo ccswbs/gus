@@ -7,16 +7,15 @@ function Video (props) {
 	//let Heading = setHeadingLevel(props.headingLevel);
 	//let vimeoURL = "https://player.vimeo.com/video/";
 	let youtubeURL = "https://www.youtube.com/embed/";
-	let playerID = "player" + props.playerID;
-	let videoSrc = youtubeURL + props.videoSrc;
-	let videoTitle = props.videoTitle;
+	let playerID = "player" + String(props.playerID);
+	let videoID = props.videoURL.substr(props.videoURL.length - 11);
+	let videoSrc = youtubeURL + videoID;
 	let videoTranscript = props.videoTranscript;
 	
 	return (
 		<React.Fragment>		
 		<div className="col-lg-6 col-md-12">
             <div id="youtube-embed">
-                <h3 className="sub-section-header">{videoTitle}</h3>
                 <section name="Youtube" className="ui-kit-section">
                     <div className="embed-responsive embed-responsive-16by9">
                         <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls">
@@ -34,15 +33,13 @@ function Video (props) {
 	)
 }
 Video.propTypes = {
-	playerID: PropTypes.string,
-	videoSrc: PropTypes.string,
-	videoTitle: PropTypes.string,
+	playerID: PropTypes.number,
+	videoURL: PropTypes.string,
 	videoTranscript: PropTypes.string,
 }
 Video.defaultProps = {
 	playerID: ``,
-	videoSrc: ``,
-	videoTitle: ``,
+	videoURL: ``,
 	videoTranscript: ``,
 }
 export default Video
