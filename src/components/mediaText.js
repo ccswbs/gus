@@ -27,7 +27,7 @@ function MediaText (props) {
 					const videoID = videoURL.substr(videoURL.length - 11);					
 					return (<>
 					<h2>Video {mediaTitle} Exists</h2>
-					<Video playerID={i} videoSrc={videoID} videoTitle={mediaTitle} />
+					<Video playerID={i} videoSrc={videoID} videoTitle={mediaTitle} videoTranscript={videoTranscript} />
 					<p>Video URL is {videoURL} and video ID is {videoID} and video transcript is {videoTranscript}</p>
 					</>)
 					
