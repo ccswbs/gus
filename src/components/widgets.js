@@ -45,7 +45,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
         }
 
         else if (widgetData.__typename==="paragraph__call_to_action") {
-            return(<CtaPara pageData={props.pageData} />)
+            return( <CtaPara pageData={widgetData} />)
        } 
        else if (widgetData.__typename==="paragraph__new_widget") {
         console.log("Paragraph__new_widget")
