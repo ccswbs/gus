@@ -5,7 +5,7 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import LeadPara from '../components/leadPara';
-import MediaText from '../components/mediaText';
+//import MediaText from '../components/mediaText';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
@@ -17,16 +17,16 @@ export default ({data}) => {
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
-	var ctaParaData;
+	let ctaParaData;
 
 
     if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
 	
 
-	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget validate that the correct items are selected
-	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your componeent.
+	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected
+	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component.
 
-	const widgetsData = (contentExists(pageData.relationships.field_widgets)) ? pageData.relationships.field_widgets: null;
+	const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
 
 	return (
 		<Layout>
@@ -55,12 +55,13 @@ export default ({data}) => {
 						<div dangerouslySetInnerHTML={{ __html: body}} />
 					</section>
 				</div>
-				{ /**** Links Items conent ****/}	
+				
+				{ /**** Widgets content ****/}	
 		
 				<Widgets pageData={widgetsData} />
 				
-				{/**** Media and Text content ****/}
-				<MediaText widgetData={widgetsData} />
+				{/**** Media and Text content 
+				<MediaText widgetData={widgetsData} />****/}
 
 			</div>	
 			
