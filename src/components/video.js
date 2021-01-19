@@ -7,7 +7,7 @@ function Video (props) {
 	//let Heading = setHeadingLevel(props.headingLevel);
 	//let vimeoURL = "https://player.vimeo.com/video/";
 	let youtubeURL = "https://www.youtube.com/embed/";
-	let playerID = "player" + String(props.playerID);
+	let playerID = props.playerID;
 	let videoID = props.videoURL.substr(props.videoURL.length - 11);
 	let videoSrc = youtubeURL + videoID;
 	let videoTranscript = props.videoTranscript;
@@ -33,7 +33,7 @@ function Video (props) {
 	)
 }
 Video.propTypes = {
-	playerID: PropTypes.number,
+	playerID: PropTypes.string,
 	videoURL: PropTypes.string,
 	videoTranscript: PropTypes.string,
 }

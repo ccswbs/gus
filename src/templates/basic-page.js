@@ -5,7 +5,6 @@ import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import LeadPara from '../components/leadPara';
-//import MediaText from '../components/mediaText';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
@@ -56,12 +55,8 @@ export default ({data}) => {
 					</section>
 				</div>
 				
-				{ /**** Widgets content ****/}	
-		
-				<Widgets pageData={widgetsData} />
-				
-				{/**** Media and Text content 
-				<MediaText widgetData={widgetsData} />****/}
+				{ /**** Widgets content ****/}		
+				<Widgets pageData={widgetsData} />				
 
 			</div>	
 			
@@ -184,6 +179,7 @@ export const query = graphql`
 						}
 					  }
 					  ... on media__remote_video {
+						drupal_id
 						name
 						field_media_oembed_video
 						relationships {
