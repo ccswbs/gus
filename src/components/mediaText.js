@@ -8,6 +8,7 @@ function MediaText (props) {
 	
 	const mediaTitle = props.widgetData.field_media_text_title;
 	const mediaDescription = props.widgetData.field_media_text_desc.processed;
+	const mediaLinks = props.widgetData.field_media_text_links;
 	const mediaRelationships = props.widgetData.relationships.field_media_text_media.relationships;
 	
 	const videoURL = (contentExists(props.widgetData.relationships.field_media_text_media.field_media_oembed_video) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
@@ -27,6 +28,9 @@ function MediaText (props) {
 			<section className="col-md-6">
 				<h3>{mediaTitle}</h3>
 				<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
+				<div>{mediaLinks.map(mediaLink => {
+					return <><a className="btn btn-danger" href={mediaLink.uri}>{mediaLink.title}</a> </>
+				})}</div>
 			</section>
 		</div>
 	</>)
