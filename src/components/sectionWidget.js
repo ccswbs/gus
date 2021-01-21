@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import LinksItems from './linksItems';
-import CtaPara from './ctaPara';
-import SectionWidget from './sectionWidget';
+import CtaPara from './ctaPara'
 import { contentExists } from '../utils/ug-utils';
 
 // 
-// add to the if statement each widget, widgets will call each function in the order that it appears in the Drupal Backend. 
+// add to the if statement each widget in the section widget, 
+// widgets will call each function in the order that it appears in the Drupal Backend. 
 // props.pageData - an array that contains all widgets (paragraphs) in field_widget 
 // if contenet exists - step through each element in props.pageData 
 // widgetData - contains an array for the current element in the props.pageData array 
@@ -14,8 +14,8 @@ import { contentExists } from '../utils/ug-utils';
 // will return all the widgets in the order they were entered. 
 //
 
-function Widgets (props) {
-console.log(props)
+function SectionWidget (props) {
+
 if (contentExists(props.pageData) && props.pageData.length !== 0){
     return (props.pageData.map(widgetData => {
         if (widgetData.__typename==="paragraph__links_widget") {
@@ -47,11 +47,8 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
         else if (widgetData.__typename==="paragraph__call_to_action") {
             return( <CtaPara pageData={widgetData} />);
        } 
-       else if (widgetData.__typename==="paragraph__section") {
-        return(<SectionWidget pageData={widgetData.relationships.field_section_content}/>);
-       }
        else if (widgetData.__typename==="paragraph__new_widget") {
-
+        console.log("Paragraph__new_widget")
         return(<p>This is Paragraph_new_widget</p>);
        }
        return null;
@@ -62,13 +59,13 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
 
    
 }
-Widgets.propTypes = {
+SectionWidget.propTypes = {
     pageData: PropTypes.array,
    
 }
-Widgets.defaultProps = {
+SectionWidget.defaultProps = {
     pageData: ``,
 
   }
 
-export default Widgets
+export default SectionWidget

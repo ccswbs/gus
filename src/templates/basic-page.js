@@ -151,6 +151,87 @@ export const query = graphql`
 						}
 						
 					}
+					... on paragraph__section {
+						drupal_id
+						field_section_title
+						field_section_classes
+						relationships {
+							field_section_content {
+								__typename
+								... on paragraph__call_to_action {
+									id
+									field_cta_title
+									field_cta_description
+									field_cta_primary_link {
+										  title
+										  uri
+									}
+								}
+								... on paragraph__lead_paragraph {
+											 id
+											  field_lead_paratext {
+												value
+											  }
+										}	
+								... on paragraph__links_items {
+									drupal_id
+									field_link_description
+									field_link_url {
+										title
+										uri
+										}
+										relationships {
+											field_link_image {
+												relationships {
+													field_media_image {
+														localFile {
+															publicURL
+															childImageSharp {
+																resize(width: 400, height: 300, cropFocus: CENTER) {
+																src
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								... on paragraph__links_widget {
+									drupal_id
+									field_link_items_title
+									field_link_items_description
+									relationships {
+										field_link_items {
+											drupal_id
+											field_link_description
+											field_link_url {
+												title
+												uri
+											}
+											relationships {
+												field_link_image {
+													relationships {
+														field_media_image {
+															localFile {
+																publicURL
+																childImageSharp {
+																	resize(width: 400, height: 300, cropFocus: CENTER) {
+																	src
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+									
+								}
+							}
+						}
+					}
 				}
 			field_tags {
 			  __typename

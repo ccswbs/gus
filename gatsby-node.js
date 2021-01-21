@@ -97,17 +97,19 @@ exports.createSchemaCustomization = ({ actions }) => {
     | paragraph__call_to_action
     | paragraph__links_widget
     | paragraph__lead_paragraph
+    | paragraph__section
+  
+    union widgetSectionParagraphUnion =
+    paragraph__link_item
+    | paragraph__links_items
+    | paragraph__call_to_action
+    | paragraph__links_widget
+    | paragraph__lead_paragraph
 
   interface WidgetParagraphInterface @nodeInterface {
       id: ID!
       drupal_id: String
     }
-
-  union widgetParagraphUnion =
-    paragraph__link_item
-    | paragraph__links_items
-    | paragraph__call_to_action
-    | paragraph__links_widget
 
 	interface RelatedPagesInterface @nodeInterface {
 	  id: ID!
@@ -299,6 +301,15 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }
+
+    type paragraph__section implements Node & WidgetParagraphInterface {
+      drupal_id:String
+      field_link_description: String
+      relationships: paragraph__sectionRelationships
+    }
+    type paragraph__sectionRelationships implements Node {
+      field_section_content: [widgetSectionParagraphUnion] @link(from:"field_section_content___NODE")
     }
     type paragraph__links_items implements Node & WidgetParagraphInterface{
       drupal_id: String
