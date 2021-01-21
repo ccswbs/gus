@@ -14,15 +14,13 @@ import { contentExists } from '../utils/ug-utils';
 //
 
 function Widgets (props) {
-// console.log(props, "props")
+
 if (contentExists(props.pageData) && props.pageData.length !== 0){
     return (props.pageData.map(widgetData => {
         if (widgetData.__typename==="paragraph__links_widget") {
             
             const gridFirstHeadingLevel = "h2";
             const listFirstHeadingLevel = "h2";
-           
-            // console.log("paragraph__links_widget")
 
     // if there is at least one links widget (paragarph__links_widget) - step through each one to display links 
     // if there are link items on the page display them using LinksItems
@@ -30,26 +28,27 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
     // logic could be added to have a selction of layout - 
     // to use - call LinksItems - passing the array of links (pictures optional)
     // - set level heading to start at h2 for grid and list, option to change. 
-                  const linksDisplayType = (contentExists(widgetData.relationships.field_link_items[0].relationships.field_link_image))? 'grid': 'list';
-                  const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
-                  const numColumns = (linksDisplayType === 'grid')? 4: null;
-              
-                  return <LinksItems  key={widgetData.drupal_id}
-                                      pageData={widgetData.relationships.field_link_items} 
-                                      displayType={linksDisplayType} 
-                                      heading={widgetData.field_link_items_title} 
-                                      headingLevel={headingLevel} 
-                                      description={widgetData.field_link_items_description}
-                                      numColumns={numColumns}/>
+    
+            const linksDisplayType = (contentExists(widgetData.relationships.field_link_items[0].relationships.field_link_image))? 'grid': 'list';
+            const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
+            const numColumns = (linksDisplayType === 'grid')? 4: null;
+        
+            return <LinksItems  key={widgetData.drupal_id}
+                                pageData={widgetData.relationships.field_link_items} 
+                                displayType={linksDisplayType} 
+                                heading={widgetData.field_link_items_title} 
+                                headingLevel={headingLevel} 
+                                description={widgetData.field_link_items_description}
+                                numColumns={numColumns}/>
   
         }
 
         else if (widgetData.__typename==="paragraph__call_to_action") {
-            return( <CtaPara pageData={widgetData} />)
+            return( <CtaPara pageData={widgetData} />);
        } 
        else if (widgetData.__typename==="paragraph__new_widget") {
         console.log("Paragraph__new_widget")
-        return(<p>This is Paragraph_new_widget</p>)
+        return(<p>This is Paragraph_new_widget</p>);
        }
        return null;
     }
