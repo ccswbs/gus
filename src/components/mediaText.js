@@ -11,10 +11,10 @@ function MediaText (props) {
 	const mediaLinks = props.widgetData.field_media_text_links;
 	const mediaRelationships = props.widgetData.relationships.field_media_text_media.relationships;
 	
-	const videoURL = (contentExists(props.widgetData.relationships.field_media_text_media.field_media_oembed_video) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
+	const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
+	const imageAlt = (contentExists(props.widgetData.relationships.field_media_text_media.field_media_image) ? props.widgetData.relationships.field_media_text_media.field_media_image.alt : `test`);
 	
-	const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);
-
+	const videoURL = (contentExists(props.widgetData.relationships.field_media_text_media.field_media_oembed_video) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
 	
 	return (<>	
@@ -23,7 +23,7 @@ function MediaText (props) {
 			{contentExists(videoURL) ?
 			<Video playerID={props.widgetData.drupal_id} videoURL={videoURL} videoTranscript={videoTranscript} />
 			: ``}
-			{contentExists(imageURL) ? <Img fluid={imageURL.childImageSharp.fluid} alt="placeholder" /> : ``}
+			{contentExists(imageURL) ? <Img fluid={imageURL.childImageSharp.fluid} alt={imageAlt} /> : ``}
 			</section>
 			<section className="col-md-6">
 				<h3>{mediaTitle}</h3>

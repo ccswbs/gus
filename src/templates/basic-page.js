@@ -164,6 +164,9 @@ export const query = graphql`
 					field_media_text_media {
 					  ... on media__image {
 						name
+						field_media_image {
+						  alt
+						}
 						relationships {
 						  field_media_image {
 							localFile {
