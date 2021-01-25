@@ -14,7 +14,7 @@ import { contentExists } from '../utils/ug-utils';
 // will return all the widgets in the order they were entered. 
 //
 
-function SectionWidget (props) {
+function SectionWidgets (props) {
 
 if (contentExists(props.pageData) && props.pageData.length !== 0){
     return (props.pageData.map(widgetData => {
@@ -59,13 +59,13 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
 
    
 }
-SectionWidget.propTypes = {
+SectionWidgets.propTypes = {
     pageData: PropTypes.array,
    
 }
-SectionWidget.defaultProps = {
+SectionWidgets.defaultProps = {
     pageData: ``,
 
   }
 
-export default SectionWidget
+export default SectionWidgets
