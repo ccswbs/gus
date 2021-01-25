@@ -1,25 +1,27 @@
 import React from 'react';
-import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types';
+import { contentExists } from '../utils/ug-utils';
 
 function Video (props) {
 	
-	//let Heading = setHeadingLevel(props.headingLevel);
-	//let vimeoURL = "https://player.vimeo.com/video/";
-	//let youtubeURL = "https://www.youtube.com/embed/";
-	let videoSrc = "https://www.youtube.com/embed/" + props.videoSrc;
-	let videoTitle = props.videoTitle;
+	let youtubeURL = "https://www.youtube.com/embed/";
+	let playerID = props.playerID;
+	let videoID = props.videoURL.substr(props.videoURL.length - 11);
+	let videoSrc = youtubeURL + videoID;
+	let videoTranscript = props.videoTranscript;
 	
 	return (
-		<React.Fragment>
-		<Helmet><script defer type="text/javascript" src="/assets/uog-media-player.js"></script></Helmet>
-		 <div className="col-lg-6 col-md-12">
+		<React.Fragment>		
+		<div className="col-lg-6 col-md-12">
             <div id="youtube-embed">
-                <h3 className="sub-section-header">{videoTitle}</h3>
                 <section name="Youtube" className="ui-kit-section">
                     <div className="embed-responsive embed-responsive-16by9">
-                        <video className="ugplayer embed-responsive-item" width="100%" id="player1" preload="none" controls="controls">
+                        <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls">
                             <source type="video/youtube" src={videoSrc} />
+							{contentExists(videoTranscript) ? 
+							<><track label="English" kind="subtitles" srclang="en" src={videoTranscript} default="true" />
+							<link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={videoTranscript} default="true" /></>
+							: ``}							
                         </video>
                     </div>
                 </section>
@@ -29,11 +31,13 @@ function Video (props) {
 	)
 }
 Video.propTypes = {
-	videoTitle: PropTypes.string,
-	videoSrc: PropTypes.string,
+	playerID: PropTypes.string,
+	videoURL: PropTypes.string,
+	videoTranscript: PropTypes.string,
 }
 Video.defaultProps = {
-	videoTitle: ``,
-	videoSrc: ``,
+	playerID: ``,
+	videoURL: ``,
+	videoTranscript: ``,
 }
 export default Video

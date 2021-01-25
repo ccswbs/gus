@@ -74,7 +74,28 @@ const util = require('util');
 exports.createSchemaCustomization = ({ actions }) => {
 	const { createTypes } = actions
 
-	const typeDefs = `    
+	const typeDefs = `
+	
+	interface TaxonomyInterface @nodeInterface {
+      id: ID!
+      drupal_id: String
+      name: String
+    }
+	interface WidgetParagraphInterface @nodeInterface {
+      id: ID!
+      drupal_id: String
+    }
+	interface RelatedPagesInterface @nodeInterface {
+	  id: ID!
+	  drupal_id: String
+	  title: String
+	  fields: FieldsPathAlias
+	}
+
+	union media__imagemedia__remote_videoUnion =
+	  media__image
+	  | media__remote_video
+	  
 	union relatedParagraphUnion = 
 	  paragraph__program_variants
 	  | paragraph__general_text
@@ -87,42 +108,26 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | taxonomy_term__topics
 	  | taxonomy_term__units
 
+	union widgetParagraphUnion =
+      paragraph__link_item
+      | paragraph__links_items
+      | paragraph__call_to_action
+	  | paragraph__lead_paragraph
+      | paragraph__links_widget
+	  | paragraph__media_text
+	  | paragraph__section
+
 	union relatedPagesUnion =
 	  node__page
     | node__landing_page
     
-  union widgetParagraphUnion =
-    paragraph__link_item
-    | paragraph__links_items
-    | paragraph__call_to_action
-    | paragraph__links_widget
-    | paragraph__lead_paragraph
-    | paragraph__section
-  
     union widgetSectionParagraphUnion =
     paragraph__link_item
     | paragraph__links_items
     | paragraph__call_to_action
+	| paragraph__lead_paragraph
     | paragraph__links_widget
-    | paragraph__lead_paragraph
-
-  interface WidgetParagraphInterface @nodeInterface {
-      id: ID!
-      drupal_id: String
-    }
-
-	interface RelatedPagesInterface @nodeInterface {
-	  id: ID!
-	  drupal_id: String
-	  title: String
-	  fields: FieldsPathAlias
-	}
-	
-	interface TaxonomyInterface @nodeInterface {
-      id: ID!
-      drupal_id: String
-      name: String
-    }
+    | paragraph__media_text
 
 	type BodyField {
       processed: String
@@ -168,6 +173,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+	type media__remote_video implements Node {
+	  name: String
+	  field_media_oembed_video: String
+	  relationships: media__remote_videoRelationships
+	}
+	type media__remote_videoRelationships implements Node {
+	  field_media_file: file__file
+	}
 	
 	type MenuItems implements Node {
 	  parent: Node
@@ -301,27 +314,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-
-    type paragraph__section implements Node & WidgetParagraphInterface {
-      drupal_id:String
-      field_link_description: String
-      relationships: paragraph__sectionRelationships
-    }
-    type paragraph__sectionRelationships implements Node {
-      field_section_content: [widgetSectionParagraphUnion] @link(from:"field_section_content___NODE")
-    }
-    type paragraph__links_items implements Node & WidgetParagraphInterface{
-      drupal_id: String
-      field_link_description: String
-      field_link_url: node__link_url
-      relationships: paragraph__links_itemsRelationships
-      
-    }
-    
-    type paragraph__links_itemsRelationships implements Node {
-      field_link_image: media__image @link(from: "field_link_image___NODE")
-    }
+    }	
     type node__link_url implements Node {
       title: String
       uri: String
@@ -371,8 +364,19 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
+    }	
 
+	type paragraph__call_to_action implements Node {
+      drupal_id: String
+      field_cta_title: String
+      field_cta_description: String
+      field_cta_primary_link: FieldLink
+      field_cta_secondary_link: FieldLink
+      relationships: paragraph__call_to_actionRelationships
+    }
+    type paragraph__call_to_actionRelationships {
+      field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
+    }
 	type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
@@ -385,7 +389,26 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_grid_page: relatedPagesUnion @link(from: "field_grid_page___NODE")
       field_grid_image: media__image @link(from: "field_grid_image___NODE")
     }
-    type paragraph__program_statistic implements Node {
+	type paragraph__lead_paragraph implements Node {
+      drupal_id: String
+      field_lead_paratext: BodyField
+    }
+	type paragraph__links_items implements Node & WidgetParagraphInterface{
+      drupal_id: String
+      field_link_description: String
+      field_link_url: node__link_url
+      relationships: paragraph__links_itemsRelationships      
+    }	
+	type paragraph__links_itemsRelationships implements Node {
+      field_link_image: media__image @link(from: "field_link_image___NODE")
+    }
+	type paragraph__media_text implements Node {
+	  field_media_text_title: String
+	  field_media_text_desc: BodyField
+	  field_media_text_links: [FieldLink]
+	  field_media_text_media: media__imagemedia__remote_videoUnion
+	}
+	type paragraph__program_statistic implements Node {
       drupal_id: String	  
       field_stat_range: Boolean
       field_stat_value: String
@@ -414,24 +437,15 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__related_contentRelationships {
       field_list_pages: [relatedPagesUnion] @link(from: "field_list_pages___NODE")
     }
-
-    type paragraph__call_to_action implements Node {
-      drupal_id: String
-      field_cta_title: String
-      field_cta_description: String
-      field_cta_primary_link: FieldLink
-      field_cta_secondary_link: FieldLink
-      relationships: paragraph__call_to_actionRelationships
+	type paragraph__section implements Node & WidgetParagraphInterface {
+      drupal_id:String
+      field_link_description: String
+      relationships: paragraph__sectionRelationships
     }
-    type paragraph__call_to_actionRelationships {
-      field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
-    }	
-
-    type paragraph__lead_paragraph implements Node {
-      drupal_id: String
-      field_lead_paratext: BodyField
+    type paragraph__sectionRelationships implements Node {
+      field_section_content: [widgetSectionParagraphUnion] @link(from:"field_section_content___NODE")
     }
-
+	
 	type PathAlias implements Node {
       value: String
       alias: String
