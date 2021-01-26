@@ -18,7 +18,7 @@ function MediaText (props) {
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
 	
 	return (<>	
-		<div className="row row-with-vspace">
+		<div className="row row-with-vspace site-content">
 			<section className="col-md-6">
 			{contentExists(videoURL) ?
 			<Video playerID={props.widgetData.drupal_id} videoURL={videoURL} videoTranscript={videoTranscript} />
