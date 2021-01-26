@@ -167,12 +167,6 @@ export const query = graphql`
 										  uri
 									}
 								}
-								... on paragraph__lead_paragraph {
-											 id
-											  field_lead_paratext {
-												value
-											  }
-										}	
 								... on paragraph__links_items {
 									drupal_id
 									field_link_description
@@ -229,6 +223,51 @@ export const query = graphql`
 									}
 									
 								}
+								... on paragraph__media_text {
+									field_media_text_title
+									field_media_text_desc {
+									  processed
+									}
+									field_media_text_links {
+									  title
+									  uri
+									}
+									relationships {
+									  field_media_text_media {
+										... on media__image {
+										  name
+										  field_media_image {
+											alt
+										  }
+										  relationships {
+											field_media_image {
+											  localFile {
+												publicURL
+												childImageSharp {
+												  fluid(maxWidth: 800) {
+													originalImg
+													...GatsbyImageSharpFluid
+												  }
+												}
+											  }
+											}
+										  }
+										}
+										... on media__remote_video {
+										  drupal_id
+										  name
+										  field_media_oembed_video
+										  relationships {
+											field_media_file {
+											  localFile {
+												publicURL
+											  }
+											}
+										  }
+										}
+									  }
+									}
+								  }
 							}
 						}
 					}
