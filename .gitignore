@@ -68,5 +68,8 @@ yarn-error.log
 # Yarn Integrity file
 .yarn-integrity
 
+# yaml files in config
+config/aliases/*.yml
+config/sitemaps/*.yml
 # Auto-generated sitemaps
 config/sitemaps/

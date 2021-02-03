@@ -52,7 +52,7 @@ export default ({data}) => {
 			</div>
 
 			{ /**** Grid Items content ****/ }
-			<GridItems pageData={gridItemsData}/>
+			<GridItems pageData={gridItemsData} heading={"Grid"} displayType={'grid'} headingLevel={'h2'} numColumns={4}/>
 		</Layout>
 	)
 }

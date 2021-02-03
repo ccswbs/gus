@@ -85,6 +85,7 @@ function getNextHeadingLevel(headingLevel) {
 }
 
 function setHeadingLevel(headingLevel) {
+	// console.log(headingLevel, "setHeadingLevel")
 	const validHeadingLevels = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 	const safeHeading = headingLevel ? headingLevel.toLowerCase() : '';
 	const selectedHeading = validHeadingLevels.includes(safeHeading) ? safeHeading : 'p';
