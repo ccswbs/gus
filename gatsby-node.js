@@ -393,7 +393,10 @@ exports.createSchemaCustomization = ({ actions }) => {
 	type paragraph__media_text implements Node {
 	  field_media_text_title: String
 	  field_media_text_desc: BodyField
-	  field_media_text_links: [FieldLink]
+	  field_media_text_links: [FieldLink]	  
+	  relationships: paragraph__media_textRelationships
+	}
+	type paragraph__media_textRelationships implements Node {
 	  field_media_text_media: media__imagemedia__remote_videoUnion
 	}
 	type paragraph__program_statistic implements Node {
