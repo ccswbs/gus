@@ -390,6 +390,27 @@ exports.createSchemaCustomization = ({ actions }) => {
 	type paragraph__links_itemsRelationships implements Node {
       field_link_image: media__image @link(from: "field_link_image___NODE")
     }
+	type paragraph__links_widget implements Node {
+	  drupal_id: String
+	  field_link_items_description: String
+	  field_link_items_title: String	  
+	  relationships: paragraph__links_widgetRelationships
+	}
+	type paragraph__links_widgetRelationships implements Node {
+	  field_link_items: [paragraph__link_item]
+	}
+	type paragraph__link_item implements Node {
+	  drupal_id: String
+	  field_link_description: String
+	  field_link_image: media__image @link(from: "field_link_image___NODE")
+	  field_link_url: FieldLink
+	  relationships: paragraph__link_itemRelationships
+	}
+	type paragraph__link_itemRelationships implements Node {
+	  drupal_id: String
+	  paragraph__links_widget: [paragraph__links_widget]
+	  field_link_image: media__image
+	}
 	type paragraph__media_text implements Node {
 	  field_media_text_title: String
 	  field_media_text_desc: BodyField
@@ -429,8 +450,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_list_pages: [relatedPagesUnion] @link(from: "field_list_pages___NODE")
     }
 	type paragraph__section implements Node & WidgetParagraphInterface {
-      drupal_id:String
-      field_link_description: String
+      drupal_id: String
+	  field_section_classes: String
+	  field_section_title: String
       relationships: paragraph__sectionRelationships
     }
     type paragraph__sectionRelationships implements Node {
