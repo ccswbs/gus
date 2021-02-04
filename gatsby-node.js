@@ -119,8 +119,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 	union relatedPagesUnion =
 	  node__page
-    | node__landing_page
-    
+        
     union widgetSectionParagraphUnion =
     paragraph__link_item
     | paragraph__links_items
@@ -288,19 +287,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-    type node__landing_page implements Node & RelatedPagesInterface {
-      drupal_id: String
-      drupal_internal__nid: Int
-      body: BodyFieldWithSummary
-      field_hero_image: ImageField
-      relationships: node__landing_pageRelationships
-      fields: FieldsPathAlias
-    }
-    type node__landing_pageRelationships implements Node {
-      field_hero_image: media__image @link(from: "field_hero_image___NODE")
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-      field_grid_items: [paragraph__grid_items] @link(from: "field_grid_items___NODE")
-    }
+    
+    
     type node__page implements Node & RelatedPagesInterface {
       drupal_id: String
       drupal_internal__nid: Int
@@ -543,7 +531,6 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 		node.internal.type === `node__course` || 
 		node.internal.type === `node__employer` ||
 		node.internal.type === `node__page` || 
-		node.internal.type === `node__landing_page` || 
 		node.internal.type === `node__testimonial`
 	) {
 	createNodeField({
@@ -557,7 +544,6 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 	// INSTRUCTION: If you've added a new content-type and need each node to generate a page
 	// then add it to the following if statement
 	if (node.internal.type === `node__article` || 
-		node.internal.type === `node__landing_page` || 
 		node.internal.type === `node__page` || 
 		node.internal.type === `node__program` ) {
         
@@ -598,7 +584,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
 	const pageTemplate = path.resolve('./src/templates/basic-page.js');
 	const articleTemplate = path.resolve('./src/templates/article-page.js');
 	const programTemplate = path.resolve('./src/templates/program-page.js');
-	const landingTemplate = path.resolve('./src/templates/landing-page.js');
+	
 	const helpers = Object.assign({}, actions, {
 		createContentDigest,
 		createNodeId,
@@ -641,17 +627,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                 name
               }
             }
-          }
-        }
-      }
-
-      landing_pages: allNodeLandingPage {
-        edges {
-          node {
-            drupal_id
-            drupal_internal__nid
-            id
-            title
           }
         }
       }
@@ -779,20 +754,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
 			})
 		}
 
-		// process landing page topics
-		if (result.data.landing_pages !== undefined) {
-			const landing_pages = result.data.landing_pages.edges;
-			landing_pages.forEach(( { node }, index) => {
-				aliases[node.drupal_internal__nid] = processPage(
-					node, 
-					node.id, 
-					createLandingAlias, 
-					landingTemplate, 
-					helpers
-				);
-			})
-		}
-
+		
 		// process menu nodes and pass through aliases
 		if (result.data.menus !== undefined) {			
 			const menus = result.data.menus.edges;
@@ -924,10 +886,6 @@ function createArticleAlias(node) {
 	return alias;
 }
 
-function createLandingAlias(node) {
-	let alias = createContentTypeAlias(node, `topics`)
-	return alias;
-}
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function slugify(string) {
