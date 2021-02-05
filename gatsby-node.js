@@ -85,12 +85,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       id: ID!
       drupal_id: String
     }
-	interface RelatedPagesInterface @nodeInterface {
-	  id: ID!
-	  drupal_id: String
-	  title: String
-	  fields: FieldsPathAlias
-	}
 
 	union media__imagemedia__remote_videoUnion =
 	  media__image
@@ -117,16 +111,14 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | paragraph__media_text
 	  | paragraph__section
 
-	union relatedPagesUnion =
-	  node__page
-        
+
     union widgetSectionParagraphUnion =
-    paragraph__link_item
-    | paragraph__links_items
-    | paragraph__call_to_action
-	| paragraph__lead_paragraph
-    | paragraph__links_widget
-    | paragraph__media_text
+	  paragraph__link_item
+	  | paragraph__links_items
+	  | paragraph__call_to_action
+	  | paragraph__lead_paragraph
+	  | paragraph__links_widget
+	  | paragraph__media_text
 
 	type BodyField {
       processed: String
@@ -289,7 +281,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     
     
-    type node__page implements Node & RelatedPagesInterface {
+    type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
@@ -369,14 +361,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       field_general_text: BodyField
     }
-	type paragraph__grid_items implements Node {
-      drupal_id: String
-      relationships: paragraph__grid_itemsRelationships
-    }
-    type paragraph__grid_itemsRelationships implements Node {
-      field_grid_page: relatedPagesUnion @link(from: "field_grid_page___NODE")
-      field_grid_image: media__image @link(from: "field_grid_image___NODE")
-    }
 	type paragraph__lead_paragraph implements Node {
       drupal_id: String
       field_lead_paratext: BodyField
@@ -441,13 +425,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__program_variantsRelationships {
       field_variant_name: taxonomy_term__program_variant_type
       field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
-    }
-    type paragraph__related_content implements Node {
-      drupal_id: String
-      relationships: paragraph__related_contentRelationships
-    }
-    type paragraph__related_contentRelationships {
-      field_list_pages: [relatedPagesUnion] @link(from: "field_list_pages___NODE")
     }
 	type paragraph__section implements Node & WidgetParagraphInterface {
       drupal_id: String
