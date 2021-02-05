@@ -24,13 +24,7 @@ const IndexPage = ({ data }) => (
 					))}
 				</ul>
 
-				<h2>Landing Pages</h2>
-				<ul>
-					{data.landing_pages.edges.map((edge, index) => (
-						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
-					))}
-				</ul>
-
+				
 				<h2>Instagram</h2>
 				<Instagram />
 			</div>
@@ -68,19 +62,6 @@ export const query = graphql`
 				}
 			}
 		}
-		landing_pages: allNodeLandingPage {
-			edges {
-				node {
-					drupal_id
-					drupal_internal__nid
-					title
-					fields {
-						alias {
-							value
-						}
-					}
-				}
-			}
-		}
+		
 	}
 `
