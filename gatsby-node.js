@@ -397,7 +397,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  relationships: paragraph__links_widgetRelationships
 	}
 	type paragraph__links_widgetRelationships implements Node {
-	  field_link_items: [paragraph__link_item]
+	  field_link_items: [paragraph__link_item] @link(from: "field_link_items___NODE")
 	}
 	type paragraph__link_item implements Node {
 	  drupal_id: String
@@ -408,8 +408,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 	}
 	type paragraph__link_itemRelationships implements Node {
 	  drupal_id: String
-	  paragraph__links_widget: [paragraph__links_widget]
-	  field_link_image: media__image
+	  paragraph__links_widget: [paragraph__links_widget] @link(from: "paragraph__links_widget___NODE")
+	  field_link_image: media__image @link(from: "field_link_image___NODE")
 	}
 	type paragraph__media_text implements Node {
 	  field_media_text_title: String
