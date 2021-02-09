@@ -114,7 +114,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 
     union widgetSectionParagraphUnion =
-	  paragraph__link_item
+	  paragraph__general_text
+    | paragraph__link_item
 	  | paragraph__links_items
 	  | paragraph__call_to_action
 	  | paragraph__lead_paragraph

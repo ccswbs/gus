@@ -167,6 +167,13 @@ export const query = graphql`
 										  uri
 									}
 								}
+								__typename
+								... on paragraph__general_text {
+								  drupal_id
+								  field_general_text {
+									processed
+								  }
+								}
 								... on paragraph__links_items {
 									drupal_id
 									field_link_description
