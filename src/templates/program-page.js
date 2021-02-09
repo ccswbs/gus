@@ -348,7 +348,8 @@ export default ({data, location}) => {
 	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
 	const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
 	const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
-	const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+	 // moved testimonialh=eading definition to inside testimonial call to allow for a more dynamic name
+  // const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
 	// set last modified date
 	let allModifiedDates = sortLastModifiedDates(
@@ -428,7 +429,7 @@ export default ({data, location}) => {
 
       { /**** Testimonials ****/ }
       {testimonialData && 
-        <Testimonials testimonialData={testimonialData} heading={testimonialHeading} headingLevel='h3' />
+      <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel='h3' />
       }
 
       { /*** News ****/}
@@ -730,6 +731,10 @@ export const query = graphql`
           }
           title
           field_testimonial_person_desc
+          field_home_profile {
+            title
+            uri
+          }
           relationships {
             field_hero_image {
             field_media_image {
