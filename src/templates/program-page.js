@@ -322,11 +322,12 @@ export default ({data, location}) => {
 	let courseData;
 	let degreesData;
 	let employerData;
+	let footerData;
 	let imageData;
 	let progData;
 	let newsData;
 	let specData;
-	var statsData;
+	let statsData;
 	let tagData;
 	let testimonialData;
 	let variantData;
@@ -335,6 +336,7 @@ export default ({data, location}) => {
 	if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 	if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
+	if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
 	if (data.images.edges !== undefined) { imageData = data.images.edges; }
 	if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
 	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
@@ -362,7 +364,7 @@ export default ({data, location}) => {
 	specData = progData.relationships.field_specializations;
 	tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
-  let variantDataHeading = prepareVariantHeading(variantData);
+	let variantDataHeading = prepareVariantHeading(variantData); 
   
 	return (
 	<Layout date={lastModified}>
@@ -455,7 +457,15 @@ export default ({data, location}) => {
           </section>
         </div>
       }
-
+	  
+	  {footerData.length !== 0 &&
+		
+		<div className="container page-container">
+			<h3>{footerData[0].node.relationships.field_tags[0].name}</h3>
+			<div dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} /> 
+		</div>
+	  }
+		
 	</Layout>
 	)
 }
@@ -639,6 +649,28 @@ export const query = graphql`
       }
     }
 	
+	footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id] }}}) {
+	  edges {
+	    node {
+		  drupal_id
+		  body {
+            processed
+          }
+		  relationships {
+			field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            } 
+		  }
+		}
+	  }
+	}
+	
+	
     images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
@@ -667,8 +699,8 @@ export const query = graphql`
           }
         }
       }
-    }
-	
+    }	
+
     news: allNodeArticle (limit: 4, sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
