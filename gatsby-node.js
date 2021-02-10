@@ -104,11 +104,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     | taxonomy_term__testimonial_type
 
 	union widgetParagraphUnion =
-      paragraph__link_item
-      | paragraph__links_items
-      | paragraph__call_to_action
+  paragraph__general_text
+    | paragraph__link_item
+    | paragraph__links_items
+    | paragraph__call_to_action
 	  | paragraph__lead_paragraph
-      | paragraph__links_widget
+    | paragraph__links_widget
 	  | paragraph__media_text
 	  | paragraph__section
 
