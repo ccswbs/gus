@@ -649,7 +649,7 @@ export const query = graphql`
       }
     }
 	
-	footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id] }}}) {
+	footer: allNodeCustomFooter {
 	  edges {
 	    node {
 		  drupal_id

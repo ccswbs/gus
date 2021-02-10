@@ -285,9 +285,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__nid: Int
 	  body: BodyFieldWithSummary
 	  relationships: node__custom_footerRelationships
-	  fields: node__customFooterFields
+	  fields: node__custom_footerFields
 	}
-	type node__customFooterFields implements Node {
+	type node__custom_footerFields implements Node {
       tags: [String]
     }
 	type node__custom_footerRelationships implements Node {
