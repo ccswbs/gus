@@ -18,6 +18,7 @@ import SVG from 'react-inlinesvg';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
+import Widgets from '../components/widgets'
 import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import { graphql } from 'gatsby';
 import { useIconData } from '../utils/fetch-icon';
@@ -462,8 +463,9 @@ export default ({data, location}) => {
 		
 		<div className="container page-container">
 			<h3>{footerData[0].node.relationships.field_tags[0].name}</h3>
-			<div dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} /> 
-		</div>
+			<div dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} />
+			<Widgets pageData={footerData} />
+		</div>		
 	  }
 		
 	</Layout>
@@ -649,7 +651,7 @@ export const query = graphql`
       }
     }
 	
-	footer: allNodeCustomFooter {
+	footer: allNodeCustomFooter(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
 	  edges {
 	    node {
 		  drupal_id
@@ -658,18 +660,252 @@ export const query = graphql`
           }
 		  relationships {
 			field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            } 
+              drupal_id
+              id
+              name
+            }
+			field_widgets {
+				__typename
+					... on paragraph__call_to_action {
+						id
+						field_cta_title
+						field_cta_description
+						field_cta_primary_link {
+					  		title
+					  		uri
+						}
+					}
+					... on paragraph__lead_paragraph {
+             					id
+              					field_lead_paratext {
+                					value
+              					}
+            				}	
+					... on paragraph__links_items {
+						drupal_id
+						field_link_description
+						field_link_url {
+							title
+							uri
+							}
+							relationships {
+								field_link_image {
+									relationships {
+										field_media_image {
+											localFile {
+												publicURL
+												childImageSharp {
+													resize(width: 400, height: 300, cropFocus: CENTER) {
+													src
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					... on paragraph__links_widget {
+						drupal_id
+						field_link_items_title
+						field_link_items_description
+						relationships {
+							field_link_items {
+								drupal_id
+								field_link_description
+								field_link_url {
+									title
+									uri
+								}
+								relationships {
+									field_link_image {
+										relationships {
+											field_media_image {
+												localFile {
+													publicURL
+													childImageSharp {
+														resize(width: 400, height: 300, cropFocus: CENTER) {
+														src
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					... on paragraph__section {
+						drupal_id
+						field_section_title
+						field_section_classes
+						relationships {
+							field_section_content {
+								__typename
+								... on paragraph__call_to_action {
+									id
+									field_cta_title
+									field_cta_description
+									field_cta_primary_link {
+										  title
+										  uri
+									}
+								}
+								... on paragraph__links_items {
+									drupal_id
+									field_link_description
+									field_link_url {
+										title
+										uri
+										}
+										relationships {
+											field_link_image {
+												relationships {
+													field_media_image {
+														localFile {
+															publicURL
+															childImageSharp {
+																resize(width: 400, height: 300, cropFocus: CENTER) {
+																src
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								... on paragraph__links_widget {
+									drupal_id
+									field_link_items_title
+									field_link_items_description
+									relationships {
+										field_link_items {
+											drupal_id
+											field_link_description
+											field_link_url {
+												title
+												uri
+											}
+											relationships {
+												field_link_image {
+													relationships {
+														field_media_image {
+															localFile {
+																publicURL
+																childImageSharp {
+																	resize(width: 400, height: 300, cropFocus: CENTER) {
+																	src
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+									
+								}
+								... on paragraph__media_text {
+									field_media_text_title
+									field_media_text_desc {
+									  processed
+									}
+									field_media_text_links {
+									  title
+									  uri
+									}
+									relationships {
+									  field_media_text_media {
+										... on media__image {
+										  name
+										  field_media_image {
+											alt
+										  }
+										  relationships {
+											field_media_image {
+											  localFile {
+												publicURL
+												childImageSharp {
+												  fluid(maxWidth: 800) {
+													originalImg
+													...GatsbyImageSharpFluid
+												  }
+												}
+											  }
+											}
+										  }
+										}
+										... on media__remote_video {
+										  drupal_id
+										  name
+										  field_media_oembed_video
+										  relationships {
+											field_media_file {
+											  localFile {
+												publicURL
+											  }
+											}
+										  }
+										}
+									  }
+									}
+								  }
+							}
+						}
+					}
+				... on paragraph__media_text {
+				  field_media_text_title
+				  field_media_text_desc {
+					processed
+				  }
+				  field_media_text_links {
+					title
+					uri
+				  }
+				  relationships {
+					field_media_text_media {
+					  ... on media__image {
+						name
+						field_media_image {
+						  alt
+						}
+						relationships {
+						  field_media_image {
+							localFile {
+							  publicURL
+							  childImageSharp {
+								fluid(maxWidth: 800) {
+								  originalImg
+								  ...GatsbyImageSharpFluid
+								}
+							  }
+							}
+						  }
+						}
+					  }
+					  ... on media__remote_video {
+						drupal_id
+						name
+						field_media_oembed_video
+						relationships {
+						  field_media_file {
+                            localFile {
+							  publicURL
+                            }
+						  }
+						}
+					  }
+					}
+				  }
+				}
+			}
 		  }
 		}
 	  }
-	}
-	
+	}	
 	
     images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
       edges {

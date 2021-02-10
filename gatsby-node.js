@@ -292,8 +292,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 	type node__custom_footerRelationships implements Node {
 	  field_footer_logo: [media__image] @link(from: "field_footer_logo___NODE")
-	  field_widgets: [paragraph__links_widget] @link(from: "field_widgets___NODE")
-	  field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+	  field_tags: [taxonomy_term__programs] @link(from: "field_tags___NODE")
+	  field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
 	}
     type node__page implements Node {
       drupal_id: String
