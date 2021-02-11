@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import Img from 'gatsby-image';
 import Breadcrumbs from '../components/breadcrumbs';
 import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
@@ -366,7 +367,7 @@ export default ({data, location}) => {
 	tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
 	let variantDataHeading = prepareVariantHeading(variantData); 
-  
+
 	return (
 	<Layout date={lastModified}>
 	  <Helmet bodyAttributes={{
@@ -461,15 +462,21 @@ export default ({data, location}) => {
 	  
 	  {footerData.length !== 0 &&
 		
-		<div className="container page-container">
-			<h3>{footerData[0].node.relationships.field_tags[0].name}</h3>
-			<div dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} />
-			<Widgets pageData={footerData} />
+		<div className="row row-with-vspace site-content">
+			{footerData[0].node.relationships.field_footer_logo !== null &&
+				<section className="col-md-3">
+				{footerData[0].node.relationships.field_footer_logo.map(logo => (
+					<Img fluid={logo.relationships.field_media_image.localFile.childImageSharp.fluid} alt={logo.field_media_image.alt} />
+				))}
+			</section>}
+			<section className="col-md-9">
+				<div dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} />
+				<Widgets pageData={footerData[0].node.relationships.field_widgets} />
+			</section>			
 		</div>		
-	  }
-		
-	</Layout>
-	)
+	  }		
+	</Layout>	
+	)	
 }
 
 export const query = graphql`
@@ -664,6 +671,24 @@ export const query = graphql`
               id
               name
             }
+			field_footer_logo {
+			  field_media_image {
+				alt
+              }
+              relationships {
+				field_media_image {
+				  localFile {
+					publicURL
+					childImageSharp {
+					  fluid(maxWidth: 800) {
+						originalImg
+						...GatsbyImageSharpFluid
+					  }
+					}
+				  }
+				}
+			  }
+			}
 			field_widgets {
 				__typename
 					... on paragraph__call_to_action {
@@ -681,30 +706,6 @@ export const query = graphql`
                 					value
               					}
             				}	
-					... on paragraph__links_items {
-						drupal_id
-						field_link_description
-						field_link_url {
-							title
-							uri
-							}
-							relationships {
-								field_link_image {
-									relationships {
-										field_media_image {
-											localFile {
-												publicURL
-												childImageSharp {
-													resize(width: 400, height: 300, cropFocus: CENTER) {
-													src
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
 					... on paragraph__links_widget {
 						drupal_id
 						field_link_items_title
@@ -752,30 +753,6 @@ export const query = graphql`
 										  uri
 									}
 								}
-								... on paragraph__links_items {
-									drupal_id
-									field_link_description
-									field_link_url {
-										title
-										uri
-										}
-										relationships {
-											field_link_image {
-												relationships {
-													field_media_image {
-														localFile {
-															publicURL
-															childImageSharp {
-																resize(width: 400, height: 300, cropFocus: CENTER) {
-																src
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
 								... on paragraph__links_widget {
 									drupal_id
 									field_link_items_title

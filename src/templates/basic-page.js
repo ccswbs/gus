@@ -96,30 +96,6 @@ export const query = graphql`
                 					value
               					}
             				}	
-					... on paragraph__links_items {
-						drupal_id
-						field_link_description
-						field_link_url {
-							title
-							uri
-							}
-							relationships {
-								field_link_image {
-									relationships {
-										field_media_image {
-											localFile {
-												publicURL
-												childImageSharp {
-													resize(width: 400, height: 300, cropFocus: CENTER) {
-													src
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
 					... on paragraph__links_widget {
 						drupal_id
 						field_link_items_title
@@ -167,30 +143,6 @@ export const query = graphql`
 										  uri
 									}
 								}
-								... on paragraph__links_items {
-									drupal_id
-									field_link_description
-									field_link_url {
-										title
-										uri
-										}
-										relationships {
-											field_link_image {
-												relationships {
-													field_media_image {
-														localFile {
-															publicURL
-															childImageSharp {
-																resize(width: 400, height: 300, cropFocus: CENTER) {
-																src
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
 								... on paragraph__links_widget {
 									drupal_id
 									field_link_items_title

@@ -105,7 +105,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 	union widgetParagraphUnion =
       paragraph__link_item
-      | paragraph__links_items
       | paragraph__call_to_action
 	  | paragraph__lead_paragraph
       | paragraph__links_widget
@@ -115,7 +114,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     union widgetSectionParagraphUnion =
 	  paragraph__link_item
-	  | paragraph__links_items
 	  | paragraph__call_to_action
 	  | paragraph__lead_paragraph
 	  | paragraph__links_widget
@@ -378,15 +376,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 	type paragraph__lead_paragraph implements Node {
       drupal_id: String
       field_lead_paratext: BodyField
-    }
-	type paragraph__links_items implements Node & WidgetParagraphInterface{
-      drupal_id: String
-      field_link_description: String
-      field_link_url: node__link_url
-      relationships: paragraph__links_itemsRelationships      
-    }	
-	type paragraph__links_itemsRelationships implements Node {
-      field_link_image: media__image @link(from: "field_link_image___NODE")
     }
 	type paragraph__links_widget implements Node {
 	  drupal_id: String
