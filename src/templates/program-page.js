@@ -461,19 +461,22 @@ export default ({data, location}) => {
       }
 	  
 	  {footerData.length !== 0 &&
-		
-		<div className="row row-with-vspace site-content">
-			{footerData[0].node.relationships.field_footer_logo !== null &&
-				<section className="col-md-3">
-				{footerData[0].node.relationships.field_footer_logo.map(logo => (
-					<Img fluid={logo.relationships.field_media_image.localFile.childImageSharp.fluid} alt={logo.field_media_image.alt} />
-				))}
-			</section>}
-			<section className="col-md-9">
-				<div dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} />
-				<Widgets pageData={footerData[0].node.relationships.field_widgets} />
-			</section>			
-		</div>		
+		<div className="full-width-container bg-light pre-footer">
+			<div className="container page-container">
+				<section className="row row-with-vspace site-content">
+					{footerData[0].node.relationships.field_footer_logo !== null &&
+					<div className="col-md-3 content-area">
+					{footerData[0].node.relationships.field_footer_logo.map(logo => (
+						<Img fluid={logo.relationships.field_media_image.localFile.childImageSharp.fluid} alt={logo.field_media_image.alt} />
+					))}
+					</div>}
+					<div className="col-md-9 content-area">
+						<div dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} />
+						<Widgets pageData={footerData[0].node.relationships.field_widgets} />
+					</div>
+				</section>			
+			</div>
+		</div>
 	  }		
 	</Layout>	
 	)	
@@ -680,7 +683,7 @@ export const query = graphql`
 				  localFile {
 					publicURL
 					childImageSharp {
-					  fluid(maxWidth: 800) {
+					  fluid(maxWidth: 400) {
 						originalImg
 						...GatsbyImageSharpFluid
 					  }
