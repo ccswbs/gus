@@ -20,10 +20,11 @@ import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
 import Widgets from '../components/widgets'
-import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
+import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import { graphql } from 'gatsby';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
+import '../styles/customFooter.css';
 
 function renderHeaderImage(imageData) {
 	if (!contentIsNullOrEmpty(imageData)) {
@@ -460,7 +461,7 @@ export default ({data, location}) => {
         </div>
       }
 	  
-	  {footerData.length !== 0 &&
+	  {contentExists(footerData) && footerData.length !== 0 &&
 		<div className="full-width-container bg-light pre-footer">
 			<div className="container page-container">
 				<section className="row row-with-vspace site-content">
