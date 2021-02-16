@@ -111,7 +111,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | paragraph__media_text
 	  | paragraph__section
 
-
     union widgetSectionParagraphUnion =
 	  paragraph__link_item
 	  | paragraph__call_to_action
@@ -290,7 +289,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 	type node__custom_footerRelationships implements Node {
 	  field_footer_logo: [media__image] @link(from: "field_footer_logo___NODE")
-	  field_tags: [taxonomy_term__programs] @link(from: "field_tags___NODE")
+	  field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
 	  field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
 	}
     type node__page implements Node {
@@ -539,6 +538,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 		node.internal.type === `node__call_to_action` ||
 		node.internal.type === `node__career` || 
 		node.internal.type === `node__course` || 
+		node.internal.type === `node__custom_footer` ||
 		node.internal.type === `node__employer` ||
 		node.internal.type === `node__page` || 
 		node.internal.type === `node__testimonial`

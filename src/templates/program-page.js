@@ -662,7 +662,7 @@ export const query = graphql`
       }
     }
 	
-	footer: allNodeCustomFooter(filter: {relationships: {field_tags: {elemMatch: {id: {in: [$id]}}}}}) {
+	footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id] }}}) {
 	  edges {
 	    node {
 		  drupal_id
@@ -671,9 +671,12 @@ export const query = graphql`
           }
 		  relationships {
 			field_tags {
-              drupal_id
-              id
-              name
+			  __typename
+              ... on TaxonomyInterface {
+				drupal_id
+				id
+				name
+			  }
             }
 			field_footer_logo {
 			  field_media_image {
