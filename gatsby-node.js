@@ -101,20 +101,22 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | taxonomy_term__degrees
 	  | taxonomy_term__topics
 	  | taxonomy_term__units
-    | taxonomy_term__testimonial_type
+      | taxonomy_term__testimonial_type
 
 	union widgetParagraphUnion =
-      paragraph__link_item
-      | paragraph__call_to_action
+      paragraph__call_to_action
+	  | paragraph__general_text
 	  | paragraph__lead_paragraph
+      | paragraph__link_item
       | paragraph__links_widget
 	  | paragraph__media_text
 	  | paragraph__section
 
     union widgetSectionParagraphUnion =
-	  paragraph__link_item
-	  | paragraph__call_to_action
+	  paragraph__call_to_action
+	  | paragraph__general_text
 	  | paragraph__lead_paragraph
+	  | paragraph__link_item
 	  | paragraph__links_widget
 	  | paragraph__media_text
 

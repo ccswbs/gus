@@ -56,6 +56,9 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 		else if (widgetData.__typename==="paragraph__media_text") {
 		   return <MediaText widgetData={widgetData} />
 		}
+        else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
+            return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
+        }
 		else if (widgetData.__typename==="paragraph__new_widget") {
 			return(<p>This is Paragraph_new_widget</p>);
 		}
