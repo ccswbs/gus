@@ -9,12 +9,12 @@ function MediaText (props) {
 	const mediaTitle = props.widgetData.field_media_text_title;
 	const mediaDescription = props.widgetData.field_media_text_desc.processed;
 	const mediaLinks = props.widgetData.field_media_text_links;
-	const mediaRelationships = props.widgetData.relationships.field_media_text_media.relationships;
+	const mediaRelationships = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.relationships: '');
 	
 	const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
-	const imageAlt = (contentExists(props.widgetData.relationships.field_media_text_media.field_media_image) ? props.widgetData.relationships.field_media_text_media.field_media_image.alt : `test`);
+	const imageAlt = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.field_media_image.alt : ``);
 	
-	const videoURL = (contentExists(props.widgetData.relationships.field_media_text_media.field_media_oembed_video) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
+	const videoURL = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
 	
 	return (<>	

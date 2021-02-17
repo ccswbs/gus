@@ -95,7 +95,13 @@ export const query = graphql`
               					field_lead_paratext {
                 					value
               					}
-            				}	
+            				}
+					... on paragraph__general_text {
+						drupal_id
+						field_general_text {
+							processed
+						}
+						}
 					... on paragraph__links_items {
 						drupal_id
 						field_link_description
@@ -166,6 +172,12 @@ export const query = graphql`
 										  title
 										  uri
 									}
+								}
+								... on paragraph__general_text {
+								  drupal_id
+								  field_general_text {
+									processed
+								  }
 								}
 								... on paragraph__links_items {
 									drupal_id
