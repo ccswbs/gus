@@ -468,11 +468,11 @@ export default ({data, location}) => {
 					{footerData[0].node.relationships.field_footer_logo !== null &&
 					<div className="col-md-3 content-area">
 					{footerData[0].node.relationships.field_footer_logo.map(logo => (
-						<Img fluid={logo.relationships.field_media_image.localFile.childImageSharp.fluid} alt={logo.field_media_image.alt} />
+						<Img className="footer-logo" fluid={logo.relationships.field_media_image.localFile.childImageSharp.fluid} alt={logo.field_media_image.alt} />
 					))}
 					</div>}
 					<div className="col-md-9 content-area">
-						<div dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} />
+						<div className="container" dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} />
 						<Widgets pageData={footerData[0].node.relationships.field_widgets} />
 					</div>
 				</section>			

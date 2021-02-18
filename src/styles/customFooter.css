@@ -1,3 +1,7 @@
 .pre-footer h2 {
 	margin-top: 0 !important;
 }
+
+.pre-footer .footer-logo {
+	margin-right: 1em;
+}
