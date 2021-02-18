@@ -3,13 +3,14 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
-import Img from 'gatsby-image';
+//import Img from 'gatsby-image';
 import Breadcrumbs from '../components/breadcrumbs';
 import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
 import Courses from '../components/courses';
 import Degrees from '../components/degrees';
 import Employers from '../components/employers';
+import CustomFooter from '../components/customFooter';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
@@ -24,7 +25,7 @@ import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from '../u
 import { graphql } from 'gatsby';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
-import '../styles/customFooter.css';
+//import '../styles/customFooter.css';
 
 function renderHeaderImage(imageData) {
 	if (!contentIsNullOrEmpty(imageData)) {
@@ -462,22 +463,7 @@ export default ({data, location}) => {
       }
 	  
 	  {contentExists(footerData) && footerData.length !== 0 &&
-		<div className="full-width-container bg-light pre-footer">
-			<div className="container page-container">
-				<section className="row row-with-vspace site-content">
-					{footerData[0].node.relationships.field_footer_logo !== null &&
-					<div className="col-md-3 content-area">
-					{footerData[0].node.relationships.field_footer_logo.map(logo => (
-						<Img className="footer-logo" fluid={logo.relationships.field_media_image.localFile.childImageSharp.fluid} alt={logo.field_media_image.alt} />
-					))}
-					</div>}
-					<div className="col-md-9 content-area">
-						<div className="container" dangerouslySetInnerHTML={{ __html: footerData[0].node.body.processed}} />
-						<Widgets pageData={footerData[0].node.relationships.field_widgets} />
-					</div>
-				</section>			
-			</div>
-		</div>
+		<CustomFooter footerData={footerData[0]} />
 	  }		
 	</Layout>	
 	)	
