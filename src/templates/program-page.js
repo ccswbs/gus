@@ -3,7 +3,6 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
-//import Img from 'gatsby-image';
 import Breadcrumbs from '../components/breadcrumbs';
 import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
@@ -20,12 +19,10 @@ import SVG from 'react-inlinesvg';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
-import Widgets from '../components/widgets'
 import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import { graphql } from 'gatsby';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
-//import '../styles/customFooter.css';
 
 function renderHeaderImage(imageData) {
 	if (!contentIsNullOrEmpty(imageData)) {
