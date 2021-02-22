@@ -36,18 +36,22 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
             const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
             const numColumns = (linksDisplayType === 'grid')? 4: null;
         
-            return <LinksItems  key={widgetData.drupal_id}
-                                pageData={widgetData.relationships.field_link_items} 
-                                displayType={linksDisplayType} 
-                                heading={widgetData.field_link_items_title} 
-                                headingLevel={headingLevel} 
-                                description={widgetData.field_link_items_description}
-                                numColumns={numColumns}/>
-  
+            return ( <div class="flex-even">
+                        <LinksItems key={widgetData.drupal_id}
+                                    pageData={widgetData.relationships.field_link_items} 
+                                    displayType={linksDisplayType} 
+                                    heading={widgetData.field_link_items_title} 
+                                    headingLevel={headingLevel} 
+                                    description={widgetData.field_link_items_description}
+                                    numColumns={numColumns}/>
+                    </div>
+            )
         }
 
         else if (widgetData.__typename==="paragraph__call_to_action") {
-            return( <CtaPara pageData={widgetData} />);
+            return( <div class="flex-even">
+                    <CtaPara pageData={widgetData} />
+                    </div>);
        } 
        else if (widgetData.__typename==="paragraph__media_text") {
         return <MediaText widgetData={widgetData} />

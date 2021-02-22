@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Img from 'gatsby-image';
-import Widgets from './sectionWidgets';
+import Widgets from './widgets';
 import { contentExists } from '../utils/ug-utils';
 import '../styles/customFooter.css';
 

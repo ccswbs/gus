@@ -42,3 +42,7 @@
         padding-top: 0 !important;
     }
 }
+
+.flex-even {
+    flex:1;
+}
