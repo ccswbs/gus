@@ -36,7 +36,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
             const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
             const numColumns = (linksDisplayType === 'grid')? 4: null;
         
-            return ( <div class="flex-even">
+            return ( <div className="flex-even">
                         <LinksItems key={widgetData.drupal_id}
                                     pageData={widgetData.relationships.field_link_items} 
                                     displayType={linksDisplayType} 
@@ -49,7 +49,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
         }
 
         else if (widgetData.__typename==="paragraph__call_to_action") {
-            return( <div class="flex-even">
+            return( <div className="flex-even">
                     <CtaPara pageData={widgetData} />
                     </div>);
        } 
