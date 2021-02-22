@@ -59,7 +59,7 @@ const LinksElement = (props) => {
     const classes = `${elementClass} ${columnClasses} ${props.extraClasses}`
     const Tag = props.tag;
 
-    // General Scenario: heading, image and text below (link and text optional)
+    // General Scenario: heading and text below (image, link and text optional)
     if(contentExists(props.headingLink)){
         const levelHeading = setHeadingLevel(props.headingLinkLevel);
         const HeadingElement = (contentExists(props.text)) 

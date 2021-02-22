@@ -4,7 +4,7 @@ import React from 'react';
 
 
 const LinksParent = (props) => {
-
+console.log(props, 'links parent')
     const classes = `${props.extraClasses}`;
     const Tag = props.tag;
     return(<Tag className={classes}>
