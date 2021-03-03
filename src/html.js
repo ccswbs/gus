@@ -25,7 +25,7 @@ export default function HTML(props) {
         </noscript>
 		<script defer src="https://www.uoguelph.ca/web-components/UofGHeader-dist.js"></script>
 		<script defer src="https://www.uoguelph.ca/web-components/UofGDropdownMenu-dist.js"></script>
-		<script defer src="/assets/UofGIcon-dist.js"></script>
+		<script defer src="https://www.uoguelph.ca/web-components/UofGIcon-dist.js"></script>
         <Header />
         <div
           key={`body`}
