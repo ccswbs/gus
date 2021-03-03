@@ -23,9 +23,9 @@ export default function HTML(props) {
         <noscript key="noscript" id="gatsby-noscript">
           This app works best with JavaScript enabled.
         </noscript>
-		<script defer src="//www.uoguelph.ca/web-components/UofGHeader-dist.js"></script>
-		<script defer src="//www.uoguelph.ca/web-components/UofGDropdownMenu-dist.js"></script>
-		<script defer src="//www.uoguelph.ca/web-components/UofGIcon-dist.js"></script>
+		<script defer src="https://www.uoguelph.ca/web-components/UofGHeader-dist.js"></script>
+		<script defer src="https://www.uoguelph.ca/web-components/UofGDropdownMenu-dist.js"></script>
+		<script defer src="/assets/UofGIcon-dist.js"></script>
         <Header />
         <div
           key={`body`}
