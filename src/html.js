@@ -23,16 +23,18 @@ export default function HTML(props) {
         <noscript key="noscript" id="gatsby-noscript">
           This app works best with JavaScript enabled.
         </noscript>
-		<script defer src="//www.uoguelph.ca/web-components/UofGHeader-dist.js"></script>
-		<script defer src="//www.uoguelph.ca/web-components/UofGDropdownMenu-dist.js"></script>
-		<script defer src="//www.uoguelph.ca/web-components/UofGIcon-dist.js"></script>
+		<script defer src="https://www.uoguelph.ca/web-components/UofGHeader-dist.js"></script>
+		<script defer src="https://www.uoguelph.ca/web-components/UofGDropdownMenu-dist.js"></script>
+		<script defer src="https://www.uoguelph.ca/web-components/UofGIcon-dist.js"></script>
         <Header />
         <div
           key={`body`}
           id="___gatsby"
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
-        {props.postBodyComponents}		
+        {props.postBodyComponents}
+		<uofg-footer></uofg-footer>
+		<script defer src="https://www.uoguelph.ca/web-components/UofGFooter-dist.js"></script>
         <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" crossOrigin="anonymous"></script>
         <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossOrigin="anonymous"></script>
         <script defer type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" crossOrigin="anonymous"></script>
