@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import DateModified from './dateModified'
-import Footer from './footer'
+//import Footer from './footer'
 import '../styles/global.css'
 
 
@@ -11,7 +11,7 @@ const Layout = ({ children, date }) => (
           {children}
           <DateModified date={date}/>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </>
 )
 
