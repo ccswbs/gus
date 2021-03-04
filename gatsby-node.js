@@ -406,7 +406,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  relationships: paragraph__media_textRelationships
 	}
 	type paragraph__media_textRelationships implements Node {
-	  field_media_text_media: media__imagemedia__remote_videoUnion
+	  field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
 	}
 	type paragraph__program_statistic implements Node {
       drupal_id: String	  
