@@ -5,6 +5,7 @@ import { contentExists } from '../utils/ug-utils';
 import '../styles/hero.css';
 
 function Hero (props) {
+	console.log("hero")
 	return (
 		<React.Fragment>
 			{contentExists(props.imgData) && props.imgData.length !== 0 && <>

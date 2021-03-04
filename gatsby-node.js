@@ -76,12 +76,12 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 	const typeDefs = `
 	
-	interface TaxonomyInterface @nodeInterface {
+	interface TaxonomyInterface implements Node {
       id: ID!
       drupal_id: String
       name: String
     }
-	interface WidgetParagraphInterface @nodeInterface {
+	interface WidgetParagraphInterface implements Node {
       id: ID!
       drupal_id: String
     }
