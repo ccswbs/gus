@@ -85,7 +85,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       id: ID!
       drupal_id: String
     }
-
 	union media__imagemedia__remote_videoUnion =
 	  media__image
 	  | media__remote_video
@@ -101,22 +100,21 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | taxonomy_term__degrees
 	  | taxonomy_term__topics
 	  | taxonomy_term__units
-    | taxonomy_term__testimonial_type
+      | taxonomy_term__testimonial_type
 
 	union widgetParagraphUnion =
-  paragraph__general_text
-    | paragraph__link_item
-    | paragraph__links_items
-    | paragraph__call_to_action
+	  paragraph__general_text
+      | paragraph__link_item
+      | paragraph__links_items
+      | paragraph__call_to_action
 	  | paragraph__lead_paragraph
-    | paragraph__links_widget
+      | paragraph__links_widget
 	  | paragraph__media_text
 	  | paragraph__section
 
-
-    union widgetSectionParagraphUnion =
+	union widgetSectionParagraphUnion =
 	  paragraph__general_text
-    | paragraph__link_item
+      | paragraph__link_item
 	  | paragraph__links_items
 	  | paragraph__call_to_action
 	  | paragraph__lead_paragraph
@@ -281,9 +279,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__employerRelationships {
       field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
-    
-    
+    }    
     type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
@@ -368,7 +364,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       field_lead_paratext: BodyField
     }
-	type paragraph__links_items implements Node & WidgetParagraphInterface{
+	type paragraph__links_items implements Node & WidgetParagraphInterface {
       drupal_id: String
       field_link_description: String
       field_link_url: node__link_url
@@ -401,11 +397,11 @@ exports.createSchemaCustomization = ({ actions }) => {
 	type paragraph__media_text implements Node {
 	  field_media_text_title: String
 	  field_media_text_desc: BodyField
-	  field_media_text_links: [FieldLink]	  
+	  field_media_text_links: [FieldLink]
 	  relationships: paragraph__media_textRelationships
 	}
 	type paragraph__media_textRelationships implements Node {
-	  field_media_text_media: media__imagemedia__remote_videoUnion
+	  field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
 	}
 	type paragraph__program_statistic implements Node {
       drupal_id: String	  
