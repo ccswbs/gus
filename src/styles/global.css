@@ -1,5 +1,10 @@
 @import url("https://www.uoguelph.ca/css/UofG-styles-dist.css");
 
+#rotator img {
+    top: 50% !important;
+    left: 50% !important;
+  }
+
 .skiplink {
     z-index: 1001;
 }
