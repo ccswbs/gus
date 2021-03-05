@@ -48,8 +48,9 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             return( <CtaPara pageData={widgetData} />);
 		} 
 		else if (widgetData.__typename==="paragraph__section") {
+            const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
             return( <div className={widgetData.field_section_classes}>
-                        <h2>{widgetData.field_section_title}</h2>
+                       <div dangerouslySetInnerHTML={{__html: sectionTitle}} ></div>
                             <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
                     </div>);
         }

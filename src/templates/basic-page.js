@@ -90,42 +90,18 @@ export const query = graphql`
 					  		uri
 						}
 					}
-					... on paragraph__lead_paragraph {
-             					id
-              					field_lead_paratext {
-                					value
-              					}
-            				}
 					... on paragraph__general_text {
 						drupal_id
 						field_general_text {
 							processed
+						  }
 						}
-						}
-					... on paragraph__links_items {
-						drupal_id
-						field_link_description
-						field_link_url {
-							title
-							uri
+					... on paragraph__lead_paragraph {
+							id
+							field_lead_paratext {
+								value
 							}
-							relationships {
-								field_link_image {
-									relationships {
-										field_media_image {
-											localFile {
-												publicURL
-												childImageSharp {
-													resize(width: 400, height: 300, cropFocus: CENTER) {
-													src
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
+            			}	
 					... on paragraph__links_widget {
 						drupal_id
 						field_link_items_title
@@ -179,30 +155,6 @@ export const query = graphql`
 									processed
 								  }
 								}
-								... on paragraph__links_items {
-									drupal_id
-									field_link_description
-									field_link_url {
-										title
-										uri
-										}
-										relationships {
-											field_link_image {
-												relationships {
-													field_media_image {
-														localFile {
-															publicURL
-															childImageSharp {
-																resize(width: 400, height: 300, cropFocus: CENTER) {
-																src
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
 								... on paragraph__links_widget {
 									drupal_id
 									field_link_items_title

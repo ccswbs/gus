@@ -9,6 +9,7 @@ import Careers from '../components/careers';
 import Courses from '../components/courses';
 import Degrees from '../components/degrees';
 import Employers from '../components/employers';
+import CustomFooter from '../components/customFooter';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
@@ -18,7 +19,7 @@ import SVG from 'react-inlinesvg';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
-import { contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
+import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import { graphql } from 'gatsby';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
@@ -322,11 +323,12 @@ export default ({data, location}) => {
 	let courseData;
 	let degreesData;
 	let employerData;
+	let footerData;
 	let imageData;
 	let progData;
 	let newsData;
 	let specData;
-	var statsData;
+	let statsData;
 	let tagData;
 	let testimonialData;
 	let variantData;
@@ -335,6 +337,7 @@ export default ({data, location}) => {
 	if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 	if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
+	if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
 	if (data.images.edges !== undefined) { imageData = data.images.edges; }
 	if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
 	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
@@ -362,8 +365,8 @@ export default ({data, location}) => {
 	specData = progData.relationships.field_specializations;
 	tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
-  let variantDataHeading = prepareVariantHeading(variantData);
-  
+	let variantDataHeading = prepareVariantHeading(variantData); 
+
 	return (
 	<Layout date={lastModified}>
 	  <Helmet bodyAttributes={{
@@ -455,9 +458,12 @@ export default ({data, location}) => {
           </section>
         </div>
       }
-
-	</Layout>
-	)
+	  
+	  {contentExists(footerData) && footerData.length !== 0 &&
+		<CustomFooter footerData={footerData[0]} />
+	  }		
+	</Layout>	
+	)	
 }
 
 export const query = graphql`
@@ -639,6 +645,234 @@ export const query = graphql`
       }
     }
 	
+	footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id] }}}) {
+	  edges {
+	    node {
+		  drupal_id
+		  body {
+            processed
+          }
+		  relationships {
+			field_tags {
+			  __typename
+              ... on TaxonomyInterface {
+				drupal_id
+				id
+				name
+			  }
+            }
+			field_footer_logo {
+			  field_media_image {
+				alt
+              }
+              relationships {
+				field_media_image {
+				  localFile {
+					publicURL
+					childImageSharp {
+					  fluid(maxWidth: 400) {
+						originalImg
+						...GatsbyImageSharpFluid
+					  }
+					}
+				  }
+				}
+			  }
+			}
+			field_widgets {
+			  __typename
+				... on paragraph__call_to_action {
+				  id
+				  field_cta_title
+				  field_cta_description
+				  field_cta_primary_link {
+					title
+					uri
+				  }
+				}
+				... on paragraph__lead_paragraph {
+				  id
+				  field_lead_paratext {
+					value
+				  }
+				}	
+				... on paragraph__links_widget {
+				  drupal_id
+				  field_link_items_title
+				  field_link_items_description
+				  relationships {
+					field_link_items {
+					  drupal_id
+					  field_link_description
+					  field_link_url {
+						title
+						uri
+					  }
+					  relationships {
+						field_link_image {
+						  relationships {
+							field_media_image {
+							  localFile {
+								publicURL
+								childImageSharp {
+								  resize(width: 400, height: 300, cropFocus: CENTER) {
+									src
+								  }
+								}
+							  }
+							}
+						  }
+						}
+					  }
+					}
+				  }
+				}
+				... on paragraph__section {
+				  drupal_id
+				  field_section_title
+				  field_section_classes
+				  relationships {
+					field_section_content {
+					  __typename
+						... on paragraph__call_to_action {
+						  id
+						  field_cta_title
+						  field_cta_description
+						  field_cta_primary_link {
+							title
+							uri
+						  }
+						}
+						... on paragraph__links_widget {
+						  drupal_id
+						  field_link_items_title
+						  field_link_items_description
+						  relationships {
+							field_link_items {
+							  drupal_id
+							  field_link_description
+							  field_link_url {
+								title
+								uri
+							  }
+							  relationships {
+								field_link_image {
+								  relationships {
+									field_media_image {
+									  localFile {
+										publicURL
+										childImageSharp {
+										  resize(width: 400, height: 300, cropFocus: CENTER) {
+											src
+										  }
+										}
+									  }
+									}
+								  }
+								}
+							  }
+							}
+						  }
+						}
+						... on paragraph__media_text {
+						  field_media_text_title
+						  field_media_text_desc {
+							processed
+						  }
+						  field_media_text_links {
+							title
+							uri
+						  }
+						  relationships {
+						    field_media_text_media {
+							  ... on media__image {
+								name
+								field_media_image {
+								  alt
+								}
+								relationships {
+								  field_media_image {
+									localFile {
+									  publicURL
+									  childImageSharp {
+										fluid(maxWidth: 800) {
+										  originalImg
+										  ...GatsbyImageSharpFluid
+									    }
+									  }
+									}
+								  }
+								}
+							  }
+							  ... on media__remote_video {
+								drupal_id
+								name
+								field_media_oembed_video
+								relationships {
+								  field_media_file {
+								    localFile {
+									  publicURL
+								    }
+								  }
+								}
+							  }
+							}
+						  }
+						}
+					}
+				  }
+				}
+				... on paragraph__media_text {
+				  field_media_text_title
+				  field_media_text_desc {
+					processed
+				  }
+				  field_media_text_links {
+					title
+					uri
+				  }
+				  relationships {
+					field_media_text_media {
+					  ... on media__image {
+						name
+						field_media_image {
+						  alt
+						}
+						relationships {
+						  field_media_image {
+							localFile {
+							  publicURL
+							  childImageSharp {
+								fluid(maxWidth: 800) {
+								  originalImg
+								  ...GatsbyImageSharpFluid
+								}
+							  }
+							}
+						  }
+						}
+					  }
+					  ... on media__remote_video {
+						drupal_id
+						name
+						field_media_oembed_video
+						relationships {
+						  field_media_file {
+                            localFile {
+							  publicURL
+                            }
+						  }
+						}
+					  }
+					}
+				  }
+				}
+			}
+		  }
+		}
+	  }
+	}	
+	
     images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {
@@ -667,8 +901,8 @@ export const query = graphql`
           }
         }
       }
-    }
-	
+    }	
+
     news: allNodeArticle (limit: 4, sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
       edges {
         node {

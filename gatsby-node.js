@@ -85,6 +85,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       id: ID!
       drupal_id: String
     }
+
 	union media__imagemedia__remote_videoUnion =
 	  media__image
 	  | media__remote_video
@@ -103,21 +104,19 @@ exports.createSchemaCustomization = ({ actions }) => {
       | taxonomy_term__testimonial_type
 
 	union widgetParagraphUnion =
-	  paragraph__general_text
-      | paragraph__link_item
-      | paragraph__links_items
-      | paragraph__call_to_action
+      paragraph__call_to_action
+	  | paragraph__general_text
 	  | paragraph__lead_paragraph
+      | paragraph__link_item
       | paragraph__links_widget
 	  | paragraph__media_text
 	  | paragraph__section
 
-	union widgetSectionParagraphUnion =
-	  paragraph__general_text
-      | paragraph__link_item
-	  | paragraph__links_items
-	  | paragraph__call_to_action
+    union widgetSectionParagraphUnion =
+	  paragraph__call_to_action
+	  | paragraph__general_text
 	  | paragraph__lead_paragraph
+	  | paragraph__link_item
 	  | paragraph__links_widget
 	  | paragraph__media_text
 
@@ -279,7 +278,22 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__employerRelationships {
       field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }    
+    }
+	type node__custom_footer implements Node {
+	  drupal_id: String
+      drupal_internal__nid: Int
+	  body: BodyFieldWithSummary
+	  relationships: node__custom_footerRelationships
+	  fields: node__custom_footerFields
+	}
+	type node__custom_footerFields implements Node {
+      tags: [String]
+    }
+	type node__custom_footerRelationships implements Node {
+	  field_footer_logo: [media__image] @link(from: "field_footer_logo___NODE")
+	  field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+	  field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
+	}
     type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
@@ -364,15 +378,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       field_lead_paratext: BodyField
     }
-	type paragraph__links_items implements Node & WidgetParagraphInterface {
-      drupal_id: String
-      field_link_description: String
-      field_link_url: node__link_url
-      relationships: paragraph__links_itemsRelationships      
-    }	
-	type paragraph__links_itemsRelationships implements Node {
-      field_link_image: media__image @link(from: "field_link_image___NODE")
-    }
 	type paragraph__links_widget implements Node {
 	  drupal_id: String
 	  field_link_items_description: String
@@ -397,7 +402,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	type paragraph__media_text implements Node {
 	  field_media_text_title: String
 	  field_media_text_desc: BodyField
-	  field_media_text_links: [FieldLink]
+	  field_media_text_links: [FieldLink]	  
 	  relationships: paragraph__media_textRelationships
 	}
 	type paragraph__media_textRelationships implements Node {
@@ -535,6 +540,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 		node.internal.type === `node__call_to_action` ||
 		node.internal.type === `node__career` || 
 		node.internal.type === `node__course` || 
+		node.internal.type === `node__custom_footer` ||
 		node.internal.type === `node__employer` ||
 		node.internal.type === `node__page` || 
 		node.internal.type === `node__testimonial`
