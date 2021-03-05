@@ -41,7 +41,11 @@
     top: 50% !important;
     left: 50% !important;
 }
-  
+
+.flex-even {
+    flex: 1;
+}
+
 @media (max-width: 575.98px){
     .main-container {
         padding-top: 0 !important;
