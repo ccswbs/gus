@@ -66,7 +66,7 @@ module.exports = {
          baseUrl: `https://api.` + _env + _site + `.` + _zone + `/`,
         /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
          //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
-         baseUrl: `http://multidev-bovey.pantheonsite.io/`,
+         //baseUrl: `http://multidev-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
