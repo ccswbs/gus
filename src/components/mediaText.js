@@ -29,7 +29,7 @@ function MediaText (props) {
 				<h3>{mediaTitle}</h3>
 				<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
 				<div>{mediaLinks.map(mediaLink => {
-					return <><a className="btn btn-danger" href={mediaLink.uri}>{mediaLink.title}</a> </>
+					return <><a className="btn btn-outline-info" href={mediaLink.uri}>{mediaLink.title}</a> </>
 				})}</div>
 			</section>
 		</div>
