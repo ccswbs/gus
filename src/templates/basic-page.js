@@ -280,6 +280,17 @@ export const query = graphql`
 					}
 				  }
 				}
+				... on paragraph__program_statistic {
+					drupal_id
+					field_stat_range
+					field_stat_value
+					field_stat_value_end
+					relationships {
+					  field_stat_type {
+						name
+					  }
+					}
+				}
 			}
 			field_tags {
 			  __typename

@@ -60,6 +60,9 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
             return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
         }
+		else if (widgetData.__typename==="paragraph__program_statistic") {
+			return (<div className="container content-area">{widgetData.field_stat_value} {widgetData.relationships.field_stat_type.name}</div>); 
+		}
 		else if (widgetData.__typename==="paragraph__new_widget") {
 			return(<p>This is Paragraph_new_widget</p>);
 		}
