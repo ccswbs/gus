@@ -111,6 +111,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       | paragraph__links_widget
 	  | paragraph__media_text
 	  | paragraph__section
+	  | paragraph__program_statistic
 
     union widgetSectionParagraphUnion =
 	  paragraph__call_to_action
