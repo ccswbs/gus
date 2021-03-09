@@ -8,6 +8,7 @@ import LeadPara from '../components/leadPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
+//import '../styles/stats.css';
 
 export default ({data}) => {
 
