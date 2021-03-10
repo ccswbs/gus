@@ -4,6 +4,7 @@ import LinksItems from './linksItems';
 import CtaPara from './ctaPara';
 import MediaText from '../components/mediaText';
 import SectionWidgets from './sectionWidgets';
+import Stats from './statsWidget';
 import { contentExists } from '../utils/ug-utils';
 
 // 
@@ -48,11 +49,25 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             return( <CtaPara pageData={widgetData} />);
 		} 
 		else if (widgetData.__typename==="paragraph__section") {
-            const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
-            return( <div className={widgetData.field_section_classes}>
-                       <div dangerouslySetInnerHTML={{__html: sectionTitle}} ></div>
-                            <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
-                    </div>);
+            
+			const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
+			
+			return (widgetData.relationships.field_section_content.map(secWidgetType => {
+				if (secWidgetType.__typename==="paragraph__program_statistic") {
+					return (
+						<dl className="d-flex flex-wrap flex-fill justify-content-center">
+							<SectionWidgets pageData={widgetData.relationships.field_section_content} />
+						</dl>
+					);
+				} else {
+					return (
+						<div className={widgetData.field_section_classes}>
+							<div dangerouslySetInnerHTML={{__html: sectionTitle}} ></div>
+							<SectionWidgets pageData={widgetData.relationships.field_section_content} />
+						</div>						
+					);
+				}			
+			}));
         }
 		else if (widgetData.__typename==="paragraph__media_text") {
 		   return <MediaText widgetData={widgetData} />

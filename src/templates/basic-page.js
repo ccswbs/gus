@@ -8,6 +8,7 @@ import LeadPara from '../components/leadPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
+//import '../styles/stats.css';
 
 // Modified function to remove warning  --> Anonymous arrow functions cause Fast Refresh to not preserve local component state.
 
@@ -245,6 +246,17 @@ export const query = graphql`
 									  }
 									}
 								  }
+								  ... on paragraph__program_statistic {
+									drupal_id
+									field_stat_range
+									field_stat_value
+									field_stat_value_end
+									relationships {
+									  field_stat_type {
+										name
+									  }
+									}
+								}
 							}
 						}
 					}
@@ -292,6 +304,17 @@ export const query = graphql`
 					  }
 					}
 				  }
+				}
+				... on paragraph__program_statistic {
+					drupal_id
+					field_stat_range
+					field_stat_value
+					field_stat_value_end
+					relationships {
+					  field_stat_type {
+						name
+					  }
+					}
 				}
 			}
 			field_tags {
