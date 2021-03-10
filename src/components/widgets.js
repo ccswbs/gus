@@ -49,11 +49,25 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             return( <CtaPara pageData={widgetData} />);
 		} 
 		else if (widgetData.__typename==="paragraph__section") {
-            const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
-            return( <div className={widgetData.field_section_classes}>
-                       <div dangerouslySetInnerHTML={{__html: sectionTitle}} ></div>
-                            <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
-                    </div>);
+            
+			const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
+			
+			return (widgetData.relationships.field_section_content.map(secWidgetType => {
+				if (secWidgetType.__typename==="paragraph__program_statistic") {
+					return (
+						<dl className="d-flex flex-wrap flex-fill justify-content-center">
+							<SectionWidgets pageData={widgetData.relationships.field_section_content} />
+						</dl>
+					);
+				} else {
+					return (
+						<div className={widgetData.field_section_classes}>
+							<div dangerouslySetInnerHTML={{__html: sectionTitle}} ></div>
+							<SectionWidgets pageData={widgetData.relationships.field_section_content} />
+						</div>						
+					);
+				}			
+			}));
         }
 		else if (widgetData.__typename==="paragraph__media_text") {
 		   return <MediaText widgetData={widgetData} />
@@ -61,9 +75,6 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
             return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
         }
-		else if (widgetData.__typename==="paragraph__program_statistic") {
-			return <Stats widgetData={widgetData} />
-		}
 		else if (widgetData.__typename==="paragraph__new_widget") {
 			return(<p>This is Paragraph_new_widget</p>);
 		}

@@ -120,6 +120,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | paragraph__link_item
 	  | paragraph__links_widget
 	  | paragraph__media_text
+	  | paragraph__program_statistic
 
 	type BodyField {
       processed: String

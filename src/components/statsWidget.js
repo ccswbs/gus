@@ -13,8 +13,8 @@ function Stats (props) {
 	
 	return <React.Fragment key={props.widgetData.drupal_id}>
 	<div className="uog-card">
-		<h3>{statRange === true && statValueEnd !== null ? statValue + " - " + statValueEnd : statValue}</h3>
-		<p>{statType}</p>
+		<dt>{statRange === true && statValueEnd !== null ? statValue + " - " + statValueEnd : statValue}</dt>
+		<dd>{statType}</dd>
 	</div>
 	</React.Fragment>
 }

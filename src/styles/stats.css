@@ -61,12 +61,14 @@ body.basic-page div.uog-card {
 	border-left: 1rem solid var(--uog-red);
 }
 
-body.basic-page div.uog-card:nth-of-type(9n+3),
-body.basic-page div.uog-card:nth-of-type(9n+6) {
+body.basic-page div.uog-card:nth-of-type(9n+2),
+body.basic-page div.uog-card:nth-of-type(9n+4),
+body.basic-page div.uog-card:nth-of-type(9n+9) {
 	border-left: 1rem solid var(--uog-yellow);
 }
 
-body.basic-page div.uog-card:nth-of-type(9n+4),
+body.basic-page div.uog-card:nth-of-type(9n+3),
+body.basic-page div.uog-card:nth-of-type(9n+5),
 body.basic-page div.uog-card:nth-of-type(9n+7) {
 	border-left: 1rem solid var(--uog-blue);
 } 
