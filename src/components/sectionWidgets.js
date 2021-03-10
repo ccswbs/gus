@@ -3,7 +3,6 @@ import React from 'react';
 import LinksItems from './linksItems';
 import CtaPara from './ctaPara'
 import MediaText from '../components/mediaText';
-import Stats from './statsWidget';
 
 import { contentExists } from '../utils/ug-utils';
 
@@ -60,10 +59,6 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
         return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
     }
-	else if (widgetData.__typename==="paragraph__program_statistic") {
-			return <Stats widgetData={widgetData} />
-		}
-	
        else if (widgetData.__typename==="paragraph__new_widget") {
         console.log("Paragraph__new_widget")
         return(<p>This is Paragraph_new_widget</p>);

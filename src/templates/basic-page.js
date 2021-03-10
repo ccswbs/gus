@@ -233,17 +233,6 @@ export const query = graphql`
 									  }
 									}
 								  }
-								  ... on paragraph__program_statistic {
-									drupal_id
-									field_stat_range
-									field_stat_value
-									field_stat_value_end
-									relationships {
-									  field_stat_type {
-										name
-									  }
-									}
-								}
 							}
 						}
 					}
@@ -292,16 +281,20 @@ export const query = graphql`
 					}
 				  }
 				}
-				... on paragraph__program_statistic {
-					drupal_id
-					field_stat_range
-					field_stat_value
-					field_stat_value_end
-					relationships {
-					  field_stat_type {
-						name
+				... on paragraph__stats_widget {
+				  drupal_id
+				  relationships {
+					field_statistic {
+					  field_stat_range
+					  field_stat_value
+					  field_stat_value_end
+					  relationships {
+						field_stat_type {
+						  name
+						}
 					  }
 					}
+                  }
 				}
 			}
 			field_tags {
