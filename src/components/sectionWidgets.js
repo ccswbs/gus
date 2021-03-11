@@ -61,8 +61,11 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
         return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
     }
 	else if (widgetData.__typename==="paragraph__program_statistic") {
-			return <Stats widgetData={widgetData} />
-		}
+			return (
+                <dl className="d-flex flex-wrap flex-fill justify-content-center">
+                    <Stats widgetData={widgetData}/>
+                </dl>)
+    	}
 	
        else if (widgetData.__typename==="paragraph__new_widget") {
         console.log("Paragraph__new_widget")
