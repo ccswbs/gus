@@ -64,12 +64,12 @@ const BasicPage =  ({data}) => {
 					<section className="col-md-9 content-area">
 						<LeadPara pageData={ctaParaData} />
 						<div dangerouslySetInnerHTML={{ __html: body}} />
+						
+						{ /**** Widgets content ****/}		
+						<Widgets pageData={widgetsData} />	
+						
 					</section>
 				</div>
-				
-				{ /**** Widgets content ****/}		
-				<Widgets pageData={widgetsData} />				
-
 			</div>	
 			
 		</Layout>
