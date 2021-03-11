@@ -63,20 +63,20 @@ module.exports = {
     {
        resolve: `gatsby-source-drupal`,
        options: {
-         //baseUrl: `https://api.` + _env + _site + `.` + _zone + `/`,
+         baseUrl: `https://api.` + _env + _site + `.` + _zone + `/`,
         /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
          //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
-         baseUrl: `http://chugstats-bovey.pantheonsite.io/`,
+         baseUrl: `http://multidev-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
 	{
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
-		  //baseUrl: `https://api.` + _env + _site + `.` + _zone,
+		  baseUrl: `https://api.` + _env + _site + `.` + _zone,
 		  /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
 		  //baseUrl: `https://api.devugconthub.uoguelph.dev`,
-		  baseUrl: `http://chugstats-bovey.pantheonsite.io`,
+		  //baseUrl: `http://multidev-bovey.pantheonsite.io`,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
         menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },
