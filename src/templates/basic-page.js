@@ -54,11 +54,12 @@ export default ({data}) => {
 						<LeadPara pageData={ctaParaData} />
 						<div dangerouslySetInnerHTML={{ __html: body}} />
 						
-						{ /**** Widgets content ****/}		
-						<Widgets pageData={widgetsData} />	
+						
 						
 					</section>
 				</div>
+				{ /**** Widgets content ****/}		
+				<Widgets pageData={widgetsData} />	
 			</div>	
 			
 		</Layout>
