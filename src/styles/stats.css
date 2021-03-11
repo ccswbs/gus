@@ -19,6 +19,7 @@ body.basic-page .uog-card {
 	flex: 1 0 0%;
     padding: 1.25rem;
 	margin: 1.5rem;
+	min-width: 25%;
 }
 
 body.program dt,
@@ -53,19 +54,19 @@ body.basic-page dd {
 }
 
 div.uog-card path {
-	fill: #69a3b9;
+	fill: var(--uog-blue);
 }
 
 div.uog-card:nth-of-type(9n+2) path,
 div.uog-card:nth-of-type(9n+4) path,
 div.uog-card:nth-of-type(9n+9) path {
-	fill: #ffc72a;
+	fill: var(--uog-yellow);
 }
 
 div.uog-card:nth-of-type(9n+3) path,
 div.uog-card:nth-of-type(9n+5) path,
 div.uog-card:nth-of-type(9n+7) path {
-	fill: #c20430;
+	fill: var(--uog-red);
 }
 
 body.basic-page div.uog-card {
