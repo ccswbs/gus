@@ -111,6 +111,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       | paragraph__links_widget
 	  | paragraph__media_text
 	  | paragraph__section
+	  | paragraph__stats_widget
 
     union widgetSectionParagraphUnion =
 	  paragraph__call_to_action
@@ -439,6 +440,13 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__sectionRelationships implements Node {
       field_section_content: [widgetSectionParagraphUnion] @link(from:"field_section_content___NODE")
     }
+	type paragraph__stats_widget implements Node {
+		drupal_id: String
+		relationships: paragraph__stats_widgetRelationships
+	}
+	type paragraph__stats_widgetRelationships implements Node {
+		field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
+	}
 	
 	type PathAlias implements Node {
       value: String

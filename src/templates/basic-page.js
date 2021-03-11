@@ -8,6 +8,7 @@ import LeadPara from '../components/leadPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
+//import '../styles/stats.css';
 
 export default ({data}) => {
 
@@ -52,12 +53,12 @@ export default ({data}) => {
 					<section className="col-md-9 content-area">
 						<LeadPara pageData={ctaParaData} />
 						<div dangerouslySetInnerHTML={{ __html: body}} />
+						
+						{ /**** Widgets content ****/}		
+						<Widgets pageData={widgetsData} />	
+						
 					</section>
 				</div>
-				
-				{ /**** Widgets content ****/}		
-				<Widgets pageData={widgetsData} />				
-
 			</div>	
 			
 		</Layout>
@@ -279,6 +280,21 @@ export const query = graphql`
 					  }
 					}
 				  }
+				}
+				... on paragraph__stats_widget {
+				  drupal_id
+				  relationships {
+					field_statistic {
+					  field_stat_range
+					  field_stat_value
+					  field_stat_value_end
+					  relationships {
+						field_stat_type {
+						  name
+						}
+					  }
+					}
+                  }
 				}
 			}
 			field_tags {

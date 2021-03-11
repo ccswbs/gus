@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
-import { contentIsNullOrEmpty } from '../utils/ug-utils';
+import { contentExists } from '../utils/ug-utils';
 import '../styles/stats.css';
 
 function Stats (props) {
 	return (
 		<React.Fragment>
-			{!contentIsNullOrEmpty(props.statsData) && props.statsData.length !== 0 && <>
+			{contentExists(props.statsData) && props.statsData.length !== 0 && <>
 				{props.statsData.map (stat => {	
-					let statIcon = stat.relationships.field_stat_icon.relationships.field_media_image.localFile;
+					let statIcon = (contentExists(stat.relationships.field_stat_icon) ? stat.relationships.field_stat_icon.relationships.field_media_image.localFile : null);
 					let statRange = stat.field_stat_range;
 					let statType = stat.relationships.field_stat_type.name;
 					let statValue = stat.field_stat_value;

@@ -14,10 +14,25 @@ body.program .uog-card {
 	margin-top: 3rem;
 }
 
-body.program dt {
-    font-size: 5rem;
+body.basic-page .uog-card {
+	background: var(--uog-blue-muted);
+	flex: 1 0 0%;
+    padding: 1.25rem;
+	margin: 1.5rem;
+	min-width: 25%;
+}
+
+body.program dt,
+body.basic-page dt {
+	font-size: 5rem;
     color: #000;
-    margin-bottom: 2rem;
+}
+body.program dt {
+    margin-bottom: 2rem;	
+}
+body.basic-page dt {
+	margin-bottom: 0.75rem;
+	line-height: 1.2;
 }
 
 body.program .uog-card dt svg {
@@ -33,31 +48,53 @@ body.program dd {
     margin: 0 auto;
 	max-width: 33ch;
 }
+body.basic-page dd {
+	font-size: 1.8rem;
+    line-height: 1.58;
+}
 
 div.uog-card path {
-	fill: #69a3b9;
+	fill: var(--uog-blue);
 }
 
 div.uog-card:nth-of-type(9n+2) path,
 div.uog-card:nth-of-type(9n+4) path,
 div.uog-card:nth-of-type(9n+9) path {
-	fill: #ffc72a;
+	fill: var(--uog-yellow);
 }
 
 div.uog-card:nth-of-type(9n+3) path,
 div.uog-card:nth-of-type(9n+5) path,
 div.uog-card:nth-of-type(9n+7) path {
-	fill: #c20430;
+	fill: var(--uog-red);
 }
 
+body.basic-page div.uog-card {
+	border-left: 1rem solid var(--uog-red);
+}
+
+body.basic-page div.uog-card:nth-of-type(9n+2),
+body.basic-page div.uog-card:nth-of-type(9n+4),
+body.basic-page div.uog-card:nth-of-type(9n+9) {
+	border-left: 1rem solid var(--uog-yellow);
+}
+
+body.basic-page div.uog-card:nth-of-type(9n+3),
+body.basic-page div.uog-card:nth-of-type(9n+5),
+body.basic-page div.uog-card:nth-of-type(9n+7) {
+	border-left: 1rem solid var(--uog-blue);
+} 
+
 @media only screen and (max-width: 768px) {
-	body.program .uog-card {
+	body.program .uog-card,
+	body.basic-page .uog-card {
 		min-width: 50%; 
 		text-align: center;
 		margin-top: 0;
 		margin-bottom: 3rem;
 	}
-	body.program dt {
+	body.program dt,
+	body.basic-page .uog-card dt {
 		font-size: 3.5rem;
 		color: #000;
 		margin-bottom: 0.5rem;
@@ -65,7 +102,8 @@ div.uog-card:nth-of-type(9n+7) path {
 	body.program .uog-card dt svg {
 		height: 4rem;
 	}
-	body.program dd {
+	body.program dd,
+	body.basic-page .uog-card dd {
 		font-weight: 600;
 		font-size: 1.4rem;
 	}
