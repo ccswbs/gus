@@ -1,30 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import SVG from 'react-inlinesvg';
-import { contentExists } from '../utils/ug-utils';
-import '../styles/stats.css';
+import Stats from '../components/stats'
 
-function Stats (props) {
-	//let statIcon = stat.relationships.field_stat_icon.relationships.field_media_image.localFile;
-	let statRange = props.widgetData.field_stat_range;
-	let statType = props.widgetData.relationships.field_stat_type.name;
-	let statValue = props.widgetData.field_stat_value;
-	let statValueEnd = props.widgetData.field_stat_value_end;
+function StatsWidget (props) {
 	
-	return <React.Fragment key={props.widgetData.drupal_id}>
-	<div className="uog-card">
-		<dt>{statRange === true && statValueEnd !== null ? statValue + " - " + statValueEnd : statValue}</dt>
-		<dd>{statType}</dd>
-	</div>
-	</React.Fragment>
+	let statsData = props.statsWidgetData.relationships.field_statistic;
+
+	return (<>
+		<dl className="d-flex flex-wrap flex-fill justify-content-center">
+			<Stats statsData={statsData} />
+		</dl>
+	</>)
 }
 		
 
 
-Stats.propTypes = {
-	widgetData: PropTypes.object,
+StatsWidget.propTypes = {
+	statsWidgetData: PropTypes.object,
 }
-Stats.defaultProps = {
-	widgetData: null,
+StatsWidget.defaultProps = {
+	statsWidgetData: null,
 }
-export default Stats
+export default StatsWidget

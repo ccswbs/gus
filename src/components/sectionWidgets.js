@@ -3,7 +3,6 @@ import React from 'react';
 import LinksItems from './linksItems';
 import CtaPara from './ctaPara'
 import MediaText from '../components/mediaText';
-import Stats from './statsWidget';
 
 import { contentExists } from '../utils/ug-utils';
 

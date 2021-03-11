@@ -4,7 +4,7 @@ import LinksItems from './linksItems';
 import CtaPara from './ctaPara';
 import MediaText from '../components/mediaText';
 import SectionWidgets from './sectionWidgets';
-import Stats from './statsWidget';
+import StatsWidget from '../components/statsWidget';
 import { contentExists } from '../utils/ug-utils';
 
 // 
@@ -49,14 +49,11 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             return( <CtaPara pageData={widgetData} />);
 		} 
 		else if (widgetData.__typename==="paragraph__section") {
-            
-			const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
-					return (
-						<div className={widgetData.field_section_classes}>
-							<span dangerouslySetInnerHTML={{__html: sectionTitle}} ></span>
-							<SectionWidgets pageData={widgetData.relationships.field_section_content} />
-						</div>						
-					);
+            const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
+            return( <div className={widgetData.field_section_classes}>
+                       <div dangerouslySetInnerHTML={{__html: sectionTitle}} ></div>
+                            <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
+                    </div>);
         }
 		else if (widgetData.__typename==="paragraph__media_text") {
 		   return <MediaText widgetData={widgetData} />
@@ -68,9 +65,13 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
                 
             ); 
         }
+		else if (widgetData.__typename==="paragraph__stats_widget") {
+			return <StatsWidget statsWidgetData={widgetData} />			
+		}
 		else if (widgetData.__typename==="paragraph__new_widget") {
 			return(<p>This is Paragraph_new_widget</p>);
 		}
+		console.log(widgetData);
 		return null;
     }
     ))}
