@@ -67,7 +67,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 		else if (widgetData.__typename==="paragraph__new_widget") {
 			return(<p>This is Paragraph_new_widget</p>);
 		}
-		console.log(widgetData);
+
 		return null;
     }
     ))}
