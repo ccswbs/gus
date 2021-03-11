@@ -7,7 +7,7 @@ function StatsWidget (props) {
 	let statsData = props.statsWidgetData.relationships.field_statistic;
 
 	return (<>
-		<dl className="d-flex flex-wrap flex-fill justify-content-center">
+		<dl className="card-group stats">
 			<Stats statsData={statsData} />
 		</dl>
 	</>)
