@@ -8,8 +8,7 @@ body.program .stats-bg {
 	background-size: cover;
 }
 
-body.program .uog-card,
-body.basic-page .uog-card {
+body.program .uog-card {
     min-width: 33%; 
     text-align: center;
 	margin-top: 3rem;
@@ -17,13 +16,22 @@ body.basic-page .uog-card {
 
 body.basic-page .uog-card {
 	background: var(--uog-blue-muted);
+	flex: 1 0 0%;
+    padding: 1.25rem;
+	margin: 1.5rem;
 }
 
 body.program dt,
-body.basic-page .uog-card dt {
-    font-size: 5rem;
+body.basic-page dt {
+	font-size: 5rem;
     color: #000;
-    margin-bottom: 2rem;
+}
+body.program dt {
+    margin-bottom: 2rem;	
+}
+body.basic-page dt {
+	margin-bottom: 0.75rem;
+	line-height: 1.2;
 }
 
 body.program .uog-card dt svg {
@@ -32,13 +40,16 @@ body.program .uog-card dt svg {
 	vertical-align: text-bottom;
 }
 
-body.program dd,
-body.basic-page .uog-card {
+body.program dd {
     text-transform: uppercase;
     font-weight: 700;
     color: #555;
     margin: 0 auto;
 	max-width: 33ch;
+}
+body.basic-page dd {
+	font-size: 1.8rem;
+    line-height: 1.58;
 }
 
 div.uog-card path {
