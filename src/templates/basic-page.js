@@ -70,7 +70,7 @@ const BasicPage =  ({data}) => {
 					</section>
 				</div>
 				{ /**** Widgets content ****/}		
-						<Widgets pageData={widgetsData} />	
+				<Widgets pageData={widgetsData} />	
 			</div>	
 			
 		</Layout>
