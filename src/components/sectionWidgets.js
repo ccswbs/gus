@@ -18,7 +18,7 @@ import { contentExists } from '../utils/ug-utils';
 
 function SectionWidgets (props) {
 
-if (contentExists(props.pageData) && props.pageData.length !== 0){
+if (contentExists(props.pageData) && props.pageData.length !== 0) {
     return (props.pageData.map(widgetData => {
         if (widgetData.__typename==="paragraph__links_widget") {
             
@@ -47,15 +47,17 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
                     </div>
             )
         }
-
         else if (widgetData.__typename==="paragraph__call_to_action") {
             return( <div className="flex-even">
                     <CtaPara pageData={widgetData} />
                     </div>);
-       } 
-       else if (widgetData.__typename==="paragraph__media_text") {
-        return <MediaText widgetData={widgetData} />
-     }
+		} 
+		else if (widgetData.__typename==="paragraph__media_text") {
+			
+			const colClass = "col-xlg-6";			
+			return (<div className="flex-even"><MediaText colClass={colClass} widgetData={widgetData} /></div>);
+			
+		}
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
         return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
     }

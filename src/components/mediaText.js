@@ -19,13 +19,13 @@ function MediaText (props) {
 	
 	return (<>	
 		<div className="row row-with-vspace site-content">
-			<section className="col-md-6">
+			<section className={props.colClass}>
 			{contentExists(videoURL) ?
 			<Video playerID={props.widgetData.drupal_id} videoURL={videoURL} videoTranscript={videoTranscript} />
 			: ``}
 			{contentExists(imageURL) ? <Img fluid={imageURL.childImageSharp.fluid} alt={imageAlt} /> : ``}
 			</section>
-			<section className="col-md-6">
+			<section className={props.colClass}>
 				<h3>{mediaTitle}</h3>
 				<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
 				<div>{mediaLinks.map(mediaLink => {
@@ -38,9 +38,11 @@ function MediaText (props) {
 
 MediaText.propTypes = {
     widgetData: PropTypes.object,
+	colClass: PropTypes.string,
 }
 MediaText.defaultProps = {
     widgetData: null,
+	colClass: `col-md-6`,
 }
 
 export default MediaText

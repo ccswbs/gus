@@ -49,11 +49,13 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             return( <CtaPara pageData={widgetData} />);
 		} 
 		else if (widgetData.__typename==="paragraph__section") {
-            const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
-            return( <div className={widgetData.field_section_classes}>
-                       <div dangerouslySetInnerHTML={{__html: sectionTitle}} ></div>
-                            <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
-                    </div>);
+            const sectionTitle = (contentExists(widgetData.field_section_title) ? widgetData.field_section_title : ``);
+            return (<>
+				<h2>{sectionTitle}</h2>
+				<div className={widgetData.field_section_classes}>
+					<SectionWidgets pageData={widgetData.relationships.field_section_content}/>
+                </div>
+			</>);
         }
 		else if (widgetData.__typename==="paragraph__media_text") {
 		   return <MediaText widgetData={widgetData} />
