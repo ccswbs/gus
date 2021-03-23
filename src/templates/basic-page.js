@@ -258,6 +258,21 @@ export const query = graphql`
 									  }
 									}
 								  }
+								... on paragraph__stats_widget {
+								  drupal_id
+								  relationships {
+									field_statistic {
+									  field_stat_range
+									  field_stat_value
+									  field_stat_value_end
+									  relationships {
+										field_stat_type {
+										  name
+										}
+									  }
+									}
+								  }
+								}
 							}
 						}
 					}
