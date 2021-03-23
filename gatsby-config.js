@@ -67,7 +67,7 @@ module.exports = {
         /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
          //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
          //baseUrl: `http://multidev-bovey.pantheonsite.io/`,
-         baseUrl: `http://widgets-bovey.pantheonsite.io/`,
+         baseUrl: `http://mediafix-bovey.pantheonsite.io/`,
          apiBase: `jsonapi`, // optional, defaults to `jsonapi`
        },
     },
@@ -78,7 +78,7 @@ module.exports = {
 		  /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
 		  //baseUrl: `https://api.devugconthub.uoguelph.dev`,
 		  //baseUrl: `http://multidev-bovey.pantheonsite.io`,
-      baseUrl: `http://widgets-bovey.pantheonsite.io/`,
+      baseUrl: `http://mediafix-bovey.pantheonsite.io/`,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
         menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },

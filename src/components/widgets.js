@@ -7,6 +7,7 @@ import SectionWidgets from './sectionWidgets';
 import StatsWidget from '../components/statsWidget';
 import { contentExists } from '../utils/ug-utils';
 
+
 // 
 // add to the if statement each widget, widgets will call each function in the order that it appears in the Drupal Backend. 
 // props.pageData - an array that contains all widgets (paragraphs) in field_widget 
@@ -53,7 +54,10 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             return (<>
 				<h2>{sectionTitle}</h2>
 				<div className={widgetData.field_section_classes}>
-					<SectionWidgets pageData={widgetData.relationships.field_section_content}/>
+                    
+                        <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
+              
+					
                 </div>
 			</>);
         }

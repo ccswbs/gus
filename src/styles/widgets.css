@@ -1,0 +1,16 @@
+.section-wrapper {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(12, [col-start] 1fr);
+    
+}
+
+.section-left{
+    grid-column: col-start / span 9;
+
+}
+
+.section-right {
+    grid-column: col-start 10 / span 3;
+
+}

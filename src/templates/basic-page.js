@@ -49,7 +49,7 @@ export default ({data}) => {
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">
-				<div className="row row-with-vspace site-content">
+				{/* <div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
 						<LeadPara pageData={ctaParaData} />
 						<div dangerouslySetInnerHTML={{ __html: body}} />
@@ -57,7 +57,7 @@ export default ({data}) => {
 						
 						
 					</section>
-				</div>
+				</div> */}
 				{ /**** Widgets content ****/}		
 				<Widgets pageData={widgetsData} />	
 			</div>	
@@ -91,12 +91,22 @@ export const query = graphql`
 					  		title
 					  		uri
 						}
+						relationships {
+							field_section_column {
+								name
+							}
+						}
 					}
 					... on paragraph__general_text {
 						drupal_id
 						field_general_text {
 							processed
 						  }
+						  relationships {
+							field_section_column {
+								name
+							}
+						}
 						}
 					... on paragraph__lead_paragraph {
 							id
@@ -150,11 +160,21 @@ export const query = graphql`
 										  title
 										  uri
 									}
+									relationships {
+										field_section_column {
+											name
+										}
+									}
 								}
 								... on paragraph__general_text {
 								  drupal_id
 								  field_general_text {
 									processed
+								  }
+								  relationships {
+									  field_section_column {
+										  name
+									  }
 								  }
 								}
 								... on paragraph__links_widget {
