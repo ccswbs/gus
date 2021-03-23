@@ -3,6 +3,7 @@ import React from 'react';
 import LinksItems from './linksItems';
 import CtaPara from './ctaPara'
 import MediaText from '../components/mediaText';
+import StatsWidget from '../components/statsWidget';
 import { contentExists } from '../utils/ug-utils'
 import '../styles/widgets.css';
 // 
@@ -57,6 +58,11 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 			
 			const colClass = "col-xlg-6";			
 			return (<div className="flex-even"><MediaText colClass={colClass} widgetData={widgetData} /></div>);
+			
+		}
+		else if (widgetData.__typename==="paragraph__stats_widget") {
+		
+			return <StatsWidget statsWidgetData={widgetData} />
 			
 		}
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
