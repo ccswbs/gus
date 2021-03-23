@@ -59,7 +59,11 @@ export default ({data}) => {
 					</section>
 				</div> */}
 				{ /**** Widgets content ****/}		
-				<Widgets pageData={widgetsData} />	
+				<div className="row row-with-vspace site-content">
+					<section className="col-md-12 content-area">
+						<Widgets pageData={widgetsData} />
+					</section>
+				</div>
 			</div>	
 			
 		</Layout>
