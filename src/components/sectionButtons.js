@@ -42,10 +42,10 @@ let fieldButtonsData = contentExists(props.pageData.relationships.field_buttons)
                 {fieldButtonsData.map (buttonData => {
                     console.log(buttonData)
                     let buttonLinkURI = buttonData.field_button_link.uri;
-                    // let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
-                    //     contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    
+                    let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
+                        contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    
                                            
-                    let buttonLinkTitle = contentExists(buttonData.field_button_link)? buttonData.field_button_link.title: "no title entered";    
+                    // let buttonLinkTitle = contentExists(buttonData.field_button_link)? buttonData.field_button_link.title: "no title entered";    
                                            
                     let buttonClassName= 'btn ' + ButtonStyle(buttonData.relationships.field_button_style.name) +' btn-block section-button' ;
                     let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? 'fas ' + buttonData.field_font_awesome_icon +
