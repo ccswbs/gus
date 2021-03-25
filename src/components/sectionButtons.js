@@ -49,7 +49,7 @@ let fieldButtonsData = contentExists(props.pageData.relationships.field_buttons)
                                            
                     let buttonClassName= 'btn ' + ButtonStyle(buttonData.relationships.field_button_style.name) +' btn-block section-button' ;
                     let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? buttonData.field_font_awesome_icon +
-                                                ' fa-pull-left section-button-icon fa-fw '+ FontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
+                                                ' section-button-icon fa-fw '+ FontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
     
                     return <React.Fragment key={buttonData.drupal_id}>
                         <a href={buttonLinkURI} className={buttonClassName}>
