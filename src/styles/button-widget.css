@@ -1,0 +1,16 @@
+.section-button {
+    text-align:left;
+    padding:20px;
+}
+.section-button-icon {
+    font-size: 5rem;
+    padding-top: 10px;
+}
+
+.yellow-icon {
+    color:var(--uog-yellow);
+}
+
+.section-button-text {
+    font-size:larger;
+}

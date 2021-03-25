@@ -2,31 +2,16 @@
     display: grid;
     gap: 10px;
     grid-template-columns: repeat(12, [col-start] 1fr);
+    /* grid-auto-rows: fit-content(1em); */
     
 }
 
 .section-left{
     grid-column: col-start / span 9;
-
 }
 
 .section-right {
     grid-column: col-start 10 / span 3;
-
-}
-.section-button {
-    text-align:left;
-    padding:20px;
-}
-.section-button-icon {
-    font-size: 5rem;
-    padding-top: 10px;
-}
-
-.yellow-icon {
-    color:var(--uog-yellow);
-}
-
-.section-button-text {
-    font-size:larger;
+    grid-row-start: 1;
+    grid-row-end: 3 ;
 }

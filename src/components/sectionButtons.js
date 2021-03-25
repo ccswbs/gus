@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import SVG from 'react-inlinesvg';
-import '../styles/cta.css'
+import '../styles/button-widget.css'
 import { contentExists } from '../utils/ug-utils';
 
 
