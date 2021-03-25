@@ -20,7 +20,7 @@ function leadPara (props) {
                             const image = (contentExists(leaditem.relationships.field_lead_para_hero)) ; 
                             
                             const heroImage = leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile;
-			                const pubImage = leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile.publicURL;
+			                const pubImage = encodeURI(leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile.publicURL);
 					
                             let imageFile = null;
 			    
@@ -32,12 +32,13 @@ function leadPara (props) {
                             } 
 
                             const myDivStyle = {
-  				                display: 'flex', opacity: 0.8,
+  				                display: 'flex', opacity: 0.8, 				
 				                backgroundImage: `url(${pubImage})`
-				  				
+				                
+  				
 			                };
 
-                            
+                                                      
                             if (imageFile !== null) {
                                return (
 				                <React.Fragment>
