@@ -18,7 +18,7 @@ function MediaText (props) {
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
 	
 	return (<>	
-		<div className="row row-with-vspace site-content">
+
 			<section className={props.colClass}>
 			{contentExists(videoURL) ?
 			<Video playerID={props.widgetData.drupal_id} videoURL={videoURL} videoTranscript={videoTranscript} />
@@ -26,13 +26,13 @@ function MediaText (props) {
 			{contentExists(imageURL) ? <Img fluid={imageURL.childImageSharp.fluid} alt={imageAlt} /> : ``}
 			</section>
 			<section className={props.colClass}>
-				<h3>{mediaTitle}</h3>
+				<h2>{mediaTitle}</h2>
 				<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
 				<div>{mediaLinks.map(mediaLink => {
 					return <><a className="btn btn-outline-info" href={mediaLink.uri}>{mediaLink.title}</a> </>
 				})}</div>
 			</section>
-		</div>
+		
 	</>)
 }
 
