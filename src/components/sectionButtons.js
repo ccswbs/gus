@@ -48,13 +48,13 @@ let fieldButtonsData = contentExists(props.pageData.relationships.field_buttons)
                     // let buttonLinkTitle = contentExists(buttonData.field_button_link)? buttonData.field_button_link.title: "no title entered";    
                                            
                     let buttonClassName= 'btn ' + ButtonStyle(buttonData.relationships.field_button_style.name) +' btn-block section-button' ;
-                    let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? 'fas ' + buttonData.field_font_awesome_icon +
-                                                ' fa-pull-left section-button-icon '+ FontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
+                    let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? buttonData.field_font_awesome_icon +
+                                                ' fa-pull-left section-button-icon fa-fw '+ FontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
     
                     return <React.Fragment key={buttonData.drupal_id}>
                         <a href={buttonLinkURI} className={buttonClassName}>
                             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
-                            <div className="section-button-text" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+                            <span className="section-button-text" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
                         </a>
                     </React.Fragment>
                 })}
