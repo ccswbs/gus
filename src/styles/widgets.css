@@ -15,3 +15,7 @@
     grid-row-start: 1;
     grid-row-end: 3 ;
 }
+
+.gap-between {
+	gap: 20px;
+}
