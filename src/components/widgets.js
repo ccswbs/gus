@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import LinksItems from './linksItems';
 import CtaPara from './ctaPara';
+import LeadPara from './leadPara';
 import MediaText from '../components/mediaText';
 import SectionWidgets from './sectionWidgets';
 import StatsWidget from '../components/statsWidget';
@@ -49,7 +50,10 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
         else if (widgetData.__typename==="paragraph__call_to_action") {
             return( <CtaPara pageData={widgetData} />);
 		} 
-		else if (widgetData.__typename==="paragraph__section") {
+        else if (widgetData.__typename==="paragraph__lead_paragraph") {
+            return( <LeadPara pageData={widgetData} />);
+		} 
+        else if (widgetData.__typename==="paragraph__section") {
             const sectionTitle = (contentExists(widgetData.field_section_title) ? widgetData.field_section_title : ``);
             return (<>
 				<h2>{sectionTitle}</h2>
