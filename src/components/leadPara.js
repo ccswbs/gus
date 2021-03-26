@@ -61,7 +61,7 @@ function leadPara (props) {
 }
 
 leadPara.propTypes = {
-    pageData: PropTypes.array,
+    pageData: PropTypes.object,
 }
   
 leadPara.defaultProps = {
