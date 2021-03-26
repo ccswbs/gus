@@ -6,70 +6,58 @@ import '../styles/cta.css';
 
 function leadPara (props) {
 
-    if(contentExists(props.pageData) && props.pageData.length !== 0){
-        
-        return (
-            <React.Fragment>
-                {props.pageData.map (leaditem => {
-                    if(contentExists(leaditem) && leaditem.__typename === 'paragraph__lead_paragraph'){
-                        
-                        const retStr = <div class="lead" dangerouslySetInnerHTML={{ __html: leaditem.field_lead_paratext.value}} />
+        const leaditem = props.pageData;
 
-                        if(contentExists(leaditem.relationships)){
+        const retStr = <div class="lead" dangerouslySetInnerHTML={{ __html: leaditem.field_lead_paratext.value}} />
+        
+                                
+        if(contentExists(leaditem.relationships)) {
                             
-                            const image = (contentExists(leaditem.relationships.field_lead_para_hero)) ; 
+            const image = (contentExists(leaditem.relationships.field_lead_para_hero)) ; 
                             
-                            const heroImage = leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile;
-			                const pubImage = encodeURI(leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile.publicURL);
+            const heroImage = leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile;
+		    const pubImage = encodeURI(leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile.publicURL);
 					
-                            let imageFile = null;
+            let imageFile = null;
 			    
-                            if(contentExists(image) && contentExists(heroImage)) {
+            if(contentExists(image) && contentExists(heroImage)) {
 	                           
-                               imageFile = <Img className="leadimg" fluid={heroImage.childImageSharp.fluid} alt={leaditem.relationships.field_lead_para_hero.field_media_image.alt} />
+                imageFile = <Img className="leadimg" fluid={heroImage.childImageSharp.fluid} alt={leaditem.relationships.field_lead_para_hero.field_media_image.alt} />
                                
  			       
-                            } 
+            } 
 
-                            const myDivStyle = {
-  				                display: 'flex', opacity: 0.8, 				
-				                backgroundImage: `url(${pubImage})`
+            const myDivStyle = {
+  			    display: 'flex', opacity: 0.8, 				
+			    backgroundImage: `url(${pubImage})`
 				                
-  				
-			                };
+  			};
 
                                                       
-                            if (imageFile !== null) {
-                               return (
-				                <React.Fragment>
-							        <div class="full-width-container">
-				                        <div className="container-fluid">
-				                            <div className="row leadimg">
+            if (imageFile !== null) {
+                return (
+			        <React.Fragment>
+				       <div class="full-width-container"> 
+			                <div className="container-fluid">
+			                    <div className="row leadimg">
 
-				 			                    <div className="col-md-6">{imageFile}</div>
-				                                <div className="col-md-6" style={myDivStyle} >{retStr}</div>
+				                    <div className="col-md-6">{imageFile}</div>
+			                        <div className="col-md-6" style={myDivStyle} >{retStr}</div>
 				                        
-							                </div>
-				                        </div>
-							        </div>
-				                    <br />
+				                </div>
+			                </div>
+				       </div> 
+				        <br />
 
-				                </React.Fragment>
-			                    )
-                            }
-                        }
-                        return(
-                            retStr                            
-                        )
-                    }
-                    return null;
-                })}
-            </React.Fragment>
-        )
-        
-    }
-    return null;
+				    </React.Fragment>
+			    )
+                 
+            } 
 
+        }
+
+        return retStr
+                                        
 }
 
 leadPara.propTypes = {
