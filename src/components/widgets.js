@@ -66,7 +66,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 			</>);
         }
 		else if (widgetData.__typename==="paragraph__media_text") {
-		   return <MediaText widgetData={widgetData} />
+		   return <div className="row site-content"><MediaText widgetData={widgetData} /></div>
 		}
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
             return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 

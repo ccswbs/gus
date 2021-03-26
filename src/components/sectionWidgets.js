@@ -4,6 +4,7 @@ import LinksItems from './linksItems';
 import CtaPara from './ctaPara'
 import MediaText from '../components/mediaText';
 import StatsWidget from '../components/statsWidget';
+import SectionButtons from '../components/sectionButtons';
 import { contentExists } from '../utils/ug-utils'
 import '../styles/widgets.css';
 // 
@@ -17,7 +18,6 @@ import '../styles/widgets.css';
 //
 
 function SectionWidgets (props) {
-console.log(props)
 if (contentExists(props.pageData) && props.pageData.length !== 0) {
     return (props.pageData.map(widgetData => {
         if (widgetData.__typename==="paragraph__links_widget") {
@@ -61,15 +61,26 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 			
 		}
 		else if (widgetData.__typename==="paragraph__stats_widget") {
-		
-			return <StatsWidget statsWidgetData={widgetData} />
+            const statsClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+			return (
+                    <div className = {statsClassName} >
+                        <StatsWidget statsWidgetData={widgetData} />
+                    </div>
+            );
 			
 		}
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
                 const textClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
-             console.log(textClassName)
         return <div className={textClassName } dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
     }
+        else if (widgetData.__typename==="paragraph__section_buttons") {
+            const sbtnClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+            return(
+                <div className={sbtnClassName}>
+                    <SectionButtons pageData={widgetData} />
+                </div>
+            );
+        }
        else if (widgetData.__typename==="paragraph__new_widget") {
         console.log("Paragraph__new_widget")
         return(<p>This is Paragraph_new_widget</p>);

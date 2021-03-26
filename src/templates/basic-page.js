@@ -283,6 +283,9 @@ export const query = graphql`
 								... on paragraph__stats_widget {
 								  drupal_id
 								  relationships {
+									field_section_column {
+										name
+									}
 									field_statistic {
 									  field_stat_range
 									  field_stat_value
@@ -294,6 +297,33 @@ export const query = graphql`
 									  }
 									}
 								  }
+								}
+								... on paragraph__section_buttons {
+									drupal_id
+									relationships{
+										field_section_column{
+											name
+										}
+										field_buttons {
+											drupal_id
+											field_button_link {
+												title
+												uri
+											}
+											field_font_awesome_icon
+											field_formatted_title {
+												processed
+											}
+											relationships {
+												field_button_style {
+													name
+												}
+												field_font_awesome_icon_colour {
+													name
+												}
+											}
+										}
+									}
 								}
 							}
 						}
