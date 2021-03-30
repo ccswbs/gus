@@ -10,7 +10,7 @@ import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
 //import '../styles/stats.css';
 
-export default ({data}) => {
+const BasicPage = ({data}) => {
 
 	const pageData = data.pages.edges[0].node;
 	const nodeID = pageData.drupal_internal__nid;	
@@ -71,7 +71,7 @@ export default ({data}) => {
 	
 }
 
-//export default BasicPage
+export default BasicPage;
 
 export const query = graphql`
   query ($id: String) {
