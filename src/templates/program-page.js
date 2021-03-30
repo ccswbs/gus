@@ -317,7 +317,7 @@ function prepareVariantHeading (variantData) {
   return variantHeading;
 }
 
-export default ({data, location}) => {
+const ProgramPage = ({data, location}) => {
 	let callToActionData = [];
 	let careerData;
 	let courseData;
@@ -465,6 +465,8 @@ export default ({data, location}) => {
 	</Layout>	
 	)	
 }
+
+export default ProgramPage
 
 export const query = graphql`
   query ($id: String) {
