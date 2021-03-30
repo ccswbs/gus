@@ -32,7 +32,7 @@
     "js-yaml": "^3.14.0",
     "moment-timezone": "^0.5.31",
     "preact": "^10.5.10",
-    "preact-render-to-string": "^5.1.12",
+    "preact-render-to-string": "^5.1.18",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
