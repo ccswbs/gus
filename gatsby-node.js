@@ -804,7 +804,7 @@ function createSitemap(menus, whichMenu, aliases) {
 		}
 	})
 
-	let yamlStr = yaml.safeDump(sitemap);
+	let yamlStr = yaml.dump(sitemap);
 	fs.writeFileSync(sitemapFile, yamlStr, 'utf8');  
 }
 
@@ -840,7 +840,7 @@ function processMenuItemChildren(children, aliases) {
 }
 function createAliasFile(aliases) {
   const aliasFile = 'config/aliases/aliasfile.yml';
-  let yamlStr = yaml.safeDump(aliases);
+  let yamlStr = yaml.dump(aliases);
   fs.writeFileSync(aliasFile, yamlStr, 'utf8'); 
  }
  
