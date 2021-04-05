@@ -10,7 +10,7 @@
 //  let gatsbySource = 'live';
 // let gatsbySource = 'pantheionsorce prefex';
 
- let gatsbySource = 'chugstats';
+let gatsbySource = 'live';
 
 let protocal = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "https://api.": "http://";
 let sitename = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "ugconthub": "-bovey";
