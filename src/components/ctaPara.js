@@ -3,8 +3,7 @@ import React from 'react';
 import '../styles/cta.css';
 
 function ctaPara (props) {
-    let buttonClass = 'btn btn-secondary btn-block';
-    let faIcon = 'fa-backpack';
+   
     return(
         <div className="row row-with-vspace site-content">
             <section className="col-md-9 content-area">
