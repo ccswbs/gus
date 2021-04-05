@@ -5,18 +5,16 @@
  */
 
 /**
- * Set the gatsbySource variable to the pantheon prefex - live, dev, test, or your multidev
+ * Set the gatsbySource variable to the pantheon prefix - live, dev, test, or your multidev
  */
-//  let gatsbySource = 'live';
-// let gatsbySource = 'pantheionsorce prefex';
 
-let gatsbySource = 'live';
+let gatsbySource = 'mediafix';
 
-let protocal = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "https://api.": "http://";
+let protocol = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "https://api.": "http://";
 let sitename = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "ugconthub": "-bovey";
-let zone = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test')? "uoguelph.dev": "pantheonsite.io";
+let zone = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "uoguelph.dev": "pantheonsite.io";
 
-let _protocol = process.env._PROTOCOL || protocal
+let _protocol = process.env._PROTOCOL || protocol
 let _site = process.env._SITE || sitename;
 let _env  = process.env._GATSBY_SOURCE || gatsbySource;
 let _zone = process.env._ZONE || zone;
@@ -74,26 +72,16 @@ module.exports = {
       },
     },
     {
-       resolve: `gatsby-source-drupal`,
-       options: {
-         baseUrl: _protocol + _env + _site + `.` + _zone + `/`,
-         /** NOTE: do not use this see comment about gatsybSource variable at the top of the file **/
-        /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
-         //baseUrl: `https://api.devugconthub.uoguelph.dev/`,
-         //baseUrl: `https://api.liveugconthub.uoguelph.dev`,
-         //baseUrl: `http://multidev-bovey.pantheonsite.io/`,
-         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
-       },
+	  resolve: `gatsby-source-drupal`,
+	  options: {
+		baseUrl: _protocol + _env + _site + `.` + _zone + `/`,
+		apiBase: `jsonapi`, // optional, defaults to `jsonapi`
+	  },
     },
 	{
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
-		  baseUrl: _protocol + _env + _site + `.` + _zone,
-      /** NOTE: do not use this see comment about gatsybSource variable at the top of the file **/
-		  /** For dev purposes, comment the line above and uncomment the appropriate line below: **/
-		  //baseUrl: `https://api.devugconthub.uoguelph.dev`,
-		  //baseUrl: `https://api.liveugconthub.uoguelph.dev`,
-		  //baseUrl: `http://multidev-bovey.pantheonsite.io`,
+		baseUrl: _protocol + _env + _site + `.` + _zone,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
         menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },
