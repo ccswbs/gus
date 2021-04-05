@@ -10,7 +10,18 @@ import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
 //import '../styles/stats.css';
 
-export default ({data}) => {
+// Modified function to remove warning  --> Anonymous arrow functions cause Fast Refresh to not preserve local component state.
+
+										// Please add a name to your function, for example:
+
+										// Before:
+										// export default () => {}
+
+										// After:
+										// const Named = () => {}
+										// export default Named;
+
+const BasicPage =  ({data}) => {
 
 	const pageData = data.pages.edges[0].node;
 	const nodeID = pageData.drupal_internal__nid;	
@@ -66,6 +77,8 @@ export default ({data}) => {
 	)
 	
 }
+
+export default BasicPage;
 
 //export default BasicPage
 
