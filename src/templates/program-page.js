@@ -316,8 +316,19 @@ function prepareVariantHeading (variantData) {
   
   return variantHeading;
 }
+// Modified function to remove warning  --> Anonymous arrow functions cause Fast Refresh to not preserve local component state.
 
-const ProgramPage = ({data, location}) => {
+										// Please add a name to your function, for example:
+
+										// Before:
+										// export default () => {}
+
+										// After:
+										// const Named = () => {}
+										// export default Named;
+
+
+										const ProgramPage = ({data, location}) => {
 	let callToActionData = [];
 	let careerData;
 	let courseData;
@@ -466,7 +477,7 @@ const ProgramPage = ({data, location}) => {
 	)	
 }
 
-export default ProgramPage
+export default ProgramPage;
 
 export const query = graphql`
   query ($id: String) {
