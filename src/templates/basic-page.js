@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
-import LeadPara from '../components/leadPara';
+//import LeadPara from '../components/leadPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
@@ -17,10 +17,10 @@ const BasicPage = ({data}) => {
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
-	let ctaParaData;
+	//let ctaParaData;
 
 
-    if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
+    //if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
 	
 
 	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected
@@ -49,15 +49,11 @@ const BasicPage = ({data}) => {
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">
-				{/* <div className="row row-with-vspace site-content">
+				<div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
-						<LeadPara pageData={ctaParaData} />
-						<div dangerouslySetInnerHTML={{ __html: body}} />
-						
-						
-						
+							<div dangerouslySetInnerHTML={{ __html: body}} />						
 					</section>
-				</div> */}
+				</div>
 				{ /**** Widgets content ****/}		
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-12 content-area">
@@ -320,6 +316,10 @@ export const query = graphql`
 												}
 												field_font_awesome_icon_colour {
 													name
+												}
+												field_cta_analytics_goal {
+												  name
+												  field_goal_action
 												}
 											}
 										}

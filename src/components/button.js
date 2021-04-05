@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import '../styles/button-widget.css'
+import CallToAction from '../components/callToAction';
 import { contentExists } from '../utils/ug-utils';
 
 
@@ -43,9 +44,19 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
     let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? buttonData.field_font_awesome_icon + ' ' +
                                 btnFAIconAdjust + ' fa-fw '+ FontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
     let buttonTextClassName = contentExists(buttonTextClass)? buttonTextClass: '';
+	
+	let btnAnalyticsGoal = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.name : ``);
+	let btnAnalyticsAction = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.field_goal_action : ``);
+
+	/*
+	<CallToAction href={buttonLinkURI} goalEventCategory={btnAnalyticsGoal} goalEventAction={btnAnalyticsAction} classNames={buttonFontAwesomeClassName}>
+            <i aria-hidden="true" className={buttonFontAwesomeClassName}> </i>
+            <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+        </CallToAction>
+	*/
 
     return <React.Fragment key={buttonData.drupal_id}>
-        <a href={buttonLinkURI} className={buttonClassName}>
+		 <a href={buttonLinkURI} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>

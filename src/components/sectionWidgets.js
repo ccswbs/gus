@@ -48,7 +48,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             )
         }
         else if (widgetData.__typename==="paragraph__call_to_action") {
-            const ctaClassName = contentExists(widgetData.relationships.field_section_column.name)? "flex-even section-"+widgetData.relationships.field_section_column.name: '';
+            const ctaClassName = contentExists(widgetData.relationships.field_section_column)? "flex-even section-"+widgetData.relationships.field_section_column.name: '';
              console.log(ctaClassName)
             return( <div className={ctaClassName}>
                     <CtaPara pageData={widgetData} />
@@ -61,7 +61,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 			
 		}
 		else if (widgetData.__typename==="paragraph__stats_widget") {
-            const statsClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+            const statsClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
 			return (
                     <div className = {statsClassName} >
                         <StatsWidget statsWidgetData={widgetData} />
@@ -70,11 +70,11 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 			
 		}
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
-                const textClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+                const textClassName = contentExists(widgetData.relationships.field_section_column) ? "section-"+widgetData.relationships.field_section_column.name: '';
         return <div className={textClassName } dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
     }
         else if (widgetData.__typename==="paragraph__section_buttons") {
-            const sbtnClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+            const sbtnClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
             return(
                 <div className={sbtnClassName}>
                     <SectionButtons pageData={widgetData} />

@@ -13,14 +13,14 @@ function leadPara (props) {
                                 
         if(contentExists(leaditem.relationships)) {
                             
-            const image = (contentExists(leaditem.relationships.field_lead_para_hero)) ; 
+            const img = (contentExists(leaditem.relationships.field_lead_para_hero) ? leaditem.relationships.field_lead_para_hero : ``) ; 
                             
-            const heroImage = leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile;
-		    const pubImage = encodeURI(leaditem.relationships.field_lead_para_hero.relationships.field_media_image.localFile.publicURL);
+            const heroImage = (contentExists(img) && contentExists(img.relationships) ? img.relationships.field_media_image.localFile : ``);
+		    const pubImage = (contentExists(heroImage) ? encodeURI(heroImage.publicURL) : ``);
 					
             let imageFile = null;
 			    
-            if(contentExists(image) && contentExists(heroImage)) {
+            if(contentExists(img) && contentExists(heroImage)) {
 	                           
                 imageFile = <Img className="leadimg" fluid={heroImage.childImageSharp.fluid} alt={leaditem.relationships.field_lead_para_hero.field_media_image.alt} />
                                
