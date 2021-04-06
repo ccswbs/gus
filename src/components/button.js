@@ -3,6 +3,7 @@ import React from 'react';
 import '../styles/button-widget.css'
 import CallToAction from '../components/callToAction';
 import { contentExists } from '../utils/ug-utils';
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 
 function ButtonStyle (styleOfButton){
@@ -34,7 +35,7 @@ function FontAwesomeIconColour (colourChoice) {
 }
 
 function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
-    console.log(buttonData, buttonClass)
+    
     let buttonLinkURI = buttonData.field_button_link.uri;
     let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
         contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    
@@ -48,19 +49,20 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
 	let btnAnalyticsGoal = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.name : ``);
 	let btnAnalyticsAction = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.field_goal_action : ``);
 
-	/*
-	<CallToAction href={buttonLinkURI} goalEventCategory={btnAnalyticsGoal} goalEventAction={btnAnalyticsAction} classNames={buttonFontAwesomeClassName}>
-            <i aria-hidden="true" className={buttonFontAwesomeClassName}> </i>
-            <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
-        </CallToAction>
-	*/
-
-    return <React.Fragment key={buttonData.drupal_id}>
-		 <a href={buttonLinkURI} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>
+    return (
+	<React.Fragment key={buttonData.drupal_id}>
+	{contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
+		<a href={buttonLinkURI} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
-    </React.Fragment>
+		:
+		<a href={buttonLinkURI} className={buttonClassName}>		
+            <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
+            <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+        </a>
+	}
+    </React.Fragment>)
 }
 Button.propTypes = {
     buttonData: PropTypes.object,

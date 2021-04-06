@@ -3,9 +3,10 @@ import React from 'react';
 import LinksItems from './linksItems';
 import CtaPara from './ctaPara'
 import MediaText from '../components/mediaText';
-
-import { contentExists } from '../utils/ug-utils';
-
+import StatsWidget from '../components/statsWidget';
+import SectionButtons from '../components/sectionButtons';
+import { contentExists } from '../utils/ug-utils'
+import '../styles/widgets.css';
 // 
 // add to the if statement each widget in the section widget, 
 // widgets will call each function in the order that it appears in the Drupal Backend. 
@@ -17,8 +18,7 @@ import { contentExists } from '../utils/ug-utils';
 //
 
 function SectionWidgets (props) {
-
-if (contentExists(props.pageData) && props.pageData.length !== 0){
+if (contentExists(props.pageData) && props.pageData.length !== 0) {
     return (props.pageData.map(widgetData => {
         if (widgetData.__typename==="paragraph__links_widget") {
             
@@ -47,25 +47,40 @@ if (contentExists(props.pageData) && props.pageData.length !== 0){
                     </div>
             )
         }
-
         else if (widgetData.__typename==="paragraph__call_to_action") {
-            return( <div className="flex-even">
+            const ctaClassName = contentExists(widgetData.relationships.field_section_column.name)? "flex-even section-"+widgetData.relationships.field_section_column.name: '';
+             console.log(ctaClassName)
+            return( <div className={ctaClassName}>
                     <CtaPara pageData={widgetData} />
                     </div>);
-       } 
-       else if (widgetData.__typename==="paragraph__media_text") {
-        return <MediaText widgetData={widgetData} />
-     }
+		} 
+		else if (widgetData.__typename==="paragraph__media_text") {
+			
+			const colClass = "col-xlg-6";			
+			return (<div className="flex-even"><MediaText colClass={colClass} widgetData={widgetData} /></div>);
+			
+		}
+		else if (widgetData.__typename==="paragraph__stats_widget") {
+            const statsClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+			return (
+                    <div className = {statsClassName} >
+                        <StatsWidget statsWidgetData={widgetData} />
+                    </div>
+            );
+			
+		}
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
-        return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
+                const textClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+        return <div className={textClassName } dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
     }
-	// else if (widgetData.__typename==="paragraph__program_statistic") {
-	// 		return (
-    //             <dl className="d-flex flex-wrap flex-fill justify-content-center">
-    //                 <Stats widgetData={widgetData}/>
-    //             </dl>)
-    	// }
-	
+        else if (widgetData.__typename==="paragraph__section_buttons") {
+            const sbtnClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+            return(
+                <div className={sbtnClassName}>
+                    <SectionButtons pageData={widgetData} />
+                </div>
+            );
+        }
        else if (widgetData.__typename==="paragraph__new_widget") {
         console.log("Paragraph__new_widget")
         return(<p>This is Paragraph_new_widget</p>);
