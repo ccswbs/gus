@@ -294,6 +294,37 @@ export const query = graphql`
 									}
 								  }
 								}
+								... on paragraph__lead_paragraph {
+									id
+									field_lead_paratext {
+										value
+									}
+									relationships {
+										field_section_column {
+											name
+										}
+										field_lead_para_hero {
+											field_media_image {
+												alt
+											}
+										
+											relationships {
+												field_media_image {
+											
+													localFile {
+														publicURL
+														childImageSharp {
+															fluid(maxWidth: 400, maxHeight: 400) {
+																originalImg
+																...GatsbyImageSharpFluid
+															}
+														}
+													}
+												}
+											}		
+								    	}
+									}
+            					}	
 								... on paragraph__section_buttons {
 									drupal_id
 									relationships{

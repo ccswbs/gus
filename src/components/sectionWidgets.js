@@ -4,6 +4,7 @@ import LinksItems from './linksItems';
 import CtaPara from './ctaPara'
 import MediaText from '../components/mediaText';
 import StatsWidget from '../components/statsWidget';
+import LeadPara from '../components/leadPara';
 import SectionButtons from '../components/sectionButtons';
 import { contentExists } from '../utils/ug-utils'
 import '../styles/widgets.css';
@@ -68,6 +69,15 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
                     </div>
             );
 			
+		}
+        else if (widgetData.__typename==="paragraph__lead_paragraph") {
+            const leadClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+			return (
+                    <div className = {leadClassName} >
+                        <LeadPara pageData={widgetData} />
+                    </div>
+            );
+            
 		}
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
                 const textClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
