@@ -8,7 +8,6 @@ import LeadPara from '../components/leadPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
-//import '../styles/stats.css';
 
 const BasicPage = ({data}) => {
 
@@ -17,11 +16,6 @@ const BasicPage = ({data}) => {
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
-	//let ctaParaData;
-
-
-    //if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
-	
 
 	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected
 	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component.
