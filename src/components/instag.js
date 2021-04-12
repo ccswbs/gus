@@ -16,8 +16,18 @@ class Instagram extends React.Component {
       )
     }
   }
+// Modified function to remove warning  --> Anonymous arrow functions cause Fast Refresh to not preserve local component state.
 
-  export default () => (
+										// Please add a name to your function, for example:
+
+										// Before:
+										// export default () => {}
+
+										// After:
+										// const Named = () => {}
+										// export default Named;
+
+const instag = () => (
     <StaticQuery
       query={graphql`
         query {
@@ -36,3 +46,4 @@ class Instagram extends React.Component {
       )}
     />
   )
+  export default instag;

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Implement Gatsby's Node APIs in this file.
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
@@ -74,7 +74,22 @@ const util = require('util');
 exports.createSchemaCustomization = ({ actions }) => {
 	const { createTypes } = actions
 
-	const typeDefs = `    
+	const typeDefs = `
+	
+	interface TaxonomyInterface implements Node {
+      id: ID!
+      drupal_id: String
+      name: String
+    }
+	interface WidgetParagraphInterface implements Node {
+      id: ID!
+      drupal_id: String
+    }
+
+	union media__imagemedia__remote_videoUnion =
+	  media__image
+	  | media__remote_video
+	  
 	union relatedParagraphUnion = 
 	  paragraph__program_variants
 	  | paragraph__general_text
@@ -86,23 +101,25 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | taxonomy_term__degrees
 	  | taxonomy_term__topics
 	  | taxonomy_term__units
+      | taxonomy_term__testimonial_type
 
-	union relatedPagesUnion =
-	  node__page
-	  | node__landing_page
+	union widgetParagraphUnion =
+      paragraph__call_to_action
+	  | paragraph__general_text
+	  | paragraph__lead_paragraph
+      | paragraph__link_item
+      | paragraph__links_widget
+	  | paragraph__media_text
+	  | paragraph__section
+	  | paragraph__stats_widget
 
-	interface RelatedPagesInterface @nodeInterface {
-	  id: ID!
-	  drupal_id: String
-	  title: String
-	  fields: FieldsPathAlias
-	}
-	
-	interface TaxonomyInterface @nodeInterface {
-      id: ID!
-      drupal_id: String
-      name: String
-    }
+    union widgetSectionParagraphUnion =
+	  paragraph__call_to_action
+	  | paragraph__general_text
+	  | paragraph__lead_paragraph
+	  | paragraph__link_item
+	  | paragraph__links_widget
+	  | paragraph__media_text
 
 	type BodyField {
       processed: String
@@ -148,6 +165,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
+	type media__remote_video implements Node {
+	  name: String
+	  field_media_oembed_video: String
+	  relationships: media__remote_videoRelationships
+	}
+	type media__remote_videoRelationships implements Node {
+	  field_media_file: file__file @link(from: "field_media_file___NODE")
+	}
 	
 	type MenuItems implements Node {
 	  parent: Node
@@ -255,20 +280,22 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-    type node__landing_page implements Node & RelatedPagesInterface {
-      drupal_id: String
+	type node__custom_footer implements Node {
+	  drupal_id: String
       drupal_internal__nid: Int
-      body: BodyFieldWithSummary
-      field_hero_image: ImageField
-      relationships: node__landing_pageRelationships
-      fields: FieldsPathAlias
+	  body: BodyFieldWithSummary
+	  relationships: node__custom_footerRelationships
+	  fields: node__custom_footerFields
+	}
+	type node__custom_footerFields implements Node {
+      tags: [String]
     }
-    type node__landing_pageRelationships implements Node {
-      field_hero_image: media__image @link(from: "field_hero_image___NODE")
-      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-      field_grid_items: [paragraph__grid_items] @link(from: "field_grid_items___NODE")
-    }
-    type node__page implements Node & RelatedPagesInterface {
+	type node__custom_footerRelationships implements Node {
+	  field_footer_logo: [media__image] @link(from: "field_footer_logo___NODE")
+	  field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+	  field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
+	}
+    type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
       body: BodyFieldWithSummary
@@ -278,8 +305,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
-      field_related_content: [paragraph__related_content] @link(from: "field_related_content___NODE")
+      field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+    }	
+    type node__link_url implements Node {
+      title: String
+      uri: String
     }
     type node__program implements Node {
       drupal_id: String
@@ -317,6 +348,7 @@ exports.createSchemaCustomization = ({ actions }) => {
         body: BodyFieldWithSummary
         field_testimonial_person_desc: String
         field_hero_image: ImageField
+        field_home_profile: FieldLink
         relationships: node__testimonialRelationships
         fields: node__testimonialFields
     }
@@ -326,21 +358,58 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }
+    }	
 
+	type paragraph__call_to_action implements Node {
+      drupal_id: String
+      field_cta_title: String
+      field_cta_description: String
+      field_cta_primary_link: FieldLink
+      field_cta_secondary_link: FieldLink
+      relationships: paragraph__call_to_actionRelationships
+    }
+    type paragraph__call_to_actionRelationships {
+      field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
+    }
 	type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
     }
-	type paragraph__grid_items implements Node {
+	type paragraph__lead_paragraph implements Node {
       drupal_id: String
-      relationships: paragraph__grid_itemsRelationships
+      field_lead_paratext: BodyField
     }
-    type paragraph__grid_itemsRelationships implements Node {
-      field_grid_page: relatedPagesUnion @link(from: "field_grid_page___NODE")
-      field_grid_image: media__image @link(from: "field_grid_image___NODE")
-    }
-    type paragraph__program_statistic implements Node {
+	type paragraph__links_widget implements Node {
+	  drupal_id: String
+	  field_link_items_description: String
+	  field_link_items_title: String	  
+	  relationships: paragraph__links_widgetRelationships
+	}
+	type paragraph__links_widgetRelationships implements Node {
+	  field_link_items: [paragraph__link_item] @link(from: "field_link_items___NODE")
+	}
+	type paragraph__link_item implements Node {
+	  drupal_id: String
+	  field_link_description: String
+	  field_link_image: media__image @link(from: "field_link_image___NODE")
+	  field_link_url: FieldLink
+	  relationships: paragraph__link_itemRelationships
+	}
+	type paragraph__link_itemRelationships implements Node {
+	  drupal_id: String
+	  paragraph__links_widget: [paragraph__links_widget] @link(from: "paragraph__links_widget___NODE")
+	  field_link_image: media__image @link(from: "field_link_image___NODE")
+	}
+	type paragraph__media_text implements Node {
+	  field_media_text_title: String
+	  field_media_text_desc: BodyField
+	  field_media_text_links: [FieldLink]	  
+	  relationships: paragraph__media_textRelationships
+	}
+	type paragraph__media_textRelationships implements Node {
+	  field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
+	}
+	type paragraph__program_statistic implements Node {
       drupal_id: String	  
       field_stat_range: Boolean
       field_stat_value: String
@@ -362,14 +431,23 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_variant_name: taxonomy_term__program_variant_type
       field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
     }
-    type paragraph__related_content implements Node {
+	type paragraph__section implements Node & WidgetParagraphInterface {
       drupal_id: String
-      relationships: paragraph__related_contentRelationships
+	  field_section_classes: String
+	  field_section_title: String
+      relationships: paragraph__sectionRelationships
     }
-    type paragraph__related_contentRelationships {
-      field_list_pages: [relatedPagesUnion] @link(from: "field_list_pages___NODE")
-    }	
-
+    type paragraph__sectionRelationships implements Node {
+      field_section_content: [widgetSectionParagraphUnion] @link(from:"field_section_content___NODE")
+    }
+	type paragraph__stats_widget implements Node {
+		drupal_id: String
+		relationships: paragraph__stats_widgetRelationships
+	}
+	type paragraph__stats_widgetRelationships implements Node {
+		field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
+	}
+	
 	type PathAlias implements Node {
       value: String
       alias: String
@@ -436,6 +514,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
+    type taxonomy_term__testimonial_type implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+    }
     type taxonomy_term__topics implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -465,9 +548,9 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 		node.internal.type === `node__call_to_action` ||
 		node.internal.type === `node__career` || 
 		node.internal.type === `node__course` || 
+		node.internal.type === `node__custom_footer` ||
 		node.internal.type === `node__employer` ||
 		node.internal.type === `node__page` || 
-		node.internal.type === `node__landing_page` || 
 		node.internal.type === `node__testimonial`
 	) {
 	createNodeField({
@@ -481,7 +564,6 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 	// INSTRUCTION: If you've added a new content-type and need each node to generate a page
 	// then add it to the following if statement
 	if (node.internal.type === `node__article` || 
-		node.internal.type === `node__landing_page` || 
 		node.internal.type === `node__page` || 
 		node.internal.type === `node__program` ) {
         
@@ -522,7 +604,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
 	const pageTemplate = path.resolve('./src/templates/basic-page.js');
 	const articleTemplate = path.resolve('./src/templates/article-page.js');
 	const programTemplate = path.resolve('./src/templates/program-page.js');
-	const landingTemplate = path.resolve('./src/templates/landing-page.js');
+	
 	const helpers = Object.assign({}, actions, {
 		createContentDigest,
 		createNodeId,
@@ -565,17 +647,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                 name
               }
             }
-          }
-        }
-      }
-
-      landing_pages: allNodeLandingPage {
-        edges {
-          node {
-            drupal_id
-            drupal_internal__nid
-            id
-            title
           }
         }
       }
@@ -703,27 +774,16 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
 			})
 		}
 
-		// process landing page topics
-		if (result.data.landing_pages !== undefined) {
-			const landing_pages = result.data.landing_pages.edges;
-			landing_pages.forEach(( { node }, index) => {
-				aliases[node.drupal_internal__nid] = processPage(
-					node, 
-					node.id, 
-					createLandingAlias, 
-					landingTemplate, 
-					helpers
-				);
-			})
-		}
-
+		
 		// process menu nodes and pass through aliases
 		if (result.data.menus !== undefined) {			
 			const menus = result.data.menus.edges;
 			const config = require('./gatsby-config');
 			const menuNames = config.siteMetadata.menus;			
 			menuNames.forEach(element => createSitemap(menus, element, aliases));
-		}
+    }
+    // proces aliases for each page/node
+    createAliasFile(aliases);
 	}
 }
 
@@ -737,7 +797,7 @@ function createSitemap(menus, whichMenu, aliases) {
 		}
 	})
 
-	let yamlStr = yaml.safeDump(sitemap);
+	let yamlStr = yaml.dump(sitemap);
 	fs.writeFileSync(sitemapFile, yamlStr, 'utf8');  
 }
 
@@ -771,7 +831,12 @@ function processMenuItemChildren(children, aliases) {
 	}
 	return childrenMenuItems;
 }
-
+function createAliasFile(aliases) {
+  const aliasFile = 'config/aliases/aliasfile.yml';
+  let yamlStr = yaml.dump(aliases);
+  fs.writeFileSync(aliasFile, yamlStr, 'utf8'); 
+ }
+ 
 function processPage(node, contextID, functionToRetrieveAlias, template, helpers) {
     let alias = functionToRetrieveAlias(node);
     createNodeAlias(node, alias, helpers);
@@ -841,10 +906,6 @@ function createArticleAlias(node) {
 	return alias;
 }
 
-function createLandingAlias(node) {
-	let alias = createContentTypeAlias(node, `topics`)
-	return alias;
-}
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function slugify(string) {

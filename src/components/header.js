@@ -8,8 +8,8 @@ import { contentExists } from '../utils/ug-utils';
         <uofg-header class="unloaded">
             <a href="#">Apply</a>
             <uofg-dropdown-menu>
-            <span className="opener">Dropdown Example</span>
-                <ul>
+            <button data-for="menu-button">Dropdown Example</button>
+                <ul data-for="menu-content">
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
                     <li><a href="#">Menu item 3</a></li>
@@ -42,10 +42,10 @@ if (contentExists(menuData)) {
 
 			return (<>		
 				{submenu !== null && submenu.length > 0 ?  
-					<><uofg-dropdown-menu>
-					<span className="opener">{item.title}</span>
-					<ul>
-						<li key={item.id}><a href={item.alias !== "" ? item.alias : item.url}>{item.title}</a></li>
+					<><uofg-dropdown-menu key={item.id}>
+					<button data-for="menu-button">{item.title}</button>
+					<ul data-for="menu-content">
+						<li><a href={item.alias !== "" ? item.alias : item.url}>{item.title}</a></li>
 						{submenuItems}
 					</ul>
 					</uofg-dropdown-menu></>

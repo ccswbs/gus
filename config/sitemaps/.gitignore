@@ -1,0 +1,6 @@
+# This folder is needed as a place to create the aliases yaml files - to be used for the components sitemaps, menu, footer, and social media. 
+# The file is created at gatsby develop/build to make the gatsby aliases available to use for linking the pages.
+# Disregard this entire folder
+*
+# Except this .gitignore file
+!.gitignore

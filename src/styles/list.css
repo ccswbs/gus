@@ -1,0 +1,43 @@
+/* link */
+
+.link-element {
+    display: block;
+}
+
+/* --- Text --- */
+
+.link-element .link-heading p{
+    color: #000000;
+}
+
+.link-element a:hover .link-heading, 
+.link-element a:focus .link-heading {
+    color: #0074C1;
+}
+
+/* --- Images --- */
+
+.link .img-container {
+    overflow: hidden;
+}
+
+.link-element.col-md-3 img,
+.link-element.col-md-3 .gatsby-image-wrapper {
+    width: 100%;
+    height: auto;
+}
+
+.link a img,
+.link a .gatsby-image-wrapper {
+    transition: all 0.15s ease-in-out !important;
+}
+
+.link a:hover img,
+.link a:focus img,
+.link a:hover .gatsby-image-wrapper img,
+.link a:focus .gatsby-image-wrapper img {
+    opacity: 0.75 !important;
+    transform: scale(1.03) !important;
+
+    
+}

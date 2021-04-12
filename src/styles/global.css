@@ -1,4 +1,4 @@
-@import url("https://www.uoguelph.ca/css/site-styles-dist.css");
+@import url("https://www.uoguelph.ca/css/UofG-styles-dist.css");
 
 .skiplink {
     z-index: 1001;
@@ -35,6 +35,15 @@
 
 .full-width-container .site-content {
     background: transparent !important;
+}
+
+#rotator img {
+    top: 50% !important;
+    left: 50% !important;
+}
+
+.flex-even {
+    flex: 1;
 }
 
 @media (max-width: 575.98px){

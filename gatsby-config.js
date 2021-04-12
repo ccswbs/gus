@@ -4,13 +4,22 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-let _site = process.env._SITE || "ugconthub";
-let _env  = process.env._GATSBY_SOURCE || "live";
-let _zone = process.env._ZONE || "uoguelph.dev";
+/**
+ * Set the gatsbySource variable to the pantheon prefix - live, dev, test, or your multidev
+ */
+
+let gatsbySource = 'live';
+
+let protocol = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "https://api.": "http://";
+let sitename = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "ugconthub": "-bovey";
+let zone = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "uoguelph.dev": "pantheonsite.io";
+
+let _protocol = process.env._PROTOCOL || protocol
+let _site = process.env._SITE || sitename;
+let _env  = process.env._GATSBY_SOURCE || gatsbySource;
+let _zone = process.env._ZONE || zone;
 
 let metaConfig = require('./config/sites/' + _site + '.js');
-// For dev purposes, comment the line above and uncomment the line below:
-// let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
 	metaConfig['title'] = "Gatsby UG Starter Template";
@@ -36,6 +45,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-preact`,
     {
       resolve: `gatsby-transformer-sharp`,
       options: {
@@ -62,24 +72,16 @@ module.exports = {
       },
     },
     {
-       resolve: `gatsby-source-drupal`,
-       options: {
-         baseUrl: `https://api.` + _env + _site + `.` + _zone + `/`,
-        // For dev purposes, comment the line above and uncomment the appropriate line below:
-        // baseUrl: `https://api.devugconthub.uoguelph.dev/`,
-        // baseUrl: `https://api.liveugconthub.uoguelph.dev/`,
-        // baseUrl: `http://multidev-bovey.pantheonsite.io/`,
-         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
-       },
+	  resolve: `gatsby-source-drupal`,
+	  options: {
+		baseUrl: _protocol + _env + _site + `.` + _zone + `/`,
+		apiBase: `jsonapi`, // optional, defaults to `jsonapi`
+	  },
     },
 	{
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
-		baseUrl: `https://api.` + _env + _site + `.` + _zone,
-		/** For dev purposes, comment the line above and uncomment the appropriate line below: **/
-		//baseUrl: `https://api.devugconthub.uoguelph.dev`,
-		//baseUrl: `https://api.liveugconthub.uoguelph.dev`,
-		//baseUrl: `http://multidev-bovey.pantheonsite.io`,
+		baseUrl: _protocol + _env + _site + `.` + _zone,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
         menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },
@@ -99,11 +101,17 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-asset-path`,
-    }
+    },
+    {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: "GTM-NRSSDKW",
+        includeInDevelopment: false,
+      },
+    },
   ],
   mapping: {
     "node__article.fields.alias": `PathAlias`,
-    "node__landing_page.fields.alias": `PathAlias`,
     "node__page.fields.alias": `PathAlias`,
     "node__program.fields.alias": `PathAlias`,
   },
