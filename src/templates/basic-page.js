@@ -8,31 +8,14 @@ import LeadPara from '../components/leadPara';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import Widgets from '../components/widgets'
-//import '../styles/stats.css';
 
-// Modified function to remove warning  --> Anonymous arrow functions cause Fast Refresh to not preserve local component state.
-
-										// Please add a name to your function, for example:
-
-										// Before:
-										// export default () => {}
-
-										// After:
-										// const Named = () => {}
-										// export default Named;
-
-const BasicPage =  ({data}) => {
+const BasicPage = ({data}) => {
 
 	const pageData = data.pages.edges[0].node;
 	const nodeID = pageData.drupal_internal__nid;	
 	const title = pageData.title;
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
-	let ctaParaData;
-
-
-    if (pageData.relationships.field_widgets !== undefined) { ctaParaData = pageData.relationships.field_widgets; }
-	
 
 	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected
 	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component.
@@ -62,15 +45,15 @@ const BasicPage =  ({data}) => {
 			<div className="container page-container">
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
-						<LeadPara pageData={ctaParaData} />
-						<div dangerouslySetInnerHTML={{ __html: body}} />
-						
-						
-						
+							<div dangerouslySetInnerHTML={{ __html: body}} />						
 					</section>
 				</div>
 				{ /**** Widgets content ****/}		
-				<Widgets pageData={widgetsData} />	
+				<div className="row row-with-vspace site-content">
+					<section className="col-md-12 content-area">
+						<Widgets pageData={widgetsData} />
+					</section>
+				</div>
 			</div>	
 			
 		</Layout>
@@ -79,8 +62,6 @@ const BasicPage =  ({data}) => {
 }
 
 export default BasicPage;
-
-//export default BasicPage
 
 export const query = graphql`
   query ($id: String) {
@@ -104,17 +85,49 @@ export const query = graphql`
 					  		title
 					  		uri
 						}
+						relationships {
+							field_section_column {
+								name
+							}
+						}
 					}
 					... on paragraph__general_text {
 						drupal_id
 						field_general_text {
 							processed
 						  }
+						  relationships {
+							field_section_column {
+								name
+							}
+						}
 						}
 					... on paragraph__lead_paragraph {
 							id
 							field_lead_paratext {
 								value
+							}
+							relationships {
+									field_lead_para_hero {
+										field_media_image {
+											alt
+										}
+										
+										relationships {
+											field_media_image {
+											
+												localFile {
+													publicURL
+													childImageSharp {
+														fluid(maxWidth: 400, maxHeight: 400) {
+															originalImg
+															...GatsbyImageSharpFluid
+														}
+													}
+												}
+											}
+										}		
+								    }
 							}
             			}	
 					... on paragraph__links_widget {
@@ -163,11 +176,21 @@ export const query = graphql`
 										  title
 										  uri
 									}
+									relationships {
+										field_section_column {
+											name
+										}
+									}
 								}
 								... on paragraph__general_text {
 								  drupal_id
 								  field_general_text {
 									processed
+								  }
+								  relationships {
+									  field_section_column {
+										  name
+									  }
 								  }
 								}
 								... on paragraph__links_widget {
@@ -247,6 +270,86 @@ export const query = graphql`
 									  }
 									}
 								  }
+								... on paragraph__stats_widget {
+								  drupal_id
+								  relationships {
+									field_section_column {
+										name
+									}
+									field_statistic {
+									  field_stat_range
+									  field_stat_value
+									  field_stat_value_end
+									  relationships {
+										field_stat_type {
+										  name
+										}
+									  }
+									}
+								  }
+								}
+								... on paragraph__lead_paragraph {
+									id
+									field_lead_paratext {
+										value
+									}
+									relationships {
+										field_section_column {
+											name
+										}
+										field_lead_para_hero {
+											field_media_image {
+												alt
+											}
+										
+											relationships {
+												field_media_image {
+											
+													localFile {
+														publicURL
+														childImageSharp {
+															fluid(maxWidth: 400, maxHeight: 400) {
+																originalImg
+																...GatsbyImageSharpFluid
+															}
+														}
+													}
+												}
+											}		
+								    	}
+									}
+            					}	
+								... on paragraph__section_buttons {
+									drupal_id
+									relationships{
+										field_section_column{
+											name
+										}
+										field_buttons {
+											drupal_id
+											field_button_link {
+												title
+												uri
+											}
+											field_font_awesome_icon
+											field_formatted_title {
+												processed
+											}
+											relationships {
+												field_button_style {
+													name
+												}
+												field_font_awesome_icon_colour {
+													name
+												}
+												field_cta_analytics_goal {
+												  name
+												  field_goal_action
+												}
+											}
+										}
+									}
+								}
 							}
 						}
 					}

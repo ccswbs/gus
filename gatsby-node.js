@@ -120,6 +120,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | paragraph__link_item
 	  | paragraph__links_widget
 	  | paragraph__media_text
+	  | paragraph__stats_widget
+    | paragraph__section_buttons
 
 	type BodyField {
       processed: String
@@ -378,6 +380,11 @@ exports.createSchemaCustomization = ({ actions }) => {
 	type paragraph__lead_paragraph implements Node {
       drupal_id: String
       field_lead_paratext: BodyField
+      relationships: node__lead_paragraphRelationships
+    }
+
+  type node__lead_paragraphRelationships implements Node {
+      field_lead_para_hero: media__image @link(from: "field_lead_para_hero___NODE")
     }
 	type paragraph__links_widget implements Node {
 	  drupal_id: String

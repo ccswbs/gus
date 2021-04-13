@@ -35,3 +35,19 @@ div.cta a.btn.btn-uogRed img {
     float: left;
     margin-right: 10%;
 }
+
+
+div.container-fluid  { margin-top: 0px; border: 0px solid black; padding-left: 0px; padding-right: 0px;}
+
+
+div.lead h2 { margin-bottom: 35px;}
+
+div.lead p {font-weight: bold; color: white; margin-top: 45px; opacity: 0.9; font-size: 1.5em; }
+
+div.lead p:not(.author)::before { content: open-quote; color: var(--uog-yellow); font-weight: bold; margin-left: -10px; margin-top: -60px; position: absolute; font-size: 4em;}
+
+div.lead p:not(.author)::after { content: close-quote; color: var(--uog-yellow); font-weight: bold; position: absolute; font-size: 4em; }
+
+div.lead { /* background-color: dimgrey; background-image: linear-gradient(dimgrey, black); */ background-color: rgba(64,64,64,0.9);  padding-left: 8px; padding-right: 4px;}
+
+div.leadimg {  background-color: rgba(64,64,64,0.9); background-image: linear-gradient(dimgrey, black);  border: 0px solid red;}
