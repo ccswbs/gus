@@ -101,7 +101,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | taxonomy_term__degrees
 	  | taxonomy_term__topics
 	  | taxonomy_term__units
-      | taxonomy_term__testimonial_type
+    | taxonomy_term__testimonial_type
 
 	union widgetParagraphUnion =
       paragraph__call_to_action
@@ -122,6 +122,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | paragraph__media_text
 	  | paragraph__stats_widget
     | paragraph__section_buttons
+    | paragraph__button_widget
 
 	type BodyField {
       processed: String
@@ -134,6 +135,12 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
       summary: String
+    }
+  
+    type FieldFormattedTitle {
+      processed: String
+      value: String
+      format: String
     }
 	
 	type FieldLink {
@@ -362,6 +369,31 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }	
 
+
+  type paragraph__section_buttons implements Node {
+      drupal_id: String
+      field_tile_buttons: Boolean
+      relationships: paragraph__section_buttonsRelationships
+    }
+    type paragraph__section_buttonsRelationships {
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_columns___NODE")
+      field_buttons: paragraph__button_widget @link(from:"field_buttons___NODE")
+    }
+    
+  type paragraph__button_widget implements Node {
+      drupal_id: String
+      field_button_link: FieldLink
+      field_font_awesome_icon: String
+      field_formatted_title: FieldFormattedTitle
+      relationships: paragraph__button_widgetRelationships
+  }
+    type paragraph__button_widgetRelationships {
+      field_cta_analytics_goal: taxonomy_term__goals @link(from: "field_cta_analytics_goal___NODE")
+      field_button_style:taxonomy_term__button_styles @link(from: "field_button_style___NODE")
+      field_font_awesome_icon_colour: taxonomy_term__colour_variables @link(from: "field_font_awesome_icon_colour___NODE")
+    }
+
+
 	type paragraph__call_to_action implements Node {
       drupal_id: String
       field_cta_title: String
@@ -372,10 +404,15 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type paragraph__call_to_actionRelationships {
       field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_columns___NODE")
     }
 	type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
+      relationships: paragraph__general_textRelationships
+    }
+    type paragraph__general_textRelationships {
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_columns___NODE")
     }
 	type paragraph__lead_paragraph implements Node {
       drupal_id: String
@@ -385,6 +422,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type node__lead_paragraphRelationships implements Node {
       field_lead_para_hero: media__image @link(from: "field_lead_para_hero___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_columns___NODE")
+
     }
 	type paragraph__links_widget implements Node {
 	  drupal_id: String
@@ -426,6 +465,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__program_statisticRelationships implements Node {
       field_stat_icon: media__image @link(from: "field_stat_icon___NODE")
       field_stat_type: taxonomy_term__statistic_type @link(from: "field_stat_type___NODE")  
+      
     }
     type paragraph__program_variants implements Node {
       drupal_id: String
@@ -453,6 +493,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 	}
 	type paragraph__stats_widgetRelationships implements Node {
 		field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
+    field_section_column: taxonomy_term__section_columns @link(from: "field_section_columns___NODE")
+
 	}
 	
 	type PathAlias implements Node {
@@ -465,6 +507,25 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
     }
+  
+
+  type taxonomy_term__button_styles implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+  }
+  type taxonomy_term__colour_variables implements Node & TaxonomyInterface {
+    drupal_id: String
+    drupal_internal__tid: Int
+    name: String
+  }
+  type taxonomy_term__section_columns implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+    }
+
+
 
     type taxonomy_term__degrees implements Node & TaxonomyInterface {
       drupal_id: String
