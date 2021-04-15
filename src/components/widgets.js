@@ -2,10 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import LinksItems from './linksItems';
 import CtaPara from './ctaPara';
+import LeadPara from './leadPara';
 import MediaText from '../components/mediaText';
 import SectionWidgets from './sectionWidgets';
 import StatsWidget from '../components/statsWidget';
 import { contentExists } from '../utils/ug-utils';
+
 
 // 
 // add to the if statement each widget, widgets will call each function in the order that it appears in the Drupal Backend. 
@@ -48,22 +50,26 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
         else if (widgetData.__typename==="paragraph__call_to_action") {
             return( <CtaPara pageData={widgetData} />);
 		} 
-		else if (widgetData.__typename==="paragraph__section") {
-            const sectionTitle = (contentExists(widgetData.field_section_title)) ? '<h2>' + widgetData.field_section_title + '<h2>': '';
-            return( <div className={widgetData.field_section_classes}>
-                       <div dangerouslySetInnerHTML={{__html: sectionTitle}} ></div>
-                            <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
-                    </div>);
+        else if (widgetData.__typename==="paragraph__lead_paragraph") {
+            return( <LeadPara pageData={widgetData} />);
+		} 
+        else if (widgetData.__typename==="paragraph__section") {
+            const sectionTitle = (contentExists(widgetData.field_section_title) ? widgetData.field_section_title : ``);
+            return (<>
+				<h2>{sectionTitle}</h2>
+				<div className={widgetData.field_section_classes}>
+                    
+                        <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
+              
+					
+                </div>
+			</>);
         }
 		else if (widgetData.__typename==="paragraph__media_text") {
-		   return <MediaText widgetData={widgetData} />
+		   return <div className="row site-content"><MediaText widgetData={widgetData} /></div>
 		}
         else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
-            return (
-                
-                <div dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>
-                
-            ); 
+            return <div className="container content-area" dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
         }
 		else if (widgetData.__typename==="paragraph__stats_widget") {
 			return <StatsWidget statsWidgetData={widgetData} />			

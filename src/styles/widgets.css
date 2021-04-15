@@ -1,0 +1,21 @@
+.section-wrapper {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(12, [col-start] 1fr);
+    /* grid-auto-rows: fit-content(1em); */
+    
+}
+
+.section-left{
+    grid-column: col-start / span 9;
+}
+
+.section-right {
+    grid-column: col-start 10 / span 3;
+    grid-row-start: 1;
+    grid-row-end: 3 ;
+}
+
+.gap-between {
+	gap: 20px;
+}
