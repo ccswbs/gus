@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Img from 'gatsby-image';
+import { GatsbyImage } from "gatsby-plugin-image";
 import Video from '../components/video';
 import { contentExists } from '../utils/ug-utils';
 
@@ -17,13 +17,13 @@ function MediaText (props) {
 	const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
 	
-	return (<>	
+	return <>	
 
 			<section className={props.colClass}>
 			{contentExists(videoURL) ?
 			<Video playerID={props.widgetData.drupal_id} videoURL={videoURL} videoTranscript={videoTranscript} />
 			: ``}
-			{contentExists(imageURL) ? <Img fluid={imageURL.childImageSharp.fluid} alt={imageAlt} /> : ``}
+			{contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
 			</section>
 			<section className={props.colClass}>
 				<h2>{mediaTitle}</h2>
@@ -33,7 +33,7 @@ function MediaText (props) {
 				})}</div>
 			</section>
 		
-	</>)
+	</>;
 }
 
 MediaText.propTypes = {
