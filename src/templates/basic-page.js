@@ -4,10 +4,9 @@ import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
-import LeadPara from '../components/leadPara';
+import Widgets from '../components/widgets'
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
-import Widgets from '../components/widgets'
 
 const BasicPage = ({data}) => {
 
