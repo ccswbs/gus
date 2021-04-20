@@ -428,11 +428,11 @@ export const query = graphql`query ($id: String) {
           field_media_image {
             localFile {
               childImageSharp {
-                gatsbyImageData(
-					placeholder: BLURRED
-                      aspectRatio: 3
-                      width: 1920
-                      layout: FULL_WIDTH)
+                 gatsbyImageData(
+				  transformOptions: {cropFocus: CENTER}
+				  placeholder: BLURRED
+				  aspectRatio: 3
+			    )
               }
             }
           }
