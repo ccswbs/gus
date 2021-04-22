@@ -50,7 +50,6 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
         }
         else if (widgetData.__typename==="paragraph__call_to_action") {
             const ctaClassName = contentExists(widgetData.relationships.field_section_column)? "flex-even section-"+widgetData.relationships.field_section_column.name: '';
-             console.log(ctaClassName)
             return( <div className={ctaClassName}>
                     <CtaPara pageData={widgetData} />
                     </div>);
