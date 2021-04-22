@@ -8,11 +8,11 @@ function MediaText (props) {
 	
 	const mediaTitle = props.widgetData.field_media_text_title;
 	const mediaDescription = props.widgetData.field_media_text_desc.processed;
-	const mediaLinks = props.widgetData.field_media_text_links;
+	const mediaLinks = props.widgetData.field_media_text_links;	
 	const mediaRelationships = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.relationships: ``);
 	
 	const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
-	const imageAlt = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.alt : ``);
+	const imageAlt = (contentExists(props.widgetData.relationships.field_media_text_media.field_media_image) ? props.widgetData.relationships.field_media_text_media.field_media_image.alt : ``);
 	
 	const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
