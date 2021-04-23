@@ -17,26 +17,23 @@ function ColumnClass (columnName) {
 
 
 function SectionButtons (props) {
-console.log (props)
-console.log (props.pageData.relationships.field_buttons)
-//
-// Set variables to control button layout 
-//      if column is right use section-button-right
-//      if column is left use section-button-left
-//      if column is main use section-button-main
-//
-// Note: if button has a Font Awesome Icon - the placement of the FA Icon is affected by the column
-// 
-console.log(props.pageData.relationships.field_section_column.name)
 
+/***
+Set variables to control button layout 
+	if column is right use section-button-right
+	if column is left use section-button-left
+	if column is main use section-button-main
+
+Note: if button has a Font Awesome Icon - the placement of the FA Icon is affected by the column 
+***/
+ 
 const columnClass = (contentExists(props.pageData.relationships.field_section_column.name))? ColumnClass (props.pageData.relationships.field_section_column.name): "section-button-main"
-console.log(columnClass)
+
 let fieldButtonsData = contentExists(props.pageData.relationships.field_buttons)? props.pageData.relationships.field_buttons: '';
     return (
         <React.Fragment>
             {contentExists(fieldButtonsData) && fieldButtonsData.length !== 0 && <>
                 {fieldButtonsData.map (buttonData => {
-                    console.log(buttonData)
                     return Button(buttonData,
                                  columnClass,
                                  'section-button-icon fa-pull-left',

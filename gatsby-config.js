@@ -38,14 +38,17 @@ module.exports = {
 	menus: metaConfig['menus'],
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-preact`,
+	`gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: metaConfig['GAtrackingID'],
       },
     },
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-preact`,
     {
       resolve: `gatsby-transformer-sharp`,
       options: {

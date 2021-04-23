@@ -1,6 +1,6 @@
 import Grid from './grid';
 import GridCell from './gridCell';
-import Img from 'gatsby-image';
+import { GatsbyImage } from "gatsby-plugin-image";
 import React from 'react';
 import PropTypes from 'prop-types';
 import { contentExists, getNextHeadingLevel } from '../utils/ug-utils.js';
@@ -17,13 +17,15 @@ function NewsGrid (props) {
             const categories = Array.prototype.map.call(newsItem.node.relationships.field_news_category, s => s.name).join(', ');
             const categoryElement = (contentExists(categories)) ? <p className="category">{categories}</p> : null;
 
-			return <GridCell key={newsItem.node.drupal_id} 
-                        url={newsItem.node.fields.alias.value} 
-                        image={<Img fluid={image.localFile.childImageSharp.fluid} alt="" />}
-                        heading={title}
-                        headingLevel={nextHeadingLevel} 
-                        text={categoryElement}
-                        extraClasses="news-item" />
+			return (
+                <GridCell key={newsItem.node.drupal_id} 
+                            url={newsItem.node.fields.alias.value} 
+                            image={<GatsbyImage image={image.localFile.childImageSharp.gatsbyImageData} alt="" />}
+                            heading={title}
+                            headingLevel={nextHeadingLevel} 
+                            text={categoryElement}
+                            extraClasses="news-item" />
+            );
 		})
 
 		return (<Grid heading={props.heading} headingLevel={props.headingLevel}>
