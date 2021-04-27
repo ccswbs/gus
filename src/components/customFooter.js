@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Img from 'gatsby-image';
+import { GatsbyImage } from "gatsby-plugin-image";
 import Widgets from './widgets';
 import { contentExists } from '../utils/ug-utils';
 import '../styles/customFooter.css';
@@ -12,14 +12,17 @@ function CustomFooter (props) {
 	const footerText = (contentExists(footer.node.body.processed) ? footer.node.body.processed : null);
 	const footerWidgets = (contentExists(footer.node.relationships.field_widgets) ? footer.node.relationships.field_widgets : null);
 		
-	return (<>	
+	return <>	
 		<div className="full-width-container bg-light pre-footer">
 			<div className="container page-container">
 				<section className="row row-with-vspace site-content">
 					{contentExists(footerLogos) &&
 					<div className="col-md-3 content-area">
 					{footerLogos.map(logo => (
-						<Img className="footer-logo" fluid={logo.relationships.field_media_image.localFile.childImageSharp.fluid} alt={logo.field_media_image.alt} />
+						<GatsbyImage
+                            image={logo.relationships.field_media_image.localFile.childImageSharp.gatsbyImageData}
+                            className="footer-logo"
+                            alt={logo.field_media_image.alt} />
 					))}
 					</div>}
 					<div className="col-md-9 content-area">
@@ -29,7 +32,7 @@ function CustomFooter (props) {
 				</section>			
 			</div>
 		</div>
-	</>)
+	</>;
 }
 		
 CustomFooter.propTypes = {

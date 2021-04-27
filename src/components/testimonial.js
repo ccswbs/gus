@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Img from 'gatsby-image';
+import { GatsbyImage } from "gatsby-plugin-image";
 import SliderResponsive from './sliderResponsive';
 import TestimonialTitle from './testimonialTitle';
 import TestimonialTags from './testimonialTags';
@@ -40,17 +40,22 @@ function Testimonials (props) {
 					return null;
 				};
 
-			return <div key={testimonial.node.drupal_id}>
-				{testimonialPicture && <Img className="testimonial-pic" fluid={testimonialPicture.localFile.childImageSharp.fluid} alt={testimonial.node.relationships.field_hero_image.field_media_image.alt} />}
-				<blockquote className="testimonial-quote" dangerouslySetInnerHTML={{__html: testimonialContent}} />
-				<p className="testimonial-tagline">
-					<strong className="testimonial-title">{testimonial.node.title + TestimonialTitle(testimonial.node)}</strong>
-					<br />
-					<span className="testimonial-person-desc">{testimonial.node.field_testimonial_person_desc}</span>
-					<br/>
-					{testimonialHomeProfile()}
-				</p>
-			</div>
+			return (
+                <div key={testimonial.node.drupal_id}>
+                    {testimonialPicture && <GatsbyImage
+                        image={testimonialPicture.localFile.childImageSharp.gatsbyImageData}
+                        className="testimonial-pic"
+                        alt={testimonial.node.relationships.field_hero_image.field_media_image.alt} />}
+                    <blockquote className="testimonial-quote" dangerouslySetInnerHTML={{__html: testimonialContent}} />
+                    <p className="testimonial-tagline">
+                        <strong className="testimonial-title">{testimonial.node.title + TestimonialTitle(testimonial.node)}</strong>
+                        <br />
+                        <span className="testimonial-person-desc">{testimonial.node.field_testimonial_person_desc}</span>
+                        <br/>
+                        {testimonialHomeProfile()}
+                    </p>
+                </div>
+            );
 		})
 		return (
 			<div className="ug-testimonial">

@@ -479,540 +479,538 @@ function prepareVariantHeading (variantData) {
 
 export default ProgramPage;
 
-export const query = graphql`
-  query ($id: String) {
-    programs: allNodeProgram(filter: {relationships: {field_program_acronym: {id: {eq: $id}}}}) {
-      edges {
-        node {
-          changed
-          drupal_id
-          drupal_internal__nid
+export const query = graphql`query ($id: String) {
+  programs: allNodeProgram(
+    filter: {relationships: {field_program_acronym: {id: {eq: $id}}}}
+  ) {
+    edges {
+      node {
+        changed
+        drupal_id
+        drupal_internal__nid
+        title
+        field_program_overview {
+          processed
+        }
+        field_course_notes {
+          processed
+        }
+        relationships {
+          field_program_acronym {
+            name
+            id
+          }
+          field_courses {
+            changed
+            field_credits
+            field_level
+            field_code
+            title
+            field_course_url {
+              uri
+            }
+          }
+          field_degrees {
+            drupal_id
+            name
+            field_degree_acronym
+          }
+          field_specializations {
+            name
+          }
+          field_program_statistics {
+            drupal_id
+            field_stat_range
+            field_stat_value
+            field_stat_value_end
+            relationships {
+              field_stat_type {
+                name
+              }
+              field_stat_icon {
+                relationships {
+                  field_media_image {
+                    localFile {
+                      publicURL
+                    }
+                  }
+                }
+              }
+            }
+          }
+          field_tags {
+            name
+          }
+          field_program_variants {
+            __typename
+            ... on paragraph__general_text {
+              drupal_id
+              field_general_text {
+                processed
+              }
+            }
+            ... on paragraph__program_variants {
+              drupal_id
+              field_variant_title
+              field_variant_link {
+                uri
+              }
+              field_variant_info {
+                processed
+              }
+              relationships {
+                field_variant_type {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id]}}}) {
+    edges {
+      node {
+        changed
+        field_call_to_action_link {
           title
-          field_program_overview {
-            processed
+          uri
+        }
+        relationships {
+          field_call_to_action_goal {
+            name
+            field_goal_action
           }
-          field_course_notes {
-            processed
-          }
-          relationships {
-            field_program_acronym {
-              name
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              drupal_id
               id
-            }        
-            field_courses {
-              changed
-              field_credits
-              field_level
-              field_code
-              title
-              field_course_url {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+  careers: allNodeCareer(
+    sort: {fields: [title], order: ASC}
+    filter: {fields: {tags: {in: [$id]}}}
+  ) {
+    edges {
+      node {
+        title
+        drupal_id
+        changed
+        body {
+          processed
+        }
+        relationships {
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              drupal_id
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+  employers: allNodeEmployer(
+    sort: {fields: title}
+    filter: {fields: {tags: {in: [$id]}}}
+  ) {
+    edges {
+      node {
+        drupal_id
+        field_employer_summary {
+          processed
+        }
+        title
+        field_image {
+          alt
+        }
+        field_link {
+          uri
+        }
+        relationships {
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              drupal_id
+              id
+              name
+            }
+          }
+          field_image {
+            localFile {
+              url
+              childImageSharp {
+                gatsbyImageData(
+                  width: 400
+                  height: 400
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id]}}}) {
+    edges {
+      node {
+        drupal_id
+        body {
+          processed
+        }
+        relationships {
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              drupal_id
+              id
+              name
+            }
+          }
+          field_footer_logo {
+            field_media_image {
+              alt
+            }
+            relationships {
+              field_media_image {
+                localFile {
+                  publicURL
+                  childImageSharp {
+                    gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                  }
+                }
+              }
+            }
+          }
+          field_widgets {
+            __typename
+            ... on paragraph__call_to_action {
+              id
+              field_cta_title
+              field_cta_description
+              field_cta_primary_link {
+                title
                 uri
               }
             }
-            field_degrees {
-              drupal_id
-              name
-              field_degree_acronym
-            }			
-            field_specializations {
-              name
+            ... on paragraph__lead_paragraph {
+              id
+              field_lead_paratext {
+                value
+              }
             }
-            field_program_statistics {
+            ... on paragraph__links_widget {
               drupal_id
-              field_stat_range
-              field_stat_value
-              field_stat_value_end
+              field_link_items_title
+              field_link_items_description
               relationships {
-                field_stat_type {
-                  name
-                }
-                field_stat_icon {
+                field_link_items {
+                  drupal_id
+                  field_link_description
+                  field_link_url {
+                    title
+                    uri
+                  }
                   relationships {
-                    field_media_image {
-                      localFile {
-                        publicURL
+                    field_link_image {
+                      relationships {
+                        field_media_image {
+                          localFile {
+                            publicURL
+                            childImageSharp {
+                              resize(width: 400, height: 300, cropFocus: CENTER) {
+                                src
+                              }
+                            }
+                          }
+                        }
                       }
                     }
                   }
                 }
               }
             }
-            field_tags {
-              name
-            }
-            field_program_variants {
-              __typename
-              ... on paragraph__general_text {
-                drupal_id
-                field_general_text {
-                  processed
-                }
-              }
-              ... on paragraph__program_variants {
-                drupal_id
-                field_variant_title
-                field_variant_link {
-                  uri
-                }
-                field_variant_info {
-                  processed
-                }
-                relationships {
-                  field_variant_type {
-                    name
+            ... on paragraph__section {
+              drupal_id
+              field_section_title
+              field_section_classes
+              relationships {
+                field_section_content {
+                  __typename
+                  ... on paragraph__call_to_action {
+                    id
+                    field_cta_title
+                    field_cta_description
+                    field_cta_primary_link {
+                      title
+                      uri
+                    }
+                  }
+                  ... on paragraph__links_widget {
+                    drupal_id
+                    field_link_items_title
+                    field_link_items_description
+                    relationships {
+                      field_link_items {
+                        drupal_id
+                        field_link_description
+                        field_link_url {
+                          title
+                          uri
+                        }
+                        relationships {
+                          field_link_image {
+                            relationships {
+                              field_media_image {
+                                localFile {
+                                  publicURL
+                                  childImageSharp {
+                                    resize(width: 400, height: 300, cropFocus: CENTER) {
+                                      src
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  ... on paragraph__media_text {
+                    field_media_text_title
+                    field_media_text_desc {
+                      processed
+                    }
+                    field_media_text_links {
+                      title
+                      uri
+                    }
+                    relationships {
+                      field_media_text_media {
+                        ... on media__image {
+                          name
+                          field_media_image {
+                            alt
+                          }
+                          relationships {
+                            field_media_image {
+                              localFile {
+                                publicURL
+                                childImageSharp {
+                                  gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
+                                }
+                              }
+                            }
+                          }
+                        }
+                        ... on media__remote_video {
+                          drupal_id
+                          name
+                          field_media_oembed_video
+                          relationships {
+                            field_media_file {
+                              localFile {
+                                publicURL
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
-          }
-        }
-      }
-    }
-	
-    ctas: allNodeCallToAction(filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          changed
-          field_call_to_action_link {
-            title
-            uri
-          }
-          relationships {
-            field_call_to_action_goal {
-              name
-              field_goal_action
-            }
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
+            ... on paragraph__media_text {
+              field_media_text_title
+              field_media_text_desc {
+                processed
               }
-            }
-          }
-        }
-      }
-    }
-	
-    careers: allNodeCareer(sort: {fields: [title], order: ASC}, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          title
-          drupal_id
-          changed
-          body {
-            processed
-          }
-          relationships {
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-
-    employers: allNodeEmployer(sort: {fields: title}, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          drupal_id
-          field_employer_summary {
-              processed
-          }
-          title
-          field_image {
-            alt
-          }
-          field_link {
-            uri
-          }
-          relationships {
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-
-            field_image {
-              localFile {
-                url
-                childImageSharp {
-                  fluid(maxWidth: 400, maxHeight: 400) {
-                      originalImg
-                      ...GatsbyImageSharpFluid
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-	
-	footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id] }}}) {
-	  edges {
-	    node {
-		  drupal_id
-		  body {
-            processed
-          }
-		  relationships {
-			field_tags {
-			  __typename
-              ... on TaxonomyInterface {
-				drupal_id
-				id
-				name
-			  }
-            }
-			field_footer_logo {
-			  field_media_image {
-				alt
+              field_media_text_links {
+                title
+                uri
               }
               relationships {
-				field_media_image {
-				  localFile {
-					publicURL
-					childImageSharp {
-					  fluid(maxWidth: 400) {
-						originalImg
-						...GatsbyImageSharpFluid
-					  }
-					}
-				  }
-				}
-			  }
-			}
-			field_widgets {
-			  __typename
-				... on paragraph__call_to_action {
-				  id
-				  field_cta_title
-				  field_cta_description
-				  field_cta_primary_link {
-					title
-					uri
-				  }
-				}
-				... on paragraph__lead_paragraph {
-				  id
-				  field_lead_paratext {
-					value
-				  }
-				}	
-				... on paragraph__links_widget {
-				  drupal_id
-				  field_link_items_title
-				  field_link_items_description
-				  relationships {
-					field_link_items {
-					  drupal_id
-					  field_link_description
-					  field_link_url {
-						title
-						uri
-					  }
-					  relationships {
-						field_link_image {
-						  relationships {
-							field_media_image {
-							  localFile {
-								publicURL
-								childImageSharp {
-								  resize(width: 400, height: 300, cropFocus: CENTER) {
-									src
-								  }
-								}
-							  }
-							}
-						  }
-						}
-					  }
-					}
-				  }
-				}
-				... on paragraph__section {
-				  drupal_id
-				  field_section_title
-				  field_section_classes
-				  relationships {
-					field_section_content {
-					  __typename
-						... on paragraph__call_to_action {
-						  id
-						  field_cta_title
-						  field_cta_description
-						  field_cta_primary_link {
-							title
-							uri
-						  }
-						}
-						... on paragraph__links_widget {
-						  drupal_id
-						  field_link_items_title
-						  field_link_items_description
-						  relationships {
-							field_link_items {
-							  drupal_id
-							  field_link_description
-							  field_link_url {
-								title
-								uri
-							  }
-							  relationships {
-								field_link_image {
-								  relationships {
-									field_media_image {
-									  localFile {
-										publicURL
-										childImageSharp {
-										  resize(width: 400, height: 300, cropFocus: CENTER) {
-											src
-										  }
-										}
-									  }
-									}
-								  }
-								}
-							  }
-							}
-						  }
-						}
-						... on paragraph__media_text {
-						  field_media_text_title
-						  field_media_text_desc {
-							processed
-						  }
-						  field_media_text_links {
-							title
-							uri
-						  }
-						  relationships {
-						    field_media_text_media {
-							  ... on media__image {
-								name
-								field_media_image {
-								  alt
-								}
-								relationships {
-								  field_media_image {
-									localFile {
-									  publicURL
-									  childImageSharp {
-										fluid(maxWidth: 800) {
-										  originalImg
-										  ...GatsbyImageSharpFluid
-									    }
-									  }
-									}
-								  }
-								}
-							  }
-							  ... on media__remote_video {
-								drupal_id
-								name
-								field_media_oembed_video
-								relationships {
-								  field_media_file {
-								    localFile {
-									  publicURL
-								    }
-								  }
-								}
-							  }
-							}
-						  }
-						}
-					}
-				  }
-				}
-				... on paragraph__media_text {
-				  field_media_text_title
-				  field_media_text_desc {
-					processed
-				  }
-				  field_media_text_links {
-					title
-					uri
-				  }
-				  relationships {
-					field_media_text_media {
-					  ... on media__image {
-						name
-						field_media_image {
-						  alt
-						}
-						relationships {
-						  field_media_image {
-							localFile {
-							  publicURL
-							  childImageSharp {
-								fluid(maxWidth: 800) {
-								  originalImg
-								  ...GatsbyImageSharpFluid
-								}
-							  }
-							}
-						  }
-						}
-					  }
-					  ... on media__remote_video {
-						drupal_id
-						name
-						field_media_oembed_video
-						relationships {
-						  field_media_file {
-                            localFile {
-							  publicURL
-                            }
-						  }
-						}
-					  }
-					}
-				  }
-				}
-			}
-		  }
-		}
-	  }
-	}	
-	
-    images: allMediaImage(filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          drupal_id
-          field_media_image {
-                alt
-          }
-          relationships {
-            field_media_image {
-              localFile {
-                childImageSharp {
-                  fluid(maxWidth: 1920) {
-                    originalImg
-                    ...GatsbyImageSharpFluid
+                field_media_text_media {
+                  ... on media__image {
+                    name
+                    field_media_image {
+                      alt
+                    }
+                    relationships {
+                      field_media_image {
+                        localFile {
+                          publicURL
+                          childImageSharp {
+                            gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
+                          }
+                        }
+                      }
+                    }
+                  }
+                  ... on media__remote_video {
+                    drupal_id
+                    name
+                    field_media_oembed_video
+                    relationships {
+                      field_media_file {
+                        localFile {
+                          publicURL
+                        }
+                      }
+                    }
                   }
                 }
-                extension
-              }
-            }
-            field_tags {
-            __typename
-            ... on TaxonomyInterface {
-                name
-              }
-            }
-          }
-        }
-      }
-    }	
-
-    news: allNodeArticle (limit: 4, sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          title
-          drupal_id
-          changed
-          created
-          fields {
-            alias {
-              value
-            }
-          }
-          body {
-            processed
-          }
-          relationships {
-			field_hero_image {
-			  field_media_image {
-				alt
-              }
-			  relationships {
-			    field_media_image {
-				  localFile {
-				    url
-				    childImageSharp {
-					  fluid(maxWidth: 400) {
-					    originalImg
-					    ...GatsbyImageSharpFluid
-					  }
-				    }
-				  }
-			    }
-			  }
-			}
-            field_news_category {
-              drupal_id
-              id
-              name
-            }
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
               }
             }
           }
         }
       }
     }
-	
-    testimonials: allNodeTestimonial(sort: {fields: created}, filter: {fields: {tags: {in: [$id] }}}) {
-      edges {
-        node {
-          changed
-          drupal_id
-          body {
-            processed
+  }
+  images: allMediaImage(filter: {fields: {tags: {in: [$id]}}}) {
+    edges {
+      node {
+        drupal_id
+        field_media_image {
+          alt
+        }
+        relationships {
+          field_media_image {
+            localFile {
+              childImageSharp {
+                 gatsbyImageData(
+				  transformOptions: {cropFocus: CENTER}
+				  placeholder: BLURRED
+				  aspectRatio: 3
+			    )
+              }
+              extension
+            }
           }
-          title
-          field_testimonial_person_desc
-          field_home_profile {
-            title
-            uri
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              name
+            }
           }
-          relationships {
-            field_hero_image {
+        }
+      }
+    }
+  }
+  news: allNodeArticle(
+    limit: 4
+    sort: {fields: created}
+    filter: {fields: {tags: {in: [$id]}}}
+  ) {
+    edges {
+      node {
+        title
+        drupal_id
+        changed
+        created
+        fields {
+          alias {
+            value
+          }
+        }
+        body {
+          processed
+        }
+        relationships {
+          field_hero_image {
             field_media_image {
               alt
             }
             relationships {
               field_media_image {
-              localFile {
-                url
-                childImageSharp {
-                fluid(maxWidth: 400, maxHeight: 400) {
-                  originalImg
-                  ...GatsbyImageSharpFluid
+                localFile {
+                  url
+                  childImageSharp {
+                    gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                  }
                 }
-                }
-              }
               }
             }
-			}			
-			field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
+          }
+          field_news_category {
+            drupal_id
+            id
+            name
+          }
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              drupal_id
+              id
+              name
             }
           }
         }
       }
     }
-
   }
+  testimonials: allNodeTestimonial(
+    sort: {fields: created}
+    filter: {fields: {tags: {in: [$id]}}}
+  ) {
+    edges {
+      node {
+        changed
+        drupal_id
+        body {
+          processed
+        }
+        title
+        field_testimonial_person_desc
+        field_home_profile {
+          title
+          uri
+        }
+        relationships {
+          field_hero_image {
+            field_media_image {
+              alt
+            }
+            relationships {
+              field_media_image {
+                localFile {
+                  url
+                  childImageSharp {
+                    gatsbyImageData(
+                      width: 400
+                      height: 400
+                      placeholder: BLURRED
+                      layout: CONSTRAINED
+                    )
+                  }
+                }
+              }
+            }
+          }
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              drupal_id
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
 `

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Img from 'gatsby-image';
+import { GatsbyImage } from "gatsby-plugin-image";
 import { contentExists } from '../utils/ug-utils';
 import '../styles/cta.css';
 
@@ -22,7 +22,10 @@ function leadPara (props) {
 			    
             if(contentExists(img) && contentExists(heroImage)) {
 	                           
-                imageFile = <Img className="leadimg" fluid={heroImage.childImageSharp.fluid} alt={leaditem.relationships.field_lead_para_hero.field_media_image.alt} />
+                imageFile = <GatsbyImage
+                    image={heroImage.childImageSharp.gatsbyImageData}
+                    className="leadimg"
+                    alt={leaditem.relationships.field_lead_para_hero.field_media_image.alt} />
                                
  			       
             } 
