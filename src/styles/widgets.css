@@ -13,7 +13,7 @@
 .section-right {
     grid-column: col-start 10 / span 3;
     grid-row-start: 1;
-    grid-row-end: 3 ;
+    grid-row-end: 5 ;
 }
 
 .gap-between {

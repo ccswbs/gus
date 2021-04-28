@@ -26,7 +26,7 @@ function MediaText (props) {
 			{contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
 			</section>
 			<section className={props.colClass}>
-				<h2>{mediaTitle}</h2>
+				<h3>{mediaTitle}</h3>
 				<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
 				<div>{mediaLinks.map(mediaLink => {
 					return <><a className="btn btn-outline-info" href={mediaLink.uri}>{mediaLink.title}</a> </>
