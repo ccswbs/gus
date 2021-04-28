@@ -16,6 +16,10 @@ function ButtonStyle (styleOfButton){
             return 'btn-secondary';
         case 'Secondary (Outline)':
             return 'btn-outline-secondary';
+        case 'Info':
+            return 'btn-info';
+        case 'Info (Outline)':
+            return 'btn-outline-info'
         default:
             return 'btn-primary';
     }
