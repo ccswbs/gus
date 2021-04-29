@@ -16,6 +16,15 @@
     grid-row-end: 5 ;
 }
 
+@media only screen and (max-width: 768px){
+    .section-wrapper {
+         display:unset ;
+    }
+    .d-flex {
+
+    }
+    }
+
 .gap-between {
 	gap: 20px;
 }
