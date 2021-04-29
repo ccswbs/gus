@@ -42,11 +42,11 @@ const BasicPage = ({data}) => {
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">
-				<div className="row row-with-vspace site-content">
+				{/* <div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
 							<div dangerouslySetInnerHTML={{ __html: body}} />						
 					</section>
-				</div>
+				</div> */}
 				{ /**** Widgets content ****/}		
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-12 content-area">

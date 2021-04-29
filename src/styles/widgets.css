@@ -13,8 +13,17 @@
 .section-right {
     grid-column: col-start 10 / span 3;
     grid-row-start: 1;
-    grid-row-end: 3 ;
+    grid-row-end: 5 ;
 }
+
+@media only screen and (max-width: 768px){
+    .section-wrapper {
+         display:unset ;
+    }
+    .d-flex {
+        flex-direction: column;
+    }
+    }
 
 .gap-between {
 	gap: 20px;
