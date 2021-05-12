@@ -27,7 +27,7 @@ Set variables to control button layout
 Note: if button has a Font Awesome Icon - the placement of the FA Icon is affected by the column 
 ***/
  
-const columnClass = (contentExists(props.pageData.relationships.field_section_column.name))? ColumnClass (props.pageData.relationships.field_section_column.name): "section-button-main"
+const columnClass = (contentExists(props.pageData.relationships.field_section_column))? ColumnClass (props.pageData.relationships.field_section_column.name): "section-button-main"
 
 let fieldButtonsData = contentExists(props.pageData.relationships.field_buttons)? props.pageData.relationships.field_buttons: '';
     return (
