@@ -7,7 +7,7 @@ import Button from "../components/button";
 function ColumnClass (columnName) {
     switch (columnName){
         case 'right':
-            return 'btn-block section-button-rigth';
+            return 'btn-block section-button-right';
         case 'left':
             return 'section-button-left';
         case 'cta':
@@ -39,7 +39,7 @@ function TextClass (columnName) {
 function IconClass (columnName) {
     switch (columnName){
         case 'right':
-            return 'section-button-icon-right'
+            return 'fa-pull-left section-button-icon-right'
         case 'cta':
             return 'section-button-icon-cta';
         default:
