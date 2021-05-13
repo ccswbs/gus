@@ -325,6 +325,9 @@ export const query = graphql`query ($id: String) {
                           title
                           uri
                         }
+                        field_cta_heading {
+                          processed
+                        }
                         field_font_awesome_icon
                         field_formatted_title {
                           processed

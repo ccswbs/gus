@@ -39,7 +39,8 @@ function FontAwesomeIconColour (colourChoice) {
 }
 
 function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
-  
+
+   
     let buttonLinkURI = buttonData.field_button_link.uri;
     let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
         contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    
@@ -55,6 +56,8 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
 
     return (
 	<React.Fragment key={buttonData.drupal_id}>
+    {contentExists(buttonData.field_cta_heading)? 
+        <span dangerouslySetInnerHTML={{__html: "<p>" + buttonData.field_cta_heading.processed + "</p>"}} /> : ``}
 	{contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
 		<a href={buttonLinkURI} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
