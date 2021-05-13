@@ -39,7 +39,7 @@ function FontAwesomeIconColour (colourChoice) {
 }
 
 function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
-    
+  
     let buttonLinkURI = buttonData.field_button_link.uri;
     let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
         contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    

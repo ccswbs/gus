@@ -14,6 +14,16 @@ function ColumnClass (columnName) {
             return 'section-button-main';
     }      
 }
+function ButtonClass (columnName) {
+    switch (columnName){
+        case 'right':
+            return 'section-button-rigth-layout';
+        case 'left':
+            return 'section-button-left-layout';
+        default:
+            return 'section-button-main-layout';
+    }      
+}
 
 
 function SectionButtons (props) {
@@ -26,21 +36,23 @@ Set variables to control button layout
 
 Note: if button has a Font Awesome Icon - the placement of the FA Icon is affected by the column 
 ***/
- 
-const columnClass = (contentExists(props.pageData.relationships.field_section_column))? ColumnClass (props.pageData.relationships.field_section_column.name): "section-button-main"
 
+console.log(props.pageData.relationships.field_section_column)
+const columnClass = (contentExists(props.pageData.relationships.field_section_column))? ColumnClass (props.pageData.relationships.field_section_column.name): "section-button-main";
+const buttonClassWraper = (contentExists(props.pageData.relationships.field_section_column))? ButtonClass (props.pageData.relationships.field_section_column.name): '';
 let fieldButtonsData = contentExists(props.pageData.relationships.field_buttons)? props.pageData.relationships.field_buttons: '';
     return (
         <React.Fragment>
+            <div class={buttonClassWraper}>
             {contentExists(fieldButtonsData) && fieldButtonsData.length !== 0 && <>
                 {fieldButtonsData.map (buttonData => {
                     return Button(buttonData,
                                  columnClass,
-                                 'section-button-icon fa-pull-left',
+                                 'section-button-icon',
                                  'section-button-text',
                         )
                 })}
-           </> }
+           </> }</div>
         </React.Fragment>
     )
 

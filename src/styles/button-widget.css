@@ -1,16 +1,30 @@
 .section-button {
     padding:20px;
     text-align: left;
+
 }
 
 .section-button-rigth {
     padding:20px;
     text-align: left;
 }
+.section-button-main-layout {
+    display: flex;
+
+    grid-gap: 1rem;   
+    white-space: nowrap;
+}
+@media only screen and (max-width: 768px){
+    .section-button-main-layout {
+         display:grid;
+        grid-template-columns: 1fr;
+    }
+    }
 
 .section-button-icon {
     font-size: 5rem;
     padding-top: 10px;
+
 
 }
 
@@ -20,5 +34,6 @@
 
 .section-button-text {
     font-size: 1em;
+    padding-left: 5px;
 
 }

@@ -6,8 +6,8 @@ import { contentExists } from '../utils/ug-utils';
 
 function MediaText (props) {
 	
-	const mediaTitle = props.widgetData.field_media_text_title;
-	const mediaDescription = props.widgetData.field_media_text_desc.processed;
+	const mediaTitle = (contentExists(props.widgetData.field_media_text_title) ? '<h3>' + props.widgetData.field_media_text_title + '</h3>': ``);
+	const mediaDescription = (contentExists(props.widgetData.field_media_text_desc) ? props.widgetData.field_media_text_desc.processed: ``);
 	const mediaLinks = props.widgetData.field_media_text_links;	
 	const mediaRelationships = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.relationships: ``);
 	
@@ -26,7 +26,7 @@ function MediaText (props) {
 			{contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
 			</section>
 			<section className={props.colClass}>
-				<h3>{mediaTitle}</h3>
+				<div dangerouslySetInnerHTML={{ __html: mediaTitle}} />
 				<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
 				<div>{mediaLinks.map(mediaLink => {
 					return <><a className="btn btn-outline-info" href={mediaLink.uri}>{mediaLink.title}</a> </>
