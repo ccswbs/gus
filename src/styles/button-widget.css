@@ -16,7 +16,7 @@
 .section-button-main-layout {
     display: flex;
     grid-gap: 1rem;   
-    white-space: nowrap;
+
 }
 @media only screen and (max-width: 768px){
     .section-button-main-layout {

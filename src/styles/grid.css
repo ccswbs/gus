@@ -2,6 +2,11 @@
 
 .grid-cell {
     display: block;
+    padding-left: 0rem !important;
+}
+.grid-row {
+    grid-gap: 30px !important;
+    padding-left: 0rem !important ;
 }
 
 /* --- Text --- */
