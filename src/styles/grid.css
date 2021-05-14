@@ -10,6 +10,10 @@
 }
 
 /* --- Text --- */
+.grid-heading {
+    font-size: 1.2em !important;
+
+}
 
 .grid-cell .grid-heading {
     color: #000000;
