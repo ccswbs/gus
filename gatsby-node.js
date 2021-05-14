@@ -373,6 +373,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_button_link: FieldLink
       field_font_awesome_icon: String
       field_formatted_title: FieldFormattedTitle
+      field_cta_heading: FieldFormattedTitle
       relationships: paragraph__button_widgetRelationships
   }
     type paragraph__button_widgetRelationships {
