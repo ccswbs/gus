@@ -7,13 +7,13 @@ import '../styles/list.css';
 
 function LinksOuter (props) {
 
-    const setExtraClasses = (props.displayType==='grid')? "row row-with-vspace site-content content-area": "content-area";
-    const setBackGroundClass = (props.displayType==='grid')? "full-width-container bg-light grid":"row row-with-vspace site-content full-width-container list";
+    const setExtraClasses = (props.displayType==='grid')? "row grid-row ": ``;
+    const setBackGroundClass = (props.displayType==='grid')? "grid":"row list";
 
     let Heading = setHeadingLevel(props.headingLevel);
 	if (contentExists(props.children)) {
 		return (<div className={setBackGroundClass}>
-                    <div className="container page-container">
+                    <div>
                     <Heading>{props.heading}</Heading>
                     <p>{props.description}</p>
                         <LinksParent extraClasses={setExtraClasses}>

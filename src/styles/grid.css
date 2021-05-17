@@ -2,9 +2,18 @@
 
 .grid-cell {
     display: block;
+    padding-left: 0rem !important;
+}
+.grid-row {
+    grid-gap: 30px !important;
+    padding-left: 0rem !important ;
 }
 
 /* --- Text --- */
+.grid-heading {
+    font-size: 1.2em !important;
+
+}
 
 .grid-cell .grid-heading {
     color: #000000;

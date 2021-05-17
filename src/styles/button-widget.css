@@ -1,24 +1,62 @@
 .section-button {
     padding:20px;
     text-align: left;
+
 }
 
-.section-button-rigth {
+.section-button-right {
     padding:20px;
     text-align: left;
 }
-
-.section-button-icon {
-    font-size: 5rem;
-    padding-top: 10px;
+.section-button-cta {
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+}
+.section-button-main-layout {
+    display: flex;
+    grid-gap: 1rem;   
 
 }
+@media only screen and (max-width: 768px){
+    .section-button-main-layout {
+         display:grid;
+        grid-template-columns: 1fr;
+    }
+    }
+.section-button-cta-layout {
+    text-align: center;
+}
+.section-button-icon-right {
+    font-size: 5rem;
+    padding-top: 1px;
+    padding-right: 5px;
+}
 
+.section-button-icon {
+    font-size: 2.4rem;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+}
+.section-button-icon-cta {
+    font-size: 4rem;
+    padding-top: 10px;
+
+
+}
 .yellow-icon {
     color:var(--uog-yellow);
 }
 
 .section-button-text {
     font-size: 1em;
+ 
+
+}
+.section-button-cta-text {
+    font-size: 1.5em;
+    padding-left: 5px;
+   
 
 }
