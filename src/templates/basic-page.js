@@ -259,6 +259,11 @@ export const query = graphql`query ($id: String) {
                                 publicURL
                               }
                             }
+                            field_video_cc {
+                              localFile {
+                                publicURL
+                              }
+                            }
                           }
                         }
                       }
