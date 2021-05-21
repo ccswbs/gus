@@ -181,6 +181,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	}
 	type media__remote_videoRelationships implements Node {
 	  field_media_file: file__file @link(from: "field_media_file___NODE")
+    field_video_cc: file__file @link(from: "field_video_cc___NODE")
 	}
 	
 	type MenuItems implements Node {
