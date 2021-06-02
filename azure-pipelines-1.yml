@@ -20,6 +20,8 @@ variables:
   _zone: $(Zone)
   _gatsby_source: $(GatsbySource)
   _pantheonsitelabel: $(PantheonSiteLabel)
+  _drupalbaseurl: $(DrupalBaseUrl)
+
 
 trigger:
   batch: true
