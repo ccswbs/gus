@@ -181,6 +181,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	}
 	type media__remote_videoRelationships implements Node {
 	  field_media_file: file__file @link(from: "field_media_file___NODE")
+    field_video_cc: file__file @link(from: "field_video_cc___NODE")
 	}
 	
 	type MenuItems implements Node {
@@ -373,6 +374,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_button_link: FieldLink
       field_font_awesome_icon: String
       field_formatted_title: FieldFormattedTitle
+      field_cta_heading: FieldFormattedTitle
       relationships: paragraph__button_widgetRelationships
   }
     type paragraph__button_widgetRelationships {

@@ -6,8 +6,8 @@ import { contentExists } from '../utils/ug-utils';
 
 function MediaText (props) {
 	
-	const mediaTitle = props.widgetData.field_media_text_title;
-	const mediaDescription = props.widgetData.field_media_text_desc.processed;
+	const mediaTitle = (contentExists(props.widgetData.field_media_text_title) ? '<h3>' + props.widgetData.field_media_text_title + '</h3>': ``);
+	const mediaDescription = (contentExists(props.widgetData.field_media_text_desc) ? props.widgetData.field_media_text_desc.processed: ``);
 	const mediaLinks = props.widgetData.field_media_text_links;	
 	const mediaRelationships = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.relationships: ``);
 	
@@ -16,17 +16,18 @@ function MediaText (props) {
 	
 	const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
+	const videoCC = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_video_cc) ? mediaRelationships.field_video_cc.localFile.publicURL : ``);
 	
 	return <>	
 
 			<section className={props.colClass}>
 			{contentExists(videoURL) ?
-			<Video playerID={props.widgetData.drupal_id} videoURL={videoURL} videoTranscript={videoTranscript} />
+			<Video playerID={props.widgetData.drupal_id} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
 			: ``}
 			{contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
 			</section>
 			<section className={props.colClass}>
-				<h2>{mediaTitle}</h2>
+				<div dangerouslySetInnerHTML={{ __html: mediaTitle}} />
 				<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
 				<div>{mediaLinks.map(mediaLink => {
 					return <><a className="btn btn-outline-info" href={mediaLink.uri}>{mediaLink.title}</a> </>

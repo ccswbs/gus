@@ -51,7 +51,7 @@ function LinksItems (props) {
 						// if images exists - set the images to use in the grid display
 						const image = (contentExists(paragraph.relationships.field_link_image)) ? paragraph.relationships.field_link_image.relationships.field_media_image : null;
 						const imageFile = (contentExists(image) && contentExists(image.localFile.childImageSharp)) ? 
-												<img src={image.localFile.childImageSharp.resize.src} alt="" /> : null;
+												<img src={"/assets"+image.localFile.childImageSharp.resize.src} alt="" /> : null;
 						// set the link to the url provided, if internal Drupal link (entity or internal) - clean up the URI to work with Link command,
 						// to handel a <noLink>, if external link pass through, otherwise set to null
 

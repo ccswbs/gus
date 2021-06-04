@@ -407,8 +407,8 @@ function prepareVariantHeading (variantData) {
                   <div className="col-md-3">
                     {callToActionData.map((cta, index) => (
                       <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
-                        goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
+                        goalEventCategory={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.name: ``} 
+                        goalEventAction={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.field_goal_action: ``} 
                         classNames='btn btn-uogRed apply' >
                         {cta.node.field_call_to_action_link.title}
                       </CallToAction>
@@ -459,8 +459,8 @@ function prepareVariantHeading (variantData) {
                   <h3><span>Are you ready to</span> Improve Life?</h3>
                   {callToActionData.map((cta, index) => (
                       <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={cta.node.relationships.field_call_to_action_goal.name} 
-                        goalEventAction={cta.node.relationships.field_call_to_action_goal.field_goal_action} 
+                        goalEventCategory={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.name: ``} 
+                        goalEventAction={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.field_goal_action: ``} 
                         classNames='btn btn-uogRed apply' >
                       {cta.node.field_call_to_action_link.title}
                       </CallToAction>

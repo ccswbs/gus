@@ -42,11 +42,11 @@ const BasicPage = ({data}) => {
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">
-				<div className="row row-with-vspace site-content">
+				{/* <div className="row row-with-vspace site-content">
 					<section className="col-md-9 content-area">
 							<div dangerouslySetInnerHTML={{ __html: body}} />						
 					</section>
-				</div>
+				</div> */}
 				{ /**** Widgets content ****/}		
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-12 content-area">
@@ -259,6 +259,11 @@ export const query = graphql`query ($id: String) {
                                 publicURL
                               }
                             }
+                            field_video_cc {
+                              localFile {
+                                publicURL
+                              }
+                            }
                           }
                         }
                       }
@@ -324,6 +329,9 @@ export const query = graphql`query ($id: String) {
                         field_button_link {
                           title
                           uri
+                        }
+                        field_cta_heading {
+                          processed
                         }
                         field_font_awesome_icon
                         field_formatted_title {

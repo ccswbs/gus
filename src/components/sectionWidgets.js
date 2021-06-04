@@ -19,6 +19,7 @@ import '../styles/widgets.css';
 //
 
 function SectionWidgets (props) {
+
 if (contentExists(props.pageData) && props.pageData.length !== 0) {
     return (props.pageData.map(widgetData => {
         if (widgetData.__typename==="paragraph__links_widget") {
@@ -83,7 +84,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
         return <div className={textClassName } dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
     }
         else if (widgetData.__typename==="paragraph__section_buttons") {
-            const sbtnClassName = contentExists(widgetData.relationships.field_section_column.name)? "section-"+widgetData.relationships.field_section_column.name: '';
+            const sbtnClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
             return(
                 <div className={sbtnClassName}>
                     <SectionButtons pageData={widgetData} />
