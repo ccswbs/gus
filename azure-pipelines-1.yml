@@ -31,7 +31,7 @@ trigger:
     - develop
 
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: 'Ubuntu 18.04'
   demands: npm
 
 steps:
