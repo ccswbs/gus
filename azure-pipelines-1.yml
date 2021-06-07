@@ -1,0 +1,87 @@
+# Build, test, and deploy the content hub.
+# See: https://docs.microsoft.com/azure/devops/pipelines/languages/php
+#=========================================================================
+# In addition to the environment variables defined in this file, also
+# add the following variables in the Azure Pipelines UI.
+#
+# See: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables
+#
+# ServiceConnection:  Name of the Azure service connection
+# Site:               Name of the site to create
+# Env:                Name of the environment to create
+# Zone:               Name of the domain zone in which to create the site (e.g. uoguelph.dev)
+# PantheonSiteLabel:  Name of the Pantheon site that will serve as the site back-end.
+#=========================================================================
+
+variables:
+  _gatsby_cache_folder: '.cache'
+  _gatsby_public_folder: 'public'
+  _site: $(Site)
+  _zone: $(Zone)
+  _gatsby_source: $(GatsbySource)
+  _pantheonsitelabel: $(PantheonSiteLabel)
+  _drupalbaseurl: $(DrupalBaseUrl)
+
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+    - develop
+
+pool:
+  vmImage: 'Ubuntu 18.04'
+  demands: npm
+
+steps:
+
+# Setup environment
+- script: ./.ci/env/set
+  displayName: 'Initialize build environment'
+
+- script: ./.ci/env/update-source
+  displayName: 'If applicable, update GatsbySource test environment'
+  condition: eq(variables._gatsby_source, 'test')
+
+- script: 'npm install --only=dev gatsby-cli'
+  displayName: 'Install Gatsby-CLI'
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    verbose: false
+
+# Retrieve caches
+- task: CacheBeta@1
+  inputs:
+    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_zone)"'
+    path: $(_gatsby_cache_folder)
+  displayName: 'Retrieve cached Gatsby .cache folder'
+
+- task: CacheBeta@1
+  inputs:
+    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_zone)"'
+    path: $(_gatsby_public_folder)
+  displayName: 'Retrieve cached Gatsby public folder'
+
+# Build Gatsby
+- script: |
+    npx gatsby build --prefix-paths
+  displayName: 'Gatsby build'
+
+# Publish artifact
+- task: ArchiveFiles@2
+  displayName: 'Archive $(Build.SourcesDirectory)'
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/public'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Build Artifact
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    artifactName: gatsby_build_artifact
