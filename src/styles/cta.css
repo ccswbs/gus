@@ -42,12 +42,14 @@ div.container-fluid  { margin-top: 0px; border: 0px solid black; padding-left: 0
 
 div.lead h2 { margin-bottom: 35px;}
 
-div.lead p {font-weight: bold; color: white; margin-top: 45px; opacity: 0.9; font-size: 1.5em; }
+div.lead p {font-weight: bold; color: white; margin-top: 45px; opacity: 0.9; font-size: 1.5em; padding-left: 40px; padding-right: 40px;}
 
-div.lead p:not(.author)::before { content: open-quote; color: var(--uog-yellow); font-weight: bold; margin-left: -10px; margin-top: -60px; position: absolute; font-size: 4em;}
+div.lead p:not(.author)::before { content: open-quote; color: var(--uog-yellow); font-weight: bold; margin-left: -40px; margin-top: -30px; position: absolute; font-size: 4em;}
 
-div.lead p:not(.author)::after { content: close-quote; color: var(--uog-yellow); font-weight: bold; position: absolute; font-size: 4em; }
+div.lead p:not(.author)::after { content: close-quote; color: var(--uog-yellow); font-weight: bold; font-size: 4em; margin-top: -20px; display: block; float: right; margin-right: -25px;}
 
-div.lead { /* background-color: dimgrey; background-image: linear-gradient(dimgrey, black); */ background-color: rgba(64,64,64,0.9);  padding-left: 8px; padding-right: 4px;}
+div.lead p.author { margin-left: 4rem; padding-left: 10px;}
 
-div.leadimg {  background-color: rgba(64,64,64,0.9); background-image: linear-gradient(dimgrey, black);  border: 0px solid red;}
+div.lead { /* background-color: dimgrey; background-image: linear-gradient(dimgrey, black); */ background-color: rgba(10,0,0,0.95);  padding-left: 8px; padding-right: 4px;}
+
+div.leadimg {  background-color: rgba(64,64,64,0.9); background-image: linear-gradient(dimgrey, black);  border: 0px solid red;  grid-gap: 0px;}
