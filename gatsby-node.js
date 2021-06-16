@@ -439,6 +439,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  relationships: paragraph__media_textRelationships
 	}
 	type paragraph__media_textRelationships implements Node {
+    field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
 	  field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
 	}
 	type paragraph__program_statistic implements Node {

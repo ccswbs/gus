@@ -230,6 +230,9 @@ export const query = graphql`query ($id: String) {
                       uri
                     }
                     relationships {
+                      field_section_column {
+                        name
+                      }
                       field_media_text_media {
                         ... on media__image {
                           name
