@@ -13,7 +13,6 @@ const BasicPage = ({data}) => {
 	const pageData = data.pages.edges[0].node;
 	const nodeID = pageData.drupal_internal__nid;	
 	const title = pageData.title;
-	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const imageData = data.images.edges;
 
 	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected
@@ -42,11 +41,6 @@ const BasicPage = ({data}) => {
 			
 			{ /**** Body content ****/ }
 			<div className="container page-container">
-				{/* <div className="row row-with-vspace site-content">
-					<section className="col-md-9 content-area">
-							<div dangerouslySetInnerHTML={{ __html: body}} />						
-					</section>
-				</div> */}
 				{ /**** Widgets content ****/}		
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-12 content-area">
@@ -69,9 +63,6 @@ export const query = graphql`query ($id: String) {
         drupal_id
         drupal_internal__nid
         title
-        body {
-          processed
-        }
         relationships {
           field_widgets {
             __typename

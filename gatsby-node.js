@@ -308,7 +308,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
-      body: BodyFieldWithSummary
       field_hero_image: ImageField
       relationships: node__pageRelationships
       fields: FieldsPathAlias
