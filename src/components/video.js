@@ -23,7 +23,7 @@ function Video (props) {
                         <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls">
                             <source type={`video/` + videoType} src={videoSrc} />
 							{contentExists(videoTranscript) ? 
-							<><track label="English" kind="subtitles" srclang="en" src={videoCC} default="true" />
+							<><track className="caption-input" label="English" kind="subtitles" srclang="en" src={videoCC} default="true" />
 							<link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={videoTranscript} default="true" /></>
 							: ``}							
                         </video>
