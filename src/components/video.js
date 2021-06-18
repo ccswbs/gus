@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { contentExists } from '../utils/ug-utils';
 
 function Video (props) {
-	console.log(props)
 	let playerID = props.playerID;
 	let videoCC = props.videoCC;
 	let videoTranscript = props.videoTranscript;
