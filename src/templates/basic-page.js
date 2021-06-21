@@ -116,10 +116,8 @@ export const query = graphql`query ($id: String) {
                         publicURL
                         childImageSharp {
                           gatsbyImageData(
-                            width: 400
-                            height: 400
                             placeholder: BLURRED
-                            layout: CONSTRAINED
+                            layout: FULL_WIDTH
                           )
                         }
                       }
@@ -306,10 +304,8 @@ export const query = graphql`query ($id: String) {
                               publicURL
                               childImageSharp {
                                 gatsbyImageData(
-                                  width: 400
-                                  height: 400
                                   placeholder: BLURRED
-                                  layout: CONSTRAINED
+                                  layout: FULL_WIDTH
                                 )
                               }
                             }
