@@ -5,9 +5,11 @@ import moment from 'moment-timezone'
 function DateModified ({ date }) {
     const lastModified = moment(date).tz('America/Toronto').format(`MMMM D, YYYY HH:mm z`);
     if(date !== null && date !== ""){
-        return <div className="container date-modified">
-            <p><strong>Last updated:</strong> {lastModified}</p>
-        </div>
+        return <div className="container-fluid date-modified">
+                    <div class="container ft-container">
+                        <strong>Last updated:</strong> {lastModified}
+                    </div> 
+               </div>
     }
     return null;
 }
