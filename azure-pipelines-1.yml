@@ -29,7 +29,6 @@ trigger:
     include:
     - master
     - develop
-    - next
 
 pool:
   vmImage: 'Ubuntu 18.04'
