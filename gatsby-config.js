@@ -8,7 +8,7 @@
  * Set the gatsbySource variable to the pantheon prefix - live, dev, test, or your multidev
  */
 
-let gatsbySource = 'pageurl';
+let gatsbySource = 'live';
 
 let protocol = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "https://api.": "http://";
 let sitename = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "ugconthub": "-bovey";
