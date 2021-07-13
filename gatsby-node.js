@@ -142,7 +142,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
     }
-	
+	type AliasPath {
+    alias: String
+  }
 	type FieldLink {
       title: String
       uri: String
@@ -311,6 +313,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_hero_image: ImageField
       relationships: node__pageRelationships
       fields: FieldsPathAlias
+      path: AliasPath
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
