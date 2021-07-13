@@ -215,6 +215,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_hero_image: ImageField
       relationships: node__articleRelationships
       fields: node__articleFields
+      path: AliasPath
     }
     type node__articleRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
@@ -333,6 +334,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
       fields: FieldsPathAlias
+      path: AliasPath
     }
     type node__programField_course_notes implements Node {
       value: String
@@ -692,6 +694,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             drupal_id
             drupal_internal__nid
             title
+            path {
+              alias
+            }
           }
         }
       }
