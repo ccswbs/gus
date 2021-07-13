@@ -676,6 +676,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             drupal_id
             drupal_internal__nid
             title
+            path {
+              alias
+            }
           }
         }
       }
@@ -693,6 +696,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         edges {
           node {
             title
+            path {
+              alias
+            }
             id
             drupal_id
             drupal_internal__nid
@@ -931,8 +937,13 @@ function createNodeAlias(node, alias, helpers){
 
 // use for content types
 function createContentTypeAlias(node, prepend = '') {
-	let alias = `/` + slugify(node.title);
+  let alias = '';
 
+  if (node.path !== ''){
+    alias = node.path.alias;
+  } else{
+    alias = `/` + slugify(node.title);
+  }
 	if (prepend !== '') {
 		alias = `/` + slugify(prepend) + alias;
 	}
