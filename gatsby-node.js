@@ -112,6 +112,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | paragraph__media_text
 	  | paragraph__section
 	  | paragraph__stats_widget
+    | paragraph__section_tabs
+    | paragraph__tab_content
 
     union widgetSectionParagraphUnion =
 	  paragraph__call_to_action
@@ -415,6 +417,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_lead_para_hero: media__image @link(from: "field_lead_para_hero___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
+	type paragraph__tab_content implements Node {
+      drupal_id: String
+      field_tab_title: String
+      field_tab_body: BodyField
+    }
 	type paragraph__links_widget implements Node {
 	  drupal_id: String
 	  field_link_items_description: String
@@ -485,6 +492,13 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__section_buttonsRelationships {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
       field_buttons: [paragraph__button_widget] @link(from:"field_buttons___NODE")
+    }
+    type paragraph__section_tabs implements Node {
+      drupal_id: String
+      relationships: paragraph__section_tabsRelationships
+    }
+    type paragraph__section_tabsRelationships {
+      field_tabs: [paragraph__tab_content] @link(from:"field_tabs___NODE")
     }
 	type paragraph__stats_widget implements Node {
 		drupal_id: String

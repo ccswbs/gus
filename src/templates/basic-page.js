@@ -117,6 +117,17 @@ export const query = graphql`query ($id: String) {
                 }
               }
             }
+	    ... on paragraph__section_tabs {
+              id
+              relationships {
+                field_tabs {
+                  field_tab_title
+                  field_tab_body {
+                    value
+                  }
+                }
+              }
+	    }
             ... on paragraph__links_widget {
               drupal_id
               field_link_items_title

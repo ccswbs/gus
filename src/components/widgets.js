@@ -6,6 +6,7 @@ import LeadPara from './leadPara';
 import MediaText from '../components/mediaText';
 import SectionWidgets from './sectionWidgets';
 import StatsWidget from '../components/statsWidget';
+import PageTabs from './pageTabs';
 import { contentExists } from '../utils/ug-utils';
 
 
@@ -74,8 +75,8 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 		else if (widgetData.__typename==="paragraph__stats_widget") {
 			return <StatsWidget statsWidgetData={widgetData} />			
 		}
-		else if (widgetData.__typename==="paragraph__new_widget") {
-			return(<p>This is Paragraph_new_widget</p>);
+		else if (widgetData.__typename==="paragraph__section_tabs") {
+            		return( <PageTabs pageData={widgetData} />);
 		}
 
 		return null;
