@@ -19,6 +19,8 @@ let _site = process.env._SITE || sitename;
 let _env  = process.env._GATSBY_SOURCE || gatsbySource;
 let _zone = process.env._ZONE || zone;
 
+let _drupalBaseUrl = process.env._DRUPALBASEURL || _protocol + _env + _site + `.` + _zone + `/`;
+
 let metaConfig = require('./config/sites/' + _site + '.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
@@ -77,14 +79,14 @@ module.exports = {
     {
 	  resolve: `gatsby-source-drupal`,
 	  options: {
-		baseUrl: _protocol + _env + _site + `.` + _zone + `/`,
+		baseUrl: _drupalBaseUrl,
 		apiBase: `jsonapi`, // optional, defaults to `jsonapi`
 	  },
     },
 	{
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
-		baseUrl: _protocol + _env + _site + `.` + _zone,
+		baseUrl: _drupalBaseUrl,
         apiBase: `jsonapi`, // optional, defaults to `jsonapi`
         menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },
