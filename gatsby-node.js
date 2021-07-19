@@ -112,6 +112,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  | paragraph__media_text
 	  | paragraph__section
 	  | paragraph__stats_widget
+    | paragraph__section_tabs
+    | paragraph__tab_content
 
     union widgetSectionParagraphUnion =
 	  paragraph__call_to_action
@@ -142,7 +144,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
     }
-	
+	type AliasPath {
+    alias: String
+  }
 	type FieldLink {
       title: String
       uri: String
@@ -213,6 +217,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_hero_image: ImageField
       relationships: node__articleRelationships
       fields: node__articleFields
+      path: AliasPath
     }
     type node__articleRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
@@ -308,10 +313,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
-      body: BodyFieldWithSummary
       field_hero_image: ImageField
       relationships: node__pageRelationships
       fields: FieldsPathAlias
+      path: AliasPath
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
@@ -331,6 +336,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
       fields: FieldsPathAlias
+      path: AliasPath
     }
     type node__programField_course_notes implements Node {
       value: String
@@ -411,6 +417,11 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_lead_para_hero: media__image @link(from: "field_lead_para_hero___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
+	type paragraph__tab_content implements Node {
+      drupal_id: String
+      field_tab_title: String
+      field_tab_body: BodyField
+    }
 	type paragraph__links_widget implements Node {
 	  drupal_id: String
 	  field_link_items_description: String
@@ -439,6 +450,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 	  relationships: paragraph__media_textRelationships
 	}
 	type paragraph__media_textRelationships implements Node {
+    field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
 	  field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
 	}
 	type paragraph__program_statistic implements Node {
@@ -480,6 +492,13 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__section_buttonsRelationships {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
       field_buttons: [paragraph__button_widget] @link(from:"field_buttons___NODE")
+    }
+    type paragraph__section_tabs implements Node {
+      drupal_id: String
+      relationships: paragraph__section_tabsRelationships
+    }
+    type paragraph__section_tabsRelationships {
+      field_tabs: [paragraph__tab_content] @link(from:"field_tabs___NODE")
     }
 	type paragraph__stats_widget implements Node {
 		drupal_id: String
@@ -676,6 +695,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             drupal_id
             drupal_internal__nid
             title
+            path {
+              alias
+            }
           }
         }
       }
@@ -686,6 +708,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
             drupal_id
             drupal_internal__nid
             title
+            path {
+              alias
+            }
           }
         }
       }
@@ -693,6 +718,9 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         edges {
           node {
             title
+            path {
+              alias
+            }
             id
             drupal_id
             drupal_internal__nid
@@ -931,8 +959,13 @@ function createNodeAlias(node, alias, helpers){
 
 // use for content types
 function createContentTypeAlias(node, prepend = '') {
-	let alias = `/` + slugify(node.title);
+  let alias = '';
 
+  if (node.path !== ''){
+    alias = node.path.alias;
+  } else{
+    alias = `/` + slugify(node.title);
+  }
 	if (prepend !== '') {
 		alias = `/` + slugify(prepend) + alias;
 	}

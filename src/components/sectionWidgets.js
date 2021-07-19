@@ -56,9 +56,10 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
                     </div>);
 		} 
 		else if (widgetData.__typename==="paragraph__media_text") {
-			
-			const colClass = "col-xlg-6";			
-			return (<div className="flex-even"><MediaText colClass={colClass} widgetData={widgetData} /></div>);
+            const mediaClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';	
+            const colClassName = "flex-even " + mediaClassName;		
+            const colClass = "col-xlg-12"
+			return (<div className= {colClassName}><MediaText colClass={colClass} widgetData={widgetData} /></div>);
 			
 		}
 		else if (widgetData.__typename==="paragraph__stats_widget") {
