@@ -108,12 +108,19 @@ module.exports = {
       resolve: `gatsby-plugin-asset-path`,
     },
     {
-      resolve: "gatsby-plugin-google-tagmanager",
+      resolve: `gatsby-plugin-google-tagmanager`,
       options: {
         id: "GTM-NRSSDKW",
         includeInDevelopment: false,
       },
     },
+	{
+      resolve: `gatsby-plugin-robots-txt`,
+      options: {
+        host: `https://liveugconthub.uoguelph.dev`,
+        policy: [{ userAgent: '*', disallow: '/' }]
+      }
+    }
   ],
   mapping: {
     "node__article.fields.alias": `PathAlias`,
