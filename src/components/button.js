@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import '../styles/button-widget.css'
 import CallToAction from '../components/callToAction';
+import { Link } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
@@ -39,9 +40,14 @@ function FontAwesomeIconColour (colourChoice) {
 }
 
 function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
+    const aliasData = require('../../config/aliases/aliasfile.yml');
 
-   
-    let buttonLinkURI = buttonData.field_button_link.uri;
+// set the link to the url provided, if internal Drupal link (entity or internal) - clean up the URI to work with Link command,
+// to handel a <noLink>, if external link pass through, otherwise set to null
+	const urlLink = (contentExists(buttonData.field_button_link.uri)) ? (buttonData.field_button_link.uri.includes("entity:node/")) ? 
+		aliasData[buttonData.field_button_link.uri.replace("entity:node/","")]: (buttonData.field_button_link.uri.includes("internal:/")) ? ("/") : (
+            buttonData.field_button_link.uri.includes("<nolink>")) ? null : buttonData.field_button_link.uri :null; 
+
     let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
         contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    
     let btnClassName = (contentExists(buttonClass))? buttonClass: '' ;                                          
@@ -58,16 +64,29 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
 	<React.Fragment key={buttonData.drupal_id}>
     {contentExists(buttonData.field_cta_heading)? 
         <span dangerouslySetInnerHTML={{__html: "<p>" + buttonData.field_cta_heading.processed + "</p>"}} /> : ``}
-	{contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
-		<a href={buttonLinkURI} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
+	
+    {(buttonData.field_button_link.uri.includes("http"))? contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
+		<a href={urlLink} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
 		:
-		<a href={buttonLinkURI} className={buttonClassName}>		
+		<a href={urlLink} className={buttonClassName}>		
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
+        :
+        contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
+		<Link to={urlLink} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
+            <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
+            <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+        </Link>
+		:
+		<Link to={urlLink} className={buttonClassName}>		
+            <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
+            <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+        </Link>
+        
 	}
     </React.Fragment>)
 }
