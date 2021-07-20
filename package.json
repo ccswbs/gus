@@ -26,6 +26,7 @@
     "gatsby-plugin-manifest": "^3.7.1",
     "gatsby-plugin-preact": "^5.7.1",
     "gatsby-plugin-react-helmet": "^4.7.1",
+    "gatsby-plugin-robots-txt": "^1.6.8",
     "gatsby-plugin-sharp": "^3.7.1",
     "gatsby-source-drupal": "^4.7.2",
     "gatsby-source-drupal-menu-links": "^2.0.0",
