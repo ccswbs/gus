@@ -42,7 +42,7 @@ const GridCell = (props) => {
     const columnClasses = setColumnClasses(props.numColumns);
     const classes = `grid-cell ${columnClasses} ${props.extraClasses}`
     const Tag = props.tag;
-console.log(columnClasses, ",", classes, ",", Tag, "Classes")
+
     // General Scenario: heading, image and text below (link and text optional)
     if(contentExists(props.headingLink) && contentExists(props.image)){
         const levelHeading = setHeadingLevel(props.headingLinkLevel);
