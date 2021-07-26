@@ -935,7 +935,7 @@ function processPage(node, contextID, functionToRetrieveAlias, template, helpers
     return alias;
 }
 
-function createNodeAlias(node, alias, helpers){
+async function createNodeAlias(node, alias, helpers){
 	const aliasID = helpers.createNodeId(`alias-${node.drupal_id}`);
 	const aliasData = {
 		key: aliasID,
@@ -954,7 +954,7 @@ function createNodeAlias(node, alias, helpers){
 		}
 	}
 	const aliasNode = Object.assign({}, aliasData, aliasMeta);
-	helpers.createNode(aliasNode);
+	await helpers.createNode(aliasNode);
 }
 
 // use for content types
