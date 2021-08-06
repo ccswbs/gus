@@ -30,7 +30,7 @@ const BasicPage = ({data}) => {
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			
 			{ /**** Header and Title ****/ }
-			<div id="rotator">
+			<div className={!contentExists(imageData) && "no-thumb"} id="rotator">
 				<Hero imgData={imageData} />				
 				<div className="container ft-container">
 					<h1 className="fancy-title">{title}</h1>
