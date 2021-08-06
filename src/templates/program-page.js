@@ -386,7 +386,7 @@ function prepareVariantHeading (variantData) {
 	/>
 	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 	  { /**** Header and Title ****/ }
-	  <div id="rotator">
+	  <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
 		{/* <FetchImages tags={imageTags} /> */}
 		{renderHeaderImage(imageData)}
 		<div className="container ft-container">
