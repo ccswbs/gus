@@ -77,10 +77,14 @@ module.exports = {
       },
     },
     {
-	  resolve: `gatsby-source-drupal`,
+      resolve: `gatsby-source-drupal`,
 	  options: {
 		baseUrl: _drupalBaseUrl,
 		apiBase: `jsonapi`, // optional, defaults to `jsonapi`
+		basicAuth: {
+          	  username: process.env.BASIC_AUTH_USERNAME,
+                  password: process.env.BASIC_AUTH_PASSWORD,
+                },
 	  },
     },
 	{
