@@ -13,9 +13,7 @@ let gatsbySource = 'dev';
 let protocol = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "https://api.": "http://";
 let sitename = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "ugconthub": "-chug";
 let zone = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "uoguelph.dev": "pantheonsite.io";
-// let protocol =  "http://";
-// let sitename =  "-chug";
-// let zone =  "pantheonsite.io";
+
 
 let _protocol = process.env._PROTOCOL || protocol
 let _site = process.env._SITE || sitename;
