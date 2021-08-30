@@ -11,7 +11,7 @@
 let gatsbySource = 'live';
 
 let protocol = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "https://api.": "http://";
-let sitename = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "ugconthub": "-bovey";
+let sitename = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "ugconthub": "-chug";
 let zone = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "uoguelph.dev": "pantheonsite.io";
 
 let _protocol = process.env._PROTOCOL || protocol
@@ -20,7 +20,6 @@ let _env  = process.env._GATSBY_SOURCE || gatsbySource;
 let _zone = process.env._ZONE || zone;
 
 let _drupalBaseUrl = process.env._DRUPALBASEURL || _protocol + _env + _site + `.` + _zone + `/`;
-
 let metaConfig = require('./config/sites/' + _site + '.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
