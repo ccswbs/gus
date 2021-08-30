@@ -20,7 +20,6 @@ let _env  = process.env._GATSBY_SOURCE || gatsbySource;
 let _zone = process.env._ZONE || zone;
 
 let _drupalBaseUrl = process.env._DRUPALBASEURL || _protocol + _env + _site + `.` + _zone + `/`;
-console.log(_drupalBaseUrl)
 let metaConfig = require('./config/sites/' + _site + '.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
