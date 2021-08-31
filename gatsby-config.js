@@ -61,10 +61,12 @@ module.exports = {
       },
     },
     {
-	  resolve: `gatsby-source-drupal`,
-	  options: {
+      resolve: `gatsby-source-drupal`,
+	    options: {
         baseUrl: process.env.DRUPAL_BASEURL,
         apiBase: process.env.DRUPAL_APIBASE,
+        username: process.env.BASIC_AUTH_USERNAME,
+        password: process.env.BASIC_AUTH_PASSWORD,
       },
     },
 	{
