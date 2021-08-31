@@ -79,15 +79,15 @@ module.exports = {
     {
 	  resolve: `gatsby-source-drupal`,
 	  options: {
-		baseUrl: _drupalBaseUrl,
-		apiBase: `jsonapi`, // optional, defaults to `jsonapi`
-	  },
+        baseUrl: process.env.DRUPAL_BASEURL,
+        apiBase: process.env.DRUPAL_APIBASE,
+      },
     },
 	{
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
-		baseUrl: _drupalBaseUrl,
-        apiBase: `jsonapi`, // optional, defaults to `jsonapi`
+        baseUrl: process.env.DRUPAL_BASEURL,
+        apiBase: process.env.DRUPAL_APIBASE,
         menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
       },
     },    
