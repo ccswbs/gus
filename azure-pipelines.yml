@@ -1,85 +1,57 @@
-# Build, test, and deploy the content hub.
-# See: https://docs.microsoft.com/azure/devops/pipelines/languages/php
-#=========================================================================
-# In addition to the environment variables defined in this file, also
-# add the following variables in the Azure Pipelines UI.
-#
-# See: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables
-#
-# ServiceConnection:  Name of the Azure service connection
-# Site:               Name of the site to create
-# Env:                Name of the environment to create
-# Zone:               Name of the domain zone in which to create the site (e.g. uoguelph.dev)
-# PantheonSiteLabel:  Name of the Pantheon site that will serve as the site back-end.
-#=========================================================================
+# Build and deploy content hub 
 
 variables:
-  _gatsby_cache_folder: '.cache'
-  _gatsby_public_folder: 'public'
-  _site: $(Site)
-  _zone: $(Zone)
-  _gatsby_source: $(GatsbySource)
-  _pantheonsitelabel: $(PantheonSiteLabel)
-
-trigger:
-  batch: true
-  branches:
-    include:
-    - master
-    - develop
+  SUBSCRIPTION_ID: '3a1e4cf8-5973-49b0-bebf-d31a390189cf'
+  AZURE_SUBSCRIPTION: 'Pay-As-You-Go(3a1e4cf8-5973-49b0-bebf-d31a390189cf)'
+  AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go(3a1e4cf8-5973-49b0-bebf-d31a390189cf)'
+  RESOURCE_GROUP_NAME: 'chuglivewebrg'
+  STORAGE_ACCOUNT_NAME: 'livechugstorage'
 
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: windows-latest
   demands: npm
 
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - main
+
 steps:
-
-# Setup environment
-- script: ./.ci/env/set
-  displayName: 'Initialize build environment'
-
-- script: ./.ci/env/update-source
-  displayName: 'If applicable, update GatsbySource test environment'
-  condition: eq(variables._gatsby_source, 'test')
-
-- script: 'npm install --only=dev gatsby-cli'
-  displayName: 'Install Gatsby-CLI'
-
 - task: Npm@1
   displayName: 'npm install'
   inputs:
     verbose: false
-
-# Retrieve caches
-- task: CacheBeta@1
+- task: Npm@1
+  displayName: 'npm run build'
   inputs:
-    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_zone)"'
-    path: $(_gatsby_cache_folder)
-  displayName: 'Retrieve cached Gatsby .cache folder'
-
-- task: CacheBeta@1
+    command: 'custom'
+    customCommand: 'run build'
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'az deploy'
   inputs:
-    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_site)" | "$(_zone)"'
-    path: $(_gatsby_public_folder)
-  displayName: 'Retrieve cached Gatsby public folder'
-
-# Build Gatsby
-- script: |
-    npx gatsby build --prefix-paths
-  displayName: 'Gatsby build'
-
-# Publish artifact
-- task: ArchiveFiles@2
-  displayName: 'Archive $(Build.SourcesDirectory)'
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
+    subscriptionId: $(SUBSCRIPTION_ID)
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: $(RESOURCE_GROUP_NAME)
+    location: 'Canada East'
+    templateLocation: 'Linked artifact'
+    csmFile: 'azuredeploy.json'
+    deploymentMode: 'Complete'
+- task: AzureCLI@2
+  displayName: 'enable static website'
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/public'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-
-- task: PublishBuildArtifacts@1
-  displayName: Publish Build Artifact
+    azureSubscription: $(AZURE_SUBSCRIPTION)
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
+- task: AzureFileCopy@3
+  displayName: 'copy files'
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    artifactName: gatsby_build_artifact
+    SourcePath: 'public'
+    azureSubscription: $(AZURE_SUBSCRIPTION)
+    Destination: 'AzureBlob'
+    storage: $(STORAGE_ACCOUNT_NAME)
+    ContainerName: '$web'
