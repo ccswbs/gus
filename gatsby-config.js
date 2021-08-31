@@ -4,23 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
-/**
- * Set the gatsbySource variable to the pantheon prefix - live, dev, test, or your multidev
- */
-
-let gatsbySource = 'live';
-
-let protocol = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "https://api.": "http://";
-let sitename = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "ugconthub": "-chug";
-let zone = (gatsbySource === 'live' || gatsbySource === 'dev' || gatsbySource === 'test') ? "uoguelph.dev": "pantheonsite.io";
-
-let _protocol = process.env._PROTOCOL || protocol
-let _site = process.env._SITE || sitename;
-let _env  = process.env._GATSBY_SOURCE || gatsbySource;
-let _zone = process.env._ZONE || zone;
-
-let _drupalBaseUrl = process.env._DRUPALBASEURL || _protocol + _env + _site + `.` + _zone + `/`;
-let metaConfig = require('./config/sites/' + _site + '.js');
+let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
 	metaConfig['title'] = "Gatsby UG Starter Template";
