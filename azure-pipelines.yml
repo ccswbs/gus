@@ -1,9 +1,8 @@
 # Build and deploy content hub 
 
 variables:
-  SUBSCRIPTION_ID: '3a1e4cf8-5973-49b0-bebf-d31a390189cf'
-  AZURE_SUBSCRIPTION: 'Pay-As-You-Go(3a1e4cf8-5973-49b0-bebf-d31a390189cf)'
-  AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go(3a1e4cf8-5973-49b0-bebf-d31a390189cf)'
+  AZURE_SUBSCRIPTION: 'Pay-As-You-Go($(subscription_id))'
+  AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go($(subscription_id))'
   RESOURCE_GROUP_NAME: 'chuglivewebrg'
   STORAGE_ACCOUNT_NAME: 'livechugstorage'
 
@@ -33,7 +32,7 @@ steps:
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
-    subscriptionId: $(SUBSCRIPTION_ID)
+    subscriptionId: $(subscription_id)
     action: 'Create Or Update Resource Group'
     resourceGroupName: $(RESOURCE_GROUP_NAME)
     location: 'Canada East'
