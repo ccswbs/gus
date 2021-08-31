@@ -7,12 +7,12 @@
 let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
-	metaConfig['title'] = "Gatsby UG Starter Template";
-	metaConfig['description'] = "Description of the site";
-	metaConfig['author'] = "Author of site";
-	metaConfig['GAtrackingID'] = "";
-	metaConfig['IGuser'] = "";
-	metaConfig['menus'] = "";
+    metaConfig['title'] = "Gatsby UG Starter Template";
+    metaConfig['description'] = "Description of the site";
+    metaConfig['author'] = "Author of site";
+    metaConfig['GAtrackingID'] = "";
+    metaConfig['IGuser'] = "";
+    metaConfig['menus'] = "";
 }
 
 module.exports = {
@@ -20,15 +20,15 @@ module.exports = {
     title: metaConfig['title'],
     description: metaConfig['description'],
     author: metaConfig['author'],
-	menus: metaConfig['menus'],
+    menus: metaConfig['menus'],
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-preact`,
-	`gatsby-plugin-image`,
+    `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
-	`gatsby-plugin-gatsby-cloud`,
+    `gatsby-plugin-gatsby-cloud`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -43,11 +43,11 @@ module.exports = {
       },
     },
     {
-	  resolve: `gatsby-plugin-sharp`,
-	  options: {
-		defaultQuality: 90,
-	  },
-	},
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaultQuality: 90,
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -62,14 +62,16 @@ module.exports = {
     },
     {
       resolve: `gatsby-source-drupal`,
-	    options: {
+        options: {
         baseUrl: process.env.DRUPAL_BASEURL,
         apiBase: process.env.DRUPAL_APIBASE,
-        username: process.env.BASIC_AUTH_USERNAME,
-        password: process.env.BASIC_AUTH_PASSWORD,
+        basicAuth: {
+          username: process.env.BASIC_AUTH_USERNAME,
+          password: process.env.BASIC_AUTH_PASSWORD,
+        },
       },
     },
-	{
+    {
       resolve: `gatsby-source-drupal-menu-links`,
       options: {
         baseUrl: process.env.DRUPAL_BASEURL,
@@ -100,7 +102,7 @@ module.exports = {
         includeInDevelopment: false,
       },
     },
-	{
+    {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
         host: `https://liveugconthub.uoguelph.dev`,
