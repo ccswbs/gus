@@ -171,7 +171,6 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 		const courseHeading = "Selected Courses";
 		const courseID = "pills-courses";
     if (activeTabExists === false) {
-      activeValue = true;
       activeTabExists = true;
     } else {
       activeValue = false;
@@ -198,7 +197,6 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 	if (variantDataHeading !== '') {
 		const variantID = "pills-variants";
     if (activeTabExists === false) {
-      activeValue = true;
       activeTabExists = true;
     } else {
       activeValue = false;
@@ -224,7 +222,6 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 	// prep TAB 3 - Careers
 	if (!contentIsNullOrEmpty(careerData)) {
     if (activeTabExists === false) {
-      activeValue = true;
       activeTabExists = true;
     } else {
       activeValue = false;
@@ -252,7 +249,6 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 	// prep TAB 4 - Employers
 	if (!contentIsNullOrEmpty(employerData)) {
     if (activeTabExists === false) {
-      activeValue = true;
       activeTabExists = true;
     } else {
       activeValue = false;
