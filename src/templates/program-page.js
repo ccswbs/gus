@@ -170,7 +170,12 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 	if (!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)) {
 		const courseHeading = "Selected Courses";
 		const courseID = "pills-courses";
-		activeTabExists = true;
+    if (activeTabExists === false) {
+      activeValue = true;
+      activeTabExists = true;
+    } else {
+      activeValue = false;
+    }
 		checkIfContentAvailable = true;
 		key++;
 
@@ -192,7 +197,12 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 	// prep TAB 2 - Variants
 	if (variantDataHeading !== '') {
 		const variantID = "pills-variants";
-		activeValue = (activeTabExists === true) ? false : true;
+    if (activeTabExists === false) {
+      activeValue = true;
+      activeTabExists = true;
+    } else {
+      activeValue = false;
+    }
 		checkIfContentAvailable = true;
 		key++;
 
@@ -213,7 +223,12 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 
 	// prep TAB 3 - Careers
 	if (!contentIsNullOrEmpty(careerData)) {
-		activeValue = (activeTabExists === true) ? false : true;
+    if (activeTabExists === false) {
+      activeValue = true;
+      activeTabExists = true;
+    } else {
+      activeValue = false;
+    }
 		checkIfContentAvailable = true;
 		const careersHeading = "Careers";
 		const careersID = "pills-careers";
@@ -236,7 +251,12 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 	
 	// prep TAB 4 - Employers
 	if (!contentIsNullOrEmpty(employerData)) {
-		activeValue = (activeTabExists === true) ? false : true;
+    if (activeTabExists === false) {
+      activeValue = true;
+      activeTabExists = true;
+    } else {
+      activeValue = false;
+    }
 		checkIfContentAvailable = true;
 		const employerHeading = "Employers";
 		const employerID = "pills-employer";
