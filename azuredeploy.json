@@ -3,19 +3,17 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "site": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "chug"
     },
     "env": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "live"
     },
     "zone": {
       "type": "string",
       "defaultValue": "uoguelph.dev"
-    },
-    "pantheonsitelabel": {
-      "type": "string"
     }
-    
   },
   "variables": {
     "cdnProfileName": "[concat(parameters('env'), parameters('site'), 'cdn')]",
@@ -24,8 +22,6 @@
     "domainProfileName": "[concat(parameters('env'), parameters('site'),'-uoguelph-dev')]",
     "domainHostName": "[concat(parameters('env'), parameters('site'),'.uoguelph.dev')]",
     "dnsResourceGroup": "ug-ccs-wds-dns-rg",
-    "apiCnameProfileName": "[concat('api.',parameters('env'),parameters('site'))]",
-    "apiCnameRecordName": "[concat(parameters('env'),'-',parameters('pantheonsitelabel'),'.pantheonsite.io')]",
     "cnameProfileName": "[concat(parameters('env'), parameters('site'))]",
     "cnameRecordName": "[concat(parameters('env'), parameters('site'),'endpoint.azureedge.net')]"
   },
@@ -33,27 +29,8 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
-      "name": "addDNSRecord_API",
-      "resourceGroup": "[variables('dnsResourceGroup')]",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "https://raw.githubusercontent.com/ccswbs/azure-resource-manager-templates/master/dns-cname-uoguelphdev/template.json"
-        },
-        "parameters": {
-          "name": {"value": "[variables('apiCnameProfileName')]"},
-          "value": {"value": "[variables('apiCnameRecordName')]"},
-          "zone": {"value": "[parameters('zone')]"}
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2018-05-01",
       "name": "addDNSRecord",
-      "dependsOn": [
-        "[resourceId(variables('dnsResourceGroup'),'Microsoft.Resources/deployments', 'addDNSRecord_API')]"
-      ],
+      "dependsOn": [],
       "resourceGroup": "[variables('dnsResourceGroup')]",
       "properties": {
         "mode": "Incremental",
@@ -136,8 +113,7 @@
       "type": "Microsoft.Cdn/profiles",
       "apiVersion": "2016-04-02",
       "dependsOn": [
-        "[resourceId(variables('dnsResourceGroup'),'Microsoft.Resources/deployments', 'addDNSRecord')]",
-        "[resourceId(variables('dnsResourceGroup'),'Microsoft.Resources/deployments', 'addDNSRecord_API')]"
+        "[resourceId(variables('dnsResourceGroup'),'Microsoft.Resources/deployments', 'addDNSRecord')]"
       ],
       "location": "[resourceGroup().location]",
       "sku": {
