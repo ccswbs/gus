@@ -672,7 +672,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
     }
 }
 
-exports.createPages = async ({ graphql, actions, createContentDigest, createNodeId, reporter }) => {
+exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
     const pageTemplate = path.resolve('./src/templates/basic-page.js');
@@ -680,7 +680,6 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     const programTemplate = path.resolve('./src/templates/program-page.js');
     
     const helpers = Object.assign({}, actions, {
-        createContentDigest,
         createNodeId,
     })
 
@@ -822,7 +821,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                 aliases[node.drupal_internal__nid] = processPage(
                     node, 
                     node.id, 
-                    createContentTypeAlias, 
+                    node.path, 
                     pageTemplate, 
                     helpers
                 );
@@ -836,7 +835,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                 aliases[node.drupal_internal__nid] = processPage(
                     node, 
                     node.id, 
-                    createArticleAlias, 
+                    node.path, 
                     articleTemplate, 
                     helpers
                 );
@@ -850,7 +849,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                 aliases[node.drupal_internal__nid] = processPage(
                     node, 
                     node.relationships.field_program_acronym.id, 
-                    createProgramAlias, 
+                    node.path, 
                     programTemplate, 
                     helpers
                 );
@@ -920,9 +919,8 @@ function createAliasFile(aliases) {
   fs.writeFileSync(aliasFile, yamlStr, 'utf8'); 
  }
  
-function processPage(node, contextID, functionToRetrieveAlias, template, helpers) {
-    let alias = functionToRetrieveAlias(node);
-    createNodeAlias(node, alias, helpers);
+function processPage(node, contextID, nodePath, template, helpers) {
+    let alias = createContentTypeAlias(nodePath);
 
     helpers.createPage({
       path: alias,
@@ -935,65 +933,17 @@ function processPage(node, contextID, functionToRetrieveAlias, template, helpers
     return alias;
 }
 
-async function createNodeAlias(node, alias, helpers){
-    const aliasID = helpers.createNodeId(`alias-${node.drupal_id}`);
-    const aliasData = {
-        key: aliasID,
-        value: alias,
-    }
-    const aliasContent = JSON.stringify(aliasData);
-    const aliasMeta = {
-        id: aliasID,
-        parent: null,
-        children: [],
-        internal: {
-            type: `PathAlias`,
-            mediaType: `text/html`,
-            content: aliasContent,
-            contentDigest: helpers.createContentDigest(aliasData)
-        }
-    }
-    const aliasNode = Object.assign({}, aliasData, aliasMeta);
-    await helpers.createNode(aliasNode);
-}
-
 // use for content types
-function createContentTypeAlias(node, prepend = '') {
-  let alias = '';
+function createContentTypeAlias(nodePath) {
+    let alias = '';
 
-  if (node.path !== ''){
-    alias = node.path.alias;
-  } else{
-    alias = `/` + slugify(node.title);
-  }
-    if (prepend !== '') {
-        alias = `/` + slugify(prepend) + alias;
+    if (nodePath !== '') {
+        alias = nodePath.alias;
+    } else {
+        alias = `/` + slugify(node.title);
     }
-    
     return alias;
 }
-
-// use for taxonomies
-function createTaxonomyAlias(node, prepend = '') {
-    let alias = `/` + slugify(node.name);
-
-    if (prepend !== '') {
-        alias = `/` + slugify(prepend) + alias;
-    }
-
-    return alias;
-}
-
-function createProgramAlias(node) {
-    let alias = createContentTypeAlias(node, `programs`)
-    return alias;
-}
-
-function createArticleAlias(node) {
-    let alias = createContentTypeAlias(node, `news`)
-    return alias;
-}
-
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function slugify(string) {
