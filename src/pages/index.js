@@ -13,14 +13,14 @@ const IndexPage = ({ data }) => (
 				<h2>Pages</h2>
 				<ul>
 					{data.allNodePage.edges.map((edge, index) => (
-						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
+						<li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li>
 					))}
 				</ul>
 
 				<h2>Programs</h2>
 				<ul>
 					{data.programs.edges.map((edge, index) => (
-						<li key={index}><Link to={edge.node.fields.alias.value}>{edge.node.title}</Link></li>
+						<li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li>
 					))}
 				</ul>
 
@@ -40,10 +40,8 @@ export const query = graphql`
 				node {
 					title
 					drupal_id
-					fields {
-						alias {
-							value
-						}
+					path {
+						alias
 					}
 				}
 			}
@@ -54,10 +52,8 @@ export const query = graphql`
 					drupal_id
 					drupal_internal__nid
 					title
-					fields {
-						alias {
-							value
-						}
+					path {
+						alias
 					}
 				}
 			}
