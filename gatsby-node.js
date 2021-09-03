@@ -72,61 +72,61 @@ const yaml = require('js-yaml');
 const util = require('util');
 
 exports.createSchemaCustomization = ({ actions }) => {
-	const { createTypes } = actions
+    const { createTypes } = actions
 
-	const typeDefs = `
-	
-	interface TaxonomyInterface implements Node {
+    const typeDefs = `
+    
+    interface TaxonomyInterface implements Node {
       id: ID!
       drupal_id: String
       name: String
     }
-	interface WidgetParagraphInterface implements Node {
+    interface WidgetParagraphInterface implements Node {
       id: ID!
       drupal_id: String
     }
 
-	union media__imagemedia__remote_videoUnion =
-	  media__image
-	  | media__remote_video
-	  
-	union relatedParagraphUnion = 
-	  paragraph__program_variants
-	  | paragraph__general_text
+    union media__imagemedia__remote_videoUnion =
+      media__image
+      | media__remote_video
+      
+    union relatedParagraphUnion = 
+      paragraph__program_variants
+      | paragraph__general_text
 
-	union relatedTaxonomyUnion =
-	  taxonomy_term__tags
-	  | taxonomy_term__specializations
-	  | taxonomy_term__programs
-	  | taxonomy_term__degrees
-	  | taxonomy_term__topics
-	  | taxonomy_term__units
-    | taxonomy_term__testimonial_type
+    union relatedTaxonomyUnion =
+      taxonomy_term__tags
+      | taxonomy_term__specializations
+      | taxonomy_term__programs
+      | taxonomy_term__degrees
+      | taxonomy_term__topics
+      | taxonomy_term__units
+      | taxonomy_term__testimonial_type
 
-	union widgetParagraphUnion =
+    union widgetParagraphUnion =
       paragraph__call_to_action
-	  | paragraph__general_text
-	  | paragraph__lead_paragraph
+      | paragraph__general_text
+      | paragraph__lead_paragraph
       | paragraph__link_item
       | paragraph__links_widget
-	  | paragraph__media_text
-	  | paragraph__section
-	  | paragraph__stats_widget
-    | paragraph__section_tabs
-    | paragraph__tab_content
+      | paragraph__media_text
+      | paragraph__section
+      | paragraph__stats_widget
+      | paragraph__section_tabs
+      | paragraph__tab_content
 
     union widgetSectionParagraphUnion =
-	  paragraph__call_to_action
-	  | paragraph__general_text
-	  | paragraph__lead_paragraph
-	  | paragraph__link_item
-	  | paragraph__links_widget
-	  | paragraph__media_text
-	  | paragraph__stats_widget
-    | paragraph__section_buttons
-    | paragraph__button_widget
+      paragraph__call_to_action
+      | paragraph__general_text
+      | paragraph__lead_paragraph
+      | paragraph__link_item
+      | paragraph__links_widget
+      | paragraph__media_text
+      | paragraph__stats_widget
+      | paragraph__section_buttons
+      | paragraph__button_widget
 
-	type BodyField {
+    type BodyField {
       processed: String
       value: String
       format: String
@@ -144,27 +144,27 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
     }
-	type AliasPath {
-    alias: String
-  }
-	type FieldLink {
+    type AliasPath {
+      alias: String
+    }
+    type FieldLink {
       title: String
       uri: String
     }
-	type FieldsPathAlias {
+    type FieldsPathAlias {
       alias: PathAlias @link
     }
-	
-	type ImageField implements Node {
+    
+    type ImageField implements Node {
       alt: String
     }
-	
-	type InstaNode implements Node {
+    
+    type InstaNode implements Node {
       original: String
       caption: String
     }
 
-	type media__image implements Node {
+    type media__image implements Node {
       drupal_id: String
       name: String
       field_media_image: ImageField
@@ -178,36 +178,36 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-	type media__remote_video implements Node {
-	  name: String
-	  field_media_oembed_video: String
-	  relationships: media__remote_videoRelationships
-	}
-	type media__remote_videoRelationships implements Node {
-	  field_media_file: file__file @link(from: "field_media_file___NODE")
-    field_video_cc: file__file @link(from: "field_video_cc___NODE")
-	}
-	
-	type MenuItems implements Node {
-	  parent: Node
-	  enabled: Boolean
-	  menu_name: String
-	  route: MenuItemsRoute
-	  title: String
-	  description: String
-	  url: String
-	  weight: Int
-	  childrenMenuItems: [MenuItems]
-	}
-	type MenuItemsRoute implements Node {
-	  name: String
-	  parameters: MenuItemsRouteParameters
-	}
-	type MenuItemsRouteParameters implements Node {
-	  node: String
-	}
-	
-	type node__article implements Node {
+    type media__remote_video implements Node {
+      name: String
+      field_media_oembed_video: String
+      relationships: media__remote_videoRelationships
+    }
+    type media__remote_videoRelationships implements Node {
+      field_media_file: file__file @link(from: "field_media_file___NODE")
+      field_video_cc: file__file @link(from: "field_video_cc___NODE")
+    }
+    
+    type MenuItems implements Node {
+      parent: Node
+      enabled: Boolean
+      menu_name: String
+      route: MenuItemsRoute
+      title: String
+      description: String
+      url: String
+      weight: Int
+      childrenMenuItems: [MenuItems]
+    }
+    type MenuItemsRoute implements Node {
+      name: String
+      parameters: MenuItemsRouteParameters
+    }
+    type MenuItemsRouteParameters implements Node {
+      node: String
+    }
+    
+    type node__article implements Node {
       changed: Date @dateformat
       created: Date @dateformat
       drupal_id: String
@@ -295,21 +295,21 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_image: file__file @link(from: "field_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
-	type node__custom_footer implements Node {
-	  drupal_id: String
+    type node__custom_footer implements Node {
+      drupal_id: String
       drupal_internal__nid: Int
-	  body: BodyFieldWithSummary
-	  relationships: node__custom_footerRelationships
-	  fields: node__custom_footerFields
-	}
-	type node__custom_footerFields implements Node {
+      body: BodyFieldWithSummary
+      relationships: node__custom_footerRelationships
+      fields: node__custom_footerFields
+    }
+    type node__custom_footerFields implements Node {
       tags: [String]
     }
-	type node__custom_footerRelationships implements Node {
-	  field_footer_logo: [media__image] @link(from: "field_footer_logo___NODE")
-	  field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-	  field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
-	}
+    type node__custom_footerRelationships implements Node {
+      field_footer_logo: [media__image] @link(from: "field_footer_logo___NODE")
+      field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+      field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
+    }
     type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
@@ -322,7 +322,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }	
+    }   
     type node__link_url implements Node {
       title: String
       uri: String
@@ -346,8 +346,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__programField_program_overview implements Node {
       value: String
       format: String
-      processed: String		
-    }	
+      processed: String     
+    }   
     type node__programRelationships implements Node {
       field_program_acronym: taxonomy_term__programs @link(from: "field_program_acronym___NODE")
       field_courses: [node__course] @link(from: "field_courses___NODE")
@@ -358,15 +358,15 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
     }
     type node__testimonial implements Node {
-        drupal_id: String
-        drupal_internal__nid: Int
-        title: String
-        body: BodyFieldWithSummary
-        field_testimonial_person_desc: String
-        field_hero_image: ImageField
-        field_home_profile: FieldLink
-        relationships: node__testimonialRelationships
-        fields: node__testimonialFields
+      drupal_id: String
+      drupal_internal__nid: Int
+      title: String
+      body: BodyFieldWithSummary
+      field_testimonial_person_desc: String
+      field_hero_image: ImageField
+      field_home_profile: FieldLink
+      relationships: node__testimonialRelationships
+      fields: node__testimonialFields
     }
     type node__testimonialFields implements Node {
       tags: [String]
@@ -374,7 +374,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }	
+    }   
     type paragraph__button_widget implements Node {
       drupal_id: String
       field_button_link: FieldLink
@@ -382,7 +382,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_formatted_title: FieldFormattedTitle
       field_cta_heading: FieldFormattedTitle
       relationships: paragraph__button_widgetRelationships
-  }
+    }
     type paragraph__button_widgetRelationships {
       field_cta_analytics_goal: taxonomy_term__goals @link(from: "field_cta_analytics_goal___NODE")
       field_button_style:taxonomy_term__button_styles @link(from: "field_button_style___NODE")
@@ -400,61 +400,61 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
-	type paragraph__general_text implements Node {
+    type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
     }
     type paragraph__general_textRelationships {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
-	type paragraph__lead_paragraph implements Node {
+    type paragraph__lead_paragraph implements Node {
       drupal_id: String
       field_lead_paratext: BodyField
       relationships: node__lead_paragraphRelationships
     }
 
-  type node__lead_paragraphRelationships implements Node {
+    type node__lead_paragraphRelationships implements Node {
       field_lead_para_hero: media__image @link(from: "field_lead_para_hero___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
-	type paragraph__tab_content implements Node {
+    type paragraph__tab_content implements Node {
       drupal_id: String
       field_tab_title: String
       field_tab_body: BodyField
     }
-	type paragraph__links_widget implements Node {
-	  drupal_id: String
-	  field_link_items_description: String
-	  field_link_items_title: String	  
-	  relationships: paragraph__links_widgetRelationships
-	}
-	type paragraph__links_widgetRelationships implements Node {
-	  field_link_items: [paragraph__link_item] @link(from: "field_link_items___NODE")
-	}
-	type paragraph__link_item implements Node {
-	  drupal_id: String
-	  field_link_description: String
-	  field_link_image: media__image @link(from: "field_link_image___NODE")
-	  field_link_url: FieldLink
-	  relationships: paragraph__link_itemRelationships
-	}
-	type paragraph__link_itemRelationships implements Node {
-	  drupal_id: String
-	  paragraph__links_widget: [paragraph__links_widget] @link(from: "paragraph__links_widget___NODE")
-	  field_link_image: media__image @link(from: "field_link_image___NODE")
-	}
-	type paragraph__media_text implements Node {
-	  field_media_text_title: String
-	  field_media_text_desc: BodyField
-	  field_media_text_links: [FieldLink]	  
-	  relationships: paragraph__media_textRelationships
-	}
-	type paragraph__media_textRelationships implements Node {
-    field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
-	  field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
-	}
-	type paragraph__program_statistic implements Node {
-      drupal_id: String	  
+    type paragraph__links_widget implements Node {
+      drupal_id: String
+      field_link_items_description: String
+      field_link_items_title: String      
+      relationships: paragraph__links_widgetRelationships
+    }
+    type paragraph__links_widgetRelationships implements Node {
+      field_link_items: [paragraph__link_item] @link(from: "field_link_items___NODE")
+    }
+    type paragraph__link_item implements Node {
+      drupal_id: String
+      field_link_description: String
+      field_link_image: media__image @link(from: "field_link_image___NODE")
+      field_link_url: FieldLink
+      relationships: paragraph__link_itemRelationships
+    }
+    type paragraph__link_itemRelationships implements Node {
+      drupal_id: String
+      paragraph__links_widget: [paragraph__links_widget] @link(from: "paragraph__links_widget___NODE")
+      field_link_image: media__image @link(from: "field_link_image___NODE")
+    }
+    type paragraph__media_text implements Node {
+      field_media_text_title: String
+      field_media_text_desc: BodyField
+      field_media_text_links: [FieldLink]     
+      relationships: paragraph__media_textRelationships
+    }
+    type paragraph__media_textRelationships implements Node {
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+      field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
+    }
+    type paragraph__program_statistic implements Node {
+      drupal_id: String   
       field_stat_range: Boolean
       field_stat_value: String
       field_stat_value_end: String
@@ -476,10 +476,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_variant_name: taxonomy_term__program_variant_type
       field_variant_type: taxonomy_term__program_variant_type @link(from: "field_variant_type___NODE")
     }
-	type paragraph__section implements Node & WidgetParagraphInterface {
+    type paragraph__section implements Node & WidgetParagraphInterface {
       drupal_id: String
-	  field_section_classes: String
-	  field_section_title: String
+      field_section_classes: String
+      field_section_title: String
       relationships: paragraph__sectionRelationships
     }
     type paragraph__sectionRelationships implements Node {
@@ -500,20 +500,20 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__section_tabsRelationships {
       field_tabs: [paragraph__tab_content] @link(from:"field_tabs___NODE")
     }
-	type paragraph__stats_widget implements Node {
-		drupal_id: String
-		relationships: paragraph__stats_widgetRelationships
-	}
-	type paragraph__stats_widgetRelationships implements Node {
-		field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
+    type paragraph__stats_widget implements Node {
+      drupal_id: String
+      relationships: paragraph__stats_widgetRelationships
+    }
+    type paragraph__stats_widgetRelationships implements Node {
+        field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
     field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
-	}
-	
-	  type PathAlias implements Node {
+    }
+    
+    type PathAlias implements Node {
       value: String
       alias: String
     }
-	  type TaxonomyDescription {
+    type TaxonomyDescription {
       processed: String
       value: String
       format: String
@@ -541,7 +541,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       field_goal_action: String
     }
-	  type taxonomy_term__news_category implements Node & TaxonomyInterface {
+      type taxonomy_term__news_category implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
@@ -612,81 +612,81 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.onCreateNode = ({ node, createNodeId, actions }) => {
-	const { createNodeField } = actions
+    const { createNodeField } = actions
 
-	// Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
-	// INSTRUCTION: If you've added a new content-type and it contains a field that references
-	// multiple vocabularies, then add it to the if statement
-	if (node.internal.type === `media__image` || 
-		node.internal.type === `node__article` || 
-		node.internal.type === `node__call_to_action` ||
-		node.internal.type === `node__career` || 
-		node.internal.type === `node__course` || 
-		node.internal.type === `node__custom_footer` ||
-		node.internal.type === `node__employer` ||
-		node.internal.type === `node__page` || 
-		node.internal.type === `node__testimonial`
-	) {
-	createNodeField({
-		node,
-		name: `tags`,
-		value: node.relationships.field_tags___NODE,
-		})
-	}
+    // Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
+    // INSTRUCTION: If you've added a new content-type and it contains a field that references
+    // multiple vocabularies, then add it to the if statement
+    if (node.internal.type === `media__image` || 
+        node.internal.type === `node__article` || 
+        node.internal.type === `node__call_to_action` ||
+        node.internal.type === `node__career` || 
+        node.internal.type === `node__course` || 
+        node.internal.type === `node__custom_footer` ||
+        node.internal.type === `node__employer` ||
+        node.internal.type === `node__page` || 
+        node.internal.type === `node__testimonial`
+    ) {
+    createNodeField({
+        node,
+        name: `tags`,
+        value: node.relationships.field_tags___NODE,
+        })
+    }
 
-	// Handle nodes that require page aliases
-	// INSTRUCTION: If you've added a new content-type and need each node to generate a page
-	// then add it to the following if statement
-	if (node.internal.type === `node__article` || 
-		node.internal.type === `node__page` || 
-		node.internal.type === `node__program` ) {
+    // Handle nodes that require page aliases
+    // INSTRUCTION: If you've added a new content-type and need each node to generate a page
+    // then add it to the following if statement
+    if (node.internal.type === `node__article` || 
+        node.internal.type === `node__page` || 
+        node.internal.type === `node__program` ) {
         
-		/* Create page path */
-		const aliasID = createNodeId(`alias-${node.drupal_id}`);
+        /* Create page path */
+        const aliasID = createNodeId(`alias-${node.drupal_id}`);
 
-		// add  mapped alias node as a field
-		createNodeField({
-			node,
-			name: "alias",
-			value: aliasID,
-		})
+        // add  mapped alias node as a field
+        createNodeField({
+            node,
+            name: "alias",
+            value: aliasID,
+        })
 
-		/* Set content field for search */
-		/*    - return body of content */
-		if (typeof node.body !== 'undefined' && node.body !== null) {
-			content = `${node.body.processed}`
-		}
-		/*    - return description of taxonomy */
-		else if (typeof node.description !== 'undefined' && node.description !== null) {
-			content = `${node.description.processed}`
-		}
-		/*    - set default content */
-		else {
-			content = ''
-		}
-		createNodeField({
-			node,
-			name: `content`,
-			value: content,
-		})
-	}
+        /* Set content field for search */
+        /*    - return body of content */
+        if (typeof node.body !== 'undefined' && node.body !== null) {
+            content = `${node.body.processed}`
+        }
+        /*    - return description of taxonomy */
+        else if (typeof node.description !== 'undefined' && node.description !== null) {
+            content = `${node.description.processed}`
+        }
+        /*    - set default content */
+        else {
+            content = ''
+        }
+        createNodeField({
+            node,
+            name: `content`,
+            value: content,
+        })
+    }
 }
 
 exports.createPages = async ({ graphql, actions, createContentDigest, createNodeId, reporter }) => {
 
-	// INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
-	const pageTemplate = path.resolve('./src/templates/basic-page.js');
-	const articleTemplate = path.resolve('./src/templates/article-page.js');
-	const programTemplate = path.resolve('./src/templates/program-page.js');
-	
-	const helpers = Object.assign({}, actions, {
-		createContentDigest,
-		createNodeId,
-	})
+    // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
+    const pageTemplate = path.resolve('./src/templates/basic-page.js');
+    const articleTemplate = path.resolve('./src/templates/article-page.js');
+    const programTemplate = path.resolve('./src/templates/program-page.js');
+    
+    const helpers = Object.assign({}, actions, {
+        createContentDigest,
+        createNodeId,
+    })
 
-	// INSTRUCTION: Query for menu and page template content here
+    // INSTRUCTION: Query for menu and page template content here
 
-	const result = await graphql(`
+    const result = await graphql(`
     {
       pages: allNodePage {
         edges {
@@ -738,7 +738,7 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
         edges {
           node {
             title
-			description
+            description
             menu_name
             id
             parent {
@@ -755,28 +755,28 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
                 id
                 url
                 title
-				description
-				parent {
-				  id
-				}
+                description
+                parent {
+                  id
+                }
                 children {
                   ... on MenuItems {
                     id
                     url
                     title
-					description
-					parent {
-					  id
-					}
+                    description
+                    parent {
+                      id
+                    }
                     children {
                       ... on MenuItems {
                         id
                         url
                         title
-						description
-						parent {
-						  id
-						}
+                        description
+                        parent {
+                          id
+                        }
                         route {
                           parameters {
                             node
@@ -804,115 +804,115 @@ exports.createPages = async ({ graphql, actions, createContentDigest, createNode
     }
   `)
 
-	if (result.errors) {
-		reporter.panicOnBuild('ERROR: Loading "createPages" query')
-	}
+    if (result.errors) {
+        reporter.panicOnBuild('ERROR: Loading "createPages" query')
+    }
 
-	if (result.data !== undefined) {
+    if (result.data !== undefined) {
 
-		// INSTRUCTION: Create a page for each node by processing the results of your query here
-		// Each content type should have its own if statement code snippet
+        // INSTRUCTION: Create a page for each node by processing the results of your query here
+        // Each content type should have its own if statement code snippet
 
-		let aliases = {};
+        let aliases = {};
 
-		// process page nodes
-		if (result.data.pages !== undefined) {
-			const pages = result.data.pages.edges;
-			pages.forEach(( { node }, index) => {
-				aliases[node.drupal_internal__nid] = processPage(
-					node, 
-					node.id, 
-					createContentTypeAlias, 
-					pageTemplate, 
-					helpers
-				);
-			})
-		}
+        // process page nodes
+        if (result.data.pages !== undefined) {
+            const pages = result.data.pages.edges;
+            pages.forEach(( { node }, index) => {
+                aliases[node.drupal_internal__nid] = processPage(
+                    node, 
+                    node.id, 
+                    createContentTypeAlias, 
+                    pageTemplate, 
+                    helpers
+                );
+            })
+        }
 
-		// process article nodes
-		if (result.data.articles !== undefined) {
-			const articles = result.data.articles.edges;
-			articles.forEach(( { node }, index) => {
-				aliases[node.drupal_internal__nid] = processPage(
-					node, 
-					node.id, 
-					createArticleAlias, 
-					articleTemplate, 
-					helpers
-				);
-			})
-		}
+        // process article nodes
+        if (result.data.articles !== undefined) {
+            const articles = result.data.articles.edges;
+            articles.forEach(( { node }, index) => {
+                aliases[node.drupal_internal__nid] = processPage(
+                    node, 
+                    node.id, 
+                    createArticleAlias, 
+                    articleTemplate, 
+                    helpers
+                );
+            })
+        }
 
-		// process program nodes
-		if (result.data.programs !== undefined) {
-			const programs = result.data.programs.edges;
-			programs.forEach(( { node }, index) => {
-				aliases[node.drupal_internal__nid] = processPage(
-					node, 
-					node.relationships.field_program_acronym.id, 
-					createProgramAlias, 
-					programTemplate, 
-					helpers
-				);
-			})
-		}
+        // process program nodes
+        if (result.data.programs !== undefined) {
+            const programs = result.data.programs.edges;
+            programs.forEach(( { node }, index) => {
+                aliases[node.drupal_internal__nid] = processPage(
+                    node, 
+                    node.relationships.field_program_acronym.id, 
+                    createProgramAlias, 
+                    programTemplate, 
+                    helpers
+                );
+            })
+        }
 
-		
-		// process menu nodes and pass through aliases
-		if (result.data.menus !== undefined) {			
-			const menus = result.data.menus.edges;
-			const config = require('./gatsby-config');
-			const menuNames = config.siteMetadata.menus;			
-			menuNames.forEach(element => createSitemap(menus, element, aliases));
+        
+        // process menu nodes and pass through aliases
+        if (result.data.menus !== undefined) {          
+            const menus = result.data.menus.edges;
+            const config = require('./gatsby-config');
+            const menuNames = config.siteMetadata.menus;            
+            menuNames.forEach(element => createSitemap(menus, element, aliases));
     }
     // proces aliases for each page/node
     createAliasFile(aliases);
-	}
+    }
 }
 
 function createSitemap(menus, whichMenu, aliases) {
-	let sitemap = [];
-	const sitemapFile = 'config/sitemaps/' + whichMenu + '.yml';
+    let sitemap = [];
+    const sitemapFile = 'config/sitemaps/' + whichMenu + '.yml';
 
-	menus.forEach(( { node }, index) => {
-		if (node.parent === null && node.menu_name === whichMenu) {
-			sitemap.push(processMenuItem( node, aliases ));
-		}
-	})
+    menus.forEach(( { node }, index) => {
+        if (node.parent === null && node.menu_name === whichMenu) {
+            sitemap.push(processMenuItem( node, aliases ));
+        }
+    })
 
-	let yamlStr = yaml.dump(sitemap);
-	fs.writeFileSync(sitemapFile, yamlStr, 'utf8');  
+    let yamlStr = yaml.dump(sitemap);
+    fs.writeFileSync(sitemapFile, yamlStr, 'utf8');  
 }
 
 function processMenuItem(node, aliases){
-	if (node !== undefined) {
-		const drupalID = (node.route.parameters !== null && node.route.parameters !== undefined) ? node.route.parameters.node : '';
-		const gatsbyAlias = (aliases[drupalID] !== null && aliases[drupalID] !== undefined) ? aliases[drupalID] : '';
-		const menuURL = node.url;
+    if (node !== undefined) {
+        const drupalID = (node.route.parameters !== null && node.route.parameters !== undefined) ? node.route.parameters.node : '';
+        const gatsbyAlias = (aliases[drupalID] !== null && aliases[drupalID] !== undefined) ? aliases[drupalID] : '';
+        const menuURL = node.url;
 
-		const menuNode = {
-			id: node.id,
-			drupal_id: drupalID,
-			alias: gatsbyAlias,
-			url: menuURL,
-			title: node.title,
-			description: node.description,
-			parent: node.parent,
-			children: processMenuItemChildren(node.children, aliases),
-		} 
-		return menuNode;
-	}
-	return null;
+        const menuNode = {
+            id: node.id,
+            drupal_id: drupalID,
+            alias: gatsbyAlias,
+            url: menuURL,
+            title: node.title,
+            description: node.description,
+            parent: node.parent,
+            children: processMenuItemChildren(node.children, aliases),
+        } 
+        return menuNode;
+    }
+    return null;
 }
 
 function processMenuItemChildren(children, aliases) {
-	let childrenMenuItems = [];  
-	if (children !== undefined) { 
-		children.forEach((child, index ) => {
-			childrenMenuItems.push(processMenuItem(child, aliases));
-		})
-	}
-	return childrenMenuItems;
+    let childrenMenuItems = [];  
+    if (children !== undefined) { 
+        children.forEach((child, index ) => {
+            childrenMenuItems.push(processMenuItem(child, aliases));
+        })
+    }
+    return childrenMenuItems;
 }
 function createAliasFile(aliases) {
   const aliasFile = 'config/aliases/aliasfile.yml';
@@ -936,25 +936,25 @@ function processPage(node, contextID, functionToRetrieveAlias, template, helpers
 }
 
 async function createNodeAlias(node, alias, helpers){
-	const aliasID = helpers.createNodeId(`alias-${node.drupal_id}`);
-	const aliasData = {
-		key: aliasID,
-		value: alias,
-	}
-	const aliasContent = JSON.stringify(aliasData);
-	const aliasMeta = {
-		id: aliasID,
-		parent: null,
-		children: [],
-		internal: {
-			type: `PathAlias`,
-			mediaType: `text/html`,
-			content: aliasContent,
-			contentDigest: helpers.createContentDigest(aliasData)
-		}
-	}
-	const aliasNode = Object.assign({}, aliasData, aliasMeta);
-	await helpers.createNode(aliasNode);
+    const aliasID = helpers.createNodeId(`alias-${node.drupal_id}`);
+    const aliasData = {
+        key: aliasID,
+        value: alias,
+    }
+    const aliasContent = JSON.stringify(aliasData);
+    const aliasMeta = {
+        id: aliasID,
+        parent: null,
+        children: [],
+        internal: {
+            type: `PathAlias`,
+            mediaType: `text/html`,
+            content: aliasContent,
+            contentDigest: helpers.createContentDigest(aliasData)
+        }
+    }
+    const aliasNode = Object.assign({}, aliasData, aliasMeta);
+    await helpers.createNode(aliasNode);
 }
 
 // use for content types
@@ -966,47 +966,47 @@ function createContentTypeAlias(node, prepend = '') {
   } else{
     alias = `/` + slugify(node.title);
   }
-	if (prepend !== '') {
-		alias = `/` + slugify(prepend) + alias;
-	}
-	
-	return alias;
+    if (prepend !== '') {
+        alias = `/` + slugify(prepend) + alias;
+    }
+    
+    return alias;
 }
 
 // use for taxonomies
 function createTaxonomyAlias(node, prepend = '') {
-	let alias = `/` + slugify(node.name);
+    let alias = `/` + slugify(node.name);
 
-	if (prepend !== '') {
-		alias = `/` + slugify(prepend) + alias;
-	}
+    if (prepend !== '') {
+        alias = `/` + slugify(prepend) + alias;
+    }
 
-	return alias;
+    return alias;
 }
 
 function createProgramAlias(node) {
-	let alias = createContentTypeAlias(node, `programs`)
-	return alias;
+    let alias = createContentTypeAlias(node, `programs`)
+    return alias;
 }
 
 function createArticleAlias(node) {
-	let alias = createContentTypeAlias(node, `news`)
-	return alias;
+    let alias = createContentTypeAlias(node, `news`)
+    return alias;
 }
 
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function slugify(string) {
-	const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
-	const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
-	const p = new RegExp(a.split('').join('|'), 'g')
+    const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
+    const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
+    const p = new RegExp(a.split('').join('|'), 'g')
 
-	return string.toString().toLowerCase()
-	.replace(/\s+/g, '-') // Replace spaces with -
-	.replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-	.replace(/&/g, '-and-') // Replace & with 'and'
-	.replace(/[^\w\-]+/g, '') // Remove all non-word characters
-	.replace(/\-\-+/g, '-') // Replace multiple - with single -
-	.replace(/^-+/, '') // Trim - from start of text
-	.replace(/-+$/, '') // Trim - from end of text
+    return string.toString().toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+    .replace(/&/g, '-and-') // Replace & with 'and'
+    .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, '') // Trim - from end of text
 }
