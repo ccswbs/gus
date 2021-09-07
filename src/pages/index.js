@@ -1,5 +1,4 @@
 import { graphql, Link } from 'gatsby';
-import Instagram from '../components/instag';
 import Layout from '../components/layout';
 import React from 'react';
 import SEO from '../components/seo';
@@ -22,10 +21,7 @@ const IndexPage = ({ data }) => (
                 {data.programs.edges.map((edge, index) => (
                     <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li>
                 ))}
-            </ul>
-            
-            <h2>Instagram</h2>
-            <Instagram />
+            </ul>            
         </div>
     </Layout>
 )
