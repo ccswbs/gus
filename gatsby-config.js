@@ -87,12 +87,6 @@ module.exports = {
       },
     },    
     {
-      resolve: `gatsby-source-instagram`,
-      options: {
-        username: metaConfig['IGuser'],        
-      },
-    },
-    {
       resolve: `gatsby-plugin-asset-path`,
     },
     {
@@ -110,10 +104,5 @@ module.exports = {
       }
     }
   ],
-  mapping: {
-    "node__article.fields.alias": `PathAlias`,
-    "node__page.fields.alias": `PathAlias`,
-    "node__program.fields.alias": `PathAlias`,
-  },
   assetPrefix: "/assets/",
 }
