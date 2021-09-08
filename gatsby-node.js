@@ -914,10 +914,10 @@ function processMenuItemChildren(children, aliases) {
     return childrenMenuItems;
 }
 function createAliasFile(aliases) {
-  const aliasFile = 'config/aliases/aliasfile.yml';
-  let yamlStr = yaml.dump(aliases);
-  fs.writeFileSync(aliasFile, yamlStr, 'utf8'); 
- }
+    const aliasFile = 'config/aliases/aliasfile.yml';
+    let yamlStr = yaml.dump(aliases);
+    fs.writeFileSync(aliasFile, yamlStr, 'utf8'); 
+}
  
 function processPage(node, contextID, nodePath, template, helpers) {
     let alias = createContentTypeAlias(nodePath);
