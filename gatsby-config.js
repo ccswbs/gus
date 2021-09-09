@@ -11,7 +11,6 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['description'] = "Description of the site";
     metaConfig['author'] = "Author of site";
     metaConfig['GAtrackingID'] = "";
-    metaConfig['IGuser'] = "";
     metaConfig['menus'] = "";
 }
 
@@ -86,12 +85,6 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },    
-    {
-      resolve: `gatsby-source-instagram`,
-      options: {
-        username: metaConfig['IGuser'],        
-      },
-    },
     {
       resolve: `gatsby-plugin-asset-path`,
     },
