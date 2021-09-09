@@ -158,11 +158,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type ImageField implements Node {
       alt: String
     }
-    
-    type InstaNode implements Node {
-      original: String
-      caption: String
-    }
 
     type media__image implements Node {
       drupal_id: String

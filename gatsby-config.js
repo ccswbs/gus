@@ -11,7 +11,6 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['description'] = "Description of the site";
     metaConfig['author'] = "Author of site";
     metaConfig['GAtrackingID'] = "";
-    metaConfig['IGuser'] = "";
     metaConfig['menus'] = "";
 }
 
