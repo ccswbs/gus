@@ -24,6 +24,7 @@ schedules:
   branches:
     include:
     - master
+  always: true
 
 steps:
 - task: Npm@1
