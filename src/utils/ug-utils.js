@@ -78,6 +78,19 @@ function fetchMenuMain() {
 	return mainMenu;
 }
 
+function fontAwesomeIconColour (colourChoice) {
+    switch(colourChoice) {
+        case 'Yellow':
+            return 'yellow-icon';
+        case 'Red':
+            return 'red-icon';
+        case 'Darker Red':
+            return 'red-darker-icon)';
+        default: 
+            return '';
+    }
+}
+
 function getNextHeadingLevel(headingLevel) {
 	let level = parseInt(headingLevel.replace(/[^\d.]/g,'')) + 1;
 	let nextHeadingLevel = setHeadingLevel('h' + level);
@@ -107,6 +120,7 @@ export {
 	divideIntoColumns,
 	fetchMenu,
 	fetchMenuMain,
+	fontAwesomeIconColour,
 	getNextHeadingLevel,
 	setHeadingLevel,
 	sortLastModifiedDates,
