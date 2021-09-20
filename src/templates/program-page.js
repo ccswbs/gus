@@ -58,7 +58,7 @@ function renderProgramOverview(description, specData) {
 	return null;
 }
 
-function renderProgramStats(degreesData, variantData, statsData, imageData) {
+function renderProgramStats(degreesData, variantData, statsData) {
 	let checkIfContentAvailable = false;
 
 	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
@@ -368,13 +368,26 @@ function prepareVariantHeading (variantData) {
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 	if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
 	if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
-	// if (data.images.edges !== undefined) { imageData = data.images.edges; }
 	if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
 	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-	if (progData.relationships.field_prog_image !== undefined) { imageData = progData.relationships.field_prog_image; }
 	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
 	if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+
+	// use page image if it exists 
+	if (progData.relationships.field_prog_image !== undefined) { 
+       	   imageData = progData.relationships.field_prog_image; 
+	
+	   if (contentExists(imageData)) {
+	      altText = imageData.field_media_image.alt;
+	      heroImage = imageData.relationships.field_media_image.localFile;
+	
+	   } else {
+	   
+	       if (data.images.edges !== undefined) { imageData = data.images.edges; }
+
+	   }
+	}
 
 	// set program details
 	const nodeID = progData.drupal_internal__nid;
@@ -398,10 +411,6 @@ function prepareVariantHeading (variantData) {
 	variantData = progData.relationships.field_program_variants;
 	let variantDataHeading = prepareVariantHeading(variantData); 
 	
-	if (contentExists(imageData)) {
-	   altText = imageData.field_media_image.alt;
-	   heroImage = imageData.relationships.field_media_image.localFile;
-	}
 	
 	return (
 	<Layout date={lastModified}>
@@ -418,7 +427,7 @@ function prepareVariantHeading (variantData) {
                         <React.Fragment>
                             <GatsbyImage image={heroImage.childImageSharp.gatsbyImageData} alt={altText} />
                         </React.Fragment>
-                    : null
+                    : renderHeaderImage(imageData)
 		}
 		<div className="container ft-container">
 		  <h1 className="fancy-title">{title}</h1>
@@ -461,7 +470,7 @@ function prepareVariantHeading (variantData) {
       </div>
 	
       { /**** Program Stats ****/ }
-      {renderProgramStats(degreesData, variantData, statsData, imageData)}
+      {renderProgramStats(degreesData, variantData, statsData)}
 
       { /**** Program Information Tabs ****/ }
       <div className="container page-container">
