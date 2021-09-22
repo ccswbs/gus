@@ -327,6 +327,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_internal__nid: Int
       title: String
       changed: Date @dateformat
+      field_prog_image: ImageField
       field_course_notes: node__programField_course_notes
       field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
@@ -351,6 +352,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
       field_specializations: [taxonomy_term__specializations] @link(from: "field_specializations___NODE")
       field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
+      field_prog_image: media__image @link(from: "field_prog_image___NODE")
     }
     type node__testimonial implements Node {
       drupal_id: String

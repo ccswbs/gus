@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
+import { GatsbyImage } from "gatsby-plugin-image";
 import Breadcrumbs from '../components/breadcrumbs';
 import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
@@ -57,7 +58,7 @@ function renderProgramOverview(description, specData) {
 	return null;
 }
 
-function renderProgramStats(degreesData, variantData, statsData, imageData) {
+function renderProgramStats(degreesData, variantData, statsData) {
 	let checkIfContentAvailable = false;
 
 	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
@@ -352,6 +353,8 @@ function prepareVariantHeading (variantData) {
 	let employerData;
 	let footerData;
 	let imageData;
+	let heroImage;
+	let altText;
 	let progData;
 	let newsData;
 	let specData;
@@ -365,12 +368,26 @@ function prepareVariantHeading (variantData) {
 	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
 	if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
 	if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
-	if (data.images.edges !== undefined) { imageData = data.images.edges; }
 	if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
 	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
 	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
 	if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+
+	// use page image if it exists 
+	if (progData.relationships.field_prog_image !== undefined) { 
+       	   imageData = progData.relationships.field_prog_image; 
+	
+	   if (contentExists(imageData)) {
+	      altText = imageData.field_media_image.alt;
+	      heroImage = imageData.relationships.field_media_image.localFile;
+	
+	   } else {
+	   
+	       if (data.images.edges !== undefined) { imageData = data.images.edges; }
+
+	   }
+	}
 
 	// set program details
 	const nodeID = progData.drupal_internal__nid;
@@ -393,7 +410,8 @@ function prepareVariantHeading (variantData) {
 	tagData = progData.relationships.field_tags;
 	variantData = progData.relationships.field_program_variants;
 	let variantDataHeading = prepareVariantHeading(variantData); 
-
+	
+	
 	return (
 	<Layout date={lastModified}>
 	  <Helmet bodyAttributes={{
@@ -404,7 +422,13 @@ function prepareVariantHeading (variantData) {
 	  { /**** Header and Title ****/ }
 	  <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
 		{/* <FetchImages tags={imageTags} /> */}
-		{renderHeaderImage(imageData)}
+		{/*	{renderHeaderImage(imageData)} */}
+		{ contentExists(heroImage) ?
+                        <React.Fragment>
+                            <GatsbyImage image={heroImage.childImageSharp.gatsbyImageData} alt={altText} />
+                        </React.Fragment>
+                    : renderHeaderImage(imageData)
+		}
 		<div className="container ft-container">
 		  <h1 className="fancy-title">{title}</h1>
 		</div>
@@ -446,7 +470,7 @@ function prepareVariantHeading (variantData) {
       </div>
 	
       { /**** Program Stats ****/ }
-      {renderProgramStats(degreesData, variantData, statsData, imageData)}
+      {renderProgramStats(degreesData, variantData, statsData)}
 
       { /**** Program Information Tabs ****/ }
       <div className="container page-container">
@@ -512,6 +536,24 @@ export const query = graphql`query ($id: String) {
           processed
         }
         relationships {
+	  field_prog_image {
+            field_media_image {
+              alt
+            } 
+            relationships {
+              field_media_image {
+		localFile {
+		   childImageSharp {
+                      gatsbyImageData(
+				  transformOptions: {cropFocus: CENTER}
+				  placeholder: BLURRED
+				  aspectRatio: 3
+			    )
+              	   }
+              	}
+              }
+            }
+          }
           field_program_acronym {
             name
             id
