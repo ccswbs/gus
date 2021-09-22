@@ -43,6 +43,7 @@ const BasicPage = ({data}) => {
 			<div className="container page-container">
 				{ /**** Widgets content ****/}		
 				<div className="row row-with-vspace site-content">
+					<p>Description: {pageData.field_metatags.og_description}</p>
 					<section className="col-md-12 content-area">
 						<Widgets pageData={widgetsData} />
 					</section>
@@ -413,6 +414,9 @@ export const query = graphql`query ($id: String) {
                 }
               }
             }
+          }
+		  field_metatags {
+            og_description
           }
           field_tags {
             __typename
