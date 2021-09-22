@@ -20,7 +20,7 @@ const BasicPage = ({data}) => {
 
 	const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
 	
-	const cardDescription = (contentExists(pageData.field_metatags.twitter_cards_description) ? pageData.field_metatags.twitter_cards_description : (contentExists(pageData.field_metatags.og_description) ? og_description : null) : null )
+	/* const cardDescription = (contentExists(pageData.field_metatags.twitter_cards_description) ? pageData.field_metatags.twitter_cards_description : (contentExists(pageData.field_metatags.og_description) ? og_description : null) : null ) */
 
 	return (
 		<Layout>
@@ -29,7 +29,7 @@ const BasicPage = ({data}) => {
 			}}
 			/>
 			<Helmet><script defer type="text/javascript" src="/assets/uog-media-player.js"></script></Helmet>
-			<SEO description={pageData.field_metatags.og} title={title} keywords={[`gatsby`, `application`, `react`]} />
+			<SEO description={title={title} keywords={[`gatsby`, `application`, `react`]} />
 			
 			{ /**** Header and Title ****/ }
 			<div className={!contentExists(imageData) && "no-thumb"} id="rotator">
@@ -416,13 +416,6 @@ export const query = graphql`query ($id: String) {
                 }
               }
             }
-          }
-		  field_metatags {
-            og_description
-            twitter_cards_description
-            twitter_cards_image
-            twitter_cards_image_alt
-            twitter_cards_type
           }
           field_tags {
             __typename
