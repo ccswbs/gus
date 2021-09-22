@@ -64,6 +64,9 @@ export const query = graphql`query ($id: String) {
         drupal_id
         drupal_internal__nid
         title
+		field_metatags {
+          og_description
+        }
         relationships {
           field_widgets {
             __typename
@@ -414,9 +417,6 @@ export const query = graphql`query ($id: String) {
                 }
               }
             }
-          }
-		  field_metatags {
-            og_description
           }
           field_tags {
             __typename
