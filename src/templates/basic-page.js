@@ -19,8 +19,6 @@ const BasicPage = ({data}) => {
 	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component.
 
 	const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
-	
-	/* const cardDescription = (contentExists(pageData.field_metatags.twitter_cards_description) ? pageData.field_metatags.twitter_cards_description : (contentExists(pageData.field_metatags.og_description) ? og_description : null) : null ) */
 
 	return (
 		<Layout>
@@ -29,7 +27,7 @@ const BasicPage = ({data}) => {
 			}}
 			/>
 			<Helmet><script defer type="text/javascript" src="/assets/uog-media-player.js"></script></Helmet>
-			<SEO description={title={title} keywords={[`gatsby`, `application`, `react`]} />
+			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			
 			{ /**** Header and Title ****/ }
 			<div className={!contentExists(imageData) && "no-thumb"} id="rotator">
@@ -46,7 +44,6 @@ const BasicPage = ({data}) => {
 				{ /**** Widgets content ****/}		
 				<div className="row row-with-vspace site-content">
 					<section className="col-md-12 content-area">
-						<p>Card Test: {cardDescription}</p>
 						<Widgets pageData={widgetsData} />
 					</section>
 				</div>
