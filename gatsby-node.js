@@ -256,6 +256,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__course implements Node {
       drupal_id: String
       drupal_internal__nid: Int
+      changed: String
       title: String
       field_code: String
       field_course_url: node__courseField_course_url
@@ -309,9 +310,16 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       drupal_internal__nid: Int
       field_hero_image: ImageField
+      field_metatags: node__pageField_metatags
       relationships: node__pageRelationships
       fields: FieldsPathAlias
       path: AliasPath
+    }
+    type node__pageField_metatags implements Node {
+      og_description: String
+      og_image: String
+      twitter_cards_type: String
+      twitter_cards_description: String	
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")

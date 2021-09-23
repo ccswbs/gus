@@ -14,11 +14,14 @@ const BasicPage = ({data}) => {
 	const nodeID = pageData.drupal_internal__nid;	
 	const title = pageData.title;
 	const imageData = data.images.edges;
+	console.log(imageData[0].node.relationships.field_media_image.localFile.publicURL);
 
 	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected
 	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component.
 
 	const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
+	const ogDescription = (contentExists(pageData.field_metatags.og_description) ? pageData.field_metatags.og_description : null);
+	const ogImage = (contentExists(imageData[0].node.relationships.field_media_image.localFile) ? imageData[0].node.relationships.field_media_image.localFile.publicURL : null);
 
 	return (
 		<Layout>
@@ -27,7 +30,7 @@ const BasicPage = ({data}) => {
 			}}
 			/>
 			<Helmet><script defer type="text/javascript" src="/assets/uog-media-player.js"></script></Helmet>
-			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+			<SEO title={title} description={ogDescription} img={ogImage} />
 			
 			{ /**** Header and Title ****/ }
 			<div className={!contentExists(imageData) && "no-thumb"} id="rotator">
@@ -43,14 +46,12 @@ const BasicPage = ({data}) => {
 			<div className="container page-container">
 				{ /**** Widgets content ****/}		
 				<div className="row row-with-vspace site-content">
-					<p>Description: {pageData.field_metatags.og_description}</p>
 					<section className="col-md-12 content-area">
 						<Widgets pageData={widgetsData} />
 					</section>
 				</div>
-			</div>	
-			
-		</Layout>
+			</div>				
+		</Layout>		
 	)
 	
 }
@@ -440,6 +441,7 @@ export const query = graphql`query ($id: String) {
         relationships {
           field_media_image {
             localFile {
+			  publicURL
               childImageSharp {
                  gatsbyImageData(
 				  transformOptions: {cropFocus: CENTER}
