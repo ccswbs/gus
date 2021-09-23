@@ -13,12 +13,18 @@ pool:
 trigger:
   - master
 
+resources:
+  webhooks:
+    - webhook: ccswds-gus-pipeline-trigger
+      connection: ccswds-gus-pipeline-service
+
 schedules:
 - cron: "0 0 * * *"
   displayName: Daily midnight build
   branches:
     include:
     - master
+  always: true
 
 steps:
 - task: Npm@1
