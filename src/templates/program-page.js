@@ -383,8 +383,6 @@ function prepareVariantHeading (variantData) {
 		if (contentExists(imageData)) {
 			altText = imageData.field_media_image.alt;
 			heroImage = imageData.relationships.field_media_image.localFile;
-			setOGimage = progData.relationships.field_prog_image.localFile;	
-			setOGimageAlt = progData.field_media_image.alt;
 		} else {
 			if (data.images.edges !== undefined) { 
 				imageData = data.images.edges;
@@ -418,9 +416,8 @@ function prepareVariantHeading (variantData) {
 	
 	// Open Graph metatags
 	const ogDescription = (contentExists(progData.field_metatags.og_description) ? progData.field_metatags.og_description : null);
-	const ogImage = (contentExists(setOGimage) ? setOGimage.publicURL : null);
-	const ogImageAlt = (contentExists(setOGimageAlt) ? setOGimageAlt : null);
-	console.log(setOGimage);
+	const ogImage = (contentExists(heroImage) ? heroImage.publicURL : (contentExists(setOGimage) ? setOGimage.publicURL : null));
+	const ogImageAlt = (contentExists(altText) ? altText : (contentExists(setOGimageAlt) ? setOGimageAlt : null));
 	
 	return (
 	<Layout date={lastModified}>
@@ -549,14 +546,15 @@ export const query = graphql`query ($id: String) {
           processed
         }
         relationships {
-	  field_prog_image {
+          field_prog_image {
             field_media_image {
               alt
             } 
             relationships {
-              field_media_image {
-		localFile {
-		   childImageSharp {
+              field_media_image {				
+                localFile {
+				  publicURL
+		          childImageSharp {
                       gatsbyImageData(
 				  transformOptions: {cropFocus: CENTER}
 				  placeholder: BLURRED
