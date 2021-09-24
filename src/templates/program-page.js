@@ -345,7 +345,7 @@ function prepareVariantHeading (variantData) {
 										// export default Named;
 
 
-										const ProgramPage = ({data, location}) => {
+	const ProgramPage = ({data, location}) => {
 	let callToActionData = [];
 	let careerData;
 	let courseData;
@@ -362,6 +362,8 @@ function prepareVariantHeading (variantData) {
 	let tagData;
 	let testimonialData;
 	let variantData;
+	let setOGimage; 
+	let setOGimageAlt; 
 
 	// set data
 	if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
@@ -376,16 +378,19 @@ function prepareVariantHeading (variantData) {
 
 	// use page image if it exists 
 	if (progData.relationships.field_prog_image !== undefined) { 
-       	   imageData = progData.relationships.field_prog_image; 
+		imageData = progData.relationships.field_prog_image; 
 	
-	   if (contentExists(imageData)) {
-	      altText = imageData.field_media_image.alt;
-	      heroImage = imageData.relationships.field_media_image.localFile;
-	
-	   } else {
-	   
-	       if (data.images.edges !== undefined) { imageData = data.images.edges; }
-
+		if (contentExists(imageData)) {
+			altText = imageData.field_media_image.alt;
+			heroImage = imageData.relationships.field_media_image.localFile;
+			setOGimage = progData.relationships.field_prog_image.localFile;	
+			setOGimageAlt = progData.field_media_image.alt;
+		} else {
+			if (data.images.edges !== undefined) { 
+				imageData = data.images.edges;
+				setOGimage = imageData[0].node.relationships.field_media_image.localFile;
+				setOGimageAlt = imageData[0].node.field_media_image.alt;
+			}
 	   }
 	}
 
@@ -411,6 +416,11 @@ function prepareVariantHeading (variantData) {
 	variantData = progData.relationships.field_program_variants;
 	let variantDataHeading = prepareVariantHeading(variantData); 
 	
+	// Open Graph metatags
+	const ogDescription = (contentExists(progData.field_metatags.og_description) ? progData.field_metatags.og_description : null);
+	const ogImage = (contentExists(setOGimage) ? setOGimage.publicURL : null);
+	const ogImageAlt = (contentExists(setOGimageAlt) ? setOGimageAlt : null);
+	console.log(setOGimage);
 	
 	return (
 	<Layout date={lastModified}>
@@ -418,7 +428,7 @@ function prepareVariantHeading (variantData) {
 		  class: 'program'
 	  }}
 	/>
-	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+	<SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 	  { /**** Header and Title ****/ }
 	  <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
 		{/* <FetchImages tags={imageTags} /> */}
@@ -529,6 +539,9 @@ export const query = graphql`query ($id: String) {
         drupal_id
         drupal_internal__nid
         title
+        field_metatags {
+          og_description
+        }
         field_program_overview {
           processed
         }
@@ -948,6 +961,7 @@ export const query = graphql`query ($id: String) {
         relationships {
           field_media_image {
             localFile {
+			  publicURL
               childImageSharp {
                  gatsbyImageData(
 				  transformOptions: {cropFocus: CENTER}
