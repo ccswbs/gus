@@ -256,6 +256,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__course implements Node {
       drupal_id: String
       drupal_internal__nid: Int
+	  changed: String
       title: String
       field_code: String
       field_course_url: node__courseField_course_url
@@ -385,7 +386,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_button_style:taxonomy_term__button_styles @link(from: "field_button_style___NODE")
       field_font_awesome_icon_colour: taxonomy_term__colour_variables @link(from: "field_font_awesome_icon_colour___NODE")
     }
-  type paragraph__call_to_action implements Node {
+    type paragraph__call_to_action implements Node {
       drupal_id: String
       field_cta_title: String
       field_cta_description: String
