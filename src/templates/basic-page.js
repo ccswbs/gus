@@ -22,6 +22,7 @@ const BasicPage = ({data}) => {
 	const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
 	const ogDescription = (contentExists(pageData.field_metatags.og_description) ? pageData.field_metatags.og_description : null);
 	const ogImage = (contentExists(imageData[0].node.relationships.field_media_image.localFile) ? imageData[0].node.relationships.field_media_image.localFile.publicURL : null);
+	const ogImageAlt = (contentExists(imageData[0].node.field_media_image) ? imageData[0].node.field_media_image.alt : null);
 
 	return (
 		<Layout>
@@ -30,7 +31,7 @@ const BasicPage = ({data}) => {
 			}}
 			/>
 			<Helmet><script defer type="text/javascript" src="/assets/uog-media-player.js"></script></Helmet>
-			<SEO title={title} description={ogDescription} img={ogImage} />
+			<SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 			
 			{ /**** Header and Title ****/ }
 			<div className={!contentExists(imageData) && "no-thumb"} id="rotator">
