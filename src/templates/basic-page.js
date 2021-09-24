@@ -14,15 +14,12 @@ const BasicPage = ({data}) => {
 	const nodeID = pageData.drupal_internal__nid;	
 	const title = pageData.title;
 	const imageData = data.images.edges;
-	console.log(imageData[0].node.relationships.field_media_image.localFile.publicURL);
-
-	// WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected
-	// using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component.
-
-	const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
 	const ogDescription = (contentExists(pageData.field_metatags.og_description) ? pageData.field_metatags.og_description : null);
 	const ogImage = (contentExists(imageData[0].node.relationships.field_media_image.localFile) ? imageData[0].node.relationships.field_media_image.localFile.publicURL : null);
 	const ogImageAlt = (contentExists(imageData[0].node.field_media_image) ? imageData[0].node.field_media_image.alt : null);
+
+	/* WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component. */
+	const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
 
 	return (
 		<Layout>
