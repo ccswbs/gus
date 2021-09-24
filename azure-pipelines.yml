@@ -27,6 +27,9 @@ schedules:
   always: true
 
 steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.x'
 - task: Npm@1
   displayName: 'npm install npm@latest'
   inputs:
