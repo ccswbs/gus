@@ -25,21 +25,6 @@ import { graphql } from 'gatsby';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
 
-function renderHeaderImage(imageData) {
-	if (!contentIsNullOrEmpty(imageData)) {
-		let imgData = [];
-		for (let i = 0; i < imageData.length; i++) {
-			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
-				if (imageData[i].node.relationships.field_tags[j].name === "img-header") {
-					imgData.push(imageData[i]);
-				}
-			}
-		}
-		return <Hero imgData={imgData} />
-	}	
-	return null;
-}
-
 function renderProgramOverview(description, specData) {
 	let checkIfContentAvailable = false;
 
@@ -352,9 +337,10 @@ function prepareVariantHeading (variantData) {
 	let degreesData;
 	let employerData;
 	let footerData;
-	let imageData;
-	let heroImage;
-	let altText;
+	let imageData = [];
+	let imageTaggedData = [];
+	//let heroImage;
+	//let altText;
 	let progData;
 	let newsData;
 	let specData;
@@ -362,8 +348,6 @@ function prepareVariantHeading (variantData) {
 	let tagData;
 	let testimonialData;
 	let variantData;
-	let setOGimage; 
-	let setOGimageAlt; 
 
 	// set data
 	if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
@@ -375,22 +359,10 @@ function prepareVariantHeading (variantData) {
 	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
 	if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
 	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
-
-	// use page image if it exists 
-	if (progData.relationships.field_prog_image !== undefined) { 
-		imageData = progData.relationships.field_prog_image; 
+	if (data.images.edges !== undefined) { imageData = data.images.edges; }
+	if (data.imagesTagged.edges !== undefined) { imageTaggedData = data.imagesTagged.edges; }
 	
-		if (contentExists(imageData)) {
-			altText = imageData.field_media_image.alt;
-			heroImage = imageData.relationships.field_media_image.localFile;
-		} else {
-			if (data.images.edges !== undefined) { 
-				imageData = data.images.edges;
-				setOGimage = imageData[0].node.relationships.field_media_image.localFile;
-				setOGimageAlt = imageData[0].node.field_media_image.alt;
-			}
-	   }
-	}
+	const heroImage = (contentExists(imageData) ? imageData : (contentExists(imageTaggedData) ? imageTaggedData : null));
 
 	// set program details
 	const nodeID = progData.drupal_internal__nid;
@@ -415,9 +387,11 @@ function prepareVariantHeading (variantData) {
 	let variantDataHeading = prepareVariantHeading(variantData); 
 	
 	// Open Graph metatags
-	const ogDescription = (contentExists(progData.field_metatags.og_description) ? progData.field_metatags.og_description : null);
-	const ogImage = (contentExists(heroImage) ? heroImage.publicURL : (contentExists(setOGimage) ? setOGimage.publicURL : null));
-	const ogImageAlt = (contentExists(altText) ? altText : (contentExists(setOGimageAlt) ? setOGimageAlt : null));
+	const ogDescription = (contentExists(progData.field_metatags) ? progData.field_metatags.og_description : null);
+	const ogImage = (contentExists(heroImage) ? heroImage[0].node.relationships.field_media_image.localFile.publicURL : null);
+	const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
+	
+	console.log(heroImage);
 	
 	return (
 	<Layout date={lastModified}>
@@ -428,14 +402,7 @@ function prepareVariantHeading (variantData) {
 	<SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 	  { /**** Header and Title ****/ }
 	  <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
-		{/* <FetchImages tags={imageTags} /> */}
-		{/*	{renderHeaderImage(imageData)} */}
-		{ contentExists(heroImage) ?
-                        <React.Fragment>
-                            <GatsbyImage image={heroImage.childImageSharp.gatsbyImageData} alt={altText} />
-                        </React.Fragment>
-                    : renderHeaderImage(imageData)
-		}
+		<Hero imgData={heroImage} />
 		<div className="container ft-container">
 		  <h1 className="fancy-title">{title}</h1>
 		</div>
@@ -949,7 +916,32 @@ export const query = graphql`query ($id: String) {
       }
     }
   }
-  images: allMediaImage(filter: {fields: {tags: {in: [$id]}}}) {
+  images: allMediaImage(filter: {relationships: {node__program: {elemMatch: {relationships: {field_program_acronym: {id: {eq: $id}}}} }}}) {
+    edges {
+      node {
+        drupal_id
+        field_media_image {
+          alt
+        }
+        relationships {
+          field_media_image {
+            localFile {
+			  publicURL
+              childImageSharp {
+                 gatsbyImageData(
+				  transformOptions: {cropFocus: CENTER}
+				  placeholder: BLURRED
+				  aspectRatio: 3
+			    )
+              }
+              extension
+            }
+          }
+        }
+      }
+    }
+  }
+  imagesTagged: allMediaImage(filter: {fields: {tags: {in: [$id]}}}) {
     edges {
       node {
         drupal_id
