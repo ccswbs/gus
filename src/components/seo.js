@@ -9,7 +9,11 @@ function SEO({ description, img, imgAlt, lang, meta, keywords, title }) {
       query={detailsQuery}
       render={data => {
         const metaDescription =
-          description || data.site.siteMetadata.description		
+          description || data.site.siteMetadata.description	
+		const metaImage = 
+		  img || data.site.siteMetadata.ogImage
+		const metaImageAlt = 
+		  imgAlt || data.site.siteMetadata.ogImageAlt
         return (
           <Helmet
             htmlAttributes={{
@@ -36,11 +40,11 @@ function SEO({ description, img, imgAlt, lang, meta, keywords, title }) {
               },
 			  {
                 property: `og:image`,
-                content: img,
+                content: metaImage,
               },
 			  {
                 property: `og:image:alt`,
-                content: imgAlt,
+                content: metaImageAlt,
               },
               {
                 name: `twitter:card`,
@@ -79,8 +83,6 @@ SEO.defaultProps = {
   lang: `en`,
   meta: [],
   keywords: [],
-  img: `https://www.uoguelph.ca/img/uofg-cornerstone.jpg`,
-  imgAlt: `University of Guelph logo`
 }
 
 SEO.propTypes = {
@@ -102,6 +104,8 @@ const detailsQuery = graphql`
         title
         description
         author
+		ogImage
+		ogImageAlt
       }
     }
   }
