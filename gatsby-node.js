@@ -172,8 +172,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     type media__imageRelationships implements Node {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-      node__page: [node__page]
-      node__program: [node__program]
+      node__page: [node__page] @link(from: "node__page___NODE")
+      node__program: [node__program] @link(from: "node__program___NODE")
     }
     type media__remote_video implements Node {
       name: String
