@@ -48,18 +48,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsby UG Starter Template`,
-        short_name: `UG starter`,
-        start_url: `/`,
-        background_color: `#FFFFFF`,
-        theme_color: `#000000`,
-        display: `browser`,
-        icon: `src/favicon.png`, // This path is relative to the root of the site.
-      },
-    },
-    {
       resolve: `gatsby-source-drupal`,
         options: {
         baseUrl: process.env.DRUPAL_BASEURL,
