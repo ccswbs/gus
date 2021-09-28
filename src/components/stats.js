@@ -23,7 +23,7 @@ function Stats (props) {
 					<div className="uog-card">
 						<dt>
 							{statIcon !== null && <><SVG src={statIcon.publicURL} /></>} 
-							{<i className={statFAIcon + " path"}> </i>}
+							{<i className={statFAIcon}> </i>}
 							{statRange === true && statValueEnd !== null ? statValue + " - " + statValueEnd : statValue}
 						</dt>
 						<dd>{statType}</dd>
