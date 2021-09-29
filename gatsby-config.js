@@ -80,7 +80,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-asset-path`,
       options: {
-        fileTypes: ["js", "map", "css"],
+        fileTypes: ["js", "json", "map", "css", "htm"],
       }
     },
     {
