@@ -39,6 +39,7 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run build'
+    verbose: true
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'az deploy'
   inputs:
