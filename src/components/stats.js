@@ -18,12 +18,11 @@ function Stats (props) {
 					let statValueEnd = stat.field_stat_value_end;
 					let statFAIcon = stat.field_font_awesome_icon ;
 
-
 					return <React.Fragment key={stat.drupal_id}>
 					<div className="uog-card">
 						<dt>
-							{statIcon !== null && <><SVG src={statIcon.publicURL} /></>} 
-							<span className="fa-icon-colour"><i className={statFAIcon}>  </i></span>
+							{contentExists(statFAIcon) === false && statIcon !== null && <><SVG src={statIcon.publicURL} /></>} 
+							{contentExists(statFAIcon) === true && <span className="fa-icon-colour"><i className={statFAIcon}>  </i></span>}
 							{statRange === true && statValueEnd !== null ? statValue + " - " + statValueEnd : statValue}
 						</dt>
 						<dd>{statType}</dd>

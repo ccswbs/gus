@@ -72,7 +72,7 @@ div.uog-card:nth-of-type(9n+7) span.fa-icon-colour {
 }
 
 div.uog-card path {
-	fill: var(--uog-blue);
+	fill: var(--uog-red);
 }
 
 div.uog-card:nth-of-type(9n+2) path,
@@ -84,7 +84,7 @@ div.uog-card:nth-of-type(9n+9) path {
 div.uog-card:nth-of-type(9n+3) path,
 div.uog-card:nth-of-type(9n+5) path,
 div.uog-card:nth-of-type(9n+7) path {
-	fill: var(--uog-red);
+	fill: var(--uog-blue);
 }
 
 body.basic-page div.uog-card {
