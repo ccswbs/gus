@@ -401,7 +401,7 @@ function prepareVariantHeading (variantData) {
 	/>
 	<SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 	  { /**** Header and Title ****/ }
-	  <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
+	  <div className={!contentExists(heroImage) && "no-thumb"} id="rotator">
 		<Hero imgData={heroImage} />
 		<div className="container ft-container">
 		  <h1 className="fancy-title">{title}</h1>
