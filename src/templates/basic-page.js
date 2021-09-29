@@ -26,6 +26,7 @@ const BasicPage = ({data}) => {
 				class: 'basic-page'
 			}}
 			/>
+                        <Helmet><script defer type="text/javascript" src="https://www.uoguelph.ca/js/uog-media-player.js"></script></Helmet>
 			<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
 			
 			{ /**** Header and Title ****/ }
