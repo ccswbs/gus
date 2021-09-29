@@ -391,7 +391,7 @@ function prepareVariantHeading (variantData) {
 	const ogImage = (contentExists(heroImage) ? heroImage[0].node.relationships.field_media_image.localFile.publicURL : null);
 	const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
 	
-	console.log(heroImage);
+	console.log(ogImage);
 	
 	return (
 	<Layout date={lastModified}>
