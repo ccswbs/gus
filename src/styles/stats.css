@@ -55,17 +55,20 @@ body.basic-page dd {
 
 div.uog-card span.fa-icon-colour {
 	color: var(--uog-red);
+	padding-right: 1.5rem;
 }
 div.uog-card:nth-of-type(9n+2) span.fa-icon-colour,
 div.uog-card:nth-of-type(9n+4) span.fa-icon-colour,
 div.uog-card:nth-of-type(9n+9) span.fa-icon-colour {
-	color: var(--uog-yellow);
+	color: var(--uog-yellow);	
+	padding-right: 1.5rem;
 }
 
 div.uog-card:nth-of-type(9n+3) span.fa-icon-colour,
 div.uog-card:nth-of-type(9n+5) span.fa-icon-colour,
 div.uog-card:nth-of-type(9n+7) span.fa-icon-colour {
 	color: var(--uog-blue);
+	padding-right: 1.5rem;
 }
 
 div.uog-card path {
