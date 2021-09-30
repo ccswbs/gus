@@ -14,11 +14,11 @@ export default function HTML(props) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         {props.headComponents}
-		<script data-search-pseudo-elements defer src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous"></script>
-		<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"></script>
-	  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" media="print" onload="this.media='all'" />
+        <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous"></script>
+        <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" media="print" onload="this.media='all'" />
 
       </head>
       <body {...props.bodyAttributes}>
@@ -27,7 +27,7 @@ export default function HTML(props) {
         <noscript key="noscript" id="gatsby-noscript">
           This app works best with JavaScript enabled.
         </noscript>
-		<script defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"></script>
+        <script defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"></script>
         <Header />
         <div
           key={`body`}
@@ -35,10 +35,9 @@ export default function HTML(props) {
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
-		<uofg-footer></uofg-footer>
+        <uofg-footer></uofg-footer>
         <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossOrigin="anonymous"></script>
-        <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" crossOrigin="anonymous"></script>
-        <script defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script>        
+        <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" crossOrigin="anonymous"></script>                
       </body>
     </html>
   )
