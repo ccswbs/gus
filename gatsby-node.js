@@ -319,7 +319,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type node__pageField_metatags implements Node {
       og_description: String
-      og_image: String
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
@@ -337,6 +336,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       changed: Date @dateformat
       field_prog_image: ImageField
       field_course_notes: node__programField_course_notes
+      field_metatags: node__programField_metatags
       field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
       fields: FieldsPathAlias
@@ -346,6 +346,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
       processed: String
+    }
+    type node__programField_metatags implements Node {
+      og_description: String
     }
     type node__programField_program_overview implements Node {
       value: String
