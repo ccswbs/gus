@@ -28,6 +28,8 @@ const BasicPage = ({data}) => {
             />
             <Helmet>
             {/* <script defer type="text/javascript" src="https://www.uoguelph.ca/js/uog-media-player.js"></script> */}
+                <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossOrigin="anonymous"></script>
+                <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" crossOrigin="anonymous"></script> 
                 <script defer type="text/javascript" src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script>
             </Helmet>
             <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
