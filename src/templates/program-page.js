@@ -3,7 +3,6 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
-import { GatsbyImage } from "gatsby-plugin-image";
 import Breadcrumbs from '../components/breadcrumbs';
 import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
@@ -386,8 +385,6 @@ function prepareVariantHeading (variantData) {
     const ogDescription = (contentExists(progData.field_metatags) ? progData.field_metatags.og_description : null);
     const ogImage = (contentExists(heroImage) ? heroImage[0].node.relationships.field_media_image.localFile.publicURL : null);
     const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
-    
-    console.log(ogImage);
     
     return (
     <Layout date={lastModified}>
