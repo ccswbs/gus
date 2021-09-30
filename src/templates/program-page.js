@@ -339,8 +339,6 @@ function prepareVariantHeading (variantData) {
     let footerData;
     let imageData = [];
     let imageTaggedData = [];
-    //let heroImage;
-    //let altText;
     let progData;
     let newsData;
     let specData;
@@ -370,8 +368,6 @@ function prepareVariantHeading (variantData) {
     const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
     const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
     const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
-     // moved testimonialh=eading definition to inside testimonial call to allow for a more dynamic name
-  // const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
 
     // set last modified date
     let allModifiedDates = sortLastModifiedDates(
@@ -400,7 +396,7 @@ function prepareVariantHeading (variantData) {
         }}
       />
       <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
-      <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+      <SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 
       { /**** Header and Title ****/ }
       <div className={!contentExists(heroImage) && "no-thumb"} id="rotator">
