@@ -320,8 +320,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__pageField_metatags implements Node {
       og_description: String
       og_image: String
-      twitter_cards_type: String
-      twitter_cards_description: String	
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")

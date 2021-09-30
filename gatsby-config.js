@@ -79,9 +79,6 @@ module.exports = {
     },    
     {
       resolve: `gatsby-plugin-asset-path`,
-      options: {
-        fileTypes: ["js", "json", "map", "css", "htm"],
-      }
     },
     {
       resolve: `gatsby-plugin-google-tagmanager`,
