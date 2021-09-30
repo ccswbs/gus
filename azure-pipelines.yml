@@ -27,8 +27,11 @@ schedules:
   always: true
 
 steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.x'
 - task: Npm@1
-  displayName: 'npm install npm@latest'
+  displayName: 'npm install'
   inputs:
     verbose: false
 - task: Npm@1
@@ -36,6 +39,7 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run build'
+    verbose: true
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'az deploy'
   inputs:

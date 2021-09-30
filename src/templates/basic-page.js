@@ -32,7 +32,7 @@ const BasicPage = ({data}) => {
                 class: 'basic-page'
             }}
             />
-            <Helmet><script defer type="text/javascript" src="https://www.uoguelph.ca/js/uog-media-player.js"></script></Helmet>
+            <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
             <SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
             
             { /**** Header and Title ****/ }

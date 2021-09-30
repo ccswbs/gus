@@ -21,8 +21,8 @@ module.exports = {
     title: metaConfig['title'],
     description: metaConfig['description'],
     author: metaConfig['author'],
-	ogImage: metaConfig['ogImage'],
-	ogImageAlt: metaConfig['ogImageAlt'],
+    ogImage: metaConfig['ogImage'],
+    ogImageAlt: metaConfig['ogImageAlt'],
     menus: metaConfig['menus'],
   },
   plugins: [
