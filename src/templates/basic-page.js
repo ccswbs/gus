@@ -25,7 +25,8 @@ const BasicPage = ({data}) => {
             <Helmet bodyAttributes={{
                 class: 'basic-page'
             }}
-            />            
+            />
+            <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
             <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
             
             { /**** Header and Title ****/ }
