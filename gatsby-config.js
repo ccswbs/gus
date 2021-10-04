@@ -10,6 +10,8 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['title'] = "Gatsby UG Starter Template";
     metaConfig['description'] = "Description of the site";
     metaConfig['author'] = "Author of site";
+    metaConfig['ogImage'] = "",
+    metaConfig['ogImageAlt'] = "",
     metaConfig['GAtrackingID'] = "";
     metaConfig['menus'] = "";
 }
@@ -19,6 +21,8 @@ module.exports = {
     title: metaConfig['title'],
     description: metaConfig['description'],
     author: metaConfig['author'],
+    ogImage: metaConfig['ogImage'],
+    ogImageAlt: metaConfig['ogImageAlt'],
     menus: metaConfig['menus'],
   },
   plugins: [

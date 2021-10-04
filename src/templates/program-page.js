@@ -3,7 +3,6 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import SEO from '../components/seo';
 import Hero from '../components/hero';
-import { GatsbyImage } from "gatsby-plugin-image";
 import Breadcrumbs from '../components/breadcrumbs';
 import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
@@ -25,282 +24,267 @@ import { graphql } from 'gatsby';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/program-page.css';
 
-function renderHeaderImage(imageData) {
-	if (!contentIsNullOrEmpty(imageData)) {
-		let imgData = [];
-		for (let i = 0; i < imageData.length; i++) {
-			for (let j = 0; j < imageData[i].node.relationships.field_tags.length; j++) {
-				if (imageData[i].node.relationships.field_tags[j].name === "img-header") {
-					imgData.push(imageData[i]);
-				}
-			}
-		}
-		return <Hero imgData={imgData} />
-	}	
-	return null;
-}
-
 function renderProgramOverview(description, specData) {
-	let checkIfContentAvailable = false;
+    let checkIfContentAvailable = false;
 
-	if (!contentIsNullOrEmpty(description) || 
-		!contentIsNullOrEmpty(specData)) {
-		checkIfContentAvailable = true;
-	}
+    if (!contentIsNullOrEmpty(description) || 
+        !contentIsNullOrEmpty(specData)) {
+        checkIfContentAvailable = true;
+    }
 
-	if (checkIfContentAvailable === true) {
-		return <React.Fragment>
-			<h2>Program Overview</h2>
-			<div dangerouslySetInnerHTML={{ __html: description }}  />
-		</React.Fragment>
-	}
+    if (checkIfContentAvailable === true) {
+        return <React.Fragment>
+            <h2>Program Overview</h2>
+            <div dangerouslySetInnerHTML={{ __html: description }}  />
+        </React.Fragment>
+    }
 
-	return null;
+    return null;
 }
 
 function renderProgramStats(degreesData, variantData, statsData) {
-	let checkIfContentAvailable = false;
+    let checkIfContentAvailable = false;
 
-	if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
-		checkIfContentAvailable = true;
-	}
-	
-	if (checkIfContentAvailable === true) {
-		return <React.Fragment>
-		<div className="full-width-container stats-bg">
-			<div className="container page-container">
-				<section className="row row-with-vspace site-content">
-					<div className="col-md-12 content-area">
-						<h2 className="sr-only">Program Statistics</h2>
-						<dl className="d-flex flex-wrap flex-fill justify-content-center">
-							<Degrees degreesData={degreesData} />
-							{CountProgramVariants(variantData)}
-							<Stats statsData={statsData} />
-						</dl>
-					</div>
-				</section>
-			</div>
-		</div>
-		</React.Fragment>
-	}
-	
-	return null;
+    if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
+        checkIfContentAvailable = true;
+    }
+    
+    if (checkIfContentAvailable === true) {
+        return <React.Fragment>
+        <div className="full-width-container stats-bg">
+            <div className="container page-container">
+                <section className="row row-with-vspace site-content">
+                    <div className="col-md-12 content-area">
+                        <h2 className="sr-only">Program Statistics</h2>
+                        <dl className="d-flex flex-wrap flex-fill justify-content-center">
+                            <Degrees degreesData={degreesData} />
+                            {CountProgramVariants(variantData)}
+                            <Stats statsData={statsData} />
+                        </dl>
+                    </div>
+                </section>
+            </div>
+        </div>
+        </React.Fragment>
+    }
+    
+    return null;
 }
 
 function CountProgramVariants(variantData) {
-	const specIcon = useIconData();
-	let checkIfContentAvailable = false;
-	let majors = [];
-	let minors = [];
-	let certificates = [];
-	let assocDiplomas = [];
-	
-	if (!contentIsNullOrEmpty(variantData)) {
-		checkIfContentAvailable = true;
-	}
-	
-	if (checkIfContentAvailable === true) {
-		var iconURL = ``;		
-		if (specIcon !== null && specIcon !== undefined) {
-			for (let i=0; i<specIcon.length; i++) {
-				for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
-					if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
-						iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
-					}
-				}
-			}
-		}		
-		variantData.forEach((edge) => {
-			if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
-				switch(edge.relationships.field_variant_type.name) {
-					case "Associate Diplomas":
-						assocDiplomas.push(edge.relationships.field_variant_type.name);
-					break;
-					case "Certificates":
-						certificates.push(edge.relationships.field_variant_type.name);
-					break;
-					case "Minors":
-						minors.push(edge.relationships.field_variant_type.name);						
-					break;	
-					default:
-						majors.push(edge.relationships.field_variant_type.name);
-				}
-			}
-		});	
-		return <React.Fragment>		
-			{!contentIsNullOrEmpty(majors) && <>
-				<div className="uog-card">
-					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {majors.length}</dt>
-					<dd>Specialized Majors</dd>
-				</div>
-			</>}
-			{!contentIsNullOrEmpty(minors) && <>
-				<div className="uog-card">
-					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {minors.length}</dt>
-					<dd>Specialized Minors</dd>
-				</div>
-			</>}
-			{!contentIsNullOrEmpty(assocDiplomas) && <>
-				<div className="uog-card">
-					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {assocDiplomas.length}</dt>
-					<dd>Associate Diplomas</dd>
-				</div>
-			</>}
-			{!contentIsNullOrEmpty(certificates) && <>
-				<div className="uog-card">
-					<dt>{iconURL !== null && <><SVG src={iconURL} /></>} {certificates.length}</dt>
-					<dd>Optional Certificates</dd>
-				</div>
-			</>}
-		</React.Fragment>
+    const specIcon = useIconData();
+    let checkIfContentAvailable = false;
+    let majors = [];
+    let minors = [];
+    let certificates = [];
+    let assocDiplomas = [];
+    
+    if (!contentIsNullOrEmpty(variantData)) {
+        checkIfContentAvailable = true;
+    }
+    
+    if (checkIfContentAvailable === true) {
+        var iconURL = ``;       
+        if (specIcon !== null && specIcon !== undefined) {
+            for (let i=0; i<specIcon.length; i++) {
+                for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
+                    if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
+                        iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
+                    }
+                }
+            }
+        }       
+        variantData.forEach((edge) => {
+            if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
+                switch(edge.relationships.field_variant_type.name) {
+                    case "Associate Diplomas":
+                        assocDiplomas.push(edge.relationships.field_variant_type.name);
+                    break;
+                    case "Certificates":
+                        certificates.push(edge.relationships.field_variant_type.name);
+                    break;
+                    case "Minors":
+                        minors.push(edge.relationships.field_variant_type.name);                        
+                    break;  
+                    default:
+                        majors.push(edge.relationships.field_variant_type.name);
+                }
+            }
+        }); 
+        return <React.Fragment>     
+            {!contentIsNullOrEmpty(majors) && <>
+                <div className="uog-card">
+                    <dt>{iconURL !== null && <><SVG src={iconURL} /></>} {majors.length}</dt>
+                    <dd>Specialized Majors</dd>
+                </div>
+            </>}
+            {!contentIsNullOrEmpty(minors) && <>
+                <div className="uog-card">
+                    <dt>{iconURL !== null && <><SVG src={iconURL} /></>} {minors.length}</dt>
+                    <dd>Specialized Minors</dd>
+                </div>
+            </>}
+            {!contentIsNullOrEmpty(assocDiplomas) && <>
+                <div className="uog-card">
+                    <dt>{iconURL !== null && <><SVG src={iconURL} /></>} {assocDiplomas.length}</dt>
+                    <dd>Associate Diplomas</dd>
+                </div>
+            </>}
+            {!contentIsNullOrEmpty(certificates) && <>
+                <div className="uog-card">
+                    <dt>{iconURL !== null && <><SVG src={iconURL} /></>} {certificates.length}</dt>
+                    <dd>Optional Certificates</dd>
+                </div>
+            </>}
+        </React.Fragment>
 
-	}
-	
-	return null;
+    }
+    
+    return null;
 }
 
 function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
-	let activeValue = true;
-	let activeTabExists = false;
-	let checkIfContentAvailable = false;
-	let navTabHeadings = [];
-	let navTabContent = [];
-	let key = 0;
+    let activeValue = true;
+    let activeTabExists = false;
+    let checkIfContentAvailable = false;
+    let navTabHeadings = [];
+    let navTabContent = [];
+    let key = 0;
 
-	// prep TAB 1 - Courses
-	if (!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)) {
-		const courseHeading = "Selected Courses";
-		const courseID = "pills-courses";
+    // prep TAB 1 - Courses
+    if (!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)) {
+        const courseHeading = "Selected Courses";
+        const courseID = "pills-courses";
     if (activeTabExists === false) {
       activeTabExists = true;
     } else {
       activeValue = false;
     }
-		checkIfContentAvailable = true;
-		key++;
+        checkIfContentAvailable = true;
+        key++;
 
-		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-										   active={activeValue} 
-										   heading={courseHeading} 
-										   controls={courseID} 
-							/>);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                           active={activeValue} 
+                                           heading={courseHeading} 
+                                           controls={courseID} 
+                            />);
 
-		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-										  active={activeValue} 
-										  heading={courseHeading} 
-										  headingLevel="h3" 
-										  id={courseID} 
-										  content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} 
-							/>);
-	}
+        navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                          active={activeValue} 
+                                          heading={courseHeading} 
+                                          headingLevel="h3" 
+                                          id={courseID} 
+                                          content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} 
+                            />);
+    }
 
-	// prep TAB 2 - Variants
-	if (variantDataHeading !== '') {
-		const variantID = "pills-variants";
+    // prep TAB 2 - Variants
+    if (variantDataHeading !== '') {
+        const variantID = "pills-variants";
     if (activeTabExists === false) {
       activeTabExists = true;
     } else {
       activeValue = false;
     }
-		checkIfContentAvailable = true;
-		key++;
+        checkIfContentAvailable = true;
+        key++;
 
-		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-										   active={activeValue} 
-										   heading={variantDataHeading} 
-										   controls={variantID} 
-							/>);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                           active={activeValue} 
+                                           heading={variantDataHeading} 
+                                           controls={variantID} 
+                            />);
 
-		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-										  active={activeValue} 
-										  heading={variantDataHeading} 
-										  headingLevel="h3" 
-										  id={variantID} 
-										  content={<Variants variantData={variantData} />} 
-							/>);
-	}
+        navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                          active={activeValue} 
+                                          heading={variantDataHeading} 
+                                          headingLevel="h3" 
+                                          id={variantID} 
+                                          content={<Variants variantData={variantData} />} 
+                            />);
+    }
 
-	// prep TAB 3 - Careers
-	if (!contentIsNullOrEmpty(careerData)) {
+    // prep TAB 3 - Careers
+    if (!contentIsNullOrEmpty(careerData)) {
     if (activeTabExists === false) {
       activeTabExists = true;
     } else {
       activeValue = false;
     }
-		checkIfContentAvailable = true;
-		const careersHeading = "Careers";
-		const careersID = "pills-careers";
-		key++;
+        checkIfContentAvailable = true;
+        const careersHeading = "Careers";
+        const careersID = "pills-careers";
+        key++;
 
-		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-										   active={activeValue} 
-										   heading={careersHeading} 
-										   controls={careersID} 
-							/>);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                           active={activeValue} 
+                                           heading={careersHeading} 
+                                           controls={careersID} 
+                            />);
 
-		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-										  active={activeValue} 
-										  heading={careersHeading} 
-										  headingLevel="h3" 
-										  id={careersID} 
-										  content={<Careers careerData={careerData} numColumns={3} />} 
-							/>);
-	}
-	
-	// prep TAB 4 - Employers
-	if (!contentIsNullOrEmpty(employerData)) {
+        navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                          active={activeValue} 
+                                          heading={careersHeading} 
+                                          headingLevel="h3" 
+                                          id={careersID} 
+                                          content={<Careers careerData={careerData} numColumns={3} />} 
+                            />);
+    }
+    
+    // prep TAB 4 - Employers
+    if (!contentIsNullOrEmpty(employerData)) {
     if (activeTabExists === false) {
       activeTabExists = true;
     } else {
       activeValue = false;
     }
-		checkIfContentAvailable = true;
-		const employerHeading = "Employers";
-		const employerID = "pills-employer";
-		key++;
+        checkIfContentAvailable = true;
+        const employerHeading = "Employers";
+        const employerID = "pills-employer";
+        key++;
 
-		navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-										   active={activeValue} 
-										   heading={employerHeading} 
-										   controls={employerID} 
-							/>);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
+                                           active={activeValue} 
+                                           heading={employerHeading} 
+                                           controls={employerID} 
+                            />);
 
-		navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-										  active={activeValue} 
-										  heading={employerHeading} 
-										  headingLevel="h3" 
-										  id={employerID} 
-										  content={<Employers employerData={employerData} />} 
-							/>);
-	}
-	if (checkIfContentAvailable === true) {
-		return <React.Fragment>
-				<h2>Program Information</h2>
-				<NavTabs headings={
-					navTabHeadings.map((heading) => {
-						return heading;
-						})
-					}>
-					{navTabContent.map((content) => {
-						return content;
-					})}
-				</NavTabs>
-			</React.Fragment>
-	}
+        navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
+                                          active={activeValue} 
+                                          heading={employerHeading} 
+                                          headingLevel="h3" 
+                                          id={employerID} 
+                                          content={<Employers employerData={employerData} />} 
+                            />);
+    }
+    if (checkIfContentAvailable === true) {
+        return <React.Fragment>
+                <h2>Program Information</h2>
+                <NavTabs headings={
+                    navTabHeadings.map((heading) => {
+                        return heading;
+                        })
+                    }>
+                    {navTabContent.map((content) => {
+                        return content;
+                    })}
+                </NavTabs>
+            </React.Fragment>
+    }
 
-	return null;
+    return null;
 }
 
 function retrieveLastModifiedDates (content) {
-	let dates = [];
+    let dates = [];
 
-	if (!contentIsNullOrEmpty(content)) {  
-		content.forEach((edge) => {
-			dates.push(edge.node.changed);
-		})
-	}
+    if (!contentIsNullOrEmpty(content)) {  
+        content.forEach((edge) => {
+            dates.push(edge.node.changed);
+        })
+    }
 
-	return dates;
+    return dates;
 }
 
 function prepareVariantHeading (variantData) {
@@ -335,105 +319,89 @@ function prepareVariantHeading (variantData) {
 }
 // Modified function to remove warning  --> Anonymous arrow functions cause Fast Refresh to not preserve local component state.
 
-										// Please add a name to your function, for example:
+                                        // Please add a name to your function, for example:
 
-										// Before:
-										// export default () => {}
+                                        // Before:
+                                        // export default () => {}
 
-										// After:
-										// const Named = () => {}
-										// export default Named;
+                                        // After:
+                                        // const Named = () => {}
+                                        // export default Named;
 
 
-										const ProgramPage = ({data, location}) => {
-	let callToActionData = [];
-	let careerData;
-	let courseData;
-	let degreesData;
-	let employerData;
-	let footerData;
-	let imageData;
-	let heroImage;
-	let altText;
-	let progData;
-	let newsData;
-	let specData;
-	let statsData;
-	let tagData;
-	let testimonialData;
-	let variantData;
+    const ProgramPage = ({data, location}) => {
+    let callToActionData = [];
+    let careerData;
+    let courseData;
+    let degreesData;
+    let employerData;
+    let footerData;
+    let imageData = [];
+    let imageTaggedData = [];
+    let progData;
+    let newsData;
+    let specData;
+    let statsData;
+    let tagData;
+    let testimonialData;
+    let variantData;
 
-	// set data
-	if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
-	if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-	if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
-	if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
-	if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
-	if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-	if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
-	if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
-	if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+    // set data
+    if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
+    if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
+    if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
+    if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
+    if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
+    if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+    if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
+    if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
+    if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
+    if (data.images.edges !== undefined) { imageData = data.images.edges; }
+    if (data.imagesTagged.edges !== undefined) { imageTaggedData = data.imagesTagged.edges; }
+    
+    const heroImage = (contentExists(imageData) ? imageData : (contentExists(imageTaggedData) ? imageTaggedData : null));
 
-	// use page image if it exists 
-	if (progData.relationships.field_prog_image !== undefined) { 
-       	   imageData = progData.relationships.field_prog_image; 
-	
-	   if (contentExists(imageData)) {
-	      altText = imageData.field_media_image.alt;
-	      heroImage = imageData.relationships.field_media_image.localFile;
-	
-	   } else {
-	   
-	       if (data.images.edges !== undefined) { imageData = data.images.edges; }
+    // set program details
+    const nodeID = progData.drupal_internal__nid;
+    const title = progData.title;
+    const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
+    const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
+    const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
 
-	   }
-	}
+    // set last modified date
+    let allModifiedDates = sortLastModifiedDates(
+        [progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
+        );
+    let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
-	// set program details
-	const nodeID = progData.drupal_internal__nid;
-	const title = progData.title;
-	const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
-	const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
-	const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
-	 // moved testimonialh=eading definition to inside testimonial call to allow for a more dynamic name
-  // const testimonialHeading = (acronym !== `` ? "What Students are saying about the " + acronym + " program" : "What Students are Saying");
+    // set degree, specialization, variant, and tag info  
+    degreesData = progData.relationships.field_degrees;
+    specData = progData.relationships.field_specializations;
+    tagData = progData.relationships.field_tags;
+    variantData = progData.relationships.field_program_variants;
+    let variantDataHeading = prepareVariantHeading(variantData); 
+    
+    // Open Graph metatags
+    const ogDescription = (contentExists(progData.field_metatags) ? progData.field_metatags.og_description : null);
+    const ogImage = (contentExists(heroImage) ? heroImage[0].node.relationships.field_media_image.localFile.publicURL : null);
+    const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
+    
+    return (
+    <Layout date={lastModified}>
+      <Helmet bodyAttributes={{
+          class: 'program'
+        }}
+      />
+      <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
+      <SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 
-	// set last modified date
-	let allModifiedDates = sortLastModifiedDates(
-		[progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
-		);
-	let lastModified = allModifiedDates[allModifiedDates.length - 1];
-
-	// set degree, specialization, variant, and tag info  
-	degreesData = progData.relationships.field_degrees;
-	specData = progData.relationships.field_specializations;
-	tagData = progData.relationships.field_tags;
-	variantData = progData.relationships.field_program_variants;
-	let variantDataHeading = prepareVariantHeading(variantData); 
-	
-	
-	return (
-	<Layout date={lastModified}>
-	  <Helmet bodyAttributes={{
-		  class: 'program'
-	  }}
-	/>
-    <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
-	<SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
-	  { /**** Header and Title ****/ }
-	  <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
-		{/* <FetchImages tags={imageTags} /> */}
-		{/*	{renderHeaderImage(imageData)} */}
-		{ contentExists(heroImage) ?
-                        <React.Fragment>
-                            <GatsbyImage image={heroImage.childImageSharp.gatsbyImageData} alt={altText} />
-                        </React.Fragment>
-                    : renderHeaderImage(imageData)
-		}
-		<div className="container ft-container">
-		  <h1 className="fancy-title">{title}</h1>
-		</div>
-	  </div>
+      { /**** Header and Title ****/ }
+      <div className={!contentExists(heroImage) && "no-thumb"} id="rotator">
+        <Hero imgData={heroImage} />
+        <div className="container ft-container">
+          <h1 className="fancy-title">{title}</h1>
+        </div>
+      </div>
 
       { /**** Tags and Call to Action Button ****/ }
       <div className="full-width-container bg-dark">
@@ -443,7 +411,7 @@ function prepareVariantHeading (variantData) {
                     {tagData && tagData.length > 0 ?  
                       (<Tags tagData={tagData} />)
                       : null
-                    }	
+                    }   
                   </div>
                   <div className="col-md-3">
                     {callToActionData.map((cta, index) => (
@@ -458,8 +426,8 @@ function prepareVariantHeading (variantData) {
               </section>
           </div>
       </div>
-	  
-	  <Breadcrumbs nodeID={nodeID} nodeTitle={title} />
+      
+      <Breadcrumbs nodeID={nodeID} nodeTitle={title} />
 
       { /**** Program Overview ****/ }
       <div className="container page-container">
@@ -469,7 +437,7 @@ function prepareVariantHeading (variantData) {
           </section>
         </div>
       </div>
-	
+    
       { /**** Program Stats ****/ }
       {renderProgramStats(degreesData, variantData, statsData)}
 
@@ -510,12 +478,12 @@ function prepareVariantHeading (variantData) {
           </section>
         </div>
       }
-	  
-	  {contentExists(footerData) && footerData.length !== 0 &&
-		<CustomFooter footerData={footerData[0]} />
-	  }		
-	</Layout>	
-	)	
+      
+      {contentExists(footerData) && footerData.length !== 0 &&
+        <CustomFooter footerData={footerData[0]} />
+      }     
+    </Layout>   
+    )   
 }
 
 export default ProgramPage;
@@ -530,6 +498,9 @@ export const query = graphql`query ($id: String) {
         drupal_id
         drupal_internal__nid
         title
+        field_metatags {
+          og_description
+        }
         field_program_overview {
           processed
         }
@@ -537,21 +508,22 @@ export const query = graphql`query ($id: String) {
           processed
         }
         relationships {
-	  field_prog_image {
+          field_prog_image {
             field_media_image {
               alt
             } 
             relationships {
-              field_media_image {
-		localFile {
-		   childImageSharp {
+              field_media_image {               
+                localFile {
+                  publicURL
+                  childImageSharp {
                       gatsbyImageData(
-				  transformOptions: {cropFocus: CENTER}
-				  placeholder: BLURRED
-				  aspectRatio: 3
-			    )
-              	   }
-              	}
+                  transformOptions: {cropFocus: CENTER}
+                  placeholder: BLURRED
+                  aspectRatio: 3
+                )
+                   }
+                }
               }
             }
           }
@@ -939,7 +911,7 @@ export const query = graphql`query ($id: String) {
       }
     }
   }
-  images: allMediaImage(filter: {fields: {tags: {in: [$id]}}}) {
+  images: allMediaImage(filter: {relationships: {node__program: {elemMatch: {relationships: {field_program_acronym: {id: {eq: $id}}}} }}}) {
     edges {
       node {
         drupal_id
@@ -949,12 +921,38 @@ export const query = graphql`query ($id: String) {
         relationships {
           field_media_image {
             localFile {
+              publicURL
               childImageSharp {
                  gatsbyImageData(
-				  transformOptions: {cropFocus: CENTER}
-				  placeholder: BLURRED
-				  aspectRatio: 3
-			    )
+                  transformOptions: {cropFocus: CENTER}
+                  placeholder: BLURRED
+                  aspectRatio: 3
+                )
+              }
+              extension
+            }
+          }
+        }
+      }
+    }
+  }
+  imagesTagged: allMediaImage(filter: {fields: {tags: {in: [$id]}}}) {
+    edges {
+      node {
+        drupal_id
+        field_media_image {
+          alt
+        }
+        relationships {
+          field_media_image {
+            localFile {
+              publicURL
+              childImageSharp {
+                 gatsbyImageData(
+                  transformOptions: {cropFocus: CENTER}
+                  placeholder: BLURRED
+                  aspectRatio: 3
+                )
               }
               extension
             }

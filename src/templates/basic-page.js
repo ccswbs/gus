@@ -14,11 +14,17 @@ const BasicPage = ({data}) => {
     const nodeID = pageData.drupal_internal__nid;   
     const title = pageData.title;
     const imageData = data.images.edges;
+    const ogDescription = (contentExists(pageData.field_metatags) ? pageData.field_metatags.og_description : null);
+    const ogImage = (contentExists(imageData) ? imageData[0].node.relationships.field_media_image.localFile.publicURL : null);
+    const ogImageAlt = (contentExists(imageData) ? imageData[0].node.field_media_image.alt : null);
 
-    // WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected
-    // using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component.
-
+    /****
+    WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component. 
+    ****/
+    
     const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
+    
+    console.log(ogImage);
 
     return (
         <Layout>
@@ -27,11 +33,11 @@ const BasicPage = ({data}) => {
             }}
             />
             <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
-            <SEO title={title} keywords={[`gatsby`, `application`, `react`]} />
+            <SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
             
             { /**** Header and Title ****/ }
             <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
-                <Hero imgData={imageData} />                
+                <Hero imgData={imageData} />
                 <div className="container ft-container">
                     <h1 className="fancy-title">{title}</h1>
                 </div>
@@ -47,8 +53,7 @@ const BasicPage = ({data}) => {
                         <Widgets pageData={widgetsData} />
                     </section>
                 </div>
-            </div>  
-            
+            </div>
         </Layout>
     )
     
@@ -63,6 +68,9 @@ export const query = graphql`query ($id: String) {
         drupal_id
         drupal_internal__nid
         title
+        field_metatags {
+          og_description
+        }
         relationships {
           field_widgets {
             __typename
@@ -424,9 +432,7 @@ export const query = graphql`query ($id: String) {
       }
     }
   }
-  images: allMediaImage(
-    filter: {relationships: {node__page: {elemMatch: {id: {eq: $id}}}}}
-  ) {
+  images: allMediaImage(filter: {relationships: {node__page: {elemMatch: {id: {eq: $id}}}}}) {
     edges {
       node {
         drupal_id
@@ -436,6 +442,7 @@ export const query = graphql`query ($id: String) {
         relationships {
           field_media_image {
             localFile {
+              publicURL
               childImageSharp {
                  gatsbyImageData(
                   transformOptions: {cropFocus: CENTER}
