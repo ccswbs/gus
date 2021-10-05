@@ -95,5 +95,5 @@ module.exports = {
       }
     }
   ],
-  assetPrefix: "/assets/",
+  assetPrefix: "https://livechugendpoint.azureedge.net",
 }
