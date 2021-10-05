@@ -10,6 +10,8 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['title'] = "Gatsby UG Starter Template";
     metaConfig['description'] = "Description of the site";
     metaConfig['author'] = "Author of site";
+    metaConfig['ogImage'] = "",
+    metaConfig['ogImageAlt'] = "",
     metaConfig['GAtrackingID'] = "";
     metaConfig['menus'] = "";
 }
@@ -19,6 +21,8 @@ module.exports = {
     title: metaConfig['title'],
     description: metaConfig['description'],
     author: metaConfig['author'],
+    ogImage: metaConfig['ogImage'],
+    ogImageAlt: metaConfig['ogImageAlt'],
     menus: metaConfig['menus'],
   },
   plugins: [
@@ -45,18 +49,6 @@ module.exports = {
       resolve: `gatsby-plugin-sharp`,
       options: {
         defaultQuality: 90,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsby UG Starter Template`,
-        short_name: `UG starter`,
-        start_url: `/`,
-        background_color: `#FFFFFF`,
-        theme_color: `#000000`,
-        display: `browser`,
-        icon: `src/favicon.png`, // This path is relative to the root of the site.
       },
     },
     {

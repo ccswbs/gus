@@ -172,6 +172,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     type media__imageRelationships implements Node {
       field_media_image: file__file @link(from: "field_media_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+      node__page: [node__page] @link(from: "node__page___NODE")
+      node__program: [node__program] @link(from: "node__program___NODE")
     }
     type media__remote_video implements Node {
       name: String
@@ -256,6 +258,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__course implements Node {
       drupal_id: String
       drupal_internal__nid: Int
+      changed: String
       title: String
       field_code: String
       field_course_url: node__courseField_course_url
@@ -309,9 +312,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       drupal_internal__nid: Int
       field_hero_image: ImageField
+      field_metatags: node__pageField_metatags
       relationships: node__pageRelationships
       fields: FieldsPathAlias
       path: AliasPath
+    }
+    type node__pageField_metatags implements Node {
+      og_description: String
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
@@ -329,6 +336,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       changed: Date @dateformat
       field_prog_image: ImageField
       field_course_notes: node__programField_course_notes
+      field_metatags: node__programField_metatags
       field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
       fields: FieldsPathAlias
@@ -338,6 +346,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
       processed: String
+    }
+    type node__programField_metatags implements Node {
+      og_description: String
     }
     type node__programField_program_overview implements Node {
       value: String
@@ -385,7 +396,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_button_style:taxonomy_term__button_styles @link(from: "field_button_style___NODE")
       field_font_awesome_icon_colour: taxonomy_term__colour_variables @link(from: "field_font_awesome_icon_colour___NODE")
     }
-  type paragraph__call_to_action implements Node {
+    type paragraph__call_to_action implements Node {
       drupal_id: String
       field_cta_title: String
       field_cta_description: String
