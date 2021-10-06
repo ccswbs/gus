@@ -15,11 +15,6 @@
       - [ ] If yes, then:
          - [ ] Ensure a Gatsby page alias is set up in gatsby-config and gatsby-node
          - [ ] Ensure the site still runs if all values are null (e.g. add a schema, check for null/undefined values)
-   - Is a test necessary?
-      - [ ] No
-      - [ ] If yes, then:
-         - [ ] Add a test if existing tests do not effectively test the code change
-         - [ ] Test passes
    - [ ] Pull request (PR) is mergeable with *master* branch
    - [ ] PR has a meaningful title
    - [ ] PR has a summary of changes
@@ -28,11 +23,6 @@
 
 ## Backend
 
-### Are there User-facing changes in the Drupal UI?
-- [ ] No
-- [ ] If yes, then:
-   - [ ] User documentation is updated
-   - [ ] User training is updated
 
 ### Are there Site Configuration changes?
 - [ ] No
