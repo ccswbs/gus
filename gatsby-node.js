@@ -472,7 +472,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__program_statisticRelationships implements Node {
       field_stat_icon: media__image @link(from: "field_stat_icon___NODE")
       field_stat_type: taxonomy_term__statistic_type @link(from: "field_stat_type___NODE")  
-      field_font_awesome_icon_colour: taxonomy_term__colour_variables @link(from: "field_font_awesome_icon_colour___NODE")
       
     }
     type paragraph__program_variants implements Node {

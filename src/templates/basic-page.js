@@ -440,9 +440,6 @@ export const query = graphql`query ($id: String) {
                     field_stat_type {
                       name
                     }
-                    field_font_awesome_icon_colour {
-                      name
-                    }
                   }
                 }
               }
