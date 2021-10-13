@@ -31,6 +31,10 @@ steps:
   inputs:
     versionSpec: '16.x'
 - task: Npm@1
+  displayName: 'npm cache clear --force'
+  inputs:
+    verbose: false
+- task: Npm@1
   displayName: 'npm install'
   inputs:
     verbose: false
