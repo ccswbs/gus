@@ -7,7 +7,7 @@ variables:
   STORAGE_ACCOUNT_NAME: 'livechugstorage'
 
 pool:
-  vmImage: vs2017-win2016
+  vmImage: windows-latest
   demands: npm
 
 trigger:
