@@ -554,6 +554,7 @@ export const query = graphql`query ($id: String) {
             field_stat_range
             field_stat_value
             field_stat_value_end
+            field_font_awesome_icon
             relationships {
               field_stat_type {
                 name

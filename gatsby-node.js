@@ -466,6 +466,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_stat_range: Boolean
       field_stat_value: String
       field_stat_value_end: String
+      field_font_awesome_icon: String
       relationships: paragraph__program_statisticRelationships
     }
     type paragraph__program_statisticRelationships implements Node {

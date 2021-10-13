@@ -3,7 +3,7 @@ import React from 'react';
 import '../styles/button-widget.css'
 import CallToAction from '../components/callToAction';
 import { Link } from 'gatsby';
-import { contentExists } from '../utils/ug-utils';
+import { contentExists, fontAwesomeIconColour} from '../utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 
@@ -26,18 +26,7 @@ function ButtonStyle (styleOfButton){
     }
 }
 
-function FontAwesomeIconColour (colourChoice) {
-    switch(colourChoice) {
-        case 'Yellow':
-            return 'yellow-icon';
-        case 'Red':
-            return 'red-icon';
-        case 'Darker Red':
-            return 'red-darker-icon)';
-        default: 
-            return '';
-    }
-}
+
 
 function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
     const aliasData = require('../../config/aliases/aliasfile.yml');
@@ -54,7 +43,7 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
     let buttonClassName= 'btn ' + ButtonStyle(buttonData.relationships.field_button_style.name) + ' ' + btnClassName;
     let btnFAIconAdjust = (contentExists(buttonFAIconAdjust))? buttonFAIconAdjust: '';
     let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? buttonData.field_font_awesome_icon + ' ' +
-                                btnFAIconAdjust + ' fa-fw '+ FontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
+                                btnFAIconAdjust + ' fa-fw '+ fontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
     let buttonTextClassName = contentExists(buttonTextClass)? buttonTextClass: '';
 	
 	let btnAnalyticsGoal = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.name : ``);

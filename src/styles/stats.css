@@ -53,8 +53,26 @@ body.basic-page dd {
     line-height: 1.58;
 }
 
+div.uog-card span.fa-icon-colour {
+	color: var(--uog-red);
+	padding-right: 1.5rem;
+}
+div.uog-card:nth-of-type(9n+2) span.fa-icon-colour,
+div.uog-card:nth-of-type(9n+4) span.fa-icon-colour,
+div.uog-card:nth-of-type(9n+9) span.fa-icon-colour {
+	color: var(--uog-yellow);	
+	padding-right: 1.5rem;
+}
+
+div.uog-card:nth-of-type(9n+3) span.fa-icon-colour,
+div.uog-card:nth-of-type(9n+5) span.fa-icon-colour,
+div.uog-card:nth-of-type(9n+7) span.fa-icon-colour {
+	color: var(--uog-blue);
+	padding-right: 1.5rem;
+}
+
 div.uog-card path {
-	fill: var(--uog-blue);
+	fill: var(--uog-red);
 }
 
 div.uog-card:nth-of-type(9n+2) path,
@@ -66,7 +84,7 @@ div.uog-card:nth-of-type(9n+9) path {
 div.uog-card:nth-of-type(9n+3) path,
 div.uog-card:nth-of-type(9n+5) path,
 div.uog-card:nth-of-type(9n+7) path {
-	fill: var(--uog-red);
+	fill: var(--uog-blue);
 }
 
 body.basic-page div.uog-card {

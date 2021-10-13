@@ -37,6 +37,7 @@
     "js-yaml": "^4.1.0",
     "moment-timezone": "^0.5.33",
     "node-fetch": "^3.0.0",
+    "npm": "^7.24.0",
     "npm-check-updates": "^11.8.5",
     "preact": "^10.5.14",
     "preact-render-to-string": "^5.1.19",
