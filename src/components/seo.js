@@ -48,11 +48,19 @@ function SEO({ description, img, imgAlt, lang, meta, keywords, title }) {
               },
               {
                 name: `twitter:card`,
-                content: `summary`,
+                content: `summary_large_image`,
               },
               {
                 name: `twitter:creator`,
                 content: data.site.siteMetadata.author,
+              },
+	      {
+                name: `twitter:image`,
+                content: metaImage,
+              },
+	      {
+                name: `twitter:image:alt`,
+                content: metaImageAlt,
               },
               {
                 name: `twitter:title`,
