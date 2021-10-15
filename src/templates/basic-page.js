@@ -155,9 +155,7 @@ export const query = graphql`query ($id: String) {
                           localFile {
                             publicURL
                             childImageSharp {
-                              resize(width: 400, height: 300, cropFocus: CENTER) {
-                                src
-                              }
+                              gatsbyImageData(width: 400, height: 300, transformOptions: {cropFocus: CENTER})
                             }
                           }
                         }
@@ -218,9 +216,7 @@ export const query = graphql`query ($id: String) {
                                 localFile {
                                   publicURL
                                   childImageSharp {
-                                    resize(width: 400, height: 300, cropFocus: CENTER) {
-                                      src
-                                    }
+                                    gatsbyImageData(width: 400, height: 300, transformOptions: {cropFocus: CENTER})
                                   }
                                 }
                               }
