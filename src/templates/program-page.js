@@ -559,15 +559,6 @@ export const query = graphql`query ($id: String) {
               field_stat_type {
                 name
               }
-              field_stat_icon {
-                relationships {
-                  field_media_image {
-                    localFile {
-                      publicURL
-                    }
-                  }
-                }
-              }
             }
           }
           field_tags {
