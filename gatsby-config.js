@@ -95,5 +95,5 @@ module.exports = {
       }
     }
   ],
-  assetPrefix: "/assets/",
+  assetPrefix: process.env.ASSET_PREFIX,
 }
