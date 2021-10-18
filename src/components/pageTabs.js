@@ -34,7 +34,7 @@ function renderTabInfo (pageData) {
 		navTabContent.push(<NavTabContent key={`navTabContent-` + i}
 				  active={activeValue}
 				  id={tabID}
-				  content=<div dangerouslySetInnerHTML={{ __html: pageData.relationships.field_tabs[i].field_tab_body.value }} />
+				  content=<div dangerouslySetInnerHTML={{ __html: pageData.relationships.field_tabs[i].field_tab_body.processed }} />
 				/>);
 		}
 	}

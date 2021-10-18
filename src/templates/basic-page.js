@@ -131,7 +131,7 @@ export const query = graphql`query ($id: String) {
                 field_tabs {
                   field_tab_title
                   field_tab_body {
-                    value
+                    processed
                   }
                 }
               }
@@ -155,9 +155,7 @@ export const query = graphql`query ($id: String) {
                           localFile {
                             publicURL
                             childImageSharp {
-                              resize(width: 400, height: 300, cropFocus: CENTER) {
-                                src
-                              }
+                              gatsbyImageData(width: 400, height: 300, transformOptions: {cropFocus: CENTER})
                             }
                           }
                         }
@@ -218,9 +216,7 @@ export const query = graphql`query ($id: String) {
                                 localFile {
                                   publicURL
                                   childImageSharp {
-                                    resize(width: 400, height: 300, cropFocus: CENTER) {
-                                      src
-                                    }
+                                    gatsbyImageData(width: 400, height: 300, transformOptions: {cropFocus: CENTER})
                                   }
                                 }
                               }
@@ -292,15 +288,6 @@ export const query = graphql`query ($id: String) {
                         field_stat_value_end
                         field_font_awesome_icon
                         relationships {
-                          field_stat_icon {
-                            relationships {
-                              field_media_image {
-                                localFile {
-                                  publicURL 
-                                }
-                              }
-                            }
-                          }
                           field_stat_type {
                             name
                           }
@@ -425,15 +412,6 @@ export const query = graphql`query ($id: String) {
                   field_stat_value_end
                   field_font_awesome_icon
                   relationships {
-                    field_stat_icon {
-                      relationships {
-                        field_media_image {
-                          localFile {
-                            publicURL 
-                          }
-                        }
-                      }
-                    }
                     field_stat_type {
                       name
                     }
