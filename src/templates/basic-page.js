@@ -131,7 +131,7 @@ export const query = graphql`query ($id: String) {
                 field_tabs {
                   field_tab_title
                   field_tab_body {
-                    value
+                    processed
                   }
                 }
               }
