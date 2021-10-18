@@ -78,9 +78,6 @@ module.exports = {
       },
     },    
     {
-      resolve: `gatsby-plugin-asset-path`,
-    },
-    {
       resolve: `gatsby-plugin-google-tagmanager`,
       options: {
         id: "GTM-NRSSDKW",
@@ -95,5 +92,5 @@ module.exports = {
       }
     }
   ],
-  assetPrefix: "/assets/",
+  assetPrefix: process.env.ASSET_PREFIX,
 }
