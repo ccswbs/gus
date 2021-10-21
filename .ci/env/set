@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Install jq utility
-sudo apt-get install jq
