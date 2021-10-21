@@ -3,10 +3,11 @@ import React from 'react';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Video from '../components/video';
 import { Link } from 'gatsby';
+import SectionButtons from '../components/sectionButtons';
 import { contentExists } from '../utils/ug-utils';
 
 function MediaText (props) {
-	console.log(props)
+console.log(props.widgetData.relationships)
 	const aliasData = require('../../config/aliases/aliasfile.yml');
 
 	const mediaTitle = (contentExists(props.widgetData.field_media_text_title) ? '<h3>' + props.widgetData.field_media_text_title + '</h3>': ``);
@@ -32,7 +33,8 @@ function MediaText (props) {
 			<section className={props.colClass}>
 				<div dangerouslySetInnerHTML={{ __html: mediaTitle}} />
 				<div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
-				<div>{mediaLinks.map(mediaLink => {
+				{contentExists(props.widgetData.relationships.field_button_section) === true &&<SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
+				{contentExists(props.widgetData.relationships.field_button_section) === false && <div>{mediaLinks.map(mediaLink => {
 // set the link to the url provided, if internal Drupal link (entity or internal) - clean up the URI to work with Link command,
 // to handel a <noLink>, if external link pass through, otherwise set to null
 				const  urlLink= (contentExists(mediaLink.uri)) ? (mediaLink.uri.includes("entity:node/")) ?
@@ -42,9 +44,9 @@ function MediaText (props) {
 					<React.Fragment>
 						{(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={urlLink}>{mediaLink.title}</a> </> :
 						<Link to={urlLink} className="btn btn-outline-info" >{mediaLink.title}</Link>}
-					
 					</React.Fragment>)
-				})}</div>
+					
+				})}</div>}
 			</section>
 		
 	</>;
