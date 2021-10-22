@@ -87,8 +87,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
-        host: `https://liveugconthub.uoguelph.dev`,
-        policy: [{ userAgent: '*', disallow: '/' }]
+        host: `https://livechugendpoint.azureedge.net/`,
+        sitemap: null,
+        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
       }
     }
   ],
