@@ -16,6 +16,12 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['menus'] = "";
 }
 
+let assetPrefixValue = process.env.ASSET_PREFIX;
+
+if (process.env.IS_PR_BUILD) === true {
+    assetPrefixValue = null;
+}
+
 module.exports = {
   siteMetadata: {
     title: metaConfig['title'],
@@ -93,5 +99,5 @@ module.exports = {
       }
     }
   ],
-  assetPrefix: process.env.ASSET_PREFIX,
+  assetPrefix: assetPrefixValue,
 }
