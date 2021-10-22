@@ -4,7 +4,6 @@ import { contentExists} from '../utils/ug-utils';
 import '../styles/stats.css';
 
 function Stats (props) {
-	console.log(props)
 	return (
 		
 		<React.Fragment>

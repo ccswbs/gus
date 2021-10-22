@@ -5,7 +5,6 @@ import GridCell from './gridCell';
 import { contentExists } from '../utils/ug-utils';
 
 function GridItems (props) {
-	console.log(props, "griditems");
     if(contentExists(props.pageData) && props.pageData.length !== 0){
 
 		return (
@@ -31,8 +30,7 @@ function GridItems (props) {
 					return null;
 				})}
 			</Grid>
-		)
-        
+		)        
     }
 
     return null;
