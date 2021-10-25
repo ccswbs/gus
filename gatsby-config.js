@@ -18,7 +18,7 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
 
 let assetPrefixValue = process.env.ASSET_PREFIX;
 
-if (process.env.IS_PR_BUILD === true) {
+if (process.env.GATSBY_IS_PR_BUILD === true) {
     assetPrefixValue = null;
 }
 
