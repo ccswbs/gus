@@ -24,6 +24,8 @@ if (process.env.GATSBY_IS_PR_BUILD === true) {
     assetPrefixValue = process.env.ASSET_PREFIX;
 }
 
+console.log(process.env.GATSBY_IS_PR_BUILD);
+
 module.exports = {
   siteMetadata: {
     title: metaConfig['title'],
