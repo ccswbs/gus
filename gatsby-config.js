@@ -16,10 +16,12 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['menus'] = "";
 }
 
-let assetPrefixValue = process.env.ASSET_PREFIX;
+let assetPrefixValue;
 
 if (process.env.GATSBY_IS_PR_BUILD === true) {
     assetPrefixValue = null;
+} else {
+    assetPrefixValue = process.env.ASSET_PREFIX;
 }
 
 module.exports = {
