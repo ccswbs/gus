@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SVG from 'react-inlinesvg';
+import Svg from 'react-inlinesvg';
 import { contentIsNullOrEmpty } from '../utils/ug-utils';
 import { useIconData } from '../utils/fetch-icon';
 import '../styles/stats.css';
@@ -24,7 +24,7 @@ function Degrees (props) {
 		<React.Fragment>
 			{!contentIsNullOrEmpty(props.degreesData) && <>									
 				<div className="uog-card">
-					<dt>{iconURL !== null && <><SVG src={iconURL} /></>}{dtValue}</dt>
+					<dt>{iconURL !== null && <><Svg src={iconURL} /></>}{dtValue}</dt>
 					{props.degreesData.map (degree => {
 						const acronym = (degree.field_degree_acronym !== undefined && degree.field_degree_acronym !== null ? ` (` + degree.field_degree_acronym + `)`: ``);
 						return <dd key={degree.drupal_id}>{degree.name} {acronym}</dd>

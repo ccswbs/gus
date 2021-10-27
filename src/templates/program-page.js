@@ -15,7 +15,7 @@ import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import NewsGrid from '../components/newsGrid';
 import Stats from '../components/stats'
-import SVG from 'react-inlinesvg';
+import Svg from 'react-inlinesvg';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
@@ -114,25 +114,25 @@ function CountProgramVariants(variantData) {
         return <React.Fragment>     
             {!contentIsNullOrEmpty(majors) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><SVG src={iconURL} /></>} {majors.length}</dt>
+                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {majors.length}</dt>
                     <dd>Specialized Majors</dd>
                 </div>
             </>}
             {!contentIsNullOrEmpty(minors) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><SVG src={iconURL} /></>} {minors.length}</dt>
+                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {minors.length}</dt>
                     <dd>Specialized Minors</dd>
                 </div>
             </>}
             {!contentIsNullOrEmpty(assocDiplomas) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><SVG src={iconURL} /></>} {assocDiplomas.length}</dt>
+                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {assocDiplomas.length}</dt>
                     <dd>Associate Diplomas</dd>
                 </div>
             </>}
             {!contentIsNullOrEmpty(certificates) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><SVG src={iconURL} /></>} {certificates.length}</dt>
+                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {certificates.length}</dt>
                     <dd>Optional Certificates</dd>
                 </div>
             </>}
