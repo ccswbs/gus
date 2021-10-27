@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
 import CallToAction from '../components/callToAction';
@@ -393,7 +393,7 @@ function prepareVariantHeading (variantData) {
         }}
       />
       <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
-      <SEO title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
+      <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 
       { /**** Header and Title ****/ }
       <div className={!contentExists(heroImage) && "no-thumb"} id="rotator">
