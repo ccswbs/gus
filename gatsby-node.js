@@ -176,6 +176,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       node__program: [node__program] @link(from: "node__program___NODE")
     }
     type media__remote_video implements Node {
+      drupal_id: String
       name: String
       field_media_oembed_video: String
       relationships: media__remote_videoRelationships
@@ -226,6 +227,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       tags: [String]
     }
     type node__call_to_action implements Node {
+      changed: Date
       drupal_id: String
       drupal_internal__nid: Int
       title: String
@@ -366,6 +368,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_prog_image: media__image @link(from: "field_prog_image___NODE")
     }
     type node__testimonial implements Node {
+      changed: Date
+      created: Date
       drupal_id: String
       drupal_internal__nid: Int
       title: String
@@ -680,11 +684,24 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
     }
 }
 
+// Suppress chunk out-of-order warnings
+exports.onCreateWebpackConfig = helper => {    
+    const { actions, getConfig } = helper
+    const config = getConfig()
+    const miniCssExtractPlugin = config.plugins.find(
+        plugin => plugin.constructor.name === "MiniCssExtractPlugin"
+    )
+    if (miniCssExtractPlugin) {
+        miniCssExtractPlugin.options.ignoreOrder = true
+    }
+    actions.replaceWebpackConfig(config)        
+}
+
 exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
     const pageTemplate = path.resolve('./src/templates/basic-page.js');
-    const articleTemplate = path.resolve('./src/templates/article-page.js');
+    //const articleTemplate = path.resolve('./src/templates/article-page.js');
     const programTemplate = path.resolve('./src/templates/program-page.js');
     
     const helpers = Object.assign({}, actions, {
