@@ -16,7 +16,7 @@ export default ({data}) => {
 	)
 }
 
-export const query = graphql`
+/* export const query = graphql`
   query ($id: String) {
 	articles: allNodeArticle(filter: {id: {eq: $id}}) {
 		edges {
@@ -30,4 +30,4 @@ export const query = graphql`
 		}
 	}
   }
-`
+` */
