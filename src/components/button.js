@@ -49,7 +49,9 @@ function ButtonStyle (styleOfButton){
 
 function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
     const aliasData = require('../../config/aliases/aliasfile.yml');
+    console.log(buttonData)
     console.log(buttonData.field_button_link.uri);
+    console.log(buttonData.field_button_link.url);
 // set the link to the url provided, if internal Drupal link (entity or internal) - clean up the URI to work with Link command,
 // to handel a <noLink>, if external link pass through, otherwise set to null
 	const urlLink = (contentExists(buttonData.field_button_link.uri)) ? (buttonData.field_button_link.uri.includes("entity:node/")) ? 

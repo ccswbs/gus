@@ -19,7 +19,7 @@ import '../styles/widgets.css';
 //
 
 function SectionWidgets (props) {
-
+console.log(props);
 if (contentExists(props.pageData) && props.pageData.length !== 0) {
     return (props.pageData.map(widgetData => {
         if (widgetData.__typename==="paragraph__links_widget") {
