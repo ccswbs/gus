@@ -145,6 +145,7 @@ export const query = graphql`query ($id: String) {
                   field_link_url {
                     title
                     uri
+                    url
                   }
                   relationships {
                     field_link_image {
@@ -206,6 +207,7 @@ export const query = graphql`query ($id: String) {
                         field_link_url {
                           title
                           uri
+                          url
                         }
                         relationships {
                           field_link_image {

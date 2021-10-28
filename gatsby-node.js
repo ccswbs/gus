@@ -150,7 +150,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type FieldLink {
       title: String
       uri: String
-
+      url: String
     }
     type FieldsPathAlias {
       alias: PathAlias @link
@@ -461,6 +461,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__media_textRelationships implements Node {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
       field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
+      field_button_section: [paragraph__section_buttons] @link(from:"field_button_section___NODE")
     }
     type paragraph__program_statistic implements Node {
       drupal_id: String   
