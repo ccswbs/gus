@@ -48,7 +48,6 @@ function IconClass (columnName) {
 }
 
 function SectionButtons (props) {
-console.log(props)
 /***
 Set variables to control button layout 
 	if column is right use section-button-right

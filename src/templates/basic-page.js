@@ -370,6 +370,7 @@ export const query = graphql`query ($id: String) {
                         field_button_link {
                           title
                           uri
+                          url
                         }
                         field_cta_heading {
                           processed

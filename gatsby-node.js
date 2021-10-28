@@ -150,7 +150,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type FieldLink {
       title: String
       uri: String
-      url: String
+
     }
     type FieldsPathAlias {
       alias: PathAlias @link
