@@ -853,7 +853,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             })
         }
 
-        // process article nodes
+/*         // process article nodes
         if (result.data.articles !== undefined) {
             const articles = result.data.articles.edges;
             articles.forEach(( { node }, index) => {
@@ -865,7 +865,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                     helpers
                 );
             })
-        }
+        } */
 
         // process program nodes
         if (result.data.programs !== undefined) {
