@@ -16,13 +16,13 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['menus'] = "";
 }
 
-let assetPrefixValue;
+/* let assetPrefixValue;
 
 if (process.env.GATSBY_IS_PR_BUILD === true) {
     assetPrefixValue = null;
 } else {
     assetPrefixValue = process.env.ASSET_PREFIX;
-}
+} */
 
 console.log(process.env.GATSBY_IS_PR_BUILD);
 
@@ -103,5 +103,5 @@ module.exports = {
       }
     }
   ],
-  assetPrefix: assetPrefixValue,
+  assetPrefix: process.env.ASSET_PREFIX,
 }
