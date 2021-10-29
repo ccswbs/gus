@@ -7,7 +7,7 @@ import SectionButtons from '../components/sectionButtons';
 import { contentExists } from '../utils/ug-utils';
 
 function MediaText (props) {
-console.log(props.widgetData.relationships)
+
 	const aliasData = require('../../config/aliases/aliasfile.yml');
 
 	const mediaTitle = (contentExists(props.widgetData.field_media_text_title) ? '<h3>' + props.widgetData.field_media_text_title + '</h3>': ``);
