@@ -275,7 +275,7 @@ export const query = graphql`query ($id: String) {
                         }
                       }
                       field_button_section {
-                        
+                        ... on paragraph__section_buttons {
                           drupal_id
                           relationships {
                             field_section_column {
@@ -309,7 +309,7 @@ export const query = graphql`query ($id: String) {
                               }
                             }
                           }
-                        
+                        }
                       }
                     }
                   }
@@ -440,7 +440,7 @@ export const query = graphql`query ($id: String) {
                   }
                 }
                 field_button_section {
-                  
+                  ... on paragraph__section_buttons {
                     drupal_id
                     relationships {
                       field_section_column {
@@ -474,7 +474,7 @@ export const query = graphql`query ($id: String) {
                         }
                       }
                     }
-                  
+                  }
                 }
               }
             }
