@@ -57,7 +57,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
         else if (widgetData.__typename==="paragraph__section") {
             const sectionTitle = (contentExists(widgetData.field_section_title) ? widgetData.field_section_title : ``);
             return (<>
-				<h2>{sectionTitle}</h2>
+				{contentExists(sectionTitle) === true && <h2>{sectionTitle}</h2>}
 				<div className={widgetData.field_section_classes}>
                     
                         <SectionWidgets pageData={widgetData.relationships.field_section_content}/>

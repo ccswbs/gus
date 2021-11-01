@@ -13,10 +13,11 @@
     padding-right: 30px;
     text-align: center;
 }
+.section-button-main {
+    margin-right: 3px;
+}
 .section-button-main-layout {
-    white-space: nowrap;
-    display: flex;
-    grid-gap: 1rem;   
+    padding: 20px; 
 
 }
 @media only screen and (max-width: 768px){
