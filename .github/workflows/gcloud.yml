@@ -4,9 +4,8 @@ name: CI for Gatsby Cloud
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
+  schedule:
+    - cron: '0 0 * * *'  # every day at midnight
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,7 +22,7 @@ jobs:
       
       # Runs a single command using the runners shell
       - name: Call webhook
-        run: curl -X POST https://webhook.gatsbyjs.com/hooks/data_source/fc8e90a4-54ce-4012-a5fc-3302f05a3d6d
+        run: curl -X POST https://webhook.gatsbyjs.com/hooks/data_source/publish/fc8e90a4-54ce-4012-a5fc-3302f05a3d6d
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
