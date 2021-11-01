@@ -874,8 +874,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             const menuNames = config.siteMetadata.menus;            
             menuNames.forEach(element => createSitemap(menus, element, aliases));
     }
-    // proces aliases for each page/node
-    createAliasFile(aliases);
     }
 }
 
@@ -922,11 +920,6 @@ function processMenuItemChildren(children, aliases) {
         })
     }
     return childrenMenuItems;
-}
-function createAliasFile(aliases) {
-    const aliasFile = 'config/aliases/aliasfile.yml';
-    let yamlStr = yaml.dump(aliases);
-    fs.writeFileSync(aliasFile, yamlStr, 'utf8'); 
 }
  
 function processPage(node, contextID, nodePath, template, helpers) {

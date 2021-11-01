@@ -234,6 +234,7 @@ export const query = graphql`query ($id: String) {
                     field_media_text_links {
                       title
                       uri
+                      url
                     }
                     relationships {
                       field_section_column {
@@ -407,6 +408,7 @@ export const query = graphql`query ($id: String) {
               field_media_text_links {
                 title
                 uri
+                url
               }
               relationships {
                 field_media_text_media {
