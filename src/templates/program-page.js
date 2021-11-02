@@ -19,6 +19,8 @@ import Svg from 'react-inlinesvg';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
+//import Video from '../components/video'; 
+import HeroVideo from '../components/heroVideo'; 
 import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import { graphql } from 'gatsby';
 import { useIconData } from '../utils/fetch-icon';
@@ -345,6 +347,7 @@ function prepareVariantHeading (variantData) {
     let tagData;
     let testimonialData;
     let variantData;
+    let videoData;
 
     // set data
     if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
@@ -358,8 +361,10 @@ function prepareVariantHeading (variantData) {
     if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
     if (data.images.edges !== undefined) { imageData = data.images.edges; }
     if (data.imagesTagged.edges !== undefined) { imageTaggedData = data.imagesTagged.edges; }
+    if (data.videos.edges[0] !== undefined) { videoData = data.videos.edges[0].node; }
     
     const heroImage = (contentExists(imageData) ? imageData : (contentExists(imageTaggedData) ? imageTaggedData : null));
+    console.log(videoData);
 
     // set program details
     const nodeID = progData.drupal_internal__nid;
@@ -396,8 +401,13 @@ function prepareVariantHeading (variantData) {
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 
       { /**** Header and Title ****/ }
-      <div className={!contentExists(heroImage) && "no-thumb"} id="rotator">
-        <Hero imgData={heroImage} />
+      <div className={!contentExists(heroImage) && !contentExists(videoData) && "no-thumb"} id="rotator">
+          {contentExists(videoData) ?
+            <HeroVideo playerID={videoData.drupal_id} videoURL={videoData.field_media_oembed_video} videoSize="21by9" />
+
+            :
+            <Hero imgData={heroImage} />
+          }
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
@@ -959,6 +969,17 @@ export const query = graphql`query ($id: String) {
       }
     }
   }
+  videos: allMediaRemoteVideo(
+      filter: {relationships: {node__program: {elemMatch: {relationships: {field_program_acronym: {id: {eq: $id}}}}}}}
+    ) {
+      edges {
+        node {
+          drupal_id
+          field_media_oembed_video
+          name
+        }
+      }
+    }
   news: allNodeArticle(
     limit: 4
     sort: {fields: created}
