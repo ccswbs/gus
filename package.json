@@ -46,6 +46,7 @@
     "react-helmet": "^6.1.0",
     "react-inlinesvg": "^2.3.0",
     "react-number-format": "^4.7.3",
+    "react-player": "^2.9.0",
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1"
   },
