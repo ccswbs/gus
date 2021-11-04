@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import '../styles/button-widget.css'
-import CallToAction from '../components/callToAction';
 import { Link } from 'gatsby';
 import { contentExists, fontAwesomeIconColour} from '../utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
@@ -21,6 +20,26 @@ function ButtonStyle (styleOfButton){
             return 'btn-info';
         case 'Info (Outline)':
             return 'btn-outline-info'
+        case 'Success':
+            return 'btn-success';
+        case 'Success (Outline)':
+            return 'btn-outline-success'
+        case 'Warning':
+            return 'btn-warning';
+        case 'Warning (Outline)':
+            return 'btn-outline-warning'
+        case 'Danger':
+            return 'btn-danger';
+        case 'Danger (Outline)':
+            return 'btn-outline-danger'
+        case 'Light':
+            return 'btn-white';
+        case 'Light (Outline)':
+            return 'btn-outline-white'
+        case 'Dark':
+            return 'btn-black';
+        case 'Dark (Outline)':
+            return 'btn-outline-black'
         default:
             return 'btn-primary';
     }
@@ -29,14 +48,8 @@ function ButtonStyle (styleOfButton){
 
 
 function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
-    const aliasData = require('../../config/aliases/aliasfile.yml');
-
-// set the link to the url provided, if internal Drupal link (entity or internal) - clean up the URI to work with Link command,
-// to handel a <noLink>, if external link pass through, otherwise set to null
-	const urlLink = (contentExists(buttonData.field_button_link.uri)) ? (buttonData.field_button_link.uri.includes("entity:node/")) ? 
-		aliasData[buttonData.field_button_link.uri.replace("entity:node/","")]: (buttonData.field_button_link.uri.includes("internal:/")) ? ("/") : (
-            buttonData.field_button_link.uri.includes("<nolink>")) ? null : buttonData.field_button_link.uri :null; 
-
+  
+    const urlLink = (contentExists(buttonData.field_button_link.url)) ? buttonData.field_button_link.url : null;
     let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
         contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    
     let btnClassName = (contentExists(buttonClass))? buttonClass: '' ;                                          
