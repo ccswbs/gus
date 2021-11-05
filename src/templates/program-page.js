@@ -19,7 +19,7 @@ import Svg from 'react-inlinesvg';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
-//import Video from '../components/video'; 
+import Video from '../components/video'; 
 import HeroVideo from '../components/heroVideo'; 
 import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
 import { graphql } from 'gatsby';
@@ -397,14 +397,14 @@ function prepareVariantHeading (variantData) {
           class: 'program'
         }}
       />
-      <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
+      <Helmet><script type="text/javascript" defer src="/uog-scripts-dist.js"></script></Helmet>
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 
       { /**** Header and Title ****/ }
       <div className={!contentExists(heroImage) && !contentExists(videoData) && "no-thumb"} id="rotator">
           {contentExists(videoData) ?
             <HeroVideo playerID={videoData.drupal_id} videoURL={videoData.field_media_oembed_video} videoSize="21by9" />
-
+                /* <Video playerID={videoData.drupal_id} videoURL={videoData.field_media_oembed_video} videoSize="21by9" /> */
             :
             <Hero imgData={heroImage} />
           }
