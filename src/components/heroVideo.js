@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { contentExists } from '../utils/ug-utils';
+import '../styles/heroVideo.css';
 
 class HeroVideo extends Component {
     
@@ -35,7 +36,9 @@ class HeroVideo extends Component {
         return (
             <React.Fragment>        
             <div className={"embed-responsive embed-responsive-" + videoSize}>
-            <button style="width:100px; position:absolute; top:10%; left:50%; transform:translate(-10%,-50%); background:#c20430; color:#fff; font-weight:bold; z-index:50;" onClick={this.handlePlayPause}>{playing ? 'Pause' : 'Play'}</button>
+            <button className="hero-playPause" onClick={this.handlePlayPause}>
+                <i className={playing ? "duotoneColors fad fa-pause-circle" : "duotoneColors fad fa-play-circle"}></i>
+            </button>
             <ReactPlayer
                 ref={this.ref}
                 url={videoSrc}

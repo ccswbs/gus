@@ -1,0 +1,21 @@
+.hero-playPause {
+	background: none;
+	width:100px; 
+	position:absolute; 
+	top:10%; left:50%; 
+	transform:translate(-10%,-50%); 
+	font-weight:bold;
+	font-size: 7rem;
+	z-index:50;
+	border: none;
+}
+
+.duotoneColors {
+	--fa-primary-color: #fff;
+	--fa-secondary-color: #c20430;
+	--fa-secondary-opacity: 1.0;
+}
+.duotoneColors:hover {
+	--fa-primary-color: #c20430;
+	--fa-secondary-color: #fff;	
+}
