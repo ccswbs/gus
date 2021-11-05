@@ -150,6 +150,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type FieldLink {
       title: String
       uri: String
+      url: String
     }
     type FieldsPathAlias {
       alias: PathAlias @link
@@ -464,6 +465,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type paragraph__media_textRelationships implements Node {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
       field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
+      field_button_section: paragraph__section_buttons @link(from:"field_button_section___NODE")
     }
     type paragraph__program_statistic implements Node {
       drupal_id: String   
@@ -889,8 +891,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             const menuNames = config.siteMetadata.menus;            
             menuNames.forEach(element => createSitemap(menus, element, aliases));
     }
-    // proces aliases for each page/node
-    createAliasFile(aliases);
     }
 }
 
@@ -937,11 +937,6 @@ function processMenuItemChildren(children, aliases) {
         })
     }
     return childrenMenuItems;
-}
-function createAliasFile(aliases) {
-    const aliasFile = 'config/aliases/aliasfile.yml';
-    let yamlStr = yaml.dump(aliases);
-    fs.writeFileSync(aliasFile, yamlStr, 'utf8'); 
 }
  
 function processPage(node, contextID, nodePath, template, helpers) {
