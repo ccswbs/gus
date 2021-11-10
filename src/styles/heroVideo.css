@@ -1,21 +1,59 @@
 .hero-playPause {
 	background: none;
-	width:100px; 
-	position:absolute; 
-	top:10%; left:50%; 
-	transform:translate(-10%,-50%); 
-	font-weight:bold;
-	font-size: 7rem;
-	z-index:50;
+	height: 6rem;
+	width: 6rem;
 	border: none;
+	margin-top: 6rem; 
+	margin-left: 95%;
+	padding: 0;
+}
+.hero-playPause:focus {
+	outline: thin dotted #fff;
+	border-radius: 2rem;
+}
+.hero-playPause i {
+	font-size: 6rem;
+}
+.hero-controls {
+	position:absolute;
+	top:0; 
+	left:50%; 
+	transform:translateX(-50%); 
+	z-index:1; 
+	height:100%; 
+	aspect-ratio:21 / 9; 	
+}
+i.hero-thruster {
+	font-size: 8rem;
+	color: #fff;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 8rem;
+	height: 8rem;
+	transform: translate(-50%,-50%);
+}
+.hero-loading {
+	background: #000;
+}
+
+.hero-ready {
+	background: transparent !important;
+}
+.hero-ready i.hero-thruster {
+	display: none !important;
 }
 
 .duotoneColors {
-	--fa-primary-color: #fff;
+	--fa-primary-color: #ffc72a;
 	--fa-secondary-color: #c20430;
 	--fa-secondary-opacity: 1.0;
 }
 .duotoneColors:hover {
 	--fa-primary-color: #c20430;
-	--fa-secondary-color: #fff;	
+	--fa-secondary-color: #ffc72a;	
+}
+
+.react-player {
+	background: #000;
 }
