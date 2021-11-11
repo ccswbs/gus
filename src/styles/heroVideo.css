@@ -1,10 +1,11 @@
 .hero-playPause {
+	position: absolute;
+	top: 4rem;
+	right: 3rem;
 	background: none;
+	border: none;
 	height: 6rem;
 	width: 6rem;
-	border: none;
-	margin-top: 6rem; 
-	margin-left: 95%;
 	padding: 0;
 }
 .hero-playPause:focus {
@@ -15,13 +16,14 @@
 	font-size: 6rem;
 }
 .hero-controls {
-	position:absolute;
-	top:0; 
-	left:50%; 
-	transform:translateX(-50%); 
-	z-index:1; 
-	height:100%; 
-	aspect-ratio:21 / 9; 	
+	position: absolute;
+	top: 0; 
+	left: 50%; 
+	transform: translateX(-50%); 
+	z-index: 1;
+	width: 100%;
+	max-height: 600px; 
+	aspect-ratio: 21 / 9; 	
 }
 i.hero-thruster {
 	font-size: 8rem;
@@ -29,14 +31,13 @@ i.hero-thruster {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	width: 8rem;
 	height: 8rem;
+	width: 8rem;	
 	transform: translate(-50%,-50%);
 }
 .hero-loading {
-	background: #000;
+	background: rgba(0, 0, 0, 0.5);
 }
-
 .hero-ready {
 	background: transparent !important;
 }
@@ -54,6 +55,19 @@ i.hero-thruster {
 	--fa-secondary-color: #ffc72a;	
 }
 
-.react-player {
-	background: #000;
+@media only screen and (max-width: 768px) {
+	.hero-playPause {
+		top: 1.5rem;
+		right: 1.5rem;
+		height: 3rem;
+		width: 3rem;
+	}
+	.hero-playPause i {
+		font-size: 3rem;
+	}
+	i.hero-thruster {
+		font-size: 4rem;
+		height: 4rem;
+		width: 4rem;
+	}
 }
