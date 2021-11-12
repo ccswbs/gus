@@ -2,6 +2,7 @@ import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
 import React from 'react';
 import Seo from '../components/seo';
+import '../styles/stats.css';
 
 const IndexPage = ({ data }) => (
     <Layout>
@@ -10,18 +11,18 @@ const IndexPage = ({ data }) => (
       {console.log (data.allNodeProgram)}
         <Seo title="Program List" keywords={[`gatsby`, `application`, `react`]} />
         <div className="container page-container">
-            <h1>Gatsby UG Starter Theme</h1>
-            <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
-
-            <h2>Programs</h2>
-            <ul>
+            <h1>Programs</h1>
+            <dl className="card-group programsList">
                 {data.allNodeProgram.edges.map((edge, index) => (
-                  <div>
-                    <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li>
-                    <span>{edge.node.relationships.field_program_acronym.name}</span>
-                  </div>
+                  <dt className="uog-card">
+                    <h2 key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></h2>
+                    <dd>{edge.node.relationships.field_program_acronym.name}</dd>
+                    <dd>{edge.node.relationships.field_tags.map((tags, indexTags) => (
+                      <span key={indexTags}>{tags.name}, </span>
+                    ))}</dd>
+                  </dt>
                 ))}
-            </ul>            
+            </dl>            
         </div>
     </Layout>
 )
@@ -41,6 +42,9 @@ export const query = graphql`
             }
             relationships {
               field_program_acronym {
+                name
+              }
+              field_tags {
                 name
               }
             }
