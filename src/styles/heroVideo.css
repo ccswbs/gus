@@ -1,4 +1,4 @@
-.hero-playPause {
+button.hero-playPause {
 	position: absolute;
 	top: 4rem;
 	right: 3rem;
@@ -15,34 +15,47 @@
 .hero-playPause i {
 	font-size: 6rem;
 }
-.hero-controls {
+.hero-controls-16by9,
+.hero-controls-21by9 {
 	position: absolute;
 	top: 0; 
 	left: 50%; 
 	transform: translateX(-50%); 
 	z-index: 1;
 	width: 100%;
-	max-height: 600px; 
-	aspect-ratio: 21 / 9; 	
+	max-height: 600px;		
+}
+.hero-controls-16by9 {
+	aspect-ratio: 16 / 9; 
+}
+.hero-controls-21by9 {
+	aspect-ratio: 21 / 9;
 }
 i.hero-thruster {
 	font-size: 8rem;
 	color: #fff;
 	position: absolute;
-	top: 50%;
-	left: 50%;
+	top: 45%;
+	left: 48%;
 	height: 8rem;
 	width: 8rem;	
-	transform: translate(-50%,-50%);
+	transform: translate(-45%,-48%);
+	display: block;
 }
 .hero-loading {
 	background: rgba(0, 0, 0, 0.5);
+}
+.hero-loading button.hero-playPause {
+	display: none;
 }
 .hero-ready {
 	background: transparent !important;
 }
 .hero-ready i.hero-thruster {
 	display: none !important;
+}
+.hero-ready button.hero-playPause {
+	display: block;
 }
 
 .duotoneColors {

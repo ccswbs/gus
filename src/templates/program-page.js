@@ -403,7 +403,7 @@ function prepareVariantHeading (variantData) {
       { /**** Header and Title ****/ }
       <div className={!contentExists(heroImage) && !contentExists(videoData) && "no-thumb"} id="rotator">
         {contentExists(videoData) ?
-            <HeroVideo playerID={videoData.drupal_id} videoURL={videoData.field_media_oembed_video} videoSize="21by9" />
+            <HeroVideo playerID={videoData.drupal_id} videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} />
             :
             <Hero imgData={heroImage} />
         }
@@ -975,6 +975,8 @@ export const query = graphql`query ($id: String) {
         node {
           drupal_id
           field_media_oembed_video
+          field_video_width
+          field_video_height
           name
         }
       }
