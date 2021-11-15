@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
+import { contentExists } from '../utils/ug-utils';
 import '../styles/heroVideo.css';
 
 class HeroVideo extends Component {
@@ -24,7 +25,6 @@ class HeroVideo extends Component {
     
     render() {
 
-        let videoCC = this.props.videoCC;        
         let videoTranscript = this.props.videoTranscript;
         let videoWidth = this.props.videoWidth;
         let videoHeight = this.props.videoHeight;
@@ -46,8 +46,14 @@ class HeroVideo extends Component {
             <div className={"hero-controls-" + aspectRatio + videoStatus}>
                 <button id="heroButton" className="hero-playPause" data-toggle="tooltip" data-placement="bottom" data-selector="true" title={playing ? "Pause" : "Play"} onClick={this.handlePlayPause}>
                     <i className={playing ? "duotoneColors fad fa-pause-circle" : "duotoneColors fad fa-play-circle"}></i>
-                    <span className="sr-only">{playing ? "Pause" : "Play"}</span>
+                    <span className="sr-only">{playing ? "Pause video" : "Play video"}</span>
                 </button>
+                {contentExists(videoTranscript) ? 
+                    <><a id="hero-transcript" href={videoTranscript} download>
+                        <i className="duotoneColors fad fa-file-download"></i>
+                        <span className="sr-only">Download transcript</span>                        
+                    </a></>
+                : ``}
                 <i className="hero-thruster fas fa-spinner fa-spin"></i>
             </div>
             <div className={"embed-responsive embed-responsive-" + aspectRatio}>                

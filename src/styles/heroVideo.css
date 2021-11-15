@@ -1,6 +1,6 @@
-button.hero-playPause {
-	position: absolute;
-	top: 4rem;
+button.hero-playPause,
+a.hero-transcript {
+	position: absolute;	
 	right: 3rem;
 	background: none;
 	border: none;
@@ -8,13 +8,24 @@ button.hero-playPause {
 	width: 6rem;
 	padding: 0;
 }
-.hero-playPause:focus {
+button.hero-playPause {
+	top: 4rem;
+}
+button.hero-playPause:focus {
 	outline: thin dotted #fff;
 	border-radius: 2rem;
 }
-.hero-playPause i {
+button.hero-playPause i {
 	font-size: 6rem;
 }
+
+a.hero-transcript {
+	top: 8rem;
+}
+a.hero-transcript i {
+	font-size: 6rem;
+}
+
 .hero-controls-16by9,
 .hero-controls-21by9 {
 	position: absolute;
