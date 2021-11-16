@@ -1,5 +1,5 @@
-button.hero-playPause,
-a.hero-transcript {
+button#hero-playPause,
+a#hero-transcript {
 	position: absolute;	
 	right: 3rem;
 	background: none;
@@ -8,21 +8,22 @@ a.hero-transcript {
 	width: 6rem;
 	padding: 0;
 }
-button.hero-playPause {
+button#hero-playPause {
 	top: 4rem;
 }
-button.hero-playPause:focus {
+button#hero-playPause:focus {
 	outline: thin dotted #fff;
 	border-radius: 2rem;
 }
-button.hero-playPause i {
+button#hero-playPause i {
 	font-size: 6rem;
 }
 
-a.hero-transcript {
-	top: 8rem;
+a#hero-transcript {
+	top: 12rem;
+	text-align: center;
 }
-a.hero-transcript i {
+a#hero-transcript i {
 	font-size: 6rem;
 }
 
@@ -80,13 +81,13 @@ i.hero-thruster {
 }
 
 @media only screen and (max-width: 768px) {
-	.hero-playPause {
+	button#hero-playPause {
 		top: 1.5rem;
 		right: 1.5rem;
 		height: 3rem;
 		width: 3rem;
 	}
-	.hero-playPause i {
+	button#hero-playPause i {
 		font-size: 3rem;
 	}
 	i.hero-thruster {

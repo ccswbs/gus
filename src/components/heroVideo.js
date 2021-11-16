@@ -41,16 +41,18 @@ class HeroVideo extends Component {
 
         const { playing, muted, loop, videoStatus, playPause } = this.state;
         
+        console.log(videoTranscript);
+        
         return (
             <React.Fragment>
             <div className={"hero-controls-" + aspectRatio + videoStatus}>
-                <button id="heroButton" className="hero-playPause" data-toggle="tooltip" data-placement="bottom" data-selector="true" title={playing ? "Pause" : "Play"} onClick={this.handlePlayPause}>
+                <button id="hero-playPause" data-toggle="tooltip" data-placement="bottom" data-selector="true" title={playing ? "Pause" : "Play"} onClick={this.handlePlayPause}>
                     <i className={playing ? "duotoneColors fad fa-pause-circle" : "duotoneColors fad fa-play-circle"}></i>
                     <span className="sr-only">{playing ? "Pause video" : "Play video"}</span>
                 </button>
                 {contentExists(videoTranscript) ? 
-                    <><a id="hero-transcript" href={videoTranscript} download>
-                        <i className="duotoneColors fad fa-file-download"></i>
+                    <><a id="hero-transcript" href={videoTranscript} download data-toggle="tooltip" data-placement="bottom" data-selector="true" title="Download transcript">
+                        <i className="duotoneColors fad fa-file-alt"></i>
                         <span className="sr-only">Download transcript</span>                        
                     </a></>
                 : ``}
