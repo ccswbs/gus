@@ -54,7 +54,8 @@ i.hero-thruster {
 .hero-loading {
 	background: rgba(0, 0, 0, 0.5);
 }
-.hero-loading button.hero-playPause {
+.hero-loading button#hero-playPause,
+.hero-loading a#hero-transcript {
 	display: none;
 }
 .hero-ready {
@@ -63,7 +64,8 @@ i.hero-thruster {
 .hero-ready i.hero-thruster {
 	display: none !important;
 }
-.hero-ready button.hero-playPause {
+.hero-ready button#hero-playPause,
+.hero-ready a#hero-transcript {
 	display: block;
 }
 
