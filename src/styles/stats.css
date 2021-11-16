@@ -14,8 +14,7 @@ body.program .uog-card {
 	margin-top: 3rem;
 }
 
-body.basic-page .uog-card,
-.programsList .uog-card {
+body.basic-page .uog-card {
 	background: var(--uog-blue-muted);
 	flex: 1 0 0%;
     padding: 1.25rem;
@@ -28,15 +27,10 @@ body.basic-page dt {
 	font-size: 5rem;
     color: #000;
 }
-.programsList h2 {
-	font-size: 1.5rem;
-    color: var(--uog-red);;
-}
 body.program dt {
     margin-bottom: 2rem;	
 }
-body.basic-page dt,
-.programsList dt {
+body.basic-page dt{
 	margin-bottom: 0.75rem;
 	line-height: 1.2;
 }
@@ -54,8 +48,7 @@ body.program dd {
     margin: 0 auto;
 	max-width: 33ch;
 }
-body.basic-page dd,
-.programsList .uog-card  {
+body.basic-page dd {
 	font-size: 1.8rem;
     line-height: 1.58;
 }
@@ -108,22 +101,7 @@ body.basic-page div.uog-card:nth-of-type(9n+3),
 body.basic-page div.uog-card:nth-of-type(9n+5),
 body.basic-page div.uog-card:nth-of-type(9n+7) {
 	border-left: 1rem solid var(--uog-blue);
-
-} .programsList div.uog-card {
-	border-left: 1rem solid var(--uog-red);
 }
-
-.programsList div.uog-card:nth-of-type(9n+2),
-.programsList div.uog-card:nth-of-type(9n+4),
-.programsList div.uog-card:nth-of-type(9n+9) {
-	border-left: 1rem solid var(--uog-yellow);
-}
-
-.programsList div.uog-card:nth-of-type(9n+3),
-.programsList div.uog-card:nth-of-type(9n+5),
-.programsList div.uog-card:nth-of-type(9n+7) {
-	border-left: 1rem solid var(--uog-blue);
-} 
 
 @media only screen and (max-width: 768px) {
 	body.program .uog-card,

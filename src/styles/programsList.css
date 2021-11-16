@@ -1,0 +1,52 @@
+
+  .programsList-card {
+    flex: 1 0 0%;
+    min-width: 23%;
+    background-color: #f4f4f4;
+    padding: 5px;
+    margin: 1%;
+  }
+  
+  .programsList-card h2 {
+    color: black;
+    padding-top: 0px;
+    margin-top: 15px;
+    font-size: 2rem;
+  }
+  
+  .programsList-card {
+    border-left: 1rem solid var(--uog-red);
+  }
+
+  .programsList-card:nth-of-type(12n+2),
+  .programsList-card:nth-of-type(12n+5),
+  .programsList-card:nth-of-type(12n+8),
+  .programsList-card:nth-of-type(12n+11) {
+    border-left: 1rem solid var(--uog-yellow);
+  }
+  .programsList-card:nth-of-type(12n+3),
+  .programsList-card:nth-of-type(12n+6),
+  .programsList-card:nth-of-type(12n+9),
+  .programsList-card:nth-of-type(12n+12) {
+    border-left: 1rem solid var(--uog-blue);
+}
+  
+  .programsList-card:hover {
+    background-color: #d3d3d3;
+  }
+  
+
+  @media only screen and (max-width: 1000px) {
+    .programsList-card {
+        min-width: 48%;
+
+      } 
+  }
+
+  @media only screen and (max-width: 768px) {
+    .programsList-card {
+        min-width: 100%;
+        margin-top: 0;
+        margin-bottom:3rem;
+      } 
+  }

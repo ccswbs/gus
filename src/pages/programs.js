@@ -2,7 +2,7 @@ import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
 import React from 'react';
 import Seo from '../components/seo';
-import '../styles/stats.css';
+import '../styles/programsList.css';
 
 const IndexPage = ({ data }) => (
     <Layout>
@@ -14,7 +14,7 @@ const IndexPage = ({ data }) => (
             <h1>Programs</h1>
             <dl className="card-group programsList">
                 {data.allNodeProgram.edges.map((edge, index) => (
-                  <dt className="uog-card">
+                  <dt className="programsList-card p">
                     <h2 key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></h2>
                     <dd>{edge.node.relationships.field_program_acronym.name}</dd>
                     <dd>{edge.node.relationships.field_tags.map((tags, indexTags) => (
