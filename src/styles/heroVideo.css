@@ -15,16 +15,13 @@ button#hero-playPause:focus {
 	outline: thin dotted #fff;
 	border-radius: 2rem;
 }
-button#hero-playPause i {
+button#hero-playPause i,
+a#hero-transcript i {
 	font-size: 6rem;
 }
-
 a#hero-transcript {
 	top: 12rem;
 	text-align: center;
-}
-a#hero-transcript i {
-	font-size: 6rem;
 }
 
 .hero-controls-16by9,
@@ -71,23 +68,30 @@ i.hero-thruster {
 }
 
 .duotoneColors {
-	--fa-primary-color: #ffc72a;
+	--fa-primary-color: #fff;
 	--fa-secondary-color: #c20430;
 	--fa-secondary-opacity: 1.0;
 }
 .duotoneColors:hover {
 	--fa-primary-color: #c20430;
-	--fa-secondary-color: #ffc72a;	
+	--fa-secondary-color: #fff;	
 }
 
 @media only screen and (max-width: 768px) {
-	button#hero-playPause {
-		top: 1.5rem;
+	button#hero-playPause,
+	a#hero-transcript {
 		right: 1.5rem;
 		height: 3rem;
 		width: 3rem;
 	}
-	button#hero-playPause i {
+	button#hero-playPause {
+		top: 1.5rem;
+	}
+	a#hero-transcript {	
+		top: 5.5rem;
+	}
+	button#hero-playPause i,
+	a#hero-transcript i	{
 		font-size: 3rem;
 	}
 	i.hero-thruster {
