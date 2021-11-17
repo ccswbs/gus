@@ -61,7 +61,6 @@ class HeroVideo extends Component {
                     ref={this.ref}
                     className="react-player"
                     url={videoSrc}
-                    config={{ vimeo: { playerOptions:{portrait:true} } }}
                     playing={playing}
                     loop={loop}
                     muted={muted}
