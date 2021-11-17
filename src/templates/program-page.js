@@ -364,7 +364,6 @@ function prepareVariantHeading (variantData) {
     if (data.videos.edges[0] !== undefined) { videoData = data.videos.edges[0].node; }
     
     const heroImage = (contentExists(imageData) ? imageData : (contentExists(imageTaggedData) ? imageTaggedData : null));
-    console.log(videoData);
 
     // set program details
     const nodeID = progData.drupal_internal__nid;
