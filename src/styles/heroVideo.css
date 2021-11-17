@@ -12,8 +12,7 @@ button#hero-playPause {
 	top: 4rem;
 }
 button#hero-playPause:focus {
-	outline: thin dotted #fff;
-	border-radius: 2rem;
+	outline: 0.1rem dotted #ffc72a;
 }
 button#hero-playPause i,
 a#hero-transcript i {
