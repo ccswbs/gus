@@ -180,8 +180,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       name: String
       field_media_oembed_video: String
-      field_video_width: Int
-      field_video_height: Int
       relationships: media__remote_videoRelationships
     }
     type media__remote_videoRelationships implements Node {
