@@ -23,7 +23,7 @@ const BasicPage = ({data}) => {
     ****/
     
     const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
-    
+
     return (
         <Layout>
             <Helmet bodyAttributes={{
@@ -145,6 +145,7 @@ export const query = graphql`query ($id: String) {
                   field_link_url {
                     title
                     uri
+                    url
                   }
                   relationships {
                     field_link_image {
@@ -206,6 +207,7 @@ export const query = graphql`query ($id: String) {
                         field_link_url {
                           title
                           uri
+                          url
                         }
                         relationships {
                           field_link_image {
@@ -232,6 +234,7 @@ export const query = graphql`query ($id: String) {
                     field_media_text_links {
                       title
                       uri
+                      url
                     }
                     relationships {
                       field_section_column {
@@ -267,6 +270,43 @@ export const query = graphql`query ($id: String) {
                             field_video_cc {
                               localFile {
                                 publicURL
+                              }
+                            }
+                          }
+                        }
+                      }
+                      field_button_section {
+                        ... on paragraph__section_buttons {
+                          drupal_id
+                          relationships {
+                            field_section_column {
+                              name
+                            }
+                            field_buttons {
+                              drupal_id
+                              field_button_link {
+                                title
+                                uri
+                                url
+                              }
+                              field_cta_heading {
+                                processed
+                              }
+                              field_font_awesome_icon
+                              field_formatted_title {
+                                processed
+                              }
+                              relationships {
+                                field_button_style {
+                                  name
+                                }
+                                field_font_awesome_icon_colour {
+                                  name
+                                }
+                                field_cta_analytics_goal {
+                                  name
+                                  field_goal_action
+                                }
                               }
                             }
                           }
@@ -333,6 +373,7 @@ export const query = graphql`query ($id: String) {
                         field_button_link {
                           title
                           uri
+                          url
                         }
                         field_cta_heading {
                           processed
@@ -367,6 +408,7 @@ export const query = graphql`query ($id: String) {
               field_media_text_links {
                 title
                 uri
+                url
               }
               relationships {
                 field_media_text_media {
@@ -394,6 +436,43 @@ export const query = graphql`query ($id: String) {
                       field_media_file {
                         localFile {
                           publicURL
+                        }
+                      }
+                    }
+                  }
+                }
+                field_button_section {
+                  ... on paragraph__section_buttons {
+                    drupal_id
+                    relationships {
+                      field_section_column {
+                        name
+                      }
+                      field_buttons {
+                        drupal_id
+                        field_button_link {
+                          title
+                          uri
+                          url
+                        }
+                        field_cta_heading {
+                          processed
+                        }
+                        field_font_awesome_icon
+                        field_formatted_title {
+                          processed
+                        }
+                        relationships {
+                          field_button_style {
+                            name
+                          }
+                          field_font_awesome_icon_colour {
+                            name
+                          }
+                          field_cta_analytics_goal {
+                            name
+                            field_goal_action
+                          }
                         }
                       }
                     }

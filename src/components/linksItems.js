@@ -40,7 +40,6 @@ Example Usage:
 */
 
 function LinksItems (props) {
-	const aliasData = require('../../config/aliases/aliasfile.yml');
 
 		if(contentExists(props.pageData) && props.pageData.length !== 0){
 			return (
@@ -53,12 +52,9 @@ function LinksItems (props) {
 						const image = (contentExists(paragraph.relationships.field_link_image)) ? paragraph.relationships.field_link_image.relationships.field_media_image : null;
 						const imageFile = (contentExists(image) && contentExists(image.localFile.childImageSharp)) ? 
 													<GatsbyImage image={image.localFile.childImageSharp.gatsbyImageData} alt ={""} /> : null;
-						// set the link to the url provided, if internal Drupal link (entity or internal) - clean up the URI to work with Link command,
-						// to handel a <noLink>, if external link pass through, otherwise set to null
-
-						const urlLink = (contentExists(paragraph.field_link_url.uri)) ? (paragraph.field_link_url.uri.includes("entity:node/")) ? 
-							aliasData[paragraph.field_link_url.uri.replace("entity:node/","")]: (paragraph.field_link_url.uri.includes("internal:/")) ? ("/") : (
-							paragraph.field_link_url.uri.includes("<nolink>")) ? null : paragraph.field_link_url.uri :null;
+						
+						const urlLink = (contentExists(paragraph.field_link_url.url)) ? paragraph.field_link_url.url : null;
+						
 						// set heading level to one lower based on the heading level of the header, if header does not exists set to h2
 						const nextHeadingLevel = (props.displayType ==='grid')? (contentExists(props.heading))? (props.headingLevel === "h2")? "h3": 
 										(props.headingLevel==="h3") ? "h4" : "h5": "h2": '';
