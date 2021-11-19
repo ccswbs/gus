@@ -17,9 +17,9 @@ const IndexPage = ({ data }) => (
                   <dt className="programsList-card p">
                     <h2 key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></h2>
                     <dd>{edge.node.relationships.field_program_acronym.name}</dd>
-                    <dd>{edge.node.relationships.field_tags.map((tags, indexTags) => (
+                    {/* <dd>{edge.node.relationships.field_tags.map((tags, indexTags) => (
                       <span key={indexTags}>{tags.name}, </span>
-                    ))}</dd>
+                    ))}</dd> */}
                   </dt>
                 ))}
             </dl>            
