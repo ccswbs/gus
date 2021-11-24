@@ -4,7 +4,11 @@
     min-width: 23%;
     background-color: #f4f4f4;
     padding: 5px;
-    margin: 1%;
+    margin:1%;
+
+  }
+  .stretched-link:after {
+    content: "";
   }
   
   .programsList-card h2 {
@@ -14,20 +18,23 @@
     font-size: 2rem;
   }
   
-  .programsList-card {
+  .programsList-card.card:nth-of-type(12n+1),
+  .programsList-card.card:nth-of-type(12n+4),
+  .programsList-card.card:nth-of-type(12n+7),
+  .programsList-card.card:nth-of-type(12n+10) {
     border-left: 1rem solid var(--uog-red);
   }
 
-  .programsList-card:nth-of-type(12n+2),
-  .programsList-card:nth-of-type(12n+5),
-  .programsList-card:nth-of-type(12n+8),
-  .programsList-card:nth-of-type(12n+11) {
+  .programsList-card.card:nth-of-type(12n+2),
+  .programsList-card.card:nth-of-type(12n+5),
+  .programsList-card.card:nth-of-type(12n+8),
+  .programsList-card.card:nth-of-type(12n+11) {
     border-left: 1rem solid var(--uog-yellow);
   }
-  .programsList-card:nth-of-type(12n+3),
-  .programsList-card:nth-of-type(12n+6),
-  .programsList-card:nth-of-type(12n+9),
-  .programsList-card:nth-of-type(12n+12) {
+  .programsList-card.card:nth-of-type(12n+3),
+  .programsList-card.card:nth-of-type(12n+6),
+  .programsList-card.card:nth-of-type(12n+9),
+  .programsList-card.card:nth-of-type(12n+12) {
     border-left: 1rem solid var(--uog-blue);
 }
   
