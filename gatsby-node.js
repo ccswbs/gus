@@ -180,11 +180,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       drupal_id: String
       name: String
       field_media_oembed_video: String
+      field_video_width: Int
+      field_video_height: Int
       relationships: media__remote_videoRelationships
     }
     type media__remote_videoRelationships implements Node {
       field_media_file: file__file @link(from: "field_media_file___NODE")
       field_video_cc: file__file @link(from: "field_video_cc___NODE")
+      node__program: [node__program] @link(from: "node__program___NODE")
     }
     
     type MenuItems implements Node {
