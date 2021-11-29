@@ -20,7 +20,7 @@ const ProgramsPage = ({ data }) => (
             <div className="card-group programsList">
                 {data.allNodeProgram.edges.map((edge, index) => (
                   <div className="programsList-card card">
-                    <h2 key={index}><Link className = "stretched-link"to={edge.node.path.alias}>{edge.node.title}</Link></h2>
+                    <h2 key={index}><a className = "stretched-link" href={edge.node.path.alias}>{edge.node.title}</a></h2>
                     <div>{edge.node.relationships.field_program_acronym.name}</div>
                   </div>
                 ))}
