@@ -1,10 +1,11 @@
 
-  .programsList-card {
+  .card-group.programsList-card {
     flex: 1 0 0%;
     min-width: 23%;
     background-color: #f4f4f4;
     padding: 5px;
-    margin:1%;
+    margin-bottom:1%;
+    margin-right:1%;
 
   }
   .stretched-link:after {
