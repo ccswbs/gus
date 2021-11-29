@@ -14,7 +14,7 @@ const ProgramsPage = ({ data }) => (
           return 1;
         return 0;
       })}
-        <Seo title="Program List" keywords={[`gatsby`, `application`, `react`]} />
+        <Seo title="Program List" description={[`Univeristy of Guelph Programs`]} />
         <div className="container page-container">
             <h1>Programs</h1>
             <div className="card-group programsList">
