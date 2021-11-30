@@ -114,6 +114,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       | paragraph__stats_widget
       | paragraph__section_tabs
       | paragraph__tab_content
+      | paragraph__accordion_section
 
     union widgetSectionParagraphUnion =
       paragraph__call_to_action

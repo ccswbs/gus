@@ -20,7 +20,6 @@ import { contentExists } from '../utils/ug-utils';
 //
 
 function Widgets (props) {
-
 if (contentExists(props.pageData) && props.pageData.length !== 0) {
     return (props.pageData.map((widgetData,i) => {
         if (widgetData.__typename==="paragraph__links_widget") {
@@ -59,10 +58,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             return (<>
 				{contentExists(sectionTitle) === true && <h2>{sectionTitle}</h2>}
 				<div className={widgetData.field_section_classes}>
-                    
-                        <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
-              
-					
+                    <SectionWidgets pageData={widgetData.relationships.field_section_content}/>	
                 </div>
 			</>);
         }
@@ -78,7 +74,26 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
 		else if (widgetData.__typename==="paragraph__section_tabs") {
             		return( <PageTabs pageData={widgetData} />);
 		}
-
+        else if (widgetData.__typename==="paragraph__accordion_section") {
+            return(
+                widgetData.relationships.field_accordion_block_elements.map((accordionData,j) => {
+                    return( <>
+                        <div class="panel-group panel-group-lists collapse in show" id={"accordionWidget"+widgetData.drupal_id}>
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent={"#accordionWidget"+widgetData.drupal_id} href={"#collapse"+j} class="collapsed" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_title.processed}}></a>
+                                    </h4>
+                                </div>
+                                <div id={"collapse"+j} class="panel-collapse collapse in">
+                                    <div class="panel-body" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_text.processed}}/>
+                                </div>
+                            </div>
+                        </div>
+                    </>);
+                } )
+            );  
+}
 		return null;
     }
     ))}
