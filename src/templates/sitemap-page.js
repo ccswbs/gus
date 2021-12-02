@@ -7,7 +7,8 @@ const SitePage = ({pageContext, data }) => {
     <Layout>
         <div className="container page-container">
             <h1>Sitemap</h1>
-            
+            <p>The University of Guelph, and everyone who studies here, explores here, teaches here a
+nd works here, is committed to one simple purpose: To Improve Life.</p>
             <h2>Pages for {pageContext.searchfilt}</h2>
             <ul>
                 {data.allNodePage.edges.map((edge, index) => (
@@ -17,7 +18,9 @@ const SitePage = ({pageContext, data }) => {
 
         </div>
     </Layout>
+  )
 }
+
 export default SitePage
 
 export const query = graphql`
