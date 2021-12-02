@@ -13,11 +13,10 @@ function LinksOuter (props) {
     let Heading = setHeadingLevel(props.headingLevel);
 	if (contentExists(props.children)) {
 		return (<div className={setBackGroundClass}>
-                    <div>
-                    <Heading>{props.heading}</Heading>
-                    <p>{props.description}</p>
+                    <div className="col-md-12">
+                    {contentExists(props.heading) && <Heading>{props.heading}</Heading>}
+                    {contentExists(props.description) && <p>{props.description}</p>}
                         <LinksParent extraClasses={setExtraClasses}>
-                         
                             {props.children}
                         </LinksParent>
                     </div>
