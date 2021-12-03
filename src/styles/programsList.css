@@ -41,8 +41,15 @@
     border-left: 1rem solid var(--uog-blue);
 }
   
-  .programsList-card:hover {
-    background-color: #d3d3d3;
+  .programsList-card.card:hover,
+  .programsList-card.card:focus {
+    background-color: #d3d3d3 !important;
+  }
+
+  .page-container a.stretched-link:hover,
+  .page-container a.streched-link:focus {
+    border-bottom:unset;
+    background-color: #d3d3d3 !important;
   }
   
 
