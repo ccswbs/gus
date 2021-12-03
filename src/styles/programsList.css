@@ -42,14 +42,13 @@
 }
   
   .programsList-card.card:hover,
-  .programsList-card.card:focus {
+  .programsList-card.card:focus-within {
     background-color: #d3d3d3 !important;
   }
 
   .page-container a.stretched-link:hover,
   .page-container a.stretched-link:focus {
     border-bottom:unset;
-    background-color: #d3d3d3 !important;
   }
   
 
