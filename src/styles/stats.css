@@ -30,7 +30,7 @@ body.basic-page dt {
 body.program dt {
     margin-bottom: 2rem;	
 }
-body.basic-page dt {
+body.basic-page dt{
 	margin-bottom: 0.75rem;
 	line-height: 1.2;
 }
@@ -101,7 +101,7 @@ body.basic-page div.uog-card:nth-of-type(9n+3),
 body.basic-page div.uog-card:nth-of-type(9n+5),
 body.basic-page div.uog-card:nth-of-type(9n+7) {
 	border-left: 1rem solid var(--uog-blue);
-} 
+}
 
 @media only screen and (max-width: 768px) {
 	body.program .uog-card,
