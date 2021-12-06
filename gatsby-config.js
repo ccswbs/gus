@@ -62,14 +62,7 @@ module.exports = {
         },
       },
     },
-    {
-      resolve: `gatsby-source-drupal-menu-links`,
-      options: {
-        baseUrl: process.env.DRUPAL_BASEURL,
-        apiBase: process.env.DRUPAL_APIBASE,
-        menus: metaConfig['menus'], // Which menus to fetch, there are the menu IDs.
-      },
-    },    
+  
     {
       resolve: `gatsby-source-filesystem`,
       options: {
