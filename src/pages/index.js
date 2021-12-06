@@ -1,11 +1,13 @@
 import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
+import Menu from '../components/menu';
 import React from 'react';
 import Seo from '../components/seo';
 
 const IndexPage = ({ data }) => (
     <Layout>
         <Seo title="Home" keywords={[`gatsby`, `application`, `react`]} />
+        
         <div className="container page-container">
             <h1>Gatsby UG Starter Theme</h1>
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
@@ -21,7 +23,10 @@ const IndexPage = ({ data }) => (
                 {data.programs.edges.map((edge, index) => (
                     <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li>
                 ))}
-            </ul>            
+            </ul>
+
+            <h2>Menu Test, main</h2>
+            <Menu />       
         </div>
     </Layout>
 )
