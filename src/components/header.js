@@ -59,8 +59,7 @@ if (contentExists(menuData)) {
 
 const Header = () => (
     <>
-        <div id="header-breakpoint"></div>
-        <uofg-header className="unloaded">{pageSpecificMenu}</uofg-header>
+        <uofg-header>{pageSpecificMenu}</uofg-header>
     </>
 )
 
