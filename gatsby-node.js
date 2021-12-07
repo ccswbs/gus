@@ -806,8 +806,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                 );
             })
         }
-
-        
     }
 }
 
@@ -835,6 +833,20 @@ function createContentTypeAlias(nodePath) {
         alias = `/` + slugify(node.title);
     }
     return alias;
+}
+
+// list of pages for SE site
+function createSitePageList(helpers) {
+
+    helpers.createPage({
+      path: `/sitemap-se/`,
+      component: path.resolve(`./src/templates/sitemap-page.js`),
+      context: {
+         searchfilt: `/studentexperience/`,
+      },
+    })
+
+    return;
 }
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
