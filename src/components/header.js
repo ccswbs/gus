@@ -23,7 +23,7 @@ import { contentExists } from '../utils/ug-utils';
  * 
  */
  
-const menuData = require('../../config/sitemaps/main.yml');
+const menuData = "";
 let pageSpecificMenu;
 
 if (contentExists(menuData)) {

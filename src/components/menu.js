@@ -43,7 +43,7 @@ const buildLink = link => {
       {link.title}
     </Link>)
   } else {
-    return ( <a href={link.link.uri} className={'external'}>
+    return ( <a href={link.link.uri}>
       {link.title}
     </a>)
   }
