@@ -14,14 +14,14 @@ const IndexPage = ({ data }) => (
             <h2>Pages</h2>
             <ul>
                 {data.allNodePage.edges.map((edge, index) => (
-                    <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li>
+                    <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link> {edge.node.status === false ? "Unpublished" : ""}</li>
                 ))}
             </ul>
 
             <h2>Programs</h2>
             <ul>
                 {data.programs.edges.map((edge, index) => (
-                    <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li>
+                    <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link> {edge.node.status === false ? "Unpublished" : ""}</li>
                 ))}
             </ul>
 
@@ -43,6 +43,7 @@ export const query = graphql`
             path {
               alias
             }
+            status
           }
         }
       }
@@ -55,6 +56,7 @@ export const query = graphql`
             path {
               alias
             }
+            status
           }
         }
       }        
