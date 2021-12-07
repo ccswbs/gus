@@ -38,12 +38,10 @@ const createMenuHierarchy = (menuData, menuName) => {
 }
 
 const buildLink = link => {
-  if (link.link.uri.includes('internal:')) {
-    return ( <Link activeClassName="active" to={link.link.uri.replace('internal:', '')}>
-      {link.title}
-    </Link>)
+  if (link.link.uri.includes('entity:')) {
+    return (<Link to={link.link.url}>{link.title}</Link>)
   } else {
-    return ( <a href={link.link.uri}>
+    return ( <a href={link.link.url}>
       {link.title}
     </a>)
   }
@@ -98,6 +96,7 @@ const Menu = ({menuName}) => (
                 weight
                 link {
                   uri
+                  url
                 }
                 drupal_parent_menu_item
                 bundle
