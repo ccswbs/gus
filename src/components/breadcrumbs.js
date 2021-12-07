@@ -8,7 +8,7 @@ function Breadcrumbs (props) {
 	const currentPage = String(props.nodeID);
 	const pageTitle = props.nodeTitle;
 	
-	const menuData = require('../../config/sitemaps/main.yml');
+	const menuData = "";
 	
 	if (contentExists(currentPage)) {
 
