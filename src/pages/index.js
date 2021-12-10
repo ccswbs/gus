@@ -5,8 +5,9 @@ import React from 'react';
 import Seo from '../components/seo';
 
 const IndexPage = ({ data }) => (
+    <><uofg-header><a href="/">Test</a></uofg-header>
     <Layout>
-        <Seo title="Home" keywords={[`gatsby`, `application`, `react`]} />
+        <Seo title="Home" />
         
         <div className="container page-container">
             <h1>Gatsby UG Starter Theme</h1>
@@ -28,7 +29,7 @@ const IndexPage = ({ data }) => (
             <h2>Menu Test, main</h2>
             <Menu />       
         </div>
-    </Layout>
+    </Layout></>
 )
 
 export default IndexPage

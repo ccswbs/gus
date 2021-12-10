@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SkipLink from './components/skiplink'
-import Header from './components/header'
 
 export default function HTML(props) {
   return (
@@ -29,7 +28,7 @@ export default function HTML(props) {
           This app works best with JavaScript enabled.
         </noscript>
         <script defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"></script>
-        <Header />
+        
         <div
           key={`body`}
           id="___gatsby"
