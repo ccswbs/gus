@@ -1,11 +1,11 @@
 import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
-import Menu from '../components/menu';
+import HeaderMenu from '../components/headerMenu'
 import React from 'react';
 import Seo from '../components/seo';
 
 const IndexPage = ({ data }) => (
-    <><uofg-header><a href="/">Test</a></uofg-header>
+    <><uofg-header><HeaderMenu /></uofg-header>
     <Layout>
         <Seo title="Home" />
         
@@ -25,9 +25,6 @@ const IndexPage = ({ data }) => (
                     <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link> {edge.node.status === false ? "Unpublished" : ""}</li>
                 ))}
             </ul>
-
-            <h2>Menu Test, main</h2>
-            <Menu />       
         </div>
     </Layout></>
 )
