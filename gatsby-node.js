@@ -771,7 +771,8 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             pages.forEach(( { node }, index) => {
                 aliases[node.drupal_internal__nid] = processPage(
                     node, 
-                    node.id, 
+                    node.id,
+                    node.drupal_internal__nid,
                     node.path, 
                     pageTemplate, 
                     helpers
@@ -798,8 +799,9 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             const programs = result.data.programs.edges;
             programs.forEach(( { node }, index) => {
                 aliases[node.drupal_internal__nid] = processPage(
-                    node, 
-                    node.relationships.field_program_acronym.id, 
+                    node,
+                    node.relationships.field_program_acronym.id,
+                    node.drupal_internal__nid,
                     node.path, 
                     programTemplate, 
                     helpers
@@ -809,7 +811,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     }
 }
 
-function processPage(node, contextID, nodePath, template, helpers) {
+function processPage(node, contextID, nodeNid, nodePath, template, helpers) {
     let alias = createContentTypeAlias(nodePath);
 
     helpers.createPage({
@@ -817,6 +819,7 @@ function processPage(node, contextID, nodePath, template, helpers) {
       component: template,
       context: {
         id: contextID,
+        nid: `entity:node/` + nodeNid,
       },
     })
 
