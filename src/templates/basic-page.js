@@ -1,6 +1,6 @@
 import React from 'react';
 //import Layout from '../components/layout';
-//import HeaderMenu from '../components/headerMenu'
+import HeaderMenu from '../components/headerMenu';
 import { Helmet } from 'react-helmet';
 import Seo from '../components/seo';
 import Hero from '../components/hero';
@@ -12,15 +12,18 @@ import { contentExists } from '../utils/ug-utils';
 const BasicPage = ({data}) => {
 
     const pageData = data.pages.edges[0].node;
-    const nodeID = pageData.drupal_internal__nid;   
+    const nodeID = pageData.drupal_internal__nid;
     const title = pageData.title;
     const imageData = data.images.edges;
     const ogDescription = (contentExists(pageData.field_metatags) ? pageData.field_metatags.og_description : null);
     const ogImage = (contentExists(imageData) ? imageData[0].node.relationships.field_media_image.localFile.publicURL : null);
     const ogImageAlt = (contentExists(imageData) ? imageData[0].node.field_media_image.alt : null);
+    
+    const menuName = (contentExists(data.menus.edges) ? data.menus.edges[0].node.menu_name : `main`);
 
     /****
-    WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected using a comparison to __typename.  This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component. 
+    WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected using a comparison to __typename.  
+    This will be paragraph__WIDGETNAME - you can pass the widgetsData variable through to your component. 
     ****/
     
     const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
@@ -31,10 +34,15 @@ const BasicPage = ({data}) => {
                 class: 'basic-page'
             }}
             />
-            <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
+            <Helmet>
+                <script defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"></script>
+                <script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script>
+            </Helmet>
+            
             <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
             
-            <uofg-header></uofg-header>
+            <HeaderMenu menuName={menuName} />
+            
             <main id="content" className="main-container">
             { /**** Header and Title ****/ }
             <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
@@ -63,7 +71,7 @@ const BasicPage = ({data}) => {
 
 export default BasicPage;
 
-export const query = graphql`query ($id: String) {
+export const query = graphql`query ($id: String, $nid: String) {
   pages: allNodePage(filter: {id: {eq: $id}}) {
     edges {
       node {
@@ -72,6 +80,9 @@ export const query = graphql`query ($id: String) {
         title
         field_metatags {
           og_description
+        }
+        path {
+          alias
         }
         relationships {
           field_widgets {
@@ -541,5 +552,19 @@ export const query = graphql`query ($id: String) {
       }
     }
   }
+  menus: allMenuLinkContentMenuLinkContent(filter: {link: {uri: {eq: $nid}}}) {
+    edges {
+      node {
+        link {
+          uri
+          url
+        }
+        drupal_parent_menu_item
+        drupal_id
+        menu_name
+      }
+    }
+  }
+
 }
 `

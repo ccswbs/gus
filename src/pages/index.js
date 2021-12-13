@@ -1,11 +1,14 @@
 import { graphql, Link } from 'gatsby';
-import Layout from '../components/layout';
 import HeaderMenu from '../components/headerMenu'
+import { Helmet } from 'react-helmet';
+import Layout from '../components/layout';
+//import Header from '../components/header'
 import React from 'react';
 import Seo from '../components/seo';
 
 const IndexPage = ({ data }) => (
-    <><uofg-header><HeaderMenu /></uofg-header>
+        <><Helmet><script defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"></script></Helmet>
+        <HeaderMenu />
     <Layout>
         <Seo title="Home" />
         

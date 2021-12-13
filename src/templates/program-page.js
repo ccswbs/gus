@@ -1,6 +1,7 @@
 import React from 'react';
-import Layout from '../components/layout';
+//import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
+import HeaderMenu from '../components/headerMenu';
 import Seo from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
@@ -391,14 +392,20 @@ function prepareVariantHeading (variantData) {
     const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
     
     return (
-    <Layout date={lastModified}>
+    <>
       <Helmet bodyAttributes={{
           class: 'program'
         }}
       />
-      <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
+      <Helmet>
+        <script defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"></script>
+        <script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script>
+      </Helmet>
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
+      
+      <HeaderMenu />
 
+      <main id="content" className="main-container">
       { /**** Header and Title ****/ }
       <div className={!contentExists(heroImage) && !contentExists(videoData) && "no-thumb"} id="rotator">
         {contentExists(videoData) ?
@@ -490,7 +497,7 @@ function prepareVariantHeading (variantData) {
       {contentExists(footerData) && footerData.length !== 0 &&
         <CustomFooter footerData={footerData[0]} />
       }     
-    </Layout>   
+    </main></>  
     )   
 }
 

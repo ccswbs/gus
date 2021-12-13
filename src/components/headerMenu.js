@@ -1,5 +1,5 @@
 import React from "react"
-import { StaticQuery, graphql, Link } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types";
 import { contentExists } from '../utils/ug-utils';
 
@@ -42,32 +42,34 @@ const generateMenu = (menuLinks, menuName) => {
     let pageSpecificMenu;
     let menuTree;
 
-    menuTree = createMenuHierarchy(menuLinks.allMenuLinkContentMenuLinkContent.edges, menuName);
-    
-    console.log(menuTree);
-  
-    if (contentExists(menuTree)) {
-        pageSpecificMenu = menuTree.map(item => {			
-            let submenu = item.children;
-            let submenuItems = [];
+    menuTree = createMenuHierarchy(menuLinks.allMenuLinkContentMenuLinkContent.edges, menuName);    
 
-            if (submenu !== null && submenu.length > 0) {
-                for (let i=0; i<submenu.length; i++) {
-                    submenuItems.push(<li key={submenu[i].drupal_id}>
-                        <a href={submenu[i].link.url}>{submenu[i].title}</a>
-                        </li>
-                    );
-                }
+    pageSpecificMenu = menuTree.map(item => {			
+        let submenu = item.children;
+        let submenuItems = [];
+
+        if (submenu !== null && submenu.length > 0) {
+            for (let i=0; i<submenu.length; i++) {
+                submenuItems.push(<li key={submenu[i].drupal_id}>
+                    <a href={submenu[i].link.url}>{submenu[i].title}</a>
+                    </li>
+                );
             }
-            console.log(submenu);
-            return (<><React.Fragment key={item.drupal_id}><a href={item.link.url}>{item.title}</a></React.Fragment>}
+        }
+        return (<>
+        {submenu !== null && submenu.length > 0 ?  
+            <><uofg-dropdown-menu key={item.drupal_id}>
+            <button data-for="menu-button">{item.title}</button>
+            <ul data-for="menu-content">
+                <li><a href={item.link.url}>{item.title}</a></li>
+                {submenuItems}
+            </ul>
+            </uofg-dropdown-menu></>
+        : <React.Fragment key={item.drupal_id}><a href={item.link.url}>{item.title}</a></React.Fragment>}
+        </>)
+    })
 
-            </>)
-        })
-    } else {
-        pageSpecificMenu = "";
-    }
-    return pageSpecificMenu
+    return (<><uofg-header>{pageSpecificMenu}</uofg-header></>)
 }
 
 const HeaderMenu = ({menuName}) => (
