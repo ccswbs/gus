@@ -5,9 +5,10 @@
   .programsList-card.card {
     min-width: 23%;
     background-color: #f4f4f4;
-    padding: 5px;
-    margin-bottom:1rem;
-    margin-right:1rem;
+    padding: 2rem;
+    margin-bottom:2rem;
+    margin-right:2rem;
+    border: none;
 
   }
   .stretched-link:after {
@@ -16,8 +17,8 @@
   
   .programsList-card h2 {
     color: black;
-    padding-top: 0px;
-    margin-top: 15px;
+    padding-top: 0rem;
+    margin-top: 0rem;
     font-size: 2rem;
   }
   
