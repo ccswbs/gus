@@ -139,7 +139,22 @@ exports.createSchemaCustomization = ({ actions }) => {
       format: String
       summary: String
     }
-  
+    type FieldAccordionBlockText {
+      processed: String
+      value: String
+      format: String
+      summary: String
+    }
+    type FieldAccordionBlockTitle {
+      processed: String
+      value: String
+      format: String
+      summary: String
+    }
+    type FieldAccordionBlockElement {
+      field_accordion_block_text: FieldAccordionBlockText
+      field_accordion_block_title: FieldAccordionBlockTitle
+    }
     type FieldFormattedTitle {
       processed: String
       value: String
@@ -429,6 +444,19 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_lead_paratext: BodyField
       relationships: node__lead_paragraphRelationships
     }
+
+
+
+    
+    type paragraph__accordion_section implements Node {
+      drupal_id: String
+      relationships: paragraph__accordion_sectionRelationship
+    }
+    type paragraph__accordion_sectionRelationship implements Node {
+      field_accordion_block_element: FieldAccordionBlockElement
+    }
+
+
 
     type node__lead_paragraphRelationships implements Node {
       field_lead_para_hero: media__image @link(from: "field_lead_para_hero___NODE")
