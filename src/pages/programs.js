@@ -17,7 +17,6 @@ const ProgramsPage = ({ data }) => (
         <Seo title="Program List" description={[`Univeristy of Guelph Programs`]} />
         <div className="container page-container">
             <h1>Programs</h1>
-            <p>This is the text on the page</p>
             <div className="card-group programsList">
                 {data.allNodeProgram.edges.map((edge, index) => (
                   <div className="programsList-card card">
