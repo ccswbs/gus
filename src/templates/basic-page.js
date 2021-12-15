@@ -1,5 +1,5 @@
 import React from 'react';
-//import Layout from '../components/layout';
+import Layout from '../components/layout';
 import HeaderMenu from '../components/headerMenu';
 import { Helmet } from 'react-helmet';
 import Seo from '../components/seo';
@@ -29,13 +29,14 @@ const BasicPage = ({data}) => {
     const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
 
     return (
-        <>
+        <Layout>
             <Helmet bodyAttributes={{
                 class: 'basic-page'
             }}
             />
             <Helmet>
-                <script defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"></script>
+                <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"></script>
+                <script type="text/javascript" defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist-fix.js"></script>
                 <script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script>
             </Helmet>
             
@@ -43,7 +44,6 @@ const BasicPage = ({data}) => {
             
             <HeaderMenu menuName={menuName} />
             
-            <main id="content" className="main-container">
             { /**** Header and Title ****/ }
             <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
                 <Hero imgData={imageData} />
@@ -63,8 +63,7 @@ const BasicPage = ({data}) => {
                     </section>
                 </div>
             </div>
-            </main>
-        </>
+        </Layout>
     )
     
 }

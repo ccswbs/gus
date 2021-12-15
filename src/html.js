@@ -13,12 +13,8 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
-        {props.headComponents}        
-        <script data-search-pseudo-elements defer type="text/javascript" src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous"></script>
-        <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"></script>
-        <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" crossOrigin="anonymous"></script>
-        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossOrigin="anonymous"></script>        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        {props.headComponents}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" media="print" onload="this.media='all'" />
       </head>
@@ -35,7 +31,10 @@ export default function HTML(props) {
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
-        <uofg-footer></uofg-footer>        
+        <uofg-footer></uofg-footer>
+        <script data-search-pseudo-elements defer type="text/javascript" src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous"></script>
+        <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" crossOrigin="anonymous"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossOrigin="anonymous"></script>        
       </body>
     </html>
   )
