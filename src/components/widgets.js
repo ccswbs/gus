@@ -82,10 +82,10 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
                             <div class="panel">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent={"#accordionWidget"+widgetData.drupal_id} href={"#collapse"+j} class="collapsed" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_title.processed}}></a>
+                                        <a data-toggle="collapse" data-parent={"#accordionWidget"+widgetData.drupal_id} href={"#collapse"+j+widgetData.drupal_id} class="collapsed" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_title.processed}}></a>
                                     </h4>
                                 </div>
-                                <div id={"collapse"+j} class="panel-collapse collapse in">
+                                <div id={"collapse"+j+widgetData.drupal_id} class="panel-collapse collapse in">
                                     <div class="panel-body" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_text.processed}}/>
                                 </div>
                             </div>
