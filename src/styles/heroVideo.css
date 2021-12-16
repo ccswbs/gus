@@ -28,6 +28,9 @@ a#hero-transcript {
 .hero-controls-21by9 {
 	max-height: 77rem;	
 }
+#rotator .embed-responsive {
+	background: transparent !important;
+}
 
 .hero-controls-16by9,
 .hero-controls-21by9 {
