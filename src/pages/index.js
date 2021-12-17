@@ -1,5 +1,5 @@
 import { graphql, Link } from 'gatsby';
-import HeaderMenu from '../components/headerMenu'
+//import HeaderMenu from '../components/headerMenu'
 import { Helmet } from 'react-helmet';
 import Layout from '../components/layout';
 //import Header from '../components/header'
@@ -7,14 +7,9 @@ import React from 'react';
 import Seo from '../components/seo';
 
 const IndexPage = ({ data }) => (
-    <Layout>
-        <Helmet>
-            <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"></script>
-            <script type="text/javascript" defer src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist-fix.js"></script>
-            <script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script>
-        </Helmet>
+    <Layout menuName="main">
+        <Helmet><script src="https://www.uoguelph.ca/js/uog-scripts-dist.js" defer></script></Helmet>
         <Seo title="Home" />
-        <HeaderMenu />
         <div className="container page-container">
             <h1>Gatsby UG Starter Theme</h1>
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>

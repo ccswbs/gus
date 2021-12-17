@@ -69,7 +69,7 @@ const generateMenu = (menuLinks, menuName) => {
         </>)
     })
 
-    return (<><uofg-header>{pageSpecificMenu}</uofg-header></>)
+    return pageSpecificMenu
 }
 
 const HeaderMenu = ({menuName}) => (

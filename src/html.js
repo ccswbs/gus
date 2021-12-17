@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SkipLink from './components/skiplink'
-import Header from './components/header';
 
 export default function HTML(props) {
   return (
@@ -14,9 +13,6 @@ export default function HTML(props) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         {props.headComponents}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" media="print" onload="this.media='all'" />
       </head>
       <body {...props.bodyAttributes}>
         <SkipLink mainContent="#content"/>
@@ -30,11 +26,7 @@ export default function HTML(props) {
           id="___gatsby"
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
-        {props.postBodyComponents}
-        <uofg-footer></uofg-footer>
-        <script data-search-pseudo-elements defer type="text/javascript" src="https://kit.fontawesome.com/7993323d0c.js" crossOrigin="anonymous"></script>
-        <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" crossOrigin="anonymous"></script>
-        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossOrigin="anonymous"></script>        
+        {props.postBodyComponents}        
       </body>
     </html>
   )
