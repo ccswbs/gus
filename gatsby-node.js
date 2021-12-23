@@ -139,21 +139,28 @@ exports.createSchemaCustomization = ({ actions }) => {
       format: String
       summary: String
     }
-    type FieldAccordionBlockText {
+    type FieldAccordionBlockText implements Node {
       processed: String
       value: String
       format: String
       summary: String
     }
-    type FieldAccordionBlockTitle {
+    type FieldAccordionBlockTitle implements Node {
       processed: String
       value: String
       format: String
       summary: String
     }
-    type FieldAccordionBlockElement {
-      field_accordion_block_text: FieldAccordionBlockText
-      field_accordion_block_title: FieldAccordionBlockTitle
+    type FieldAccordionBlockElement implements Node {
+      field_accordion_block_text: FieldAccordionBlockText @link(from:" field_accordion_block_text___NODE")
+      field_accordion_block_title: FieldAccordionBlockTitle @link(from:" field_accordion_block_title___NODE")
+    }
+    type paragraph__accordion_section implements Node {
+      drupal_id: String
+      relationships: paragraph__accordion_sectionRelationship
+    }
+    type paragraph__accordion_sectionRelationship implements Node {
+      field_accordion_block_elements: FieldAccordionBlockElement @link(from:"field_accordion_block_elements___NODE")
     }
     type FieldFormattedTitle {
       processed: String
@@ -444,20 +451,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_lead_paratext: BodyField
       relationships: node__lead_paragraphRelationships
     }
-
-
-
-    
-    type paragraph__accordion_section implements Node {
-      drupal_id: String
-      relationships: paragraph__accordion_sectionRelationship
-    }
-    type paragraph__accordion_sectionRelationship implements Node {
-      field_accordion_block_element: FieldAccordionBlockElement
-    }
-
-
-
     type node__lead_paragraphRelationships implements Node {
       field_lead_para_hero: media__image @link(from: "field_lead_para_hero___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
