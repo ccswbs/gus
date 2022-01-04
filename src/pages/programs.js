@@ -6,14 +6,14 @@ import '../styles/programsList.css';
 
 const ProgramsPage = ({ data }) => (
     <Layout>
-      {data.allNodeProgram.edges.sort(function(a,b){
+    {/* {data.allNodeProgram.edges.sort(function(a,b){
         var titleA =a.node.title, titleB = b.node.title;
         if (titleA < titleB)
           return -1;
         if (titleA > titleB)
           return 1;
         return 0;
-      })}
+    })} */}
         <Seo title="Program List" description={[`Univeristy of Guelph Programs`]} />
         <div className="container page-container">
             <h1>Programs</h1>
