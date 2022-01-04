@@ -397,8 +397,7 @@ function prepareVariantHeading (variantData) {
           class: 'program'
         }}
       />
-      <Helmet><script src="https://www.uoguelph.ca/js/uog-scripts-dist.js" defer></script></Helmet>
-      
+            
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
       
       { /**** Header and Title ****/ }

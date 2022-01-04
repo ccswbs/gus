@@ -32,13 +32,13 @@ const BasicPage = ({data}) => {
         <Layout menuName={menuName}>
             <Helmet bodyAttributes={{
                 class: 'basic-page'
-            }}
+            }}            
             />
-            <Helmet><script src="https://www.uoguelph.ca/js/uog-scripts-dist.js" defer></script></Helmet>
-            
-            <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
-            
-            
+            <Helmet>
+                <script src="https://www.uoguelph.ca/js/uog-scripts-dist.js" type="text/javascript" defer />
+            </Helmet>
+                        
+            <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />            
             
             { /**** Header and Title ****/ }
             <div className={!contentExists(imageData) && "no-thumb"} id="rotator">

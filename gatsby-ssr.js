@@ -7,9 +7,9 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       key="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
       src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
     />,
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />,
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" />,
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" media="print" onload="this.media='all'" />
+    <link key="https://fonts.gstatic.com" rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />,
+    <link key="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" />,
+    <link key="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" media="print" onLoad="this.media='all'" />
   ])
   
   setPostBodyComponents([
@@ -28,6 +28,11 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       key="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
       crossOrigin="anonymous"
+      defer
+    />,
+    <script
+      key="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
+      src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
       defer
     />
   ])
