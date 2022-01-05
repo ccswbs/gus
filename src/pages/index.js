@@ -1,14 +1,10 @@
 import { graphql, Link } from 'gatsby';
-//import HeaderMenu from '../components/headerMenu'
-import { Helmet } from 'react-helmet';
 import Layout from '../components/layout';
-//import Header from '../components/header'
 import React from 'react';
 import Seo from '../components/seo';
 
 const IndexPage = ({ data }) => (
     <Layout menuName="main">
-        <Helmet><script src="https://www.uoguelph.ca/js/uog-scripts-dist.js" defer></script></Helmet>
         <Seo title="Home" />
         <div className="container page-container">
             <h1>Gatsby UG Starter Theme</h1>

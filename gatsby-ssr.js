@@ -34,6 +34,7 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       key="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
       src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
       defer
-    />
+    />,
+    <script key="https://www.uoguelph.ca/js/uog-scripts-dist.js" src="https://www.uoguelph.ca/js/uog-scripts-dist.js" defer></script>
   ])
 }

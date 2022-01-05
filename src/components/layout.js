@@ -13,6 +13,7 @@ const Layout = ({ children, date, menuName }) => (
           <DateModified date={date}/>
         </main>
         <uofg-footer></uofg-footer>
+        
       </>
 )
 

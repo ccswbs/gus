@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
-//import HeaderMenu from '../components/headerMenu';
 import Seo from '../components/seo';
 import Hero from '../components/hero';
 import Breadcrumbs from '../components/breadcrumbs';
