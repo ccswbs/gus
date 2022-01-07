@@ -34,7 +34,7 @@ export default ProgramsPage
 
 export const query = graphql`
     query {
-      allNodeProgram {
+      allNodeProgram(sort: {fields: [title], order: ASC}) {
         edges {
           node {
             drupal_id
