@@ -12,14 +12,14 @@ const IndexPage = ({ data }) => (
             <h2>Pages</h2>
             <ul>
                 {data.allNodePage.edges.map((edge, index) => (
-                    <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link> {edge.node.status === false ? "Unpublished" : ""}</li>
+                    edge.node.status === true ? <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li> : ""
                 ))}
             </ul>
 
             <h2>Programs</h2>
             <ul>
                 {data.programs.edges.map((edge, index) => (
-                    <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link> {edge.node.status === false ? "Unpublished" : ""}</li>
+                    edge.node.status === true ? <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li> : ""
                 ))}
             </ul>
         </div>

@@ -1,7 +1,6 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types";
-import { contentExists } from '../utils/ug-utils';
 
 const createMenuHierarchy = (menuData, menuName) => {
   let tree = [],
@@ -73,7 +72,6 @@ const generateMenu = (menuLinks, menuName) => {
 }
 
 const HeaderMenu = ({menuName}) => (
-
    <StaticQuery
       query={
         graphql`
