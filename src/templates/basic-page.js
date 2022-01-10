@@ -44,7 +44,7 @@ const BasicPage = ({data}) => {
                 </div>
             </div>
             
-            <Breadcrumbs nodeID={nodeID} nodeTitle={title} />
+            <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={title} />
             
             { /**** Body content ****/ }
             <div className="container page-container">
