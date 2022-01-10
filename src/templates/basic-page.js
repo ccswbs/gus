@@ -27,8 +27,6 @@ const BasicPage = ({data}) => {
     
     const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
 
-console.log(eventsData);
-
     return (
         <Layout>
             <Helmet bodyAttributes={{
