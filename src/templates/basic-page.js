@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import Seo from '../components/seo';
 import Hero from '../components/hero';
+import Events from '../components/events';
 import Breadcrumbs from '../components/breadcrumbs';
 import Widgets from '../components/widgets'
 import { graphql } from 'gatsby';
@@ -13,7 +14,9 @@ const BasicPage = ({data}) => {
     const pageData = data.pages.edges[0].node;
     const nodeID = pageData.drupal_internal__nid;   
     const title = pageData.title;
+    const showEvents = pageData.field_show_events;
     const imageData = data.images.edges;
+    const eventsData = data.events.events.edges;
     const ogDescription = (contentExists(pageData.field_metatags) ? pageData.field_metatags.og_description : null);
     const ogImage = (contentExists(imageData) ? imageData[0].node.relationships.field_media_image.localFile.publicURL : null);
     const ogImageAlt = (contentExists(imageData) ? imageData[0].node.field_media_image.alt : null);
@@ -23,6 +26,8 @@ const BasicPage = ({data}) => {
     ****/
     
     const widgetsData = (contentExists(pageData.relationships.field_widgets) ? pageData.relationships.field_widgets : null);
+
+console.log(eventsData);
 
     return (
         <Layout>
@@ -45,6 +50,10 @@ const BasicPage = ({data}) => {
             
             { /**** Body content ****/ }
             <div className="container page-container">
+	       
+	    {contentExists(showEvents) && showEvents === true &&
+                <Events eventsData={eventsData} />
+	    }
                 { /**** Widgets content ****/}      
                 <div className="row row-with-vspace site-content">
                     <section className="col-md-12 content-area">
@@ -66,6 +75,7 @@ export const query = graphql`query ($id: String) {
         drupal_id
         drupal_internal__nid
         title
+	field_show_events
         field_metatags {
           og_description
         }
@@ -503,6 +513,18 @@ export const query = graphql`query ($id: String) {
               name
             }
           }
+        }
+      }
+    }
+  }
+  events: wpgraphql {
+    events(first: 3) {
+      edges {
+        node {
+          title
+	  startDate
+          link
+	  date
         }
       }
     }

@@ -319,6 +319,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: node__pageRelationships
       fields: FieldsPathAlias
       path: AliasPath
+      field_show_events: Boolean
     }
     type node__pageField_metatags implements Node {
       og_description: String
@@ -892,6 +893,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             menuNames.forEach(element => createSitemap(menus, element, aliases));
     }
     }
+    createSitePageList(helpers);
 }
 
 function createSitemap(menus, whichMenu, aliases) {
@@ -963,6 +965,19 @@ function createContentTypeAlias(nodePath) {
         alias = `/` + slugify(node.title);
     }
     return alias;
+}
+
+function createSitePageList(helpers) {
+
+    helpers.createPage({
+      path: `/sitemap-se/`,
+      component: path.resolve(`./src/templates/sitemap-page.js`),
+      context: {
+         searchfilt: `/studentexperience/`,
+      },
+    })
+
+    return;
 }
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
