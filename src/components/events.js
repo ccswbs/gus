@@ -106,7 +106,7 @@ function Events (props) {
           	   </EventDate>
           	<EventDetails>
             	   <EventDetailsContent>
-              	   <a href={event.node.link}>{event.node.title}</a> <br />
+              	   <a href={event.node.link} className="text-decoration-none"> {event.node.title}</a> <br />
 	           <EventTime>{myTime}</EventTime>
             	   </EventDetailsContent>
           	</EventDetails>
