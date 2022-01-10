@@ -49,23 +49,24 @@ const generateMenu = (menuLinks, menuName) => {
 
         if (submenu !== null && submenu.length > 0) {
             for (let i=0; i<submenu.length; i++) {
-                submenuItems.push(<li key={submenu[i].drupal_id}>
-                    <a href={submenu[i].link.url}>{submenu[i].title}</a>
+                submenuItems.push(
+                    <li key={submenu[i].drupal_id}>
+                        <a href={submenu[i].link.url}>{submenu[i].title}</a>
                     </li>
                 );
             }
         }
-        return (<>
+        return (<React.Fragment key={item.drupal_id + `menu`}>
         {submenu !== null && submenu.length > 0 ?  
             <><uofg-dropdown-menu key={item.drupal_id}>
             <button data-for="menu-button">{item.title}</button>
             <ul data-for="menu-content">
-                <li><a href={item.link.url}>{item.title}</a></li>
+                <li key={item.drupal_id + `dup`}><a href={item.link.url}>{item.title}</a></li>
                 {submenuItems}
             </ul>
             </uofg-dropdown-menu></>
         : <React.Fragment key={item.drupal_id}><a href={item.link.url}>{item.title}</a></React.Fragment>}
-        </>)
+        </React.Fragment>)
     })
 
     return pageSpecificMenu
