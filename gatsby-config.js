@@ -26,6 +26,7 @@ module.exports = {
     menus: metaConfig['menus'],
   },
   plugins: [
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-preact`,
     `gatsby-plugin-image`,
@@ -75,6 +76,14 @@ module.exports = {
       options: {
         name: `src`,
         path: `${__dirname}/src/`,
+      },
+    },    
+    {
+      resolve: `gatsby-source-graphql`,
+      options: {
+        typeName: `WPGraphQL`,
+        fieldName: `wpgraphql`,
+        url: `https://dev-ug-news.pantheonsite.io/graphql`,
       },
     },    
     {
