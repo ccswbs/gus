@@ -69,7 +69,7 @@ export default IndexPage
 
 export const query = graphql`
     query {
-      allNodePage {
+      allNodePage(sort: {fields: [title], order: ASC}) {
         edges {
           node {
             title
@@ -81,7 +81,7 @@ export const query = graphql`
           }
         }
       }
-      programs: allNodeProgram {
+      programs: allNodeProgram(sort: {fields: [title], order: ASC}) {
         edges {
           node {
             drupal_id
