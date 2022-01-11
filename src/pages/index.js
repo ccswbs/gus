@@ -3,7 +3,31 @@ import Layout from '../components/layout';
 import React from 'react';
 import Seo from '../components/seo';
 
-const IndexPage = ({ data }) => (
+const IndexPage = ({ data }) => {
+
+    const pubPages = [];
+    const unpubPages = [];
+    const pubPrograms = [];
+    const unpubPrograms = [];
+    const pages = data.allNodePage.edges;
+    const programs = data.programs.edges;
+    
+    for (let i=0; i<pages.length; i++) {
+        if (pages[i].node.status === true) {
+            pubPages.push(pages[i])
+        } else {
+            unpubPages.push(pages[i])
+        }
+    }
+    for (let i=0; i<programs.length; i++) {
+        if (programs[i].node.status === true) {
+            pubPrograms.push(programs[i])
+        } else {
+            unpubPrograms.push(programs[i])
+        }
+    }
+    
+    return (
     <Layout menuName="main">
         <Seo title="Home" />
         <div className="container page-container">
@@ -11,20 +35,35 @@ const IndexPage = ({ data }) => (
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
             <h2>Pages</h2>
             <ul>
-                {data.allNodePage.edges.map((edge, index) => (
-                    edge.node.status === true ? <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li> : ""
+                {pubPages.map((page) => (
+                    <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                 ))}
             </ul>
 
             <h2>Programs</h2>
             <ul>
-                {data.programs.edges.map((edge, index) => (
-                    edge.node.status === true ? <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li> : ""
+                {pubPrograms.map((program) => (
+                    <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
+                ))}
+            </ul>
+            
+            <h2>Unpublished Content</h2>
+            <h3>Pages</h3>
+            <ul>
+                {unpubPages.map((page) => (
+                    <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
+                ))}
+            </ul>
+            <h3>Programs</h3>
+            <ul>
+                {unpubPrograms.map((program) => (
+                    <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                 ))}
             </ul>
         </div>
     </Layout>
-)
+    )
+}
 
 export default IndexPage
 
