@@ -13,8 +13,9 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             defer
         />,
         <link
-            key="https://www.uoguelph.ca/css/UofG-bs5-styles-dist.css"
-            href="https://www.uoguelph.ca/css/UofG-bs5-styles-dist.css"
+            key="https://www.uoguelph.ca/css/UofG-bs5-styles-dist.css" 
+            rel="stylesheet" 
+            href="https://www.uoguelph.ca/css/UofG-bs5-styles-dist.css" 
         />,
         <link 
             key="https://fonts.gstatic.com" 
