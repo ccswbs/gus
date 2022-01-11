@@ -7,6 +7,11 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             key="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
             src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
         />,
+        <script
+            key="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
+            src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
+            defer
+        />,
         <link 
             key="https://fonts.gstatic.com" 
             rel="preconnect" 
@@ -41,14 +46,9 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             defer
         />,
         <script
-            key="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            key="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
             crossOrigin="anonymous"
-            defer
-        />,
-        <script
-            key="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
-            src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
             defer
         />,
         <script 
