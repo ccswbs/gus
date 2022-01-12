@@ -94,7 +94,7 @@ function Events (props) {
 	    !noResults &&
 			<EventList>
 	    {props.eventsData.map (event => {
-		    console.log(event.node.startDate);
+		    
 		    myDatemon = moment(event.node.startDate,"YYYY-MM-DD").format("MMM"); 
 		    myDateday = moment(event.node.startDate,"YYYY-MM-DD").format("D"); 
 		    myTime = moment(event.node.startDate,"YYYY-MM-DD HH:mm").format("h:mm A"); 
