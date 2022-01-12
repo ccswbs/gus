@@ -8,12 +8,9 @@ import '../styles/global.css';
 const Layout = ({ children, date, menuName }) => (
       <>
         <uofg-header><HeaderMenu menuName={menuName} /></uofg-header>
-        <main id="content" className="main-container">
-          {children}
-          <DateModified date={date}/>
-        </main>
-        <uofg-footer></uofg-footer>
-        
+        {children}
+        <DateModified date={date}/>
+        <uofg-footer></uofg-footer>        
       </>
 )
 

@@ -31,6 +31,7 @@ const IndexPage = ({ data }) => {
     <Layout menuName="main">
         <Seo title="Home" />
         <div className="container page-container">
+        <div id="content" className="site-content">
             <h1>Gatsby UG Starter Theme</h1>
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
             <h2>Pages</h2>
@@ -60,7 +61,7 @@ const IndexPage = ({ data }) => {
                     <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                 ))}
             </ul>
-        </div>
+        </div></div>
     </Layout>
     )
 }
