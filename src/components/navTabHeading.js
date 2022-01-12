@@ -29,7 +29,7 @@ function NavTabHeading (props) {
                 id={id} 
                 href={href} 
                 role="tab" 
-                data-toggle="pill" 
+                data-bs-toggle="pill" 
                 aria-controls={props.controls} 
                 aria-selected={props.active}>
                     {props.heading.toUpperCase()}
