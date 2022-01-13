@@ -160,7 +160,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: paragraph__accordion_sectionRelationship
     }
     type paragraph__accordion_sectionRelationship implements Node {
-      field_accordion_block_elements: FieldAccordionBlockElement @link(from:"field_accordion_block_elements___NODE")
+      field_accordion_block_elements: [FieldAccordionBlockElement] @link(from:"field_accordion_block_elements___NODE")
     }
     type FieldFormattedTitle {
       processed: String

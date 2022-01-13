@@ -75,6 +75,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             		return( <PageTabs pageData={widgetData} />);
 		}
         else if (widgetData.__typename==="paragraph__accordion_section") {
+            console.log(widgetData)
             return(
                 widgetData.relationships.field_accordion_block_elements.map((accordionData,j) => {
                     return( <>
