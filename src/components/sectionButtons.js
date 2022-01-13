@@ -64,7 +64,7 @@ const buttonIconWraper = (contentExists(props.pageData.relationships.field_secti
 let fieldButtonsData = contentExists(props.pageData.relationships.field_buttons)? props.pageData.relationships.field_buttons: '';
     return (
         <React.Fragment>
-            <div class={buttonClassWraper}>
+            <div className={buttonClassWraper}>
             {contentExists(fieldButtonsData) && fieldButtonsData.length !== 0 && <>
                 {fieldButtonsData.map (buttonData => {
                     return Button(buttonData,
