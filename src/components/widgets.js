@@ -58,7 +58,7 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             const sectionTitle = (contentExists(widgetData.field_section_title) ? widgetData.field_section_title : ``);
             return (<>
 				{contentExists(sectionTitle) === true && <h2>{sectionTitle}</h2>}
-				<div className={widgetData.field_section_classes}>
+				<div key={widgetData.drupal_id} className={widgetData.field_section_classes}>
                     
                         <SectionWidgets pageData={widgetData.relationships.field_section_content}/>
               
