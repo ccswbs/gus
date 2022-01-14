@@ -7,7 +7,7 @@ import '../styles/list.css';
 
 function LinksOuter (props) {
 
-    const setExtraClasses = (props.displayType==='grid')? "row grid-row ": ``;
+    const setExtraClasses = (props.displayType==='grid')? "row": ``;
     const setBackGroundClass = (props.displayType==='grid')? "grid":"row list";
 
     let Heading = setHeadingLevel(props.headingLevel);
@@ -38,7 +38,7 @@ LinksOuter.propTypes = {
 }
 LinksOuter.defaultProps = {
     children: ``,
-    columnClass: 'col-md-3 col-sm-6',
+    columnClass: '',
     heading: ``,
     headingLevel: ``,
     description: ``,
