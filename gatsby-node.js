@@ -139,28 +139,29 @@ exports.createSchemaCustomization = ({ actions }) => {
       format: String
       summary: String
     }
-    type FieldAccordionBlockText implements Node {
+    type FieldAccordionBlockText {
       processed: String
       value: String
       format: String
       summary: String
     }
-    type FieldAccordionBlockTitle implements Node {
+    type FieldAccordionBlockTitle {
       processed: String
       value: String
       format: String
       summary: String
     }
-    type FieldAccordionBlockElement implements Node {
-      field_accordion_block_text: FieldAccordionBlockText @link(from:" field_accordion_block_text___NODE")
-      field_accordion_block_title: FieldAccordionBlockTitle @link(from:" field_accordion_block_title___NODE")
+    type paragraph__accordion_block implements Node {
+      drupal_id: String
+      field_accordion_block_text: FieldAccordionBlockText
+      field_accordion_block_title: FieldAccordionBlockTitle
     }
     type paragraph__accordion_section implements Node {
       drupal_id: String
-      relationships: paragraph__accordion_sectionRelationship
+      relationships: paragraph__accordion_sectionRelationships
     }
-    type paragraph__accordion_sectionRelationship implements Node {
-      field_accordion_block_elements: [FieldAccordionBlockElement] @link(from:"field_accordion_block_elements___NODE")
+    type paragraph__accordion_sectionRelationships implements Node {
+      field_accordion_block_elements: [paragraph__accordion_block] @link(from: "field_accordion_block_elements___NODE")
     }
     type FieldFormattedTitle {
       processed: String

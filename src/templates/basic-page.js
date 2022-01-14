@@ -101,6 +101,7 @@ export const query = graphql`query ($id: String) {
               drupal_id
               relationships {
                 field_accordion_block_elements {
+                  drupal_id
                   field_accordion_block_title {
                     processed
                   }
