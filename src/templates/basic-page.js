@@ -103,6 +103,20 @@ export const query = graphql`query ($id: String, $nid: String) {
                 }
               }
             }
+            ... on paragraph__accordion_section {
+              drupal_id
+              relationships {
+                field_accordion_block_elements {
+                  drupal_id
+                  field_accordion_block_title {
+                    processed
+                  }
+                  field_accordion_block_text {
+                    processed
+                  }
+                }
+              }
+            }
             ... on paragraph__lead_paragraph {
               id
               field_lead_paratext {

@@ -118,6 +118,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       | paragraph__stats_widget
       | paragraph__section_tabs
       | paragraph__tab_content
+      | paragraph__accordion_section
 
     union widgetSectionParagraphUnion =
       paragraph__call_to_action
@@ -142,7 +143,18 @@ exports.createSchemaCustomization = ({ actions }) => {
       format: String
       summary: String
     }
-  
+    type FieldAccordionBlockText {
+      processed: String
+      value: String
+      format: String
+      summary: String
+    }
+    type FieldAccordionBlockTitle {
+      processed: String
+      value: String
+      format: String
+      summary: String
+    }
     type FieldFormattedTitle {
       processed: String
       value: String
@@ -377,7 +389,19 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }   
+    }  
+    type paragraph__accordion_block implements Node {
+      drupal_id: String
+      field_accordion_block_text: FieldAccordionBlockText
+      field_accordion_block_title: FieldAccordionBlockTitle
+    }
+    type paragraph__accordion_section implements Node {
+      drupal_id: String
+      relationships: paragraph__accordion_sectionRelationships
+    }
+    type paragraph__accordion_sectionRelationships implements Node {
+      field_accordion_block_elements: [paragraph__accordion_block] @link(from: "field_accordion_block_elements___NODE")
+    } 
     type paragraph__button_widget implements Node {
       drupal_id: String
       field_button_link: FieldLink
@@ -415,7 +439,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_lead_paratext: BodyField
       relationships: node__lead_paragraphRelationships
     }
-
     type node__lead_paragraphRelationships implements Node {
       field_lead_para_hero: media__image @link(from: "field_lead_para_hero___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
