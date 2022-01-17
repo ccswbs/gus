@@ -391,7 +391,7 @@ function prepareVariantHeading (variantData) {
     const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
     
     return (
-    <Layout menuName="main">
+    <Layout date={lastModified} menuName="main">
       <Helmet bodyAttributes={{
           class: 'program'
         }}
