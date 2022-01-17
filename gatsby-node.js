@@ -151,18 +151,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       format: String
       summary: String
     }
-    type paragraph__accordion_block implements Node {
-      drupal_id: String
-      field_accordion_block_text: FieldAccordionBlockText
-      field_accordion_block_title: FieldAccordionBlockTitle
-    }
-    type paragraph__accordion_section implements Node {
-      drupal_id: String
-      relationships: paragraph__accordion_sectionRelationships
-    }
-    type paragraph__accordion_sectionRelationships implements Node {
-      field_accordion_block_elements: [paragraph__accordion_block] @link(from: "field_accordion_block_elements___NODE")
-    }
     type FieldFormattedTitle {
       processed: String
       value: String
@@ -414,7 +402,19 @@ exports.createSchemaCustomization = ({ actions }) => {
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }   
+    }  
+    type paragraph__accordion_block implements Node {
+      drupal_id: String
+      field_accordion_block_text: FieldAccordionBlockText
+      field_accordion_block_title: FieldAccordionBlockTitle
+    }
+    type paragraph__accordion_section implements Node {
+      drupal_id: String
+      relationships: paragraph__accordion_sectionRelationships
+    }
+    type paragraph__accordion_sectionRelationships implements Node {
+      field_accordion_block_elements: [paragraph__accordion_block] @link(from: "field_accordion_block_elements___NODE")
+    } 
     type paragraph__button_widget implements Node {
       drupal_id: String
       field_button_link: FieldLink
