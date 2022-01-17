@@ -53,7 +53,7 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
     let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
         contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    
     let btnClassName = (contentExists(buttonClass))? buttonClass: '' ;                                          
-    let buttonClassName= 'btn ' + ButtonStyle(buttonData.relationships.field_button_style.name) + ' ' + btnClassName;
+    let buttonClassName= 'btn ' + ButtonStyle(buttonData.relationships.field_button_style.name) + ' ' + btnClassName + ' w-100 text-start p-4';
     let btnFAIconAdjust = (contentExists(buttonFAIconAdjust))? buttonFAIconAdjust: '';
     let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? buttonData.field_font_awesome_icon + ' ' +
                                 btnFAIconAdjust + ' fa-fw '+ fontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
@@ -61,6 +61,8 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
 	
 	let btnAnalyticsGoal = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.name : ``);
 	let btnAnalyticsAction = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.field_goal_action : ``);
+    
+    console.log(buttonClassName);
 
     return (
 	<React.Fragment key={buttonData.drupal_id}>
