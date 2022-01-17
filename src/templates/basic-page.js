@@ -31,10 +31,10 @@ const BasicPage = ({data}) => {
         <Layout menuName={menuName}>
             <Helmet bodyAttributes={{
                 class: 'basic-page'
-            }}            
-            />            
-                        
-            <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />            
+            }}
+            />
+            
+            <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
             
             { /**** Header and Title ****/ }
             <div className={!contentExists(imageData) && "no-thumb"} id="rotator">

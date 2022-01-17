@@ -5,9 +5,7 @@ import '../styles/list.css';
 
 function LinksOuter (props) {
 
-    const setExtraClasses = (props.displayType==='grid')? "row g-5": ``;
-    const setBackGroundClass = (props.displayType==='grid')? "grid":"row list";
-    const setTag = props.displayType === "grid" ? "div" : "ul";
+    const setBackGroundClass = (props.displayType === "grid") ? "grid" : "row list";
 
     let Heading = setHeadingLevel(props.headingLevel);
 	if (contentExists(props.children)) {
@@ -22,9 +20,7 @@ function LinksOuter (props) {
                         : 
                         <ul>{props.children}</ul>}
                     </div>
-                </div>
-            )
-
+                </div>)
 	} else {
 		return null;
 	}
