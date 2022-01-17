@@ -7,7 +7,7 @@ import '../styles/list.css';
 
 function LinksOuter (props) {
 
-    const setExtraClasses = (props.displayType==='grid')? "row": ``;
+    const setExtraClasses = (props.displayType==='grid')? "row g-5": ``;
     const setBackGroundClass = (props.displayType==='grid')? "grid":"row list";
 
     let Heading = setHeadingLevel(props.headingLevel);
