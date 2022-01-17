@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LinksParent from './linksParent';
 import { contentExists, setHeadingLevel } from '../utils/ug-utils.js';
 import '../styles/list.css';
-
 
 function LinksOuter (props) {
 
     const setExtraClasses = (props.displayType==='grid')? "row g-5": ``;
     const setBackGroundClass = (props.displayType==='grid')? "grid":"row list";
+    const setTag = props.displayType === "grid" ? "div" : "ul";
 
     let Heading = setHeadingLevel(props.headingLevel);
 	if (contentExists(props.children)) {
@@ -16,9 +15,12 @@ function LinksOuter (props) {
                     <div className="col-md-12">
                     {contentExists(props.heading) && <Heading>{props.heading}</Heading>}
                     {contentExists(props.description) && <p>{props.description}</p>}
-                        <LinksParent extraClasses={setExtraClasses}>
+                        {props.displayType === "grid" ? 
+                        <div className="row g-5">
                             {props.children}
-                        </LinksParent>
+                        </div> 
+                        : 
+                        <ul>{props.children}</ul>}
                     </div>
                 </div>
             )
