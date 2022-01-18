@@ -10,7 +10,7 @@ const ProgramsPage = ({ data }) => (
         <div className="container page-container">
             <div id="content" className="site-content">
                 <h1>Programs</h1>            
-                <div id="program-list" className="row row-cols-1 row-cols-md-2 g-4 mb-5">
+                <div id="program-list" className="row row-cols-1 row-cols-md-4 g-4 mb-5">
                     {data.allNodeProgram.edges.map((edge, index) => (
                       <div className="col">
                           <div className="card h-100">
