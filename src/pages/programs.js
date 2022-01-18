@@ -9,11 +9,13 @@ const ProgramsPage = ({ data }) => (
         <Seo title="Program List" description={[`Univeristy of Guelph Programs`]} />
         <div className="container page-container">
             <h1>Programs</h1>
-            <div className="card-group programsList">
+            <div className="row row-cols-1 row-cols-md-2 g-4">
                 {data.allNodeProgram.edges.map((edge, index) => (
-                  <div className="programsList-card card">
-                    <h2 key={index}><a className = "stretched-link" href={edge.node.path.alias}>{edge.node.title}</a></h2>
-                    <div>{edge.node.relationships.field_program_acronym.name}</div>
+                  <div className="col">
+                      <div className="programs-card card h-100">
+                        <h2 key={index}><a className="stretched-link" href={edge.node.path.alias}>{edge.node.title}</a></h2>
+                        <div>{edge.node.relationships.field_program_acronym.name}</div>
+                      </div>
                   </div>
                 ))}
             </div>            

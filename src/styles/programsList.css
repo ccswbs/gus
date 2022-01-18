@@ -2,7 +2,7 @@
   .card-group.programsList{
     margin-left:1rem;
   }
-  .programsList-card.card {
+.programs-card.card {
     min-width: 23%;
     background-color: #f4f4f4;
     padding: 2rem;
@@ -10,40 +10,42 @@
     margin-right:2rem;
     border: none;
 
-  }
-  .stretched-link:after {
-    content: "";
-  }
+}
+.programs-card h2 {
+	color: black;
+	padding-top: 0rem;
+	margin-top: 0rem;
+	font-size: 2rem;
+}
   
-  .programsList-card h2 {
-    color: black;
-    padding-top: 0rem;
-    margin-top: 0rem;
-    font-size: 2rem;
-  }
+.programs-card a.stretched-link {
+	text-decoration: none !important;
+}
+
   
-  .programsList-card.card:nth-of-type(12n+1),
-  .programsList-card.card:nth-of-type(12n+4),
-  .programsList-card.card:nth-of-type(12n+7),
-  .programsList-card.card:nth-of-type(12n+10) {
+  
+  .programs-card.card:nth-of-type(12n+1),
+  .programs-card.card:nth-of-type(12n+4),
+  .programs-card.card:nth-of-type(12n+7),
+  .programs-card.card:nth-of-type(12n+10) {
     border-left: 1rem solid var(--uog-red);
   }
 
-  .programsList-card.card:nth-of-type(12n+2),
-  .programsList-card.card:nth-of-type(12n+5),
-  .programsList-card.card:nth-of-type(12n+8),
-  .programsList-card.card:nth-of-type(12n+11) {
+  .programs-card.card:nth-of-type(12n+2),
+  .programs-card.card:nth-of-type(12n+5),
+  .programs-card.card:nth-of-type(12n+8),
+  .programs-card.card:nth-of-type(12n+11) {
     border-left: 1rem solid var(--uog-yellow);
   }
-  .programsList-card.card:nth-of-type(12n+3),
-  .programsList-card.card:nth-of-type(12n+6),
-  .programsList-card.card:nth-of-type(12n+9),
-  .programsList-card.card:nth-of-type(12n+12) {
+  .programs-card.card:nth-of-type(12n+3),
+  .programs-card.card:nth-of-type(12n+6),
+  .programs-card.card:nth-of-type(12n+9),
+  .programs-card.card:nth-of-type(12n+12) {
     border-left: 1rem solid var(--uog-blue);
 }
   
-  .programsList-card.card:hover,
-  .programsList-card.card:focus-within {
+  .programs-card.card:hover,
+  .programs-card.card:focus-within {
     background-color: #d3d3d3 !important;
   }
 
@@ -57,7 +59,7 @@
     .card-group.programsList{
       margin-left:1rem;
     }
-    .programsList-card.card {
+    .programs-card.card {
         min-width: 48%;
 
       } 
@@ -67,7 +69,7 @@
     .card-group.programsList{
       margin-left:1rem;
     }
-    .programsList-card.card {
+    .programs-card.card {
         min-width: 100%;
         margin-bottom:1rem;
       } 
