@@ -77,8 +77,22 @@ exports.createSchemaCustomization = ({ actions }) => {
     const typeDefs = `
     
     type menu_link_content__menu_link_content implements Node {
+      bundle: String
+      drupal_id: String
       drupal_parent_menu_item: String
-      weight: Int
+      enabled: Boolean
+      expanded: Boolean
+      external: Boolean
+      langcode: String
+      link: menu_link_content__menu_link_contentLink
+      menu_name: String
+      title: String
+      weight: Int      
+    }
+    type menu_link_content__menu_link_contentLink implements Node {
+      uri: String
+      url: String
+      title: String
     }
     
     interface TaxonomyInterface implements Node {
