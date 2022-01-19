@@ -5,7 +5,6 @@ import { Link } from 'gatsby';
 import { contentExists, fontAwesomeIconColour} from '../utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
-
 function ButtonStyle (styleOfButton){
     switch(styleOfButton){
         case 'Primary':
@@ -45,8 +44,6 @@ function ButtonStyle (styleOfButton){
     }
 }
 
-
-
 function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
   
     const urlLink = (contentExists(buttonData.field_button_link.url)) ? buttonData.field_button_link.url : null;
@@ -58,39 +55,38 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
     let btnFAIconAdjust = (contentExists(buttonFAIconAdjust))? buttonFAIconAdjust: '';
     let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? buttonData.field_font_awesome_icon + ' ' +
                                 btnFAIconAdjust + ' fa-fw '+ fontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
-    let buttonTextClassName = contentExists(buttonTextClass)? buttonTextClass: '';
-	
-	let btnAnalyticsGoal = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.name : ``);
-	let btnAnalyticsAction = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.field_goal_action : ``);
+    let buttonTextClassName = contentExists(buttonTextClass)? buttonTextClass: '';    
+    let btnAnalyticsGoal = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.name : ``);
+    let btnAnalyticsAction = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.field_goal_action : ``);
     
     return (
-	<React.Fragment key={buttonData.drupal_id}>
+    <React.Fragment key={buttonData.drupal_id}>
     {contentExists(buttonData.field_cta_heading)? 
         <span dangerouslySetInnerHTML={{__html: "<p>" + buttonData.field_cta_heading.processed + "</p>"}} /> : ``}
-	
+    
     {(buttonData.field_button_link.uri.includes("http"))? contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
-		<a href={urlLink} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
+        <a href={urlLink} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
-		:
-		<a href={urlLink} className={buttonClassName}>		
+        :
+        <a href={urlLink} className={buttonClassName}>
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
         :
         contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
-		<Link to={urlLink} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
+        <Link to={urlLink} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </Link>
-		:
-		<Link to={urlLink} className={buttonClassName}>		
+        :
+        <Link to={urlLink} className={buttonClassName}>
             <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </Link>
         
-	}
+    }
     </React.Fragment>)
 }
 Button.propTypes = {
