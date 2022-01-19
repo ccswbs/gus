@@ -391,14 +391,14 @@ function prepareVariantHeading (variantData) {
     const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
     
     return (
-    <Layout date={lastModified}>
+    <Layout date={lastModified} menuName="main">
       <Helmet bodyAttributes={{
           class: 'program'
         }}
       />
-      <Helmet><script type="text/javascript" defer src="https://www.uoguelph.ca/js/uog-scripts-dist.js"></script></Helmet>
+            
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
-
+      
       { /**** Header and Title ****/ }
       <div className={!contentExists(heroImage) && !contentExists(videoData) && "no-thumb"} id="rotator">
         {contentExists(videoData) ?
@@ -439,7 +439,7 @@ function prepareVariantHeading (variantData) {
 
       { /**** Program Overview ****/ }
       <div className="container page-container">
-        <div className="row row-with-vspace site-content">
+        <div id="content" className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
             {renderProgramOverview(description, specData)}
           </section>
@@ -490,7 +490,7 @@ function prepareVariantHeading (variantData) {
       {contentExists(footerData) && footerData.length !== 0 &&
         <CustomFooter footerData={footerData[0]} />
       }     
-    </Layout>   
+    </Layout>  
     )   
 }
 

@@ -76,6 +76,25 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     const typeDefs = `
     
+    type menu_link_content__menu_link_content implements Node {
+      bundle: String
+      drupal_id: String
+      drupal_parent_menu_item: String
+      enabled: Boolean
+      expanded: Boolean
+      external: Boolean
+      langcode: String
+      link: menu_link_content__menu_link_contentLink
+      menu_name: String
+      title: String
+      weight: Int      
+    }
+    type menu_link_content__menu_link_contentLink implements Node {
+      uri: String
+      url: String
+      title: String
+    }
+    
     interface TaxonomyInterface implements Node {
       id: ID!
       drupal_id: String
@@ -202,24 +221,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       node__program: [node__program] @link(from: "node__program___NODE")
     }
     
-    type MenuItems implements Node {
-      parent: Node
-      enabled: Boolean
-      menu_name: String
-      route: MenuItemsRoute
-      title: String
-      description: String
-      url: String
-      weight: Int
-      childrenMenuItems: [MenuItems]
-    }
-    type MenuItemsRoute implements Node {
-      name: String
-      parameters: MenuItemsRouteParameters
-    }
-    type MenuItemsRouteParameters implements Node {
-      node: String
-    }
+
     
     type node__article implements Node {
       changed: Date @dateformat
@@ -786,73 +788,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         }
       }
 
-      menus: allMenuItems {
-        edges {
-          node {
-            title
-            description
-            menu_name
-            id
-            parent {
-              id
-            }
-            url
-            route {
-              parameters {
-                node
-              }
-            }
-            children {
-              ... on MenuItems {
-                id
-                url
-                title
-                description
-                parent {
-                  id
-                }
-                children {
-                  ... on MenuItems {
-                    id
-                    url
-                    title
-                    description
-                    parent {
-                      id
-                    }
-                    children {
-                      ... on MenuItems {
-                        id
-                        url
-                        title
-                        description
-                        parent {
-                          id
-                        }
-                        route {
-                          parameters {
-                            node
-                          }
-                        }
-                      }
-                    }
-                    route {
-                      parameters {
-                        node
-                      }
-                    }
-                  }
-                }
-                route {
-                  parameters {
-                    node
-                  }
-                }
-              }
-            }
-          }
-        }
-      }      
+    
     }
   `)
 
@@ -873,7 +809,8 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             pages.forEach(( { node }, index) => {
                 aliases[node.drupal_internal__nid] = processPage(
                     node, 
-                    node.id, 
+                    node.id,
+                    node.drupal_internal__nid,
                     node.path, 
                     pageTemplate, 
                     helpers
@@ -900,75 +837,19 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             const programs = result.data.programs.edges;
             programs.forEach(( { node }, index) => {
                 aliases[node.drupal_internal__nid] = processPage(
-                    node, 
-                    node.relationships.field_program_acronym.id, 
+                    node,
+                    node.relationships.field_program_acronym.id,
+                    node.drupal_internal__nid,
                     node.path, 
                     programTemplate, 
                     helpers
                 );
             })
         }
-
-        
-        // process menu nodes and pass through aliases
-        if (result.data.menus !== undefined) {          
-            const menus = result.data.menus.edges;
-            const config = require('./gatsby-config');
-            const menuNames = config.siteMetadata.menus;            
-            menuNames.forEach(element => createSitemap(menus, element, aliases));
-        }
-        
-        // generate page listing (sitemap)
-        createSitePageList(helpers);
     }
 }
 
-function createSitemap(menus, whichMenu, aliases) {
-    let sitemap = [];
-    const sitemapFile = 'config/sitemaps/' + whichMenu + '.yml';
-
-    menus.forEach(( { node }, index) => {
-        if (node.parent === null && node.menu_name === whichMenu) {
-            sitemap.push(processMenuItem( node, aliases ));
-        }
-    })
-
-    let yamlStr = yaml.dump(sitemap);
-    fs.writeFileSync(sitemapFile, yamlStr, 'utf8');  
-}
-
-function processMenuItem(node, aliases){
-    if (node !== undefined) {
-        const drupalID = (node.route.parameters !== null && node.route.parameters !== undefined) ? node.route.parameters.node : '';
-        const gatsbyAlias = (aliases[drupalID] !== null && aliases[drupalID] !== undefined) ? aliases[drupalID] : '';
-        const menuURL = node.url;
-
-        const menuNode = {
-            id: node.id,
-            drupal_id: drupalID,
-            alias: gatsbyAlias,
-            url: menuURL,
-            title: node.title,
-            description: node.description,
-            parent: node.parent,
-            children: processMenuItemChildren(node.children, aliases),
-        } 
-        return menuNode;
-    }
-    return null;
-}
-
-function processMenuItemChildren(children, aliases) {
-    let childrenMenuItems = [];  
-    if (children !== undefined) { 
-        children.forEach((child, index ) => {
-            childrenMenuItems.push(processMenuItem(child, aliases));
-        })
-    }
-    return childrenMenuItems;
-}
- 
-function processPage(node, contextID, nodePath, template, helpers) {
+function processPage(node, contextID, nodeNid, nodePath, template, helpers) {
     let alias = createContentTypeAlias(nodePath);
 
     helpers.createPage({
@@ -976,6 +857,7 @@ function processPage(node, contextID, nodePath, template, helpers) {
       component: template,
       context: {
         id: contextID,
+        nid: `entity:node/` + nodeNid,
       },
     })
 

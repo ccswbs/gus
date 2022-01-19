@@ -58,7 +58,7 @@ function LinksItems (props) {
 						// set heading level to one lower based on the heading level of the header, if header does not exists set to h2
 						const nextHeadingLevel = (props.displayType ==='grid')? (contentExists(props.heading))? (props.headingLevel === "h2")? "h3": 
 										(props.headingLevel==="h3") ? "h4" : "h5": "h2": '';
-						const setTag = (props.displayType === 'list') ? 'li': 'ul';
+						const setTag = (props.displayType === 'list') ? 'li': 'div';
 						return <LinksElement key={paragraph.drupal_id} 
 									url={urlLink} 
 									image={imageFile} 

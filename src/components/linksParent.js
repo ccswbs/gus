@@ -22,7 +22,7 @@ LinksParent.propTypes = {
 LinksParent.defaultProps = {
     children: ``,
     extraClasses: ``,
-    tag: 'ul',
+    tag: 'div',
   }
 
 export default LinksParent

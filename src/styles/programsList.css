@@ -1,8 +1,4 @@
-
-  .card-group.programsList{
-    margin-left:1rem;
-  }
-  .programsList-card.card {
+#program-list .card {
     min-width: 23%;
     background-color: #f4f4f4;
     padding: 2rem;
@@ -10,54 +6,57 @@
     margin-right:2rem;
     border: none;
 
-  }
-  .stretched-link:after {
-    content: "";
-  }
-  
-  .programsList-card h2 {
-    color: black;
-    padding-top: 0rem;
-    margin-top: 0rem;
-    font-size: 2rem;
-  }
-  
-  .programsList-card.card:nth-of-type(12n+1),
-  .programsList-card.card:nth-of-type(12n+4),
-  .programsList-card.card:nth-of-type(12n+7),
-  .programsList-card.card:nth-of-type(12n+10) {
-    border-left: 1rem solid var(--uog-red);
-  }
+}
+#program-list .card:hover,
+#program-list .card:focus-within {
+	background-color: #d3d3d3 !important;
+}
 
-  .programsList-card.card:nth-of-type(12n+2),
-  .programsList-card.card:nth-of-type(12n+5),
-  .programsList-card.card:nth-of-type(12n+8),
-  .programsList-card.card:nth-of-type(12n+11) {
-    border-left: 1rem solid var(--uog-yellow);
-  }
-  .programsList-card.card:nth-of-type(12n+3),
-  .programsList-card.card:nth-of-type(12n+6),
-  .programsList-card.card:nth-of-type(12n+9),
-  .programsList-card.card:nth-of-type(12n+12) {
-    border-left: 1rem solid var(--uog-blue);
+#program-list .card h2 {
+	color: black;
+	padding-top: 0rem;
+	margin-top: 0rem;
+	font-size: 2rem;
 }
   
-  .programsList-card.card:hover,
-  .programsList-card.card:focus-within {
-    background-color: #d3d3d3 !important;
-  }
-
-  .page-container a.stretched-link:hover,
-  .page-container a.stretched-link:focus {
+#program-list .card a.stretched-link {
+	text-decoration: none !important;
+}
+#program-list .card a.stretched-link:hover,
+#program-list .card a.stretched-link:focus {
     border-bottom:unset;
-  }
+} 
+  
+#program-list .col:nth-of-type(12n+1) .card,
+#program-list .col:nth-of-type(12n+4) .card,
+#program-list .col:nth-of-type(12n+7) .card,
+#program-list .col:nth-of-type(12n+10) .card {
+	border-left: 1rem solid var(--uog-red);
+}
+
+#program-list .col:nth-of-type(12n+2) .card,
+#program-list .col:nth-of-type(12n+5) .card,
+#program-list .col:nth-of-type(12n+8) .card,
+#program-list .col:nth-of-type(12n+11) .card {
+	border-left: 1rem solid var(--uog-yellow);
+}
+#program-list .col:nth-of-type(12n+3) .card,
+#program-list .col:nth-of-type(12n+6) .card,
+#program-list .col:nth-of-type(12n+9) .card,
+#program-list .col:nth-of-type(12n+12) .card {
+	border-left: 1rem solid var(--uog-blue);
+}
   
 
-  @media only screen and (max-width: 1010px) {
+
+
+  
+
+/*   @media only screen and (max-width: 1010px) {
     .card-group.programsList{
       margin-left:1rem;
     }
-    .programsList-card.card {
+    #program-list .card {
         min-width: 48%;
 
       } 
@@ -67,8 +66,8 @@
     .card-group.programsList{
       margin-left:1rem;
     }
-    .programsList-card.card {
+    #program-list .card {
         min-width: 100%;
         margin-bottom:1rem;
       } 
-  }
+  } */

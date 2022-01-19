@@ -15,7 +15,7 @@ function Video (props) {
     
     return (
         <React.Fragment>
-        <div className="col-lg-6 col-md-12">
+        <div>
             <div id="video-embed">
                 <section name={videoType} className="ui-kit-section">
                     <div className="embed-responsive embed-responsive-16by9">

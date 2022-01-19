@@ -35,9 +35,9 @@ function setElementClass(displayType) {
         case 'list':
             return 'list-element';
         case 'small-grid':
-            return 'small-grid-cell';
+            return 'col';
         default:
-            return 'grid-cell';
+            return 'col';
       }
 }
 
