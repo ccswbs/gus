@@ -63,8 +63,6 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
 	let btnAnalyticsGoal = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.name : ``);
 	let btnAnalyticsAction = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.field_goal_action : ``);
     
-    console.log(buttonClass, btnSize);
-    
     return (
 	<React.Fragment key={buttonData.drupal_id}>
     {contentExists(buttonData.field_cta_heading)? 
