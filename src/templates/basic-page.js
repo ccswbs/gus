@@ -49,7 +49,7 @@ const BasicPage = ({data}) => {
             { /**** Body content ****/ }
             <div className="container page-container">
                 { /**** Widgets content ****/}      
-                <div className="row row-with-vspace site-content">
+                <div id="content" className="row row-with-vspace site-content">
                     <section className="col-md-12 content-area">
                         <Widgets pageData={widgetsData} />
                     </section>
