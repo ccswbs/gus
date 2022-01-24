@@ -44,6 +44,10 @@
     flex: 1;
 }
 
+html {
+    scroll-padding-top: 10rem;
+}
+
 @media (max-width: 575.98px){
     .main-container {
         padding-top: 0 !important;
