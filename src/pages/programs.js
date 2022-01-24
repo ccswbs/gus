@@ -15,7 +15,7 @@ const ProgramsPage = ({ data }) => (
                 <div id="program-list" className="row row-cols-1 row-cols-md-4 g-4 mb-5">
                   {console.log(data)}
                     {data.allNodeProgram.edges.map((edge, index) => (
-                      <div className="col">
+                      edge.node.status=== true && <div className="col">
                           <div className="card h-100">
                             <h2 key={index}><a className="stretched-link" href={edge.node.path.alias}>{edge.node.title}</a></h2>
                             <div>{edge.node.relationships.field_program_acronym.name}</div>
