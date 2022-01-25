@@ -2,6 +2,7 @@ import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
 import React from 'react';
 import Seo from '../components/seo';
+import moment from 'moment';
 
 const IndexPage = ({ data }) => {
 
@@ -11,6 +12,11 @@ const IndexPage = ({ data }) => {
     const unpubPrograms = [];
     const pages = data.allNodePage.edges;
     const programs = data.programs.edges;
+    
+    const events = data.events.edges;
+    /* let eventMonth;
+    let eventDay;
+    let eventTime; */
     
     for (let i=0; i<pages.length; i++) {
         if (pages[i].node.status === true) {
@@ -35,7 +41,7 @@ const IndexPage = ({ data }) => {
             <h1>Gatsby UG Starter Theme</h1>
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
             <h2>Pages</h2>
-            <ul>
+            <ul className="two-col-md">
                 {pubPages.map((page) => (
                     <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                 ))}
@@ -56,11 +62,23 @@ const IndexPage = ({ data }) => {
                 ))}
             </ul>
             <h3>Programs</h3>
-            <ul>
+            <ul className="two-col-md">
                 {unpubPrograms.map((program) => (
                     <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                 ))}
             </ul>
+            
+            <h2>Events</h2>
+            <ul className="two-col-md">
+                {events.map(wpEvent => {
+                    let eventMonth = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("MMM");
+                    let eventDay = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("D");
+                    let eventTime = moment(wpEvent.node.startDate,"YYYY-MM-DD HH:mm").format("h:mm A");
+                    
+                    return <li key={wpEvent.node.id}>{eventMonth} {eventDay} at {eventTime}: <a href={wpEvent.node.url}>{wpEvent.node.title}</a></li>
+                })}
+            </ul>            
+            
         </div></div>
     </Layout>
     )
@@ -94,6 +112,17 @@ export const query = graphql`
             status
           }
         }
-      }        
+      }
+      events: allWpEvent(sort: {fields: startDate, order: ASC}) {
+        edges {
+          node {
+            id
+            title
+            startDate
+            endDate
+            url
+          }
+        }
+      }
     }
 `
