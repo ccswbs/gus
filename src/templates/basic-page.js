@@ -143,17 +143,18 @@ export const query = graphql`query ($id: String, $nid: String) {
                 }
               }
             }
-        ... on paragraph__section_tabs {
+            ... on paragraph__section_tabs {
               id
               relationships {
                 field_tabs {
+                  drupal_id
                   field_tab_title
                   field_tab_body {
                     processed
                   }
                 }
               }
-        }
+            }
             ... on paragraph__links_widget {
               drupal_id
               field_link_items_title
