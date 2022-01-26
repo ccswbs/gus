@@ -120,7 +120,7 @@ module.exports = {
           Post: {limit: 0},
           ContentType: {limit: 0},
           Tag: {limit: 0},
-          EventsCategory: {limit: 0},
+          EventsCategory: {limit: 10},
           Venue: {limit: 0},
           User: {limit: 0},
           MediaItem: {limit: 0},
