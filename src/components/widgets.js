@@ -78,15 +78,15 @@ if (contentExists(props.pageData) && props.pageData.length !== 0) {
             return(
                 widgetData.relationships.field_accordion_block_elements.map((accordionData,j) => {
                     return( <>
-                        <div class="panel-group panel-group-lists collapse in show" id={"accordionWidget"+widgetData.drupal_id}>
-                            <div class="panel">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent={"#accordionWidget"+widgetData.drupal_id} href={"#collapse"+j+widgetData.drupal_id} class="collapsed" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_title.processed}}></a>
+                        <div className="panel-group panel-group-lists collapse in show" id={"accordionWidget"+widgetData.drupal_id}>
+                            <div className="panel">
+                                <div className="panel-heading">
+                                    <h4 className="panel-title">
+                                        <a data-toggle="collapse" data-parent={"#accordionWidget"+widgetData.drupal_id} href={"#collapse"+j+widgetData.drupal_id} className="collapsed" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_title.processed}}></a>
                                     </h4>
                                 </div>
-                                <div id={"collapse"+j+widgetData.drupal_id} class="panel-collapse collapse in">
-                                    <div class="panel-body" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_text.processed}}/>
+                                <div id={"collapse"+j+widgetData.drupal_id} className="panel-collapse collapse in">
+                                    <div className="panel-body" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_text.processed}}/>
                                 </div>
                             </div>
                         </div>
