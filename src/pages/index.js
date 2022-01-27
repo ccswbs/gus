@@ -4,6 +4,20 @@ import React from 'react';
 import Seo from '../components/seo';
 import moment from 'moment';
 
+function getCurrentDateString() {
+  const date = new Date()
+  const timezoneOffset = date.getTimezoneOffset()
+  const now = (new Date(date.getTime() - timezoneOffset * 60 * 1000)
+                  .toISOString().substring(0, 19))
+            + (timezoneOffset > 0 ? "-" : "+")
+            + (timezoneOffset / 60 < 10 ? "0" : "")
+            + (timezoneOffset / 60)
+            + ":"
+            + (timezoneOffset % 60 < 10 ? "0" : "")
+            + (timezoneOffset % 60)
+  return now
+}
+
 const IndexPage = ({ data }) => {
 
     const pubPages = [];
@@ -40,6 +54,7 @@ const IndexPage = ({ data }) => {
         <div id="content" className="site-content">
             <h1>Gatsby UG Starter Theme</h1>
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
+            {getCurrentDateString()}
             <h2>Pages</h2>
             <ul className="two-col-md">
                 {pubPages.map((page) => (
@@ -113,7 +128,10 @@ export const query = graphql`
           }
         }
       }
-      events: allWpEvent(sort: {fields: startDate, order: ASC}) {
+      events: allWpEvent(
+        filter: {date: {gte: "2021-12-01"}}
+        sort: {order: ASC, fields: startDate}
+      ) {
         edges {
           node {
             id

@@ -849,6 +849,16 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     }
 }
 
+function getCurrentDateString() {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '*';
+    return today
+}
+
 function processPage(node, contextID, nodeNid, nodePath, template, helpers) {
     let alias = createContentTypeAlias(nodePath);
 
@@ -858,6 +868,7 @@ function processPage(node, contextID, nodeNid, nodePath, template, helpers) {
       context: {
         id: contextID,
         nid: `entity:node/` + nodeNid,
+        date: getCurrentDateString(),
       },
     })
 

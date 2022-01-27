@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Seo from '../components/seo';
 import Hero from '../components/hero'; 
 import Breadcrumbs from '../components/breadcrumbs';
+import Events from '../components/events';
 import Widgets from '../components/widgets'
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
@@ -19,6 +20,8 @@ const BasicPage = ({data}) => {
     const ogImageAlt = (contentExists(imageData) ? imageData[0].node.field_media_image.alt : null);
     
     const menuName = (contentExists(data.menus.edges) ? data.menus.edges[0].node.menu_name : `main`);
+    
+    const eventData = data.events.edges;
 
     /****
     WidgetData contains all widgets (paragraphs) that are available - when adding a new widget, validate that the correct items are selected using a comparison to __typename.  
@@ -51,6 +54,7 @@ const BasicPage = ({data}) => {
                 { /**** Widgets content ****/}      
                 <div id="content" className="row row-with-vspace site-content">
                     <section className="col-md-12 content-area">
+                        <Events eventData={eventData} />
                         <Widgets pageData={widgetsData} />
                     </section>
                 </div>
@@ -62,7 +66,7 @@ const BasicPage = ({data}) => {
 
 export default BasicPage;
 
-export const query = graphql`query ($id: String, $nid: String) {
+export const query = graphql`query ($id: String, $nid: String, $date: String) {
   pages: allNodePage(filter: {id: {eq: $id}}) {
     edges {
       node {
@@ -568,6 +572,17 @@ export const query = graphql`query ($id: String, $nid: String) {
         drupal_parent_menu_item
         drupal_id
         menu_name
+      }
+    }
+  }
+  events: allWpEvent(filter: {startDate: {glob: $date}}, sort: {order: ASC, fields: startDate}) {
+    edges {
+      node {
+        id
+        title
+        startDate
+        endDate
+        url
       }
     }
   }
