@@ -35,14 +35,14 @@ const IndexPage = ({ data }) => {
             <h1>Gatsby UG Starter Theme</h1>
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
             <h2>Pages</h2>
-            <ul>
+            <ul className="two-col-md">
                 {pubPages.map((page) => (
                     <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                 ))}
             </ul>
 
             <h2>Programs</h2>
-            <ul>
+            <ul className="two-col-md">
                 {pubPrograms.map((program) => (
                     <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                 ))}
@@ -50,13 +50,13 @@ const IndexPage = ({ data }) => {
             
             <h2>Unpublished Content</h2>
             <h3>Pages</h3>
-            <ul>
+            <ul className="two-col-md">
                 {unpubPages.map((page) => (
                     <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                 ))}
             </ul>
             <h3>Programs</h3>
-            <ul>
+            <ul className="two-col-md">
                 {unpubPrograms.map((program) => (
                     <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                 ))}
