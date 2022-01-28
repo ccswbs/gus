@@ -15,7 +15,7 @@ function MediaText (props) {
 	
 	const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
 	const imageAlt = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.alt : ``);
-    const imageSize = (contentExists(imageURL) && contentExists(props.widgetData.field_image_size) ? props.widgetData.field_image_size : ``);
+    const imageSize = (contentExists(imageURL) && contentExists(props.widgetData.field_media_image_size) ? props.widgetData.field_media_image_size : ``);
     
     const playerID = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.drupal_id : ``);
 	const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
