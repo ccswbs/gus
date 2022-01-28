@@ -4,6 +4,7 @@ import React from 'react';
 import Seo from '../components/seo';
 
 const IndexPage = ({ data }) => (
+
     <Layout>
         <Seo title="Home" keywords={[`gatsby`, `application`, `react`]} />
         <div className="container page-container">
@@ -22,6 +23,14 @@ const IndexPage = ({ data }) => (
                     <li key={index}><Link to={edge.node.path.alias}>{edge.node.title}</Link></li>
                 ))}
             </ul>            
+            <h2>Upcoming Events</h2>
+	    <ul>
+        	{data.restevents.events.map(event => {
+          	return (
+            	<li>{event.start_date} <br /> {event.title}</li>
+          	)
+        	})}
+      	   </ul>
         </div>
     </Layout>
 )
@@ -53,5 +62,12 @@ export const query = graphql`
           }
         }
       }        
+    restevents: dataJson {
+    	events {
+      	start_date
+      	title
+	url
+    	}
+      }	
     }
 `

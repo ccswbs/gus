@@ -52,6 +52,14 @@ module.exports = {
         defaultQuality: 90,
       },
     },
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/data`,
+      },
+    },
+
     {
       resolve: `gatsby-source-drupal`,
         options: {
