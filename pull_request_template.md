@@ -22,7 +22,7 @@ List all significant changes to Gatsby code
    - [ ] PR builds without error
 
 ## Backend
-
+List all significant changes to the Drupal site (e.g. new fields, content types, modules, etc)
 
 ### Are there Site Configuration changes?
 - [ ] No
