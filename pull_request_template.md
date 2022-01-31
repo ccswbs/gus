@@ -2,7 +2,7 @@
 - Description of the proposed changes
 
 ## Frontend
-
+List all significant changes to Gatsby code
 
 
 ### Are there Gatsby Code changes?
