@@ -1,4 +1,4 @@
-## Summary
+# Summary of changes
 - Description of the proposed changes
 
 ## Frontend
