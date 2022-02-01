@@ -39,6 +39,10 @@ function MediaText (props) {
                 mediaCol = "col-md-6";
                 textCol = "col-md-6";
             break;
+            default:
+                mediaCol = "col-md-6";
+                textCol = "col-md-6";
+            break;
         }        
     } else {
         mediaCol = props.colClass;
@@ -54,7 +58,7 @@ function MediaText (props) {
 			{contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
         </section>
         <section className={textCol}>
-            <h3 className="mt-md-0">{mediaTitle}</h3>
+            {contentExists(props.headingClass) ? <h3 className={props.headingClass}>{mediaTitle}</h3> : <h3>{mediaTitle}</h3>}
             <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
             {contentExists(props.widgetData.relationships.field_button_section) === true && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
             {contentExists(props.widgetData.relationships.field_button_section) === false && <div>{mediaLinks.map(mediaLink => {
@@ -73,10 +77,12 @@ function MediaText (props) {
 MediaText.propTypes = {
     widgetData: PropTypes.object,
 	colClass: PropTypes.string,
+    headingClass: PropTypes.string,
 }
 MediaText.defaultProps = {
     widgetData: null,
 	colClass: `col-md-6`,
+    headingClass: ``,
 }
 
 export default MediaText
