@@ -63,7 +63,7 @@ const IndexPage = ({ data }) => {
             </ul>
 
             <h2>Programs</h2>
-            <ul>
+            <ul className="two-col-md">
                 {pubPrograms.map((program) => (
                     <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                 ))}
@@ -71,7 +71,7 @@ const IndexPage = ({ data }) => {
             
             <h2>Unpublished Content</h2>
             <h3>Pages</h3>
-            <ul>
+            <ul className="two-col-md">
                 {unpubPages.map((page) => (
                     <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                 ))}

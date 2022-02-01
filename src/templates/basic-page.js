@@ -426,6 +426,7 @@ export const query = graphql`query ($id: String, $nid: String, $date: String) {
               }
             }
             ... on paragraph__media_text {
+              field_media_image_size
               field_media_text_title
               field_media_text_desc {
                 processed
