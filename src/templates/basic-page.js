@@ -66,7 +66,7 @@ const BasicPage = ({data}) => {
 
 export default BasicPage;
 
-export const query = graphql`query ($id: String, $nid: String, $date: String) {
+export const query = graphql`query ($id: String, $nid: String) {
   pages: allNodePage(filter: {id: {eq: $id}}) {
     edges {
       node {
@@ -576,7 +576,7 @@ export const query = graphql`query ($id: String, $nid: String, $date: String) {
       }
     }
   }
-  events: allWpEvent(filter: {startDate: {glob: $date}}, sort: {order: ASC, fields: startDate}) {
+  events: allWpEvent(sort: {order: ASC, fields: startDate}) {
     edges {
       node {
         id

@@ -71,31 +71,13 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const util = require('util');
 
-exports.createSchemaCustomization = ({ actions }) => {
-    const { createTypes } = actions
-
-    const typeDefs = `
+exports.createSchemaCustomization = ({ actions, schema }) => {
     
-    type menu_link_content__menu_link_content implements Node {
-      bundle: String
-      drupal_id: String
-      drupal_parent_menu_item: String
-      enabled: Boolean
-      expanded: Boolean
-      external: Boolean
-      langcode: String
-      link: menu_link_content__menu_link_contentLink
-      menu_name: String
-      title: String
-      weight: Int      
-    }
-    type menu_link_content__menu_link_contentLink implements Node {
-      uri: String
-      url: String
-      title: String
-    }
+  const { createTypes } = actions
+  
+  const typeDefs = [
     
-    interface TaxonomyInterface implements Node {
+    `interface TaxonomyInterface implements Node {
       id: ID!
       drupal_id: String
       name: String
@@ -221,7 +203,24 @@ exports.createSchemaCustomization = ({ actions }) => {
       node__program: [node__program] @link(from: "node__program___NODE")
     }
     
-
+    type menu_link_content__menu_link_content implements Node {
+      bundle: String
+      drupal_id: String
+      drupal_parent_menu_item: String
+      enabled: Boolean
+      expanded: Boolean
+      external: Boolean
+      langcode: String
+      link: menu_link_content__menu_link_contentLink
+      menu_name: String
+      title: String
+      weight: Int      
+    }
+    type menu_link_content__menu_link_contentLink implements Node {
+      uri: String
+      url: String
+      title: String
+    }
     
     type node__article implements Node {
       changed: Date @dateformat
@@ -344,7 +343,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }   
+    }
     type node__link_url implements Node {
       title: String
       uri: String
@@ -374,7 +373,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
       processed: String     
-    }   
+    }
     type node__programRelationships implements Node {
       field_program_acronym: taxonomy_term__programs @link(from: "field_program_acronym___NODE")
       field_courses: [node__course] @link(from: "field_courses___NODE")
@@ -505,8 +504,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: paragraph__program_statisticRelationships
     }
     type paragraph__program_statisticRelationships implements Node {
-      field_stat_type: taxonomy_term__statistic_type @link(from: "field_stat_type___NODE")  
-      
+      field_stat_type: taxonomy_term__statistic_type @link(from: "field_stat_type___NODE")
     }
     type paragraph__program_variants implements Node {
       drupal_id: String
@@ -548,8 +546,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: paragraph__stats_widgetRelationships
     }
     type paragraph__stats_widgetRelationships implements Node {
-        field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
-    field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+      field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     
     type PathAlias implements Node {
@@ -649,8 +647,23 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_unit_acronym: String
       name: String
       description: TaxonomyDescription
-    }
-  `
+    }`,
+    
+    schema.buildObjectType({
+      name: `WpEvent`,
+      interfaces: [`Node`],
+      fields: {
+        endDate: `String`,
+        startDate: `String`,
+        title: `String`,
+        url: `String`,
+        isPast: {
+          type: `Boolean`,
+          resolve: (source) => new Date(source.startDate) < new Date(),
+        },
+      },
+    }),
+  ]
   createTypes(typeDefs)
 }
 
@@ -850,16 +863,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     }
 }
 
-function getCurrentDateString() {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear();
-
-    today = yyyy + '-' + mm + '*';
-    return today
-}
-
 function processPage(node, contextID, nodeNid, nodePath, template, helpers) {
     let alias = createContentTypeAlias(nodePath);
 
@@ -869,7 +872,6 @@ function processPage(node, contextID, nodeNid, nodePath, template, helpers) {
       context: {
         id: contextID,
         nid: `entity:node/` + nodeNid,
-        date: getCurrentDateString(),
       },
     })
 

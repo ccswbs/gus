@@ -90,7 +90,7 @@ module.exports = {
         url:
         // allows a fallback url if WPGRAPHQL_URL is not set in the env, this may be a local or remote WP instance.
           process.env.WPGRAPHQL_URL ||
-          `https://news.uoguelph.ca/graphql`,
+          `https://live-ug-news.pantheonsite.io/graphql`,
         schema: {
           //Prefixes all WP Types with "Wp" so "Post and allPost" become "WpPost and allWpPost".
           typePrefix: `Wp`,
@@ -108,22 +108,22 @@ module.exports = {
                 : // and we don't actually need more than 5000 in production for this particular site
                   50,
           },
-          Comment: {limit: 0},
-          Menu: {limit: 0},
-          Organizer: {limit: 0},
-          MenuItem: {limit: 0},
-          Taxonomy: {limit: 0},
-          Category: {limit: 0},
-          UserRole: {limit: 0},
-          PostFormat: {limit: 0},
-          Page: {limit: 0},
-          Post: {limit: 0},
-          ContentType: {limit: 0},
-          Tag: {limit: 0},
-          EventsCategory: {limit: 10},
-          Venue: {limit: 0},
-          User: {limit: 0},
-          MediaItem: {limit: 0},
+          EventsCategory: {include: true},
+          Comment: {exclude: true},
+          Menu: {exclude: true},
+          Organizer: {exclude: true},
+          MenuItem: {exclude: true},
+          Taxonomy: {exclude: true},
+          Category: {exclude: true},
+          UserRole: {exclude: true},
+          PostFormat: {exclude: true},
+          Page: {exclude: true},
+          Post: {exclude: true},
+          ContentType: {exclude: true},
+          Tag: {exclude: true},
+          Venue: {exclude: true},
+          User: {exclude: true},
+          MediaItem: {exclude: true},
         },
       },
     }

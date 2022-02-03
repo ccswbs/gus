@@ -4,20 +4,6 @@ import React from 'react';
 import Seo from '../components/seo';
 import moment from 'moment';
 
-function getCurrentDateString() {
-  const date = new Date()
-  const timezoneOffset = date.getTimezoneOffset()
-  const now = (new Date(date.getTime() - timezoneOffset * 60 * 1000)
-                  .toISOString().substring(0, 19))
-            + (timezoneOffset > 0 ? "-" : "+")
-            + (timezoneOffset / 60 < 10 ? "0" : "")
-            + (timezoneOffset / 60)
-            + ":"
-            + (timezoneOffset % 60 < 10 ? "0" : "")
-            + (timezoneOffset % 60)
-  return now
-}
-
 const IndexPage = ({ data }) => {
 
     const pubPages = [];
@@ -54,7 +40,6 @@ const IndexPage = ({ data }) => {
         <div id="content" className="site-content">
             <h1>Gatsby UG Starter Theme</h1>
             <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
-            {getCurrentDateString()}
             <h2>Pages</h2>
             <ul className="two-col-md">
                 {pubPages.map((page) => (
@@ -92,7 +77,19 @@ const IndexPage = ({ data }) => {
                     
                     return <li key={wpEvent.node.id}>{eventMonth} {eventDay} at {eventTime}: <a href={wpEvent.node.url}>{wpEvent.node.title}</a></li>
                 })}
-            </ul>            
+            </ul>
+            <div className="card w25">
+                <div className="row">
+                    <div className="w-25 border border-5 border-warning">
+                        <span>FEB</span>
+                        <span>3</span>
+                    </div>
+                    <div className="card-body w-75">
+                        <p className="card-title">{data.events.edges[0].node.title}</p>
+                        <p className="card-subtitle">{data.events.edges[0].node.startDate}</p>
+                    </div>
+                </div>
+            </div>
             
         </div></div>
     </Layout>
@@ -129,8 +126,9 @@ export const query = graphql`
         }
       }
       events: allWpEvent(
-        filter: {date: {gte: "2021-12-01"}}
-        sort: {order: ASC, fields: startDate}
+        filter: {isPast: {eq: false}}
+        sort: {fields: startDate, order: ASC}
+        limit: 4
       ) {
         edges {
           node {
