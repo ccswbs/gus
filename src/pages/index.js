@@ -80,11 +80,11 @@ const IndexPage = ({ data }) => {
                     <div key={wpEvent.node.id} className="card flex-row col-md-3 p-0 border-0">
                         <div className="col border border-5 border-warning d-flex me-3">
                         <p className="align-self-center mb-0 mx-auto text-center w-50">
-                            <span className="fs-4 text-uppercase">{eventMonth}</span> <span className="fs-1 fw-bold">{eventDay}</span>
+                            <span className="fs-2 text-uppercase">{eventMonth}</span> <span className="display-3 fw-bold">{eventDay}</span>
                         </p>
                         </div>
                         <div className="card-body col-5 d-flex flex-column p-0">
-                            <p className="lh-1 mt-3 me-3"><a className="link-dark fs-5 fw-bold stretched-link border-0" href={wpEvent.node.url}>{wpEvent.node.title}</a></p>
+                            <p className="lh-1 mt-3 me-3"><a className="link-dark fs-4 fw-bold stretched-link border-0 text-decoration-none" href={wpEvent.node.url}>{wpEvent.node.title}</a></p>
                             <p className="fs-4 mt-auto">{eventStartTime} - {eventEndTime}</p>
                         </div>
                     </div>)
