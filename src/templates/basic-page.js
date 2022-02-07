@@ -15,7 +15,7 @@ const BasicPage = ({data}) => {
     const nodeID = pageData.drupal_internal__nid;
     const title = pageData.title;
     const imageData = data.images.edges;
-    let footerData;
+    const footerData = data.footer.edges;
     const ogDescription = (contentExists(pageData.field_metatags) ? pageData.field_metatags.og_description : null);
     const ogImage = (contentExists(imageData) ? imageData[0].node.relationships.field_media_image.localFile.publicURL : null);
     const ogImageAlt = (contentExists(imageData) ? imageData[0].node.field_media_image.alt : null);
@@ -57,6 +57,7 @@ const BasicPage = ({data}) => {
                     </section>
                 </div>
             </div>
+            {console.log(data.footer.edges)}
             {console.log(footerData)}
             {contentExists(footerData) && footerData.length !== 0 &&
         <CustomFooter footerData={footerData[0]} />}
@@ -536,7 +537,7 @@ export const query = graphql`query ($id: String, $nid: String) {
       }
     }
   }
-  footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id]}}}) {
+  footer: allNodeCustomFooter {
     edges {
       node {
         drupal_id

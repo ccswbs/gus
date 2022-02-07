@@ -17,7 +17,7 @@
 
   OTHER Instructions
   - For the path alias, you will also need to:
-    - Add "node__contenttype.fields.alias": `PathAlias`, to the mapping in gatsby-config.js
+    - Add "(filter: {relationships: {node__page: {elemMatch: {id: {eq: $id}}}}})_contenttype.fields.alias": `PathAlias`, to the mapping in gatsby-config.js
     - Update exports.onCreateNode
   - Use THREE underscores when referencing nodes that do not exist yet (i.e. ___NODE)
 
