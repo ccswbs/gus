@@ -811,7 +811,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         if (result.data.pages !== undefined) {
             const pages = result.data.pages.edges;
             pages.forEach(( { node }, index) => {
-              console.log(node.fields.tags)
+              console.log(node.fields.tags);
               const fieldTags = node.fields.tags;
               console.log(fieldTags);
                 aliases[node.drupal_internal__nid] = processPage(
