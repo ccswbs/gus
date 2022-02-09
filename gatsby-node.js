@@ -816,8 +816,17 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             const pages = result.data.pages.edges;
             pages.forEach(( { node }, index) => {
               console.log(node.relationships.field_tags)
-              const fieldTags = JSON.parse(JSON.stringify(node.relationships.field_tags));
-              console.log(fieldTags);
+              
+              const fieldTags =(node.relationships.field_tags === null || node.relationships.field_tags === undefined || node.relationships.field_tags === "" || (Array.isArray(node.relationships.field_tags) && (node.relationships.field_tags.length === 0))) ?
+              "":"20f98c26-77a0-513c-b714-cd2f00a5e055";
+              
+              
+              // const fieldTags =(node.relationships.field_tags === null || node.relationships.field_tags === undefined || node.relationships.field_tags === "" || (Array.isArray(node.relationships.field_tags) && (node.relationships.field_tags.length === 0))) ?
+              // [""]:["20f98c26-77a0-513c-b714-cd2f00a5e055"];
+
+
+               // JSON.parse(JSON.stringify(node.relationships.field_tags));
+              console.log(fieldTags, "fieldTags");
                 aliases[node.drupal_internal__nid] = processPage(
                     node, 
                     node.id,
