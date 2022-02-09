@@ -750,12 +750,8 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             drupal_id
             drupal_internal__nid
             title
-            relationships {
-              field_tags {
-                ... on taxonomy_term__units {
-                  id
-                }
-              }
+            fields {
+              tags
             }
             path {
               alias
@@ -815,8 +811,8 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         if (result.data.pages !== undefined) {
             const pages = result.data.pages.edges;
             pages.forEach(( { node }, index) => {
-              console.log(node.relationships.field_tags)
-              const fieldTags = JSON.parse(JSON.stringify(node.relationships.field_tags));
+              console.log(node.fields.tags)
+              const fieldTags = node.fields.tags;
               console.log(fieldTags);
                 aliases[node.drupal_internal__nid] = processPage(
                     node, 

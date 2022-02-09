@@ -68,7 +68,9 @@ const BasicPage = ({data}) => {
 
 export default BasicPage;
 
-export const query = graphql`query ($id: String, $nid: String, $tid:[String] ) {
+export const query = graphql
+
+`query ($id: String, $nid: String, $tid: [String]) {
   pages: allNodePage(filter: {id: {eq: $id}}) {
     edges {
       node {
@@ -537,12 +539,15 @@ export const query = graphql`query ($id: String, $nid: String, $tid:[String] ) {
       }
     }
   }
-  footer: allNodeCustomFooter (filter: {fields: {tags: {in: [$tid]}}}){
+  footer: allNodeCustomFooter (filter: {fields: {tags: {in: $tid}}}){
     edges {
       node {
         drupal_id
         body {
           processed
+        }
+        fields {
+          tags
         }
         relationships {
           field_tags {
