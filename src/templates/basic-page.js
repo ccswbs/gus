@@ -68,7 +68,7 @@ const BasicPage = ({data}) => {
 
 export default BasicPage;
 
-export const query = graphql`query ($id: String, $nid: String, $tid: String) {
+export const query = graphql`query ($id: String, $nid: String, $tid:[String] ) {
   pages: allNodePage(filter: {id: {eq: $id}}) {
     edges {
       node {
