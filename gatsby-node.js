@@ -750,6 +750,13 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             drupal_id
             drupal_internal__nid
             title
+            relationships {
+              field_tags {
+                ... on taxonomy_term__units {
+                  id
+                }
+              }
+            }
             path {
               alias
             }
@@ -812,6 +819,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                     node, 
                     node.id,
                     node.drupal_internal__nid,
+                    node.relationships.field_tags.id,
                     node.path, 
                     pageTemplate, 
                     helpers
@@ -841,6 +849,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                     node,
                     node.relationships.field_program_acronym.id,
                     node.drupal_internal__nid,
+                    null,
                     node.path, 
                     programTemplate, 
                     helpers
@@ -850,7 +859,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     }
 }
 
-function processPage(node, contextID, nodeNid, nodePath, template, helpers) {
+function processPage(node, contextID, nodeNid, tagID, nodePath, template, helpers) {
     let alias = createContentTypeAlias(nodePath);
 
     helpers.createPage({
@@ -859,6 +868,7 @@ function processPage(node, contextID, nodeNid, nodePath, template, helpers) {
       context: {
         id: contextID,
         nid: `entity:node/` + nodeNid,
+        tid: tagID,
       },
     })
 

@@ -68,7 +68,7 @@ const BasicPage = ({data}) => {
 
 export default BasicPage;
 
-export const query = graphql`query ($id: String, $nid: String) {
+export const query = graphql`query ($id: String, $nid: String, $tid: String) {
   pages: allNodePage(filter: {id: {eq: $id}}) {
     edges {
       node {
@@ -537,7 +537,7 @@ export const query = graphql`query ($id: String, $nid: String) {
       }
     }
   }
-  footer: allNodeCustomFooter {
+  footer: allNodeCustomFooter (filter: {fields: {tags: {in: [$tid]}}}){
     edges {
       node {
         drupal_id
@@ -547,7 +547,7 @@ export const query = graphql`query ($id: String, $nid: String) {
         relationships {
           field_tags {
             __typename
-            ... on TaxonomyInterface {
+            ... on taxonomy_term__units {
               drupal_id
               id
               name
