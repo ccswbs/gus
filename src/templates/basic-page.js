@@ -57,8 +57,6 @@ const BasicPage = ({data}) => {
                     </section>
                 </div>
             </div>
-            {console.log(data.footer.edges)}
-            {console.log(footerData)}
             {contentExists(footerData) && footerData.length !== 0 &&
         <CustomFooter footerData={footerData[0]} />}
         </Layout>
