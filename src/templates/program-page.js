@@ -486,7 +486,6 @@ function prepareVariantHeading (variantData) {
           </section>
         </div>
       }
-      {console.log(footerData)}
       {contentExists(footerData) && footerData.length !== 0 &&
         <CustomFooter footerData={footerData[0]} />
       }     
