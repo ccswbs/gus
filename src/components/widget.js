@@ -55,7 +55,7 @@ const Widget = ({widget}) => {
                         numColumns={numColumns}/>
 
         case "paragraph__media_text":
-            return <div className="row mt-5"><MediaText headingClass="mt-md-0" widget={widget} /></div>;
+            return <div className="row mt-5"><MediaText headingClass="mt-md-0" widgetData={widget} /></div>;
         case "paragraph__section":
             return (<>
 				{contentExists(widget.field_section_title) === true && <h2>{widget.field_section_title}</h2>}
