@@ -731,7 +731,7 @@ exports.onCreateWebpackConfig = helper => {
 exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
-    const pageTemplate = path.resolve('./src/templates/basic-page.js');
+    const pageTemplate = path.resolve('./src/templates/page.js');
     //const articleTemplate = path.resolve('./src/templates/article-page.js');
     const programTemplate = path.resolve('./src/templates/program-page.js');
     
