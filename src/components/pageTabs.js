@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils.js';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
@@ -29,7 +30,7 @@ function renderTabInfo (pageData) {
             navTabContent.push(<NavTabContent key={`navTabContent-` + i}
                 active={activeValue}
                 id={tabID}
-                content=<div dangerouslySetInnerHTML={{ __html: pageData.relationships.field_tabs[i].field_tab_body.processed }} />
+                content={<div dangerouslySetInnerHTML={{ __html: pageData.relationships.field_tabs[i].field_tab_body.processed }} />}
             />);
         }
         return (
@@ -72,3 +73,18 @@ pageTabs.defaultProps = {
 }
 
 export default pageTabs
+
+export const query = graphql`
+    fragment SectionTabsParagraphFragment on paragraph__section_tabs {
+        id
+        relationships {
+        field_tabs {
+            drupal_id
+            field_tab_title
+            field_tab_body {
+            processed
+            }
+        }
+        }
+    }
+`

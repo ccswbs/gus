@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { graphql } from 'gatsby'
 import { GatsbyImage } from "gatsby-plugin-image";
 import LinksOuter from './linksOuter'
 import LinksElement from './linksElement'
@@ -98,3 +99,36 @@ LinksItems.defaultProps = {
   }
 
 export default LinksItems
+
+export const query = graphql`
+fragment LinksWidgetParagraphFragment on paragraph__links_widget {
+    drupal_id
+    field_link_items_title
+    field_link_items_description
+    relationships {
+      field_link_items {
+        drupal_id
+        field_link_description
+        field_link_url {
+          title
+          uri
+          url
+        }
+        relationships {
+          field_link_image {
+            relationships {
+              field_media_image {
+                localFile {
+                  publicURL
+                  childImageSharp {
+                    gatsbyImageData(width: 400, height: 300, transformOptions: {cropFocus: CENTER})
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

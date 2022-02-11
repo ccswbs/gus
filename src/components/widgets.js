@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { graphql } from 'gatsby';
 import LinksItems from './linksItems';
 import CtaPara from './ctaPara';
 import LeadPara from './leadPara';
@@ -8,7 +9,6 @@ import SectionWidgets from './sectionWidgets';
 import StatsWidget from '../components/statsWidget';
 import PageTabs from './pageTabs';
 import { contentExists } from '../utils/ug-utils';
-
 
 // 
 // add to the if statement each widget, widgets will call each function in the order that it appears in the Drupal Backend. 
@@ -109,3 +109,33 @@ Widgets.defaultProps = {
   }
 
 export default Widgets
+
+export const query = graphql`
+  fragment GeneralTextParagraphFragment on paragraph__general_text {
+    drupal_id
+    field_general_text {
+      processed
+    }
+    relationships {
+      field_section_column {
+        name
+      }
+    }
+  }
+
+  fragment AccordionSectionParagraphFragment on paragraph__accordion_section {
+    drupal_id
+    relationships {
+      field_accordion_block_elements {
+        drupal_id
+        field_accordion_block_title {
+          processed
+        }
+        field_accordion_block_text {
+          processed
+        }
+      }
+    }
+  }
+
+`
