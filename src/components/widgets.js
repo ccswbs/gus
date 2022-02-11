@@ -138,4 +138,35 @@ export const query = graphql`
     }
   }
 
+  fragment FieldWidgetsFragment on Node {
+    __typename
+    ... on paragraph__call_to_action {
+        ...CallToActionParagraphFragment
+    }
+    ... on paragraph__general_text {
+        ...GeneralTextParagraphFragment
+    }
+    ... on paragraph__accordion_section {
+        ...AccordionSectionParagraphFragment
+    }
+    ... on paragraph__lead_paragraph {
+        ...LeadParagraphFragment
+    }
+    ... on paragraph__section_tabs {
+        ...SectionTabsParagraphFragment
+    }
+    ... on paragraph__links_widget {
+        ...LinksWidgetParagraphFragment
+    }
+    ... on paragraph__section {
+        ...SectionParagraphFragment
+    }
+    ... on paragraph__media_text {
+        ...MediaTextParagraphFragment
+    }
+    ... on paragraph__stats_widget {
+        ...StatsWidgetParagraphFragment
+    }
+  }
+
 `
