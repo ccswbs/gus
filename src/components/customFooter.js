@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Widgets from './widgets';
 import { contentExists } from '../utils/ug-utils';
@@ -43,3 +44,45 @@ CustomFooter.defaultProps = {
 }
 
 export default CustomFooter
+
+export const query = graphql`
+	fragment CustomFooterFragment on node__custom_footer {
+		drupal_id
+            body {
+              processed
+            }
+            fields {
+              tags
+            }
+            relationships {
+              field_tags {
+                __typename
+                ... on taxonomy_term__units {
+                  drupal_id
+                  id
+                  name
+                }
+              }
+
+              field_footer_logo {
+                field_media_image {
+                  alt
+                }
+                relationships {
+                  field_media_image {
+                    localFile {
+                      publicURL
+                      childImageSharp {
+                        gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                      }
+                    }
+                  }
+                }
+              }
+              field_widgets {
+                ...FieldWidgetsFragment
+              }
+            }
+	}
+
+`

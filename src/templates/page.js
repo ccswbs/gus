@@ -4,12 +4,12 @@ import { Helmet } from 'react-helmet';
 import Seo from '../components/seo';
 import Hero from '../components/hero'; 
 import Breadcrumbs from '../components/breadcrumbs';
-import Widgets from '../components/widgets';
+import CustomFooter from '../components/customFooter';
 import Widget from '../components/widget';
 import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 
-const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, menuName}) => (
+const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, footer, menuName}) => (
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
@@ -34,11 +34,13 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
                 </section>
             </div>
         </div>
+        {contentExists(footer) && footer.length !== 0 &&
+        <CustomFooter footerData={footer[0]} />}
     </Layout>
 )
 
 export const query = graphql`
-  query ($id: String, $nid: String) {
+  query ($id: String, $nid: String, $tid: [String]) {
     nodePage(id: {eq: $id}) {
         drupal_id
         drupal_internal__nid
@@ -57,9 +59,19 @@ export const query = graphql`
             field_tags {
                 __typename
                 ... on TaxonomyInterface {
+                    drupal_id
+                    id
                     name
                 }
             }
+        }
+    }
+
+    footer: allNodeCustomFooter (filter: {fields: {tags: {in: $tid}}}){
+        edges {
+          node {
+            ...CustomFooterFragment
+          }
         }
     }
 
@@ -92,9 +104,9 @@ const PageTemplate = ({data}) => (
           ogImageAlt={data.images.edges[0]?.node?.field_media_image.alt}
           imageData={data.images.edges}
           widgets={data.nodePage.relationships.field_widgets}
+          footer={data.footer.edges}
           menuName={data.menu?.menu_name || `main`}
     ></Page>
 )
 
 export default PageTemplate;
-
