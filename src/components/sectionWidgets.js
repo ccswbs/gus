@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { graphql } from 'gatsby';
 import LinksItems from './linksItems';
 import CtaPara from './ctaPara'
 import MediaText from '../components/mediaText';
@@ -113,3 +114,38 @@ SectionWidgets.defaultProps = {
   }
 
 export default SectionWidgets
+
+export const query = graphql`
+
+    fragment SectionParagraphFragment on paragraph__section {
+        drupal_id
+        field_section_title
+        field_section_classes
+        relationships {
+            field_section_content {
+                __typename
+                ... on paragraph__call_to_action {
+                    ...CallToActionParagraphFragment
+                }
+                ... on paragraph__general_text {
+                    ...GeneralTextParagraphFragment
+                }
+                ... on paragraph__links_widget {
+                    ...LinksWidgetParagraphFragment
+                }
+                ... on paragraph__media_text {
+                    ...MediaTextParagraphFragment
+                }
+                ... on paragraph__stats_widget {
+                    ...StatsWidgetParagraphFragment
+                }
+                ... on paragraph__lead_paragraph {
+                    ...LeadParagraphFragment
+                }
+                ... on paragraph__section_buttons {
+                    ...SectionButtonsParagraphFragment
+                }
+            }
+        }
+    }
+`

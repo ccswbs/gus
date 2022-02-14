@@ -1,5 +1,6 @@
 import React from 'react';
 import { GatsbyImage } from "gatsby-plugin-image";
+import { graphql } from 'gatsby';
 import PropTypes from "prop-types";
 import { contentExists } from '../utils/ug-utils';
 import '../styles/hero.css';
@@ -30,3 +31,31 @@ Hero.defaultProps = {
 }
   
 export default Hero
+
+export const query = graphql`
+	fragment HeroImageFragment on media__image {
+		field_media_image {
+			alt
+		  }
+		  relationships {
+			field_media_image {
+			  localFile {
+				publicURL
+				childImageSharp {
+				   gatsbyImageData(
+					transformOptions: {cropFocus: CENTER}
+					placeholder: BLURRED
+					aspectRatio: 3
+				  )
+				}
+			  }
+			}
+			field_tags {
+			  __typename
+			  ... on TaxonomyInterface {
+				name
+			  }
+			}
+		  }
+	}
+`

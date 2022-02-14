@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { graphql } from 'gatsby';
 import '../styles/button-widget.css'
 import { contentExists } from '../utils/ug-utils';
 import Button from "../components/button";
@@ -87,3 +88,41 @@ SectionButtons.defaultProps = {
     pageData: '',
 }
 export default SectionButtons
+
+export const query = graphql`
+    fragment SectionButtonsParagraphFragment on paragraph__section_buttons {
+        drupal_id
+        relationships {
+        field_section_column {
+            name
+        }
+        field_buttons {
+            drupal_id
+            field_button_link {
+            title
+            uri
+            url
+            }
+            field_cta_heading {
+            processed
+            }
+            field_font_awesome_icon
+            field_formatted_title {
+            processed
+            }
+            relationships {
+            field_button_style {
+                name
+            }
+            field_font_awesome_icon_colour {
+                name
+            }
+            field_cta_analytics_goal {
+                name
+                field_goal_action
+            }
+            }
+        }
+        }
+    }
+`
