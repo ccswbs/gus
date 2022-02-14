@@ -29,7 +29,6 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
             { /**** Widgets content ****/}      
             <div id="content" className="row row-with-vspace site-content">
                 <section className="col-md-12 content-area">
-                    {/* <Widgets pageData={widgets} /> */}
                     {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
                 </section>
             </div>
