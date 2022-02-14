@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
-import Widgets from './widgets';
+import Widget from './widget';
 import { contentExists } from '../utils/ug-utils';
 import '../styles/customFooter.css';
 
@@ -28,7 +28,7 @@ function CustomFooter (props) {
 					</div>}
 					<div className="col-md-9 content-area">
 						<div className="container" dangerouslySetInnerHTML={{ __html: footerText}} />
-						<Widgets pageData={footerWidgets} />
+						<Widget pageData={footerWidgets} />
 					</div>
 				</section>			
 			</div>

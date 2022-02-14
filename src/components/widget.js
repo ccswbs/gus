@@ -14,7 +14,7 @@ const GeneralText = ({processed}) => (
   )
 
 const Widget = ({widget}) => {
-    switch (widget.__typename) {
+    switch (widget?.__typename) {
         case "paragraph__accordion_section":
             return(
                 widget.relationships.field_accordion_block_elements.map((accordionData,j) => {
