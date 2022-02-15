@@ -59,6 +59,7 @@ module.exports = {
           username: process.env.BASIC_AUTH_USERNAME,
           password: process.env.BASIC_AUTH_PASSWORD,
         },
+        concurrentFileRequests: 2,
       },
     },
   
@@ -82,6 +83,13 @@ module.exports = {
         host: `https://livechugendpoint.azureedge.net/`,
         sitemap: null,
         policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
+      }
+    },
+    `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`,
       }
     }
   ],
