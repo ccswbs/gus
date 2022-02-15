@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { graphql } from 'gatsby';
 import '../styles/cta.css';
 
 function ctaPara (props) {
@@ -26,3 +27,20 @@ ctaPara.defaultProps = {
 }
 
 export default ctaPara
+
+export const query = graphql`
+  fragment CallToActionParagraphFragment on paragraph__call_to_action {
+    id
+    field_cta_title
+    field_cta_description
+    field_cta_primary_link {
+      title
+      uri
+    }
+    relationships {
+      field_section_column {
+        name
+      }
+    }
+  }
+`
