@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import { contentExists } from '../utils/ug-utils';
 import '../styles/cta.css';
@@ -72,3 +73,35 @@ leadPara.defaultProps = {
 }
 
 export default leadPara
+
+export const query = graphql`
+    fragment LeadParagraphFragment on paragraph__lead_paragraph {
+        id
+        field_lead_paratext {
+            value
+        }
+        relationships {
+            field_section_column {
+            name
+            }
+            field_lead_para_hero {
+            field_media_image {
+                alt
+            }
+            relationships {
+                field_media_image {
+                localFile {
+                    publicURL
+                    childImageSharp {
+                    gatsbyImageData(
+                        placeholder: BLURRED
+                        layout: FULL_WIDTH
+                    )
+                    }
+                }
+                }
+            }
+            }
+        }
+    }
+`

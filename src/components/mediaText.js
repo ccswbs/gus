@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Video from '../components/video';
 import { Link } from 'gatsby';
@@ -86,3 +87,55 @@ MediaText.defaultProps = {
 }
 
 export default MediaText
+
+export const query = graphql`
+
+  fragment MediaImageFragment on media__image {
+    name
+    field_media_image {
+      alt
+    }
+    relationships {
+      field_media_image {
+        localFile {
+          publicURL
+          childImageSharp {
+            gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
+          }
+        }
+      }
+    }
+  }
+
+  fragment MediaTextParagraphFragment on paragraph__media_text {
+    field_media_image_size
+    field_media_text_title
+    field_media_text_desc {
+      processed
+    }
+    field_media_text_links {
+      title
+      uri
+      url
+    }
+    relationships {
+      field_section_column {
+          name
+        }
+      field_media_text_media {
+        ... on media__image {
+          ...MediaImageFragment
+        }
+        ... on media__remote_video {
+          ...MediaRemoteVideoFragment
+        }
+      }
+      field_button_section {
+        ... on paragraph__section_buttons {
+          ...SectionButtonsParagraphFragment
+        }
+      }
+    }
+  }
+
+`

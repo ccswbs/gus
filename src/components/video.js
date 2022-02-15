@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils';
 
 function Video (props) {
@@ -51,3 +52,23 @@ Video.defaultProps = {
     videoCC: ``,
 }
 export default Video
+
+export const query = graphql`
+  fragment MediaRemoteVideoFragment on media__remote_video {
+    drupal_id
+    name
+    field_media_oembed_video
+    relationships {
+      field_media_file {
+        localFile {
+          publicURL
+        }
+      }
+      field_video_cc {
+        localFile {
+          publicURL
+        }
+      }
+    }
+  }  
+`
