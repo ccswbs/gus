@@ -31,6 +31,7 @@
     "gatsby-source-drupal": "^4.14.3",
     "gatsby-source-filesystem": "^3.14.0",
     "gatsby-transformer-sharp": "^3.14.0",
+    "gatsby-transformer-yaml": "^3.1.0",
     "is-subset": "^0.1.1",
     "js-yaml": "^4.1.0",
     "moment-timezone": "^0.5.33",
