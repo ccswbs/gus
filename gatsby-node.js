@@ -103,6 +103,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
     union widgetParagraphUnion =
       paragraph__call_to_action
+      | paragraph__events_widget
       | paragraph__general_text
       | paragraph__lead_paragraph
       | paragraph__link_item
@@ -438,6 +439,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
+    type paragraph__events_widget implements Node {
+      drupal_id: String      
+      relationships: paragraph__events_widgetRelationships
+    }
+    type paragraph__events_widgetRelationships implements Node {
+      field_event_category: [taxonomy_term__event_categories] @link(from: "field_event_category___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+    }
     type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
@@ -573,13 +582,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       name: String
       description: TaxonomyDescription
     }
+    type taxonomy_term__event_categories implements Node & TaxonomyInterface {
+      drupal_id: String
+      name: String
+    }
     type taxonomy_term__goals implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
       field_goal_action: String
     }
-      type taxonomy_term__news_category implements Node & TaxonomyInterface {
+    type taxonomy_term__news_category implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
