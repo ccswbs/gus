@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby'
 import { GatsbyImage } from "gatsby-plugin-image";
-import LinksOuter from './linksOuter'
-import LinksElement from './linksElement'
+import LinksOuter from 'components/shared/linksOuter'
+import LinksElement from 'components/shared/linksElement'
 
-import { contentExists } from '../../utils/ug-utils';
+import { contentExists } from 'utils/ug-utils';
 /*
 
 LinksItems.propTypes = {

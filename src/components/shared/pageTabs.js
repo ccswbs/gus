@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import { contentExists } from '../../utils/ug-utils.js';
-import NavTabs from './navTabs';
-import NavTabHeading from './navTabHeading';
-import NavTabContent from './navTabContent';
+import { contentExists } from 'utils/ug-utils.js';
+import NavTabs from 'components/shared/navTabs';
+import NavTabHeading from 'components/shared/navTabHeading';
+import NavTabContent from 'components/shared/navTabContent';
 
 function renderTabInfo (pageData) {
     

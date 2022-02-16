@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Layout from '../components/layout';
-import Seo from '../components/seo';
+import Layout from 'components/layout';
+import Seo from 'components/seo';
 
 export default ({data}) => {
 	const pageData = data.articles.edges[0].node;

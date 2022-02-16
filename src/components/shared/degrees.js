@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Svg from 'react-inlinesvg';
-import { contentIsNullOrEmpty } from '../../utils/ug-utils';
-import { useIconData } from '../../utils/fetch-icon';
-import '../../styles/stats.css';
+import { contentIsNullOrEmpty } from 'utils/ug-utils';
+import { useIconData } from 'utils/fetch-icon';
+import 'styles/stats.css';
 
 function Degrees (props) {
 	let dtValue = props.degreesData.length === 1 ? "Degree" : "Degrees";

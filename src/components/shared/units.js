@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { setHeadingLevel } from '../../utils/ug-utils';
+import { setHeadingLevel } from 'utils/ug-utils';
 
 function Units (props) {
     let Heading = setHeadingLevel(props.headingLevel);

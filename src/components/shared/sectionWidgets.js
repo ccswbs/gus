@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import LinksItems from './linksItems';
-import CtaPara from './ctaPara'
-import MediaText from './mediaText';
-import StatsWidget from './statsWidget';
-import LeadPara from './leadPara';
-import SectionButtons from './sectionButtons';
-import { contentExists } from '../../utils/ug-utils'
-import '../../styles/widgets.css';
+import LinksItems from 'components/shared/linksItems';
+import CtaPara from 'components/shared/ctaPara'
+import MediaText from 'components/shared/mediaText';
+import StatsWidget from 'components/shared/statsWidget';
+import LeadPara from 'components/shared/leadPara';
+import SectionButtons from 'components/shared/sectionButtons';
+import { contentExists } from 'utils/ug-utils'
+import 'styles/widgets.css';
 // 
 // add to the if statement each widget in the section widget, 
 // widgets will call each function in the order that it appears in the Drupal Backend. 

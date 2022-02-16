@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/courses.css';
+import 'styles/courses.css';
 
 function Courses ({ courseData, courseNotes, headingLevel }) {
 	var courses;

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { GatsbyImage } from "gatsby-plugin-image";
-import { contentIsNullOrEmpty } from '../../utils/ug-utils.js';
-import '../../styles/employers.css';
+import { contentIsNullOrEmpty } from 'utils/ug-utils.js';
+import 'styles/employers.css';
 
 function Employers (props) {
     return (

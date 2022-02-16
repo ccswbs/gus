@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'gatsby';
-import { setHeadingLevel, contentExists } from '../../utils/ug-utils.js';
+import { setHeadingLevel, contentExists } from 'utils/ug-utils.js';
 
 /* 
 Example Usage:

@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql, Link } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
-import Video from './video';
-import SectionButtons from './sectionButtons';
-import { contentExists } from '../../utils/ug-utils';
+import Video from 'components/shared/video';
+import SectionButtons from 'components/shared/sectionButtons';
+import { contentExists } from 'utils/ug-utils';
 
 function MediaText (props) {
 

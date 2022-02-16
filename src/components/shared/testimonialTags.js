@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import TestimonialTitle from './testimonialTitle';
+import TestimonialTitle from 'components/shared/testimonialTitle';
 // this checks for the tesimonial tags and returns an array that has all of the testmionial types included for this page.  
 function TestimonialTags (props){
 

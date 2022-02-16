@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import '../../styles/button-widget.css'
+import 'styles/button-widget.css'
 import { Link } from 'gatsby';
-import { contentExists, fontAwesomeIconColour} from '../../utils/ug-utils';
+import { contentExists, fontAwesomeIconColour} from 'utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 function ButtonStyle (styleOfButton){

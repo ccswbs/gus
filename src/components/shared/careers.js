@@ -1,4 +1,4 @@
-import ColumnLists from './columnLists';
+import ColumnLists from 'components/shared/columnLists';
 import PropTypes from 'prop-types';
 import React from 'react';
 

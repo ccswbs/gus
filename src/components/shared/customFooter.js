@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
-import Widget from './widget';
-import { contentExists } from '../../utils/ug-utils';
-import '../../styles/customFooter.css';
+import Widget from 'components/shared/widget';
+import { contentExists } from 'utils/ug-utils';
+import 'styles/customFooter.css';
 
 function CustomFooter (props) {
 	

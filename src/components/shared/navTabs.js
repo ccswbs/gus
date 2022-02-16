@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import '../../styles/navTabs.css';
+import 'styles/navTabs.css';
 
 /* 
 Example Usage:

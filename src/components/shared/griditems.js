@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Grid from './grid';
-import GridCell from './gridCell';
-import { contentExists } from '../../utils/ug-utils';
+import Grid from 'components/shared/grid';
+import GridCell from 'components/shared/gridCell';
+import { contentExists } from 'utils/ug-utils';
 
 function GridItems (props) {
     if(contentExists(props.pageData) && props.pageData.length !== 0){

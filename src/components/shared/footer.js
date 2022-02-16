@@ -1,5 +1,5 @@
 import React from 'react';
-import { contentExists, fetchMenu } from '../../utils/ug-utils';
+import { contentExists, fetchMenu } from 'utils/ug-utils';
 
 function getSocialMenu(menuName) {
 	const socialMenu = fetchMenu(menuName);

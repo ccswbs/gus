@@ -28,6 +28,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
+    `gatsby-plugin-root-import`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-gatsby-cloud`,
@@ -59,7 +60,6 @@ module.exports = {
           username: process.env.BASIC_AUTH_USERNAME,
           password: process.env.BASIC_AUTH_PASSWORD,
         },
-        concurrentFileRequests: 2,
       },
     },
   
@@ -92,6 +92,7 @@ module.exports = {
         path: `./src/data/`,
       }
     }
+    
   ],
   assetPrefix: process.env.ASSET_PREFIX,
 }
