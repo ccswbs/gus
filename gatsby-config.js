@@ -103,12 +103,11 @@ module.exports = {
           Event: {
             limit:
               process.env.NODE_ENV === `development`
-                ? // Lets just pull 50 posts in development to make it easy on ourselves (aka. faster).
+                ? // Lets just pull 25 posts in development to make it easy on ourselves (aka. faster).
                   25
-                : // and we don't actually need more than 5000 in production for this particular site
+                : // and we don't actually need more than 50 in production for this particular site
                   50,
           },
-          EventsCategory: {include: true},
           Comment: {exclude: true},
           Menu: {exclude: true},
           Organizer: {exclude: true},
