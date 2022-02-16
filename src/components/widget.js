@@ -95,13 +95,11 @@ export const query = graphql`
   }
   fragment EventsParagraphFragment on paragraph__events_widget {
     drupal_id
+    field_title
     relationships {
       field_event_category {
         name
-      }
-      field_section_column {
-        name
-      }
+      }      
     }
   }
   fragment GeneralTextParagraphFragment on paragraph__general_text {

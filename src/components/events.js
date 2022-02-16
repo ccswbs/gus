@@ -6,6 +6,7 @@ import moment from 'moment';
 
 const generateEvents = (data, eventData) => {
     let categories = eventData.relationships.field_event_category;
+    let title = eventData.field_title;
     let events = data.allWpEvent.edges;
     
     {/* Remove events that don't match selected categories */}
@@ -16,7 +17,7 @@ const generateEvents = (data, eventData) => {
     }
     
     return (<>
-        <h2 className="mb-5">Upcoming Events</h2>
+        <h2 className="mb-5">{contentExists(title) ? title : "Upcoming Events"}</h2>
         <div className="row">
         {events.slice(0,4).map(wpEvent => {
             let eventMonth = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("MMM");

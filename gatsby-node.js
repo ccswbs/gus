@@ -440,12 +440,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__events_widget implements Node {
-      drupal_id: String      
+      drupal_id: String
+      field_title: String
       relationships: paragraph__events_widgetRelationships
     }
     type paragraph__events_widgetRelationships implements Node {
       field_event_category: [taxonomy_term__event_categories] @link(from: "field_event_category___NODE")
-      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__general_text implements Node {
       drupal_id: String
