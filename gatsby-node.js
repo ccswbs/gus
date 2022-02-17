@@ -660,7 +660,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_unit_acronym: String
       name: String
       description: TaxonomyDescription
-    }`,
+    }
+    
+    type WpEventToEventsCategoryConnection implements Node {
+      nodes: [WpEventsCategory]
+    }
+    type WpEventsCategory implements Node {
+      name: String
+    }    
+    `,
     
     schema.buildObjectType({
       name: `WpEvent`,
@@ -670,6 +678,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         startDate: `String`,
         title: `String`,
         url: `String`,
+        eventsCategories: `WpEventToEventsCategoryConnection`,
         isPast: {
           type: `Boolean`,
           resolve: (source) => new Date(source.startDate) < new Date(),

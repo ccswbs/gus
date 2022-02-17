@@ -2,7 +2,6 @@ import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
 import React from 'react';
 import Seo from '../components/seo';
-import moment from 'moment';
 
 const IndexPage = ({ data }) => {
 
