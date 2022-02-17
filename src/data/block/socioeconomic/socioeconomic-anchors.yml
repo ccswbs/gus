@@ -1,0 +1,11 @@
+id: socioeconomic_anchors
+title: Jump to section on page
+anchors:
+  - title: Total Impact
+    url: "#total-impact"
+  - title: Provincial Impact
+    url: "#provincial-impact"
+  - title: Community Impact
+    url: "#community-impact"
+  - title: Human Impact
+    url: "#human-impact"

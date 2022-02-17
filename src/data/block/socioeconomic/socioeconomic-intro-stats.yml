@@ -1,0 +1,15 @@
+id: socioeconomic_intro_stats
+title: Campus Statistics
+stats:
+  - value: "3"
+    type: CAMPUSES
+    colour: --black
+  - value: 30,000
+    type: STUDENTS
+    colour: --uog-red
+  - value: 185,000
+    type: ALUMNI
+    colour: --uog-yellow
+  - value: "15"
+    type: RESEARCH STATIONS
+    colour: --uog-blue
