@@ -5,21 +5,25 @@ import { contentExists } from '../utils/ug-utils.js';
 import moment from 'moment';
 
 const generateEvents = (data, eventData) => {
-    let categories = eventData.relationships.field_event_category;
+    let drupalCategories = eventData.relationships.field_event_category;
     let title = eventData.field_title;
-    let events = data.allWpEvent.edges;
+    let allEvents = data.allWpEvent.edges;
+    let shownEvents = [];
     
-    {/* Remove events that don't match selected categories */}
-    for (let i = events.length - 1; i >= 0; i--) {        
-        if (JSON.stringify(categories) !== JSON.stringify(events[i].node.eventsCategories.nodes)) {
-            events.splice(i, 1);
-        }
+    console.log(allEvents.length);
+    
+    for (let i=0; i < allEvents.length; i++) {        
+        if (JSON.stringify(drupalCategories) === JSON.stringify(allEvents[i].node.eventsCategories.nodes)) {
+            shownEvents.push(allEvents[i]);
+        }        
     }
+    console.log(shownEvents.length);
     
-    return (<>
+    return (contentExists(shownEvents) ?
+    <React.Fragment key={eventData.drupal_id}>
         <h2 className="mb-5">{contentExists(title) ? title : "Upcoming Events"}</h2>
         <div className="row">
-        {events.slice(0,4).map(wpEvent => {
+        {shownEvents.slice(0,4).map(wpEvent => {
             let eventMonth = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("MMM");
             let eventDay = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("D");
             let eventStartTime = moment(wpEvent.node.startDate,"YYYY-MM-DD HH:mm").format("h:mm A");
@@ -40,7 +44,8 @@ const generateEvents = (data, eventData) => {
             </>)
         })}
         </div>    
-    </>)
+    </React.Fragment>
+    : null)
 }
 
 const Events = ({eventData}) => (
