@@ -165,6 +165,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type FieldsPathAlias {
       alias: PathAlias @link
+      content: String
+      tags: [String]
     }
     
     type ImageField implements Node {
@@ -441,6 +443,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__events_widget implements Node {
       drupal_id: String
+      field_match_categories: Boolean
       field_title: String
       relationships: paragraph__events_widgetRelationships
     }

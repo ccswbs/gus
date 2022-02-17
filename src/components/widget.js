@@ -95,6 +95,7 @@ export const query = graphql`
   }
   fragment EventsParagraphFragment on paragraph__events_widget {
     drupal_id
+    field_match_categories
     field_title
     relationships {
       field_event_category {

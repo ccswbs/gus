@@ -4,25 +4,42 @@ import { StaticQuery, graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils.js';
 import moment from 'moment';
 
+function findMatches(fromDrupal, fromWP) {
+    for (let i=0; i < fromDrupal.length; i++) {
+        for (let j=0; j < fromWP.length; j++) {
+            if (fromDrupal[i].name == fromWP[j].name) {                
+                return true;
+            }
+        }
+    }
+    return null;
+}
+
 const generateEvents = (data, eventData) => {
     let drupalCategories = eventData.relationships.field_event_category;
+    let matchAllCategories = eventData.field_match_categories;
     let title = eventData.field_title;
     let allEvents = data.allWpEvent.edges;
     let shownEvents = [];
     
-    console.log(allEvents.length);
-    
-    for (let i=0; i < allEvents.length; i++) {        
-        if (JSON.stringify(drupalCategories) === JSON.stringify(allEvents[i].node.eventsCategories.nodes)) {
-            shownEvents.push(allEvents[i]);
-        }        
+    if (matchAllCategories) {
+        for (let i=0; i < allEvents.length; i++) {        
+            if (JSON.stringify(drupalCategories) === JSON.stringify(allEvents[i].node.eventsCategories.nodes)) {
+                shownEvents.push(allEvents[i]);
+            }        
+        } 
+    } else {
+        for (let i=0; i < allEvents.length; i++) {
+            if (findMatches(drupalCategories, allEvents[i].node.eventsCategories.nodes)) {
+                shownEvents.push(allEvents[i]);
+            }
+        } 
     }
-    console.log(shownEvents.length);
     
     return (contentExists(shownEvents) ?
     <React.Fragment key={eventData.drupal_id}>
         <h2 className="mb-5">{contentExists(title) ? title : "Upcoming Events"}</h2>
-        <div className="row">
+        <div className="row mb-5">
         {shownEvents.slice(0,4).map(wpEvent => {
             let eventMonth = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("MMM");
             let eventDay = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("D");
