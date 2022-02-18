@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import { contentExists } from '../utils/ug-utils.js';
 import moment from 'moment';
+import '../styles/events.css';
 
 function findMatches(fromDrupal, fromWP) {
     for (let i=0; i < fromDrupal.length; i++) {
         for (let j=0; j < fromWP.length; j++) {
-            if (fromDrupal[i].name == fromWP[j].name) {                
-                return true;
-            }
+            return fromDrupal[i].name == fromWP[j].name;
         }
     }
-    return null;
 }
 
 const generateEvents = (data, eventData) => {
@@ -39,7 +37,7 @@ const generateEvents = (data, eventData) => {
     return (contentExists(shownEvents) ?
     <React.Fragment key={eventData.drupal_id}>
         <h2 className="mb-5">{contentExists(title) ? title : "Upcoming Events"}</h2>
-        <div className="row mb-5">
+        <div className="event-list row mb-5">
         {shownEvents.slice(0,4).map(wpEvent => {
             let eventMonth = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("MMM");
             let eventDay = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("D");
@@ -47,15 +45,15 @@ const generateEvents = (data, eventData) => {
             let eventEndTime = moment(wpEvent.node.endDate,"YYYY-MM-DD HH:mm").format("h:mm A");
             
             return (<>
-            <div key={wpEvent.node.id} className="card flex-row col-md-3 p-0 border-0">
-                <div className="col border border-5 border-warning d-flex me-3">
-                <p className="align-self-center mb-0 mx-auto text-center w-50">
-                    <span className="fs-2 text-nowrap text-uppercase">{eventMonth}</span> <span className="display-4 fw-bold">{eventDay}</span>
-                </p>
+            <div key={wpEvent.node.id} className="card border-0 col-md-3 flex-row p-0 ">
+                <div className="event-day col border border-5 d-flex me-3 p-2">
+                    <p className="align-self-center mb-0 mx-auto text-center w-50">
+                        <span className="fs-2 text-nowrap text-uppercase">{eventMonth}</span> <span className="display-4 fw-bold">{eventDay}</span>
+                    </p>
                 </div>
                 <div className="card-body col-5 d-flex flex-column p-0">
-                    <p className="lh-1 mt-3 me-3"><a className="link-dark fs-4 fw-bold stretched-link border-0 text-decoration-none" href={wpEvent.node.url}>{wpEvent.node.title}</a></p>
-                    <p className="fs-4 mt-auto">{eventStartTime} - {eventEndTime}</p>
+                    <a className="event-title border-0 fs-4 fw-bold lh-base stretched-link text-decoration-none" href={wpEvent.node.url}>{wpEvent.node.title}</a>
+                    <p className="fs-4 mt-auto mb-0">{eventStartTime} - {eventEndTime}</p>
                 </div>
             </div>
             </>)

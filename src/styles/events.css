@@ -1,0 +1,20 @@
+.event-title {
+	display: -webkit-box !important;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden !important;
+	position: static !important;
+	line-height: unset;
+}
+
+.event-list .card:nth-of-type(4n+1) .event-day,
+.event-list .card:nth-of-type(4n+4) .event-day {
+	border-color: var(--uog-red) !important;
+}
+
+.event-list .card:nth-of-type(4n+2) .event-day {
+	border-color:  var(--uog-yellow) !important;
+}
+.event-list .card:nth-of-type(4n+3) .event-day {
+	border-color: var(--uog-blue) !important;
+}
