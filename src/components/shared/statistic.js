@@ -3,11 +3,19 @@ import styled from "styled-components"
 
 const StatCard = styled.div`
   background: var(--uog-blue-muted);
-  border-left: 1rem solid ${props => (props.colour ? `var(${props.colour})`: "#000000")};
+  border-left: 1rem solid ${props => (props.colour ?? "#000000")};
   flex: 1 0;
   padding: 1.25rem;
   min-width: 25%;
   word-wrap: break-word;
+`
+const StatValue = styled.dt`
+  color: #000;
+  font-size: 4.25rem;
+`
+const StatType = styled.dd`
+  font-size: 1.8rem;
+  line-height: 1.58;
 `
 
 const Statistic = ({id, children, className=""}) => (
@@ -31,13 +39,15 @@ Statistic.Icon = ({icon}) => (
 )
 
 Statistic.Value = ({children}) => (
-  <dt>
+  <StatValue>
     {children}
-  </dt>
+  </StatValue>
 )
 
 Statistic.Type = ({children}) => (
-  <dd>{children}</dd>
+  <StatType>
+    {children}
+  </StatType>
 )
 
 
