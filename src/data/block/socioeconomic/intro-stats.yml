@@ -3,13 +3,13 @@ title: Campus Statistics
 stats:
   - value: "3"
     type: CAMPUSES
-    colour: --black
+    colour: var(--black)
   - value: 30,000
     type: STUDENTS
-    colour: --uog-red
+    colour: var(--uog-red)
   - value: 185,000
     type: ALUMNI
-    colour: --uog-yellow
+    colour: var(--uog-yellow)
   - value: "15"
     type: RESEARCH STATIONS
-    colour: --uog-blue
+    colour: var(--uog-blue)

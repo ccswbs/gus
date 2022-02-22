@@ -1,0 +1,23 @@
+id: ug_connect_social
+title: Connect with U of G
+networks:
+  twitter:
+    title: Twitter
+    url: https://twitter.com/uofg
+    icon: fab fa-twitter
+  facebook:
+    title: Facebook
+    url: https://www.facebook.com/uofguelph
+    icon: fab fa-facebook-f
+  instagram:
+    title: Instagram
+    url: https://www.instagram.com/uofguelph/
+    icon: fab fa-instagram
+  linkedin:
+    title: Linked In
+    url: https://www.linkedin.com/company/university-of-guelph
+    icon: fab fa-linkedin-in
+  youtube:
+    title: YouTube
+    url: https://www.youtube.com/user/uofguelph?reload=9
+    icon: fab fa-youtube
