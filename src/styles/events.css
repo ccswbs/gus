@@ -18,3 +18,9 @@
 .event-list .card:nth-of-type(4n+3) .event-day {
 	border-color: var(--uog-blue) !important;
 }
+.event-list {
+	padding-left: 0 !important;
+}
+.event-list li:before {
+	content: "" !important;
+}
