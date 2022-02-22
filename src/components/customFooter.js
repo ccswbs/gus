@@ -1,30 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import FooterSocial from './blocks/ovc/footer_social';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Widget from './widget';
 import { contentExists } from '../utils/ug-utils';
 import '../styles/customFooter.css';
-// Social icons
-import {
-  FaInstagram,
-  FaFacebookSquare,
-  FaTwitterSquare,
-  FaLinkedin,
-  FaYoutubeSquare
-} from 'react-icons/fa';
+
 
 function CustomFooter (props) {
 	const footer = props.footerData;
+  // check if footer is from OVC - set conditions so layout is sligtly different as well as include OVC social media
   var footerOVCCust = "no";
   var firstClassCol = "col-md-3 content-area";
   var secondClassCol = "col-md-9 content-area";
-  console.log(footerOVCCust);
-  console.log(footer.node.relationships.field_tags);
   footer.node.relationships.field_tags.forEach(element => {if (element.__typename === "taxonomy_term__units" && element.name.includes("Ontario Veterinary College"))
       footerOVCCust= "yes"
     });
-console.log(footerOVCCust);
   if (footerOVCCust === "yes") {
     firstClassCol = "col-md-4 content-area";
     secondClassCol = "col-md-8 content-area";
@@ -45,30 +37,7 @@ console.log(footerOVCCust);
                             className="footer-logo"
                             alt={logo.field_media_image.alt} />
 					))}
-         {footerOVCCust === "yes" &&
-          <div>
-            <h4 className="mt-4 text-dark">Stay Connected</h4>
-            <a href="https://instagram.com/ontvetcollege/" className="text-dark">
-              <span className="sr-only">Connect with OVC on Instagram</span>
-              <FaInstagram style={{fontSize: "4.8rem"}}/>
-            </a>
-            <a href="https://www.linkedin.com/school/ontario-veterinary-college/" className="text-dark">
-              <span className="sr-only">Connect with OVC on LinkedIn</span>
-              <FaLinkedin style={{fontSize: "4.8rem"}}/>
-            </a>
-            <a href="http://www.facebook.com/ontvetcollege" className="text-dark">
-              <span className="sr-only">Connect with OVC on Facebook</span>
-              <FaFacebookSquare style={{fontSize: "4.8rem"}} />
-            </a>
-            <a href="http://twitter.com/OntVetCollege/" className="text-dark">
-              <span className="sr-only">Connect with OVC on Twitter</span>
-              <FaTwitterSquare style={{fontSize: "4.8rem"}} />
-            </a>
-            <a href="http://www.youtube.com/user/OntarioVetCollege" className="text-dark">
-              <span className="sr-only">Connect with OVC on YouTube</span>
-              <FaYoutubeSquare style={{fontSize: "4.8rem"}} />
-            </a>
-          </div>}
+         {footerOVCCust === "yes" && FooterSocial()}
 					</div>}
 					<div className={secondClassCol}>
 						<div className="container" dangerouslySetInnerHTML={{ __html: footerText}} />
