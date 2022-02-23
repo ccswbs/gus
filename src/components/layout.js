@@ -8,8 +8,10 @@ import 'styles/global.css';
 const Layout = ({ children, date, menuName }) => (
       <>
         <uofg-header><HeaderMenu menuName={menuName} /></uofg-header>
-        {children}
-        <DateModified date={date}/>
+        <main>
+          {children}
+          <DateModified date={date}/>
+        </main>
         <uofg-footer></uofg-footer>        
       </>
 )
