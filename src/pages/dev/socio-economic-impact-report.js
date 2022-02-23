@@ -23,25 +23,25 @@ const render = (title) => (
 
         <Container className="page-container">
             <Row id="content" className="row-with-vspace site-content">
-                <Row>
-                    <Col md={9} className="content-area">
-                        <SocioEconomicIntro />
-                    </Col>
-                    <Col md={3} className="mt-5">
-                        <SocioEconomicAnchors />
-                    </Col>
-                </Row>
-                <SocioEconomicIntroStats />
+                <Col className="content-area">
+                    <Row>
+                        <Col md={9} className="pe-4">
+                            <SocioEconomicIntro />
+                        </Col>
+                        <Col md={3} className="mt-5">
+                            <SocioEconomicAnchors />
+                        </Col>
+                    </Row>
+                    <SocioEconomicIntroStats />
+                </Col>
             </Row>
         </Container>
-        <Container fluid={true} className="page-container">
-            <div className="site-content">
-                <SocioEconomicTotalImpact />
-                {/* <SocioEconomicProvImpact />
-                <SocioEconomicCommunityImpact />
-                <SocioEconomicHumanImpact /> */}
-            </div>
-        </Container>
+
+        
+        <SocioEconomicTotalImpact />
+            {/* <SocioEconomicProvImpact />
+            <SocioEconomicCommunityImpact />
+            <SocioEconomicHumanImpact /> */}
     </Layout>
 )
 
