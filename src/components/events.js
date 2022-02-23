@@ -68,9 +68,9 @@ const generateEvents = (data, eventData) => {
             
             return (<>
             <li key={wpEvent.node.id} className={"card border-0 flex-row" + colClasses}>
-                <div className="event-day col-md-4 col-xl-4 border border-5 d-flex me-3 p-2" aria-hidden="true">
+                <div className="event-day col-3 col-md-4 col-xl-4 border border-5 d-flex me-3 p-2" aria-hidden="true">
                     <p className="align-self-center mb-0 mx-auto text-center w-50">
-                        <span className="fs-2 text-nowrap text-uppercase">{eventMonth}</span> <span className="display-4 fw-bold">{eventDay}</span>
+                        <span className="fs-2 text-nowrap text-uppercase">{eventMonth}</span> <span className="display-4 fw-bold text-nowrap">{eventDay}</span>
                     </p>
                 </div>
                 <div className="card-body col d-flex flex-column pt-0 pb-0 ps-0">
