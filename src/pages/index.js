@@ -60,8 +60,9 @@ const IndexPage = ({ data }) => {
                 {unpubPrograms.map((program) => (
                     <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                 ))}
-            </ul>
-        </div></div>
+            </ul>            
+        </div>
+        </div>
     </Layout>
     )
 }
@@ -94,6 +95,6 @@ export const query = graphql`
             status
           }
         }
-      }        
+      }
     }
 `
