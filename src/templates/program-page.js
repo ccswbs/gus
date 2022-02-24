@@ -84,7 +84,8 @@ function CountProgramVariants(variantData) {
     if (!contentIsNullOrEmpty(variantData)) {
         checkIfContentAvailable = true;
     }
-    
+    console.log("test");
+    console.log(variantData);
     if (checkIfContentAvailable === true) {
         var iconURL = ``;   
         console.log(specIcon);    
