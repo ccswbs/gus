@@ -1,7 +1,12 @@
-a.text-dark-social {
+.text-dark-social {
     color: #343a40!important;
 }
 
-a.text-dark-social:hover {
+.text-dark-social:hover,
+.text-dark-social:focus {
     color: #121416!important;
+    background: none !important;
+    text-decoration-color: none !important;
+    border-bottom: none !important;
+
 }
