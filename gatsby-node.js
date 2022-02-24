@@ -68,31 +68,13 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const util = require('util');
 
-exports.createSchemaCustomization = ({ actions }) => {
-    const { createTypes } = actions
-
-    const typeDefs = `
+exports.createSchemaCustomization = ({ actions, schema }) => {
     
-    type menu_link_content__menu_link_content implements Node {
-      bundle: String
-      drupal_id: String
-      drupal_parent_menu_item: String
-      enabled: Boolean
-      expanded: Boolean
-      external: Boolean
-      langcode: String
-      link: menu_link_content__menu_link_contentLink
-      menu_name: String
-      title: String
-      weight: Int      
-    }
-    type menu_link_content__menu_link_contentLink implements Node {
-      uri: String
-      url: String
-      title: String
-    }
+  const { createTypes } = actions
+  
+  const typeDefs = [
     
-    interface TaxonomyInterface implements Node {
+    `interface TaxonomyInterface implements Node {
       id: ID!
       drupal_id: String
       name: String
@@ -121,6 +103,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     union widgetParagraphUnion =
       paragraph__call_to_action
+      | paragraph__events_widget
       | paragraph__general_text
       | paragraph__lead_paragraph
       | paragraph__link_item
@@ -182,6 +165,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
     type FieldsPathAlias {
       alias: PathAlias @link
+      content: String
+      tags: [String]
     }
     
     type ImageField implements Node {
@@ -218,7 +203,24 @@ exports.createSchemaCustomization = ({ actions }) => {
       node__program: [node__program] @link(from: "node__program___NODE")
     }
     
-
+    type menu_link_content__menu_link_content implements Node {
+      bundle: String
+      drupal_id: String
+      drupal_parent_menu_item: String
+      enabled: Boolean
+      expanded: Boolean
+      external: Boolean
+      langcode: String
+      link: menu_link_content__menu_link_contentLink
+      menu_name: String
+      title: String
+      weight: Int      
+    }
+    type menu_link_content__menu_link_contentLink implements Node {
+      uri: String
+      url: String
+      title: String
+    }
     
     type node__article implements Node {
       changed: Date @dateformat
@@ -341,7 +343,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }   
+    }
     type node__link_url implements Node {
       title: String
       uri: String
@@ -371,7 +373,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       value: String
       format: String
       processed: String     
-    }   
+    }
     type node__programRelationships implements Node {
       field_program_acronym: taxonomy_term__programs @link(from: "field_program_acronym___NODE")
       field_courses: [node__course] @link(from: "field_courses___NODE")
@@ -439,6 +441,15 @@ exports.createSchemaCustomization = ({ actions }) => {
       field_call_to_action_goal: taxonomy_term__goals @link(from: "field_call_to_action_goal___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
+    type paragraph__events_widget implements Node {
+      drupal_id: String
+      field_match_categories: Boolean
+      field_title: String
+      relationships: paragraph__events_widgetRelationships
+    }
+    type paragraph__events_widgetRelationships implements Node {
+      field_event_category: [taxonomy_term__event_categories] @link(from: "field_event_category___NODE")
+    }
     type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
@@ -502,8 +513,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: paragraph__program_statisticRelationships
     }
     type paragraph__program_statisticRelationships implements Node {
-      field_stat_type: taxonomy_term__statistic_type @link(from: "field_stat_type___NODE")  
-      
+      field_stat_type: taxonomy_term__statistic_type @link(from: "field_stat_type___NODE")
     }
     type paragraph__program_variants implements Node {
       drupal_id: String
@@ -545,8 +555,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       relationships: paragraph__stats_widgetRelationships
     }
     type paragraph__stats_widgetRelationships implements Node {
-        field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
-    field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+      field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     
     type PathAlias implements Node {
@@ -575,13 +585,17 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
+    type taxonomy_term__event_categories implements Node & TaxonomyInterface {
+      drupal_id: String
+      name: String
+    }
     type taxonomy_term__goals implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
       field_goal_action: String
     }
-      type taxonomy_term__news_category implements Node & TaxonomyInterface {
+    type taxonomy_term__news_category implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
@@ -647,7 +661,31 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String
       description: TaxonomyDescription
     }
-  `
+    
+    type WpEventToEventsCategoryConnection implements Node {
+      nodes: [WpEventsCategory]
+    }
+    type WpEventsCategory implements Node {
+      name: String
+    }    
+    `,
+    
+    schema.buildObjectType({
+      name: `WpEvent`,
+      interfaces: [`Node`],
+      fields: {
+        endDate: `String`,
+        startDate: `String`,
+        title: `String`,
+        url: `String`,
+        eventsCategories: `WpEventToEventsCategoryConnection`,
+        isPast: {
+          type: `Boolean`,
+          resolve: (source) => new Date(source.startDate) < new Date(),
+        },
+      },
+    }),
+  ]
   createTypes(typeDefs)
 }
 
