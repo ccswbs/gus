@@ -92,16 +92,6 @@ export const query = graphql`
       }
     }
   }
-  fragment EventsParagraphFragment on paragraph__events_widget {
-    drupal_id
-    field_match_categories
-    field_title
-    relationships {
-      field_event_category {
-        name
-      }      
-    }
-  }
   fragment GeneralTextParagraphFragment on paragraph__general_text {
     drupal_id
     field_general_text {
