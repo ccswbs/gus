@@ -29,6 +29,7 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-root-import`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-gatsby-cloud`,
     {
