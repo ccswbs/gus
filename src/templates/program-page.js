@@ -86,7 +86,8 @@ function CountProgramVariants(variantData) {
     }
     
     if (checkIfContentAvailable === true) {
-        var iconURL = ``;       
+        var iconURL = ``;   
+        console.log(specIcon);    
         if (specIcon !== null && specIcon !== undefined) {
             for (let i=0; i<specIcon.length; i++) {
                 for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
@@ -95,7 +96,8 @@ function CountProgramVariants(variantData) {
                     }
                 }
             }
-        }       
+        }
+
         variantData.forEach((edge) => {
             if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
                 switch(edge.relationships.field_variant_type.name) {
