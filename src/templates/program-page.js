@@ -1,30 +1,30 @@
 import React from 'react';
-import Layout from '../components/layout';
+import Layout from 'components/layout';
 import { Helmet } from 'react-helmet';
-import Seo from '../components/seo';
-import Hero from '../components/shared/hero';
-import Breadcrumbs from '../components/shared/breadcrumbs';
-import CallToAction from '../components/shared/callToAction';
-import Careers from '../components/shared/careers';
-import Courses from '../components/shared/courses';
-import CustomFooter from '../components/shared/customFooter';
-import Degrees from '../components/shared/degrees';
-import Employers from '../components/shared/employers';
-import HeroVideo from '../components/shared/heroVideo';
-import NavTabs from '../components/shared/navTabs';
-import NavTabHeading from '../components/shared/navTabHeading';
-import NavTabContent from '../components/shared/navTabContent';
-import NewsGrid from '../components/shared/newsGrid';
-import Stats from '../components/shared/stats'
+import Seo from 'components/seo';
+import Hero from 'components/shared/hero';
+import Breadcrumbs from 'components/shared/breadcrumbs';
+import CallToAction from 'components/shared/callToAction';
+import Careers from 'components/shared/careers';
+import Courses from 'components/shared/courses';
+import CustomFooter from 'components/shared/customFooter';
+import Degrees from 'components/shared/degrees';
+import Employers from 'components/shared/employers';
+import HeroVideo from 'components/shared/heroVideo';
+import NavTabs from 'components/shared/navTabs';
+import NavTabHeading from 'components/shared/navTabHeading';
+import NavTabContent from 'components/shared/navTabContent';
+import NewsGrid from 'components/shared/newsGrid';
+import Stats from 'components/shared/stats'
 import Svg from 'react-inlinesvg';
-import Tags from '../components/shared/tags';
-import Testimonials from '../components/shared/testimonial';
-import Variants from '../components/shared/variants';
+import Tags from 'components/shared/tags';
+import Testimonials from 'components/shared/testimonial';
+import Variants from 'components/shared/variants';
  
-import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
+import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
-import { useIconData } from '../utils/fetch-icon';
-import '../styles/program-page.css';
+import { useIconData } from 'utils/fetch-icon';
+import 'styles/program-page.css';
 
 function renderProgramOverview(description, specData) {
     let checkIfContentAvailable = false;

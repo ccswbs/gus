@@ -1,14 +1,14 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import CtaPara from './ctaPara';
-import Events from './events';
-import LeadPara from './leadPara';
-import LinksItems from './linksItems';
-import MediaText from './mediaText';
-import PageTabs from './pageTabs';
-import SectionWidgets from './sectionWidgets';
-import StatsWidget from './statsWidget';
-import { contentExists } from '../../utils/ug-utils';
+import CtaPara from 'components/shared/ctaPara';
+import Events from 'components/shared/events';
+import LeadPara from 'components/shared/leadPara';
+import LinksItems from 'components/shared/linksItems';
+import MediaText from 'components/shared/mediaText';
+import PageTabs from 'components/shared/pageTabs';
+import SectionWidgets from 'components/shared/sectionWidgets';
+import StatsWidget from 'components/shared/statsWidget';
+import { contentExists } from 'utils/ug-utils';
 
 const GeneralText = ({processed}) => (
     <div dangerouslySetInnerHTML={{__html: processed}}></div>

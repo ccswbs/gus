@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import { contentExists } from '../../utils/ug-utils';
+import { contentExists } from 'utils/ug-utils';
 
 function Video (props) {
     let playerID = props.playerID;

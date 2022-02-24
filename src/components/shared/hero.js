@@ -2,8 +2,8 @@ import React from 'react';
 import { GatsbyImage } from "gatsby-plugin-image";
 import { graphql } from 'gatsby';
 import PropTypes from "prop-types";
-import { contentExists } from '../../utils/ug-utils';
-import '../../styles/hero.css';
+import { contentExists } from 'utils/ug-utils';
+import 'styles/hero.css';
 
 function Hero (props) {
 	return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { contentExists, setHeadingLevel } from '../../utils/ug-utils.js';
-import '../../styles/list.css';
+import { contentExists, setHeadingLevel } from 'utils/ug-utils.js';
+import 'styles/list.css';
 
 function LinksOuter (props) {
 

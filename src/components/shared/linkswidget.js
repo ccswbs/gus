@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import LinksItems from './linksitems';
+import LinksItems from 'components/shared/linksitems';
 
-import { contentExists } from '../../utils/ug-utils';
+import { contentExists } from 'utils/ug-utils';
 
 function LinksWidget (props) {
 

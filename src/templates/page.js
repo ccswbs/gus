@@ -1,13 +1,13 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Layout from '../components/layout';
-import Seo from '../components/seo';
+import Layout from 'components/layout';
+import Seo from 'components/seo';
 import { Helmet } from 'react-helmet';
-import Hero from '../components/shared/hero'; 
-import Breadcrumbs from '../components/shared/breadcrumbs';
-import Widget from '../components/shared/widget';
-import CustomFooter from '../components/shared/customFooter';
-import { contentExists } from '../utils/ug-utils';
+import Hero from 'components/shared/hero'; 
+import Breadcrumbs from 'components/shared/breadcrumbs';
+import Widget from 'components/shared/widget';
+import CustomFooter from 'components/shared/customFooter';
+import { contentExists } from 'utils/ug-utils';
 
 const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, footer, menuName}) => (
     <Layout menuName={menuName}>

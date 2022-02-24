@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { GatsbyImage } from "gatsby-plugin-image";
-import SliderResponsive from './sliderResponsive';
-import TestimonialTitle from './testimonialTitle';
-import TestimonialTags from './testimonialTags';
-import { contentExists, stripHTMLTags, setHeadingLevel } from '../../utils/ug-utils.js';
-import '../../styles/testimonial.css';
+import SliderResponsive from 'components/shared/sliderResponsive';
+import TestimonialTitle from 'components/shared/testimonialTitle';
+import TestimonialTags from 'components/shared/testimonialTags';
+import { contentExists, stripHTMLTags, setHeadingLevel } from 'utils/ug-utils.js';
+import 'styles/testimonial.css';
 
 
 function Testimonials (props) {

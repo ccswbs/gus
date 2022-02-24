@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import Stats from './stats'
+import Stats from 'components/shared/stats'
 
 function StatsWidget (props) {
 	

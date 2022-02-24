@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { setHeadingLevel } from '../../utils/ug-utils';
+import { setHeadingLevel } from 'utils/ug-utils';
 
 /* 
 Example Usage:
