@@ -3,7 +3,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import '../styles/button-widget.css'
 import { contentExists } from '../utils/ug-utils';
-import Button from "../components/button";
+import Button from '../components/button';
 
 function ColumnClass (columnName) {
     switch (columnName){
