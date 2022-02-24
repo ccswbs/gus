@@ -1,0 +1,13 @@
+id: economic_impact_intro_stats
+title: Campus Statistics
+stats:
+  - value: "3"
+    type: CAMPUSES
+  - value: "15"
+    type: RESEARCH STATIONS
+  - value: 30,000
+    type: STUDENTS
+  - value: 3,900
+    type: FACULTY + STAFF
+  - value: 185,000
+    type: ALUMNI

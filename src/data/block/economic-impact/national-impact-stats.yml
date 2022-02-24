@@ -1,15 +1,11 @@
-id: socioeconomic_total_impact_stats
+id: economic_impact_national_impact_stats
 title: Total Impact Statistics
 stats:
   - value: $8.5 B
     type: Total Impact To Canada’s GDP
-    colour: var(--black)
   - value: 21,400
     type: Jobs Sustained
-    colour: var(--uog-red)
   - value: $1.16 B
     type: Labour Income Contributed
-    colour: var(--uog-yellow)
   - value: $1.9 B
     type: GDP From Research Productivity
-    colour: var(--uog-blue)

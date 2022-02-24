@@ -14,7 +14,7 @@ const render = ({ image, title }) => (
 
 const query = graphql`
   query {
-    socioeconomicYaml(id: {eq: "socioeconomic_banner"}) {
+    economicImpactYaml(id: {eq: "economic_impact_banner"}) {
       id
       title
       image {
@@ -29,6 +29,6 @@ const query = graphql`
   }
 `
 
-export default function SocioEconomicBanner () {
-  return <StaticQuery query={query} render={({socioeconomicYaml}) => render(socioeconomicYaml)} />
+export default function EconImpactBanner () {
+  return <StaticQuery query={query} render={({economicImpactYaml}) => render(economicImpactYaml)} />
 }

@@ -1,8 +1,8 @@
-id: socioeconomic_anchors
+id: economic_impact_anchors
 title: Jump to section on page
 anchors:
-  - title: Total Impact
-    url: "#total-impact"
+  - title: National Impact
+    url: "#national-impact"
   - title: Provincial Impact
     url: "#provincial-impact"
   - title: Community Impact

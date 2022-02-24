@@ -4,49 +4,44 @@ import { Container, Row, Col } from "react-bootstrap"
 import Layout from 'components/layout';
 import Seo from 'components/seo';
 import Breadcrumbs from 'components/shared/breadcrumbs';
-import SocioEconomicAnchors from 'components/blocks/socioeconomic/anchors';
-import SocioEconomicBanner from 'components/blocks/socioeconomic/banner';
-import SocioEconomicIntro from 'components/blocks/socioeconomic/intro';
-import SocioEconomicIntroStats from 'components/blocks/socioeconomic/intro-stats';
-import SocioEconomicTotalImpact from 'components/blocks/socioeconomic/total-impact';
-// import SocioEconomicProvImpact from 'components/blocks/socioeconomic/prov-impact';
-// import SocioEconomicCommunityImpact from 'components/blocks/socioeconomic/community-impact';
-// import SocioEconomicHumanImpact from 'components/blocks/socioeconomic/human-impact';
+import EconImpactAnchors from 'components/blocks/economic-impact/anchors';
+import EconImpactBanner from 'components/blocks/economic-impact/banner';
+import EconImpactIntro from 'components/blocks/economic-impact/intro';
+import EconImpactIntroStats from 'components/blocks/economic-impact/intro-stats';
+import EconImpactNationalImpact from 'components/blocks/economic-impact/national-impact';
+// import EconImpactProvImpact from 'components/blocks/economic-impact/prov-impact';
+// import EconImpactCommunityImpact from 'components/blocks/economic-impact/community-impact';
+// import EconImpactHumanImpact from 'components/blocks/economic-impact/human-impact';
 
 const render = (title) => (
     <Layout>
         <Helmet />
         <Seo title={title} />
         
-        <SocioEconomicBanner />
+        <EconImpactBanner />
         <Breadcrumbs />
 
         <Container className="page-container">
             <Row id="content" className="row-with-vspace site-content">
-                <Col className="content-area">
-                    <Row>
-                        <Col md={9} className="pe-4">
-                            <SocioEconomicIntro />
-                        </Col>
-                        <Col md={3} className="mt-5">
-                            <SocioEconomicAnchors />
-                        </Col>
-                    </Row>
-                    <SocioEconomicIntroStats />
+                <Col md={9} className="pe-4">
+                    <EconImpactIntro />
                 </Col>
+                <Col md={3} className="mt-5">
+                    <EconImpactAnchors />
+                </Col>
+                <EconImpactIntroStats />
             </Row>
         </Container>
-
         
-        <SocioEconomicTotalImpact />
-            {/* <SocioEconomicProvImpact />
-            <SocioEconomicCommunityImpact />
-            <SocioEconomicHumanImpact /> */}
+        <EconImpactNationalImpact />
+            {/* <EconImpactProvImpact />
+            <EconImpactCommunityImpact />
+            <EconImpactHumanImpact /> */}
     </Layout>
 )
 
 // export const query = graphql`
-//   query SocioEconomicImpactQuery {
+//   query EconomicImpactQuery {
 //     nodePage(drupal_internal__nid: {eq: FILL-IN-ID}) {
 //         drupal_id
 //         drupal_internal__nid
@@ -92,12 +87,12 @@ const render = (title) => (
 // }
 // `
 
-const SocioEconomicImpactPage = () => (
-    render("Socio-Economic Impact Report")
+const EconomicImpactPage = () => (
+    render("Economic Impact Report")
 )
 
-// const SocioEconomicImpactPage = ({data}) => (
-//     <SocioEconomicImpactPageRender nodeID={data.nodePage.drupal_internal__nid}
+// const EconomicImpactPage = ({data}) => (
+//     <EconomicImpactPageRender nodeID={data.nodePage.drupal_internal__nid}
 //           pageTitle={data.nodePage.title} 
 //           ogDescription={data.nodePage.field_metatags?.og_description}
 //           ogImage={data.images.edges[0]?.node.relationships.field_media_image.localFile.publicURL}
@@ -108,6 +103,6 @@ const SocioEconomicImpactPage = () => (
 //     />
 // )
 
-export default SocioEconomicImpactPage;
+export default EconomicImpactPage;
 
 

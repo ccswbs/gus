@@ -16,7 +16,7 @@ const render = ({ title, anchors }) => (
 
 const query = graphql`
   query {
-    socioeconomicYaml(id: {eq: "socioeconomic_anchors"}) {
+    economicImpactYaml(id: {eq: "economic_impact_anchors"}) {
       id
       title
       anchors {
@@ -27,6 +27,6 @@ const query = graphql`
   }
 `
 
-export default function SocioEconomicAnchors () {
-  return <StaticQuery query={query} render={({socioeconomicYaml}) => render(socioeconomicYaml)} />
+export default function EconImpactAnchors () {
+  return <StaticQuery query={query} render={({economicImpactYaml}) => render(economicImpactYaml)} />
 }
