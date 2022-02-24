@@ -84,16 +84,14 @@ function CountProgramVariants(variantData) {
     if (!contentIsNullOrEmpty(variantData)) {
         checkIfContentAvailable = true;
     }
-    console.log("test");
-    console.log(variantData);
     if (checkIfContentAvailable === true) {
-        var iconURL = ``;   
-        console.log(specIcon);    
+        var iconURL = ``;    
         if (specIcon !== null && specIcon !== undefined) {
             for (let i=0; i<specIcon.length; i++) {
                 for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
                     if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
                         iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
+                        console.log("variant icon:" + iconURL);
                     }
                 }
             }
