@@ -24,7 +24,7 @@ function Degrees (props) {
 		<React.Fragment>
 			{!contentIsNullOrEmpty(props.degreesData) && <>									
 				<div className="uog-card">
-					<dt>{iconURL !== null && <><Svg src={iconURL} /></>}{dtValue}</dt>
+					<dt>{iconURL !== null && <><Svg cacheRequests={false} src={iconURL} /></>}{dtValue}</dt>
 					{props.degreesData.map (degree => {
 						const acronym = (degree.field_degree_acronym !== undefined && degree.field_degree_acronym !== null ? ` (` + degree.field_degree_acronym + `)`: ``);
 						return <dd key={degree.drupal_id}>{degree.name} {acronym}</dd>
