@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Grid from './grid';
-import GridCell from './gridCell';
+import Grid from '../grid';
+import GridCell from '../gridCell';
 import { Link } from 'gatsby';
-import { contentExists } from '../utils/ug-utils';
+import { contentExists } from '../../utils/ug-utils';
 
 function RelatedPages (props) {
     if(contentExists(props.pageData) && props.pageData.length !== 0){
