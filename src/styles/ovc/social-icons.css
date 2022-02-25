@@ -6,7 +6,7 @@
 .text-dark-social:focus {
     color: #121416!important;
     background: none !important;
-    text-decoration-color: none !important;
+    text-decoration: none !important;
     border-bottom: none !important;
 
 }
