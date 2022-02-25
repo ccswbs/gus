@@ -19,6 +19,8 @@ function Degrees (props) {
 			}
 		}
 	}
+
+	console.log("Degree Icon URL:",iconURL);
 	
 	return (
 		<React.Fragment>

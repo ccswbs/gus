@@ -8,7 +8,7 @@ import CallToAction from '../components/callToAction';
 import Careers from '../components/careers';
 import Courses from '../components/courses';
 import CustomFooter from '../components/customFooter';
-import Degrees from 'comps/shared/degrees';
+import Degrees from '../components/shared/degrees';
 import Employers from '../components/employers';
 import HeroVideo from '../components/heroVideo';
 import NavTabs from '../components/navTabs';
@@ -86,12 +86,14 @@ function CountProgramVariants(variantData) {
     }
     
     if (checkIfContentAvailable === true) {
-        var iconURL = ``;       
+        var iconURL = ``;   
         if (specIcon !== null && specIcon !== undefined) {
             for (let i=0; i<specIcon.length; i++) {
                 for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
                     if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
                         iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
+                        console.log("Variants Icon URL:",iconURL);
+                        console.log("-------------");
                     }
                 }
             }
@@ -390,6 +392,9 @@ function prepareVariantHeading (variantData) {
     const ogImage = (contentExists(heroImage) ? heroImage[0].node.relationships.field_media_image.localFile.publicURL : null);
     const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
     
+
+    console.log("Program:", title);
+
     return (
     <Layout date={lastModified} menuName="main">
       <Helmet bodyAttributes={{
