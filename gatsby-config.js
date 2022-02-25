@@ -81,7 +81,7 @@ module.exports = {
       options: {
         host: `https://livechugendpoint.azureedge.net/`,
         sitemap: null,
-        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png', '/*.svg'], disallow: '/' }]
+        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
       }
     },
     {
