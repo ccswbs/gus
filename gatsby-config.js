@@ -29,7 +29,13 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
-    `gatsby-plugin-root-import`,
+    {
+      resolve: 'gatsby-plugin-root-import',
+      options: {
+        resolveModules: [path.join(__dirname, "node_modules")],
+        comps: path.join(__dirname, "src", "components"),
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-gatsby-cloud`,
     {
