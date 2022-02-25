@@ -5,6 +5,7 @@
  */
 
 let metaConfig = require('./config/sites/ugconthub.js');
+const path = require("path");
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['title'] = "Gatsby UG Starter Template";
