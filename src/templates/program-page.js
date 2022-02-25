@@ -93,6 +93,7 @@ function CountProgramVariants(variantData) {
                     if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
                         iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
                         console.log("Variants Icon URL:",iconURL);
+                        console.log(<Svg src={iconURL} />);
                         console.log("-------------");
                     }
                 }
