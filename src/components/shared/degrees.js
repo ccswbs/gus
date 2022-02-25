@@ -16,6 +16,9 @@ function Degrees (props) {
 				if (data[i].node.relationships.field_tags[j].name === "icon-degree") {
 					iconURL = data[i].node.relationships.field_media_image.localFile.publicURL;
 					console.log("degree icon:" + iconURL);
+					let testSVG = <Svg src={iconURL} />;
+					console.log(testSVG);
+					console.log("-----");
 				}
 			}
 		}
