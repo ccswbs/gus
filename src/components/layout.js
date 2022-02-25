@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DateModified from './dateModified';
+import DateModified from './shared/dateModified';
 import HeaderMenu from './headerMenu';
 import '../styles/global.css';
 
