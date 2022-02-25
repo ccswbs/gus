@@ -116,7 +116,7 @@ function CountProgramVariants(variantData) {
         return <React.Fragment>     
             {!contentIsNullOrEmpty(majors) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><Svg cacheRequests={false} src={iconURL} /></>} {majors.length}</dt>
+                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {majors.length}</dt>
                     <dd>Specialized Majors</dd>
                 </div>
             </>}
