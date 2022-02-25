@@ -1,4 +1,5 @@
 import React from 'react';
+import Svg from 'react-inlinesvg';
 import Layout from '../components/layout';
 import { Helmet } from 'react-helmet';
 import Seo from '../components/seo';
@@ -16,7 +17,6 @@ import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
 import NewsGrid from '../components/newsGrid';
 import Stats from '../components/stats'
-import Svg from 'react-inlinesvg';
 import Tags from '../components/tags';
 import Testimonials from '../components/testimonial';
 import Variants from '../components/variants';
