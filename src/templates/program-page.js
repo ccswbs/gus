@@ -8,7 +8,7 @@ import CallToAction from 'components/shared/callToAction';
 import Careers from 'components/shared/careers';
 import Courses from 'components/shared/courses';
 import CustomFooter from 'components/shared/customFooter';
-import Degrees from 'components/shared/degrees';
+import Degrees from 'components/degrees';
 import Employers from 'components/shared/employers';
 import HeroVideo from 'components/shared/heroVideo';
 import NavTabs from 'components/shared/navTabs';

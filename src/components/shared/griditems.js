@@ -14,10 +14,10 @@ function GridItems (props) {
 						let gridItem = paragraph.relationships;
 						const image = (contentExists(gridItem.field_grid_image)) ? gridItem.field_grid_image.relationships.field_media_image : null;
 						const imageFile = (contentExists(image) && contentExists(image.localFile)) ? <img src={image.localFile.childImageSharp.resize.src} alt="" /> : null;
-						console.log(gridItem.field_grid_page.fields.alias.value, "url")
-						console.log(image, "image")
-						console.log(imageFile, "imageFile")
-						console.log(gridItem.field_grid_page.title,"title")
+						// console.log(gridItem.field_grid_page.fields.alias.value, "url")
+						// console.log(image, "image")
+						// console.log(imageFile, "imageFile")
+						// console.log(gridItem.field_grid_page.title,"title")
 						return <GridCell key={paragraph.drupal_id} 
 									url={gridItem.field_grid_page.fields.alias.value} 
 									image={imageFile} 
