@@ -60,15 +60,21 @@ module.exports = {
           password: process.env.BASIC_AUTH_PASSWORD,
         },
       },
-    },
-  
+    },  
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `src`,
         path: `${__dirname}/src/`,
       },
-    },    
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `components`,
+        path: `${__dirname}/src/components/`,
+      },
+    },       
     {
       resolve: `gatsby-plugin-google-tagmanager`,
       options: {
