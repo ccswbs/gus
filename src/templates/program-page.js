@@ -14,7 +14,7 @@ import HeroVideo from '../components/heroVideo';
 import NavTabs from '../components/navTabs';
 import NavTabHeading from '../components/navTabHeading';
 import NavTabContent from '../components/navTabContent';
-import NewsGrid from '../components/newsGrid';
+import NewsGrid from '../components/shared/newsGrid';
 import Stats from '../components/stats'
 import Svg from 'react-inlinesvg';
 import Tags from '../components/tags';
