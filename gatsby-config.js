@@ -74,6 +74,13 @@ module.exports = {
         name: `components`,
         path: `${__dirname}/src/components/`,
       },
+    }, 
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `shared`,
+        path: `${__dirname}/src/components/shared/`,
+      },
     },       
     {
       resolve: `gatsby-plugin-google-tagmanager`,
