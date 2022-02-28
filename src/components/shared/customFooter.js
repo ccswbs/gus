@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import FooterSocial from './blocks/ovc/footer_social';
+import FooterSocial from 'components/blocks/ovc/footer_social';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Widget from 'components/shared/widget';

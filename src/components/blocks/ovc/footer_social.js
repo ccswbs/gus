@@ -1,5 +1,5 @@
 import React from "react";
-import '../../../styles/ovc/social-icons.css';
+import 'styles/ovc/social-icons.css';
 
 // Social icons
 import {
