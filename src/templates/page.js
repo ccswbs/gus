@@ -1,12 +1,12 @@
 import React from 'react';
+import { graphql } from 'gatsby';
 import Layout from 'components/layout';
-import { Helmet } from 'react-helmet';
 import Seo from 'components/seo';
+import { Helmet } from 'react-helmet';
 import Hero from 'components/shared/hero'; 
 import Breadcrumbs from 'components/shared/breadcrumbs';
-import CustomFooter from 'components/shared/customFooter';
 import Widget from 'components/shared/widget';
-import { graphql } from 'gatsby';
+import CustomFooter from 'components/shared/customFooter';
 import { contentExists } from 'utils/ug-utils';
 
 const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, footer, menuName}) => (
@@ -41,70 +41,69 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
 export const query = graphql`
   query ($id: String, $nid: String, $tid: [String]) {
     nodePage(id: {eq: $id}) {
-        drupal_id
-        drupal_internal__nid
-        title
-        field_metatags {
-            og_description
+      drupal_id
+      drupal_internal__nid
+      title
+      field_metatags {
+        og_description
+      }
+      path {
+        alias
+      }
+      relationships {
+        field_widgets {
+          ...FieldWidgetsFragment
         }
-        path {
-            alias
+        field_tags {
+          __typename
+          ... on TaxonomyInterface {
+            drupal_id
+            id
+            name
+          }
         }
-        relationships {
-            field_widgets {
-                ...FieldWidgetsFragment
-            }
-
-            field_tags {
-                __typename
-                ... on TaxonomyInterface {
-                    drupal_id
-                    id
-                    name
-                }
-            }
-        }
+      }
     }
 
     footer: allNodeCustomFooter (filter: {fields: {tags: {in: $tid}}}){
-        edges {
-          node {
-            ...CustomFooterFragment
-          }
+      edges {
+        node {
+          ...CustomFooterFragment
         }
+      }
     }
 
     images: allMediaImage(filter: {relationships: {node__page: {elemMatch: {id: {eq: $id}}}}}) {
-        edges {
-            node {
-                drupal_id
-                ...HeroImageFragment
-            }
+      edges {
+        node {
+          drupal_id
+          ...HeroImageFragment
         }
+      }
     }
 
     menu: menuLinkContentMenuLinkContent(link: {uri: {eq: $nid}}) {
-        link {
-            uri
-            url
-        }
-        drupal_parent_menu_item
-        drupal_id
-        menu_name
+      link {
+        uri
+        url
+      }
+      drupal_parent_menu_item
+      drupal_id
+      menu_name
     }
 }
 `
 
 const PageTemplate = ({data}) => (
     <Page nodeID={data.nodePage.drupal_internal__nid}
-          pageTitle={data.nodePage.title} 
-          ogDescription={data.nodePage.field_metatags?.og_description}
-          ogImage={data.images.edges[0]?.node.relationships.field_media_image.localFile.publicURL}
-          ogImageAlt={data.images.edges[0]?.node?.field_media_image.alt}
-          imageData={data.images.edges}
-          widgets={data.nodePage.relationships.field_widgets}
-          footer={data.footer.edges}
-          menuName={data.menu?.menu_name || `main`}
+        pageTitle={data.nodePage.title} 
+        ogDescription={data.nodePage.field_metatags?.og_description}
+        ogImage={data.images.edges[0]?.node.relationships.field_media_image.localFile.publicURL}
+        ogImageAlt={data.images.edges[0]?.node?.field_media_image.alt}
+        imageData={data.images.edges}
+        widgets={data.nodePage.relationships.field_widgets}
+        footer={data.footer.edges}
+        menuName={data.menu?.menu_name || `main`}
     ></Page>
 )
 

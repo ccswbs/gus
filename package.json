@@ -32,6 +32,7 @@
     "gatsby-plugin-styled-components": "^4.0.0",
     "gatsby-source-drupal": "^4.14.3",
     "gatsby-source-filesystem": "^3.14.0",
+    "gatsby-source-wordpress": "^6.6.0",
     "gatsby-transformer-sharp": "^3.14.0",
     "gatsby-transformer-yaml": "^3.1.0",
     "is-subset": "^0.1.1",

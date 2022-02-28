@@ -1,12 +1,13 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import LinksItems from 'components/shared/linksItems';
 import CtaPara from 'components/shared/ctaPara';
+import Events from 'components/shared/events';
 import LeadPara from 'components/shared/leadPara';
+import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
+import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
-import PageTabs from 'components/shared/pageTabs';
 import { contentExists } from 'utils/ug-utils';
 
 const GeneralText = ({processed}) => (
@@ -36,6 +37,8 @@ const Widget = ({widget}) => {
             );
         case "paragraph__call_to_action":
             return <CtaPara pageData={widget} />;
+        case "paragraph__events_widget":
+            return <Events eventData={widget} />;
         case "paragraph__general_text":
             return <GeneralText processed={widget.field_general_text.processed} />;
         case "paragraph__lead_paragraph":
@@ -75,18 +78,6 @@ const Widget = ({widget}) => {
 export default Widget
 
 export const query = graphql`
-  fragment GeneralTextParagraphFragment on paragraph__general_text {
-    drupal_id
-    field_general_text {
-      processed
-    }
-    relationships {
-      field_section_column {
-        name
-      }
-    }
-  }
-
   fragment AccordionSectionParagraphFragment on paragraph__accordion_section {
     drupal_id
     relationships {
@@ -101,36 +92,48 @@ export const query = graphql`
       }
     }
   }
-
+  fragment GeneralTextParagraphFragment on paragraph__general_text {
+    drupal_id
+    field_general_text {
+      processed
+    }
+    relationships {
+      field_section_column {
+        name
+      }
+    }
+  }  
   fragment FieldWidgetsFragment on Node {
     __typename
+    ... on paragraph__accordion_section {
+        ...AccordionSectionParagraphFragment
+    }
     ... on paragraph__call_to_action {
         ...CallToActionParagraphFragment
+    }
+    ... on paragraph__events_widget {
+        ...EventsParagraphFragment
     }
     ... on paragraph__general_text {
         ...GeneralTextParagraphFragment
     }
-    ... on paragraph__accordion_section {
-        ...AccordionSectionParagraphFragment
-    }
     ... on paragraph__lead_paragraph {
         ...LeadParagraphFragment
-    }
-    ... on paragraph__section_tabs {
-        ...SectionTabsParagraphFragment
-    }
+    }    
     ... on paragraph__links_widget {
         ...LinksWidgetParagraphFragment
     }
+    ... on paragraph__media_text {
+        ...MediaTextParagraphFragment
+    }    
     ... on paragraph__section {
         ...SectionParagraphFragment
     }
-    ... on paragraph__media_text {
-        ...MediaTextParagraphFragment
+    ... on paragraph__section_tabs {
+        ...SectionTabsParagraphFragment
     }
     ... on paragraph__stats_widget {
         ...StatsWidgetParagraphFragment
     }
   }
-
 `

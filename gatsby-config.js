@@ -91,6 +91,44 @@ module.exports = {
       options: {
         path: `./src/data/`,
       }
+    },
+    {
+      resolve: `gatsby-source-wordpress`,
+      options: {
+        url:
+        // allows a fallback url if WPGRAPHQL_URL is not set in the env, this may be a local or remote WP instance.
+          process.env.WPGRAPHQL_URL ||
+          `https://live-ug-news.pantheonsite.io/graphql`,
+        schema: {
+          //Prefixes all WP Types with "Wp" so "Post and allPost" become "WpPost and allWpPost".
+          typePrefix: `Wp`,
+        },
+        develop: {
+          //caches media files outside of Gatsby's default cache an thus allows them to persist through a cache reset.
+          hardCacheMediaFiles: true,
+        },
+        type: {
+          Event: {
+            limit:
+              process.env.NODE_ENV === `development`
+                ? // Lets just pull 25 posts in development to make it easy on ourselves (aka. faster).
+                  25
+                : // and we don't actually need more than 50 in production for this particular site
+                  50,
+          },
+          Comment: {exclude: true},
+          Menu: {exclude: true},
+          MenuItem: {exclude: true},
+          Taxonomy: {exclude: true},
+          Category: {exclude: true},
+          UserRole: {exclude: true},
+          PostFormat: {exclude: true},
+          Page: {exclude: true},
+          Post: {exclude: true},
+          Tag: {exclude: true},
+          User: {exclude: true},
+        },
+      },
     }
     
   ],
