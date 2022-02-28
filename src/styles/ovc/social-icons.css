@@ -1,5 +1,6 @@
 .text-dark-social {
     color: #343a40!important;
+    transition: none !important;
 }
 
 .text-dark-social:hover,
@@ -8,5 +9,6 @@
     background: none !important;
     text-decoration: none !important;
     border-bottom: none !important;
+    transition: none !important;
 
 }
