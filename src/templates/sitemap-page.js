@@ -1,5 +1,5 @@
 import { graphql, Link } from 'gatsby';
-import Layout from '../components/layout';
+import Layout from 'components/layout';
 import React from 'react';
 
 const SitePage = ({pageContext, data }) => {
