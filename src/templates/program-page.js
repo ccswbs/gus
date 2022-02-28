@@ -1,30 +1,28 @@
 import React from 'react';
-import Layout from '../components/layout';
+import Layout from 'components/layout';
 import { Helmet } from 'react-helmet';
-import Seo from '../components/seo';
-import Hero from '../components/hero';
-import Breadcrumbs from '../components/breadcrumbs';
-import CallToAction from '../components/callToAction';
-import Careers from '../components/careers';
-import CustomFooter from '../components/customFooter';
-import Courses from '../components/courses';
-import Degrees from '../components/degrees';
-import Employers from '../components/employers';
-import HeroVideo from '../components/heroVideo';
-import NavTabs from '../components/navTabs';
-import NavTabHeading from '../components/navTabHeading';
-import NavTabContent from '../components/navTabContent';
-import NewsGrid from '../components/newsGrid';
-import Stats from '../components/stats'
-import Svg from 'react-inlinesvg';
-import Tags from '../components/tags';
-import Testimonials from '../components/testimonial';
-import Variants from '../components/variants';
+import Seo from 'components/seo';
+import Hero from 'components/shared/hero';
+import Breadcrumbs from 'components/shared/breadcrumbs';
+import CallToAction from 'components/shared/callToAction';
+import Careers from 'components/shared/careers';
+import Courses from 'components/shared/courses';
+import CustomFooter from 'components/shared/customFooter';
+import Degrees from 'components/shared/degrees';
+import Employers from 'components/shared/employers';
+import HeroVideo from 'components/shared/heroVideo';
+import NavTabs from 'components/shared/navTabs';
+import NavTabHeading from 'components/shared/navTabHeading';
+import NavTabContent from 'components/shared/navTabContent';
+import NewsGrid from 'components/shared/newsGrid';
+import Stats from 'components/shared/stats'
+import Tags from 'components/shared/tags';
+import Testimonials from 'components/shared/testimonial';
+import Variants from 'components/shared/variants';
  
-import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from '../utils/ug-utils';
+import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
-import { useIconData } from '../utils/fetch-icon';
-import '../styles/program-page.css';
+import 'styles/program-page.css';
 
 function renderProgramOverview(description, specData) {
     let checkIfContentAvailable = false;
@@ -74,7 +72,6 @@ function renderProgramStats(degreesData, variantData, statsData) {
 }
 
 function CountProgramVariants(variantData) {
-    const specIcon = useIconData();
     let checkIfContentAvailable = false;
     let majors = [];
     let minors = [];
@@ -84,18 +81,7 @@ function CountProgramVariants(variantData) {
     if (!contentIsNullOrEmpty(variantData)) {
         checkIfContentAvailable = true;
     }
-    
     if (checkIfContentAvailable === true) {
-        var iconURL = ``;       
-        if (specIcon !== null && specIcon !== undefined) {
-            for (let i=0; i<specIcon.length; i++) {
-                for (let j=0; j<specIcon[i].node.relationships.field_tags.length; j++) {
-                    if (specIcon[i].node.relationships.field_tags[j].name === "icon-majors") {
-                        iconURL = specIcon[i].node.relationships.field_media_image.localFile.publicURL;
-                    }
-                }
-            }
-        }       
         variantData.forEach((edge) => {
             if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
                 switch(edge.relationships.field_variant_type.name) {
@@ -116,25 +102,25 @@ function CountProgramVariants(variantData) {
         return <React.Fragment>     
             {!contentIsNullOrEmpty(majors) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {majors.length}</dt>
+                    <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {majors.length}</dt>
                     <dd>Specialized Majors</dd>
                 </div>
             </>}
             {!contentIsNullOrEmpty(minors) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {minors.length}</dt>
+                    <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {minors.length}</dt>
                     <dd>Specialized Minors</dd>
                 </div>
             </>}
             {!contentIsNullOrEmpty(assocDiplomas) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {assocDiplomas.length}</dt>
+                    <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {assocDiplomas.length}</dt>
                     <dd>Associate Diplomas</dd>
                 </div>
             </>}
             {!contentIsNullOrEmpty(certificates) && <>
                 <div className="uog-card">
-                    <dt>{iconURL !== null && <><Svg src={iconURL} /></>} {certificates.length}</dt>
+                    <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {certificates.length}</dt>
                     <dd>Optional Certificates</dd>
                 </div>
             </>}

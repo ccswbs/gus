@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SkipLink from './components/skiplink'
+import SkipLink from 'components/skiplink'
 
 export default function HTML(props) {
   return (
