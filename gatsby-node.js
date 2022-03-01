@@ -184,7 +184,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       tags: [String]
     }
     type media__imageRelationships implements Node {
-      field_media_image: file__file @link(from: "field_media_image___NODE")
+      field_media_image: file__file @link(from: "file__file.localFile" by: "localFile")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
       node__page: [node__page] @link(from: "node__page___NODE")
       node__program: [node__program] @link(from: "node__program___NODE")
@@ -198,8 +198,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       relationships: media__remote_videoRelationships
     }
     type media__remote_videoRelationships implements Node {
-      field_media_file: file__file @link(from: "field_media_file___NODE")
-      field_video_cc: file__file @link(from: "field_video_cc___NODE")
+      field_media_file: file__file @link(from: "file__file.localFile" by: "localFile")
+      field_video_cc: file__file @link(from: "file__file.localFile" by: "localFile")
       node__program: [node__program] @link(from: "node__program___NODE")
     }
     
@@ -309,7 +309,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       tags: [String]
     }
     type node__employerRelationships {
-      field_image: file__file @link(from: "field_image___NODE")
+      field_image: file__file @link(from: "file__file.localFile" by: "localFile")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__custom_footer implements Node {
