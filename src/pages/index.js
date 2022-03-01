@@ -1,7 +1,7 @@
 import { graphql, Link } from 'gatsby';
-import Layout from '../components/layout';
+import Layout from 'components/layout';
 import React from 'react';
-import Seo from '../components/seo';
+import Seo from 'components/seo';
 
 const IndexPage = ({ data }) => {
 
@@ -60,8 +60,9 @@ const IndexPage = ({ data }) => {
                 {unpubPrograms.map((program) => (
                     <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                 ))}
-            </ul>
-        </div></div>
+            </ul>            
+        </div>
+        </div>
     </Layout>
     )
 }
@@ -94,6 +95,6 @@ export const query = graphql`
             status
           }
         }
-      }        
+      }
     }
 `
