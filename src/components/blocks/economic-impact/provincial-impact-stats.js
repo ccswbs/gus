@@ -7,18 +7,16 @@ const colourOptions = [
   {border: "var(--black)"},
   {border: "var(--uog-red)"},
   {border: "var(--uog-yellow)"},
-  {border: "var(--uog-blue)"},
-  {border: "var(--black)"},
 ];
 
 const render = ({ title, stats }) => (
     <>
     <Container>
       <h3 className="visually-hidden">{title}</h3>
-      <Statistic className="row row-cols-sm-2 mb-5 g-5">
+      <Statistic className="row row-cols-sm-3 mb-5 g-5">
         {stats.map(({value, type}, index) => 
-          <div key={`intro-stat-${index}`} className="col-lg">
-            <Statistic.Card key={`intro-stat-${index}`} border={colourOptions[index].border} >
+          <div key={`prov-stat-${index}`} className="col-lg">
+            <Statistic.Card key={`prov-stat-${index}`} border={colourOptions[index].border} >
               <Statistic.Value><strong>{value}</strong></Statistic.Value>
               <Statistic.Type>{type}</Statistic.Type>
             </Statistic.Card>
@@ -31,7 +29,7 @@ const render = ({ title, stats }) => (
 
 const query = graphql`
   query {
-    economicImpactYaml(id: {eq: "economic_impact_intro_stats"}) {
+    economicImpactYaml(id: {eq: "economic_impact_provincial_stats"}) {
       id
       title
       stats {

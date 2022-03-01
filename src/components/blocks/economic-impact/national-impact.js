@@ -43,7 +43,7 @@ const render = ({ title, body_html, testimonial, aside }) => (
                             <h2 id="national-impact">{title}</h2>
                         </Col>
                         <Row className="gx-0">
-                            <Col md={6} className=" fs-3 pe-4">
+                            <Col md={6} className="fs-3 pe-4">
                                 <div dangerouslySetInnerHTML={{__html: body_html}}></div>
                                 <NationalImpactTestimony testimonial={testimonial} />
                             </Col>

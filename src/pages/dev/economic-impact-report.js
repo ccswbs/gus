@@ -9,7 +9,7 @@ import EconImpactBanner from 'components/blocks/economic-impact/banner';
 import EconImpactIntro from 'components/blocks/economic-impact/intro';
 import EconImpactIntroStats from 'components/blocks/economic-impact/intro-stats';
 import EconImpactNationalImpact from 'components/blocks/economic-impact/national-impact';
-// import EconImpactProvImpact from 'components/blocks/economic-impact/prov-impact';
+import EconImpactProvImpact from 'components/blocks/economic-impact/provincial-impact';
 // import EconImpactCommunityImpact from 'components/blocks/economic-impact/community-impact';
 // import EconImpactHumanImpact from 'components/blocks/economic-impact/human-impact';
 
@@ -34,8 +34,8 @@ const render = (title) => (
         </Container>
         
         <EconImpactNationalImpact />
-            {/* <EconImpactProvImpact />
-            <EconImpactCommunityImpact />
+        <EconImpactProvImpact />
+            {/* <EconImpactCommunityImpact />
             <EconImpactHumanImpact /> */}
     </Layout>
 )

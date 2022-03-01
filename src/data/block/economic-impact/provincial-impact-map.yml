@@ -1,0 +1,31 @@
+id: economic_impact_provincial_map
+
+image:
+  src: ../../../images/economic-impact/map2.jpg
+  alt: Map of Ontario showing locations of 15 research station, as well as the 3 campuses
+
+stations:
+  section_title: 15 Research Station Locations
+  names:
+    - Alma
+    - Arkell
+    - Bradford
+    - Cedar Springs
+    - Elora
+    - Emo (not pictured)
+    - Guelph
+    - Huron
+    - New Liskeard (not pictured)
+    - Ponsonby
+    - Ridgetown
+    - Simcoe
+    - Vineland
+    - Winchester
+    - Woodstock
+    
+campuses:
+  section_title: Campus Locations
+  names:
+    - Guelph-Humber
+    - University of Guelph
+    - Ridgetown Campus
