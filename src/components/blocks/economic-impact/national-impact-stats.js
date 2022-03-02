@@ -1,7 +1,7 @@
 import React from "react"
+import { Container, Col } from "react-bootstrap"
 import { StaticQuery, graphql } from "gatsby"
-import { Row, Col } from 'react-bootstrap'
-import Statistic from "../../shared/statistic"
+import Statistic from "components/shared/statistic"
 
 const colourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
@@ -11,17 +11,23 @@ const colourOptions = [
 ];
 
 const render = ({ title, stats }, colourOptions) => (
+  <Container className="page-container">
     <div className="mx-4">
         <h3 className="visually-hidden">{title}</h3>
-        <Statistic className="row mb-5 gx-0">
+        <Statistic className="row g-0">
             {stats.map(({value, type}, index) => 
-                <Statistic.SolidCard key={`nationalimpact-stat-${index}`} background={colourOptions[index].background} colour={colourOptions[index].colour} className="col content-area px-5">
+              <Col key={`nationalimpact-stat-${index}`}>
+                <Statistic.SolidCard 
+                  background={colourOptions[index].background} 
+                  colour={colourOptions[index].colour} >
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type>{type}</Statistic.Type>
                 </Statistic.SolidCard>
+              </Col>
             )}
         </Statistic>
     </div>
+  </Container>
 )
 
 const query = graphql`

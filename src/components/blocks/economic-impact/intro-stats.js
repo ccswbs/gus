@@ -1,6 +1,6 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { Container } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import Statistic from 'components/shared/statistic';
 
 const colourOptions = [
@@ -17,12 +17,12 @@ const render = ({ title, stats }) => (
       <h3 className="visually-hidden">{title}</h3>
       <Statistic className="row row-cols-sm-2 mb-5 g-5">
         {stats.map(({value, type}, index) => 
-          <div key={`intro-stat-${index}`} className="col-lg">
-            <Statistic.Card key={`intro-stat-${index}`} border={colourOptions[index].border} >
+          <Col key={`intro-stat-${index}`} className="col-lg">
+            <Statistic.BorderCard border={colourOptions[index].border} >
               <Statistic.Value><strong>{value}</strong></Statistic.Value>
               <Statistic.Type>{type}</Statistic.Type>
-            </Statistic.Card>
-          </div>
+            </Statistic.BorderCard>
+          </Col>
         )}
         </Statistic>
       </Container>

@@ -1,28 +1,30 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import { Row, Col } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap"
 
 const render = ({ image, stations, campuses }) => (
-    <Row>
-        <Col md={9}>
-            <GatsbyImage image={getImage(image.src)} alt={image.alt} />
-        </Col>
-        <Col md={3}>
-            <h3>{stations.section_title}</h3>
-            <ul>
-                {stations.names.map((name, index) => 
-                    <li key={`station-${index}`}>{name}</li>
-                )}
-            </ul>
-            <h3>{campuses.section_title}</h3>
-            <ul>
-                {campuses.names.map((name, index) => 
-                    <li key={`campus-${index}`}>{name}</li>
-                )}
-            </ul>
-        </Col>
-    </Row>
+    <Container>
+        <Row>
+            <Col md={9}>
+                <GatsbyImage image={getImage(image.src)} alt={image.alt} />
+            </Col>
+            <Col md={3}>
+                <h3>{stations.section_title}</h3>
+                <ul>
+                    {stations.names.map((name, index) => 
+                        <li key={`station-${index}`}>{name}</li>
+                    )}
+                </ul>
+                <h3>{campuses.section_title}</h3>
+                <ul>
+                    {campuses.names.map((name, index) => 
+                        <li key={`campus-${index}`}>{name}</li>
+                    )}
+                </ul>
+            </Col>
+        </Row>
+    </Container>
 )
 
 const query = graphql`

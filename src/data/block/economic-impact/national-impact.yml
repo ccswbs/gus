@@ -11,12 +11,13 @@ body_html: |
 
 testimonial: 
   quote: AI has the potential to do harm and the CARE-AI’s ecosystem. potential to improve life. We want to connect researchers trying to solve real problems that are important to people.
-  image:
-    src: ../../../images/economic-impact/testimonial-1.jpg
-    alt: Circuit board
-  person: Graham Taylor
-  person_pronouns: (he/him)
-  person_desc: Professor
+  source:
+    name: Graham Taylor
+    pronouns: (he/him)
+    desc: Professor
+    image:
+      src: ../../../images/economic-impact/testimonial-1.jpg
+      alt: Circuit board
 
 aside:
   title: CARE-AI

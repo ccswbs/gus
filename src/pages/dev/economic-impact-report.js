@@ -4,39 +4,24 @@ import { Container, Row, Col } from "react-bootstrap"
 import Layout from 'components/layout';
 import Seo from 'components/seo';
 import Breadcrumbs from 'components/shared/breadcrumbs';
-import EconImpactAnchors from 'components/blocks/economic-impact/anchors';
 import EconImpactBanner from 'components/blocks/economic-impact/banner';
-import EconImpactIntro from 'components/blocks/economic-impact/intro';
-import EconImpactIntroStats from 'components/blocks/economic-impact/intro-stats';
+import EconImpactPresMessage from 'components/blocks/economic-impact/pres-message'
 import EconImpactNationalImpact from 'components/blocks/economic-impact/national-impact';
 import EconImpactProvImpact from 'components/blocks/economic-impact/provincial-impact';
-// import EconImpactCommunityImpact from 'components/blocks/economic-impact/community-impact';
+import EconImpactCommunityImpact from 'components/blocks/economic-impact/community-impact';
 // import EconImpactHumanImpact from 'components/blocks/economic-impact/human-impact';
 
 const render = (title) => (
     <Layout>
         <Helmet />
         <Seo title={title} />
-        
         <EconImpactBanner />
         <Breadcrumbs />
-
-        <Container className="page-container">
-            <Row id="content" className="row-with-vspace site-content">
-                <Col md={9} className="pe-4">
-                    <EconImpactIntro />
-                </Col>
-                <Col md={3} className="mt-5">
-                    <EconImpactAnchors />
-                </Col>
-                <EconImpactIntroStats />
-            </Row>
-        </Container>
-        
+        <EconImpactPresMessage />
         <EconImpactNationalImpact />
         <EconImpactProvImpact />
-            {/* <EconImpactCommunityImpact />
-            <EconImpactHumanImpact /> */}
+        <EconImpactCommunityImpact />
+           {/* <EconImpactHumanImpact /> */}
     </Layout>
 )
 

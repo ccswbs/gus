@@ -3,21 +3,21 @@ import styled from "styled-components"
 
 const StatCard = styled.div`
   background: var(--uog-blue-muted);
-  border-left: 1rem solid ${props => (props.border ?? "#000000")};
   color: #000000;
   flex: 1 0;
   padding: 1.25rem;
   min-width: 25%;
   word-wrap: break-word;
+  text-align: center;
 `
-const StatSolidCard = styled.div`
+const StatBorderCard = styled(StatCard)`
+  border-left: 1rem solid ${props => (props.border ?? "#000000")};
+  text-align: left;
+`;
+const StatSolidCard = styled(StatCard)`
   background: ${props => (props.background ?? "#000000")};
   color: ${props => (props.colour ?? "#ffffff")};
-  min-width: 25%;
-  padding: 1.25rem;
-  text-align: center;
-  word-wrap: break-word;
-`
+`;
 const StatValue = styled.dt`
   font-size: 4.25rem;
 `
@@ -32,10 +32,16 @@ const Statistic = ({id, children, className=""}) => (
   </dl>
 )
 
-Statistic.Card = ({border, children, className=""}) => (
-  <StatCard border={border} className={`${className}`}>
+Statistic.Card = ({children}) => (
+  <StatCard>
     {children}
   </StatCard>
+)
+
+Statistic.BorderCard = ({border, children, className=""}) => (
+  <StatBorderCard border={border} className={`${className}`}>
+    {children}
+  </StatBorderCard>
 )
 
 Statistic.SolidCard = ({background, colour, children, className=""}) => (

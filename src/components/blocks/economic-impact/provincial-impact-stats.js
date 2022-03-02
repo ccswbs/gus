@@ -16,10 +16,10 @@ const render = ({ title, stats }) => (
       <Statistic className="row row-cols-sm-3 mb-5 g-5">
         {stats.map(({value, type}, index) => 
           <div key={`prov-stat-${index}`} className="col-lg">
-            <Statistic.Card key={`prov-stat-${index}`} border={colourOptions[index].border} >
+            <Statistic.BorderCard key={`prov-stat-${index}`} border={colourOptions[index].border} >
               <Statistic.Value><strong>{value}</strong></Statistic.Value>
               <Statistic.Type>{type}</Statistic.Type>
-            </Statistic.Card>
+            </Statistic.BorderCard>
           </div>
         )}
         </Statistic>

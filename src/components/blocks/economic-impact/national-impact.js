@@ -16,19 +16,19 @@ const NationalImpactAside = ({aside}) => (
 )
 
 const NationalImpactTestimony = ({ testimonial }) => (
-    <div className="testimonial mt-5 me-3 pb-5">
-        <div className="row">
-            <div className="col-md-3 content-area">
-                <GatsbyImage image={getImage(testimonial.image.src)} alt={testimonial.image.alt} imgClassName="rounded-circle" />
-            </div>
+    <div className="mt-5 me-3 pb-5">
+        <Row>
+            <Col className="col-md-3 content-area">
+                <GatsbyImage image={getImage(testimonial.source.image.src)} alt={testimonial.source.image.alt} imgClassName="rounded-circle" />
+            </Col>
 
-            <div className="col-md-9 content-area">
+            <Col className="col-md-9 content-area">
                 <p className="quote fs-2">
                     <i className="fad fa-quote-left" aria-hidden="true"></i> <em>{testimonial.quote}</em> <i className="fad fa-quote-right" aria-hidden="true"></i></p>
-                <p className="author"><strong>{testimonial.person}</strong> {testimonial.person_pronouns}
-                <br /><em>{testimonial.person_desc}</em></p>
-            </div>
-        </div>
+                <p className="author"><strong>{testimonial.source.name}</strong> {testimonial.source.pronouns}
+                <br /><em>{testimonial.source.desc}</em></p>
+            </Col>
+        </Row>
     </div>
 )
 
@@ -55,13 +55,7 @@ const render = ({ title, body_html, testimonial, aside }) => (
                 </Container>
             </div>
         </Container>
-        <Container fluid={true}>
-            <div className="full-width-container">
-                <Container className="page-container">
-                    <EconImpactNationalImpactStats />
-                </Container>
-            </div>
-        </Container>
+        <EconImpactNationalImpactStats />
     </>
 )
 
@@ -73,17 +67,19 @@ const query = graphql`
         body_html
         testimonial {
             quote
-            image {
-                src {
-                  childImageSharp {
-                    gatsbyImageData
-                  }
+            source {
+                name
+                desc
+                pronouns
+                image {
+                    src {
+                      childImageSharp {
+                        gatsbyImageData
+                      }
+                    }
+                    alt
                 }
-                alt
             }
-            person
-            person_pronouns
-            person_desc
         }
         aside {
             title
