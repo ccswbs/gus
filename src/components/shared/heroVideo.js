@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { contentExists } from 'utils/ug-utils';
-import 'styles/heroVideo.css';
+import 'styles/shared/heroVideo.css';
 
 class HeroVideo extends Component {
     

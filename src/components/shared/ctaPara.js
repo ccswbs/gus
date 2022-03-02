@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import 'styles/cta.css';
+import 'styles/shared/cta.css';
 
 function ctaPara (props) {
    

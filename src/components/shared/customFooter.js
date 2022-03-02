@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Widget from 'components/shared/widget';
 import { contentExists } from 'utils/ug-utils';
-import 'styles/customFooter.css';
+import 'styles/shared/customFooter.css';
 
 function CustomFooter (props) {
 	

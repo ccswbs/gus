@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { contentIsNullOrEmpty } from 'utils/ug-utils';
-import 'styles/stats.css';
+import 'styles/shared/stats.css';
 
 function Degrees (props) {
 	let dtValue = props.degreesData.length === 1 ? "Degree" : "Degrees";

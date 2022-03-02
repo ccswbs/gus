@@ -52,7 +52,7 @@ Statistic.SolidCard = ({background, colour, children, className=""}) => (
 
 Statistic.Icon = ({icon}) => (
   <span className="fa-icon-colour">
-    <i className={icon}>  </i>
+    <i className={icon} aria-hidden="true">  </i>
   </span>
 )
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { Container, Row, Col } from "react-bootstrap"
 import Layout from 'components/layout';
 import Seo from 'components/seo';
 import Breadcrumbs from 'components/shared/breadcrumbs';
@@ -10,6 +9,8 @@ import EconImpactNationalImpact from 'components/blocks/economic-impact/national
 import EconImpactProvImpact from 'components/blocks/economic-impact/provincial-impact';
 import EconImpactCommunityImpact from 'components/blocks/economic-impact/community-impact';
 // import EconImpactHumanImpact from 'components/blocks/economic-impact/human-impact';
+
+import "styles/economic-impact/economic-impact.css"
 
 const render = (title) => (
     <Layout>
@@ -21,7 +22,7 @@ const render = (title) => (
         <EconImpactNationalImpact />
         <EconImpactProvImpact />
         <EconImpactCommunityImpact />
-           {/* <EconImpactHumanImpact /> */}
+        {/* <EconImpactHumanImpact /> */}
     </Layout>
 )
 

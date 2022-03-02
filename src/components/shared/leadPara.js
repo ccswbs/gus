@@ -3,7 +3,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import { contentExists } from 'utils/ug-utils';
-import 'styles/cta.css';
+import 'styles/shared/cta.css';
 
 function leadPara (props) {
 
