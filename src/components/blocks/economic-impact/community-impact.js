@@ -9,7 +9,7 @@ const render = ({ title, intro, stats }) => (
         <Row className="mt-5">
             <h2>{title}</h2>
             <Col md={5}>
-                <h3>{intro.heading}</h3>
+                <h3 className="mt-0">{intro.heading}</h3>
                 {intro.body.map((paragraph, index) => <p key={`community-text-${index}`}>{paragraph}</p>)}
             </Col>
             <Col md={7}>
@@ -17,7 +17,7 @@ const render = ({ title, intro, stats }) => (
                     {stats.map(({value, type, icon}, index) => 
                         <Col key={`community-stat-${index}`}>
                             <Statistic.Card className="px-5">
-                                <i className={`${icon} mt-3 ft-3`} aria-hidden="true"></i>
+                                <i className={`${icon} mt-3 fa-4x`} aria-hidden="true"></i>
                                 <Statistic.Value><strong>{value}</strong></Statistic.Value>
                                 <Statistic.Type>{type}</Statistic.Type>
                             </Statistic.Card>

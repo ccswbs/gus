@@ -9,12 +9,11 @@ const render = ({ title, image, sections }) => (
             <Col md={12}>
                 <h2 id="provincial-impact">{title}</h2>
             </Col>
-            {/* Temporarily using Bootstrap to change font-size */}
-            <Col md={7} className="fs-3">
+            <Col md={7}>
                 {sections.map(({title, body_html}, index) => 
                     <div key={`prov-section-${index}`}>
                         <h3>{title}</h3>
-                        <div className="border-start border-warning border-4" dangerouslySetInnerHTML={{__html: body_html}}></div>
+                        <div className="border-start border-warning border-4 px-4" dangerouslySetInnerHTML={{__html: body_html}}></div>
                     </div>
                 )}
             </Col>

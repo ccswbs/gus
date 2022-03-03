@@ -4,7 +4,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Row, Col } from "react-bootstrap"
 
 const render = ({ quote, source, background_image }) => (
-    <Container>
+    <Container className="page-container">
         <Row className="card border-0">
             <GatsbyImage image={getImage(background_image.src)} alt={background_image.alt} className="card-img" />
             <Row className="card-img-overlay justify-content-center align-items-center ">

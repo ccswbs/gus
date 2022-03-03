@@ -19,7 +19,8 @@ const render = ({ title, stats }, colourOptions) => (
               <Col key={`nationalimpact-stat-${index}`}>
                 <Statistic.SolidCard 
                   background={colourOptions[index].background} 
-                  colour={colourOptions[index].colour} >
+                  colour={colourOptions[index].colour} 
+                  className="py-5" >
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type>{type}</Statistic.Type>
                 </Statistic.SolidCard>
