@@ -5,14 +5,15 @@ import { Container, Row, Col } from "react-bootstrap"
 
 const render = ({ quote, source, background_image }) => (
     <Container className="page-container">
-        <Row className="card border-0">
-            <GatsbyImage image={getImage(background_image.src)} alt={background_image.alt} className="card-img" />
-            <Row className="card-img-overlay justify-content-center align-items-center ">
-                <Col md={2}>
+        {/* <Row className="card border-0"> */}
+        <Row className="px-5">
+            {/* <GatsbyImage image={getImage(background_image.src)} alt={background_image.alt} className="card-img" /> */}
+            {/* <Row className="card-img-overlay justify-content-center align-items-center"> */}
+            <Row className="justify-content-center align-items-center">
+                <Col xs={2}>
                     <GatsbyImage image={getImage(source.image.src)} alt={source.image.alt} imgClassName="rounded-circle" />
                 </Col>
-
-                <Col md={6}>
+                <Col md={6} className="ps-3">
                     <p className="quote fs-2">
                         <i className="fad fa-quote-left" aria-hidden="true"></i> <em>{quote}</em> <i className="fad fa-quote-right" aria-hidden="true"></i></p>
                     <p className="author"><strong>{source.name}</strong>

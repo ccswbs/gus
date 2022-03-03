@@ -5,9 +5,9 @@ import { Container, Row, Col } from "react-bootstrap"
 import EconImpactNationalImpactStats from "components/blocks/economic-impact/national-impact-stats"
 
 const NationalImpactAside = ({aside}) => (
-    <div className="card bg-dark text-white p-5 fs-3 rounded-0">
+    <div className="card bg-dark text-white p-5 fs-3 rounded-0 align-self-center me-5">
         <div className="card-body px-2">
-            <h3 className="text-white">{aside.title}</h3>
+            <h3 className="mt-0 text-white">{aside.title}</h3>
             <div className="card-text">
                 {aside.body.map((paragraph, index) => <p key={`intro-text-${index}`}>{paragraph}</p>)}
             </div>
@@ -34,21 +34,19 @@ const NationalImpactTestimony = ({ testimonial }) => (
 
 const render = ({ title, body_html, testimonial, aside }) => (
     <>
-        <Container fluid={true} className="position-relative overflow-hidden">
-            <GatsbyImage image={getImage(aside.image.src)} alt={aside.image.alt} className="position-absolute end-0" />
+        <Container fluid={true}>
             <div className="full-width-container bg-light">
                 <Container className="page-container">
                     <div className="mx-4">
-                        <Col className="mt-7">
-                            <h2 id="national-impact">{title}</h2>
-                        </Col>
                         <Row className="gx-0">
                             <Col md={6} className="fs-3 pe-4">
+                                <h2 id="national-impact">{title}</h2>
                                 <div dangerouslySetInnerHTML={{__html: body_html}}></div>
                                 <NationalImpactTestimony testimonial={testimonial} />
                             </Col>
-                            <Col md={6}>
-                                <NationalImpactAside aside={aside} />
+                            <Col md={6} className="d-flex position-relative overflow-hidden">
+                                <GatsbyImage image={getImage(aside.image.src)} alt={aside.image.alt} className="position-absolute top-0 end-0" />
+                                <NationalImpactAside aside={aside} />    
                             </Col>
                         </Row>
                     </div>

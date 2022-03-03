@@ -14,13 +14,13 @@ const render = ({ title, stats }, colourOptions) => (
   <Container className="page-container">
     <div className="mx-4">
         <h3 className="visually-hidden">{title}</h3>
-        <Statistic className="row g-0">
+        <Statistic className="row g-0 row-cols-2 row-cols-lg-4">
             {stats.map(({value, type}, index) => 
               <Col key={`nationalimpact-stat-${index}`}>
                 <Statistic.SolidCard 
                   background={colourOptions[index].background} 
                   colour={colourOptions[index].colour} 
-                  className="py-5" >
+                  className="py-5 h-100" >
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type>{type}</Statistic.Type>
                 </Statistic.SolidCard>
