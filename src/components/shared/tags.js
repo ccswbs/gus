@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import 'styles/tags.css'
+import 'styles/shared/tags.css'
 
 function Tags ({ tagData }) {
 	var tagsList = "";

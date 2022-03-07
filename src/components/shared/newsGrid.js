@@ -4,7 +4,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import React from 'react';
 import PropTypes from 'prop-types';
 import { contentExists, getNextHeadingLevel } from 'utils/ug-utils.js';
-import 'styles/news.css';
+import 'styles/shared/news.css';
 
 function NewsGrid (props) {
     let nextHeadingLevel = getNextHeadingLevel(props.headingLevel);

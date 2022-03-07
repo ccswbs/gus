@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GridParent from 'components/shared/gridParent';
 import { contentExists, setHeadingLevel } from 'utils/ug-utils.js';
-import 'styles/grid.css';
+import 'styles/shared/grid.css';
 
 /* 
 Example Usage:

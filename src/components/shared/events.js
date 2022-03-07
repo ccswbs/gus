@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import { contentExists } from 'utils/ug-utils.js';
 import moment from 'moment';
-import 'styles/events.css';
+import 'styles/shared/events.css';
 
 function findMatches(fromDrupal, fromWP) {
     for (let i=0; i < fromDrupal.length; i++) {

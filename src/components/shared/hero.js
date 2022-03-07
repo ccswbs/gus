@@ -3,7 +3,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import { graphql } from 'gatsby';
 import PropTypes from "prop-types";
 import { contentExists } from 'utils/ug-utils';
-import 'styles/hero.css';
+import 'styles/shared/hero.css';
 
 function Hero (props) {
 	return (
