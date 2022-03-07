@@ -1,9 +1,7 @@
 id: economic_impact_provincial_map
-
 image:
   src: ../../../images/economic-impact/map2.jpg
   alt: Map of Ontario showing locations of 15 research station, as well as the 3 campuses
-
 stations:
   section_title: 15 Research Station Locations
   names:

@@ -7,27 +7,27 @@ import EconImpactCommunityImpactMealcare from "components/blocks/economic-impact
 
 const render = ({ title, intro, stats }) => (
     <Container className="page-container">
-        <Row className="mt-5">
-            <h2>{title}</h2>
-            <Col lg={5}>
-                <h3 className="mt-0">{intro.heading}</h3>
-                {intro.body.map((paragraph, index) => <p key={`community-text-${index}`}>{paragraph}</p>)}
-            </Col>
-            <Col lg={7}>
-                <Statistic className="row gx-4">
-                    {stats.map(({value, type, icon}, index) => 
-                        <Col key={`community-stat-${index}`}>
-                            <Statistic.Card className="px-5">
-                                <i className={`${icon} mt-3 fa-4x`} aria-hidden="true"></i>
-                                <Statistic.Value><strong>{value}</strong></Statistic.Value>
-                                <Statistic.Type>{type}</Statistic.Type>
-                            </Statistic.Card>
-                        </Col>
-                    )}
-                </Statistic>
-            </Col>
+        <Row className="mt-5 site-content">
+          <h2>{title}</h2>
+          <Col lg={5}>
+              <h3 className="mt-0">{intro.heading}</h3>
+              {intro.body.map((paragraph, index) => <p key={`community-text-${index}`}>{paragraph}</p>)}
+          </Col>
+          <Col lg={7}>
+              <Statistic className="row g-4">
+                  {stats.map(({value, type, icon}, index) => 
+                      <Col key={`community-stat-${index}`}>
+                          <Statistic.Card className="px-5">
+                              <i className={`${icon} mt-3 fa-4x`} aria-hidden="true"></i>
+                              <Statistic.Value><strong>{value}</strong></Statistic.Value>
+                              <Statistic.Type>{type}</Statistic.Type>
+                          </Statistic.Card>
+                      </Col>
+                  )}
+              </Statistic>
+          </Col>
+          <EconImpactCommunityImpactCampusStats />
         </Row>
-        <EconImpactCommunityImpactCampusStats />
         <EconImpactCommunityImpactMealcare />
     </Container>
 )

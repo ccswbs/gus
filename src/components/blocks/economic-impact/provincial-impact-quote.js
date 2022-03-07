@@ -1,16 +1,16 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import { Container, Row, Col } from "react-bootstrap"
+import { Row, Col } from "react-bootstrap"
 
 const render = ({ quote, source, background_image }) => (
-    <Container className="page-container">
-        {/* <Row className="card border-0"> */}
+    // <Container className="page-container">
         <Row className="px-5">
+          {/* <Row className="card border-0"> */}
             {/* <GatsbyImage image={getImage(background_image.src)} alt={background_image.alt} className="card-img" /> */}
             {/* <Row className="card-img-overlay justify-content-center align-items-center"> */}
             <Row className="justify-content-center align-items-center">
-                <Col xs={2}>
+                <Col xs={3}>
                     <GatsbyImage image={getImage(source.image.src)} alt={source.image.alt} imgClassName="rounded-circle" />
                 </Col>
                 <Col md={6} className="ps-3">
@@ -21,7 +21,7 @@ const render = ({ quote, source, background_image }) => (
                 </Col>
             </Row>
         </Row>
-    </Container>
+    // </Container>
 )
 
 const query = graphql`

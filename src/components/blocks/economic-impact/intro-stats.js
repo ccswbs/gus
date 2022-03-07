@@ -15,7 +15,7 @@ const render = ({ title, stats }) => (
     <>
     <Container>
       <h3 className="visually-hidden">{title}</h3>
-      <Statistic className="row row-cols-sm-2 mb-5 g-5">
+      <Statistic className="row row-cols-1 row-cols-sm-2 mb-5 g-5">
         {stats.map(({value, type}, index) => 
           <Col key={`intro-stat-${index}`} className="col-lg">
             <Statistic.BorderCard border={colourOptions[index].border} >

@@ -1,6 +1,6 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { Container } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import Statistic from 'components/shared/statistic';
 
 const colourOptions = [
@@ -10,21 +10,19 @@ const colourOptions = [
 ];
 
 const render = ({ title, stats }) => (
-    <>
-    <Container>
-      <h3 className="visually-hidden">{title}</h3>
-      <Statistic className="row row-cols-sm-3 mb-5 g-5">
-        {stats.map(({value, type}, index) => 
-          <div key={`prov-stat-${index}`} className="col-lg">
-            <Statistic.BorderCard key={`prov-stat-${index}`} border={colourOptions[index].border} >
-              <Statistic.Value><strong>{value}</strong></Statistic.Value>
-              <Statistic.Type>{type}</Statistic.Type>
-            </Statistic.BorderCard>
-          </div>
-        )}
-        </Statistic>
-      </Container>
-    </>
+  <Row>
+    <h3 className="visually-hidden">{title}</h3>
+    <Statistic className="row row-cols-sm-3 mb-5 g-5">
+      {stats.map(({value, type}, index) => 
+        <div key={`prov-stat-${index}`} className="col-lg">
+          <Statistic.BorderCard key={`prov-stat-${index}`} border={colourOptions[index].border} >
+            <Statistic.Value><strong>{value}</strong></Statistic.Value>
+            <Statistic.Type>{type}</Statistic.Type>
+          </Statistic.BorderCard>
+        </div>
+      )}
+      </Statistic>
+    </Row>
 )
 
 const query = graphql`
