@@ -45,6 +45,7 @@
     "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
+    "react-icons": "^4.3.1",
     "react-inlinesvg": "^2.3.0",
     "react-number-format": "^4.7.3",
     "react-player": "^2.9.0",
