@@ -12,7 +12,7 @@ const colourOptions = [
 const render = ({ title, stats }) => (
   <Row>
     <h3 className="visually-hidden">{title}</h3>
-    <Statistic className="row row-cols-sm-3 mb-5 g-5">
+    <Statistic className="row row-cols-1 row-cols-sm-3 mb-5 g-5">
       {stats.map(({value, type}, index) => 
         <div key={`prov-stat-${index}`} className="col-lg">
           <Statistic.BorderCard key={`prov-stat-${index}`} border={colourOptions[index].border} >

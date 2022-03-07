@@ -12,24 +12,19 @@ const QuoteText = styled.p`
 `
 
 const render = ({ quote, source, background_image }) => (
-  <Row className="px-5">
-    {/* <Row className="card border-0"> */}
-      {/* <GatsbyImage image={getImage(background_image.src)} alt={background_image.alt} className="card-img" /> */}
-      {/* <Row className="card-img-overlay justify-content-center align-items-center"> */}
-      <Row className="justify-content-center align-items-center">
-          <Col className="col-md-2">
-              <GatsbyImage image={getImage(source.image.src)} alt={source.image.alt} imgClassName="rounded-circle" />
-          </Col>
-          <Col className="col-md-6 ps-3">
-            <QuoteText className="fs-2">
-                <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
-                    <em>{quote}</em>
-                <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
-            </QuoteText>
-            <p className="author"><strong>{source.name}</strong>
-            <br /><em>{source.desc}</em></p>
-          </Col>
-      </Row>
+  <Row className="p-5 bg-light justify-content-center align-items-center">
+    <Col className="col-md-2">
+        <GatsbyImage image={getImage(source.image.src)} alt={source.image.alt} imgClassName="rounded-circle" />
+    </Col>
+    <Col className="col-md-6 ps-3">
+      <QuoteText className="fs-2">
+          <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
+              <em>{quote}</em>
+          <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
+      </QuoteText>
+      <p className="author"><strong>{source.name}</strong>
+      <br /><em>{source.desc}</em></p>
+    </Col>
   </Row>
 )
 

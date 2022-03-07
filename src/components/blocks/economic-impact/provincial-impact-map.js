@@ -2,20 +2,23 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Row, Col } from "react-bootstrap"
-// import { FaCircle } from 'react-icons/fa';
-// import styled from "styled-components"
+import { FaCircle } from 'react-icons/fa';
+import styled from "styled-components"
 
-// const Circle = styled.i`
-//   color: ${props => (props.colour ?? "#000000")};
-// `
-const colourOptions = [ 
-  "var(--uog-blue)", 
-  "var(--uog-red)",
-  "#000"
-];
+const ListItem = styled.li`
+    line-height: 1.35 !important;
+`
+const UnstyledListItem = styled(ListItem)`
+    &:before {
+        content: none !important;
+    }
+`
+const IconStyle = styled.span`
+  color: ${props => (props.colour ?? "#000000")};
+`
 
 const render = ({ image, stations, campuses }) => (
-    <Row>
+    <Row className="gy-5">
         <Col md={9}>
             <GatsbyImage image={getImage(image.src)} alt={image.alt} />
         </Col>
@@ -23,17 +26,18 @@ const render = ({ image, stations, campuses }) => (
             <h3 className="h5 mt-0">{stations.section_title}</h3>
             <ol className="lh-1">
                 {stations.names.map((name, index) => 
-                    <li key={`station-${index}`}>{name}</li>
+                    <ListItem key={`station-${index}`}>{name}</ListItem>
                 )}
             </ol>
             <h3 className="h5">{campuses.section_title}</h3>
-            <ul className="list-unstyled">
-                {campuses.names.map((name, index) => 
-                    <li key={`campus-${index}`}>
-                        {/* <Circle class="fa-solid fa-circle ml-3" colour={colourOptions[index]} aria-hidden="true"> </Circle> */}
-                        {/* <FaCircle /> */}
+            <ul className="list-unstyled ps-2">
+                {campuses.locations.map(({name, colour}, index) => 
+                    <UnstyledListItem key={`campus-${index}`}>
+                        <IconStyle colour={colour}>
+                            <FaCircle className="pe-2" />
+                        </IconStyle>
                         {name}
-                    </li>
+                    </UnstyledListItem>
                 )}
             </ul>
         </Col>
@@ -59,7 +63,10 @@ const query = graphql`
         }
         campuses {
             section_title
-            names
+            locations {
+                name
+                colour
+            }
         }
     }
   }

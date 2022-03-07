@@ -24,7 +24,7 @@ const render = ({ title, intro, stats }) => (
                   {stats.map(({value, type, icon}, index) => 
                       <Col key={`community-stat-${index}`}>
                           <Statistic.Card className="px-5">
-                              <i className={`${icon} mt-3 fa-4x`} aria-hidden="true"></i>
+                              <Statistic.Icon icon={icon} />
                               <Statistic.Value><strong>{value}</strong></Statistic.Value>
                               <Statistic.Type>{type}</Statistic.Type>
                           </Statistic.Card>

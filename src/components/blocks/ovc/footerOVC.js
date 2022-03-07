@@ -4,7 +4,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import OVCFooterSocial from 'components/blocks/ovc/footerSocial';
 import Widget from 'components/shared/widget';
 import { contentExists } from 'utils/ug-utils';
-import 'styles/customFooter.css';
+import 'styles/shared/customFooter.css';
 
 function OVCCustomFooter (props) {
 	

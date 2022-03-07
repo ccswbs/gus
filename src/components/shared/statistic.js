@@ -3,7 +3,6 @@ import styled from "styled-components"
 
 const StatCard = styled.div`
   background: var(--uog-blue-muted);
-  color: #000000;
   flex: 1 0;
   padding: 1.25rem;
   min-width: 25%;
@@ -17,13 +16,20 @@ const StatBorderCard = styled(StatCard)`
 const StatSolidCard = styled(StatCard)`
   background: ${props => (props.background ?? "#000000")};
   color: ${props => (props.colour ?? "#ffffff")};
+  & > dt {
+    color: ${props => (props.colour ?? "#ffffff")};
+  }
 `;
 const StatValue = styled.dt`
+  color: #000;
   font-size: 4.25rem;
 `
 const StatType = styled.dd`
   font-size: 1.8rem;
   line-height: 1.58;
+`
+const StatIcon = styled.i`
+  color: #000;
 `
 
 const Statistic = ({id, children, className=""}) => (
@@ -51,9 +57,7 @@ Statistic.SolidCard = ({background, colour, children, className=""}) => (
 )
 
 Statistic.Icon = ({icon}) => (
-  <span className="fa-icon-colour">
-    <i className={icon} aria-hidden="true">  </i>
-  </span>
+  <StatIcon className={`${icon} mt-3 fa-4x`} aria-hidden="true" />
 )
 
 Statistic.Value = ({children}) => (

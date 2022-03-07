@@ -23,7 +23,10 @@ stations:
     
 campuses:
   section_title: Campus Locations
-  names:
-    - Guelph-Humber
-    - University of Guelph
-    - Ridgetown Campus
+  locations:
+    - name: Guelph-Humber
+      colour: var(--uog-blue)
+    - name: University of Guelph
+      colour: var(--uog-red)
+    - name: Ridgetown Campus
+      colour: "#000"
