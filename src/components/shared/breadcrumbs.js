@@ -69,7 +69,6 @@ const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
                 });
                 
                 midCrumbs = findCrumbs(pageMenu, endCrumbParent);
-                //console.log(midCrumbs);
             }            
         }
         
@@ -82,7 +81,7 @@ const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
                             <ol className="breadcrumb breadcrumb-right-tag">                                
                                 <li key={topCrumbURL + `home`} className="breadcrumb-item">                                    
                                     <a href={contentExists(topCrumbURL) ? topCrumbURL : "https://www.uoguelph.ca"}>
-                                        <i className="fa fa-home"><span className="visually-hidden">Home</span></i>
+                                        <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">Home</span>
                                     </a>
                                 </li>
                                 {contentExists(midCrumbs) ? 
