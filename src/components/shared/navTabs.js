@@ -22,8 +22,10 @@ function NavTabs (props) {
 
     return(
         <>
-            <nav className={classes} role="tablist">
-                {props.headings}
+            <nav>
+                <div className={classes} role="tablist">
+                    {props.headings}
+                </div>
             </nav>
             <div className="tab-content" id="pills-tabContent">
                 {props.children}
