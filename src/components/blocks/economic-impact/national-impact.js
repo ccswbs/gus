@@ -3,12 +3,23 @@ import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Row, Col } from "react-bootstrap"
 import EconImpactNationalImpactStats from "components/blocks/economic-impact/national-impact-stats"
+import styled from "styled-components"
+
+const Lead = styled.p`
+    color: #000;
+`
+const QuoteMark = styled.i`
+    color: var(--uog-blue);
+`
+const QuoteText = styled.p`
+    color: #000;
+`
 
 const NationalImpactAside = ({aside}) => (
-    <div className="card bg-dark text-white p-5 fs-3 rounded-0 align-self-center me-5">
+    <div className="card bg-dark text-white p-5 rounded-0 align-self-center me-5">
         <div className="card-body px-2">
-            <h3 className="mt-0 text-white">{aside.title}</h3>
-            <div className="card-text">
+            <h3 className="mt-0 text-white h1">{aside.title}</h3>
+            <div className="card-text fs-2">
                 {aside.body.map((paragraph, index) => <p key={`intro-text-${index}`}>{paragraph}</p>)}
             </div>
         </div>
@@ -22,9 +33,12 @@ const NationalImpactTestimony = ({ testimonial }) => (
                 <GatsbyImage image={getImage(testimonial.source.image.src)} alt={testimonial.source.image.alt} imgClassName="rounded-circle" />
             </Col>
 
-            <Col className="col-md-9 content-area">
-                <p className="quote fs-2">
-                    <i className="fad fa-quote-left" aria-hidden="true"></i> <em>{testimonial.quote}</em> <i className="fad fa-quote-right" aria-hidden="true"></i></p>
+            <Col className="col-md-9 px-3 content-area">
+                <QuoteText className="fs-2">
+                    <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
+                        <em>{testimonial.quote}</em>
+                    <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
+                </QuoteText>
                 <p className="author"><strong>{testimonial.source.name}</strong> {testimonial.source.pronouns}
                 <br /><em>{testimonial.source.desc}</em></p>
             </Col>
@@ -32,24 +46,23 @@ const NationalImpactTestimony = ({ testimonial }) => (
     </div>
 )
 
-const render = ({ title, body_html, testimonial, aside }) => (
+const render = ({ title, lead, body_html, testimonial, aside }) => (
     <>
         <Container fluid={true}>
             <div className="full-width-container bg-light">
                 <Container className="page-container">
-                    <div className="mx-4">
-                        <Row className="gx-0">
-                            <Col md={6} className="fs-3 pe-4">
-                                <h2 id="national-impact">{title}</h2>
-                                <div dangerouslySetInnerHTML={{__html: body_html}}></div>
-                                <NationalImpactTestimony testimonial={testimonial} />
-                            </Col>
-                            <Col md={6} className="d-flex position-relative overflow-hidden">
-                                <GatsbyImage image={getImage(aside.image.src)} alt={aside.image.alt} className="position-absolute top-0 end-0" />
-                                <NationalImpactAside aside={aside} />    
-                            </Col>
-                        </Row>
-                    </div>
+                    <Row className="gx-0 site-content mx-4">
+                        <Col md={6} className="pe-4">
+                            <h2 id="national-impact">{title}</h2>
+                            <Lead><strong>{lead}</strong></Lead>
+                            <div dangerouslySetInnerHTML={{__html: body_html}}></div>
+                            <NationalImpactTestimony testimonial={testimonial} />
+                        </Col>
+                        <Col md={6} className="d-flex position-relative overflow-hidden">
+                            <GatsbyImage image={getImage(aside.image.src)} alt={aside.image.alt} className="position-absolute top-0 end-0" />
+                            <NationalImpactAside aside={aside} />    
+                        </Col>
+                    </Row>
                 </Container>
             </div>
         </Container>
@@ -62,6 +75,7 @@ const query = graphql`
     economicImpactYaml(id: {eq: "economic_impact_national_impact"}) {
         id
         title
+        lead
         body_html
         testimonial {
             quote

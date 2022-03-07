@@ -10,11 +10,11 @@ import EconImpactProvImpact from 'components/blocks/economic-impact/provincial-i
 import EconImpactCommunityImpact from 'components/blocks/economic-impact/community-impact';
 // import EconImpactHumanImpact from 'components/blocks/economic-impact/human-impact';
 
-import 'styles/economic-impact/economic-impact.css'
+// import 'styles/economic-impact/economic-impact.css'
 
 const render = (title) => (
     <Layout>
-        <Helmet bodyAttributes={{ class: 'economic-impact-report' }} />
+        <Helmet />
         <Seo title={title} />
         <EconImpactBanner />
         <Breadcrumbs />

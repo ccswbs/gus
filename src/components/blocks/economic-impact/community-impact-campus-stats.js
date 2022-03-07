@@ -12,7 +12,7 @@ const colourOptions = [
 
 const render = ({ title, stats }) => (
   <Container>
-      <h3>{title}</h3>
+      <h3 className="h4">{title}</h3>
       <Statistic className="row mb-5 g-4">
           {stats.map(({value, type, image}, index) =>
             <div key={`community-stat-campuses-${index}`} className="col-lg">

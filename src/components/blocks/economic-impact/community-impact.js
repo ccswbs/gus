@@ -4,13 +4,19 @@ import { Container, Row, Col } from "react-bootstrap"
 import Statistic from "components/shared/statistic"
 import EconImpactCommunityImpactCampusStats from "components/blocks/economic-impact/community-impact-campus-stats"
 import EconImpactCommunityImpactMealcare from "components/blocks/economic-impact/community-impact-mealcare"
+import styled from "styled-components"
+
+const Heading = styled.h3`
+  color: #000;
+  font-size: 1.8rem;
+`
 
 const render = ({ title, intro, stats }) => (
     <Container className="page-container">
         <Row className="mt-5 site-content">
           <h2>{title}</h2>
           <Col lg={5}>
-              <h3 className="mt-0">{intro.heading}</h3>
+              <Heading className="mt-0">{intro.heading}</Heading>
               {intro.body.map((paragraph, index) => <p key={`community-text-${index}`}>{paragraph}</p>)}
           </Col>
           <Col lg={7}>

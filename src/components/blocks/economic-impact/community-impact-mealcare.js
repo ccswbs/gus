@@ -7,6 +7,7 @@ import styled from "styled-components"
 const SectionTitle = styled.h3`
   font-size: 2.5rem;
   color: #fff;
+  text-transform: uppercase;
 `
 
 const render = ({ title, body, images }) => (
@@ -17,8 +18,8 @@ const render = ({ title, body, images }) => (
                 <SectionTitle>{title}</SectionTitle>
                 {body.map((paragraph, index) => <p className="text-white" key={`mealcare-text-${index}`}>{paragraph}</p>)}
             </Col>
-            <Col lg={6} className="d-flex justify-content-center">
-                <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end" />
+            <Col lg={6} className="d-flex justify-content-center pt-5">
+                <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end img-fluid" />
             </Col>
         </Row>
     </Row>
