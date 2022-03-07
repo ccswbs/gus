@@ -2,7 +2,7 @@ import { graphql} from 'gatsby';
 import Layout from 'components/layout';
 import React from 'react';
 import Seo from 'components/seo';
-import 'styles/shared/programsList.css';
+import 'styles/programsList.css';
 
 const ProgramsPage = ({ data }) => (
     <Layout>

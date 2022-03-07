@@ -22,7 +22,7 @@ import Variants from 'components/shared/variants';
  
 import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
-import 'styles/shared/program-page.css';
+import 'styles/program-page.css';
 
 function renderProgramOverview(description, specData) {
     let checkIfContentAvailable = false;

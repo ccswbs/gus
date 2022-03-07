@@ -14,7 +14,7 @@ import 'styles/economic-impact/economic-impact.css'
 
 const render = (title) => (
     <Layout>
-        <Helmet />
+        <Helmet bodyAttributes={{ class: 'economic-impact-report' }} />
         <Seo title={title} />
         <EconImpactBanner />
         <Breadcrumbs />

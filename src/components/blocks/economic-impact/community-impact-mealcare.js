@@ -7,7 +7,6 @@ import styled from "styled-components"
 const SectionTitle = styled.h3`
   font-size: 2.5rem;
   color: #fff;
-  text-transform: 
 `
 
 const render = ({ title, body, images }) => (

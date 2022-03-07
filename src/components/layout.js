@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DateModified from 'components/dateModified';
 import HeaderMenu from 'components/shared/headerMenu';
-import 'styles/shared/global.css';
+import 'styles/global.css';
 
 
 const Layout = ({ children, date, menuName }) => (
