@@ -2,7 +2,7 @@
 
 body.program .stats-bg {
 	background-color: #fff;
-	background-image: url("../../../static/stats-bg.jpg");
+	background-image: url("../../static/stats-bg.jpg");
 	background-repeat: no-repeat;
     background-position: center;
 	background-size: cover;

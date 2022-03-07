@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import 'styles/shared/button-widget.css'
+import 'styles/button-widget.css'
 import { contentExists } from 'utils/ug-utils';
 import Button from 'components/shared/button';
 
