@@ -24,7 +24,7 @@ const render = ({ title, stats }, colourOptions) => (
                 <Statistic.SolidCard 
                   background={colourOptions[index].background} 
                   colour={colourOptions[index].colour} 
-                  className="py-5" >
+                  className="p-5" >
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type>{type}</Statistic.Type>
                 </Statistic.SolidCard>

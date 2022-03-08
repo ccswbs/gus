@@ -33,10 +33,10 @@ const BackgroundImage = ({children, image, alt}) => (
 const render = ({ title, body, images, video, testimonial }) => (
     <>
         <Container fluid={true} className="bg-dark">
-            <Container className="page-container">
-                <BackgroundImage image={getImage(images.background.src)} alt={images.background.alt}>
-                    <Row className="pt-5 text-white">
-                        <Col lg={6} className="px-5 fs-3">
+            <BackgroundImage image={getImage(images.background.src)} alt={images.background.alt}>
+                <Container className="page-container">
+                    <Row className="h-100 text-white">
+                        <Col lg={6} className="p-5 fs-3 mb-4">
                             <SectionTitle>{title}</SectionTitle>
                             {body.map((paragraph, index) => <p key={`mealcare-text-${index}`}>{paragraph}</p>)}
                             {/* <p><a className="btn btn-primary" href={video.link.url}>{video.link.title}</a></p> */}
@@ -45,8 +45,8 @@ const render = ({ title, body, images, video, testimonial }) => (
                             <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end img-fluid" />
                         </Col>
                     </Row>
-                </BackgroundImage>
-            </Container>
+                </Container>
+            </BackgroundImage>
         </Container>
 
         <Testimonial className="d-flex justify-content-center">
@@ -71,9 +71,9 @@ const query = graphql`
         images {
             foreground {
                 src {
-                childImageSharp {
-                    gatsbyImageData
-                }
+                    childImageSharp {
+                        gatsbyImageData
+                    }
                 }
                 alt
             }

@@ -23,6 +23,8 @@ const StatSolidCard = styled(StatCard)`
 const StatValue = styled.dt`
   color: #000;
   font-size: 4.25rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
 `
 const StatType = styled.dd`
   font-size: 1.8rem;
