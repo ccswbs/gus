@@ -20,7 +20,7 @@ const render = ({ title, lead, body, author, author_desc, author_pronouns }) => 
 
 const query = graphql`
   query {
-    economicImpactYaml(id: {eq: "economic_impact_intro"}) {
+    economicImpactYaml(yamlId: {eq: "economic_impact_intro"}) {
       id
       title
       lead

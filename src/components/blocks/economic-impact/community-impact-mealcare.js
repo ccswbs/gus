@@ -64,7 +64,7 @@ const render = ({ title, body, images, video, testimonial }) => (
 
 const query = graphql`
   query {
-    economicImpactYaml(id: {eq: "economic_impact_community_mealcare"}) {
+    economicImpactYaml(yamlId: {eq: "economic_impact_community_mealcare"}) {
         id
         title
         body

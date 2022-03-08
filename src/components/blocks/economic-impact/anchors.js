@@ -16,7 +16,7 @@ const render = ({ title, anchors }) => (
 
 const query = graphql`
   query {
-    economicImpactYaml(id: {eq: "economic_impact_anchors"}) {
+    economicImpactYaml(yamlId: {eq: "economic_impact_anchors"}) {
       id
       title
       anchors {
