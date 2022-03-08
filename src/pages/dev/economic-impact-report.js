@@ -8,9 +8,7 @@ import EconImpactPresMessage from 'components/blocks/economic-impact/pres-messag
 import EconImpactNationalImpact from 'components/blocks/economic-impact/national-impact';
 import EconImpactProvImpact from 'components/blocks/economic-impact/provincial-impact';
 import EconImpactCommunityImpact from 'components/blocks/economic-impact/community-impact';
-// import EconImpactHumanImpact from 'components/blocks/economic-impact/human-impact';
-
-// import 'styles/economic-impact/economic-impact.css'
+import EconImpactHumanImpact from 'components/blocks/economic-impact/human-impact';
 
 const render = (title) => (
     <Layout>
@@ -22,7 +20,7 @@ const render = (title) => (
         <EconImpactNationalImpact />
         <EconImpactProvImpact />
         <EconImpactCommunityImpact />
-        {/* <EconImpactHumanImpact /> */}
+        <EconImpactHumanImpact />
     </Layout>
 )
 

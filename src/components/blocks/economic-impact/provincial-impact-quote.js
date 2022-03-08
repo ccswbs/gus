@@ -12,7 +12,7 @@ const QuoteText = styled.p`
 `
 
 const render = ({ quote, source, background_image }) => (
-  <Row className="p-5 bg-light justify-content-center align-items-center">
+  <Row className="p-5 justify-content-center align-items-center">
     <Col className="col-md-2">
         <GatsbyImage image={getImage(source.image.src)} alt={source.image.alt} imgClassName="rounded-circle" />
     </Col>

@@ -19,7 +19,7 @@ const colourOptions = [
 
 const render = ({ title, image, sections }) => (   
   <>
-    <h2 id="provincial-impact">{title}</h2>
+    <h2 className="mb-5" id="provincial-impact">{title}</h2>
     <Col lg={7}>
         {sections.map(({title, body_html}, index) => 
             <div key={`prov-section-${index}`}>

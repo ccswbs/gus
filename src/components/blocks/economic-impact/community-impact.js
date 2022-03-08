@@ -12,8 +12,9 @@ const Heading = styled.h3`
 `
 
 const render = ({ title, intro, stats }) => (
-    <Container className="page-container">
-        <Row className="mt-5 site-content">
+  <>
+    <Container className="page-container mt-5">
+        <Row className="site-content">
           <h2>{title}</h2>
           <Col lg={5}>
               <Heading className="mt-0">{intro.heading}</Heading>
@@ -34,8 +35,10 @@ const render = ({ title, intro, stats }) => (
           </Col>
           <EconImpactCommunityImpactCampusStats />
         </Row>
-        <EconImpactCommunityImpactMealcare />
     </Container>
+
+    <EconImpactCommunityImpactMealcare />
+  </>
 )
 
 const query = graphql`

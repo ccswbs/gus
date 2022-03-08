@@ -6,14 +6,20 @@ import EconImpactProvincialImpactStats from "components/blocks/economic-impact/p
 import EconImpactProvincialImpactQuote from "components/blocks/economic-impact/provincial-impact-quote"
 
 const EconImpactProvincialImpact = () => (
-    <Container className="page-container">
-        <Row className="site-content">
-            <EconImpactProvincialImpactIntro />
-            <EconImpactProvincialImpactMap />
-            <EconImpactProvincialImpactStats />
-        </Row>
-        <EconImpactProvincialImpactQuote />
-    </Container>
+    <>
+        <Container className="page-container mt-5">
+            <Row className="site-content">
+                <EconImpactProvincialImpactIntro />
+                <EconImpactProvincialImpactMap />
+                <EconImpactProvincialImpactStats />
+            </Row>
+        </Container>
+        <Container fluid={true} className="bg-light mb-4">
+            <Container className="page-container">
+                <EconImpactProvincialImpactQuote />
+            </Container>
+        </Container>
+    </>
 )
 
 export default EconImpactProvincialImpact

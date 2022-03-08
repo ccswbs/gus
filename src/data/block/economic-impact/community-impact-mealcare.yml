@@ -11,3 +11,8 @@ images:
   background:
     src: ../../../images/economic-impact/meal-care-bg.jpg
     alt: Student volunteers
+testimonial:
+  quote: Change happens at a community level. Small people put in small efforts and those efforts add up to something big. 
+  source:
+    name: Kiana Gibson
+    desc: Co-Founder | MealCare Guelph

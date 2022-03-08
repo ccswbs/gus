@@ -1,8 +1,12 @@
 import React from "react"
-import { Container, Col } from "react-bootstrap"
+import { Container, Col, Row } from "react-bootstrap"
 import { StaticQuery, graphql } from "gatsby"
 import Statistic from "components/shared/statistic"
+import styled from 'styled-components'
 
+const Gradient = styled(Container)`
+  background: linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%);
+`
 const colourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
   {background: "var(--uog-red)", colour: "#FFFFFF"},
@@ -11,10 +15,10 @@ const colourOptions = [
 ];
 
 const render = ({ title, stats }, colourOptions) => (
-  <Container className="page-container">
-    <div className="mx-4">
-        <h3 className="visually-hidden">{title}</h3>
-        <Statistic className="row g-0 row-cols-2 row-cols-lg-4">
+  <Gradient fluid={true}>
+    <Container className="page-container p-0">
+      <h3 className="visually-hidden">{title}</h3>
+        <Statistic className="row g-0 row-cols-2 row-cols-lg-4 justify-content-center mb-0">
             {stats.map(({value, type}, index) => 
               <Col key={`nationalimpact-stat-${index}`}>
                 <Statistic.SolidCard 
@@ -27,8 +31,8 @@ const render = ({ title, stats }, colourOptions) => (
               </Col>
             )}
         </Statistic>
-    </div>
-  </Container>
+    </Container>
+  </Gradient>
 )
 
 const query = graphql`
