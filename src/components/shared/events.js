@@ -60,11 +60,11 @@ const generateEvents = (data, eventData) => {
             let eventDay = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("D");
             let eventStartTime = moment(wpEvent.node.startDate,"YYYY-MM-DD HH:mm").format("h:mm A");
             let eventEndTime = moment(wpEvent.node.endDate,"YYYY-MM-DD HH:mm").format("h:mm A");
+            let eventLink = (contentExists(wpEvent.node.url) ? wpEvent.node.url : "https://news.uoguelph.ca" + wpEvent.node.uri);
             
             let srMonth = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("MMMM");
             let srDayName = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("dddd");
             let srDayNumber = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("Do");
-            let srStartTime = moment(wpEvent.node.startDate,"YYYY-MM-DD HH:mm").format("h:mm A");
             
             return (<>
             <li key={wpEvent.node.id} className={"card border-0 flex-row" + colClasses}>
@@ -74,8 +74,8 @@ const generateEvents = (data, eventData) => {
                     </p>
                 </div>
                 <div className="card-body col d-flex flex-column pt-0 pb-0 ps-0">
-                    <a className="event-title border-0 fs-4 fw-bold lh-base stretched-link text-decoration-none" href={wpEvent.node.url}>{wpEvent.node.title}</a>
-                    <p className="fs-4 mt-auto mb-0"><span className="sr-only">Happening on {srDayName} {srMonth} {srDayNumber} from </span><time datetime={wpEvent.node.startDate}>{eventStartTime}</time> to <time datetime={wpEvent.node.endDate}>{eventEndTime}</time></p>
+                    <a className="event-title border-0 fs-4 fw-bold lh-base stretched-link text-decoration-none" href={eventLink}>{wpEvent.node.title}</a>
+                    <p className="fs-4 mt-auto mb-0"><span className="visually-hidden">Happening on {srDayName} {srMonth} {srDayNumber} from </span><time datetime={wpEvent.node.startDate}>{eventStartTime}</time> to <time datetime={wpEvent.node.endDate}>{eventEndTime}</time></p>
                 </div>
             </li>
             </>)
@@ -101,6 +101,7 @@ const Events = ({eventData}) => (
                 title
                 startDate
                 endDate
+                uri
                 url
                 eventsCategories {
                   nodes {
