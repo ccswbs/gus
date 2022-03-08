@@ -14,10 +14,10 @@ const Heading = styled.h3`
 const render = ({ title, intro, stats }) => (
   <>
     <Container className="page-container mt-5">
-        <Row className="site-content">
-          <h2>{title}</h2>
+        <Row className="site-content gy-4">
+          <h2 id="community-impact">{title}</h2>
           <Col lg={5}>
-              <Heading className="mt-0">{intro.heading}</Heading>
+              <Heading className="mt-0 text-uppercase">{intro.heading}</Heading>
               {intro.body.map((paragraph, index) => <p key={`community-text-${index}`}>{paragraph}</p>)}
           </Col>
           <Col lg={7}>

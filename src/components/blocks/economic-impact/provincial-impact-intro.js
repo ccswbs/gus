@@ -23,7 +23,7 @@ const render = ({ title, image, sections }) => (
     <Col lg={7}>
         {sections.map(({title, body_html}, index) => 
             <div key={`prov-section-${index}`}>
-                <Heading className="mt-0">{title}</Heading>
+                <Heading className="mt-0 text-uppercase">{title}</Heading>
                 <Section borderColour={colourOptions[index]} className="px-4 mb-5" dangerouslySetInnerHTML={{__html: body_html}}></Section>
             </div>
         )}

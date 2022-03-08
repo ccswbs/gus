@@ -2,12 +2,12 @@ id: economic_impact_intro_stats
 title: Campus Statistics
 stats:
   - value: "3"
-    type: CAMPUSES
+    type: Campuses
   - value: "14"
-    type: RESEARCH CENTRE LOCATIONS
+    type: Research Centres
   - value: 30,000
-    type: STUDENTS
+    type: Students
   - value: 3,900
-    type: FACULTY + STAFF
+    type: Faculty + Staff
   - value: 185,000
-    type: ALUMNI
+    type: Alumni

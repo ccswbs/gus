@@ -54,7 +54,7 @@ const render = ({ title, lead, body_html, testimonial, aside }) => (
                     <Row className="gx-0 site-content mx-4">
                         <Col md={6} className="pe-4">
                             <h2 id="national-impact">{title}</h2>
-                            <Lead><strong>{lead}</strong></Lead>
+                            <Lead className="text-uppercase"><strong>{lead}</strong></Lead>
                             <div dangerouslySetInnerHTML={{__html: body_html}}></div>
                             <NationalImpactTestimony testimonial={testimonial} />
                         </Col>

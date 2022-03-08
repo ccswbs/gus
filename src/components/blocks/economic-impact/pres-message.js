@@ -10,7 +10,7 @@ const EconImpactPresMessage = () => (
             <Col md={9} className="pe-4">
                 <EconImpactIntro />
             </Col>
-            <Col md={3} className="mt-5">
+            <Col md={3} className="my-5">
                 <EconImpactAnchors />
             </Col>
             <EconImpactIntroStats />

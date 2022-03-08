@@ -13,9 +13,9 @@ const render = ({ title, lead, body }) => (
   <>
     <Container className="page-container mt-5">
         <Row className="site-content">
-          <h2>{title}</h2>
-          <Col lg={7}>
-              <Lead><strong className="mt-0">{lead}</strong></Lead>
+          <h2 id="human-impact">{title}</h2>
+          <Col lg={7} className="mb-5">
+              <Lead className="text-uppercase"><strong className="mt-0">{lead}</strong></Lead>
               {body.map((paragraph, index) => <p key={`human-impact-text-${index}`}>{paragraph}</p>)}
           </Col>
           <EconImpactHumanImpactStats />

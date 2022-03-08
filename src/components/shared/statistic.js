@@ -39,19 +39,19 @@ const Statistic = ({id, children, className=""}) => (
 )
 
 Statistic.Card = ({children}) => (
-  <StatCard>
+  <StatCard className="h-100">
     {children}
   </StatCard>
 )
 
 Statistic.BorderCard = ({border, children, className=""}) => (
-  <StatBorderCard border={border} className={`${className}`}>
+  <StatBorderCard border={border} className={`${className} h-100`}>
     {children}
   </StatBorderCard>
 )
 
 Statistic.SolidCard = ({background, colour, children, className=""}) => (
-    <StatSolidCard background={background} colour={colour} className={`${className}`}>
+    <StatSolidCard background={background} colour={colour} className={`${className} h-100`}>
       {children}
     </StatSolidCard>
 )

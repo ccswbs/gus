@@ -18,7 +18,8 @@ const render = ({ title, stats }) => (
             <div key={`community-stat-campuses-${index}`} className="col-lg">
                 <Statistic.SolidCard  
                     background={colourOptions[index].background} 
-                    colour={colourOptions[index].colour} >
+                    colour={colourOptions[index].colour}
+                    className="pb-0" >
                     <Statistic.Value><strong>{value}</strong></Statistic.Value>
                     <Statistic.Type>{type}</Statistic.Type>
                     <GatsbyImage image={getImage(image.src)} alt={image.alt} imgClassName="card-img" />
@@ -50,6 +51,6 @@ const query = graphql`
   }
 `
 
-export default function EconImpactCommunityImpactCampusStats () {
+export default function GrceImpactCommunityImpactCampusStats () {
   return <StaticQuery query={query} render={({economicImpactYaml}) => render(economicImpactYaml)} />
 }

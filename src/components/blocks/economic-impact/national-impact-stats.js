@@ -1,5 +1,5 @@
 import React from "react"
-import { Container, Col, Row } from "react-bootstrap"
+import { Container, Col } from "react-bootstrap"
 import { StaticQuery, graphql } from "gatsby"
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
@@ -24,7 +24,7 @@ const render = ({ title, stats }, colourOptions) => (
                 <Statistic.SolidCard 
                   background={colourOptions[index].background} 
                   colour={colourOptions[index].colour} 
-                  className="py-5 h-100" >
+                  className="py-5" >
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type>{type}</Statistic.Type>
                 </Statistic.SolidCard>
