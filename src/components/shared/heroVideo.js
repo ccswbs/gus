@@ -39,7 +39,7 @@ class HeroVideo extends Component {
         ratio = +ratio.toFixed(2);
         const aspectRatio = (ratio === 2.34 ? "21by9" : "16by9");
 
-        const { playing, muted, loop, videoStatus, playPause } = this.state;
+        const { playing, muted, loop, videoStatus } = this.state;
         
         return (
             <React.Fragment>

@@ -3,75 +3,73 @@ import PropTypes from 'prop-types';
 import { Link, StaticQuery, graphql } from 'gatsby';
 import { contentExists } from 'utils/ug-utils';
 
-const createMenuHierarchy = (menuData, menuName) => {
-  let tree = [],
-     mappedArr = {},
-     arrElem,
-     mappedElem
+/***
+* Recursive function to iterate through the menu in search of parents
+* Keeps going until it finds the top item with null parent
+***/
+function findCrumbs(menu, nextCrumb) {
 
-  // First map the nodes of the array to an object -> create a hash table.
-  for (let i = 0, len = menuData.length; i < len; i++) {
-    arrElem = menuData[i].node
-    if (arrElem.menu_name === menuName && arrElem.enabled === true) {
-      mappedArr[arrElem.drupal_id] = arrElem
-      if (arrElem.drupal_parent_menu_item != null && arrElem.drupal_parent_menu_item.includes(arrElem.bundle)) {
-        let stripped_drupal_id = arrElem.drupal_parent_menu_item.replace(arrElem.bundle + ':', '')
-        mappedArr[arrElem.drupal_id].drupal_parent_menu_item = stripped_drupal_id
-      }
-      mappedArr[arrElem.drupal_id]['children'] = []
-    }
-  }
+    let crumbArray, result = [];
+    let parentID;
 
-  for (let id in mappedArr) {
-    if (mappedArr.hasOwnProperty(id)) {
-      mappedElem = mappedArr[id]
-      // If the element is not at the root level, add it to its parent array of children.
-      if (mappedElem.drupal_parent_menu_item) {
-        mappedArr[mappedElem.drupal_parent_menu_item]['children'].push(mappedElem)
-      }
-      // If the element is at the root level, add it to first level elements array.
-      else {
-        tree.push(mappedElem)
-      }
+    menu.forEach(item => {
+        if (item.node.drupal_id === nextCrumb) {
+            result.push(item);          
+            if (item.node.drupal_parent_menu_item != null) {
+                parentID = stripParentID(item.node.drupal_parent_menu_item);
+                result = result.concat(findCrumbs(menu, parentID));
+            }
+        }
+    })
+    crumbArray = result.reverse();
+    return crumbArray;
+}
+    
+function stripParentID(drupalParentID) {
+    if (drupalParentID) {
+        return drupalParentID.replace("menu_link_content:", '');
     }
-  }
-  return tree
 }
 
 const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
 
-    let menuTree;
+    let pageMenu = [];
+    let midCrumbs = [];
+    let topCrumbURL;
+    let endCrumb;
+    let endCrumbParent;
     const currentPage = `entity:node/` + String(nodeID);
     const pageTitle = nodeTitle;
-
-    menuTree = createMenuHierarchy(menuLinks.allMenuLinkContentMenuLinkContent.edges, menuName);
     
     if (contentExists(currentPage)) {
-        let endCrumb;
-        let midCrumb;
-        let midCrumbURL;
-        let topCrumbURL;       
-        
-        if (contentExists(menuTree)) {
-            for (let i=0; i<menuTree.length; i++) {
-                if (menuTree[i].title === "Home") {
-                    topCrumbURL = menuTree[i].link.url;
+ 
+        let allMenuItems = menuLinks.allMenuLinkContentMenuLinkContent.edges;        
+    
+        if (contentExists(allMenuItems)) {
+            
+            allMenuItems.forEach(item => {
+                if (item.node.menu_name === menuName) {
+                    pageMenu.push(item);
                 }
-                if (menuTree[i].link.uri === currentPage) {                    
-                    endCrumb = menuTree[i].title;
-                } else {
-                    if (menuTree[i].children !== null) {
-                        for (let j=0; j<menuTree[i].children.length; j++) {
-                            if (menuTree[i].children[j].link.uri === currentPage) {
-                                endCrumb = menuTree[i].children[j].title;
-                                midCrumb = menuTree[i].title;
-                                midCrumbURL = menuTree[i].link.url;
-                            }
-                        }
+            });
+            
+            if (contentExists(pageMenu)) {
+                
+                pageMenu.forEach(item => {
+                    if (item.node.title === "Home") {
+                        topCrumbURL = item.node.link.url;
                     }
-                }
-            }
-            //console.log(currentPage, endCrumb, midCrumb, topCrumbURL)
+                });
+                
+                pageMenu.forEach(item => {
+                    if (item.node.link.uri === currentPage) {
+                        endCrumb = item.node.title;
+                        endCrumbParent = stripParentID(item.node.drupal_parent_menu_item);
+                    }
+                });
+                
+                midCrumbs = findCrumbs(pageMenu, endCrumbParent);
+            }            
         }
         
         return (<>
@@ -83,10 +81,15 @@ const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
                             <ol className="breadcrumb breadcrumb-right-tag">                                
                                 <li key={topCrumbURL + `home`} className="breadcrumb-item">                                    
                                     <a href={contentExists(topCrumbURL) ? topCrumbURL : "https://www.uoguelph.ca"}>
-                                        <i className="fa fa-home"><span className="sr-only">Home</span></i>
+                                        <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">Home</span>
                                     </a>
                                 </li>
-                                {contentExists(midCrumb) ? <li key={midCrumbURL + `mid`} className="breadcrumb-item"><Link to={midCrumbURL}>{midCrumb}</Link></li> : null}
+                                {contentExists(midCrumbs) ? 
+                                    midCrumbs.map(midCrumb => {
+                                    return <><li key={midCrumb.node.link.url + `mid`} className="breadcrumb-item">
+                                            <Link to={midCrumb.node.link.url}>{midCrumb.node.title}</Link>
+                                    </li></>})
+                                : null}
                                 <li key={endCrumb + `end`} className="breadcrumb-item">{contentExists(endCrumb) ? endCrumb : pageTitle}</li>                           
                             </ol>
                             </div>
@@ -107,18 +110,12 @@ const Breadcrumbs = (props) => (
           allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}) {
             edges {
               node {
-                enabled
                 title
-                expanded
-                external
-                langcode
-                weight
                 link {
                   uri
                   url
                 }
                 drupal_parent_menu_item
-                bundle
                 drupal_id
                 menu_name
               }
