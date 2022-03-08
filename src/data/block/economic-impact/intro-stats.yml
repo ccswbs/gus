@@ -3,8 +3,8 @@ title: Campus Statistics
 stats:
   - value: "3"
     type: CAMPUSES
-  - value: "15"
-    type: RESEARCH STATIONS
+  - value: "14"
+    type: RESEARCH CENTRE LOCATIONS
   - value: 30,000
     type: STUDENTS
   - value: 3,900

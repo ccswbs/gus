@@ -30,7 +30,7 @@ const BackgroundImage = ({children, image, alt}) => (
     </div>
 )
 
-const render = ({ title, body, images, video, testimonial }) => (
+const render = ({ title, body, images, testimonial }) => (
     <>
         <Container fluid={true} className="bg-dark">
             <Container className="page-container">
@@ -38,8 +38,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                     <Row className="pt-5 text-white">
                         <Col lg={6} className="px-5 fs-3">
                             <SectionTitle>{title}</SectionTitle>
-                            {body.map((paragraph, index) => <p key={`mealcare-text-${index}`}>{paragraph}</p>)}
-                            <p><a className="btn btn-primary" href={video.link.url}>{video.link.title}</a></p>
+                            {body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
                         </Col>
                         <Col lg={6} className="d-flex justify-content-center">
                             <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end img-fluid" />
@@ -56,7 +55,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                         <em>{testimonial.quote}</em>
                     <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
                 </QuoteText>
-                <QuoteSource className="fs-3">~ {testimonial.source.name}, {testimonial.source.desc}</QuoteSource>
+                <QuoteSource className="fs-3">~ {testimonial.source.name}</QuoteSource>
             </Row>
         </Testimonial>
     </>
@@ -64,7 +63,7 @@ const render = ({ title, body, images, video, testimonial }) => (
 
 const query = graphql`
   query {
-    economicImpactYaml(id: {eq: "economic_impact_community_mealcare"}) {
+    economicImpactYaml(id: {eq: "economic_impact_human_impact_banky"}) {
         id
         title
         body
@@ -86,12 +85,6 @@ const query = graphql`
                 alt
             }
         }
-        video {
-            link {
-                title
-                url
-            }
-        }
         testimonial {
             quote
             source {
@@ -103,6 +96,6 @@ const query = graphql`
   }
 `
 
-export default function EconImpactCommunityImpactMealcare () {
+export default function EconImpactCommunityImpactBanky () {
   return <StaticQuery query={query} render={({economicImpactYaml}) => render(economicImpactYaml)} />
 }

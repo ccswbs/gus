@@ -1,9 +1,10 @@
 id: economic_impact_provincial_map
 image:
   src: ../../../images/economic-impact/map2.jpg
-  alt: Map of Ontario showing locations of 15 research station, as well as the 3 campuses
+  alt: Map of Ontario showing research centre locations and campuses
+
 stations:
-  section_title: 15 Research Station Locations
+  section_title: Research Centre Locations
   names:
     - Alma
     - Arkell
@@ -11,7 +12,6 @@ stations:
     - Cedar Springs
     - Elora
     - Emo (not pictured)
-    - Guelph
     - Huron
     - New Liskeard (not pictured)
     - Ponsonby
@@ -20,7 +20,8 @@ stations:
     - Vineland
     - Winchester
     - Woodstock
-    
+  footnote: Research centres are owned by the Government of Ontario through its agency, the Agricultural Research Institute of Ontario, and managed by the University of Guelph through the Ontario Agri-Food Innovation Alliance.
+  
 campuses:
   section_title: Campus Locations
   locations:

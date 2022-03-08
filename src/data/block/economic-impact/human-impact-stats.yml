@@ -1,8 +1,11 @@
 id: economic_impact_human_impact_stats
 stats:
-  - value: $5.55 BILLION
+  - value: $5.22 BILLION
     type: Impact of students, alumni and visitors to Ontario's GDP
-  - value: $1.5 BILLION
-    type: Volunteer hours annually from students and main campus
-  - value: 6,525
-    type: Jobs sustained from student and visitor spending
+    footnote: ""
+  - value: $1.5 MILLION
+    type: Volunteer hours annually from students at main campus
+    footnote: ""
+  - value: 8,753
+    type: Jobs sustained from student and visitor spending in Ontario
+    footnote: 'Guelph-Wellington: 5,468 | Toronto CMA: 823 | Chatham-Kent: 234'

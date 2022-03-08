@@ -4,6 +4,7 @@ body:
   - At the University of Guelph, students like Kiana Gibson and David Sahai are committed to reducing food waste. They co-founded MealCare Guelph, which collects leftovers from U of G’s award-winning food outlets for donation to charitable organizations around Guelph.
   - During the past three years, MealCare Guelph diverted more than 17,000 pounds of healthy, campus-prepared food that would have otherwise ended up in compost or landfill.
   - MealCare Guelph is run by more than 20 student volunteers who are committed to bettering society and improving lives within and beyond their communities.
+
 images:
   foreground:
     src: ../../../images/economic-impact/meal-care-students.png
@@ -11,8 +12,14 @@ images:
   background:
     src: ../../../images/economic-impact/meal-care-bg.jpg
     alt: Student volunteers
+
+video:
+  link:
+    title: View the MealCare Video
+    url: "#"
+
 testimonial:
-  quote: Change happens at a community level. Small people put in small efforts and those efforts add up to something big. 
+  quote: Change happens at a community level. Small people put in small efforts and those efforts add up to something big.
   source:
     name: Kiana Gibson
     desc: Co-Founder | MealCare Guelph

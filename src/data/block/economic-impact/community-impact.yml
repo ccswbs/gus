@@ -8,11 +8,11 @@ intro:
     - We create jobs and opportunity for innovation and entrepreneurship. We promote civic engagement and community development. We support people and improve lives.
 stats:
   - value: 15,007
-    type: Jobs Sustained
+    type: Jobs Sustained in Campus Regions
     icon: fak fa-human-group
-  - value: 21,400
-    type: Student Spending in Campus Regions
+  - value: $523 M
+    type: Annual Student Spending
     icon: fak fa-world-money
   - value: $2.77 B
-    type: Total Impact of Campuses to Regional GDP
+    type: Total Impact of Campuses to Regional GDPS
     icon: fak fa-money-arrow

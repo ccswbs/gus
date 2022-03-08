@@ -1,11 +1,11 @@
 id: economic_impact_national_impact_stats
 title: Total Impact Statistics
 stats:
-  - value: $8.5 B
+  - value: $8.6 B
     type: Total Impact To Canada’s GDP
   - value: 21,400
-    type: Jobs Sustained
-  - value: $1.16 B
+    type: Jobs Sustained in Canada
+  - value: $1.1 B
     type: Labour Income Contributed
-  - value: $1.9 B
+  - value: $2 B
     type: GDP From Research Productivity
