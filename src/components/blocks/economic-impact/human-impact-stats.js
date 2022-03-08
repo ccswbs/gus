@@ -19,7 +19,6 @@ const render = ({ title, stats }) => (
             <Statistic.BorderCard border={colourOptions[index].border} >
               <Statistic.Value><strong>{value}</strong></Statistic.Value>
               <Statistic.Type>{type}</Statistic.Type>
-              {footnote ?? <Statistic.Footnote><em>{footnote}</em></Statistic.Footnote>}
             </Statistic.BorderCard>
           </Col>
         )}
@@ -36,7 +35,6 @@ const query = graphql`
       stats {
           value
           type
-          footnote
       }
     }
   }

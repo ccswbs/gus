@@ -28,9 +28,6 @@ const StatType = styled.dd`
   font-size: 1.8rem;
   line-height: 1.58;
 `
-const StatFootnote = styled.dd`
-  font-size: 1rem !important;
-`
 const StatIcon = styled.i`
   color: #000;
 `
@@ -74,12 +71,5 @@ Statistic.Type = ({children}) => (
     {children}
   </StatType>
 )
-
-Statistic.Footnote = ({children}) => (
-  <StatFootnote>
-    {children}
-  </StatFootnote>
-)
-
 
 export default Statistic
