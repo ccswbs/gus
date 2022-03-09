@@ -28,8 +28,8 @@ const render = ({ title, body, images, testimonial }) => (
         <Container fluid={true} className="bg-dark">
             <Overlay.GatsbyImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
                 <Container className="page-container">
-                    <Row className="h-100 text-white">
-                        <Col lg={6} className="p-5 fs-3 mb-4">
+                    <Row className="site-content bg-transparent h-100 text-white pb-0">
+                        <Col lg={6} className="fs-3 mb-4">
                             <SectionTitle>{title}</SectionTitle>
                             {body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
                         </Col>
