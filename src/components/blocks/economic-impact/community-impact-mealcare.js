@@ -23,7 +23,7 @@ const QuoteSource = styled.p`
     color: var(--uog-blue);
 `
 
-const render = ({ title, body, images, video, testimonial }) => (
+const render = ({ title, body, images, testimonial }) => (
     <>
         <Container fluid={true} className="bg-dark">
             <Overlay.GatsbyImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
@@ -32,7 +32,6 @@ const render = ({ title, body, images, video, testimonial }) => (
                         <Col lg={6} className="fs-3 mb-4">
                             <SectionTitle>{title}</SectionTitle>
                             {body.map((paragraph, index) => <p key={`mealcare-text-${index}`}>{paragraph}</p>)}
-                            {/* <p><a className="btn btn-primary" href={video.link.url}>{video.link.title}</a></p> */}
                         </Col>
                         <Col lg={6} className="d-flex justify-content-center">
                             <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end img-fluid" />
@@ -77,12 +76,6 @@ const query = graphql`
                     }
                 }
                 alt
-            }
-        }
-        video {
-            link {
-                title
-                url
             }
         }
         testimonial {
