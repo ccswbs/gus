@@ -39,18 +39,18 @@ const render = ({ title, body, images, testimonial }) => (
                     </Row>
                 </Container>
             </Overlay.GatsbyImage>
-        </Container>
 
-        <Testimonial className="d-flex justify-content-center">
-            <Row className="p-5 text-center">
-                <QuoteText className="display-2 text-white">
-                    <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
-                        <em>{testimonial.quote}</em>
-                    <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
-                </QuoteText>
-                <QuoteSource className="fs-3">~ {testimonial.source.name}, {testimonial.source.desc}</QuoteSource>
-            </Row>
-        </Testimonial>
+            <Testimonial className="d-flex justify-content-center">
+                <Row className="p-5 text-center">
+                    <QuoteText className="display-2 text-white">
+                        <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
+                            <em>{testimonial.quote}</em>
+                        <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
+                    </QuoteText>
+                    <QuoteSource className="fs-3">~ {testimonial.source.name}, {testimonial.source.desc}</QuoteSource>
+                </Row>
+            </Testimonial>
+        </Container>
     </>
 )
 
