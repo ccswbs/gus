@@ -32,7 +32,6 @@ const NationalImpactTestimony = ({ testimonial }) => (
             <Col className="col-md-3 content-area">
                 <GatsbyImage image={getImage(testimonial.source.image.src)} alt={testimonial.source.image.alt} imgClassName="rounded-circle" />
             </Col>
-
             <Col className="col-md-9 px-3 content-area">
                 <QuoteText className="fs-2">
                     <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 

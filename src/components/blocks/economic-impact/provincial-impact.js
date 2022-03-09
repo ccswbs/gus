@@ -14,11 +14,7 @@ const EconImpactProvincialImpact = () => (
                 <EconImpactProvincialImpactStats />
             </Row>
         </Container>
-        <Container fluid={true} className="bg-light mb-4">
-            <Container className="page-container">
-                <EconImpactProvincialImpactQuote />
-            </Container>
-        </Container>
+        <EconImpactProvincialImpactQuote />
     </>
 )
 

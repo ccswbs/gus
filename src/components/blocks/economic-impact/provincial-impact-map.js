@@ -18,7 +18,7 @@ const IconStyle = styled.span`
 `
 
 const render = ({ image, stations, campuses }) => (
-    <Row className="gy-5">
+    <Row className="gy-5 mb-5">
         <Col md={9}>
             <GatsbyImage image={getImage(image.src)} alt={image.alt} />
         </Col>

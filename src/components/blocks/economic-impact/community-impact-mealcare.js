@@ -2,6 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Row, Col } from "react-bootstrap"
+import Overlay from "components/shared/overlay"
 import styled from "styled-components"
 
 const SectionTitle = styled.h3`
@@ -21,19 +22,11 @@ const QuoteText = styled.p`
 const QuoteSource = styled.p`
     color: var(--uog-blue);
 `
-const BackgroundImage = ({children, image, alt}) => (
-    <div style={{display: "grid"}}>
-        <GatsbyImage style={{gridArea: "1/1",}} image={image} alt={alt} />
-        <div style={{gridArea: "1/1", position: "relative", display: "grid"}}>
-            {children}
-        </div>
-    </div>
-)
 
 const render = ({ title, body, images, video, testimonial }) => (
     <>
         <Container fluid={true} className="bg-dark">
-            <BackgroundImage image={getImage(images.background.src)} alt={images.background.alt}>
+            <Overlay.GatsbyImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
                 <Container className="page-container">
                     <Row className="h-100 text-white">
                         <Col lg={6} className="p-5 fs-3 mb-4">
@@ -46,7 +39,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                         </Col>
                     </Row>
                 </Container>
-            </BackgroundImage>
+            </Overlay.GatsbyImage>
         </Container>
 
         <Testimonial className="d-flex justify-content-center">
