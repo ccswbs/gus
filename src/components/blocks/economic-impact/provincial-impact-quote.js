@@ -13,7 +13,7 @@ const QuoteText = styled.p`
 `
 
 const render = ({ quote, source, background_image }) => (
-  <Container fluid={true} className="bg-light mb-4">
+  <div className="d-flex flex-column bg-light mb-4">
     <Overlay.GatsbyImage gatsbyImageData={getImage(background_image.src)} alt={background_image.alt}>
       <Container className="page-container">
         <Row className="h-100 p-5 gx-5 justify-content-center align-items-center">
@@ -32,7 +32,7 @@ const render = ({ quote, source, background_image }) => (
         </Row>
       </Container>
     </Overlay.GatsbyImage>
-  </Container>
+  </div>
 )
 
 const query = graphql`

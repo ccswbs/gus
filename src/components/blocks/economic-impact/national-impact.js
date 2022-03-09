@@ -47,7 +47,7 @@ const NationalImpactTestimony = ({ testimonial }) => (
 
 const render = ({ title, lead, body_html, testimonial, aside }) => (
     <>
-        <Container fluid={true} className="bg-light">
+        <div className="d-flex flex-column bg-light">
             <div className="full-width-container">
                 <Container className="page-container pe-0">
                     <Row className="site-content mx-4 py-0 pe-0">
@@ -64,7 +64,7 @@ const render = ({ title, lead, body_html, testimonial, aside }) => (
                     </Row>
                 </Container>
             </div>
-        </Container>
+        </div>
         <EconImpactNationalImpactStats />
     </>
 )
