@@ -8,7 +8,7 @@ const ProgramsPage = ({ data }) => (
     <Layout>
         <Seo title="Program List" description={[`Univeristy of Guelph Programs`]} />
         <div className="container page-container">
-            <div id="content" className="site-content">
+            <div className="site-content">
                 <h1>Programs</h1>       
                 <p>The University of Guelph is a comprehensive university offering a wide variety of programs and specialties. From general arts, commerce and science degrees, to unique programs in indigenous environmental science, veterinary technology, bio-resource management and one health. Explore everything your future can be at the University of Guelph.</p>     
                 <br/>
