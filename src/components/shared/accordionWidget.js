@@ -12,7 +12,7 @@ const accordionWidget = (props) => {
                 <div className="accordion-item">
                     <h2 className="accordion-header">
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#part" + item.drupal_id} aria-expanded="true" aria-controls={"part" + item.drupal_id}>
-                            {contentExists(field_accordion_title) ? field_accordion_title : "Read More"}
+                            {contentExists(item.field_accordion_title) ? item.field_accordion_title : "Read More"}
                         </button>
                     </h2>
                     <div id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={item.drupal_id} data-bs-parent={"#accordion" + props.pageData.drupal_id}>
