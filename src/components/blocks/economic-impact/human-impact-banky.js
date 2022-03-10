@@ -47,8 +47,10 @@ const Video = ({src, transcript, captions}) => (
                 </div>
                 <video className="ugplayer embed-responsive-item" width="100%" preload="none" controls="controls">
                     <source type="video/vimeo" src={`${src}`} />
-                    { captions && <track className="caption-input" label="English" kind="subtitles" srclang="en" src={captions} default="true" /> }
-                    { transcript && <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={transcript} default="true" /> }
+                    <>
+                        { captions && <track className="caption-input" label="English" kind="subtitles" srclang="en" src={captions} default="true" /> }
+                        { transcript && <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={transcript} default="true" /> }
+                    </>
                 </video>
             </div>
         </section>
