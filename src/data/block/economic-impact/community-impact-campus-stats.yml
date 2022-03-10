@@ -4,15 +4,15 @@ stats:
   - value: $2.01 B
     type: Guelph-Wellington
     image:
-      src: ../../../images/economic-impact/guelph-building.png
-      alt: Building at University of Guelph campus
+      src: ../../../images/economic-impact/guelph-building.jpg
+      alt: Johnston Hall
   - value: $678.5 M
     type: Toronto CMA
     image:
-      src: ../../../images/economic-impact/humber-building.png
-      alt: Building at Guelph-Humber campus
+      src: ../../../images/economic-impact/humber-building.jpg
+      alt: Guelph-Humber building
   - value: $83.8 M
     type: Chatham-Kent
     image:
-      src: ../../../images/economic-impact/ridgetown-building.png
-      alt: Building at Ridgetown campus
+      src: ../../../images/economic-impact/ridgetown-building.jpg
+      alt: DJ Pestell Student Service and Alumni Centre

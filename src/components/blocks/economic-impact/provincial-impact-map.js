@@ -2,7 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Row, Col } from "react-bootstrap"
-import { FaCircle } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
 import styled from "styled-components"
 
 const ListItem = styled.li`
@@ -35,7 +35,7 @@ const render = ({ image, stations, campuses }) => (
                 {campuses.locations.map(({name, colour}, index) => 
                     <UnstyledListItem key={`campus-${index}`}>
                         <IconStyle colour={colour}>
-                            <FaCircle className="pe-2 display-6" />
+                            <FaStar className="pe-2 display-6" aria-hidden="true" />
                         </IconStyle>
                         {name}
                     </UnstyledListItem>

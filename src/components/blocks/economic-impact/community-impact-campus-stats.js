@@ -19,10 +19,10 @@ const render = ({ title, stats }) => (
                 <Statistic.SolidCard  
                     background={colourOptions[index].background} 
                     colour={colourOptions[index].colour}
-                    className="pb-0" >
+                    className="pt-4 pb-0 px-0 h-100" >
                     <Statistic.Value><strong>{value}</strong></Statistic.Value>
-                    <Statistic.Type>{type}</Statistic.Type>
-                    <GatsbyImage image={getImage(image.src)} alt={image.alt} imgClassName="card-img" />
+                    <Statistic.Type className="mb-4">{type}</Statistic.Type>
+                    <GatsbyImage image={getImage(image.src)} alt={image.alt} className="card-img-bottom" />
                 </Statistic.SolidCard>
               </div>
           )}

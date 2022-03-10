@@ -24,7 +24,7 @@ const StatValue = styled.dt`
   color: #000;
   font-size: 4.25rem;
   line-height: 1.2;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 `
 const StatType = styled.dd`
   font-size: 1.8rem;
@@ -68,8 +68,8 @@ Statistic.Value = ({children}) => (
   </StatValue>
 )
 
-Statistic.Type = ({children}) => (
-  <StatType>
+Statistic.Type = ({children, className=""}) => (
+  <StatType className={className}>
     {children}
   </StatType>
 )
