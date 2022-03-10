@@ -28,12 +28,12 @@ const NationalImpactAside = ({aside}) => (
 
 const NationalImpactTestimony = ({ testimonial }) => (
     <div className="mt-5 me-3 pb-5">
-        <Row>
-            <Col className="col-md-3 content-area">
+        <Row className="justify-content-center g-5">
+            <Col xs={5} sm={4} md={3}>
                 <GatsbyImage image={getImage(testimonial.source.image.src)} alt={testimonial.source.image.alt} imgClassName="rounded-circle" />
             </Col>
-            <Col className="col-md-9 px-3 content-area">
-                <QuoteText className="fs-2">
+            <Col sm={8} md={9} className="ps-5 fs-2">
+                <QuoteText className="fs-1">
                     <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
                         <em>{testimonial.quote}</em>
                     <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />

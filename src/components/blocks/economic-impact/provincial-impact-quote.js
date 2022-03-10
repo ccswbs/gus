@@ -20,13 +20,13 @@ const render = ({ quote, source, background_image }) => (
           <Col xs={5} sm={4} md={3} lg={2}>
               <GatsbyImage image={getImage(source.image.src)} alt={source.image.alt} imgClassName="rounded-circle" />
           </Col>
-          <Col sm={7}className="ps-5 fs-2">
-            <QuoteText className="fs-2">
+          <Col sm={7}className="ps-5">
+            <QuoteText className="fs-1">
                 <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
                     <em>{quote}</em>
                 <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
             </QuoteText>
-            <p className="author text-dark"><strong>{source.name}</strong>
+            <p className="author text-dark fs-2"><strong>{source.name}</strong>
             <br /><em>{source.desc}</em></p>
           </Col>
         </Row>
