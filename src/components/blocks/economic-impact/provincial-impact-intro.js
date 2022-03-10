@@ -26,7 +26,7 @@ const render = ({ title, image, sections }) => (
                 <Heading className="mt-0 text-uppercase">{title}</Heading>
                 <Section borderColour={colourOptions[index]} className="px-4 mb-5">
                   <div dangerouslySetInnerHTML={{__html: body_html}}></div>
-                  { video && <a className="btn btn-outline-info my-4" href={video.url}><i class="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a> }
+                  { video && <a className="btn btn-outline-info my-4" href={video.url}><i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a> }
                 </Section>
             </div>
         )}
