@@ -10,10 +10,10 @@ const accordionWidget = (props) => {
             <div className="accordion" id={"accordion" + props.pageData.drupal_id}>            
             {accordionData.map(item =>
                 <div className="accordion-item">
-                    <h3 className="accordion-header">
+                    <h2 className="accordion-header">
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#part" + item.drupal_id} aria-expanded="true" aria-controls="collapseOne" dangerouslySetInnerHTML={{__html: item.field_accordion_block_title.processed}}>
                         </button>
-                    </h3>
+                    </h2>
                     <div id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={item.drupal_id} data-bs-parent={"#accordion" + props.pageData.drupal_id}>
                         <div className="accordion-body" dangerouslySetInnerHTML={{__html: item.field_accordion_block_text.processed}} />
                     </div>
