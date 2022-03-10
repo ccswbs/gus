@@ -5,7 +5,7 @@ import SliderResponsive from 'components/shared/sliderResponsive';
 import TestimonialTitle from 'components/shared/testimonialTitle';
 import TestimonialTags from 'components/shared/testimonialTags';
 import { contentExists, stripHTMLTags, setHeadingLevel } from 'utils/ug-utils.js';
-import 'styles/shared/testimonial.css';
+import 'styles/testimonial.css';
 
 
 function Testimonials (props) {

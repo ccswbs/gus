@@ -5,7 +5,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import OVCCustomFooter from 'components/blocks/ovc/footerOVC';
 import Widget from 'components/shared/widget';
 import { contentExists } from 'utils/ug-utils';
-import 'styles/shared/customFooter.css';
+import 'styles/customFooter.css';
 
 function chooseFooter (footer) {
   let footerSelection = ``;

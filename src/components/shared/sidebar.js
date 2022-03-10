@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { contentExists, fetchMenuMain } from 'utils/ug-utils';
-import 'styles/shared/sidebar.css';
+import 'styles/sidebar.css';
 
 function getSubmenu(submenu, currentPage) {
 	let submenuItems = [];

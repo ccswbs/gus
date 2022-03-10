@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { contentExists} from 'utils/ug-utils';
-import 'styles/shared/stats.css';
+import 'styles/stats.css';
 
 function Stats (props) {
 	return (

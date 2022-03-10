@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'styles/shared/columnLists.css';
+import 'styles/columnLists.css';
 
 function ColumnLists (props) {
 	return (
