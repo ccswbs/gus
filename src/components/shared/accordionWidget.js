@@ -39,14 +39,14 @@ export default accordionWidget
 export const query = graphql`
   fragment AccordionSectionParagraphFragment on paragraph__accordion_section {
     drupal_id
+    field_accordion_stay_open
     relationships {
       field_accordion_block_elements {
         drupal_id
         field_accordion_title
         field_accordion_block_text {
           processed
-        }
-        field_accordion_stay_open
+        }        
       }
     }
   }

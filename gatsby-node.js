@@ -400,12 +400,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }  
     type paragraph__accordion_block implements Node {
       drupal_id: String
-      field_accordion_block_text: FieldAccordionBlockText
-      field_accordion_stay_open: Boolean
+      field_accordion_block_text: FieldAccordionBlockText      
       field_accordion_title: String
     }
     type paragraph__accordion_section implements Node {
       drupal_id: String
+      field_accordion_stay_open: Boolean
       relationships: paragraph__accordion_sectionRelationships
     }
     type paragraph__accordion_sectionRelationships implements Node {
