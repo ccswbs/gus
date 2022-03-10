@@ -144,12 +144,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       format: String
       summary: String
     }
-    type FieldAccordionBlockTitle {
-      processed: String
-      value: String
-      format: String
-      summary: String
-    }
     type FieldFormattedTitle {
       processed: String
       value: String
@@ -407,7 +401,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__accordion_block implements Node {
       drupal_id: String
       field_accordion_block_text: FieldAccordionBlockText
-      field_accordion_block_title: FieldAccordionBlockTitle
+      field_accordion_title: String
     }
     type paragraph__accordion_section implements Node {
       drupal_id: String
