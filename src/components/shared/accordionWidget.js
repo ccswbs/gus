@@ -4,7 +4,8 @@ import { graphql } from 'gatsby';
 import { contentExists } from 'utils/ug-utils';
 
 const accordionWidget = (props) => {
-    let accordionData = props.pageData.relationships.field_accordion_block_elements;    
+    let accordionData = props.pageData.relationships.field_accordion_block_elements;
+    let stayOpen = props.pageData.field_accordion_stay_open;
     if (contentExists(accordionData)) {
         return <>
             <div className="accordion" id={"accordion" + props.pageData.drupal_id}>            
@@ -15,7 +16,7 @@ const accordionWidget = (props) => {
                             {contentExists(item.field_accordion_title) ? item.field_accordion_title : "Read More"}
                         </button>
                     </h2>
-                    <div id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={item.drupal_id} {item.field_accordion_stay_open ? data-bs-parent={"#accordion" + props.pageData.drupal_id} : ``}>
+                    <div id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={item.drupal_id} {stayOpen ? data-bs-parent={"#accordion" + props.pageData.drupal_id} : ``}>
                         <div className="accordion-body" dangerouslySetInnerHTML={{__html: item.field_accordion_block_text.processed}} />
                     </div>
                 </div>
