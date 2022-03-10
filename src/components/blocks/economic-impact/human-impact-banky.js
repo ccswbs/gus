@@ -26,7 +26,7 @@ const QuoteSource = styled.p`
 
 const Modal=({children}) => (
     <div id="bankyVideoModal" className="modal fade" tabindex="-1">
-        <div className="modal-dialog modal-lg">
+        <div className="modal-dialog modal-lg modal-dialog-centered">
             <div className="modal-content">
                 <div className="modal-body p-0">
                     {children}
@@ -47,7 +47,7 @@ const Video = ({src, transcript, captions}) => (
                 </div>
                 <video className="ugplayer embed-responsive-item" width="100%" preload="none" controls="controls">
                     <source type="video/vimeo" src={`${src}`} />
-                    { captions && <track className="caption-input" label="English" kind="captions" srclang="en" src={captions} default="true" /> }
+                    { captions && <track className="caption-input" label="English" kind="subtitles" srclang="en" src={captions} default="true" /> }
                     { transcript && <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={transcript} default="true" /> }
                 </video>
             </div>
