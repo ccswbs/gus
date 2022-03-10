@@ -16,11 +16,11 @@ const render = ({ quote, source, background_image }) => (
   <div className="d-flex flex-column bg-light mb-4">
     <Overlay.GatsbyImage gatsbyImageData={getImage(background_image.src)} alt={background_image.alt}>
       <Container className="page-container">
-        <Row className="h-100 p-5 gx-5 justify-content-center align-items-center">
-          <Col className="col-md-2">
+        <Row className="h-100 p-5 g-5 justify-content-center align-items-center">
+          <Col xs={5} sm={4} md={3} lg={2}>
               <GatsbyImage image={getImage(source.image.src)} alt={source.image.alt} imgClassName="rounded-circle" />
           </Col>
-          <Col className="col-md-7 ps-5 fs-2">
+          <Col sm={7}className="ps-5 fs-2">
             <QuoteText className="fs-2">
                 <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
                     <em>{quote}</em>

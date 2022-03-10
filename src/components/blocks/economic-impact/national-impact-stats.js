@@ -18,7 +18,7 @@ const render = ({ title, stats }, colourOptions) => (
   <Gradient className="d-flex flex-column">
     <Container className="page-container p-0">
       <h3 className="visually-hidden">{title}</h3>
-        <Statistic className="row g-0 row-cols-2 row-cols-lg-4 justify-content-center mb-0">
+        <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
             {stats.map(({value, type}, index) => 
               <Col key={`nationalimpact-stat-${index}`}>
                 <Statistic.SolidCard 
