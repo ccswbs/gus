@@ -21,10 +21,13 @@ const render = ({ title, image, sections }) => (
   <>
     <h2 className="mb-5" id="provincial-impact">{title}</h2>
     <Col lg={7}>
-        {sections.map(({title, body_html}, index) => 
+        {sections.map(({title, body_html, video}, index) => 
             <div key={`prov-section-${index}`}>
                 <Heading className="mt-0 text-uppercase">{title}</Heading>
-                <Section borderColour={colourOptions[index]} className="px-4 mb-5" dangerouslySetInnerHTML={{__html: body_html}}></Section>
+                <Section borderColour={colourOptions[index]} className="px-4 mb-5">
+                  <div dangerouslySetInnerHTML={{__html: body_html}}></div>
+                  { video && <a className="btn btn-outline-info my-4" href={video.url}><i class="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a> }
+                </Section>
             </div>
         )}
     </Col>
@@ -50,6 +53,10 @@ const query = graphql`
         sections {
             title
             body_html
+            video {
+              title
+              url
+            }
         }
     }
   }
