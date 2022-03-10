@@ -31,7 +31,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                     <Col lg={6} className="fs-3 mb-4">
                         <SectionTitle>{title}</SectionTitle>
                         {body.map((paragraph, index) => <p key={`mealcare-text-${index}`}>{paragraph}</p>)}
-                        <a className="btn btn-primary my-4" href={video.url}><i class="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a>
+                        <a className="btn btn-primary my-4" href={video.url}><i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a>
                     </Col>
                     <Col lg={6} className="d-flex justify-content-center">
                         <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end img-fluid" />

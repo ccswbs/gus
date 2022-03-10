@@ -23,9 +23,21 @@ const QuoteSource = styled.p`
     color: var(--uog-blue);
 `
 
-const Video = ({src}) => (
-    <div className="col-md-6">
-        <div id="video-embed">
+const Modal=({children}) => (
+    <div id="bankyVideoModal" className="modal" tabindex="-1">
+        <div className="modal-dialog">
+            <div className="modal-content">
+                <div className="modal-body p-0">
+                    {children}
+                </div>
+            </div>
+        </div>
+    </div>
+)
+
+const Video = ({src, transcript, captions}) => (
+    // <div>
+        <div id="video-embed-banky" className="bg-dark">
             <section name="vimeo" className="ui-kit-section">
                 <div className="embed-responsive embed-responsive-16by9">
                     <div className="d-flex justify-content-center">
@@ -35,16 +47,16 @@ const Video = ({src}) => (
                     </div>
                     <video className="ugplayer embed-responsive-item" width="100%" id="" preload="none" controls="controls">
                         <source type="video/vimeo" src={`${src}`} />
-                        {//contentExists(transcript) ? 
-                        // <><track className="caption-input" label="English" kind="subtitles" srclang="en" src={videoCC} default="true" />
-                        // <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={transcript} default="true" /></>
-                        // : ``
+                        { transcript ? 
+                            <><track className="caption-input" label="English" kind="subtitles" srclang="en" src={captions} default="true" />
+                            <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={transcript} default="true" /></>
+                            : ``
                         }
                     </video>
                 </div>
             </section>
         </div>
-    </div>
+    // </div>
 )
 
 const render = ({ title, body, images, video, testimonial }) => (
@@ -55,7 +67,16 @@ const render = ({ title, body, images, video, testimonial }) => (
                     <Col lg={6} className="fs-3 mb-4">
                         <SectionTitle>{title}</SectionTitle>
                         {body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
-                        <a className="btn btn-primary my-4" href={video.url}><i class="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a>
+                        {/* <a className="btn btn-primary my-4" href={video.url}>
+                            <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
+                        </a> */}
+
+                        <button type="button" className="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#bankyVideoModal">
+                        <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
+                        </button>
+                        <Modal>
+                            <Video src={video.url} transcript={video.transcript} captions={video.captions} />
+                        </Modal>
                     </Col>
                     <Col lg={6} className="d-flex justify-content-center">
                         <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end img-fluid" />
@@ -73,7 +94,6 @@ const render = ({ title, body, images, video, testimonial }) => (
                 <QuoteSource className="fs-3">~ {testimonial.source.name}</QuoteSource>
             </Row>
         </Testimonial>
-        <Video src={video.url} />
     </div>
     
 )
@@ -105,6 +125,8 @@ const query = graphql`
         video {
             title
             url
+            transcript
+            captions
         }
         testimonial {
             quote
