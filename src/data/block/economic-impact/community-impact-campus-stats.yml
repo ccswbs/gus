@@ -4,7 +4,7 @@ stats:
   - value: $2.01 B
     type: Guelph-Wellington
     image:
-      src: ../../../images/economic-impact/guelph-building.jpg
+      src: ../../../images/economic-impact/johnston-hall-building.jpg
       alt: Johnston Hall
   - value: $678.5 M
     type: Toronto CMA
@@ -14,5 +14,5 @@ stats:
   - value: $83.8 M
     type: Chatham-Kent
     image:
-      src: ../../../images/economic-impact/ridgetown-building.jpg
+      src: ../../../images/economic-impact/djPestell-building.jpg
       alt: DJ Pestell Student Service and Alumni Centre

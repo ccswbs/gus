@@ -41,7 +41,7 @@ const render = ({ title, body, images, testimonial }) => (
 
         <Testimonial className="d-flex justify-content-center">
             <Row className="p-5 text-center">
-                <QuoteText className="display-2 text-white">
+                <QuoteText className="display-3 text-white">
                     <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
                         <em>{testimonial.quote}</em>
                     <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />

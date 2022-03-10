@@ -9,6 +9,10 @@ import EconImpactNationalImpact from 'components/blocks/economic-impact/national
 import EconImpactProvImpact from 'components/blocks/economic-impact/provincial-impact';
 import EconImpactCommunityImpact from 'components/blocks/economic-impact/community-impact';
 import EconImpactHumanImpact from 'components/blocks/economic-impact/human-impact';
+import "@fontsource/roboto"
+import "@fontsource/roboto/700.css"
+import "@fontsource/roboto/100-italic.css"
+import "@fontsource/roboto/400-italic.css"
 
 const render = (title) => (
     <Layout>
