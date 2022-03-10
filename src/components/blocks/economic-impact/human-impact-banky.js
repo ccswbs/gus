@@ -23,7 +23,7 @@ const QuoteSource = styled.p`
     color: var(--uog-blue);
 `
 
-const render = ({ title, body, images, testimonial }) => (
+const render = ({ title, body, images, video, testimonial }) => (
     <div className="d-flex flex-column bg-dark">
         <Overlay.GatsbyImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
             <Container className="page-container">
@@ -31,6 +31,7 @@ const render = ({ title, body, images, testimonial }) => (
                     <Col lg={6} className="fs-3 mb-4">
                         <SectionTitle>{title}</SectionTitle>
                         {body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
+                        <a className="btn btn-primary my-4" href={video.url}><i class="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a>
                     </Col>
                     <Col lg={6} className="d-flex justify-content-center">
                         <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end img-fluid" />
@@ -74,6 +75,10 @@ const query = graphql`
                 }
                 alt
             }
+        }
+        video {
+            title
+            url
         }
         testimonial {
             quote

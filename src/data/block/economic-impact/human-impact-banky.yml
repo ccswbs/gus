@@ -12,6 +12,11 @@ images:
   background:
     src: ../../../images/economic-impact/banky-bg.jpg
     alt: ""
+
+video:
+  title: Banky
+  url: https://player.vimeo.com/video/522002889?api=1
+
 testimonial:
   quote: I never thought of schooling as a way to get a better life for me. I thought if I didn’t make it in basketball, I wouldn’t make it at all.
   source:

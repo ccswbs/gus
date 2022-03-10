@@ -13,6 +13,10 @@ images:
     src: ../../../images/economic-impact/meal-care-bg.jpg
     alt: Student volunteers
 
+video:
+  title: MealCare
+  url: https://player.vimeo.com/video/522360252?api=1
+
 testimonial:
   quote: Change happens at a community level. Small people put in small efforts and those efforts add up to something big.
   source:
