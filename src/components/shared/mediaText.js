@@ -21,8 +21,8 @@ function MediaText (props) {
 	const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
 	const videoCC = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_video_cc) ? mediaRelationships.field_video_cc.localFile.publicURL : ``);
-  const videoType = videoURL.includes("youtube") || videoURL.includes("youtu.be") ? `youtube` : `vimeo`;
-  const videoID = videoType === `youtube` ? videoURL.substr(props.videoURL.length - 11) : props.videoURL.substr(18);
+  const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
+  const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
     
   let mediaCol;
   let textCol;
