@@ -14,8 +14,9 @@ images:
     alt: ""
 
 video:
-  id: bankyVideoModal
-  title: Banky
+  id: "522002889"
+  type: vimeo
+  title: Banky Alade
   url: https://player.vimeo.com/video/522002889?api=1
   transcript: https://www.uoguelph.ca/improve-life/doc/banky-transcript.txt
   captions: /captions/banky-captions.srt

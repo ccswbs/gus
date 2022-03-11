@@ -7,8 +7,8 @@ function Video (props) {
     let playerID = props.playerID;
     let videoCC = props.videoCC;
     let videoTranscript = props.videoTranscript;
-    let videoType = (props.videoURL.includes("youtube") || props.videoURL.includes("youtu.be") ? `youtube` : `vimeo`);	
-    let videoID = (videoType === `youtube` ? props.videoURL.substr(props.videoURL.length - 11) : props.videoURL.substr(18));
+    let videoType = props.videoType;
+    let videoID = props.videoID;
 
     let youtubeURL = "https://www.youtube.com/embed/";
     let vimeoURL = "https://player.vimeo.com/video/";	

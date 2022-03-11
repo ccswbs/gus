@@ -85,7 +85,7 @@ const RenderBankySection = ({ title, body, images, video, testimonial }) => {
 
                             <Modal size="lg" show={show} onHide={handleClose} centered>
                                 <Modal.Body className="p-0 bg-dark">
-                                    <Video playerID={`embed-${video.id}`} videoURL={video.url} videoTranscript={video.transcript} videoCC={video.captions} />
+                                    <Video videoID={video.id} videoType={video.type} playerID={`player-${video.id}`} videoTranscript={video.transcript} videoCC={video.captions} />
                                 </Modal.Body>
                             </Modal>
 
@@ -142,6 +142,7 @@ const query = graphql`
         }
         video {
             id
+            type
             title
             url
             transcript

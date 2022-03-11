@@ -15,15 +15,17 @@ function MediaText (props) {
 	
 	const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
 	const imageAlt = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.alt : ``);
-    const imageSize = (contentExists(imageURL) && contentExists(props.widgetData.field_media_image_size) ? props.widgetData.field_media_image_size : ``);
+  const imageSize = (contentExists(imageURL) && contentExists(props.widgetData.field_media_image_size) ? props.widgetData.field_media_image_size : ``);
     
-    const playerID = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.drupal_id : ``);
+  const playerID = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.drupal_id : ``);
 	const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
 	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
 	const videoCC = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_video_cc) ? mediaRelationships.field_video_cc.localFile.publicURL : ``);
+  const videoType = videoURL.includes("youtube") || videoURL.includes("youtu.be") ? `youtube` : `vimeo`;
+  const videoID = videoType === `youtube` ? videoURL.substr(props.videoURL.length - 11) : props.videoURL.substr(18);
     
-    let mediaCol;
-    let textCol;
+  let mediaCol;
+  let textCol;
     
     if (contentExists(imageSize)) {
         switch(imageSize) {
@@ -53,7 +55,7 @@ function MediaText (props) {
 
         <section className={mediaCol}>
 			{contentExists(videoURL) ?
-			<Video playerID={playerID} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
+        <Video playerID={playerID} videoType={videoType} videoID={videoID} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
 			: ``}
 			{contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
         </section>
