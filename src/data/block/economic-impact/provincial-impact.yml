@@ -15,5 +15,8 @@ sections:
       <p>From heading off the next global pandemic to addressing climate change to improving food security, the University of Guelph is tackling some of the world’s most complex issues through One Health.</p>
       <p>Through a research institute, a degree program and a strategic focus at U of G, One Health involves a holistic approach. Multiple disciplines work together to find lasting solutions to global challenges, solutions that consider the interactions among humans, animals and ecosystems, and the role of social and cultural influences.</p>
     video:
+      id: oneHealthVideoModal
       title: One Health
       url: https://player.vimeo.com/video/618992196?api=1
+      transcript: https://www.uoguelph.ca/improve-life/doc/one-health-transcript.txt
+      captions: /captions/one-health-captions.srt

@@ -14,6 +14,7 @@ images:
     alt: ""
 
 video:
+  id: bankyVideoModal
   title: Banky
   url: https://player.vimeo.com/video/522002889?api=1
   transcript: https://www.uoguelph.ca/improve-life/doc/banky-transcript.txt

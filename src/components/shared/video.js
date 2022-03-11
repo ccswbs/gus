@@ -17,7 +17,7 @@ function Video (props) {
     return (
         <React.Fragment>
         <div>
-            <div id="video-embed">
+            <div id={`video-embed-${playerID}`}>
                 <section name={videoType} className="ui-kit-section">
                     <div className="embed-responsive embed-responsive-16by9">
                         <div className="d-flex justify-content-center">
@@ -27,10 +27,8 @@ function Video (props) {
                         </div>
                         <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls">
                             <source type={`video/` + videoType} src={videoSrc} />
-                            {contentExists(videoTranscript) ? 
-                            <><track className="caption-input" label="English" kind="subtitles" srclang="en" src={videoCC} default="true" />
-                            <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={videoTranscript} default="true" /></>
-                            : ``}
+                            {contentExists(videoCC) && <track className="caption-input" label="English" kind="subtitles" srcLang="en" src={videoCC} default={true} /> }
+                            {contentExists(videoTranscript) && <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srcLang="en" src={videoTranscript} default={true} /> }
                         </video>
                     </div>
                 </section>

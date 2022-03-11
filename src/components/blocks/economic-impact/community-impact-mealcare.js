@@ -41,7 +41,7 @@ const render = ({ title, body, images, video, testimonial }) => (
         </Overlay.GatsbyImage>
 
         <Testimonial className="d-flex justify-content-center">
-            <Row className="p-5 text-center">
+            <Row className="w-100 p-5 text-center">
                 <QuoteText className="display-3 text-white">
                     <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
                         <em>{testimonial.quote}</em>
