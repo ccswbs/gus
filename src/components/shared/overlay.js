@@ -16,4 +16,22 @@ Overlay.GatsbyImage = ({children, gatsbyImageData, alt}) => (
 	</div>
   )
 
+Overlay.ModalButton = ({id, children, className}) => (
+    <button type="button" className={`btn ${className}`} data-bs-toggle="modal" data-bs-target={`#${id}`}>
+        {children}
+    </button>
+)
+
+Overlay.Modal = ({id, children}) => (
+    <div id={id} className="modal fade" tabIndex="-1">
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal-content">
+                <div className="modal-body p-0 bg-dark">
+                    {children}
+                </div>
+            </div>
+        </div>
+    </div>
+)
+
 export default Overlay

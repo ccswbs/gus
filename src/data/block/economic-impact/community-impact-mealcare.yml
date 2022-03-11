@@ -14,7 +14,8 @@ images:
     alt: Student volunteers
 
 video:
-  id: mealcareVideoModal
+  id: "522360252"
+  type: vimeo
   title: MealCare
   url: https://player.vimeo.com/video/522360252?api=1
   transcript: https://www.uoguelph.ca/improve-life/doc/mealcare-transcript.txt

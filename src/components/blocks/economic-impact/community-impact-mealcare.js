@@ -2,6 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Row, Col } from "react-bootstrap"
+import Video from "components/shared/video"
 import Overlay from "components/shared/overlay"
 import styled from "styled-components"
 
@@ -31,7 +32,13 @@ const render = ({ title, body, images, video, testimonial }) => (
                     <Col lg={6} className="fs-3 mb-4">
                         <SectionTitle>{title}</SectionTitle>
                         {body.map((paragraph, index) => <p key={`mealcare-text-${index}`}>{paragraph}</p>)}
-                        <a className="btn btn-primary my-4" href={video.url}><i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a>
+                        {/* <a className="btn btn-primary my-4" href={video.url}><i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span></a> */}
+                        <Overlay.ModalButton id={`modal-${video.id}`} className="btn-primary my-4">
+                            <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
+                        </Overlay.ModalButton>
+                        <Overlay.Modal id={`modal-${video.id}`}>
+                            <Video videoID={video.id} videoType={video.type} playerID={`player-${video.id}`} videoTranscript={video.transcript} videoCC={video.captions} />
+                        </Overlay.Modal>
                     </Col>
                     <Col lg={6} className="d-flex justify-content-center">
                         <GatsbyImage image={getImage(images.foreground.src)} alt={images.foreground.alt} className="align-self-end img-fluid" />
@@ -78,8 +85,12 @@ const query = graphql`
             }
         }
         video {
+            id
+            type
             title
             url
+            transcript
+            captions
         }
         testimonial {
             quote
