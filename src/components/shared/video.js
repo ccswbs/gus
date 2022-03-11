@@ -12,7 +12,7 @@ function Video (props) {
 
     let youtubeURL = "https://www.youtube.com/embed/";
     let vimeoURL = "https://player.vimeo.com/video/";	
-    let videoSrc = (videoType === `youtube` ? youtubeURL + videoID : vimeoURL + videoID);
+    let videoSrc = (videoType.includes("youtube") ? youtubeURL + videoID : vimeoURL + videoID);
     
     return (
         <React.Fragment>
@@ -26,7 +26,7 @@ function Video (props) {
                             </div>
                         </div>
                         <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls">
-                            <source type={`video/` + videoType} src={videoSrc} />
+                            <source type={videoType} src={videoSrc} />
                             {contentExists(videoCC) && <track className="caption-input" label="English" kind="subtitles" srcLang="en" src={videoCC} default={true} /> }
                             {contentExists(videoTranscript) && <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srcLang="en" src={videoTranscript} default={true} /> }
                         </video>
