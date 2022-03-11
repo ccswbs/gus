@@ -55,7 +55,7 @@ function MediaText (props) {
 
         <section className={mediaCol}>
 			{contentExists(videoURL) ?
-        <Video playerID={playerID} videoType={`video/${videoType}`} videoID={videoID} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
+        <Video playerID={playerID} videoType={videoType} videoID={videoID} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
 			: ``}
 			{contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
         </section>
