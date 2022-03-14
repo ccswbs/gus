@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { graphql } from 'gatsby';
 import { contentExists } from 'utils/ug-utils';
 
@@ -16,6 +17,9 @@ function Video (props) {
     
     return (
         <React.Fragment>
+        <Helmet>
+            <script src="https://www.uoguelph.ca/js/uog-media-player.js" defer></script>
+        </Helmet>
         <div>
             <div id={`video-embed-${playerID}`}>
                 <section name={videoType} className="ui-kit-section">
