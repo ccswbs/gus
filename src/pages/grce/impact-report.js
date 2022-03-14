@@ -15,11 +15,11 @@ import "@fontsource/roboto/100-italic.css"
 import "@fontsource/roboto/400-italic.css"
 
 const render = (title) => (
-    <Layout>
+    <Layout menuName="grce-main">
         <Helmet />
         <Seo title={title} />
         <EconImpactBanner />
-        <Breadcrumbs />
+        <Breadcrumbs menuName="grce-main" nodeTitle="Economic Impact Report" />
         <EconImpactPresMessage />
         <EconImpactNationalImpact />
         <EconImpactProvImpact />
