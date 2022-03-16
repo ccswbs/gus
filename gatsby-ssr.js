@@ -55,7 +55,11 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
             crossOrigin="anonymous"
             defer
+        />,
+        <script 
+            key="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
+            src="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js" 
+            defer 
         />
-
     ])
 }
