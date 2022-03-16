@@ -57,9 +57,9 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             defer
         />,
         <script 
-            key="https://www.uoguelph.ca/js/uog-scripts-dist.js"
-            src="https://www.uoguelph.ca/js/uog-scripts-dist.js"
-            defer
+            key="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
+            src="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js" 
+            defer 
         />
     ])
 }
