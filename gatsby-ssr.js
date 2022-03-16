@@ -25,15 +25,17 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
         />,
         <link 
             key="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" 
-            rel="preload" as="style" 
+            rel="stylesheet preload prefetch" as="style" 
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" 
+            crossOrigin="anonymous"
         />,
         <link 
             key="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" 
-            rel="stylesheet" 
+            rel="stylesheet preload prefetch" as="style"
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" 
             media="print" 
             onLoad="this.media='all'" 
+            crossOrigin="anonymous"
         />
     ])
 
