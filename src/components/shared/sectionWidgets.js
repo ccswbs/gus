@@ -55,17 +55,14 @@ function SectionWidgets (props) {
                 return <div className={ctaClassName}><CtaPara pageData={widgetData} /></div>;
             }
             else if (widgetData.__typename==="paragraph__media_text") {
-                let divColClass;
                 let mediaColClass;
                 const mediaSectionCol = contentExists(widgetData.relationships.field_section_column) ? widgetData.relationships.field_section_column.name : '';
                 if (mediaSectionCol === "left" || mediaSectionCol === "right") {
-                    divColClass = "col-md-6 mt-5";
                     mediaColClass = "col-md-6";
                 } else {
-                    divColClass = "mt-5";
-                    mediaColClass = "col-md-6";
+                    mediaColClass = "col-xs-12";
                 }
-                return <div className={divColClass}><div className="row"><MediaText colClass={mediaColClass} widgetData={widgetData} /></div></div>;			
+                return <div className="col-md-6 mt-5"><div className="row"><MediaText colClass={mediaColClass} widgetData={widgetData} /></div></div>;			
             }
             else if (widgetData.__typename==="paragraph__stats_widget") {
                 const statsClassName=contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
