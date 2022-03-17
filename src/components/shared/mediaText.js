@@ -67,8 +67,7 @@ function MediaText (props) {
                 <React.Fragment>
                     {(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={mediaLink.url}>{mediaLink.title}</a> </> :
                     <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
-                </React.Fragment>)
-                
+                </React.Fragment>)                
             })}</div>}
         </section>
     </>;
