@@ -52,9 +52,7 @@ function SectionWidgets (props) {
             }
             else if (widgetData.__typename==="paragraph__call_to_action") {
                 const ctaClassName = contentExists(widgetData.relationships.field_section_column)? "flex-even section-"+widgetData.relationships.field_section_column.name: '';
-                return( <div className={ctaClassName}>
-                        <CtaPara pageData={widgetData} />
-                        </div>);
+                return <div className={ctaClassName}><CtaPara pageData={widgetData} /></div>;
             }
             else if (widgetData.__typename==="paragraph__media_text") {
                 let divColClass;
@@ -70,20 +68,12 @@ function SectionWidgets (props) {
                 return <div className={divColClass}><div className="row"><MediaText colClass={mediaColClass} widgetData={widgetData} /></div></div>;			
             }
             else if (widgetData.__typename==="paragraph__stats_widget") {
-                const statsClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
-                return (
-                        <div className = {statsClassName} >
-                            <StatsWidget statsWidgetData={widgetData} />
-                        </div>
-                );                
+                const statsClassName=contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
+                return <div className={statsClassName}><StatsWidget statsWidgetData={widgetData} /></div>;                
             }
             else if (widgetData.__typename==="paragraph__lead_paragraph") {
                 const leadClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
-                return (
-                        <div className = {leadClassName} >
-                            <LeadPara pageData={widgetData} />
-                        </div>
-                );
+                return <div className={leadClassName}><LeadPara pageData={widgetData} /></div>;
             }
             else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
                 const textClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
@@ -91,14 +81,10 @@ function SectionWidgets (props) {
             }
             else if (widgetData.__typename==="paragraph__section_buttons") {
                 const sbtnClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
-                return(
-                    <div className={sbtnClassName}>
-                        <SectionButtons pageData={widgetData} />
-                    </div>
-                );
+                return <div className={sbtnClassName}><SectionButtons pageData={widgetData} /></div>;
             }
             else if (widgetData.__typename==="paragraph__new_widget") {
-                return(<p>This is Paragraph_new_widget</p>);
+                return <p>This is Paragraph_new_widget</p>;
            }
            return null;
         }))
