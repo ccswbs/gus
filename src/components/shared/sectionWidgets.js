@@ -56,13 +56,16 @@ function SectionWidgets (props) {
             }
             else if (widgetData.__typename==="paragraph__media_text") {
                 let mediaColClass;
+                let headingClass;
                 const mediaSectionCol = contentExists(widgetData.relationships.field_section_column) ? widgetData.relationships.field_section_column.name : '';
                 if (mediaSectionCol === "left" || mediaSectionCol === "right") {
                     mediaColClass = "col-md-6";
+                    headingClass = "mt-md-0";
                 } else {
                     mediaColClass = "col-xs-12";
+                    headingClass = "";
                 }
-                return <div className="col-md-6 mt-5"><div className="row"><MediaText colClass={mediaColClass} widgetData={widgetData} /></div></div>;			
+                return <div className="col-md-6 mt-5"><div className="row"><MediaText colClass={mediaColClass} headingClass={headingClass} widgetData={widgetData} /></div></div>;			
             }
             else if (widgetData.__typename==="paragraph__stats_widget") {
                 const statsClassName=contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
