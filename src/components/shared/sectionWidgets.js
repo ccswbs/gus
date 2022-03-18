@@ -61,22 +61,28 @@ function SectionWidgets (props) {
                 const isImage = contentExists(widgetData.relationships.field_media_text_media.relationships.field_media_image) ? true : false;
                 const mediaSectionCol = contentExists(widgetData.relationships.field_section_column) ? widgetData.relationships.field_section_column.name : '';
                 
-                if (isImage && (mediaSectionCol === "left" || mediaSectionCol === "right")) {
-                    divColClass = "col-md-6 mt-5";
-                    mediaColClass = "col-md-6";
-                    headingClass = "mt-md-0";
-                } else if (isImage && mediaSectionCol === "main") {
-                    divColClass = "col-md-6 mt-5";
-                    mediaColClass = "col-xs-12";
+                if (isImage) {
+                    divColClass = "col-md-6 mt-5";                     
+                    if (mediaSectionCol === "left" || mediaSectionCol === "right") {                                               
+                        mediaColClass = "col-md-6";
+                        headingClass = "mt-md-0";
+                    } else {
+                        mediaColClass = "col-xs-12";
+                        headingClass = "";
+                    }                  
+                } else {
                     headingClass = "";
-                } else if (!isImage && (mediaSectionCol === "left" || mediaSectionCol === "right")) {
-                    divColClass = "col-xs-12";
                     mediaColClass = "col-xs-12";
-                    headingClass = "";
-                } else if (!isImage && mediaSectionCol === "main") {
-                    divColClass = "col-md-6 mt-5";
-                    mediaColClass = "col-xs-12";
-                    headingClass = "";
+                    switch(mediaSectionCol) {
+                        case "left":
+                        divColClass = "section-left";
+                        break;
+                        case "right":
+                        divColClass = "section-right";
+                        break;
+                        default:
+                        divColClass = "col-md-6 mt-5";
+                    }
                 }            
                 return <div className={divColClass}><div className="row"><MediaText colClass={mediaColClass} headingClass={headingClass} widgetData={widgetData} /></div></div>;			
             }
