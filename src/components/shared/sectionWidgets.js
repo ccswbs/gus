@@ -55,17 +55,30 @@ function SectionWidgets (props) {
                 return <div className={ctaClassName}><CtaPara pageData={widgetData} /></div>;
             }
             else if (widgetData.__typename==="paragraph__media_text") {
+                let divColClass;
                 let mediaColClass;
                 let headingClass;
+                const isImage = contentExists(widgetData.relationships.field_media_text_media.relationships.field_media_image) ? true : false;
                 const mediaSectionCol = contentExists(widgetData.relationships.field_section_column) ? widgetData.relationships.field_section_column.name : '';
-                if (mediaSectionCol === "left" || mediaSectionCol === "right") {
+                
+                if (isImage && (mediaSectionCol === "left" || mediaSectionCol === "right")) {
+                    divColClass = "col-md-6 mt-5";
                     mediaColClass = "col-md-6";
                     headingClass = "mt-md-0";
-                } else {
+                } else if (isImage && mediaSectionCol === "main") {
+                    divColClass = "col-md-6 mt-5";
                     mediaColClass = "col-xs-12";
                     headingClass = "";
-                }
-                return <div className="col-md-6 mt-5"><div className="row"><MediaText colClass={mediaColClass} headingClass={headingClass} widgetData={widgetData} /></div></div>;			
+                } else if (!isImage && (mediaSectionCol === "left" || mediaSectionCol === "right")) {
+                    divColClass = "col-xs-12";
+                    mediaColClass = "col-xs-12";
+                    headingClass = "";
+                } else if (!isImage && mediaSectionCol === "main") {
+                    divColClass = "col-md-6 mt-5";
+                    mediaColClass = "col-xs-12";
+                    headingClass = "";
+                }            
+                return <div className={divColClass}><div className="row"><MediaText colClass={mediaColClass} headingClass={headingClass} widgetData={widgetData} /></div></div>;			
             }
             else if (widgetData.__typename==="paragraph__stats_widget") {
                 const statsClassName=contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
