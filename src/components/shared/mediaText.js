@@ -27,28 +27,32 @@ function MediaText (props) {
     let mediaCol;
     let textCol;
     
-    if (contentExists(imageSize)) {
-        switch(imageSize) {
-            case "small":
-                mediaCol = "col-md-3";
-                textCol = "col-md-9";
-            break;
-            case "medium":
-                mediaCol = "col-md-4";
-                textCol = "col-md-8";
-            break;
-            case "large":
-                mediaCol = "col-md-6";
-                textCol = "col-md-6";
-            break;
-            default:
-                mediaCol = "col-md-6";
-                textCol = "col-md-6";
-            break;
-        }        
+    if (contentExists(mediaDescription)) {
+        if (contentExists(imageURL) && contentExists(imageSize)) {
+            switch(imageSize) {
+                case "small":
+                    mediaCol = "col-md-3";
+                    textCol = "col-md-9";
+                break;
+                case "medium":
+                    mediaCol = "col-md-4";
+                    textCol = "col-md-8";
+                break;
+                case "large":
+                    mediaCol = "col-md-6";
+                    textCol = "col-md-6";
+                break;
+                default:
+                    mediaCol = "col-md-6";
+                    textCol = "col-md-6";
+                break;
+            }        
+        } else {
+            mediaCol = props.colClass;
+            textCol = props.colClass;
+        }
     } else {
-        mediaCol = props.colClass;
-        textCol = props.colClass;
+        mediaCol = "col-xs-12";
     }
     
     return <>
@@ -58,6 +62,7 @@ function MediaText (props) {
             : ``}
             {contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
         </section>
+        {contentExists(mediaDescription) ?
         <section className={textCol}>
             {contentExists(mediaTitle) ? <h3 {...(contentExists(props.headingClass) ? {className:props.headingClass} : {})}>{mediaTitle}</h3> : ``}
             <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
@@ -70,6 +75,7 @@ function MediaText (props) {
                 </React.Fragment>)                
             })}</div>}
         </section>
+        : null} 
     </>;
 }
 
