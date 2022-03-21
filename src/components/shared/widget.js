@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import AccordionWidget from 'components/shared/accordionWidget';
 import CtaPara from 'components/shared/ctaPara';
 import Events from 'components/shared/events';
+import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
@@ -10,10 +11,6 @@ import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
 import { contentExists } from 'utils/ug-utils';
-
-const GeneralText = ({processed}) => (
-    <div dangerouslySetInnerHTML={{__html: processed}}></div>
-  )
 
 const Widget = ({widget}) => {
     switch (widget?.__typename) {
