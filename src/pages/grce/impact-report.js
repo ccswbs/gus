@@ -13,11 +13,6 @@ import EconImpactSustainability from 'components/blocks/economic-impact/sustaina
 import EconImpactResearch from 'components/blocks/economic-impact/research';
 import EconImpactVolunteerism from 'components/blocks/economic-impact/volunteerism';
 
-import "@fontsource/roboto"
-import "@fontsource/roboto/700.css"
-import "@fontsource/roboto/100-italic.css"
-import "@fontsource/roboto/400-italic.css"
-
 const render = (title) => (
     <Layout menuName="grce-main">
         <Helmet />
