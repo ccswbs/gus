@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { contentExists } from 'utils/ug-utils';
 
-const accordionWidget = (props) => {
+const Accordion = (props) => {
     let accordionData = props.pageData.relationships.field_accordion_block_elements;
     let stayOpen = props.pageData.field_accordion_stay_open;
     let dataParent = ("#accordion" + props.pageData.drupal_id);
@@ -29,15 +29,15 @@ const accordionWidget = (props) => {
     return null;
 }
 
-accordionWidget.propTypes = {
+Accordion.propTypes = {
     pageData: PropTypes.object,
 }
   
-accordionWidget.defaultProps = {
+Accordion.defaultProps = {
     pageData: ``,
 }
 
-export default accordionWidget
+export default Accordion
 
 export const query = graphql`
   fragment AccordionSectionParagraphFragment on paragraph__accordion_section {

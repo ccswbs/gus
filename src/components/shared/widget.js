@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import AccordionWidget from 'components/shared/accordionWidget';
+import Accordion from 'components/shared/accordion';
 import CtaPara from 'components/shared/ctaPara';
 import Events from 'components/shared/events';
 import GeneralText from 'components/shared/generalText';
@@ -15,7 +15,7 @@ import { contentExists } from 'utils/ug-utils';
 const Widget = ({widget}) => {
     switch (widget?.__typename) {
         case "paragraph__accordion_section":
-            return <AccordionWidget pageData={widget} />;
+            return <Accordion pageData={widget} />;
         case "paragraph__call_to_action":
             return <CtaPara pageData={widget} />;
         case "paragraph__events_widget":
