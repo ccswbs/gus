@@ -17,7 +17,7 @@ testimonial:
     pronouns: (he/him)
     desc: Professor
     image:
-      src: ../../../images/economic-impact/testimonial-1.jpg
+      src: ../../../images/grce/economic-impact/testimonial-1.jpg
       alt: Circuit board
 
 aside:
@@ -28,11 +28,5 @@ aside:
     - This network of more than 90 researchers and scholars and an advisory panel of academic and industry leaders is looking at the human and social aspects of AI.
     - Researchers investigate methodologies, including learning algorithms, human-computer interfaces, data analytics, sensors and robots. They apply machine learning and AI to U of G’s strengths, including human and animal health and environmental sciences. They aim to influence public policy and regulations.
   image:
-    src: ../../../images/economic-impact/blueoverlay-thin.jpg
+    src: ../../../images/grce/economic-impact/blueoverlay-thin.jpg
     alt: ""
-
-
-
-
-
- 

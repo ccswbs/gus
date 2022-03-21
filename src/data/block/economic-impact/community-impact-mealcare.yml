@@ -7,10 +7,10 @@ body:
 
 images:
   foreground:
-    src: ../../../images/economic-impact/meal-care-students.png
+    src: ../../../images/grce/economic-impact/meal-care-students.png
     alt: Kiana Gibson and David Sahai, co-founders of MealCare Guelph
   background:
-    src: ../../../images/economic-impact/meal-care-bg.jpg
+    src: ../../../images/grce/economic-impact/meal-care-bg.jpg
     alt: Student volunteers
 
 video:

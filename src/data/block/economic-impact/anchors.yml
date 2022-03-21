@@ -9,3 +9,9 @@ anchors:
     url: "#community-impact"
   - title: Human Impact
     url: "#human-impact"
+  - title: Sustainability
+    url: "#sustainability"
+  - title: Research, Training and Innovation
+    url: "#research-training-innovation"
+  - title: Volunteerism
+    url: "#volunteerism"
