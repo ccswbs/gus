@@ -2,15 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
-const GeneralText = ({textClass, processed}) => (
-    <div className={textClass} dangerouslySetInnerHTML={{__html: processed}}></div>
-)
+const GeneralText = (props) => {    
+    let processed = props.processed;
+    let textClass = props.textClass;    
+    return <div {...(textClass !== `` ? {className:textClass} : {})} dangerouslySetInnerHTML={{__html: processed}}></div>    
+}
 
 GeneralText.propTypes = {
+    processed: PropTypes.string,
     textClass: PropTypes.string,
 }
 
 GeneralText.defaultProps = {
+    processed: ``,
     textClass: ``,
 }
 
