@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { graphql } from 'gatsby';
 import { contentExists } from 'utils/ug-utils';
 
@@ -7,8 +8,8 @@ function Video (props) {
     let playerID = props.playerID;
     let videoCC = props.videoCC;
     let videoTranscript = props.videoTranscript;
-    let videoType = (props.videoURL.includes("youtube") || props.videoURL.includes("youtu.be") ? `youtube` : `vimeo`);	
-    let videoID = (videoType === `youtube` ? props.videoURL.substr(props.videoURL.length - 11) : props.videoURL.substr(18));
+    let videoType = props.videoType;
+    let videoID = props.videoID;
 
     let youtubeURL = "https://www.youtube.com/embed/";
     let vimeoURL = "https://player.vimeo.com/video/";	
@@ -16,8 +17,11 @@ function Video (props) {
     
     return (
         <React.Fragment>
+        <Helmet>
+            <script src="https://www.uoguelph.ca/js/uog-media-player.js" defer></script>
+        </Helmet>
         <div>
-            <div id="video-embed">
+            <div id={`video-embed-${playerID}`}>
                 <section name={videoType} className="ui-kit-section">
                     <div className="embed-responsive embed-responsive-16by9">
                         <div className="d-flex justify-content-center">
@@ -25,12 +29,10 @@ function Video (props) {
                                 <span className="sr-only">Loading...</span>
                             </div>
                         </div>
-                        <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls">
+                        <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls" crossOrigin="anonymous">
                             <source type={`video/` + videoType} src={videoSrc} />
-                            {contentExists(videoTranscript) ? 
-                            <><track className="caption-input" label="English" kind="subtitles" srclang="en" src={videoCC} default="true" />
-                            <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srclang="en" src={videoTranscript} default="true" /></>
-                            : ``}
+                            {contentExists(videoCC) && <track className="caption-input" label="English" kind="subtitles" srcLang="en" src={videoCC} default={true} /> }
+                            {contentExists(videoTranscript) && <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srcLang="en" src={videoTranscript} default={true} /> }
                         </video>
                     </div>
                 </section>
