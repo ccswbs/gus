@@ -12,13 +12,13 @@ const Accordion = (props) => {
         return <>
             <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
             {accordionData.map(item =>
-                <div className="accordion-item">
+                <div className="accordion-item" key={"item" + item.drupal_id}>
                     <h2 className="accordion-header" id={"heading" + item.drupal_id}>
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#part" + item.drupal_id} aria-expanded="true" aria-controls={"part" + item.drupal_id}>
                             {contentExists(item.field_accordion_title) ? item.field_accordion_title : "Read More"}
                         </button>
                     </h2>
-                    <div {...(stayOpen ? {} : {["data-bs-parent"]:dataParent})} id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={"heading" + item.drupal_id}>            
+                    <div {...(stayOpen ? {} : {"data-bs-parent":dataParent})} id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={"heading" + item.drupal_id}>            
                         <div className="accordion-body" dangerouslySetInnerHTML={{__html: item.field_accordion_block_text.processed}} />
                     </div>
                 </div>
