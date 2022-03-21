@@ -29,7 +29,7 @@ function Video (props) {
                                 <span className="sr-only">Loading...</span>
                             </div>
                         </div>
-                        <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls">
+                        <video className="ugplayer embed-responsive-item" width="100%" id={playerID} preload="none" controls="controls" crossOrigin="anonymous">
                             <source type={`video/` + videoType} src={videoSrc} />
                             {contentExists(videoCC) && <track className="caption-input" label="English" kind="subtitles" srcLang="en" src={videoCC} default={true} /> }
                             {contentExists(videoTranscript) && <link className="transcript-input" rel="transcript" label="English" kind="descriptions" srcLang="en" src={videoTranscript} default={true} /> }

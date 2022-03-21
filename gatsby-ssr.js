@@ -13,9 +13,9 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             defer
         />,
         <link
-            key="https://www.uoguelph.ca/css/UofG-bs5-styles-dist.css" 
+            key="https://www.uoguelph.ca/css/UofG-styles-dist.css" 
             rel="stylesheet" 
-            href="https://www.uoguelph.ca/css/UofG-bs5-styles-dist.css" 
+            href="https://www.uoguelph.ca/css/UofG-styles-dist.css" 
         />,
         <link 
             key="https://fonts.gstatic.com" 
@@ -25,15 +25,17 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
         />,
         <link 
             key="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" 
-            rel="preload" as="style" 
+            rel="stylesheet preload prefetch" as="style" 
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" 
+            crossOrigin="anonymous"
         />,
         <link 
             key="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" 
-            rel="stylesheet" 
+            rel="stylesheet preload prefetch" as="style"
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" 
             media="print" 
             onLoad="this.media='all'" 
+            crossOrigin="anonymous"
         />
     ])
 
@@ -42,7 +44,6 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             key="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" 
             src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"
             crossOrigin="anonymous"
-            defer
         />,
         <script
             key="https://kit.fontawesome.com/7993323d0c.js"
