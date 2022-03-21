@@ -8,57 +8,63 @@ import { contentExists } from 'utils/ug-utils';
 
 function MediaText (props) {
 
-	const mediaTitle = (contentExists(props.widgetData.field_media_text_title) ? props.widgetData.field_media_text_title : ``);
-	const mediaDescription = (contentExists(props.widgetData.field_media_text_desc) ? props.widgetData.field_media_text_desc.processed: ``);
-	const mediaLinks = props.widgetData.field_media_text_links;	
-	const mediaRelationships = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.relationships: ``);
-	
-	const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
-	const imageAlt = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.alt : ``);
+    const mediaTitle = (contentExists(props.widgetData.field_media_text_title) ? props.widgetData.field_media_text_title : ``);
+    const mediaDescription = (contentExists(props.widgetData.field_media_text_desc) ? props.widgetData.field_media_text_desc.processed: ``);
+    const mediaLinks = props.widgetData.field_media_text_links;	
+    const mediaRelationships = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.relationships: ``);
+
+    const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
+    const imageAlt = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.alt : ``);
     const imageSize = (contentExists(imageURL) && contentExists(props.widgetData.field_media_image_size) ? props.widgetData.field_media_image_size : ``);
-    
+
     const playerID = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.drupal_id : ``);
-	const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
-	const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
-	const videoCC = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_video_cc) ? mediaRelationships.field_video_cc.localFile.publicURL : ``);
+    const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
+    const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
+    const videoCC = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_video_cc) ? mediaRelationships.field_video_cc.localFile.publicURL : ``);
+    const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
+    const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
     
     let mediaCol;
     let textCol;
     
-    if (contentExists(imageSize)) {
-        switch(imageSize) {
-            case "small":
-                mediaCol = "col-md-3";
-                textCol = "col-md-9";
-            break;
-            case "medium":
-                mediaCol = "col-md-4";
-                textCol = "col-md-8";
-            break;
-            case "large":
-                mediaCol = "col-md-6";
-                textCol = "col-md-6";
-            break;
-            default:
-                mediaCol = "col-md-6";
-                textCol = "col-md-6";
-            break;
-        }        
+    if (contentExists(mediaDescription)) {
+        if (contentExists(imageURL) && contentExists(imageSize)) {
+            switch(imageSize) {
+                case "small":
+                    mediaCol = "col-md-3";
+                    textCol = "col-md-9";
+                break;
+                case "medium":
+                    mediaCol = "col-md-4";
+                    textCol = "col-md-8";
+                break;
+                case "large":
+                    mediaCol = "col-md-6";
+                    textCol = "col-md-6";
+                break;
+                default:
+                    mediaCol = "col-md-6";
+                    textCol = "col-md-6";
+                break;
+            }        
+        } else {
+            mediaCol = props.colClass;
+            textCol = props.colClass;
+        }
     } else {
-        mediaCol = props.colClass;
-        textCol = props.colClass;
+        mediaCol = "col-xs-12";
     }
     
-	return <>	
-
+    return <>
         <section className={mediaCol}>
-			{contentExists(videoURL) ?
-			<Video playerID={playerID} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
-			: ``}
-			{contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
+            {contentExists(videoURL) ?
+            <Video playerID={playerID} videoType={videoType} videoID={videoID} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
+            : ``}
+            {contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
         </section>
+        {contentExists(mediaDescription) ?
         <section className={textCol}>
-            {contentExists(props.headingClass) ? <h3 className={props.headingClass}>{mediaTitle}</h3> : <h3>{mediaTitle}</h3>}
+            {contentExists(mediaTitle) ? <h3 {...(contentExists(props.headingClass) ? {className:props.headingClass} : {})}>{mediaTitle}</h3> : ``}
             <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
             {contentExists(props.widgetData.relationships.field_button_section) === true && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
             {contentExists(props.widgetData.relationships.field_button_section) === false && <div>{mediaLinks.map(mediaLink => {
@@ -66,22 +72,21 @@ function MediaText (props) {
                 <React.Fragment>
                     {(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={mediaLink.url}>{mediaLink.title}</a> </> :
                     <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
-                </React.Fragment>)
-                
+                </React.Fragment>)                
             })}</div>}
         </section>
-		
-	</>;
+        : null} 
+    </>;
 }
 
 MediaText.propTypes = {
     widgetData: PropTypes.object,
-	colClass: PropTypes.string,
+    colClass: PropTypes.string,
     headingClass: PropTypes.string,
 }
 MediaText.defaultProps = {
     widgetData: null,
-	colClass: `col-md-6`,
+    colClass: `col-md-6`,
     headingClass: ``,
 }
 
