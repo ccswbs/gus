@@ -6,6 +6,8 @@ stats:
     image:
       src: ../../../images/grce/economic-impact/johnston-hall-building.jpg
       alt: Johnston Hall
+    link:
+      url: "/grce/economic-report/Guelph-Wellington-Economic-Impact-Report-U-of-G.pdf"
   - value: $678.5 M
     type: Toronto CMA
     image:

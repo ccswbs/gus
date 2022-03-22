@@ -14,14 +14,17 @@ const render = ({ title, stats }) => (
   <Container>
       <h3 className="h4">{title}</h3>
       <Statistic className="row mb-5 g-4">
-          {stats.map(({value, type, image}, index) =>
+          {stats.map(({value, type, image, link}, index) =>
             <div key={`community-stat-campuses-${index}`} className="col-lg">
                 <Statistic.SolidCard  
                     background={colourOptions[index].background} 
                     colour={colourOptions[index].colour}
                     className="pt-4 pb-0 px-0 h-100" >
                     <Statistic.Value><strong>{value}</strong></Statistic.Value>
-                    <Statistic.Type className="mb-4">{type}</Statistic.Type>
+                    {link ? 
+                      <Statistic.Type className="mb-4"><a href={link.url} className="fs-3 text-white">{type}</a></Statistic.Type>
+                      : <Statistic.Type className="mb-4">{type}</Statistic.Type>
+                    }
                     <GatsbyImage image={getImage(image.src)} alt={image.alt} className="card-img-bottom" />
                 </Statistic.SolidCard>
               </div>
@@ -45,6 +48,9 @@ const query = graphql`
                 }
               }
               alt
+          }
+          link {
+            url
           }
       }
     }
