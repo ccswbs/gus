@@ -14,7 +14,7 @@ const Accordion = (props) => {
             {accordionData.map(item =>
                 <div className="accordion-item" key={"item" + item.drupal_id}>
                     <h2 className="accordion-header" id={"heading" + item.drupal_id}>
-                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#part" + item.drupal_id} aria-expanded="true" aria-controls={"part" + item.drupal_id}>
+                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#part" + item.drupal_id} aria-expanded="false" aria-controls={"part" + item.drupal_id}>
                             {contentExists(item.field_accordion_title) ? item.field_accordion_title : "Read More"}
                         </button>
                     </h2>
