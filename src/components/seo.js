@@ -10,10 +10,10 @@ function Seo({ description, img, imgAlt, lang, meta, keywords, title }) {
       render={data => {
         const metaDescription =
           description || data.site.siteMetadata.description	
-		const metaImage = 
-		  img || data.site.siteMetadata.ogImage
-		const metaImageAlt = 
-		  imgAlt || data.site.siteMetadata.ogImageAlt
+        const metaImage = 
+          img || data.site.siteMetadata.ogImage
+        const metaImageAlt = 
+          imgAlt || data.site.siteMetadata.ogImageAlt
         return (
           <Helmet
             htmlAttributes={{
@@ -38,11 +38,11 @@ function Seo({ description, img, imgAlt, lang, meta, keywords, title }) {
                 property: `og:type`,
                 content: `website`,
               },
-			  {
+              {
                 property: `og:image`,
                 content: metaImage,
               },
-			  {
+              {
                 property: `og:image:alt`,
                 content: metaImageAlt,
               },
@@ -54,11 +54,11 @@ function Seo({ description, img, imgAlt, lang, meta, keywords, title }) {
                 name: `twitter:creator`,
                 content: data.site.siteMetadata.author,
               },
-	      {
+              {
                 name: `twitter:image`,
                 content: metaImage,
               },
-	      {
+              {
                 name: `twitter:image:alt`,
                 content: metaImageAlt,
               },
@@ -112,8 +112,8 @@ const detailsQuery = graphql`
         title
         description
         author
-		ogImage
-		ogImageAlt
+        ogImage
+        ogImageAlt
       }
     }
   }

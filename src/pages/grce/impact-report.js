@@ -1,5 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { StaticQuery, graphql } from "gatsby"
+import { getSrc } from "gatsby-plugin-image"
 import Layout from 'components/layout';
 import Seo from 'components/seo';
 import Breadcrumbs from 'components/shared/breadcrumbs';
@@ -13,12 +15,12 @@ import EconImpactSustainability from 'components/blocks/economic-impact/sustaina
 import EconImpactResearch from 'components/blocks/economic-impact/research';
 import EconImpactVolunteerism from 'components/blocks/economic-impact/volunteerism';
 
-const render = (title) => (
+const render = ({ title, description, image, menu }) => (
     <Layout menuName="grce-main">
         <Helmet />
-        <Seo title={title} />
+        <Seo title={title} description={description} img={getSrc(image.src)} imgAlt={image.alt} />
         <EconImpactBanner />
-        <Breadcrumbs menuName="grce-main" nodeTitle="Economic Impact Report" />
+        <Breadcrumbs menuName={menu} nodeTitle={title} />
         <EconImpactPresMessage />
         <EconImpactNationalImpact />
         <EconImpactProvImpact />
@@ -30,10 +32,25 @@ const render = (title) => (
     </Layout>
 )
 
-const EconomicImpactPage = () => (
-    render("Economic Impact Report")
-)
+const query = graphql`
+  query {
+    economicImpactYaml(yamlId: {eq: "economic_impact_seo"}) {
+      id
+      title
+      description
+      image {
+        src {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+        alt
+      }
+      menu
+    }
+  }
+`
 
-export default EconomicImpactPage;
-
-
+export default function EconomicImpactPage () {
+    return <StaticQuery query={query} render={({economicImpactYaml}) => render(economicImpactYaml)} />
+  }
