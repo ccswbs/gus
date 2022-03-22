@@ -18,7 +18,7 @@ video:
   type: vimeo
   title: MealCare
   url: https://player.vimeo.com/video/522360252?api=1
-  transcript: https://www.uoguelph.ca/improve-life/doc/mealcare-transcript.txt
+  transcript: /transcripts/mealcare-transcript.txt
   captions: /captions/mealcare-captions.srt
 
 testimonial:

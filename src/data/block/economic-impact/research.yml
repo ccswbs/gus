@@ -8,7 +8,7 @@ videos:
     type: youtube
     title: Food From Thought
     url: https://www.youtube.com/watch?v=La7Xi65RyFo
-    transcript: ""
+    transcript: /transcripts/Food-From-Thought-transcript.txt
     captions: ""
   - id: "WXsSVViCIN8"
     type: youtube

@@ -16,5 +16,5 @@ video:
   type: youtube
   title: University of Guelph Sustainability
   url: https://www.youtube.com/watch?v=htAn2op0rZ0
-  transcript: 
+  transcript: /transcripts/sustainability-transcript.txt
   captions: 

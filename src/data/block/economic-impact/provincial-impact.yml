@@ -19,5 +19,5 @@ sections:
       type: vimeo
       title: One Health
       url: https://player.vimeo.com/video/618992196?api=1
-      transcript: https://www.uoguelph.ca/improve-life/doc/one-health-transcript.txt
+      transcript: /transcripts/one-health-transcript.txt
       captions: /captions/one-health-captions.srt
