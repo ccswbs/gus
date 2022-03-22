@@ -4,7 +4,7 @@ stats:
   - value: "3"
     type: Campuses
   - value: "14"
-    type: Research Centres
+    type: Research Centre Locations
   - value: 30,000
     type: Students
   - value: 3,900

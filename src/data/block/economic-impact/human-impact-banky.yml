@@ -18,8 +18,8 @@ video:
   type: vimeo
   title: Banky Alade
   url: https://player.vimeo.com/video/522002889?api=1
-  transcript: /transcripts/banky-transcript.txt
-  captions: /captions/banky-captions.srt
+  transcript: /grce/economic-impact/transcripts/banky-transcript.txt
+  captions: /grce/economic-impact/captions/banky-captions.srt
 
 testimonial:
   quote: I never thought of schooling as a way to get a better life for me. I thought if I didn’t make it in basketball, I wouldn’t make it at all.

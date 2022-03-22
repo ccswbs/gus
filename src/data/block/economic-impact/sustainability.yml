@@ -8,7 +8,7 @@ news:
   heading: In the News
   articles:
     - title: U of G Earns Gold Rating for Sustainability
-      lead: U of G has earned a gold rating from the Association for the Advancement of Sustainability in Higher Education (AASHE).
+      lead: U of G has a gold rating from the Association for the Advancement of Sustainability in Higher Education (AASHE).
       url: https://news.uoguelph.ca/2020/11/u-of-g-earns-gold-rating-for-sustainability/
 
 video:
@@ -16,5 +16,5 @@ video:
   type: youtube
   title: University of Guelph Sustainability
   url: https://www.youtube.com/watch?v=htAn2op0rZ0
-  transcript: /transcripts/sustainability-transcript.txt
-  captions: 
+  transcript: /grce/economic-impact/transcripts/sustainability-transcript.txt
+  captions: /grce/economic-impact/captions/Sustainability.srt

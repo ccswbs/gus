@@ -31,8 +31,8 @@ const query = graphql`
       id
       title
       stats {
-          value
-          type
+        value
+        type
       }
     }
   }

@@ -18,8 +18,8 @@ video:
   type: vimeo
   title: MealCare
   url: https://player.vimeo.com/video/522360252?api=1
-  transcript: /transcripts/mealcare-transcript.txt
-  captions: /captions/mealcare-captions.srt
+  transcript: /grce/economic-impact/transcripts/mealcare-transcript.txt
+  captions: /grce/economic-impact/captions/mealcare-captions.srt
 
 testimonial:
   quote: Change happens at a community level. Small people put in small efforts and those efforts add up to something big.

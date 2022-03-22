@@ -19,5 +19,5 @@ sections:
       type: vimeo
       title: One Health
       url: https://player.vimeo.com/video/618992196?api=1
-      transcript: /transcripts/one-health-transcript.txt
-      captions: /captions/one-health-captions.srt
+      transcript: /grce/economic-impact/transcripts/one-health-transcript.txt
+      captions: /grce/economic-impact/captions/one-health-captions.srt

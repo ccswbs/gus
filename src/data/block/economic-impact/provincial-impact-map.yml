@@ -1,6 +1,6 @@
 id: economic_impact_provincial_map
 image:
-  src: ../../../images/grce/economic-impact/map-stars.jpg
+  src: ../../../images/grce/economic-impact/map-stars-updated.jpg
   alt: Map of south-western Ontario with research stations and campus locations
 
 stations:
@@ -29,5 +29,5 @@ campuses:
       colour: var(--uog-blue)
     - name: University of Guelph
       colour: var(--uog-red)
-    - name: Ridgetown Campus
+    - name: Ridgetown
       colour: "#000"
