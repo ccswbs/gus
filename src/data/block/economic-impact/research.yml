@@ -9,7 +9,7 @@ videos:
     title: Food From Thought
     url: https://www.youtube.com/watch?v=La7Xi65RyFo
     transcript: /grce/economic-impact/transcripts/Food-From-Thought-transcript.txt
-    captions: ""
+    captions: /grce/economic-impact/captions/FoodFromThought.srt
   - id: "WXsSVViCIN8"
     type: youtube
     title: Become an Arrell Scholar
