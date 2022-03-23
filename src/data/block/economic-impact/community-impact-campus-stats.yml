@@ -2,7 +2,7 @@ id: economic_impact_community_campus_stats
 title: "Impact of campuses to regional GDP:"
 stats:
   - value: $2.01 B
-    type: "U of G's Impact to Guelph-Wellington's Economy"
+    type: "Learn More: U of G's Impact to Guelph-Wellington's Economy"
     image:
       src: ../../../images/grce/economic-impact/johnston-hall-building.jpg
       alt: Johnston Hall
