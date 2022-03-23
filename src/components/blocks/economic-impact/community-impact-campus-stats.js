@@ -19,7 +19,7 @@ const render = ({ title, stats }) => (
                 <Statistic.SolidCard  
                     background={colourOptions[index].background} 
                     colour={colourOptions[index].colour}
-                    className="pt-4 pb-0 px-0 h-100 card" >
+                    className="pt-4 pb-0 px-0 h-100 card border-0" >
                     <Statistic.Value><strong>{value}</strong></Statistic.Value>
                     {link ? 
                       <Statistic.Type className="mb-4 px-5"><a href={link.url} className="fs-3 text-white">{type}</a></Statistic.Type>
