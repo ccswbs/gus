@@ -31,10 +31,12 @@ function stripParentID(drupalParentID) {
     }
 }
 
-const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
+const makeBreadcrumbTrail = (menuData, domain, menuName, nodeID, nodeTitle) => {
 
     let pageMenu = [];
     let midCrumbs = [];
+    let homeCrumbURL;
+    let topCrumb;
     let topCrumbURL;
     let endCrumb;
     let endCrumbParent;
@@ -43,7 +45,7 @@ const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
     
     if (contentExists(currentPage)) {
  
-        let allMenuItems = menuLinks.allMenuLinkContentMenuLinkContent.edges;        
+        let allMenuItems = menuData.allMenuLinkContentMenuLinkContent.edges;        
     
         if (contentExists(allMenuItems)) {
             
@@ -55,12 +57,14 @@ const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
             
             if (contentExists(pageMenu)) {
                 
-                pageMenu.forEach(item => {
-                    if (item.node.title === "Home") {
-                        topCrumbURL = item.node.link.url;
-                    }
-                });
-                
+                if (domain !== "api.liveugconthub.uoguelph.dev") {
+                    homeCrumbURL = pageMenu[0].node.link.url;
+                } else {
+                    homeCrumbURL = "https://www.uoguelph.ca";
+                    topCrumb = pageMenu[0].node.title;
+                    topCrumbURL = pageMenu[0].node.link.url;
+                }
+
                 pageMenu.forEach(item => {
                     if (item.node.link.uri === currentPage) {
                         endCrumb = item.node.title;
@@ -79,11 +83,12 @@ const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
                         <div className="col-sm-12">
                             <div className="site-breadcrumbs">          
                             <ol className="breadcrumb breadcrumb-right-tag">                                
-                                <li key={topCrumbURL + `home`} className="breadcrumb-item">                                    
-                                    <a href={contentExists(topCrumbURL) ? topCrumbURL : "https://www.uoguelph.ca"}>
+                                <li key={homeCrumbURL + `home`} className="breadcrumb-item">                                    
+                                    <a href={contentExists(homeCrumbURL) ? homeCrumbURL : "https://www.uoguelph.ca"}>
                                         <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">Home</span>
                                     </a>
                                 </li>
+                                {contentExists(topCrumbURL) && topCrumb !== pageTitle && <li key={topCrumbURL} className="breadcrumb-item"><Link to={topCrumbURL}>{topCrumb}</Link></li>}
                                 {contentExists(midCrumbs) ? 
                                     midCrumbs.map(midCrumb => {
                                     return <><li key={midCrumb.node.link.url + `mid`} className="breadcrumb-item">
@@ -107,34 +112,36 @@ const Breadcrumbs = (props) => (
       query={
         graphql`
         query BreadcrumbMenuQuery {
-          allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}) {
+          allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}, filter: {enabled: {eq: true}}) {
             edges {
               node {
-                title
+                drupal_id
+                drupal_parent_menu_item
+                menu_name                
                 link {
                   uri
                   url
                 }
-                drupal_parent_menu_item
-                drupal_id
-                menu_name
+                title              
               }
             }
           }
         }
       `
       }
-      render={data => makeBreadcrumbTrail(data, props.menuName, props.nodeID, props.nodeTitle)}
+      render={data => makeBreadcrumbTrail(data, props.domain, props.menuName, props.nodeID, props.nodeTitle)}
    />
 )
 
 Breadcrumbs.propTypes = {
+    domain: PropTypes.string,
     menuName: PropTypes.string,
     nodeID: PropTypes.number,
     nodeTitle: PropTypes.string,
 }
 
 Breadcrumbs.defaultProps = {
+    domain: `api.liveugconthub.uoguelph.dev`,
     menuName: `main`,
     nodeID: null,
     nodeTitle: ``,
