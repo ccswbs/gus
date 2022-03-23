@@ -1,7 +1,9 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import Accordion from 'components/shared/accordion';
 import CtaPara from 'components/shared/ctaPara';
 import Events from 'components/shared/events';
+import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
@@ -10,31 +12,10 @@ import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
 import { contentExists } from 'utils/ug-utils';
 
-const GeneralText = ({processed}) => (
-    <div dangerouslySetInnerHTML={{__html: processed}}></div>
-  )
-
 const Widget = ({widget}) => {
     switch (widget?.__typename) {
         case "paragraph__accordion_section":
-            return(
-                widget.relationships.field_accordion_block_elements.map((accordionData,j) => {
-                    return( <>
-                        <div className="panel-group panel-group-lists collapse in show" id={"accordionWidget"+widget.drupal_id}>
-                            <div className="panel">
-                                <div className="panel-heading">
-                                    <h4 className="panel-title">
-                                        <a data-toggle="collapse" data-parent={"#accordionWidget"+widget.drupal_id} href={"#collapse"+j+widget.drupal_id} className="collapsed" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_title.processed}}></a>
-                                    </h4>
-                                </div>
-                                <div id={"collapse"+j+widget.drupal_id} className="panel-collapse collapse in">
-                                    <div className="panel-body" dangerouslySetInnerHTML={{__html: accordionData.field_accordion_block_text.processed}}/>
-                                </div>
-                            </div>
-                        </div>
-                    </>);
-                } )
-            );
+            return <Accordion pageData={widget} />;
         case "paragraph__call_to_action":
             return <CtaPara pageData={widget} />;
         case "paragraph__events_widget":
@@ -78,31 +59,7 @@ const Widget = ({widget}) => {
 export default Widget
 
 export const query = graphql`
-  fragment AccordionSectionParagraphFragment on paragraph__accordion_section {
-    drupal_id
-    relationships {
-      field_accordion_block_elements {
-        drupal_id
-        field_accordion_block_title {
-          processed
-        }
-        field_accordion_block_text {
-          processed
-        }
-      }
-    }
-  }
-  fragment GeneralTextParagraphFragment on paragraph__general_text {
-    drupal_id
-    field_general_text {
-      processed
-    }
-    relationships {
-      field_section_column {
-        name
-      }
-    }
-  }  
+ 
   fragment FieldWidgetsFragment on Node {
     __typename
     ... on paragraph__accordion_section {
