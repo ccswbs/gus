@@ -9,12 +9,12 @@ stats:
     link:
       url: "/grce/economic-impact/Guelph-Wellington-Economic-Impact-Report-U-of-G.pdf"
   - value: $678.5 M
-    type: Toronto CMA
+    type: U of G Main Campus Impact to Toronto CMA's Economy
     image:
       src: ../../../images/grce/economic-impact/humber-building.jpg
       alt: Guelph-Humber building
   - value: $83.8 M
-    type: Chatham-Kent
+    type: U of G Main Campus Impact to Chatham-Kent's Economy
     image:
       src: ../../../images/grce/economic-impact/djPestell-building.jpg
       alt: DJ Pestell Student Service and Alumni Centre
