@@ -172,7 +172,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type ImageField implements Node {
       alt: String
     }
-
+    
+    type domain__domain implements Node {
+      drupal_id: String
+      hostname: String
+      name: String
+    }
     type media__image implements Node {
       drupal_id: String
       name: String
@@ -340,6 +345,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       og_description: String
     }
     type node__pageRelationships implements Node {
+      field_domain_access: [domain__domain] @link(from: "field_domain_access___NODE")
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
