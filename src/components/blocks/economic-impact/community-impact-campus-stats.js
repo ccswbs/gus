@@ -19,13 +19,13 @@ const render = ({ title, stats }) => (
                 <Statistic.SolidCard  
                     background={colourOptions[index].background} 
                     colour={colourOptions[index].colour}
-                    className="pt-4 pb-0 px-0 h-100" >
+                    className="pt-4 pb-0 px-0 h-100 card" >
                     <Statistic.Value><strong>{value}</strong></Statistic.Value>
                     {link ? 
-                      <Statistic.Type className="mb-4"><a href={link.url} className="fs-3 text-white">{type}</a></Statistic.Type>
-                      : <Statistic.Type className="mb-4">{type}</Statistic.Type>
+                      <Statistic.Type className="mb-4 px-3"><a href={link.url} className="fs-3 text-white">{type}</a></Statistic.Type>
+                      : <Statistic.Type className="mb-4 px-3">{type}</Statistic.Type>
                     }
-                    <GatsbyImage image={getImage(image.src)} alt={image.alt} className="card-img-bottom" />
+                    <GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" />
                 </Statistic.SolidCard>
               </div>
           )}

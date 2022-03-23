@@ -2,7 +2,16 @@ id: economic_impact_sustainability
 title: Sustainability
 body:
   - Sustainability underpins much of the work occurring at U of G. The University makes a concentrated effort to incorporate sustainable approaches into its daily operations as well as its interdisciplinary teaching and research. Over 550 sustainability related courses are provided to U of G students, and approximately 250 faculty members are engaged in sustainability-related research projects.
-  - "Examples: AFI, GIER, BDDC and One Health"
+
+examples:
+  - title: Arrell Food Institute
+    url: https://arrellfoodinstitute.ca/
+  - title: Guelph Institute for Environmental Research
+    url: https://sites.uoguelph.ca/gier/
+  - title: Bioproducts Discovery and Development Centre
+    url: https://www.bioproductscentre.com/
+  - title: One Health
+    url: https://onehealth.uoguelph.ca/
 
 news:
   heading: In the News

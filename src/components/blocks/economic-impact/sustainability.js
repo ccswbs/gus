@@ -9,12 +9,17 @@ const NewsHeading = styled.h4`
   font-size: 1.8rem;
 `
 
-const render = ({ title, body, news, video }) => (
+const render = ({ title, body, examples, news, video }) => (
     <Container className="page-container mt-5">
         <Row className="site-content">
           <h2 id="sustainability">{title}</h2>
           <Col lg={6} className="mb-5 pe-4">
               {body.map((paragraph, index) => <p key={`sustainability-text-${index}`}>{paragraph}</p>)}
+              <h3>Examples:</h3>
+              <ul>
+                {examples.map(({title, url}, index) => <li key={`sustainability-example-${index}`}><a href={url}>{title}</a></li>)}
+              </ul>
+
               <h3>{news.heading}</h3>
               {news.articles.map(({ title, lead, url }, index) => 
                 <div key={`sustainability-news-${index}`}>
@@ -37,6 +42,10 @@ const query = graphql`
       id
       title
       body
+      examples {
+        title
+        url
+      }
       news {
           heading
           articles {
