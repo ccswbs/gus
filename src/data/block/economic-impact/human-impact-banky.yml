@@ -7,7 +7,7 @@ body:
 
 images:
   foreground:
-    src: ../../../images/grce/economic-impact/banky.png
+    src: ../../../images/grce/economic-impact/banky-cut-out.png
     alt: Bankole Alade, athlete, marketing student, founder of the Guelph Black Professionals
   background:
     src: ../../../images/grce/economic-impact/banky-bg.jpg
