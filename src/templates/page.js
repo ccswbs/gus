@@ -107,7 +107,7 @@ const PageTemplate = ({data}) => (
         widgets={data.nodePage.relationships.field_widgets}
         footer={data.footer.edges}
         menuName={data.menu?.menu_name || `main`}
-        domain={data.nodePage.relationships.field_domain_access[0].hostname}
+        domain={data.nodePage.relationships.field_domain_access[0].hostname || `api.liveugconthub.uoguelph.dev`}
     ></Page>
 )
 
