@@ -70,6 +70,10 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                 });                
                 midCrumbs = findCrumbs(pageMenu, endCrumbParent);
                 
+                /***
+                * If there's only one domain and it's the default, set Breadcrumb home to UG homepage
+                * Otherwise, assume use of sitename.uoguelph.ca and use the top menu item as Breadcrumb home
+                ***/
                 if (domains) {
                     if (domains.length === 1 && domains[0].drupal_internal__target_id.includes("liveugconthub")) {
                         homeCrumbURL = "https://www.uoguelph.ca";
@@ -80,7 +84,6 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                         homeCrumbURL = rootItems[0].node.link.url;
                     }                    
                 }
-                console.log(domains);
             }            
         }
         
