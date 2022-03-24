@@ -30,7 +30,7 @@ function stripParentID(drupalParentID) {
     }
 }
 
-const makeBreadcrumbTrail = (menuData, domain, menuName, nodeID, nodeTitle) => {
+const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => {
 
     let pageMenu = [];
     let midCrumbs = [];
@@ -56,20 +56,12 @@ const makeBreadcrumbTrail = (menuData, domain, menuName, nodeID, nodeTitle) => {
                 }
             });
             
-            if (pageMenu) {                
+            if (pageMenu) {            
                 pageMenu.forEach(item => {
                     if (!item.node.drupal_parent_menu_item) {
                         rootItems.push(item);
                     }
                 });
-                if (domain !== "api.liveugconthub.uoguelph.dev") {
-                    homeCrumbURL = rootItems[0].node.link.url;
-                } else {
-                    homeCrumbURL = "https://www.uoguelph.ca";
-                    topCrumb = rootItems[0].node.title;
-                    topCrumbID = rootItems[0].node.link.uri;
-                    topCrumbURL = rootItems[0].node.link.url;
-                }
                 pageMenu.forEach(item => {
                     if (item.node.link.uri === currentPage) {
                         endCrumb = item.node.title;
@@ -77,6 +69,18 @@ const makeBreadcrumbTrail = (menuData, domain, menuName, nodeID, nodeTitle) => {
                     }
                 });                
                 midCrumbs = findCrumbs(pageMenu, endCrumbParent);
+                
+                if (domains) {
+                    if (domains.length === 1 && domains[0].drupal_internal__target_id.includes("liveugconthub")) {
+                        homeCrumbURL = "https://www.uoguelph.ca";
+                        topCrumb = rootItems[0].node.title;
+                        topCrumbID = rootItems[0].node.link.uri;
+                        topCrumbURL = rootItems[0].node.link.url; 
+                    } else {
+                        homeCrumbURL = rootItems[0].node.link.url;
+                    }                    
+                }
+                console.log(domains);
             }            
         }
         
@@ -134,19 +138,19 @@ const Breadcrumbs = (props) => (
         }
       `
       }
-      render={data => makeBreadcrumbTrail(data, props.domain, props.menuName, props.nodeID, props.nodeTitle)}
+      render={data => makeBreadcrumbTrail(data, props.domains, props.menuName, props.nodeID, props.nodeTitle)}
    />
 )
 
 Breadcrumbs.propTypes = {
-    domain: PropTypes.string,
+    domains: PropTypes.array,
     menuName: PropTypes.string,
     nodeID: PropTypes.number,
     nodeTitle: PropTypes.string,
 }
 
 Breadcrumbs.defaultProps = {
-    domain: `api.liveugconthub.uoguelph.dev`,
+    domains: [],
     menuName: `main`,
     nodeID: null,
     nodeTitle: ``,
