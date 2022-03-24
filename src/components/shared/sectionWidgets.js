@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import LinksItems from 'components/shared/linksItems';
 import CtaPara from 'components/shared/ctaPara'
-import MediaText from 'components/shared/mediaText';
-import StatsWidget from 'components/shared/statsWidget';
+import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
+import LinksItems from 'components/shared/linksItems';
+import MediaText from 'components/shared/mediaText';
 import SectionButtons from 'components/shared/sectionButtons';
+import StatsWidget from 'components/shared/statsWidget';
 import { contentExists } from 'utils/ug-utils'
 import 'styles/widgets.css';
 // 
@@ -95,8 +96,8 @@ function SectionWidgets (props) {
                 return <div className={leadClassName}><LeadPara pageData={widgetData} /></div>;
             }
             else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
-                const textClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
-                return <div className={textClassName } dangerouslySetInnerHTML={{__html: widgetData.field_general_text.processed }}/>; 
+                const textClass = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
+                return <GeneralText textClass={textClass} processed={widgetData.field_general_text.processed} />; 
             }
             else if (widgetData.__typename==="paragraph__section_buttons") {
                 const sbtnClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
