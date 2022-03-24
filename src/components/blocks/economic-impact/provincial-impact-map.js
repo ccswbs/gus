@@ -24,11 +24,11 @@ const render = ({ image, stations, campuses }) => (
         </Col>
         <Col md={3}>
             <h3 className="h5 mt-0">{stations.section_title}</h3>
-            <ol className="lh-1 mb-5">
+            <ul className="lh-1 mb-5">
                 {stations.names.map((name, index) => 
                     <ListItem key={`station-${index}`}>{name}</ListItem>
                 )}
-            </ol>
+            </ul>
             <p className="fs-5">{stations.footnote}</p>
             <h3 className="h5">{campuses.section_title}</h3>
             <ul className="list-unstyled ps-2">
