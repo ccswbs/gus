@@ -427,7 +427,7 @@ function prepareVariantHeading (variantData) {
 
       { /**** Program Overview ****/ }
       <div className="container page-container">
-        <div id="content" className="row row-with-vspace site-content">
+        <div className="row row-with-vspace site-content">
           <section className="col-md-9 content-area">
             {renderProgramOverview(description, specData)}
           </section>

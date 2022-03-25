@@ -1,0 +1,18 @@
+id: economic_impact_community
+title: Community Impact
+intro:
+  heading: Economic Driver.
+  body:
+    - The University of Guelph is an economic engine for communities across Ontario.
+    - Through expenditures from the University, our students and the visitors we attract, U of G supports and promotes sustainable and inclusive economies in Guelph-Wellington, Chatham-Kent and the Toronto CMA.
+    - We create jobs and opportunity for innovation and entrepreneurship. We promote civic engagement and community development. We support people and improve lives.
+stats:
+  - value: 15,007
+    type: Jobs Sustained in Campus Regions
+    icon: fak fa-human-group
+  - value: $523 M
+    type: Annual Student Spending
+    icon: fak fa-world-money
+  - value: $2.77 B
+    type: Total Impact of Campuses to Regional GDPs
+    icon: fak fa-money-arrow

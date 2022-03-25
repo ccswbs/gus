@@ -1,0 +1,20 @@
+id: economic_impact_community_campus_stats
+title: "Impact of campuses to regional GDP:"
+stats:
+  - value: $2.01 B
+    type: "Learn More: U of G's Impact to Guelph-Wellington's Economy"
+    image:
+      src: ../../../images/grce/economic-impact/johnston-hall-building.jpg
+      alt: Johnston Hall
+    link:
+      url: "/grce/economic-impact/Guelph-Wellington-Economic-Impact-Report-U-of-G.pdf"
+  - value: $678.5 M
+    type: U of G's Impact to Toronto CMA's Economy
+    image:
+      src: ../../../images/grce/economic-impact/humber-building.jpg
+      alt: Guelph-Humber building
+  - value: $83.8 M
+    type: U of G's Impact to Chatham-Kent's Economy
+    image:
+      src: ../../../images/grce/economic-impact/djPestell-building.jpg
+      alt: DJ Pestell Student Service and Alumni Centre

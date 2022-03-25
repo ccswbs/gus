@@ -1,0 +1,589 @@
+﻿1
+00:00:00,515 --> 00:00:02,932
+(soft music)
+
+2
+00:00:08,275 --> 00:00:09,500
+- So in January of 2020,
+
+3
+00:00:09,500 --> 00:00:12,850
+I was teaching my fourth
+year medical virology course.
+
+4
+00:00:12,850 --> 00:00:15,940
+And I was aware that there
+was this new respiratory virus
+
+5
+00:00:15,940 --> 00:00:17,840
+that was infecting people in China
+
+6
+00:00:17,840 --> 00:00:19,260
+and spreading rather quickly.
+
+7
+00:00:19,260 --> 00:00:23,470
+And so, as a class, we would
+watch this red dot in China
+
+8
+00:00:23,470 --> 00:00:24,530
+get bigger and bigger
+
+9
+00:00:24,530 --> 00:00:26,500
+and then these new red
+dots were showing up
+
+10
+00:00:26,500 --> 00:00:27,540
+in all these other countries
+
+11
+00:00:27,540 --> 00:00:30,510
+and we kept asking, when is
+it gonna show up in Canada?
+
+12
+00:00:30,510 --> 00:00:35,510
+- I think my moment was when
+the virus jumped from China
+
+13
+00:00:36,210 --> 00:00:40,300
+to Iran and Italy in
+very short succession.
+
+14
+00:00:40,300 --> 00:00:44,520
+- I think the data became
+scary at the beginning of March
+
+15
+00:00:44,520 --> 00:00:47,550
+where certainly more countries
+started to become affected,
+
+16
+00:00:47,550 --> 00:00:50,750
+nothing was being done
+particularly aggressively
+
+17
+00:00:50,750 --> 00:00:51,730
+at that time.
+
+18
+00:00:51,730 --> 00:00:55,033
+And then the shutdown happened
+and it kind of became real.
+
+19
+00:00:55,870 --> 00:00:58,240
+- [Man] We've always said,
+there's a pandemic virus
+
+20
+00:00:58,240 --> 00:00:59,073
+out there.
+
+21
+00:00:59,073 --> 00:00:59,906
+It's going to happen again.
+
+22
+00:00:59,906 --> 00:01:02,870
+And we've seen examples and
+I think we got overconfident.
+
+23
+00:01:02,870 --> 00:01:04,520
+We had SARS that was controlled.
+
+24
+00:01:04,520 --> 00:01:06,480
+We had another Coronavirus, MERS,
+
+25
+00:01:06,480 --> 00:01:09,700
+Middle Eastern Respiratory
+Syndrome, that was controlled.
+
+26
+00:01:09,700 --> 00:01:12,400
+And I think we've assumed
+that we can control things.
+
+27
+00:01:12,400 --> 00:01:15,050
+And we've realized that we can't.
+
+28
+00:01:15,050 --> 00:01:16,860
+- [Woman] The planning
+that needed to be done
+
+29
+00:01:16,860 --> 00:01:20,970
+before the disease came to our borders,
+
+30
+00:01:20,970 --> 00:01:22,423
+did not seem to be done.
+
+31
+00:01:23,370 --> 00:01:26,320
+- I think people realize now
+that any infectious disease
+
+32
+00:01:26,320 --> 00:01:27,786
+or emerging infectious disease can affect
+
+33
+00:01:27,786 --> 00:01:29,076
+any part of the world.
+
+34
+00:01:29,076 --> 00:01:32,030
+And also it can emerge
+from any type of species.
+
+35
+00:01:32,030 --> 00:01:33,400
+I mean, who would have thought that MERS
+
+36
+00:01:33,400 --> 00:01:36,650
+could be transmitted from
+bats to camels to people.
+
+37
+00:01:36,650 --> 00:01:39,330
+So you can't rule out any animal species
+
+38
+00:01:39,330 --> 00:01:41,530
+and you can't rule out the
+fact that it can affect
+
+39
+00:01:41,530 --> 00:01:42,630
+any part of the world.
+
+40
+00:01:48,810 --> 00:01:53,530
+- One Health, to me, is
+a collaborative approach
+
+41
+00:01:53,530 --> 00:01:55,270
+among multiple disciplines,
+
+42
+00:01:55,270 --> 00:01:57,460
+as well as other societal actors,
+
+43
+00:01:57,460 --> 00:01:58,930
+so community members,
+
+44
+00:01:58,930 --> 00:02:01,390
+potentially politicians,
+those in industries,
+
+45
+00:02:01,390 --> 00:02:04,853
+and essentially looking at
+complex or wicked problems
+
+46
+00:02:04,853 --> 00:02:08,380
+that occur at the
+intersection of human, animal
+
+47
+00:02:08,380 --> 00:02:09,930
+and environmental health.
+
+48
+00:02:09,930 --> 00:02:11,980
+- Zoonotic infections are a prime example
+
+49
+00:02:11,980 --> 00:02:13,390
+of the One Health concept.
+
+50
+00:02:13,390 --> 00:02:15,670
+We are destroying habitat,
+
+51
+00:02:15,670 --> 00:02:18,210
+and that means that humans and animals
+
+52
+00:02:18,210 --> 00:02:19,710
+are coming into closer contact.
+
+53
+00:02:19,710 --> 00:02:21,200
+The more you destroy the habitat,
+
+54
+00:02:21,200 --> 00:02:24,640
+the more likely you are
+to have this interaction.
+
+55
+00:02:24,640 --> 00:02:29,210
+And then, you know, again, it
+could transmit human to human.
+
+56
+00:02:29,210 --> 00:02:31,700
+- This pandemic's also showing how we need
+
+57
+00:02:31,700 --> 00:02:35,290
+this broad intersect or
+approach to infectious diseases.
+
+58
+00:02:35,290 --> 00:02:38,750
+It can't just be medicine
+and veterinary medicine,
+
+59
+00:02:38,750 --> 00:02:40,200
+and it can't just be science.
+
+60
+00:02:40,200 --> 00:02:42,220
+It has to be a social
+science, its behavior.
+
+61
+00:02:42,220 --> 00:02:44,060
+The bigger challenges
+we're dealing with now
+
+62
+00:02:44,060 --> 00:02:46,470
+are things like vaccine hesitancy.
+
+63
+00:02:46,470 --> 00:02:50,850
+- I understand vaccine
+hesitancy to stem from mistrust.
+
+64
+00:02:50,850 --> 00:02:53,050
+If we don't have buy-in from the public,
+
+65
+00:02:53,050 --> 00:02:54,970
+if they don't trust the product,
+
+66
+00:02:54,970 --> 00:02:57,970
+if they don't trust the policy
+makers and the providers,
+
+67
+00:02:57,970 --> 00:03:02,480
+then the best vaccines may never
+make it into people's arms.
+
+68
+00:03:02,480 --> 00:03:04,900
+We have a lot of access to media
+
+69
+00:03:04,900 --> 00:03:08,230
+and many of us have a lot of
+time to spend on the internet.
+
+70
+00:03:08,230 --> 00:03:11,170
+And we got to see the mess of science,
+
+71
+00:03:11,170 --> 00:03:13,880
+what it looks like before
+things are established,
+
+72
+00:03:13,880 --> 00:03:16,080
+before things are settled.
+
+73
+00:03:16,080 --> 00:03:17,330
+There will be people that say,
+
+74
+00:03:17,330 --> 00:03:18,960
+"You see the scientists don't know
+
+75
+00:03:18,960 --> 00:03:20,350
+what they're talking about".
+
+76
+00:03:20,350 --> 00:03:23,210
+When it might be the case
+that they are changing
+
+77
+00:03:23,210 --> 00:03:25,410
+their directives in light of new evidence.
+
+78
+00:03:25,410 --> 00:03:27,530
+And that's a sign of good science.
+
+79
+00:03:27,530 --> 00:03:29,410
+- I found the University of Guelph
+
+80
+00:03:29,410 --> 00:03:31,780
+to be extraordinarily collaborative,
+
+81
+00:03:31,780 --> 00:03:35,490
+a really a great environment
+to build relationships
+
+82
+00:03:35,490 --> 00:03:37,300
+and do work with other researchers
+
+83
+00:03:37,300 --> 00:03:39,410
+outside of your own discipline.
+
+84
+00:03:39,410 --> 00:03:41,880
+I think we also have a
+really unique combination
+
+85
+00:03:41,880 --> 00:03:43,160
+of expertise here.
+
+86
+00:03:43,160 --> 00:03:45,350
+We have the veterinary
+college and One Health
+
+87
+00:03:45,350 --> 00:03:49,140
+has really taken leadership
+out of the veterinary field.
+
+88
+00:03:49,140 --> 00:03:51,500
+We have, you know, the
+Agricultural College
+
+89
+00:03:51,500 --> 00:03:53,110
+strong biological sciences,
+
+90
+00:03:53,110 --> 00:03:55,020
+strong environmental focus,
+
+91
+00:03:55,020 --> 00:03:56,870
+and then really strong social science,
+
+92
+00:03:56,870 --> 00:03:59,460
+which is incredibly
+important when we think about
+
+93
+00:03:59,460 --> 00:04:01,390
+the entire One Health approach.
+
+94
+00:04:01,390 --> 00:04:04,580
+- Our research actually
+has expanded considerably
+
+95
+00:04:04,580 --> 00:04:07,900
+after we demonstrated
+that our vaccine platform
+
+96
+00:04:07,900 --> 00:04:09,460
+works against SARS-CoV-2.
+
+97
+00:04:09,460 --> 00:04:12,560
+This is actually kind of
+taking the One Health approach
+
+98
+00:04:12,560 --> 00:04:13,930
+and flipping on its side.
+
+99
+00:04:13,930 --> 00:04:15,550
+We're taking an animal pathogen
+
+100
+00:04:15,550 --> 00:04:19,300
+and turning it into a
+benign vaccine vector,
+
+101
+00:04:19,300 --> 00:04:20,660
+which can protect humans.
+
+102
+00:04:20,660 --> 00:04:22,800
+But interestingly, we
+can also use this vaccine
+
+103
+00:04:22,800 --> 00:04:24,470
+to vaccinate production animals.
+
+104
+00:04:24,470 --> 00:04:26,810
+- Optimizing this vaccine platform,
+
+105
+00:04:26,810 --> 00:04:30,810
+I first and foremost,
+feel grateful and honored
+
+106
+00:04:30,810 --> 00:04:32,280
+to be a part of this team.
+
+107
+00:04:32,280 --> 00:04:35,680
+The University of Guelph
+plays a significant role
+
+108
+00:04:35,680 --> 00:04:38,320
+in the prevention of the next pandemic.
+
+109
+00:04:38,320 --> 00:04:40,950
+Just incorporating or
+being a part of One Health
+
+110
+00:04:40,950 --> 00:04:42,950
+is the first step towards that.
+
+111
+00:04:42,950 --> 00:04:44,850
+- My work just deals
+with infectious diseases
+
+112
+00:04:44,850 --> 00:04:46,930
+and we're always on the
+lookout for something new.
+
+113
+00:04:46,930 --> 00:04:48,570
+We really focus on that interface
+
+114
+00:04:48,570 --> 00:04:49,970
+between humans and animals.
+
+115
+00:04:49,970 --> 00:04:51,950
+So we track current diseases,
+
+116
+00:04:51,950 --> 00:04:54,610
+we track what we think
+are emerging diseases
+
+117
+00:04:54,610 --> 00:04:57,150
+and we track things that are just unusual.
+
+118
+00:04:57,150 --> 00:04:59,940
+- I think my research can help us prepare
+
+119
+00:04:59,940 --> 00:05:03,780
+for the next pandemic in
+really providing more evidence
+
+120
+00:05:03,780 --> 00:05:05,670
+and continuing the conversation
+
+121
+00:05:05,670 --> 00:05:10,040
+on how important the environment
+and environmental health
+
+122
+00:05:10,040 --> 00:05:13,030
+and wildlife health are in preventing
+
+123
+00:05:13,030 --> 00:05:16,130
+any kind of disease
+event that we might see.
+
+124
+00:05:16,130 --> 00:05:19,600
+- Health requires this
+kind of broad perspective.
+
+125
+00:05:19,600 --> 00:05:23,330
+And there isn't one
+discipline or one researcher
+
+126
+00:05:23,330 --> 00:05:25,840
+that can bring in all the
+necessary perspectives
+
+127
+00:05:25,840 --> 00:05:27,520
+and all the necessary tools.
+
+128
+00:05:27,520 --> 00:05:32,110
+- I think if we reflect
+on the entire situation
+
+129
+00:05:32,110 --> 00:05:35,500
+with the pandemic and
+embrace a One Health approach
+
+130
+00:05:35,500 --> 00:05:37,860
+in our pandemic preparedness,
+
+131
+00:05:37,860 --> 00:05:40,017
+we can be prepared for the next one.
+
+132
+00:05:40,915 --> 00:05:43,332
+(soft music)
+

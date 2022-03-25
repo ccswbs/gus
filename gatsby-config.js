@@ -85,6 +85,13 @@ module.exports = {
         policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
       }
     },
+    `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`,
+      }
+    },
     {
       resolve: `gatsby-source-wordpress`,
       options: {
@@ -123,6 +130,7 @@ module.exports = {
         },
       },
     }
+    
   ],
   assetPrefix: process.env.ASSET_PREFIX,
 }

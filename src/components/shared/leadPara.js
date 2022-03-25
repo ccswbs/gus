@@ -9,7 +9,7 @@ function leadPara (props) {
 
         const leaditem = props.pageData;
 
-        const retStr = <div class="lead" dangerouslySetInnerHTML={{ __html: leaditem.field_lead_paratext.value}} />
+        const retStr = <div className="lead" dangerouslySetInnerHTML={{ __html: leaditem.field_lead_paratext.value}} />
         
                                 
         if(contentExists(leaditem.relationships)) {
@@ -41,7 +41,7 @@ function leadPara (props) {
             if (imageFile !== null) {
                 return (
 			        <React.Fragment>
-				       <div class="full-width-container"> 
+				       <div className="full-width-container"> 
 			                <div className="container-fluid">
 			                    <div className="row leadimg">
 

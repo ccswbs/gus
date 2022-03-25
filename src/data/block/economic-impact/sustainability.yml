@@ -1,0 +1,29 @@
+id: economic_impact_sustainability
+title: Sustainability
+body:
+  - Sustainability underpins much of the work occurring at U of G. The University makes a concentrated effort to incorporate sustainable approaches into its daily operations as well as its interdisciplinary teaching and research. Over 550 sustainability related courses are provided to U of G students, and approximately 250 faculty members are engaged in sustainability-related research projects.
+
+examples:
+  - title: Arrell Food Institute
+    url: https://arrellfoodinstitute.ca/
+  - title: Guelph Institute for Environmental Research
+    url: https://sites.uoguelph.ca/gier/
+  - title: Bioproducts Discovery and Development Centre
+    url: https://www.bioproductscentre.com/
+  - title: One Health
+    url: https://onehealth.uoguelph.ca/
+
+news:
+  heading: In the News
+  articles:
+    - title: U of G Earns Gold Rating for Sustainability
+      lead: U of G has a gold rating from the Association for the Advancement of Sustainability in Higher Education (AASHE).
+      url: https://news.uoguelph.ca/2020/11/u-of-g-earns-gold-rating-for-sustainability/
+
+video:
+  id: "htAn2op0rZ0"
+  type: youtube
+  title: University of Guelph Sustainability
+  url: https://www.youtube.com/watch?v=htAn2op0rZ0
+  transcript: /grce/economic-impact/transcripts/sustainability-transcript.txt
+  captions: /grce/economic-impact/captions/Sustainability.srt

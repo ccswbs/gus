@@ -1,0 +1,17 @@
+id: economic_impact_volunteerism
+title: Volunteerism
+body:
+  - Volunteering is a key part of U of G’s student experience. With over 34 per cent of students engaged in community service, the University reported over 1.5 million community service hours contributed by students on an annual basis, amounting to an average of 66.1 hours per student per year.
+  - As part of its suite of volunteering activities, U of G’s Project Serve offers students the opportunity to contribute to various programs, with focus on First Nations Communities, race and poverty, and health, among others.
+
+news:
+  heading: In the News
+  articles:
+    - title: Project Serve Returns to Give Back to Community
+      lead: For more than 20 years, University of Guelph students have given back to their home-away-from-home community by volunteering with Project Serve, and that tradition continues each year.
+      url: https://news.uoguelph.ca/2021/10/project-serve-returns-to-give-back-to-community/
+
+image:
+  src: ../../../images/grce/economic-impact/project-serve-2019.jpeg
+  alt: Project Serve 2019
+  caption: Project Serve 2019

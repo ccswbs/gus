@@ -24,8 +24,8 @@ function MediaText (props) {
     const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
     const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
     
-    let mediaCol;
-    let textCol;
+  let mediaCol;
+  let textCol;
     
     if (contentExists(mediaDescription)) {
         if (contentExists(imageURL) && contentExists(imageSize)) {

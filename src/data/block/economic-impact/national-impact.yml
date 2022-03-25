@@ -1,0 +1,32 @@
+id: economic_impact_national_impact
+title: National Impact
+lead: Big numbers. Big impact.
+body_html: |
+  <p>At the University of Guelph, we foster learning and development and catalyze change to Improve Life.</p>
+  <p>This commitment starts at home on our three campuses but extends across Canada and around the globe.</p>
+  <p>$8.6 Billion. That is the University of Guelph’s total impact to Canada’s economy.</p>
+  <p>Through investments in our teaching and research and in people and organizations that embody our capacity for excellence, U of G is making a difference—by improving life.</p>
+  <p>We improve life by stimulating economic development.</p>
+  <p>We improve life by creating and sustaining jobs.</p>
+  <p>We improve life by developing innovative solutions to the world’s most pressing challenges.</p>
+
+testimonial: 
+  quote: AI has the potential to do harm and the potential to improve life. At CARE-AI, we harness the power of artificial intelligence to address critical issues and make a difference in people's lives.
+  source:
+    name: Graham Taylor
+    pronouns: (he/him)
+    desc: Professor
+    image:
+      src: ../../../images/grce/economic-impact/testimonial-1.jpg
+      alt: Circuit board
+
+aside:
+  title: CARE-AI
+  body:
+    - The University of Guelph wants to ensure AI technologies—now being rapidly deployed in numerous fields—benefit people and minimize harm.
+    - A unique teaching and research initiative, the University’s Centre for Advancing Responsible and Ethical Artificial Intelligence (CARE-AI) integrates ethics, governance and social responsibility with technical leadership.
+    - This network of more than 90 researchers and scholars and an advisory panel of academic and industry leaders is looking at the human and social aspects of AI.
+    - Researchers investigate methodologies, including learning algorithms, human-computer interfaces, data analytics, sensors and robots. They apply machine learning and AI to U of G’s strengths, including human and animal health and environmental sciences. They aim to influence public policy and regulations.
+  image:
+    src: ../../../images/grce/economic-impact/blueoverlay-thin.jpg
+    alt: ""

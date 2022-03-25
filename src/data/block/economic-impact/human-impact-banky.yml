@@ -1,0 +1,28 @@
+id: economic_impact_human_impact_banky
+title: Banky Alade
+body:
+  - Bankole (Banky) Alade struggled in his first year at the University of Guelph, both in the classroom and on the basketball court. But through the support of his coaches and teachers, he discovered a love of marketing and new-found confidence in his abilities.
+  - Banky tapped into U of G resources such as the senior athlete mentorship program, the Library Learning Commons, athletics coaches and faculty in the Gordon S. Lang School of Business and Economics. The results played out in athletics and academics.
+  - He went from sitting on the bench to leading the varsity basketball team as captain. He went from disliking school to making the dean’s list. And he started the Guelph Black Professionals, now with 15 members and four campus chapters that provide networking and mentorship for Black students.
+
+images:
+  foreground:
+    src: ../../../images/grce/economic-impact/banky-cut-out.png
+    alt: Bankole Alade, athlete, marketing student, founder of the Guelph Black Professionals
+  background:
+    src: ../../../images/grce/economic-impact/banky-bg.jpg
+    alt: ""
+
+video:
+  id: "522002889"
+  type: vimeo
+  title: Banky Alade
+  url: https://player.vimeo.com/video/522002889?api=1
+  transcript: /grce/economic-impact/transcripts/banky-transcript.txt
+  captions: /grce/economic-impact/captions/banky-captions.srt
+
+testimonial:
+  quote: I never thought of schooling as a way to get a better life for me. I thought if I didn’t make it in basketball, I wouldn’t make it at all.
+  source:
+    name: Banky Alade
+    desc: ""
