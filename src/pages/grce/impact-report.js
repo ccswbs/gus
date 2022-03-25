@@ -15,12 +15,12 @@ import EconImpactSustainability from 'components/blocks/economic-impact/sustaina
 import EconImpactResearch from 'components/blocks/economic-impact/research';
 import EconImpactVolunteerism from 'components/blocks/economic-impact/volunteerism';
 
-const render = ({ title, description, image, menu }) => (
+const render = ({ title, description, image, menu, domains }) => (
     <Layout menuName="grce-main">
         <Helmet />
         <Seo title={title} description={description} img={getSrc(image.src)} imgAlt={image.alt} />
         <EconImpactBanner />
-        <Breadcrumbs menuName={menu} nodeTitle={title} />
+        <Breadcrumbs menuName={menu} nodeTitle={title} domains={domains} />
         <EconImpactPresMessage />
         <EconImpactNationalImpact />
         <EconImpactProvImpact />
@@ -47,6 +47,9 @@ const query = graphql`
         alt
       }
       menu
+      domains {
+        drupal_internal__target_id
+      }
     }
   }
 `
