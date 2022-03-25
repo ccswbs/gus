@@ -35,7 +35,8 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
     let pageMenu = [];
     let midCrumbs = [];
     let rootItems = [];
-    let homeCrumbURL;
+    let homeCrumb = "U of G Homepage";
+    let homeCrumbURL = "https://www.uoguelph.ca";
     let topCrumb;
     let topCrumbID;
     let topCrumbURL;
@@ -74,9 +75,8 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                 * If there's only one domain and it's the default, set Breadcrumb home to UG homepage
                 * Otherwise, assume use of sitename.uoguelph.ca and use the top menu item as Breadcrumb home
                 ***/
-                if (domains) {
+                if (domains && domains.length > 1) {
                     if (domains.length === 1 && domains[0].drupal_internal__target_id.includes("liveugconthub")) {
-                        homeCrumbURL = "https://www.uoguelph.ca";
                         topCrumb = rootItems[0].node.title;
                         topCrumbID = rootItems[0].node.link.uri;
                         topCrumbURL = rootItems[0].node.link.url; 
@@ -95,8 +95,8 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                             <div className="site-breadcrumbs">          
                             <ol className="breadcrumb breadcrumb-right-tag">                                
                                 <li key={homeCrumbURL + `home`} className="breadcrumb-item">                                    
-                                    <a href={homeCrumbURL ? homeCrumbURL : "https://www.uoguelph.ca"}>
-                                        <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">Home</span>
+                                    <a href={homeCrumbURL}>
+                                        <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">{homeCrumb}</span>
                                     </a>
                                 </li>
                                 {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 
