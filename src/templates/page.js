@@ -9,7 +9,7 @@ import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
 import { contentExists } from 'utils/ug-utils';
 
-const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, footer, menuName}) => (
+const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, footer, menuName, domains}) => (
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
@@ -22,7 +22,7 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
             </div>
         </div>
         
-        <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} />
+        <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
         
         { /**** Body content ****/ }
         <div className="container page-container">
@@ -44,6 +44,9 @@ export const query = graphql`
       drupal_id
       drupal_internal__nid
       title
+      field_domain_access {
+        drupal_internal__target_id
+      }
       field_metatags {
         og_description
       }
@@ -51,9 +54,6 @@ export const query = graphql`
         alias
       }
       relationships {
-        field_widgets {
-          ...FieldWidgetsFragment
-        }
         field_tags {
           __typename
           ... on TaxonomyInterface {
@@ -61,6 +61,9 @@ export const query = graphql`
             id
             name
           }
+        }
+        field_widgets {
+          ...FieldWidgetsFragment
         }
       }
     }
@@ -104,6 +107,7 @@ const PageTemplate = ({data}) => (
         widgets={data.nodePage.relationships.field_widgets}
         footer={data.footer.edges}
         menuName={data.menu?.menu_name || `main`}
+        domains={data.nodePage.field_domain_access}
     ></Page>
 )
 

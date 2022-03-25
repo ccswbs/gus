@@ -322,6 +322,7 @@ function prepareVariantHeading (variantData) {
     let careerData;
     let courseData;
     let degreesData;
+    let domains;
     let employerData;
     let footerData;
     let imageData = [];
@@ -342,6 +343,7 @@ function prepareVariantHeading (variantData) {
     if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
     if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
     if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
+    if (progData.field_domain_access !== undefined) { domains = progData.field_domain_access; }
     if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
     if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
     if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
@@ -421,7 +423,7 @@ function prepareVariantHeading (variantData) {
           </div>
       </div>
       
-      <Breadcrumbs nodeID={nodeID} nodeTitle={title} />
+      <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 
       { /**** Program Overview ****/ }
       <div className="container page-container">
@@ -491,6 +493,9 @@ export const query = graphql`query ($id: String) {
         drupal_id
         drupal_internal__nid
         title
+        field_domain_access {
+          drupal_internal__target_id
+        }
         field_metatags {
           og_description
         }

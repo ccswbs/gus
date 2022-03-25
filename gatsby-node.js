@@ -166,7 +166,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type ImageField implements Node {
       alt: String
     }
-
+    
     type media__image implements Node {
       drupal_id: String
       name: String
@@ -324,11 +324,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type node__page implements Node {
       drupal_id: String
       drupal_internal__nid: Int
+      field_domain_access: [node__pageField_domain_access]
       field_hero_image: ImageField
       field_metatags: node__pageField_metatags
       relationships: node__pageRelationships
       fields: FieldsPathAlias
       path: AliasPath
+    }
+    type node__pageField_domain_access implements Node {
+      drupal_internal__target_id: String
     }
     type node__pageField_metatags implements Node {
       og_description: String
@@ -347,8 +351,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__nid: Int
       title: String
       changed: Date @dateformat
-      field_prog_image: ImageField
       field_course_notes: node__programField_course_notes
+      field_domain_access: [node__programField_domain_access]
+      field_prog_image: ImageField      
       field_metatags: node__programField_metatags
       field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
@@ -359,6 +364,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       value: String
       format: String
       processed: String
+    }
+    type node__programField_domain_access implements Node {
+      drupal_internal__target_id: String
     }
     type node__programField_metatags implements Node {
       og_description: String

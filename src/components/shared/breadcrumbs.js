@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, StaticQuery, graphql } from 'gatsby';
-import { contentExists } from 'utils/ug-utils';
 
 /***
 * Recursive function to iterate through the menu in search of parents
@@ -31,21 +30,26 @@ function stripParentID(drupalParentID) {
     }
 }
 
-const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
+const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => {
 
     let pageMenu = [];
     let midCrumbs = [];
+    let rootItems = [];
+    let homeCrumb = "U of G Homepage";
+    let homeCrumbURL = "https://www.uoguelph.ca";
+    let topCrumb;
+    let topCrumbID;
     let topCrumbURL;
     let endCrumb;
     let endCrumbParent;
     const currentPage = `entity:node/` + String(nodeID);
     const pageTitle = nodeTitle;
     
-    if (contentExists(currentPage)) {
+    if (currentPage) {
  
-        let allMenuItems = menuLinks.allMenuLinkContentMenuLinkContent.edges;        
+        let allMenuItems = menuData.allMenuLinkContentMenuLinkContent.edges;        
     
-        if (contentExists(allMenuItems)) {
+        if (allMenuItems) {
             
             allMenuItems.forEach(item => {
                 if (item.node.menu_name === menuName) {
@@ -53,22 +57,33 @@ const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
                 }
             });
             
-            if (contentExists(pageMenu)) {
-                
+            if (pageMenu) {            
                 pageMenu.forEach(item => {
-                    if (item.node.title === "Home") {
-                        topCrumbURL = item.node.link.url;
+                    if (!item.node.drupal_parent_menu_item) {
+                        rootItems.push(item);
                     }
                 });
-                
                 pageMenu.forEach(item => {
                     if (item.node.link.uri === currentPage) {
                         endCrumb = item.node.title;
                         endCrumbParent = stripParentID(item.node.drupal_parent_menu_item);
                     }
-                });
-                
+                });                
                 midCrumbs = findCrumbs(pageMenu, endCrumbParent);
+                
+                /***
+                * If there's only one domain and it's the default, set Breadcrumb home to UG homepage
+                * Otherwise, assume use of sitename.uoguelph.ca and use the top menu item as Breadcrumb home
+                ***/
+                if (domains && domains.length > 0 && menuName !== "main") {                    
+                    if (domains.length === 1 && domains[0].drupal_internal__target_id.includes("liveugconthub")) {
+                        topCrumb = rootItems[0].node.title;
+                        topCrumbID = rootItems[0].node.link.uri;
+                        topCrumbURL = rootItems[0].node.link.url;
+                    } else {
+                        homeCrumbURL = rootItems[0].node.link.url;
+                    }                    
+                }
             }            
         }
         
@@ -79,18 +94,19 @@ const makeBreadcrumbTrail = (menuLinks, menuName, nodeID, nodeTitle) => {
                         <div className="col-sm-12">
                             <div className="site-breadcrumbs">          
                             <ol className="breadcrumb breadcrumb-right-tag">                                
-                                <li key={topCrumbURL + `home`} className="breadcrumb-item">                                    
-                                    <a href={contentExists(topCrumbURL) ? topCrumbURL : "https://www.uoguelph.ca"}>
-                                        <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">Home</span>
+                                <li key={homeCrumbURL + `home`} className="breadcrumb-item">                                    
+                                    <a href={homeCrumbURL}>
+                                        <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">{homeCrumb}</span>
                                     </a>
                                 </li>
-                                {contentExists(midCrumbs) ? 
-                                    midCrumbs.map(midCrumb => {
+                                {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 
+                                    <li key={topCrumbURL} className="breadcrumb-item"><Link to={topCrumbURL}>{topCrumb}</Link></li>}
+                                {midCrumbs && midCrumbs.map(midCrumb => {
                                     return <><li key={midCrumb.node.link.url + `mid`} className="breadcrumb-item">
                                             <Link to={midCrumb.node.link.url}>{midCrumb.node.title}</Link>
-                                    </li></>})
-                                : null}
-                                <li key={endCrumb + `end`} className="breadcrumb-item">{contentExists(endCrumb) ? endCrumb : pageTitle}</li>                           
+                                    </li></>
+                                })}
+                                <li key={endCrumb + `end`} className="breadcrumb-item">{endCrumb ? endCrumb : pageTitle}</li>                           
                             </ol>
                             </div>
                         </div>
@@ -107,34 +123,37 @@ const Breadcrumbs = (props) => (
       query={
         graphql`
         query BreadcrumbMenuQuery {
-          allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}) {
+          allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}, filter: {enabled: {eq: true}}) {
             edges {
               node {
-                title
+                drupal_id
+                drupal_parent_menu_item
+                menu_name
                 link {
                   uri
                   url
                 }
-                drupal_parent_menu_item
-                drupal_id
-                menu_name
+                title
+                weight
               }
             }
           }
         }
       `
       }
-      render={data => makeBreadcrumbTrail(data, props.menuName, props.nodeID, props.nodeTitle)}
+      render={data => makeBreadcrumbTrail(data, props.domains, props.menuName, props.nodeID, props.nodeTitle)}
    />
 )
 
 Breadcrumbs.propTypes = {
+    domains: PropTypes.array,
     menuName: PropTypes.string,
     nodeID: PropTypes.number,
     nodeTitle: PropTypes.string,
 }
 
 Breadcrumbs.defaultProps = {
+    domains: [],
     menuName: `main`,
     nodeID: null,
     nodeTitle: ``,
