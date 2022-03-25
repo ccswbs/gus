@@ -6,4 +6,4 @@ image:
   alt: University of Guelph campus
 menu: grce-main  
 domains:
-  drupal_internal__target_id: api_liveugconthub_uoguelph_dev
+  [drupal_internal__target_id: api_liveugconthub_uoguelph_dev]
