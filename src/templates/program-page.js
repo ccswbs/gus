@@ -16,7 +16,7 @@ import NavTabHeading from 'components/shared/navTabHeading';
 import NavTabContent from 'components/shared/navTabContent';
 import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
-import Tags from 'components/shared/tags';
+//import Tags from 'components/shared/tags';
 import Testimonials from 'components/shared/testimonial';
 import Variants from 'components/shared/variants';
  
@@ -331,7 +331,7 @@ function prepareVariantHeading (variantData) {
     let newsData;
     let specData;
     let statsData;
-    let tagData;
+    //let tagData;
     let testimonialData;
     let variantData;
     let videoData;
@@ -369,7 +369,7 @@ function prepareVariantHeading (variantData) {
     // set degree, specialization, variant, and tag info  
     degreesData = progData.relationships.field_degrees;
     specData = progData.relationships.field_specializations;
-    tagData = progData.relationships.field_tags;
+    //tagData = progData.relationships.field_tags;
     variantData = progData.relationships.field_program_variants;
     let variantDataHeading = prepareVariantHeading(variantData); 
     
@@ -377,6 +377,8 @@ function prepareVariantHeading (variantData) {
     const ogDescription = (contentExists(progData.field_metatags) ? progData.field_metatags.og_description : null);
     const ogImage = (contentExists(heroImage) ? heroImage[0].node.relationships.field_media_image.localFile.publicURL : null);
     const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
+    
+    console.log(progData.field_metatags);
     
     return (
     <Layout date={lastModified} menuName="main">
