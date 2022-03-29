@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { GatsbyImage } from "gatsby-plugin-image";
-import { contentIsNullOrEmpty } from 'utils/ug-utils.js';
 import 'styles/employers.css';
 
 function Employers (props) {
@@ -10,8 +9,9 @@ function Employers (props) {
                 <div className="row">
                     {props.employerData.map (unit => {
                         let employerImage = unit.node.relationships.field_image;
+                        let employerImageAlt = unit.node.field_image_alt ? unit.node.field_image_alt : ``;
                         let employerSummary = unit.node.field_employer_summary;
-                        let employerJobPostingsLink = !contentIsNullOrEmpty(unit.node.field_link) ? unit.node.field_link.uri : null;
+                        let employerJobPostingsLink = unit.node.field_link ? unit.node.field_link.uri : null;
                         return (
                             <div className="col-6 col-md-4" key={unit.node.drupal_id}>
                                     <div className="employer-wrapper">
@@ -19,7 +19,7 @@ function Employers (props) {
                                         <GatsbyImage
                                             image={employerImage.localFile.childImageSharp.gatsbyImageData}
                                             imgStyle={{ objectFit: 'contain' }}
-                                            alt={unit.node.relationships.field_image.alt} />
+                                            alt={employerImageAlt} />
                                     </div>}
                                     <div className="employer-info">
                                         <h4 className="employer-name">{unit.node.title}</h4>
