@@ -388,7 +388,7 @@ function prepareVariantHeading (variantData) {
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
       
       { /**** Header and Title ****/ }
-      <div className={!contentExists(heroImage) && !contentExists(videoData) && "no-thumb"} id="rotator">
+      <div className={!heroImage && !videoData ? "no-thumb" : null} id="rotator">
         {contentExists(videoData) ?
             <HeroVideo videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} videoTranscript={contentExists(videoData.relationships.field_media_file) ? videoData.relationships.field_media_file.localFile.publicURL : ``} />
             :
@@ -399,29 +399,23 @@ function prepareVariantHeading (variantData) {
         </div>
       </div>
 
-      { /**** Tags and Call to Action Button ****/ }
-      <div className="full-width-container bg-dark">
-          <div className="container">
-              <section className="row row-with-vspace site-content">
-                  <div className="col-md-9 content-area">
-                    {tagData && tagData.length > 0 ?  
-                      (<Tags tagData={tagData} />)
-                      : null
-                    }   
-                  </div>
-                  <div className="col-md-3">
-                    {callToActionData.map((cta, index) => (
-                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.name: ``} 
-                        goalEventAction={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.field_goal_action: ``} 
-                        classNames='btn btn-uogRed apply' >
-                        {cta.node.field_call_to_action_link.title}
+        { /**** Tags and Call to Action Button ****/ }
+        {ogDescription || contentExists(callToActionData) && 
+        <div className="full-width-container bg-dark">
+            <div className="container">
+                <section className="row">
+                    {ogDescription && <div className="col-md-9"><p className="fs-2">{ogDescription}</p></div>}
+                    {contentExists(callToActionData) && 
+                    <div className="col-md-3">
+                      <CallToAction href={callToActionData[0]?.node.field_call_to_action_link.uri} 
+                        goalEventCategory={callToActionData[0]?.node.relationships.field_call_to_action_goal?.name} 
+                        goalEventAction={callToActionData[0]?.node.relationships.field_call_to_action_goal?.field_goal_action}>
+                        {callToActionData[0]?.node.field_call_to_action_link.title}
                       </CallToAction>
-                    ))}
-                  </div>
-              </section>
-          </div>
-      </div>
+                    </div>}
+                </section>
+            </div>
+        </div>}
       
       <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 
@@ -465,8 +459,7 @@ function prepareVariantHeading (variantData) {
                   {callToActionData.map((cta, index) => (
                       <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
                         goalEventCategory={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.name: ``} 
-                        goalEventAction={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.field_goal_action: ``} 
-                        classNames='btn btn-uogRed apply' >
+                        goalEventAction={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.field_goal_action: ``}>
                       {cta.node.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
