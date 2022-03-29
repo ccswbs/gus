@@ -400,7 +400,7 @@ function prepareVariantHeading (variantData) {
       </div>
 
         { /**** Tags and Call to Action Button ****/ }
-        {ogDescription || contentExists(callToActionData) && 
+        {ogDescription || contentExists(callToActionData) ? 
         <div className="full-width-container bg-dark">
             <div className="container">
                 <section className="row">
@@ -415,7 +415,7 @@ function prepareVariantHeading (variantData) {
                     </div>}
                 </section>
             </div>
-        </div>}
+        </div> : ``}
       
       <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 
@@ -458,8 +458,8 @@ function prepareVariantHeading (variantData) {
                   <h3><span>Are you ready to</span> Improve Life?</h3>
                   {callToActionData.map((cta, index) => (
                       <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.name: ``} 
-                        goalEventAction={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.field_goal_action: ``}>
+                        goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name} 
+                        goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}>
                       {cta.node.field_call_to_action_link.title}
                       </CallToAction>
                     ))}
