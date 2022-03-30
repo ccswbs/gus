@@ -5,7 +5,7 @@ import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 const CallToAction = ({ children, href, goalEventCategory, goalEventAction }) => {
     if (goalEventCategory) {        
         return(
-            <a className="btn btn-primary fs-1 fw-bold my-4 p-4 w-100" href={href} onClick={e => {
+            <a className="btn btn-primary fs-1 my-4 p-4 w-100" href={href} onClick={e => {
                 // Track the custom click
                 trackCustomEvent({
                   category: goalEventCategory,

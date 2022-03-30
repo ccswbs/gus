@@ -325,7 +325,7 @@ const ProgramPage = ({data, location}) => {
         {ogDescription || contentExists(callToActionData) ? 
         <div className="full-width-container bg-dark">
             <div className="container">
-                <section className="row">
+                <section className="row mx-2">
                     {ogDescription && <div className="col-md-9"><p className="fs-2">{ogDescription}</p></div>}
                     {contentExists(callToActionData) && 
                     <div className="col-md-3">
