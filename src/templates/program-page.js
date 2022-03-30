@@ -17,16 +17,15 @@ import NavTabContent from 'components/shared/navTabContent';
 import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
 import Testimonials from 'components/shared/testimonial';
-import Variants from 'components/shared/variants';
- 
+import Variants from 'components/shared/variants'; 
 import { contentExists, sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
-import 'styles/program-page.css';
+//import 'styles/program-page.css';
 
 function renderProgramOverview(description, specData) {
-    if (description || specData) {
+    if (description || contentExists(specData)) {
         return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: description }} /></>
-    }
+    }    
     return null;
 }
 
@@ -281,17 +280,17 @@ const ProgramPage = ({data, location}) => {
     let variantDataHeading = prepareVariantHeading(variantData);
     let videoData = data.videos.edges[0]?.node;
   
-    const heroImage = (imageData ? imageData : (imageTaggedData ? imageTaggedData : null));
+    const heroImage = (contentExists(imageData) ? imageData : (contentExists(imageTaggedData) ? imageTaggedData : null));
     
     // Open Graph metatags
     const ogDescription = progData.field_metatags?.og_description;
-    const ogImage = heroImage[0]?.node.relationships.field_media_image.localFile.publicURL;
-    const ogImageAlt = heroImage[0]?.node.field_media_image.alt;
+    const ogImage = heroImage && heroImage[0].node.relationships.field_media_image.localFile.publicURL;
+    const ogImageAlt = heroImage && heroImage[0].node.field_media_image.alt;
 
     // set program details
     const nodeID = progData.drupal_internal__nid;
     const title = progData.title;
-    const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
+    const acronym = (progData.relationships.field_program_acronym?.name);
     const description = progData.field_program_overview?.processed;
     const courseNotes = progData.field_course_notes?.processed;
 
@@ -300,8 +299,6 @@ const ProgramPage = ({data, location}) => {
         [progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
         );
     let lastModified = allModifiedDates[allModifiedDates.length - 1];
-    
-    console.log(testimonialData);
     
     return (
     <Layout date={lastModified} menuName="main">
