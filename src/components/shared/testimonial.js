@@ -25,7 +25,7 @@ function Testimonials (props) {
 								!studentTag && facultyTag && !alumniTag ? "What Faculty from the program are saying about U of G" :
 								!studentTag && !facultyTag && alumniTag ? "What Alumni from the program are saying about U of G": "What Students in the program are saying about U of G"
 
-	if ((props.testimonialData !== null) && (props.testimonialData !== undefined)) {
+	if (contentExists(props.testimonialData)) {
 		const testimonialUnits  = () => props.testimonialData.map((testimonial) => {
 		
 			let testimonialContent = stripHTMLTags(testimonial.node.body.processed);
