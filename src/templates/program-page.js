@@ -16,7 +16,6 @@ import NavTabHeading from 'components/shared/navTabHeading';
 import NavTabContent from 'components/shared/navTabContent';
 import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
-//import Tags from 'components/shared/tags';
 import Testimonials from 'components/shared/testimonial';
 import Variants from 'components/shared/variants';
  
@@ -317,68 +316,47 @@ function prepareVariantHeading (variantData) {
                                         // export default Named;
 
 
-    const ProgramPage = ({data, location}) => {
-    let callToActionData = [];
-    let careerData;
-    let courseData;
-    let degreesData;
-    let domains;
-    let employerData;
-    let footerData;
-    let imageData = [];
-    let imageTaggedData = [];
-    let progData;
-    let newsData;
-    let specData;
-    let statsData;
-    //let tagData;
-    let testimonialData;
-    let variantData;
-    let videoData;
-
-    // set data
-    if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
-    if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-    if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
-    if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
-    if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
-    if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-    if (progData.field_domain_access !== undefined) { domains = progData.field_domain_access; }
-    if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
-    if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
-    if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
-    if (data.images.edges !== undefined) { imageData = data.images.edges; }
-    if (data.imagesTagged.edges !== undefined) { imageTaggedData = data.imagesTagged.edges; }
-    if (data.videos.edges[0] !== undefined) { videoData = data.videos.edges[0].node; }
+const ProgramPage = ({data, location}) => {
+        
+    let progData = data.programs.edges[0]?.node;
+    let callToActionData = data.ctas?.edges;
+    let careerData = data.careers?.edges;
+    let courseData = progData.relationships?.field_courses;
+    let degreesData = progData.relationships?.field_degrees;
+    let domains = progData?.field_domain_access;
+    let employerData = data.employers?.edges;
+    let footerData = data.footer?.edges;
+    let imageData =  data.images?.edges;
+    let imageTaggedData = data.imagesTagged?.edges;    
+    let newsData = data.news?.edges;
+    let specData = progData.relationships?.field_specializations;
+    let statsData = progData.relationships?.field_program_statistics;
+    let testimonialData = data.testimonials?.edges;
+    let variantData = progData.relationships?.field_program_variants;
+    let variantDataHeading = prepareVariantHeading(variantData);
+    let videoData = data.videos.edges[0]?.node;
+  
+    const heroImage = (imageData ? imageData : (imageTaggedData ? imageTaggedData : null));
     
-    const heroImage = (contentExists(imageData) ? imageData : (contentExists(imageTaggedData) ? imageTaggedData : null));
+    // Open Graph metatags
+    const ogDescription = progData.field_metatags?.og_description;
+    const ogImage = heroImage[0]?.node.relationships.field_media_image.localFile.publicURL;
+    const ogImageAlt = heroImage[0]?.node.field_media_image.alt;
 
     // set program details
     const nodeID = progData.drupal_internal__nid;
     const title = progData.title;
     const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
     const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
-    const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
+    const courseNotes = progData.field_course_notes?.processed;
 
     // set last modified date
     let allModifiedDates = sortLastModifiedDates(
         [progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
         );
     let lastModified = allModifiedDates[allModifiedDates.length - 1];
-
-    // set degree, specialization, variant, and tag info  
-    degreesData = progData.relationships.field_degrees;
-    specData = progData.relationships.field_specializations;
-    //tagData = progData.relationships.field_tags;
-    variantData = progData.relationships.field_program_variants;
-    let variantDataHeading = prepareVariantHeading(variantData); 
     
-    // Open Graph metatags
-    const ogDescription = (contentExists(progData.field_metatags) ? progData.field_metatags.og_description : null);
-    const ogImage = (contentExists(heroImage) ? heroImage[0].node.relationships.field_media_image.localFile.publicURL : null);
-    const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
-    
-    console.log(progData.field_metatags);
+    console.log(testimonialData);
     
     return (
     <Layout date={lastModified} menuName="main">
@@ -390,9 +368,9 @@ function prepareVariantHeading (variantData) {
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
       
       { /**** Header and Title ****/ }
-      <div className={!heroImage && !videoData ? "no-thumb" : null} id="rotator">
-        {contentExists(videoData) ?
-            <HeroVideo videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} videoTranscript={contentExists(videoData.relationships.field_media_file) ? videoData.relationships.field_media_file.localFile.publicURL : ``} />
+      <div className={!contentExists(heroImage) && !contentExists(videoData) ? "no-thumb" : null} id="rotator">
+        {videoData ?
+            <HeroVideo videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} videoTranscript={videoData.relationships.field_media_file?.localFile.publicURL} />
             :
             <Hero imgData={heroImage} />
         }
@@ -401,7 +379,7 @@ function prepareVariantHeading (variantData) {
         </div>
       </div>
 
-        { /**** Tags and Call to Action Button ****/ }
+        { /**** Blurb and Call to Action Button ****/ }
         {ogDescription || contentExists(callToActionData) ? 
         <div className="full-width-container bg-dark">
             <div className="container">
