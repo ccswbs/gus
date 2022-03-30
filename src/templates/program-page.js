@@ -19,37 +19,21 @@ import Stats from 'components/shared/stats'
 import Testimonials from 'components/shared/testimonial';
 import Variants from 'components/shared/variants';
  
-import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from 'utils/ug-utils';
+import { contentExists, sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
 import 'styles/program-page.css';
 
 function renderProgramOverview(description, specData) {
-    let checkIfContentAvailable = false;
-
-    if (!contentIsNullOrEmpty(description) || 
-        !contentIsNullOrEmpty(specData)) {
-        checkIfContentAvailable = true;
+    if (description || specData) {
+        return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: description }} /></>
     }
-
-    if (checkIfContentAvailable === true) {
-        return <React.Fragment>
-            <h2>Program Overview</h2>
-            <div dangerouslySetInnerHTML={{ __html: description }}  />
-        </React.Fragment>
-    }
-
     return null;
 }
 
 function renderProgramStats(degreesData, variantData, statsData) {
-    let checkIfContentAvailable = false;
-
-    if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
-        checkIfContentAvailable = true;
-    }
     
-    if (checkIfContentAvailable === true) {
-        return <React.Fragment>
+    if (contentExists(statsData) || contentExists(degreesData)) {
+        return <>
         <div className="full-width-container stats-bg">
             <div className="container page-container">
                 <section className="row row-with-vspace site-content">
@@ -64,23 +48,19 @@ function renderProgramStats(degreesData, variantData, statsData) {
                 </section>
             </div>
         </div>
-        </React.Fragment>
-    }
-    
+        </>
+    }    
     return null;
 }
 
 function CountProgramVariants(variantData) {
-    let checkIfContentAvailable = false;
+
     let majors = [];
     let minors = [];
     let certificates = [];
     let assocDiplomas = [];
     
-    if (!contentIsNullOrEmpty(variantData)) {
-        checkIfContentAvailable = true;
-    }
-    if (checkIfContentAvailable === true) {
+    if (contentExists(variantData)) {
         variantData.forEach((edge) => {
             if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
                 switch(edge.relationships.field_variant_type.name) {
@@ -98,63 +78,56 @@ function CountProgramVariants(variantData) {
                 }
             }
         }); 
-        return <React.Fragment>     
-            {!contentIsNullOrEmpty(majors) && <>
+        return <>     
+            {contentExists(majors) && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {majors.length}</dt>
                     <dd>Specialized Majors</dd>
                 </div>
             </>}
-            {!contentIsNullOrEmpty(minors) && <>
+            {contentExists(minors) && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {minors.length}</dt>
                     <dd>Specialized Minors</dd>
                 </div>
             </>}
-            {!contentIsNullOrEmpty(assocDiplomas) && <>
+            {contentExists(assocDiplomas) && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {assocDiplomas.length}</dt>
                     <dd>Associate Diplomas</dd>
                 </div>
             </>}
-            {!contentIsNullOrEmpty(certificates) && <>
+            {contentExists(certificates) && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {certificates.length}</dt>
                     <dd>Optional Certificates</dd>
                 </div>
             </>}
-        </React.Fragment>
-
-    }
-    
+        </>
+    }    
     return null;
 }
 
 function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
     let activeValue = true;
     let activeTabExists = false;
-    let checkIfContentAvailable = false;
     let navTabHeadings = [];
     let navTabContent = [];
     let key = 0;
+    let tabContent = false;
 
     // prep TAB 1 - Courses
-    if (!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)) {
+    if (courseNotes || contentExists(courseData)) {
+        tabContent = true;
         const courseHeading = "Selected Courses";
         const courseID = "pills-courses";
-    if (activeTabExists === false) {
-      activeTabExists = true;
-    } else {
-      activeValue = false;
-    }
-        checkIfContentAvailable = true;
+        if (!activeTabExists) {
+            activeTabExists = true;
+        } else {
+            activeValue = false;
+        }
         key++;
-
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                           active={activeValue} 
-                                           heading={courseHeading} 
-                                           controls={courseID} 
-                            />);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={courseHeading} controls={courseID} />);
 
         navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
                                           active={activeValue} 
@@ -163,24 +136,19 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                           id={courseID} 
                                           content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} 
                             />);
-    }
+        }
 
     // prep TAB 2 - Variants
-    if (variantDataHeading !== '') {
+    if (variantDataHeading) {
+        tabContent = true;
         const variantID = "pills-variants";
-    if (activeTabExists === false) {
-      activeTabExists = true;
-    } else {
-      activeValue = false;
-    }
-        checkIfContentAvailable = true;
+        if (!activeTabExists) {
+            activeTabExists = true;
+        } else {
+            activeValue = false;
+        }
         key++;
-
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                           active={activeValue} 
-                                           heading={variantDataHeading} 
-                                           controls={variantID} 
-                            />);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={variantDataHeading} controls={variantID} />);
 
         navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
                                           active={activeValue} 
@@ -192,22 +160,18 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     }
 
     // prep TAB 3 - Careers
-    if (!contentIsNullOrEmpty(careerData)) {
-    if (activeTabExists === false) {
-      activeTabExists = true;
-    } else {
-      activeValue = false;
-    }
-        checkIfContentAvailable = true;
+    if (contentExists(careerData)) {
+        tabContent = true;
+        if (!activeTabExists) {
+            activeTabExists = true;
+        } else {
+            activeValue = false;
+        }
         const careersHeading = "Careers";
         const careersID = "pills-careers";
         key++;
 
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                           active={activeValue} 
-                                           heading={careersHeading} 
-                                           controls={careersID} 
-                            />);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={careersHeading} controls={careersID} />);
 
         navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
                                           active={activeValue} 
@@ -219,22 +183,18 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     }
     
     // prep TAB 4 - Employers
-    if (!contentIsNullOrEmpty(employerData)) {
-    if (activeTabExists === false) {
-      activeTabExists = true;
-    } else {
-      activeValue = false;
-    }
-        checkIfContentAvailable = true;
+    if (contentExists(employerData)) {
+        tabContent = true;
+        if (activeTabExists === false) {
+            activeTabExists = true;
+        } else {
+            activeValue = false;
+        }
         const employerHeading = "Employers";
         const employerID = "pills-employer";
         key++;
 
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                           active={activeValue} 
-                                           heading={employerHeading} 
-                                           controls={employerID} 
-                            />);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={employerHeading} controls={employerID} />);
 
         navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
                                           active={activeValue} 
@@ -244,7 +204,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                           content={<Employers employerData={employerData} />} 
                             />);
     }
-    if (checkIfContentAvailable === true) {
+    if (tabContent) {
         return <React.Fragment>
                 <h2>Program Information</h2>
                 <NavTabs headings={
@@ -258,63 +218,48 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                 </NavTabs>
             </React.Fragment>
     }
-
     return null;
 }
 
 function retrieveLastModifiedDates (content) {
     let dates = [];
-
-    if (!contentIsNullOrEmpty(content)) {  
+    if (contentExists(content)) {  
         content.forEach((edge) => {
             dates.push(edge.node.changed);
         })
     }
-
     return dates;
 }
 
 function prepareVariantHeading (variantData) {
-  let labels = [];
+    let labels = [];
 
   // prepare variant data labels
-  variantData.forEach((edge) => {
-    if ((edge.__typename === "paragraph__program_variants") 
-    && (edge.relationships.field_variant_type !== null)) {
-      labels.push(edge.relationships.field_variant_type.name);
-    }
-  });
+    variantData.forEach((edge) => {
+        if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
+            labels.push(edge.relationships.field_variant_type.name);
+        }
+    });
 
-  const uniqueLabelSet = new Set(labels);
-  const uniqueLabels = [...uniqueLabelSet];
-  let variantHeading = "";
+    const uniqueLabelSet = new Set(labels);
+    const uniqueLabels = [...uniqueLabelSet];
+    let variantHeading = "";
 
-  for (let i=0; i<uniqueLabels.length; i++) {
-    if (i > 0) { 
-      if (uniqueLabels.length > 2){
-        variantHeading += ",";
-      }
-      variantHeading += " ";
-      if (i === (uniqueLabels.length - 1)) {
-        variantHeading += "and ";
-      }
+    for (let i=0; i<uniqueLabels.length; i++) {
+        if (i > 0) { 
+            if (uniqueLabels.length > 2) {
+                variantHeading += ",";
+            }
+            variantHeading += " ";
+            if (i === (uniqueLabels.length - 1)) {
+                variantHeading += "and ";
+            }
+        }
+        variantHeading += uniqueLabels[i];
     }
-    variantHeading += uniqueLabels[i];
-  }
   
   return variantHeading;
 }
-// Modified function to remove warning  --> Anonymous arrow functions cause Fast Refresh to not preserve local component state.
-
-                                        // Please add a name to your function, for example:
-
-                                        // Before:
-                                        // export default () => {}
-
-                                        // After:
-                                        // const Named = () => {}
-                                        // export default Named;
-
 
 const ProgramPage = ({data, location}) => {
         
@@ -347,7 +292,7 @@ const ProgramPage = ({data, location}) => {
     const nodeID = progData.drupal_internal__nid;
     const title = progData.title;
     const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
-    const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
+    const description = progData.field_program_overview?.processed;
     const courseNotes = progData.field_course_notes?.processed;
 
     // set last modified date
