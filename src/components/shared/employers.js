@@ -10,7 +10,7 @@ function Employers (props) {
             let employerImageAlt = employer.node.field_image_alt ? employer.node.field_image_alt : ``;
             let employerSummary = employer.node.field_employer_summary;
             let employerJobPostingsLink = employer.node.field_link?.uri;
-            return (<>                
+            return (<React.Fragment key={employer.node.drupal_id}>                
                 <li className="card border-0 col-md-6 col-lg-4 flex-row">
                     {employerImage && employerImage.localFile && 
                     <div className="col-2 col-md-3 p-1 p-md-3">
@@ -26,7 +26,7 @@ function Employers (props) {
                     
                     </div>
                 </li>
-            </>);
+            </React.Fragment>);
         })}
     </ul></>)
 }

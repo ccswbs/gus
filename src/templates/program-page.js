@@ -299,29 +299,20 @@ const ProgramPage = ({data, location}) => {
         );
     let lastModified = allModifiedDates[allModifiedDates.length - 1];
     
-    console.log(heroImage);
-    console.log(degreesData);
-    
     return (
     <Layout date={lastModified} menuName="main">
-      <Helmet bodyAttributes={{
-          class: 'program'
-        }}
-      />
-            
-      <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
+        <Helmet bodyAttributes={{ class: "program" }} />            
+        <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
       
-      { /**** Header and Title ****/ }
-      <div className={!contentExists(heroImage) && !contentExists(videoData) ? "no-thumb" : null} id="rotator">
-        {videoData ?
+        { /**** Header and Title ****/ }
+        <div className={!contentExists(heroImage) && !contentExists(videoData) ? "no-thumb" : null} id="rotator">
+            {videoData ?
             <HeroVideo videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} videoTranscript={videoData.relationships.field_media_file?.localFile.publicURL} />
             :
             <Hero imgData={heroImage} />
-        }
-        <div className="container ft-container">
-          <h1 className="fancy-title">{title}</h1>
+            }
+            <div className="container ft-container"><h1 className="fancy-title">{title}</h1></div>
         </div>
-      </div>
 
         { /**** Blurb and Call to Action Button ****/ }
         {ogDescription || contentExists(callToActionData) ? 
@@ -341,59 +332,54 @@ const ProgramPage = ({data, location}) => {
             </div>
         </div> : ``}
       
-      <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
+        <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 
-      { /**** Program Overview ****/ }
-      <div className="container page-container">
-        <div className="row row-with-vspace site-content">
-          <section className="col-md-9 content-area">
-            {renderProgramOverview(description, specData)}
-          </section>
+        { /**** Program Overview ****/ }
+        <div className="container page-container">
+            <div className="row row-with-vspace site-content">
+                <section className="col-md-9 content-area">
+                    {renderProgramOverview(description, specData)}
+                </section>
+            </div>
         </div>
-      </div>
     
-      { /**** Program Stats ****/ }
-      {renderProgramStats(degreesData, variantData, statsData)}
+        { /**** Program Stats ****/ }
+        {renderProgramStats(degreesData, variantData, statsData)}
 
-      { /**** Program Information Tabs ****/ }
-      <div className="container page-container">
-        <section className="row row-with-vspace site-content">
-          <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
-          </div>
-        </section>
-      </div>                    
+        { /**** Program Information Tabs ****/ }
+        <div className="container page-container">
+            <section className="row row-with-vspace site-content">
+                <div className="col-md-12 content-area">
+                    {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
+                </div>
+            </section>
+        </div>                    
 
-      { /**** Testimonials ****/ }
-      {testimonialData && 
-      <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel='h3' />
-      }
+        { /**** Testimonials ****/ }
+        {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel='h3' />}
 
-      { /*** News ****/}
-      {newsData && 
-        <NewsGrid newsData={newsData} heading="Program News" headingLevel='h2' />
-      }
+        { /*** News ****/}
+        {newsData && <NewsGrid newsData={newsData} heading="Program News" headingLevel='h2' />}
 
-      { /**** Call to Actions ****/ }
-      {callToActionData.length !== 0 &&
+        { /**** Call to Actions ****/ }
+        {callToActionData.length !== 0 &&
         <div className="container page-container apply-footer">
-          <section className="row row-with-vspace site-content">
-              <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
-                  <h3><span>Are you ready to</span> Improve Life?</h3>
-                  {callToActionData.map((cta, index) => (
-                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name} 
-                        goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}>
-                      {cta.node.field_call_to_action_link.title}
-                      </CallToAction>
+            <section className="row row-with-vspace site-content">
+                <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
+                    <h3><span>Are you ready to</span> Improve Life?</h3>
+                    {callToActionData.map((cta, index) => (
+                        <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+                            goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name} 
+                            goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
+                        >
+                            {cta.node.field_call_to_action_link.title}
+                        </CallToAction>
                     ))}
-              </div>
-          </section>
+                </div>
+            </section>
         </div>
-      }
-      {contentExists(footerData) && footerData.length !== 0 &&
-        <CustomFooter footerData={footerData[0]} />
-      }     
+        }
+        {contentExists(footerData) && footerData.length !== 0 && <CustomFooter footerData={footerData[0]} />}     
     </Layout>  
     )   
 }
