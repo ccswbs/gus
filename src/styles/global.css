@@ -44,6 +44,10 @@
     flex: 1;
 }
 
+.no-icon li:before {
+	content: "" !important;
+}
+
 html {
     scroll-padding-top: 10rem;
 }
