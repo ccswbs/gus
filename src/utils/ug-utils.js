@@ -3,34 +3,28 @@ function combineAndSortBodyFields (content) {
 	let stickyContent = [];
 	let allContent = [];
 
-	if (contentIsNullOrEmpty(content)) { return ""; }
-
-	content.forEach((edge) => {
-		if (!contentIsNullOrEmpty(edge.node.body.processed)) {
-			if (edge.node.sticky === true) {
-				stickyContent.push(edge.node.body.processed);
-			} else {
-				allContent.push(edge.node.body.processed);
-			}
-		}
-	})
-	
-	allContent.unshift(stickyContent);
-	return allContent.join("");
+	if (contentExists(content)) {
+        content.forEach((edge) => {
+            if (edge.node.body.processed) {
+                if (edge.node.sticky === true) {
+                    stickyContent.push(edge.node.body.processed);
+                } else {
+                    allContent.push(edge.node.body.processed);
+                }
+            }
+        })
+        allContent.unshift(stickyContent);
+        return allContent.join("");
+    }
+    return null;
 }
 
 function contentExists(content) {
-	if (!contentIsNullOrEmpty(content)) {
-		return true;
-	}
-	return false;
-}
-
-function contentIsNullOrEmpty(content) {
-	if (content === null || content === undefined || content === "" || 
-	(Array.isArray(content) && (content.length === 0))) {
-		return true;
-	}
+    if (content && !Array.isArray(content)) {
+        return true;
+    } else if (content && Array.isArray(content) && content.length > 0) {
+        return true;
+    }
 	return false;
 }
 
@@ -52,30 +46,6 @@ function divideIntoColumns(data, numColumns) {
 	}
 
 	return dividedData;
-}
-
-function fetchMenu(whichMenu) {
-	if (contentExists(whichMenu)) {
-		try {
-			var menuData = require('../../config/sitemaps/' + whichMenu + '.yml');
-			return menuData;
-		} catch (e) {
-			if (e instanceof Error && e.code === "MODULE_NOT_FOUND") {
-				console.log("Can't load " + menuData);
-			} else {
-				throw e;
-			}
-		}
-	}
-	return null;
-}
-
-function fetchMenuMain() {
-	// Commenting this out due to build error on pipeline
-	//const config = require('../../gatsby-config');	
-	//const mainMenu = config.siteMetadata.menus[0];
-	const mainMenu = "main";
-	return mainMenu;
 }
 
 function fontAwesomeIconColour (colourChoice) {
@@ -116,10 +86,7 @@ function stripHTMLTags(content) {
 export { 
 	combineAndSortBodyFields,
 	contentExists,
-	contentIsNullOrEmpty,
 	divideIntoColumns,
-	fetchMenu,
-	fetchMenuMain,
 	fontAwesomeIconColour,
 	getNextHeadingLevel,
 	setHeadingLevel,

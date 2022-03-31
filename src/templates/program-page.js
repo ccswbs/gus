@@ -20,7 +20,6 @@ import Testimonials from 'components/shared/testimonial';
 import Variants from 'components/shared/variants'; 
 import { contentExists, sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
-//import 'styles/program-page.css';
 
 function renderProgramOverview(description, specData) {
     if (description || contentExists(specData)) {
@@ -284,8 +283,8 @@ const ProgramPage = ({data, location}) => {
     
     // Open Graph metatags
     const ogDescription = progData.field_metatags?.og_description;
-    const ogImage = heroImage && heroImage[0].node.relationships.field_media_image.localFile.publicURL;
-    const ogImageAlt = heroImage && heroImage[0].node.field_media_image.alt;
+    const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.localFile.publicURL;
+    const ogImageAlt = heroImage && heroImage[0]?.node.field_media_image.alt;
 
     // set program details
     const nodeID = progData.drupal_internal__nid;
@@ -299,6 +298,9 @@ const ProgramPage = ({data, location}) => {
         [progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
         );
     let lastModified = allModifiedDates[allModifiedDates.length - 1];
+    
+    console.log(heroImage);
+    console.log(degreesData);
     
     return (
     <Layout date={lastModified} menuName="main">
