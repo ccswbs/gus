@@ -9,7 +9,7 @@ import MediaText from 'components/shared/mediaText';
 import SectionButtons from 'components/shared/sectionButtons';
 import StatsWidget from 'components/shared/statsWidget';
 import { contentExists } from 'utils/ug-utils'
-import 'styles/widgets.css';
+//import 'styles/widgets.css';
 // 
 // add to the if statement each widget in the section widget, 
 // widgets will call each function in the order that it appears in the Drupal Backend. 
@@ -95,8 +95,16 @@ function SectionWidgets (props) {
                 const leadClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
                 return <div className={leadClassName}><LeadPara pageData={widgetData} /></div>;
             }
-            else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
-                const textClass = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
+            else if (widgetData.__typename==="paragraph__general_text" && widgetData.field_general_text?.processed) {
+                const sectionClass = widgetData.relationships.field_section_column?.name;
+                let textClass;
+                if (sectionClass === "left") {
+                    textClass = "col-md-9";
+                } else if (sectionClass === "right") {
+                    textClass = "col-md-3"
+                } else {
+                    textClass = "";
+                }
                 return <GeneralText textClass={textClass} processed={widgetData.field_general_text.processed} />; 
             }
             else if (widgetData.__typename==="paragraph__section_buttons") {

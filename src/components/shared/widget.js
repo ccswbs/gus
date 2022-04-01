@@ -43,7 +43,7 @@ const Widget = ({widget}) => {
         case "paragraph__section":
             return (<>
 				{contentExists(widget.field_section_title) === true && <h2>{widget.field_section_title}</h2>}
-				<div key={widget.drupal_id} className={widget.field_section_classes}>                    
+				<div key={widget.drupal_id} className="row">                    
                     <SectionWidgets pageData={widget.relationships.field_section_content}/>
                 </div>
 			</>);
