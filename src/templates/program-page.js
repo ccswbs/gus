@@ -221,7 +221,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 
 function retrieveLastModifiedDates (content) {
     let dates = [];
-    if (contentExists(content)) {  
+    if (content?.length > 0) {  
         content.forEach((edge) => {
             dates.push(edge.node.changed);
         })
