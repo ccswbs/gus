@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { contentExists } from 'utils/ug-utils';
 import 'styles/stats.css';
 
 function Degrees (props) {
@@ -8,7 +7,7 @@ function Degrees (props) {
 	
 	return (
 		<React.Fragment>
-			{contentExists(props.degreesData) && <>									
+			{props.degreesData?.length>0 && <>									
 				<div className="uog-card">
 					<dt><span className="fa-icon-colour"><i className="fa-solid fa-graduation-cap" aria-hidden="true">  </i></span>{dtValue}</dt>
 					{props.degreesData.map (degree => {
