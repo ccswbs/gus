@@ -181,7 +181,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     }
     
     // prep TAB 4 - Employers
-    if (contentExists(employerData)) {
+    if (employerData?.length > 0) {
         tabContent = true;
         if (activeTabExists === false) {
             activeTabExists = true;
