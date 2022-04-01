@@ -279,7 +279,7 @@ const ProgramPage = ({data, location}) => {
     let variantDataHeading = prepareVariantHeading(variantData);
     let videoData = data.videos.edges[0]?.node;
   
-    const heroImage = (contentExists(imageData) ? imageData : (contentExists(imageTaggedData) ? imageTaggedData : null));
+    const heroImage = (imageData?.length>0 ? imageData : (imageTaggedData?.length>0 ? imageTaggedData : null));
     
     // Open Graph metatags
     const ogDescription = progData.field_metatags?.og_description;
