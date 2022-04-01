@@ -1,24 +1,3 @@
-// combine multiple body values and place sticky values at the top
-function combineAndSortBodyFields (content) {
-	let stickyContent = [];
-	let allContent = [];
-
-	if (contentExists(content)) {
-        content.forEach((edge) => {
-            if (edge.node.body.processed) {
-                if (edge.node.sticky === true) {
-                    stickyContent.push(edge.node.body.processed);
-                } else {
-                    allContent.push(edge.node.body.processed);
-                }
-            }
-        })
-        allContent.unshift(stickyContent);
-        return allContent.join("");
-    }
-    return null;
-}
-
 function contentExists(content) {
     if (content && !Array.isArray(content)) {
         return true;
@@ -84,7 +63,6 @@ function stripHTMLTags(content) {
 }
 
 export { 
-	combineAndSortBodyFields,
 	contentExists,
 	divideIntoColumns,
 	fontAwesomeIconColour,
