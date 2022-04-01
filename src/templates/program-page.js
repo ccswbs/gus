@@ -21,8 +21,8 @@ import Variants from 'components/shared/variants';
 import { sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
 
-function renderProgramOverview(description, specData) {
-    if (description || specData?.length>0) {
+function renderProgramOverview(description) {
+    if (description) {
         return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: description }} /></>
     }    
     return null;
@@ -31,12 +31,12 @@ function renderProgramOverview(description, specData) {
 function renderProgramStats(degreesData, variantData, statsData) {
     
     if (statsData?.length>0 || degreesData?.length>0) {
-        return <>
+        return (
         <div className="full-width-container stats-bg">
             <div className="container page-container">
                 <section className="row row-with-vspace site-content">
                     <div className="col-md-12 content-area">
-                        <h2 className="sr-only">Program Statistics</h2>
+                        <h2 className="visually-hidden">Program Statistics</h2>
                         <dl className="d-flex flex-wrap flex-fill justify-content-center">
                             <Degrees degreesData={degreesData} />
                             {CountProgramVariants(variantData)}
@@ -45,8 +45,7 @@ function renderProgramStats(degreesData, variantData, statsData) {
                     </div>
                 </section>
             </div>
-        </div>
-        </>
+        </div>)
     }    
     return null;
 }
@@ -272,7 +271,6 @@ const ProgramPage = ({data, location}) => {
     let imageData =  data.images?.edges;
     let imageTaggedData = data.imagesTagged?.edges;    
     let newsData = data.news?.edges;
-    let specData = progData.relationships?.field_specializations;
     let statsData = progData.relationships?.field_program_statistics;
     let testimonialData = data.testimonials?.edges;
     let variantData = progData.relationships?.field_program_variants;
@@ -338,7 +336,7 @@ const ProgramPage = ({data, location}) => {
         <div className="container page-container">
             <div className="row site-content">
                 <section className="content-area">
-                    {renderProgramOverview(description, specData)}
+                    {renderProgramOverview(description)}
                 </section>
             </div>
         </div>
