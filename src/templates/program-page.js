@@ -336,8 +336,8 @@ const ProgramPage = ({data, location}) => {
 
         { /**** Program Overview ****/ }
         <div className="container page-container">
-            <div className="row row-with-vspace site-content">
-                <section className="col-md-9 content-area">
+            <div className="row site-content">
+                <section className="content-area">
                     {renderProgramOverview(description, specData)}
                 </section>
             </div>
