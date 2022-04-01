@@ -18,11 +18,11 @@ import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
 import Testimonials from 'components/shared/testimonial';
 import Variants from 'components/shared/variants'; 
-import { contentExists, sortLastModifiedDates } from 'utils/ug-utils';
+import { sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
 
 function renderProgramOverview(description, specData) {
-    if (description || contentExists(specData)) {
+    if (description || specData?.length>0) {
         return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: description }} /></>
     }    
     return null;
@@ -30,7 +30,7 @@ function renderProgramOverview(description, specData) {
 
 function renderProgramStats(degreesData, variantData, statsData) {
     
-    if (contentExists(statsData) || contentExists(degreesData)) {
+    if (statsData?.length>0 || degreesData?.length>0) {
         return <>
         <div className="full-width-container stats-bg">
             <div className="container page-container">
@@ -58,7 +58,7 @@ function CountProgramVariants(variantData) {
     let certificates = [];
     let assocDiplomas = [];
     
-    if (contentExists(variantData)) {
+    if (variantData?.length > 0) {
         variantData.forEach((edge) => {
             if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
                 switch(edge.relationships.field_variant_type.name) {
@@ -77,25 +77,25 @@ function CountProgramVariants(variantData) {
             }
         }); 
         return <>     
-            {contentExists(majors) && <>
+            {majors?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {majors.length}</dt>
                     <dd>Specialized Majors</dd>
                 </div>
             </>}
-            {contentExists(minors) && <>
+            {minors?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {minors.length}</dt>
                     <dd>Specialized Minors</dd>
                 </div>
             </>}
-            {contentExists(assocDiplomas) && <>
+            {assocDiplomas?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {assocDiplomas.length}</dt>
                     <dd>Associate Diplomas</dd>
                 </div>
             </>}
-            {contentExists(certificates) && <>
+            {certificates?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {certificates.length}</dt>
                     <dd>Optional Certificates</dd>
@@ -115,7 +115,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     let tabContent = false;
 
     // prep TAB 1 - Courses
-    if (courseNotes || contentExists(courseData)) {
+    if (courseNotes || courseData?.length>0) {
         tabContent = true;
         const courseHeading = "Selected Courses";
         const courseID = "pills-courses";
@@ -158,7 +158,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     }
 
     // prep TAB 3 - Careers
-    if (contentExists(careerData)) {
+    if (careerData?.length>0) {
         tabContent = true;
         if (!activeTabExists) {
             activeTabExists = true;
@@ -305,7 +305,7 @@ const ProgramPage = ({data, location}) => {
         <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
       
         { /**** Header and Title ****/ }
-        <div className={!contentExists(heroImage) && !contentExists(videoData) ? "no-thumb" : null} id="rotator">
+        <div className={!heroImage?.length>0 && !videoData?.length>0 ? "no-thumb" : null} id="rotator">
             {videoData ?
             <HeroVideo videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} videoTranscript={videoData.relationships.field_media_file?.localFile.publicURL} />
             :
@@ -315,12 +315,12 @@ const ProgramPage = ({data, location}) => {
         </div>
 
         { /**** Blurb and Call to Action Button ****/ }
-        {ogDescription || contentExists(callToActionData) ? 
+        {ogDescription || callToActionData?.length>0 ? 
         <div className="full-width-container bg-dark">
             <div className="container">
                 <section className="row mx-2">
                     {ogDescription && <div className="col-md-9"><p className="fs-2">{ogDescription}</p></div>}
-                    {contentExists(callToActionData) && 
+                    {callToActionData?.length>0 && 
                     <div className="col-md-3">
                       <CallToAction href={callToActionData[0]?.node.field_call_to_action_link.uri} 
                         goalEventCategory={callToActionData[0]?.node.relationships.field_call_to_action_goal?.name} 
@@ -379,7 +379,7 @@ const ProgramPage = ({data, location}) => {
             </section>
         </div>
         }
-        {contentExists(footerData) && footerData.length !== 0 && <CustomFooter footerData={footerData[0]} />}     
+        {footerData?.length>0 && <CustomFooter footerData={footerData[0]} />}     
     </Layout>  
     )   
 }
