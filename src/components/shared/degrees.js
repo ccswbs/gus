@@ -11,8 +11,8 @@ function Degrees (props) {
 				<div className="uog-card">
 					<dt><span className="fa-icon-colour"><i className="fa-solid fa-graduation-cap" aria-hidden="true">  </i></span>{dtValue}</dt>
 					{props.degreesData.map (degree => {
-						const acronym = degree.field_degree_acronym ? "(" + degree.field_degree_acronym + ")" : null;
-						return <dd key={degree.drupal_id}>{degree.name} {acronym}</dd>
+						const acronym = degree?.field_degree_acronym;
+						return <dd key={degree.drupal_id}>{degree.name}{acronym && " (" + acronym + ")"}</dd>
 					})}
 				</div>
 			</>}
