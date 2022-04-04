@@ -20,7 +20,7 @@ function Employers (props) {
                             alt={employerImageAlt} />
                     </div>}
                     <div className="card-body col-11 col-md-9">
-                        <p><strong>{employer.node.title}</strong></p>
+                        <h4 className="m-0 text-dark">{employer.node.title}</h4>
                         {employerSummary && <div dangerouslySetInnerHTML={{__html: employerSummary.processed}} />}
                         {employerJobPostingsLink && <a href={employerJobPostingsLink}>Current Job Postings<span className="visually-hidden"> for {employer.node.title}</span></a>}                    
                     </div>
