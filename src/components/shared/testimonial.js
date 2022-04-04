@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import SliderResponsive from 'components/shared/sliderResponsive';
 import TestimonialTitle from 'components/shared/testimonialTitle';
 import TestimonialTags from 'components/shared/testimonialTags';
-import { contentExists, stripHTMLTags, setHeadingLevel } from 'utils/ug-utils.js';
+import { stripHTMLTags, setHeadingLevel } from 'utils/ug-utils.js';
 import 'styles/testimonial.css';
 
 
@@ -13,7 +13,7 @@ function Testimonials (props) {
 	let Heading = setHeadingLevel(props.headingLevel);
 	const testimonialTags = TestimonialTags(props)
 
-	let studentTag =testimonialTags.includes(', Graduate Student', ', Undergraduate Student')
+	let studentTag = testimonialTags.includes(', Graduate Student', ', Undergraduate Student')
 	let facultyTag = testimonialTags.includes(', Faculty')
 	let alumniTag = testimonialTags.includes(', Alumni')
 
@@ -25,25 +25,25 @@ function Testimonials (props) {
 								!studentTag && facultyTag && !alumniTag ? "What Faculty from the program are saying about U of G" :
 								!studentTag && !facultyTag && alumniTag ? "What Alumni from the program are saying about U of G": "What Students in the program are saying about U of G"
 
-	if (contentExists(props.testimonialData)) {
+	if (props.testimonialData?.length > 0) {
 		const testimonialUnits  = () => props.testimonialData.map((testimonial) => {
 		
 			let testimonialContent = stripHTMLTags(testimonial.node.body.processed);
-			let testimonialPicture = (contentExists(testimonial.node.relationships.field_hero_image)) ? testimonial.node.relationships.field_hero_image.relationships.field_media_image : null;
-			let testimonialHomeProfileTitle= (contentExists(testimonial.node.field_home_profile)) ? testimonial.node.field_home_profile.title : null;
-			let testimonialHomeProfileLink= (contentExists(testimonial.node.field_home_profile)) ? testimonial.node.field_home_profile.uri : null;
-	
+			let testimonialPicture = getImage(testimonial.node.relationships.field_hero_image?.relationships.field_media_image.localFile);
+			let testimonialHomeProfileTitle = testimonial.node.field_home_profile?.title;
+			let testimonialHomeProfileLink= testimonial.node.field_home_profile?.uri;
+    
 			const testimonialHomeProfile = () => {
-				if (contentExists(testimonial.node.field_home_profile)){
-					return( <a href= {testimonialHomeProfileLink}> {testimonialHomeProfileTitle} </a>)
-					} 
-					return null;
-				};
+				if (testimonial.node.field_home_profile) {
+					return <a href= {testimonialHomeProfileLink}> {testimonialHomeProfileTitle} </a>
+                } 
+                return null;
+            };
 
 			return (
                 <div key={testimonial.node.drupal_id}>
                     {testimonialPicture && <GatsbyImage
-                        image={testimonialPicture.localFile.childImageSharp.gatsbyImageData}
+                        image={testimonialPicture}
                         className="testimonial-pic"
                         alt={testimonial.node.relationships.field_hero_image.field_media_image.alt} />}
                     <blockquote className="testimonial-quote" dangerouslySetInnerHTML={{__html: testimonialContent}} />
@@ -63,7 +63,7 @@ function Testimonials (props) {
 					<div className="container page-container">
 						<section className="row row-with-vspace site-content">
 							<div className="col-md-12 content-area" id="main-column">
-								<Heading className="carousel-header">{testimonialHeading }</Heading>
+								<Heading className="carousel-header text-dark">{testimonialHeading}</Heading>
 								<div className="testimonial-wrapper">
 									<SliderResponsive addToControlLabel="Testimonial">{testimonialUnits()}</SliderResponsive>
 								</div>
