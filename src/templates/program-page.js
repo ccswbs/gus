@@ -111,11 +111,11 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     let navTabHeadings = [];
     let navTabContent = [];
     let key = 0;
-    let tabContent = false;
+    let tabContentExists = false;
 
     // prep TAB 1 - Courses
     if (courseNotes || courseData?.length>0) {
-        tabContent = true;
+        tabContentExists = true;
         const courseHeading = "Selected Courses";
         const courseID = "pills-courses";
         if (!activeTabExists) {
@@ -137,7 +137,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 
     // prep TAB 2 - Variants
     if (variantDataHeading) {
-        tabContent = true;
+        tabContentExists = true;
         const variantID = "pills-variants";
         if (!activeTabExists) {
             activeTabExists = true;
@@ -158,7 +158,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
 
     // prep TAB 3 - Careers
     if (careerData?.length>0) {
-        tabContent = true;
+        tabContentExists = true;
         if (!activeTabExists) {
             activeTabExists = true;
         } else {
@@ -181,7 +181,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     
     // prep TAB 4 - Employers
     if (employerData?.length > 0) {
-        tabContent = true;
+        tabContentExists = true;
         if (activeTabExists === false) {
             activeTabExists = true;
         } else {
@@ -201,7 +201,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                           content={<Employers employerData={employerData} />} 
                             />);
     }
-    if (tabContent) {
+    if (tabContentExists) {
         return <React.Fragment>
                 <h2>Program Information</h2>
                 <NavTabs headings={
