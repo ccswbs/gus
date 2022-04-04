@@ -319,7 +319,7 @@ const ProgramPage = ({data, location}) => {
                 <section className="row mx-2">
                     {ogDescription && <div className="col-md-9"><p className="fs-2">{ogDescription}</p></div>}
                     {callToActionData?.length>0 && 
-                    <div className="col-md-3">
+                    <div className={ogDescription ? "col-md-3" : "col-md-3 offset-md-9"}>
                       <CallToAction 
                         classes="btn btn-primary fs-1 my-4 p-4 w-100"
                         href={callToActionData[0]?.node.field_call_to_action_link.uri} 
