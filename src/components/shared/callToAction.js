@@ -33,7 +33,7 @@ CallToAction.propTypes = {
   
 CallToAction.defaultProps = {
     children: ``,
-    classes: "btn btn-primary fs-1 my-4 p-4 w-100",
+    classes: "btn btn-primary fs-1 me-4 p-4 w-100",
     href: "#",
     goalEventAction: ``,
     goalEventCategory: ``,

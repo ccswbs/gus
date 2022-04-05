@@ -321,7 +321,7 @@ const ProgramPage = ({data, location}) => {
                     {callToActionData?.length>0 && 
                     <div className={ogDescription ? "col-md-3" : "col-md-3 offset-md-9"}>
                       <CallToAction 
-                        classes="btn btn-primary fs-1 my-4 p-4 w-100"
+                        classes="btn btn-primary fs-1 me-4 p-4 w-100"
                         href={callToActionData[0]?.node.field_call_to_action_link.uri} 
                         goalEventCategory={callToActionData[0]?.node.relationships.field_call_to_action_goal?.name} 
                         goalEventAction={callToActionData[0]?.node.relationships.field_call_to_action_goal?.field_goal_action}>
