@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { contentIsNullOrEmpty } from 'utils/ug-utils';
 import 'styles/stats.css';
 
 function Degrees (props) {
@@ -8,12 +7,12 @@ function Degrees (props) {
 	
 	return (
 		<React.Fragment>
-			{!contentIsNullOrEmpty(props.degreesData) && <>									
+			{props.degreesData?.length>0 && <>									
 				<div className="uog-card">
 					<dt><span className="fa-icon-colour"><i className="fa-solid fa-graduation-cap" aria-hidden="true">  </i></span>{dtValue}</dt>
 					{props.degreesData.map (degree => {
-						const acronym = (degree.field_degree_acronym !== undefined && degree.field_degree_acronym !== null ? ` (` + degree.field_degree_acronym + `)`: ``);
-						return <dd key={degree.drupal_id}>{degree.name} {acronym}</dd>
+						const acronym = degree?.field_degree_acronym;
+						return <dd key={degree.drupal_id}>{degree.name}{acronym && " (" + acronym + ")"}</dd>
 					})}
 				</div>
 			</>}
