@@ -6,8 +6,8 @@ function Variants ( { variantData } ) {
 	var displayProgVariants;
 	var trackPreviousElement;
 	
-	for (let i=0;i<variantData.length;i++) {
-		if (trackPreviousElement !== "paragraph__program_variants"){
+	for (let i=0; i<variantData.length; i++) {
+		if (trackPreviousElement !== "paragraph__program_variants") {
 			displayProgVariants = [];
 		}
 		// display program variants as lists
@@ -17,14 +17,14 @@ function Variants ( { variantData } ) {
 
 			// add nested list if last display element is a program variant
 			if (i === (variantData.length - 1)) {
-				displayElements.push(<ul key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
+				displayElements.push(<ul className="two-col-md" key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
 			}
 
 		// display other paragraph elements as HTML
 		} else {
 			// add nested list if next display element is not a program variant
-			if(trackPreviousElement === "paragraph__program_variants"){
-				displayElements.push(<ul key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
+			if (trackPreviousElement === "paragraph__program_variants") {
+				displayElements.push(<ul className="two-col-md" key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
 			}
 			displayElements.push(<div key={variantData[i].drupal_id} dangerouslySetInnerHTML={{__html: variantData[i].field_general_text.processed}}/>);
 		}

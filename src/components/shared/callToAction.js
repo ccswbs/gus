@@ -2,15 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
-/* 
-Example Usage:
-    <CallToAction href="#" classNames="optional-style">Apply Now</CallToAction>
-*/
-
-const CallToAction = ({ children, href, goalEventCategory, goalEventAction, classNames }) => {
-    const classes = (classNames !== `` ? `call-to-action ${classNames}`: `call-to-action`);
-    
-    if(goalEventCategory !== ``){
+const CallToAction = ({ children, classes, href, goalEventCategory, goalEventAction }) => {
+    if (goalEventCategory) {
         return(
             <a className={classes} href={href} onClick={e => {
                 // Track the custom click
@@ -23,9 +16,8 @@ const CallToAction = ({ children, href, goalEventCategory, goalEventAction, clas
             </a>
         )
     }
-
     return(
-        <a className={classes} href={href} >
+        <a className={classes} href={href}>
             {children}
         </a>
     )
@@ -33,18 +25,18 @@ const CallToAction = ({ children, href, goalEventCategory, goalEventAction, clas
 
 CallToAction.propTypes = {
     children: PropTypes.node.isRequired,
-    href: PropTypes.string,
-    goalEventCategory: PropTypes.string,
+    classes: PropTypes.string,
     goalEventAction: PropTypes.string,
-    classNames: PropTypes.string,
-  }
+    goalEventCategory: PropTypes.string,
+    href: PropTypes.string,
+}
   
 CallToAction.defaultProps = {
     children: ``,
-    href: '#',
-    goalEventCategory: ``,
+    classes: "btn btn-primary fs-1 me-4 p-4 w-100",
+    href: "#",
     goalEventAction: ``,
-    classNames: ``,
-  }
+    goalEventCategory: ``,
+}
 
 export default CallToAction

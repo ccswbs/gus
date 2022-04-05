@@ -16,46 +16,27 @@ import NavTabHeading from 'components/shared/navTabHeading';
 import NavTabContent from 'components/shared/navTabContent';
 import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
-import Tags from 'components/shared/tags';
 import Testimonials from 'components/shared/testimonial';
-import Variants from 'components/shared/variants';
- 
-import { contentExists, contentIsNullOrEmpty, sortLastModifiedDates } from 'utils/ug-utils';
+import Variants from 'components/shared/variants'; 
+import { sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
-import 'styles/program-page.css';
 
-function renderProgramOverview(description, specData) {
-    let checkIfContentAvailable = false;
-
-    if (!contentIsNullOrEmpty(description) || 
-        !contentIsNullOrEmpty(specData)) {
-        checkIfContentAvailable = true;
-    }
-
-    if (checkIfContentAvailable === true) {
-        return <React.Fragment>
-            <h2>Program Overview</h2>
-            <div dangerouslySetInnerHTML={{ __html: description }}  />
-        </React.Fragment>
-    }
-
+function renderProgramOverview(description) {
+    if (description) {
+        return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: description }} /></>
+    }    
     return null;
 }
 
 function renderProgramStats(degreesData, variantData, statsData) {
-    let checkIfContentAvailable = false;
-
-    if (!contentIsNullOrEmpty(statsData) || !contentIsNullOrEmpty(degreesData)) {
-        checkIfContentAvailable = true;
-    }
     
-    if (checkIfContentAvailable === true) {
-        return <React.Fragment>
+    if (statsData?.length>0 || degreesData?.length>0) {
+        return (
         <div className="full-width-container stats-bg">
             <div className="container page-container">
                 <section className="row row-with-vspace site-content">
                     <div className="col-md-12 content-area">
-                        <h2 className="sr-only">Program Statistics</h2>
+                        <h2 className="visually-hidden">Program Statistics</h2>
                         <dl className="d-flex flex-wrap flex-fill justify-content-center">
                             <Degrees degreesData={degreesData} />
                             {CountProgramVariants(variantData)}
@@ -64,24 +45,19 @@ function renderProgramStats(degreesData, variantData, statsData) {
                     </div>
                 </section>
             </div>
-        </div>
-        </React.Fragment>
-    }
-    
+        </div>)
+    }    
     return null;
 }
 
 function CountProgramVariants(variantData) {
-    let checkIfContentAvailable = false;
+
     let majors = [];
     let minors = [];
     let certificates = [];
     let assocDiplomas = [];
     
-    if (!contentIsNullOrEmpty(variantData)) {
-        checkIfContentAvailable = true;
-    }
-    if (checkIfContentAvailable === true) {
+    if (variantData?.length > 0) {
         variantData.forEach((edge) => {
             if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
                 switch(edge.relationships.field_variant_type.name) {
@@ -99,63 +75,56 @@ function CountProgramVariants(variantData) {
                 }
             }
         }); 
-        return <React.Fragment>     
-            {!contentIsNullOrEmpty(majors) && <>
+        return <>     
+            {majors?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {majors.length}</dt>
                     <dd>Specialized Majors</dd>
                 </div>
             </>}
-            {!contentIsNullOrEmpty(minors) && <>
+            {minors?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {minors.length}</dt>
                     <dd>Specialized Minors</dd>
                 </div>
             </>}
-            {!contentIsNullOrEmpty(assocDiplomas) && <>
+            {assocDiplomas?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {assocDiplomas.length}</dt>
                     <dd>Associate Diplomas</dd>
                 </div>
             </>}
-            {!contentIsNullOrEmpty(certificates) && <>
+            {certificates?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {certificates.length}</dt>
                     <dd>Optional Certificates</dd>
                 </div>
             </>}
-        </React.Fragment>
-
-    }
-    
+        </>
+    }    
     return null;
 }
 
 function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
     let activeValue = true;
     let activeTabExists = false;
-    let checkIfContentAvailable = false;
     let navTabHeadings = [];
     let navTabContent = [];
     let key = 0;
+    let tabContentExists = false;
 
     // prep TAB 1 - Courses
-    if (!contentIsNullOrEmpty(courseNotes) || !contentIsNullOrEmpty(courseData)) {
+    if (courseNotes || courseData?.length>0) {
+        tabContentExists = true;
         const courseHeading = "Selected Courses";
         const courseID = "pills-courses";
-    if (activeTabExists === false) {
-      activeTabExists = true;
-    } else {
-      activeValue = false;
-    }
-        checkIfContentAvailable = true;
+        if (!activeTabExists) {
+            activeTabExists = true;
+        } else {
+            activeValue = false;
+        }
         key++;
-
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                           active={activeValue} 
-                                           heading={courseHeading} 
-                                           controls={courseID} 
-                            />);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={courseHeading} controls={courseID} />);
 
         navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
                                           active={activeValue} 
@@ -164,24 +133,19 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                           id={courseID} 
                                           content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} 
                             />);
-    }
+        }
 
     // prep TAB 2 - Variants
-    if (variantDataHeading !== '') {
+    if (variantDataHeading) {
+        tabContentExists = true;
         const variantID = "pills-variants";
-    if (activeTabExists === false) {
-      activeTabExists = true;
-    } else {
-      activeValue = false;
-    }
-        checkIfContentAvailable = true;
+        if (!activeTabExists) {
+            activeTabExists = true;
+        } else {
+            activeValue = false;
+        }
         key++;
-
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                           active={activeValue} 
-                                           heading={variantDataHeading} 
-                                           controls={variantID} 
-                            />);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={variantDataHeading} controls={variantID} />);
 
         navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
                                           active={activeValue} 
@@ -193,22 +157,18 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     }
 
     // prep TAB 3 - Careers
-    if (!contentIsNullOrEmpty(careerData)) {
-    if (activeTabExists === false) {
-      activeTabExists = true;
-    } else {
-      activeValue = false;
-    }
-        checkIfContentAvailable = true;
+    if (careerData?.length>0) {
+        tabContentExists = true;
+        if (!activeTabExists) {
+            activeTabExists = true;
+        } else {
+            activeValue = false;
+        }
         const careersHeading = "Careers";
         const careersID = "pills-careers";
         key++;
 
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                           active={activeValue} 
-                                           heading={careersHeading} 
-                                           controls={careersID} 
-                            />);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={careersHeading} controls={careersID} />);
 
         navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
                                           active={activeValue} 
@@ -220,22 +180,18 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
     }
     
     // prep TAB 4 - Employers
-    if (!contentIsNullOrEmpty(employerData)) {
-    if (activeTabExists === false) {
-      activeTabExists = true;
-    } else {
-      activeValue = false;
-    }
-        checkIfContentAvailable = true;
+    if (employerData?.length > 0) {
+        tabContentExists = true;
+        if (activeTabExists === false) {
+            activeTabExists = true;
+        } else {
+            activeValue = false;
+        }
         const employerHeading = "Employers";
         const employerID = "pills-employer";
         key++;
 
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} 
-                                           active={activeValue} 
-                                           heading={employerHeading} 
-                                           controls={employerID} 
-                            />);
+        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={employerHeading} controls={employerID} />);
 
         navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
                                           active={activeValue} 
@@ -245,7 +201,7 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                                           content={<Employers employerData={employerData} />} 
                             />);
     }
-    if (checkIfContentAvailable === true) {
+    if (tabContentExists) {
         return <React.Fragment>
                 <h2>Program Information</h2>
                 <NavTabs headings={
@@ -259,224 +215,171 @@ function renderProgramInfo (courseData, courseNotes, variantDataHeading, variant
                 </NavTabs>
             </React.Fragment>
     }
-
     return null;
 }
 
 function retrieveLastModifiedDates (content) {
     let dates = [];
-
-    if (!contentIsNullOrEmpty(content)) {  
+    if (content?.length > 0) {  
         content.forEach((edge) => {
             dates.push(edge.node.changed);
         })
     }
-
     return dates;
 }
 
 function prepareVariantHeading (variantData) {
-  let labels = [];
+    let labels = [];
 
   // prepare variant data labels
-  variantData.forEach((edge) => {
-    if ((edge.__typename === "paragraph__program_variants") 
-    && (edge.relationships.field_variant_type !== null)) {
-      labels.push(edge.relationships.field_variant_type.name);
-    }
-  });
+    variantData.forEach((edge) => {
+        if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
+            labels.push(edge.relationships.field_variant_type.name);
+        }
+    });
 
-  const uniqueLabelSet = new Set(labels);
-  const uniqueLabels = [...uniqueLabelSet];
-  let variantHeading = "";
+    const uniqueLabelSet = new Set(labels);
+    const uniqueLabels = [...uniqueLabelSet];
+    let variantHeading = "";
 
-  for (let i=0; i<uniqueLabels.length; i++) {
-    if (i > 0) { 
-      if (uniqueLabels.length > 2){
-        variantHeading += ",";
-      }
-      variantHeading += " ";
-      if (i === (uniqueLabels.length - 1)) {
-        variantHeading += "and ";
-      }
+    for (let i=0; i<uniqueLabels.length; i++) {
+        if (i > 0) { 
+            if (uniqueLabels.length > 2) {
+                variantHeading += ",";
+            }
+            variantHeading += " ";
+            if (i === (uniqueLabels.length - 1)) {
+                variantHeading += "and ";
+            }
+        }
+        variantHeading += uniqueLabels[i];
     }
-    variantHeading += uniqueLabels[i];
-  }
   
   return variantHeading;
 }
-// Modified function to remove warning  --> Anonymous arrow functions cause Fast Refresh to not preserve local component state.
 
-                                        // Please add a name to your function, for example:
-
-                                        // Before:
-                                        // export default () => {}
-
-                                        // After:
-                                        // const Named = () => {}
-                                        // export default Named;
-
-
-    const ProgramPage = ({data, location}) => {
-    let callToActionData = [];
-    let careerData;
-    let courseData;
-    let degreesData;
-    let domains;
-    let employerData;
-    let footerData;
-    let imageData = [];
-    let imageTaggedData = [];
-    let progData;
-    let newsData;
-    let specData;
-    let statsData;
-    let tagData;
-    let testimonialData;
-    let variantData;
-    let videoData;
-
-    // set data
-    if (data.careers.edges[0] !== undefined) { careerData = data.careers.edges; }
-    if (data.ctas.edges[0] !== undefined) { callToActionData = data.ctas.edges; }
-    if (data.employers.edges[0] !== undefined) { employerData = data.employers.edges; }
-    if (data.footer.edges[0] !== undefined) { footerData = data.footer.edges; }
-    if (data.news.edges[0] !== undefined) { newsData = data.news.edges; }
-    if (data.programs.edges[0] !== undefined) { progData = data.programs.edges[0].node; }
-    if (progData.field_domain_access !== undefined) { domains = progData.field_domain_access; }
-    if (progData.relationships.field_courses !== undefined) { courseData = progData.relationships.field_courses; }
-    if (progData.relationships.field_program_statistics !== undefined) { statsData = progData.relationships.field_program_statistics; }
-    if (data.testimonials.edges[0] !== undefined) { testimonialData = data.testimonials.edges; }
-    if (data.images.edges !== undefined) { imageData = data.images.edges; }
-    if (data.imagesTagged.edges !== undefined) { imageTaggedData = data.imagesTagged.edges; }
-    if (data.videos.edges[0] !== undefined) { videoData = data.videos.edges[0].node; }
+const ProgramPage = ({data, location}) => {
+        
+    let progData = data.programs.edges[0]?.node;
+    let callToActionData = data.ctas?.edges;
+    let careerData = data.careers?.edges;
+    let courseData = progData.relationships?.field_courses;
+    let degreesData = progData.relationships?.field_degrees;
+    let domains = progData?.field_domain_access;
+    let employerData = data.employers?.edges;
+    let footerData = data.footer?.edges;
+    let imageData =  data.images?.edges;
+    let imageTaggedData = data.imagesTagged?.edges;    
+    let newsData = data.news?.edges;
+    let statsData = progData.relationships?.field_program_statistics;
+    let testimonialData = data.testimonials?.edges;
+    let variantData = progData.relationships?.field_program_variants;
+    let variantDataHeading = prepareVariantHeading(variantData);
+    let videoData = data.videos.edges[0]?.node;
+  
+    const heroImage = (imageData?.length>0 ? imageData : (imageTaggedData?.length>0 ? imageTaggedData : null));
     
-    const heroImage = (contentExists(imageData) ? imageData : (contentExists(imageTaggedData) ? imageTaggedData : null));
+    // Open Graph metatags
+    const ogDescription = progData.field_metatags?.og_description;
+    const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.localFile.publicURL;
+    const ogImageAlt = heroImage && heroImage[0]?.node.field_media_image.alt;
 
     // set program details
     const nodeID = progData.drupal_internal__nid;
     const title = progData.title;
-    const acronym = (progData.relationships.field_program_acronym.name !== undefined && progData.relationships.field_program_acronym.name !== null ? progData.relationships.field_program_acronym.name : ``);
-    const description = !contentIsNullOrEmpty(progData.field_program_overview) ? progData.field_program_overview.processed : ``;
-    const courseNotes = !contentIsNullOrEmpty(progData.field_course_notes) ? progData.field_course_notes.processed : ``;
+    const acronym = (progData.relationships.field_program_acronym?.name);
+    const description = progData.field_program_overview?.processed;
+    const courseNotes = progData.field_course_notes?.processed;
 
     // set last modified date
     let allModifiedDates = sortLastModifiedDates(
         [progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
         );
     let lastModified = allModifiedDates[allModifiedDates.length - 1];
-
-    // set degree, specialization, variant, and tag info  
-    degreesData = progData.relationships.field_degrees;
-    specData = progData.relationships.field_specializations;
-    tagData = progData.relationships.field_tags;
-    variantData = progData.relationships.field_program_variants;
-    let variantDataHeading = prepareVariantHeading(variantData); 
-    
-    // Open Graph metatags
-    const ogDescription = (contentExists(progData.field_metatags) ? progData.field_metatags.og_description : null);
-    const ogImage = (contentExists(heroImage) ? heroImage[0].node.relationships.field_media_image.localFile.publicURL : null);
-    const ogImageAlt = (contentExists(heroImage) ? heroImage[0].node.field_media_image.alt : null);
     
     return (
     <Layout date={lastModified} menuName="main">
-      <Helmet bodyAttributes={{
-          class: 'program'
-        }}
-      />
-            
-      <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
+        <Helmet bodyAttributes={{ class: "program" }} />            
+        <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
       
-      { /**** Header and Title ****/ }
-      <div className={!contentExists(heroImage) && !contentExists(videoData) && "no-thumb"} id="rotator">
-        {contentExists(videoData) ?
-            <HeroVideo videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} videoTranscript={contentExists(videoData.relationships.field_media_file) ? videoData.relationships.field_media_file.localFile.publicURL : ``} />
+        { /**** Header and Title ****/ }
+        <div className={!heroImage?.length>0 && !videoData?.length>0 ? "no-thumb" : null} id="rotator">
+            {videoData ?
+            <HeroVideo videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} videoTranscript={videoData.relationships.field_media_file?.localFile.publicURL} />
             :
             <Hero imgData={heroImage} />
-        }
-        <div className="container ft-container">
-          <h1 className="fancy-title">{title}</h1>
+            }
+            <div className="container ft-container"><h1 className="fancy-title">{title}</h1></div>
         </div>
-      </div>
 
-      { /**** Tags and Call to Action Button ****/ }
-      <div className="full-width-container bg-dark">
-          <div className="container">
-              <section className="row row-with-vspace site-content">
-                  <div className="col-md-9 content-area">
-                    {tagData && tagData.length > 0 ?  
-                      (<Tags tagData={tagData} />)
-                      : null
-                    }   
-                  </div>
-                  <div className="col-md-3">
-                    {callToActionData.map((cta, index) => (
-                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.name: ``} 
-                        goalEventAction={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.field_goal_action: ``} 
-                        classNames='btn btn-uogRed apply' >
-                        {cta.node.field_call_to_action_link.title}
+        { /**** Blurb and Call to Action Button ****/ }
+        {ogDescription || callToActionData?.length>0 ? 
+        <div className="full-width-container bg-dark">
+            <div className="container">
+                <section className="row mx-2">
+                    {ogDescription && <div className="col-md-9"><p className="fs-2">{ogDescription}</p></div>}
+                    {callToActionData?.length>0 && 
+                    <div className={ogDescription ? "col-md-3" : "col-md-3 offset-md-9"}>
+                      <CallToAction 
+                        classes="btn btn-primary fs-1 me-4 p-4 w-100"
+                        href={callToActionData[0]?.node.field_call_to_action_link.uri} 
+                        goalEventCategory={callToActionData[0]?.node.relationships.field_call_to_action_goal?.name} 
+                        goalEventAction={callToActionData[0]?.node.relationships.field_call_to_action_goal?.field_goal_action}>
+                        {callToActionData[0]?.node.field_call_to_action_link.title}
                       </CallToAction>
-                    ))}
-                  </div>
-              </section>
-          </div>
-      </div>
+                    </div>}
+                </section>
+            </div>
+        </div> : ``}
       
-      <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
+        <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 
-      { /**** Program Overview ****/ }
-      <div className="container page-container">
-        <div className="row row-with-vspace site-content">
-          <section className="col-md-9 content-area">
-            {renderProgramOverview(description, specData)}
-          </section>
+        { /**** Program Overview ****/ }
+        <div className="container page-container">
+            <div className="row site-content">
+                <section className="content-area">
+                    {renderProgramOverview(description)}
+                </section>
+            </div>
         </div>
-      </div>
     
-      { /**** Program Stats ****/ }
-      {renderProgramStats(degreesData, variantData, statsData)}
+        { /**** Program Stats ****/ }
+        {renderProgramStats(degreesData, variantData, statsData)}
 
-      { /**** Program Information Tabs ****/ }
-      <div className="container page-container">
-        <section className="row row-with-vspace site-content">
-          <div className="col-md-12 content-area">
-            {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
-          </div>
-        </section>
-      </div>                    
+        { /**** Program Information Tabs ****/ }
+        <div className="container page-container">
+            <section className="row row-with-vspace site-content">
+                <div className="col-md-12 content-area">
+                    {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
+                </div>
+            </section>
+        </div>                    
 
-      { /**** Testimonials ****/ }
-      {testimonialData && 
-      <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel='h3' />
-      }
+        { /**** Testimonials ****/ }
+        {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel='h3' />}
 
-      { /*** News ****/}
-      {newsData && 
-        <NewsGrid newsData={newsData} heading="Program News" headingLevel='h2' />
-      }
+        { /*** News ****/}
+        {newsData && <NewsGrid newsData={newsData} heading="Program News" headingLevel='h2' />}
 
-      { /**** Call to Actions ****/ }
-      {callToActionData.length !== 0 &&
+        { /**** Call to Actions ****/ }
+        {callToActionData.length !== 0 &&
         <div className="container page-container apply-footer">
-          <section className="row row-with-vspace site-content">
-              <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
-                  <h3><span>Are you ready to</span> Improve Life?</h3>
-                  {callToActionData.map((cta, index) => (
-                      <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                        goalEventCategory={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.name: ``} 
-                        goalEventAction={contentExists(cta.node.relationships.field_call_to_action_goal)? cta.node.relationships.field_call_to_action_goal.field_goal_action: ``} 
-                        classNames='btn btn-uogRed apply' >
-                      {cta.node.field_call_to_action_link.title}
-                      </CallToAction>
+            <section className="row row-with-vspace site-content">
+                <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
+                    <h3><span>Are you ready to</span> Improve Life?</h3>
+                    {callToActionData.map((cta, index) => (
+                        <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
+                            goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name} 
+                            goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
+                        >
+                            {cta.node.field_call_to_action_link.title}
+                        </CallToAction>
                     ))}
-              </div>
-          </section>
+                </div>
+            </section>
         </div>
-      }
-      {contentExists(footerData) && footerData.length !== 0 &&
-        <CustomFooter footerData={footerData[0]} />
-      }     
+        }
+        {footerData?.length>0 && <CustomFooter footerData={footerData[0]} />}     
     </Layout>  
     )   
 }

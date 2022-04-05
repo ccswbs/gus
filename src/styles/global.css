@@ -27,7 +27,7 @@
 
 .full-width-container.bg-dark {
     background-color: #333 !important;
-    color: #999 !important;
+    color: #aaa !important;
     padding: 2rem 0;
 }
 
@@ -42,6 +42,10 @@
 
 .flex-even {
     flex: 1;
+}
+
+.no-icon li:before {
+	content: "" !important;
 }
 
 html {
