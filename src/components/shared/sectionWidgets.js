@@ -63,7 +63,7 @@ function SectionWidgets (props) {
         let allWidgets = props.pageData;
         
         allWidgets.forEach(widgetData => {
-            if (widgetData.relationships.field_section_column.name === "left" || widgetData.relationships.field_section_column.name === "main") {
+            if (widgetData.relationships?.field_section_column.name === "left" || widgetData.relationships?.field_section_column.name === "main") {
                 primary.push(widgetData);
             } else {
                 secondary.push(widgetData);
