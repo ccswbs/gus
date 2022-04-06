@@ -112,6 +112,7 @@ export const query = graphql`
   }
 
   fragment MediaTextParagraphFragment on paragraph__media_text {
+    drupal_id
     field_media_image_size
     field_media_text_title
     field_media_text_desc {
