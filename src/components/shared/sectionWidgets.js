@@ -29,7 +29,8 @@ function renderPrimary(widget) {
                     description={widget.field_link_items_description}
                     numColumns={numColumns} />
         case "paragraph__media_text":
-            return <div className="row mt-5"><MediaText headingClass="mt-md-0" widgetData={widget} /></div>;
+            const region = widget.relationships.field_section_column?.name;
+            return <MediaText widgetData={widget} region={region} />;
         case "paragraph__stats_widget":
             return <StatsWidget statsWidgetData={widget} />;
         case "paragraph__section_buttons":
@@ -46,7 +47,8 @@ function renderSecondary(widget) {
         case "paragraph__general_text":
             return <GeneralText processed={widget.field_general_text.processed} />;                        
         case "paragraph__media_text":
-            return <div className="row mt-5"><MediaText headingClass="mt-md-0" widgetData={widget} /></div>;
+            const region = widget.relationships.field_section_column?.name;
+            return <MediaText widgetData={widget} region={region} />;
         case "paragraph__section_buttons":
             const sbtnClassName = "";
             return <div className={sbtnClassName}><SectionButtons pageData={widget} /></div>;
@@ -60,6 +62,7 @@ function SectionWidgets (props) {
     if (props.pageData?.length > 0) {        
         let primary = [];
         let secondary = [];
+        let primaryClass;
         let allWidgets = props.pageData;
         
         allWidgets.forEach(widgetData => {
@@ -69,18 +72,26 @@ function SectionWidgets (props) {
             } else {
                 secondary.push(widgetData);
             }
-        })        
+        })
+
+        if (secondary.length > 0) {
+            primaryClass = "col-md-9 d-flex flex-wrap";
+        } else {
+            primaryClass = "row";
+        }
+        
         return (<>
-            <div className="col-md-9">
+            <div className={primaryClass}>
             {primary && primary.map(widget => {
                 return renderPrimary(widget)
             })}                
             </div>
+            {secondary.length > 0 && 
             <div className="col-md-3">
-            {secondary && secondary.map(widget => {
+            {secondary.map(widget => {
                 return renderSecondary(widget)
-            })}            
-            </div>
+            })}    
+            </div>}
         </>)
     }
     return null;

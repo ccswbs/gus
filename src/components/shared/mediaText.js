@@ -6,16 +6,18 @@ import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
 
 function MediaText (props) {
+    
+    const region = props.region;
 
     const mediaTitle = props.widgetData?.field_media_text_title;
-    const mediaDescription = props.widgetData?.field_media_text_desc.processed;
+    const mediaDescription = props.widgetData.field_media_text_desc?.processed;
     const mediaLinks = props.widgetData?.field_media_text_links;
     const mediaButtons = props.widgetData.relationships?.field_button_section;
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
     const imageURL = mediaRelationships.field_media_image?.localFile;	
     const imageAlt = mediaRelationships.field_media_image?.alt;
-    const imageSize = imageURL && props.widgetData?.field_media_image_size;
+    const mediaSize = props.widgetData?.field_media_image_size;
     
     const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships.field_media_file?.localFile.publicURL;
@@ -25,38 +27,73 @@ function MediaText (props) {
     const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
     const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
     
-    let mediaCol;
-    let textCol;
-    
-    if (mediaDescription) {
-        if (imageURL && imageSize) {
-            switch(imageSize) {
-                case "small":
-                    mediaCol = "col-md-3";
-                    textCol = "col-md-9";
-                break;
-                case "medium":
-                    mediaCol = "col-md-4";
-                    textCol = "col-md-8";
-                break;
-                case "large":
-                    mediaCol = "col-md-6";
-                    textCol = "col-md-6";
-                break;
-                default:
-                    mediaCol = "col-md-6";
-                    textCol = "col-md-6";
-                break;
-            }        
+    let mediaCol = "col-xs-12";
+    let textCol = "col-xs-12";    
+    let wrapperCol;
+
+    if (region === "left" || region === "main") {
+        if (imageURL) {
+            wrapperCol = "col-md-6 d-flex flex-wrap";
+            if (mediaDescription) {
+                switch(mediaSize) {
+                    case "small":
+                        mediaCol = "col-md-3";
+                        textCol = "col-md-9";
+                    break;
+                    case "medium":
+                        mediaCol = "col-md-4";
+                        textCol = "col-md-8";
+                    break;
+                    case "large":
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                    default:
+                        mediaCol = "col-xs-12";
+                        textCol = "col-xs-12";
+                    break;
+                }
+            } else {
+                mediaCol = "col-xs-12";
+            }
         } else {
-            mediaCol = props.colClass;
-            textCol = props.colClass;
-        }
+            wrapperCol = "col-md-6";
+            if (mediaDescription) {
+                switch(mediaSize) {
+                    case "small":
+                        mediaCol = "col-md-4";
+                        textCol = "col-md-8";
+                    break;
+                    case "medium":
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                    case "large":
+                        mediaCol = "col-xs-12";
+                        textCol = "col-xs-12";
+                    break;
+                    default:
+                        mediaCol = "col-xs-12";
+                        textCol = "col-xs-12";
+                    break;
+                }
+            } else {
+                mediaCol = "col-xs-12";
+            }
+        }            
+    } else if (region === "right") {
+        wrapperCol = "col-xs-12";
+        
     } else {
-        mediaCol = "col-xs-12";
-    }
-    
+        wrapperCol = "row";
+        if (mediaDescription) {
+            mediaCol = "col-md-6";
+            textCol = "col-md-6"
+        }
+    }        
+        
     return <>
+    <div className={wrapperCol}>
         <section className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
@@ -82,18 +119,19 @@ function MediaText (props) {
                 </React.Fragment>)                
             })}</div>}
         </section>} 
+    </div>
     </>;
 }
 
 MediaText.propTypes = {
     widgetData: PropTypes.object,
-    colClass: PropTypes.string,
     headingClass: PropTypes.string,
+    region: PropTypes.string,
 }
 MediaText.defaultProps = {
     widgetData: null,
-    colClass: `col-md-6`,
     headingClass: ``,
+    region: ``,
 }
 
 export default MediaText

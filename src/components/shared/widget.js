@@ -38,7 +38,7 @@ const Widget = ({widget}) => {
                         description={widget.field_link_items_description}
                         numColumns={numColumns} />
         case "paragraph__media_text":
-            return <div className="row mt-5"><MediaText headingClass="mt-md-0" widgetData={widget} /></div>;
+            return <MediaText headingClass="mt-md-0" widgetData={widget} />;
         case "paragraph__section":
             return (<>
 				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
