@@ -4,31 +4,32 @@ import { graphql, Link } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
-import { contentExists } from 'utils/ug-utils';
 
 function MediaText (props) {
 
-    const mediaTitle = (contentExists(props.widgetData.field_media_text_title) ? props.widgetData.field_media_text_title : ``);
-    const mediaDescription = (contentExists(props.widgetData.field_media_text_desc) ? props.widgetData.field_media_text_desc.processed: ``);
-    const mediaLinks = props.widgetData.field_media_text_links;	
-    const mediaRelationships = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.relationships: ``);
+    const mediaTitle = props.widgetData?.field_media_text_title;
+    const mediaDescription = props.widgetData?.field_media_text_desc.processed;
+    const mediaLinks = props.widgetData?.field_media_text_links;
+    const mediaButtons = props.widgetData.relationships?.field_button_section;
+    const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
-    const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
-    const imageAlt = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.alt : ``);
-    const imageSize = (contentExists(imageURL) && contentExists(props.widgetData.field_media_image_size) ? props.widgetData.field_media_image_size : ``);
-
-    const playerID = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.drupal_id : ``);
-    const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
-    const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
-    const videoCC = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_video_cc) ? mediaRelationships.field_video_cc.localFile.publicURL : ``);
+    const imageURL = mediaRelationships.field_media_image?.localFile;	
+    const imageAlt = mediaRelationships.field_media_image?.alt;
+    const imageSize = imageURL && props.widgetData?.field_media_image_size;
+    
+    const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
+    const videoTranscript = mediaRelationships.field_media_file?.localFile.publicURL;
+    const videoURL = props.widgetData.relationships.field_media_text_media?.field_media_oembed_video;
+    const videoHeight = props.widgetData.relationships.field_media_text_media?.field_video_height;
+    const videoWidth = props.widgetData.relationships.field_media_text_media?.field_video_width;
     const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
     const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
     
-  let mediaCol;
-  let textCol;
+    let mediaCol;
+    let textCol;
     
-    if (contentExists(mediaDescription)) {
-        if (contentExists(imageURL) && contentExists(imageSize)) {
+    if (mediaDescription) {
+        if (imageURL && imageSize) {
             switch(imageSize) {
                 case "small":
                     mediaCol = "col-md-3";
@@ -57,25 +58,30 @@ function MediaText (props) {
     
     return <>
         <section className={mediaCol}>
-            {contentExists(videoURL) ?
-            <Video playerID={playerID} videoType={videoType} videoID={videoID} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
-            : ``}
-            {contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
+            {videoURL &&
+            <Video videoID={videoID}
+                videoTitle={videoTitle}
+                videoTranscript={videoTranscript}
+                videoType={videoType}
+                videoURL={videoURL}
+                videoHeight={videoHeight}
+                videoWidth={videoWidth}
+            />}
+            {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
         </section>
-        {contentExists(mediaDescription) ?
+        {mediaDescription &&
         <section className={textCol}>
-            {contentExists(mediaTitle) ? <h3 {...(contentExists(props.headingClass) ? {className:props.headingClass} : {})}>{mediaTitle}</h3> : ``}
+            {mediaTitle && <h3 {...(props.headingClass ? {className:props.headingClass} : {})}>{mediaTitle}</h3>}
             <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
-            {contentExists(props.widgetData.relationships.field_button_section) === true && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
-            {contentExists(props.widgetData.relationships.field_button_section) === false && <div>{mediaLinks.map(mediaLink => {
+            {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
+            {mediaLinks && <div>{mediaLinks.map(mediaLink => {
                 return ( 
                 <React.Fragment>
                     {(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={mediaLink.url}>{mediaLink.title}</a> </> :
                     <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
                 </React.Fragment>)                
             })}</div>}
-        </section>
-        : null} 
+        </section>} 
     </>;
 }
 
