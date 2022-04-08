@@ -75,7 +75,7 @@ function SectionWidgets (props) {
         })
 
         if (secondary.length > 0) {
-            primaryClass = "col-md-9 d-flex flex-wrap";
+            primaryClass = "col-md-9";
         } else {
             primaryClass = "row";
         }

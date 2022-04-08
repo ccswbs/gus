@@ -15,12 +15,12 @@ function MediaText (props) {
     const mediaButtons = props.widgetData.relationships?.field_button_section;
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
-    const imageURL = mediaRelationships.field_media_image?.localFile;	
-    const imageAlt = mediaRelationships.field_media_image?.alt;
+    const imageURL = mediaRelationships?.field_media_image?.localFile;	
+    const imageAlt = mediaRelationships?.field_media_image?.alt;
     const mediaSize = props.widgetData?.field_media_image_size;
     
     const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
-    const videoTranscript = mediaRelationships.field_media_file?.localFile.publicURL;
+    const videoTranscript = mediaRelationships?.field_media_file?.localFile.publicURL;
     const videoURL = props.widgetData.relationships.field_media_text_media?.field_media_oembed_video;
     const videoHeight = props.widgetData.relationships.field_media_text_media?.field_video_height;
     const videoWidth = props.widgetData.relationships.field_media_text_media?.field_video_width;
@@ -32,29 +32,28 @@ function MediaText (props) {
     let wrapperCol;
 
     if (region === "left" || region === "main") {
-        if (imageURL) {
-            wrapperCol = "col-md-6 d-flex flex-wrap";
+        if (imageURL) {            
             if (mediaDescription) {
                 switch(mediaSize) {
                     case "small":
-                        mediaCol = "col-md-3";
-                        textCol = "col-md-9";
-                    break;
-                    case "medium":
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
+                        wrapperCol = "col-md-6 d-flex flex-wrap";
                     break;
-                    case "large":
+                    case "medium":
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        wrapperCol = "col-md-6 d-flex flex-wrap";
                     break;
                     default:
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
+                        wrapperCol = "col-md-3";
                     break;
                 }
             } else {
                 mediaCol = "col-xs-12";
+                wrapperCol = "col-md-3 d-flex flex-wrap";
             }
         } else {
             wrapperCol = "col-md-6";
@@ -83,12 +82,30 @@ function MediaText (props) {
         }            
     } else if (region === "right") {
         wrapperCol = "col-xs-12";
-        
+    // region is null, widget not in section 
     } else {
         wrapperCol = "row";
         if (mediaDescription) {
-            mediaCol = "col-md-6";
-            textCol = "col-md-6"
+            switch(mediaSize) {
+                case "small":
+                    mediaCol = "col-md-3";
+                    textCol = "col-md-9";
+                break;
+                case "medium":
+                    mediaCol = "col-md-4";
+                    textCol = "col-md-8";
+                break;
+                case "large":
+                    mediaCol = "col-md-6";
+                    textCol = "col-md-6";
+                break;
+                default:
+                    mediaCol = "col-xs-12";
+                    textCol = "col-xs-12";
+                break;
+            }
+        } else {
+            mediaCol = "col-xs-12";
         }
     }        
         
@@ -110,8 +127,8 @@ function MediaText (props) {
         <section className={textCol}>
             {mediaTitle && <h3 {...(props.headingClass ? {className:props.headingClass} : {})}>{mediaTitle}</h3>}
             <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
-            {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
-            {mediaLinks && <div>{mediaLinks.map(mediaLink => {
+            {mediaButtons?.length>0 && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
+            {mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
                 return ( 
                 <React.Fragment>
                     {(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={mediaLink.url}>{mediaLink.title}</a> </> :
