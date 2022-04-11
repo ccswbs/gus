@@ -10,7 +10,6 @@ import MediaText from 'components/shared/mediaText';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
-import { contentExists } from 'utils/ug-utils';
 
 const Widget = ({widget}) => {
     switch (widget?.__typename) {
@@ -42,7 +41,7 @@ const Widget = ({widget}) => {
         case "paragraph__section":
             return (<>
 				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
-				<div key={widget.drupal_id} className="row">                    
+				<div key={widget.drupal_id} title="Section Widget" className="row">                    
                     <SectionWidgets pageData={widget.relationships.field_section_content}/>
                 </div>
 			</>);
