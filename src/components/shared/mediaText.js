@@ -4,6 +4,7 @@ import { graphql, Link } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
+import { ConditionalWrapper } from 'utils/ug-utils';
 
 function MediaText (props) {
     
@@ -38,12 +39,17 @@ function MediaText (props) {
                     case "small":
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
-                        wrapperCol = "col-md-6 d-flex flex-wrap";
+                        wrapperCol = "col-md-6 row";
                     break;
                     case "medium":
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
-                        wrapperCol = "col-md-6 d-flex flex-wrap";
+                        wrapperCol = "col-md-6 row mt-3";
+                    break;
+                    case "large":
+                        mediaCol = "col-xs-12";
+                        textCol = "col-xs-12";
+                        wrapperCol = "col-md-6";
                     break;
                     default:
                         mediaCol = "col-xs-12";
@@ -56,8 +62,8 @@ function MediaText (props) {
                 wrapperCol = "col-md-3 d-flex flex-wrap";
             }
         } else {
-            wrapperCol = "col-md-6";
             if (mediaDescription) {
+                wrapperCol = "col-md-6";
                 switch(mediaSize) {
                     case "small":
                         mediaCol = "col-md-4";
@@ -77,7 +83,21 @@ function MediaText (props) {
                     break;
                 }
             } else {
-                mediaCol = "col-xs-12";
+
+                switch(mediaSize) {
+                    case "small":
+                        mediaCol = "col-md-4";
+                    break;
+                    case "medium":
+                        mediaCol = "col-md-6";
+                    break;
+                    case "large":
+                        mediaCol = "col-xs-12";
+                    break;
+                    default:
+                        mediaCol = "col-xs-12";
+                    break;
+                }
             }
         }            
     } else if (region === "right") {
@@ -85,32 +105,58 @@ function MediaText (props) {
     // region is null, widget not in section 
     } else {
         wrapperCol = "row";
-        if (mediaDescription) {
-            switch(mediaSize) {
-                case "small":
-                    mediaCol = "col-md-3";
-                    textCol = "col-md-9";
-                break;
-                case "medium":
-                    mediaCol = "col-md-4";
-                    textCol = "col-md-8";
-                break;
-                case "large":
-                    mediaCol = "col-md-6";
-                    textCol = "col-md-6";
-                break;
-                default:
-                    mediaCol = "col-xs-12";
-                    textCol = "col-xs-12";
-                break;
+        if (imageURL) {
+            if (mediaDescription) {
+                switch(mediaSize) {
+                    case "small":
+                        mediaCol = "col-md-3";
+                        textCol = "col-md-9";
+                    break;
+                    case "medium":
+                        mediaCol = "col-md-4";
+                        textCol = "col-md-8";
+                    break;
+                    case "large":
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                    default:
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                }
+            } else {
+                mediaCol = "col-xs-12";
             }
         } else {
-            mediaCol = "col-xs-12";
-        }
+            if (mediaDescription) {
+                wrapperCol = "row";
+                switch(mediaSize) {
+                    case "small":
+                        mediaCol = "col-md-4";
+                        textCol = "col-md-8";
+                    break;
+                    case "medium":
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                    case "large":
+                        mediaCol = "col-md-12";
+                        textCol = "col-md-12";
+                    break;
+                    default:
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                }
+            } else {
+                mediaCol = "col-xs-12";
+            }
+        }        
     }        
         
-    return <>
-    <div className={wrapperCol}>
+    return (
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <div className={wrapperCol}>{children}</div>}>
         <section className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
@@ -125,7 +171,7 @@ function MediaText (props) {
         </section>
         {mediaDescription &&
         <section className={textCol}>
-            {mediaTitle && <h3 {...(props.headingClass ? {className:props.headingClass} : {})}>{mediaTitle}</h3>}
+            {mediaTitle && <h3 className="mt-md-0">{mediaTitle}</h3>}
             <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
             {mediaButtons?.length>0 && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
             {mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
@@ -135,9 +181,9 @@ function MediaText (props) {
                     <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
                 </React.Fragment>)                
             })}</div>}
-        </section>} 
-    </div>
-    </>;
+        </section>}
+    </ConditionalWrapper>    
+    );
 }
 
 MediaText.propTypes = {

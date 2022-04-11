@@ -7,6 +7,7 @@ import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
 import SectionButtons from 'components/shared/sectionButtons';
 import StatsWidget from 'components/shared/statsWidget';
+import { ConditionalWrapper } from 'utils/ug-utils';
 
 // For the left column
 function renderPrimary(widget) {
@@ -81,13 +82,15 @@ function SectionWidgets (props) {
         }
         
         return (<>
-            <div className={primaryClass}>
-            {primary && primary.map(widget => {
-                return renderPrimary(widget)
-            })}                
+            <div className={primaryClass} title="Primary Area (col-md-9 if right column exists, row if it doesn't)">
+                <ConditionalWrapper condition={secondary.length > 0} wrapper={children => <div className="row" title="primary sub-row when right column exists">{children}</div>}>
+                {primary && primary.map(widget => {
+                    return renderPrimary(widget)
+                })}                
+                </ConditionalWrapper>
             </div>
             {secondary.length > 0 && 
-            <div className="col-md-3">
+            <div className="col-md-3" title= "Secondary Column (right)">
             {secondary.map(widget => {
                 return renderSecondary(widget)
             })}    
