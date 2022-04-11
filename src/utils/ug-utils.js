@@ -62,6 +62,9 @@ function stripHTMLTags(content) {
 	return content !== null ? content.replace(/(<([^>]+)>)/ig,"") : ``;
 }
 
+const ConditionalWrapper = ({ condition, wrapper, children }) => 
+  condition ? wrapper(children) : children;
+
 export { 
 	contentExists,
 	divideIntoColumns,
@@ -69,5 +72,6 @@ export {
 	getNextHeadingLevel,
 	setHeadingLevel,
 	sortLastModifiedDates,
-	stripHTMLTags
+	stripHTMLTags,
+    ConditionalWrapper
    };
