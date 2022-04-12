@@ -90,7 +90,7 @@ function SectionWidgets (props) {
                 </ConditionalWrapper>
             </div>
             {secondary.length > 0 && 
-            <div className="col-md-3" title= "Secondary Column (right)">
+            <div className="col-md-3" title="Secondary Column (right)">
             {secondary.map(widget => {
                 return renderSecondary(widget)
             })}    
