@@ -31,17 +31,20 @@ function MediaText (props) {
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";    
     let wrapperCol;
+    let headingClass;
 
     if (region === "left" || region === "main") {
         if (imageURL) {            
             if (mediaDescription) {
                 switch(mediaSize) {
                     case "small":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
                         wrapperCol = "col-md-6 row";
                     break;
                     case "medium":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
                         wrapperCol = "col-md-6 row mt-3";
@@ -66,10 +69,12 @@ function MediaText (props) {
                 wrapperCol = "col-md-6";
                 switch(mediaSize) {
                     case "small":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
                     break;
                     case "medium":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
                     break;
@@ -109,18 +114,22 @@ function MediaText (props) {
             if (mediaDescription) {
                 switch(mediaSize) {
                     case "small":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-3";
                         textCol = "col-md-9";
                     break;
                     case "medium":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
                     break;
                     case "large":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
                     break;
                     default:
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
                     break;
@@ -133,10 +142,12 @@ function MediaText (props) {
                 wrapperCol = "row";
                 switch(mediaSize) {
                     case "small":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
                     break;
                     case "medium":
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
                     break;
@@ -145,6 +156,7 @@ function MediaText (props) {
                         textCol = "col-md-12";
                     break;
                     default:
+                        headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
                     break;
@@ -171,7 +183,7 @@ function MediaText (props) {
         </section>
         {mediaDescription &&
         <section className={textCol}>
-            {mediaTitle && <h3 className="mt-md-0">{mediaTitle}</h3>}
+            {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
             <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
             {mediaButtons?.length>0 && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
             {mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
@@ -188,12 +200,10 @@ function MediaText (props) {
 
 MediaText.propTypes = {
     widgetData: PropTypes.object,
-    headingClass: PropTypes.string,
     region: PropTypes.string,
 }
 MediaText.defaultProps = {
     widgetData: null,
-    headingClass: ``,
     region: ``,
 }
 
