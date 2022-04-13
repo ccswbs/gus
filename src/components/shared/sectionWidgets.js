@@ -30,8 +30,7 @@ function renderPrimary(widget) {
                     description={widget.field_link_items_description}
                     numColumns={numColumns} />
         case "paragraph__media_text":
-            const region = widget.relationships.field_section_column?.name;
-            return <MediaText widgetData={widget} region={region} />;
+            return <MediaText widgetData={widget} region="Primary" />;
         case "paragraph__stats_widget":
             return <StatsWidget statsWidgetData={widget} />;
         case "paragraph__section_buttons":
@@ -48,8 +47,7 @@ function renderSecondary(widget) {
         case "paragraph__general_text":
             return <GeneralText processed={widget.field_general_text.processed} />;                        
         case "paragraph__media_text":
-            const region = widget.relationships.field_section_column?.name;
-            return <MediaText widgetData={widget} region={region} />;
+            return <MediaText widgetData={widget} region="Secondary" />;
         case "paragraph__section_buttons":
             const sbtnClassName = "";
             return <div className={sbtnClassName}><SectionButtons pageData={widget} /></div>;
@@ -68,10 +66,10 @@ function SectionWidgets (props) {
         
         allWidgets.forEach(widgetData => {
             let secCol = widgetData.relationships.field_section_column?.name;
-            if (secCol === "left" || secCol === "main" || secCol === null) {
-                primary.push(widgetData);
-            } else {
+            if (secCol === "right" || secCol === "Secondary") {
                 secondary.push(widgetData);
+            } else {
+                primary.push(widgetData);
             }
         })
 

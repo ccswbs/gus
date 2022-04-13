@@ -33,7 +33,7 @@ function MediaText (props) {
     let wrapperCol;
     let headingClass;
 
-    if (region === "left" || region === "main") {
+    if (region === "Primary") {
         if (imageURL) {            
             if (mediaDescription) {
                 switch(mediaSize) {
@@ -105,7 +105,7 @@ function MediaText (props) {
                 }
             }
         }            
-    } else if (region === "right") {
+    } else if (region === "Secondary") {
         wrapperCol = "col-xs-12";
     // region is null, widget not in section 
     } else {
