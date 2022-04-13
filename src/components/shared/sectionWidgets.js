@@ -67,8 +67,8 @@ function SectionWidgets (props) {
         let allWidgets = props.pageData;
         
         allWidgets.forEach(widgetData => {
-            let region = widgetData.relationships.field_section_column?.name;
-            if (region === "left" || region === "main" || region === null) {
+            let secCol = widgetData.relationships.field_section_column?.name;
+            if (secCol === "left" || secCol === "main" || secCol === null) {
                 primary.push(widgetData);
             } else {
                 secondary.push(widgetData);
