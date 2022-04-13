@@ -47,9 +47,10 @@ function buttonStyle(styleOfButton) {
 function Button (buttonData, buttonWidth, buttonFAIconAdjust, buttonTextClass) {
   
     const urlLink = buttonData.field_button_link?.url;
-    const buttonLinkTitle = buttonData?.field_formatted_title ? buttonData.field_formatted_title.processed : (buttonData.field_button_link?.title ? buttonData.field_button_link.title : "No title entered");    
-    const buttonClassName= 'btn ' + buttonStyle(buttonData.relationships.field_button_style?.name) + ' ' + buttonWidth + ' text-start p-4';
-    let buttonFontAwesomeClassName = buttonData?.field_font_awesome_icon + ' ' + fontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name);
+    const buttonLinkTitle = buttonData?.field_formatted_title ? buttonData.field_formatted_title.processed : (buttonData.field_button_link?.title ? buttonData.field_button_link.title : "No title entered");
+    const buttonIconColour = buttonData.relationships.field_font_awesome_icon_colour?.name;
+    const buttonClassName = 'btn ' + buttonStyle(buttonData.relationships.field_button_style?.name) + ' ' + buttonWidth + ' text-start p-4';
+    let buttonFontAwesomeClassName = buttonData?.field_font_awesome_icon + ' ' + fontAwesomeIconColour(buttonIconColour);
     let buttonTextClassName = buttonTextClass;    
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
