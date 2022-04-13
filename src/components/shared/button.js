@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import 'styles/button-widget.css'
+//import 'styles/button-widget.css'
 import { Link } from 'gatsby';
 import { contentExists, fontAwesomeIconColour} from 'utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
@@ -44,45 +44,38 @@ function ButtonStyle (styleOfButton){
     }
 }
 
-function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
+function Button (buttonData, buttonWidth, buttonFAIconAdjust, buttonTextClass) {
   
-    const urlLink = (contentExists(buttonData.field_button_link.url)) ? buttonData.field_button_link.url : null;
-    let buttonLinkTitle = contentExists(buttonData.field_formatted_title)? buttonData.field_formatted_title.processed:
-        contentExists(buttonData.field_button_link.title)? buttonData.field_button_link.title: "no title entered";    
-    let btnClassName = (contentExists(buttonClass))? buttonClass: '' ;
-    let btnSize = (contentExists(btnClassName) && btnClassName === "btn-block section-button-right" ? " w-100" : " w-auto");
-    let buttonClassName= 'btn ' + ButtonStyle(buttonData.relationships.field_button_style.name) + ' ' + btnClassName + btnSize + ' text-start p-4';
-    let btnFAIconAdjust = (contentExists(buttonFAIconAdjust))? buttonFAIconAdjust: '';
-    let buttonFontAwesomeClassName = contentExists(buttonData.field_font_awesome_icon)? buttonData.field_font_awesome_icon + ' ' +
-                                btnFAIconAdjust + ' fa-fw '+ fontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name):'';
-    let buttonTextClassName = contentExists(buttonTextClass)? buttonTextClass: '';    
-    let btnAnalyticsGoal = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.name : ``);
-    let btnAnalyticsAction = (contentExists(buttonData.relationships.field_cta_analytics_goal) ? buttonData.relationships.field_cta_analytics_goal.field_goal_action : ``);
+    const urlLink = buttonData.field_button_link?.url;
+    const buttonLinkTitle = buttonData?.field_formatted_title ? buttonData.field_formatted_title.processed : (buttonData.field_button_link?.title ? buttonData.field_button_link.title : "No title entered");    
+    const buttonClassName= 'btn ' + ButtonStyle(buttonData.relationships.field_button_style.name) + ' ' + buttonWidth + ' text-start p-4';
+    let buttonFontAwesomeClassName = buttonData?.field_font_awesome_icon + ' ' + fontAwesomeIconColour(buttonData.relationships.field_font_awesome_icon_colour.name);
+    let buttonTextClassName = buttonTextClass;    
+    let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
+    let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
     
     return (
     <React.Fragment key={buttonData.drupal_id}>
-    {contentExists(buttonData.field_cta_heading)? 
-        <span dangerouslySetInnerHTML={{__html: "<p>" + buttonData.field_cta_heading.processed + "</p>"}} /> : ``}
-    
-    {(buttonData.field_button_link.uri.includes("http"))? contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
+    {buttonData.field_cta_heading && <span dangerouslySetInnerHTML={{__html: "<p>" + buttonData.field_cta_heading.processed + "</p>"}} />}    
+    {(buttonData.field_button_link.uri.includes("http")) ? btnAnalyticsGoal && btnAnalyticsAction ? 
         <a href={urlLink} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
-            <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
+            {buttonData?.field_font_awesome_icon && <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>}
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
         :
         <a href={urlLink} className={buttonClassName}>
-            <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
+            {buttonData?.field_font_awesome_icon && <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>}
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
         :
         contentExists(btnAnalyticsGoal) && contentExists(btnAnalyticsAction) ? 
         <Link to={urlLink} className={buttonClassName} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
-            <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
+            {buttonData?.field_font_awesome_icon && <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>}
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </Link>
         :
         <Link to={urlLink} className={buttonClassName}>
-            <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>
+            {buttonData?.field_font_awesome_icon && <i aria-hidden="true" className={buttonFontAwesomeClassName} > </i>}
             <span className={buttonTextClassName} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </Link>
         
@@ -91,14 +84,14 @@ function Button (buttonData, buttonClass, buttonFAIconAdjust, buttonTextClass){
 }
 Button.propTypes = {
     buttonData: PropTypes.object,
-    buttonClass:  PropTypes.string, 
+    buttonWidth:  PropTypes.string, 
     buttonFAIconAdjust: PropTypes.string,
     buttonTextClass: PropTypes.string,
 }
 
 Button.defaultProps = {
     buttonData: '',
-    buttonClass: '',
+    buttonWidth: '',
     buttonFAIconAdjust: '',
     buttonTextClass: '',
 }

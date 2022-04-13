@@ -34,8 +34,7 @@ function renderPrimary(widget) {
         case "paragraph__stats_widget":
             return <StatsWidget statsWidgetData={widget} />;
         case "paragraph__section_buttons":
-            const sbtnClassName = "";
-            return <div className={sbtnClassName}><SectionButtons pageData={widget} /></div>;
+            return <SectionButtons pageData={widget} />;
         default:
             return <></>;                          
     }
@@ -49,8 +48,7 @@ function renderSecondary(widget) {
         case "paragraph__media_text":
             return <MediaText widgetData={widget} region="Secondary" />;
         case "paragraph__section_buttons":
-            const sbtnClassName = "";
-            return <div className={sbtnClassName}><SectionButtons pageData={widget} /></div>;
+            return <div><SectionButtons pageData={widget} /></div>;
         default:
             return <></>;                          
     }
