@@ -27,16 +27,16 @@ function divideIntoColumns(data, numColumns) {
 	return dividedData;
 }
 
-function fontAwesomeIconColour (colourChoice) {
+function fontAwesomeIconColour(colourChoice) {
     switch(colourChoice) {
-        case 'Yellow':
-            return 'yellow-icon';
-        case 'Red':
-            return 'red-icon';
-        case 'Darker Red':
-            return 'red-darker-icon)';
+        case "Yellow":
+            return "uog-yellow";
+        case "Red":
+            return "uog-red";
+        case "Darker Red":
+            return "uog-red-darker";
         default: 
-            return '';
+            return "";
     }
 }
 
