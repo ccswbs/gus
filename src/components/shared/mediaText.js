@@ -57,7 +57,7 @@ function MediaText (props) {
                     default:
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
-                        wrapperCol = "col-md-3";
+                        wrapperCol = "col";
                     break;
                 }
             } else {
@@ -88,7 +88,6 @@ function MediaText (props) {
                     break;
                 }
             } else {
-
                 switch(mediaSize) {
                     case "small":
                         mediaCol = "col-md-4";
