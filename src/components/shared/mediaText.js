@@ -47,7 +47,7 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
-                        wrapperCol = "col-md-6 row mt-3";
+                        wrapperCol = "col-md-6 row mt-5";
                     break;
                     case "large":
                         mediaCol = "col-xs-12";
@@ -109,7 +109,7 @@ function MediaText (props) {
         wrapperCol = "col-xs-12";
     // region is null, widget not in section 
     } else {
-        wrapperCol = "row";
+        wrapperCol = "row mt-5";
         if (imageURL) {
             if (mediaDescription) {
                 switch(mediaSize) {
