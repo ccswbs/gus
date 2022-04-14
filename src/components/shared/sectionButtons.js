@@ -26,10 +26,10 @@ function SectionButtons (props) {
                 {fieldButtonsData.map (buttonData => {
                     return Button(buttonData, buttonWidth)
                 })}
-           </> }</div>
+            </>}
+           </div>
         </React.Fragment>
     )
-
 }
 
 SectionButtons.propTypes = {
@@ -37,44 +37,45 @@ SectionButtons.propTypes = {
 }
 
 SectionButtons.defaultProps = {
-    pageData: '',
+    pageData: ``,
 }
+
 export default SectionButtons
 
 export const query = graphql`
-    fragment SectionButtonsParagraphFragment on paragraph__section_buttons {
+  fragment SectionButtonsParagraphFragment on paragraph__section_buttons {
+    drupal_id
+    relationships {
+      field_section_column {
+        name
+      }
+      field_buttons {
         drupal_id
+        field_button_link {
+          title
+          uri
+          url
+        }
+        field_cta_heading {
+          processed
+        }
+        field_font_awesome_icon
+        field_formatted_title {
+          processed
+        }
         relationships {
-        field_section_column {
+          field_button_style {
             name
+          }
+          field_font_awesome_icon_colour {
+            name
+          }
+          field_cta_analytics_goal {
+            name
+            field_goal_action
+          }
         }
-        field_buttons {
-            drupal_id
-            field_button_link {
-            title
-            uri
-            url
-            }
-            field_cta_heading {
-            processed
-            }
-            field_font_awesome_icon
-            field_formatted_title {
-            processed
-            }
-            relationships {
-            field_button_style {
-                name
-            }
-            field_font_awesome_icon_colour {
-                name
-            }
-            field_cta_analytics_goal {
-                name
-                field_goal_action
-            }
-            }
-        }
-        }
+      }
     }
+  }
 `
