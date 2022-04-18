@@ -30,12 +30,12 @@ function MediaText (props) {
     
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";
-    let textOrButtons = mediaDescription || mediaButtons || mediaLinks ? true : false;
     let wrapperCol;
     let headingClass;
+    let textOrButtons = mediaDescription || mediaButtons ? true : false;
 
     if (region === "Primary") {
-        if (textOrButtons) {
+        if (mediaDescription || mediaButtons) {
             switch(mediaSize) {
                 case "small":
                     headingClass = "mt-md-0";
@@ -77,13 +77,12 @@ function MediaText (props) {
             }
         }            
     } else if (region === "Secondary") {
-        wrapperCol = "col-xs-12";
-        console.log(textOrButtons);
+        wrapperCol = "col-xs-12";        
     // region is null, widget not in section 
     } else {
         wrapperCol = "row mt-5";
         if (imageURL) {
-            if (textOrButtons) {
+            if (mediaDescription || mediaButtons) {
                 switch(mediaSize) {
                     case "small":
                         headingClass = "mt-md-0";
@@ -110,8 +109,7 @@ function MediaText (props) {
                 mediaCol = "col-xs-12";
             }
         } else {
-            if (textOrButtons) {
-                wrapperCol = "row";
+            if (mediaDescription || mediaButtons) {
                 switch(mediaSize) {
                     case "small":
                         headingClass = "mt-md-0";
@@ -138,7 +136,7 @@ function MediaText (props) {
             }
         }        
     }        
-        
+
     return (
     <ConditionalWrapper condition={wrapperCol} wrapper={children => <div className={wrapperCol}>{children}</div>}>
         <section className={mediaCol}>
