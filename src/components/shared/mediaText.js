@@ -158,7 +158,7 @@ function MediaText (props) {
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
             {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
-            {mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
+            {!mediaButtons && mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
                 return ( 
                 <React.Fragment>
                     {(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={mediaLink.url}>{mediaLink.title}</a> </> :
