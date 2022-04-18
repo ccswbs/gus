@@ -29,38 +29,41 @@ function MediaText (props) {
     const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
     
     let mediaCol = "col-xs-12";
-    let textCol = "col-xs-12";    
-    let wrapperCol = "col mt-5";
+    let textCol = "col-xs-12";
+    let textOrButtons = mediaDescription || mediaButtons || mediaLinks ? true : false;
+    let wrapperCol;
     let headingClass;
 
     if (region === "Primary") {
-        if (mediaDescription) {
+        if (textOrButtons) {
             switch(mediaSize) {
                 case "small":
                     headingClass = "mt-md-0";
                     mediaCol = "col-md-4";
                     textCol = "col-md-8";
-                    wrapperCol += " row";
+                    wrapperCol = "col-md-6 row";
                 break;
                 case "medium":
                     headingClass = "mt-md-0";
                     mediaCol = "col-md-6";
                     textCol = "col-md-6";
-                    wrapperCol += " row";
+                    wrapperCol = "col-md-6 row";
                 break;
                 case "large":
                     mediaCol = "col-xs-12";
                     textCol = "col-xs-12";
+                    wrapperCol = "col-md-6";
                 break;
                 default:
                     mediaCol = "col-xs-12";
                     textCol = "col-xs-12";
+                    wrapperCol = "col-md-6";
                 break;
             }
         } else {
             switch(mediaSize) {
                 case "small":
-                    mediaCol = "col-md-4";
+                    mediaCol = "col-md-4";                    
                 break;
                 case "medium":
                     mediaCol = "col-md-6";
@@ -75,11 +78,12 @@ function MediaText (props) {
         }            
     } else if (region === "Secondary") {
         wrapperCol = "col-xs-12";
+        console.log(textOrButtons);
     // region is null, widget not in section 
     } else {
         wrapperCol = "row mt-5";
         if (imageURL) {
-            if (mediaDescription) {
+            if (textOrButtons) {
                 switch(mediaSize) {
                     case "small":
                         headingClass = "mt-md-0";
@@ -106,7 +110,7 @@ function MediaText (props) {
                 mediaCol = "col-xs-12";
             }
         } else {
-            if (mediaDescription) {
+            if (textOrButtons) {
                 wrapperCol = "row";
                 switch(mediaSize) {
                     case "small":
@@ -149,11 +153,11 @@ function MediaText (props) {
             />}
             {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
         </section>
-        {mediaDescription &&
+        {textOrButtons &&
         <section className={textCol}>
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
-            <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
-            {mediaButtons?.length>0 && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
+            {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
+            {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
             {mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
                 return ( 
                 <React.Fragment>
