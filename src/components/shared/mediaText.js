@@ -30,78 +30,47 @@ function MediaText (props) {
     
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";    
-    let wrapperCol;
+    let wrapperCol = "col mt-5";
     let headingClass;
 
     if (region === "Primary") {
-        if (imageURL) {            
-            if (mediaDescription) {
-                switch(mediaSize) {
-                    case "small":
-                        headingClass = "mt-md-0";
-                        mediaCol = "col-md-4";
-                        textCol = "col-md-8";
-                        wrapperCol = "col-md-6 row";
-                    break;
-                    case "medium":
-                        headingClass = "mt-md-0";
-                        mediaCol = "col-md-6";
-                        textCol = "col-md-6";
-                        wrapperCol = "col-md-6 row mt-5";
-                    break;
-                    case "large":
-                        mediaCol = "col-xs-12";
-                        textCol = "col-xs-12";
-                        wrapperCol = "col-md-6";
-                    break;
-                    default:
-                        mediaCol = "col-xs-12";
-                        textCol = "col-xs-12";
-                        wrapperCol = "col";
-                    break;
-                }
-            } else {
-                mediaCol = "col-xs-12";
-                wrapperCol = "col-md-3 d-flex flex-wrap";
+        if (mediaDescription) {
+            switch(mediaSize) {
+                case "small":
+                    headingClass = "mt-md-0";
+                    mediaCol = "col-md-4";
+                    textCol = "col-md-8";
+                    wrapperCol += " row";
+                break;
+                case "medium":
+                    headingClass = "mt-md-0";
+                    mediaCol = "col-md-6";
+                    textCol = "col-md-6";
+                    wrapperCol += " row";
+                break;
+                case "large":
+                    mediaCol = "col-xs-12";
+                    textCol = "col-xs-12";
+                break;
+                default:
+                    mediaCol = "col-xs-12";
+                    textCol = "col-xs-12";
+                break;
             }
         } else {
-            if (mediaDescription) {
-                wrapperCol = "col-md-6";
-                switch(mediaSize) {
-                    case "small":
-                        headingClass = "mt-md-0";
-                        mediaCol = "col-md-4";
-                        textCol = "col-md-8";
-                    break;
-                    case "medium":
-                        headingClass = "mt-md-0";
-                        mediaCol = "col-md-6";
-                        textCol = "col-md-6";
-                    break;
-                    case "large":
-                        mediaCol = "col-xs-12";
-                        textCol = "col-xs-12";
-                    break;
-                    default:
-                        mediaCol = "col-xs-12";
-                        textCol = "col-xs-12";
-                    break;
-                }
-            } else {
-                switch(mediaSize) {
-                    case "small":
-                        mediaCol = "col-md-4";
-                    break;
-                    case "medium":
-                        mediaCol = "col-md-6";
-                    break;
-                    case "large":
-                        mediaCol = "col-xs-12";
-                    break;
-                    default:
-                        mediaCol = "col-xs-12";
-                    break;
-                }
+            switch(mediaSize) {
+                case "small":
+                    mediaCol = "col-md-4";
+                break;
+                case "medium":
+                    mediaCol = "col-md-6";
+                break;
+                case "large":
+                    mediaCol = "col-xs-12";
+                break;
+                default:
+                    mediaCol = "col-xs-12";
+                break;
             }
         }            
     } else if (region === "Secondary") {
