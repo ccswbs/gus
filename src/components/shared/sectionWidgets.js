@@ -74,7 +74,7 @@ function SectionWidgets (props) {
         if (secondary.length > 0) {
             primaryClass = "col-md-9";
         } else {
-            primaryClass = "row";
+            primaryClass = "row row-cols-1 row-cols-md-2";
         }
         
         return (<>
