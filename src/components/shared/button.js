@@ -51,7 +51,7 @@ function Button (buttonData, buttonWidth) {
     let buttonIcon = buttonData?.field_font_awesome_icon;
     let buttonIconColour = buttonData.relationships.field_font_awesome_icon_colour?.name;
     let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonWidth + " text-start p-4";
-    let buttonFontAwesomeClasses = buttonIcon + " fa-xl me-2" + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
+    let buttonFontAwesomeClasses = "d-table-cell align-middle pe-4 fa-2xl " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
     
@@ -61,23 +61,23 @@ function Button (buttonData, buttonWidth) {
     {buttonData.field_button_link.uri.includes("http") ? btnAnalyticsGoal && btnAnalyticsAction ? 
         <a href={urlLink} className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
             {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
-            <span className="d-inline-block" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+            <span className="d-table-cell lh-sm" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
         :
         <a href={urlLink} className={buttonClasses}>
             {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
-            <span className="d-inline-block" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+            <span className="d-table-cell lh-sm" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>
         :
         btnAnalyticsGoal && btnAnalyticsAction ? 
         <Link to={urlLink} className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
             {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
-            <span className="d-inline-block" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+            <span className="d-table-cell lh-sm" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </Link>
         :
         <Link to={urlLink} className={buttonClasses}>
             {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
-            <span className="d-inline-block" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+            <span className="d-table-cell lh-sm" dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </Link>        
     }
     </React.Fragment>)
