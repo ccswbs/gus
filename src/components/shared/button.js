@@ -50,7 +50,7 @@ function Button (buttonData, buttonWidth) {
     let buttonLinkTitle = buttonData?.field_formatted_title ? buttonData.field_formatted_title.processed : (buttonData.field_button_link?.title ? buttonData.field_button_link.title : "No title entered");
     let buttonIcon = buttonData?.field_font_awesome_icon;
     let buttonIconColour = buttonData.relationships.field_font_awesome_icon_colour?.name;
-    let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonWidth + " text-start p-4";
+    let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonWidth + " no-icon p-4 text-start";
     let buttonFontAwesomeClasses = "d-table-cell align-middle pe-4 fa-2xl " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
