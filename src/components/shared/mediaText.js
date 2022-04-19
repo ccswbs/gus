@@ -43,13 +43,13 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
-                        wrapperCol = "col-md-6 row";
+                        wrapperCol = "col-md-6 row mt-4";
                     break;
                     case "medium":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
-                        wrapperCol = "col-md-6 row";
+                        wrapperCol = "col-md-6 row mt-4";
                     break;
                     case "large":
                         mediaCol = "col-xs-12";
@@ -59,7 +59,7 @@ function MediaText (props) {
                     default:
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
-                        wrapperCol = "col-sm";
+                        wrapperCol = "col-sm mb-3";
                     break;
                 }
             } else {
@@ -74,7 +74,7 @@ function MediaText (props) {
                         mediaCol = "col-xs-12";
                     break;
                     default:
-                        mediaCol = "col-sm";
+                        mediaCol = "col-sm mb-3";
                     break;
                 }
             }
