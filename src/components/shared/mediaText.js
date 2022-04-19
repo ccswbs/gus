@@ -35,50 +35,70 @@ function MediaText (props) {
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
 
     if (region === "Primary") {
-        if (mediaDescription || mediaButtons) {
-            switch(mediaSize) {
-                case "small":
-                    headingClass = "mt-md-0";
-                    mediaCol = "col-md-4";
-                    textCol = "col-md-8";
-                    wrapperCol = "col-md-6 row";
-                break;
-                case "medium":
-                    headingClass = "mt-md-0";
-                    mediaCol = "col-md-6";
-                    textCol = "col-md-6";
-                    wrapperCol = "col-md-6 row";
-                break;
-                case "large":
-                    mediaCol = "col-xs-12";
-                    textCol = "col-xs-12";
-                    wrapperCol = "col-md-6";
-                break;
-                default:
-                    mediaCol = "col-xs-12";
-                    textCol = "col-xs-12";
-                    wrapperCol = "col-md-6";
-                break;
+        // For images
+        if (imageURL) {
+            if (mediaDescription || mediaButtons) {
+                switch(mediaSize) {
+                    case "small":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-4";
+                        textCol = "col-md-8";
+                        wrapperCol = "col-md-6 row";
+                    break;
+                    case "medium":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                        wrapperCol = "col-md-6 row";
+                    break;
+                    case "large":
+                        mediaCol = "col-xs-12";
+                        textCol = "col-xs-12";
+                        wrapperCol = "col-md-6";
+                    break;
+                    default:
+                        mediaCol = "col-xs-12";
+                        textCol = "col-xs-12";
+                        wrapperCol = "col-sm";
+                    break;
+                }
+            } else {
+                switch(mediaSize) {
+                    case "small":
+                        mediaCol = "col-md-4";                    
+                    break;
+                    case "medium":
+                        mediaCol = "col-md-6";
+                    break;
+                    case "large":
+                        mediaCol = "col-xs-12";
+                    break;
+                    default:
+                        mediaCol = "col-sm";
+                    break;
+                }
             }
+        // For videos in Primary section, text and/or buttons will always appear underneath
         } else {
             switch(mediaSize) {
                 case "small":
-                    mediaCol = "col-md-4";                    
+                    wrapperCol = "col-md-4";
                 break;
                 case "medium":
-                    mediaCol = "col-md-6";
+                    wrapperCol = "col-md-6";
                 break;
                 case "large":
-                    mediaCol = "col-xs-12";
+                    wrapperCol = "col-xs-12";
                 break;
                 default:
-                    mediaCol = "col-xs-12";
+                    wrapperCol = "col-sm";
                 break;
             }
-        }            
+        }
+    // Everything in the Secondary column is stacked
     } else if (region === "Secondary") {
         wrapperCol = "col-xs-12";        
-    // region is null, widget not in section 
+    // Region is null, widget not in section 
     } else {
         wrapperCol = "row mt-5";
         if (imageURL) {
