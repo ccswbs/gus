@@ -15,7 +15,7 @@ function SectionButtons (props) {
         wrapper = "col-xs-12";
         buttonWidth = "w-100";
     } else {
-        wrapper = "row";
+        wrapper = "row mt-3 ms-0";
         buttonWidth = "col-md-auto me-md-3";
     }
     
