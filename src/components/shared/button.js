@@ -51,7 +51,7 @@ function Button (buttonData, buttonWidth) {
     let buttonIcon = buttonData?.field_font_awesome_icon;
     let buttonIconColour = buttonData.relationships.field_font_awesome_icon_colour?.name;
     let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonWidth + " no-icon p-4 text-start";
-    let buttonFontAwesomeClasses = "d-table-cell align-middle pe-4 fa-2xl " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
+    let buttonFontAwesomeClasses = "align-middle col-3 d-table-cell display-1 " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
     
