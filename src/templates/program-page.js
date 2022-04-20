@@ -311,26 +311,6 @@ const ProgramPage = ({data, location}) => {
             }
             <div className="container ft-container"><h1 className="fancy-title">{title}</h1></div>
         </div>
-
-        { /**** Blurb and Call to Action Button ****/ }
-        {ogDescription || callToActionData?.length>0 ? 
-        <div className="full-width-container bg-dark">
-            <div className="container">
-                <section className="row mx-2">
-                    {ogDescription && <div className="col-md-9"><p className="fs-2">{ogDescription}</p></div>}
-                    {callToActionData?.length>0 && 
-                    <div className={ogDescription ? "col-md-3" : "col-md-3 offset-md-9"}>
-                      <CallToAction 
-                        classes="btn btn-primary fs-1 me-4 p-4 w-100"
-                        href={callToActionData[0]?.node.field_call_to_action_link.uri} 
-                        goalEventCategory={callToActionData[0]?.node.relationships.field_call_to_action_goal?.name} 
-                        goalEventAction={callToActionData[0]?.node.relationships.field_call_to_action_goal?.field_goal_action}>
-                        {callToActionData[0]?.node.field_call_to_action_link.title}
-                      </CallToAction>
-                    </div>}
-                </section>
-            </div>
-        </div> : ``}
       
         <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 

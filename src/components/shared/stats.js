@@ -16,7 +16,7 @@ function Stats (props) {
 					let statFAIcon = stat.field_font_awesome_icon ;
 
 					return <React.Fragment key={stat.drupal_id}>
-					<div className="uog-card">
+					<div className="uog-card text-break">
 						<dt>
 							{contentExists(statFAIcon) === true && <span className="fa-icon-colour"><i className={statFAIcon}>  </i></span>}
 							{statRange === true && statValueEnd !== null ? statValue + " - " + statValueEnd : statValue}
