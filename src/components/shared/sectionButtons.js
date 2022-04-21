@@ -8,20 +8,20 @@ function SectionButtons (props) {
     const fieldButtonsData = props.pageData.relationships?.field_buttons;
     const buttonCol = props.pageData.relationships?.field_section_column?.name;
     
-    let wrapper;
+    //let wrapper;
     let buttonWidth;
     
     if (buttonCol === "right" || buttonCol === "Secondary") {
-        wrapper = "col-xs-12";
+        //wrapper = "col-xs-12";
         buttonWidth = "w-100";
     } else {
-        wrapper = "row mt-3 ms-0";
+        //wrapper = "row mt-3 ms-0";
         buttonWidth = "col-md-auto me-md-3";
     }
     
     return (
         <React.Fragment>
-            <div className={wrapper}>
+            <div className="d-grid d-md-block">
             {fieldButtonsData?.length > 0 && <>
                 {fieldButtonsData.map (buttonData => {
                     return Button(buttonData, buttonWidth)
