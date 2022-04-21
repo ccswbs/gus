@@ -13,9 +13,9 @@ import { ConditionalWrapper } from 'utils/ug-utils';
 function renderPrimary(widget) {
     switch (widget?.__typename) {
         case "paragraph__general_text":
-            return <GeneralText processed={widget.field_general_text.processed} />;
+            return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
         case "paragraph__lead_paragraph":
-            return( <LeadPara pageData={widget} />);        
+            return( <LeadPara key={widget.drupal_id} pageData={widget} />);        
         case "paragraph__links_widget":
             const gridFirstHeadingLevel = "h2";
             const listFirstHeadingLevel = "h2";
@@ -30,11 +30,11 @@ function renderPrimary(widget) {
                     description={widget.field_link_items_description}
                     numColumns={numColumns} />
         case "paragraph__media_text":
-            return <MediaText widgetData={widget} region="Primary" />;
+            return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
         case "paragraph__stats_widget":
-            return <StatsWidget statsWidgetData={widget} />;
+            return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
         case "paragraph__section_buttons":
-            return <SectionButtons pageData={widget} />;
+            return <SectionButtons key={widget.drupal_id} pageData={widget} />;
         default:
             return <></>;                          
     }
@@ -44,11 +44,11 @@ function renderPrimary(widget) {
 function renderSecondary(widget) {
     switch (widget?.__typename) {
         case "paragraph__general_text":
-            return <GeneralText processed={widget.field_general_text.processed} />;                        
+            return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;                        
         case "paragraph__media_text":
-            return <MediaText widgetData={widget} region="Secondary" />;
+            return <MediaText key={widget.drupal_id} widgetData={widget} region="Secondary" />;
         case "paragraph__section_buttons":
-            return <div><SectionButtons pageData={widget} /></div>;
+            return <SectionButtons key={widget.drupal_id} pageData={widget} />;
         default:
             return <></>;                          
     }
@@ -78,7 +78,7 @@ function SectionWidgets (props) {
         }
         
         return (<>
-            <div className={primaryClass} title="Primary Area (col-md-9 if right column exists, row if it doesn't)">
+            <div className={primaryClass}>
                 <ConditionalWrapper condition={secondary.length > 0} wrapper={children => <div className="row" title="primary sub-row when right column exists">{children}</div>}>
                 {primary && primary.map(widget => {
                     return renderPrimary(widget)
@@ -86,7 +86,7 @@ function SectionWidgets (props) {
                 </ConditionalWrapper>
             </div>
             {secondary.length > 0 && 
-            <div className="col-md-3" title="Secondary Column (right)">
+            <div className="col-md-3">
             {secondary.map(widget => {
                 return renderSecondary(widget)
             })}    
