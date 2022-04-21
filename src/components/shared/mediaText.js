@@ -172,7 +172,7 @@ function MediaText (props) {
             {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
         </section>
         {textOrButtons &&
-        <section className={textCol}>
+        <section className={textCol + " text-break"}>
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
             {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
