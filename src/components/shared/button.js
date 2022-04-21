@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-//import 'styles/button-widget.css'
 import { Link } from 'gatsby';
 import { fontAwesomeIconColour } from 'utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
@@ -44,17 +43,17 @@ function buttonStyle(styleOfButton) {
     }
 }
 
-function Button (buttonData, buttonWidth) {
+function Button (buttonData, buttonSpacing) {
   
     let urlLink = buttonData.field_button_link?.url;
     let buttonLinkTitle = buttonData?.field_formatted_title ? buttonData.field_formatted_title.processed : (buttonData.field_button_link?.title ? buttonData.field_button_link.title : "No title entered");
     let buttonIcon = buttonData?.field_font_awesome_icon;
     let buttonIconColour = buttonData.relationships.field_font_awesome_icon_colour?.name;
-    let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonWidth + " no-icon p-4 text-start d-table-row";
-    let buttonFontAwesomeClasses = "align-middle d-table-cell display-2 " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
+    let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonSpacing + " no-icon p-4 text-start";
+    let buttonFontAwesomeClasses = "align-middle display-2 d-table-cell pe-3 " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
-    let buttonTitleClasses = "d-table-cell lh-sm";
+    let buttonTitleClasses = "align-middle d-table-cell lh-sm";
     
     return (
     <React.Fragment key={buttonData.drupal_id}>
@@ -85,11 +84,11 @@ function Button (buttonData, buttonWidth) {
 }
 Button.propTypes = {
     buttonData: PropTypes.object,
-    buttonWidth:  PropTypes.string, 
+    buttonSpacing:  PropTypes.string, 
 }
 
 Button.defaultProps = {
-    buttonData: '',
-    buttonWidth: '',
+    buttonData: ``,
+    buttonSpacing: ``,
 }
 export default Button
