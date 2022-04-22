@@ -11,14 +11,14 @@ function SectionButtons (props) {
     let buttonColClasses;
     let buttonSpacing;
     
-    if (buttonCol !== "right" || buttonCol !== "Secondary") {
-        buttonColClasses = "d-grid d-md-block gap-2";
-        buttonSpacing = "me-md-3";        
-    } else {
+    if (buttonCol === "right" || buttonCol === "Secondary") {
         buttonColClasses = "d-grid gap-2";
         buttonSpacing = "";        
+    } else {        
+        buttonColClasses = "d-grid d-md-block gap-2";
+        buttonSpacing = "me-md-3";        
     }
-    
+
     return (
         <React.Fragment>
             <div className={buttonColClasses}>
