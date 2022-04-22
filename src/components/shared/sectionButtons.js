@@ -8,15 +8,20 @@ function SectionButtons (props) {
     const fieldButtonsData = props.pageData.relationships?.field_buttons;
     const buttonCol = props.pageData.relationships?.field_section_column?.name;
     
+    let buttonColClasses;
     let buttonSpacing;
     
     if (buttonCol !== "right" || buttonCol !== "Secondary") {
-        buttonSpacing = "me-md-3";
+        buttonColClasses = "d-grid d-md-block gap-2";
+        buttonSpacing = "me-md-3";        
+    } else {
+        buttonColClasses = "d-grid gap-2";
+        buttonSpacing = "";        
     }
     
     return (
         <React.Fragment>
-            <div className="d-grid d-md-block gap-2">
+            <div className={buttonColClasses}>
             {fieldButtonsData?.length > 0 && <>
                 {fieldButtonsData.map (buttonData => {
                     return Button(buttonData, buttonSpacing)
