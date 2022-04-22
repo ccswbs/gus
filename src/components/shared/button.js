@@ -43,7 +43,7 @@ function buttonStyle(styleOfButton) {
     }
 }
 
-function Button (buttonData, buttonSpacing) {
+function Button (buttonCol, buttonData, buttonSpacing) {
   
     let urlLink = buttonData.field_button_link?.url;
     let buttonLinkTitle = buttonData?.field_formatted_title ? buttonData.field_formatted_title.processed : (buttonData.field_button_link?.title ? buttonData.field_button_link.title : "No title entered");
@@ -53,11 +53,11 @@ function Button (buttonData, buttonSpacing) {
     let buttonFontAwesomeClasses = "align-middle display-2 d-table-cell pe-3 " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
-    let buttonTitleClasses = "align-middle d-table-cell lh-sm";
+    let buttonTitleClasses = "align-middle d-table-cell lh-sm" + (buttonCol === "Call to Action" ? " fs-1" : null);
     
     return (
     <React.Fragment key={buttonData.drupal_id}>
-    {buttonData.field_cta_heading && <span dangerouslySetInnerHTML={{__html: "<p>" + buttonData.field_cta_heading.processed + "</p>"}} />}    
+    {buttonData.field_cta_heading && <div dangerouslySetInnerHTML={{__html: buttonData.field_cta_heading.processed}} />}    
     {buttonData.field_button_link.uri.includes("http") ? btnAnalyticsGoal && btnAnalyticsAction ? 
         <a href={urlLink} className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
             {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}

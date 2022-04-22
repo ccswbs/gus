@@ -14,6 +14,9 @@ function SectionButtons (props) {
     if (buttonCol === "right" || buttonCol === "Secondary") {
         buttonColClasses = "d-grid gap-2";
         buttonSpacing = "";        
+    } else if (buttonCol === "Call to Action") {
+        buttonColClasses = "col-sm-12 col-md-6 d-grid offset-md-3 col-lg-4 offset-lg-4";
+        buttonSpacing = ""; 
     } else {        
         buttonColClasses = "d-grid d-md-block gap-2";
         buttonSpacing = "me-md-3";        
@@ -24,7 +27,7 @@ function SectionButtons (props) {
             <div className={buttonColClasses}>
             {fieldButtonsData?.length > 0 && <>
                 {fieldButtonsData.map (buttonData => {
-                    return Button(buttonData, buttonSpacing)
+                    return Button(buttonCol, buttonData, buttonSpacing)
                 })}
             </>}
            </div>
