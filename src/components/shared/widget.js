@@ -10,7 +10,6 @@ import MediaText from 'components/shared/mediaText';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
-import { contentExists } from 'utils/ug-utils';
 
 const Widget = ({widget}) => {
     switch (widget?.__typename) {
@@ -23,32 +22,31 @@ const Widget = ({widget}) => {
         case "paragraph__general_text":
             return <GeneralText processed={widget.field_general_text.processed} />;
         case "paragraph__lead_paragraph":
-            return( <LeadPara pageData={widget} />);
+            return( <LeadPara pageData={widget} />);        
         case "paragraph__links_widget":
             const gridFirstHeadingLevel = "h2";
             const listFirstHeadingLevel = "h2";
-            const linksDisplayType = (contentExists(widget.relationships.field_link_items[0].relationships.field_link_image))? 'grid': 'list';
-            const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
-            const numColumns = (linksDisplayType === 'grid')? 4: null;
-            return <LinksItems  key={widget.drupal_id}
+            const linksDisplayType = widget.relationships.field_link_items[0].relationships.field_link_image ? "grid" : "list";
+            const headingLevel = (linksDisplayType === "grid") ? gridFirstHeadingLevel : listFirstHeadingLevel;
+            const numColumns = (linksDisplayType === "grid") ? 4 : null;
+            return <LinksItems key={widget.drupal_id}
                         pageData={widget.relationships.field_link_items} 
                         displayType={linksDisplayType} 
                         heading={widget.field_link_items_title} 
                         headingLevel={headingLevel} 
                         description={widget.field_link_items_description}
-                        numColumns={numColumns}/>
-
+                        numColumns={numColumns} />
         case "paragraph__media_text":
-            return <div className="row mt-5"><MediaText headingClass="mt-md-0" widgetData={widget} /></div>;
+            return <MediaText headingClass="mt-md-0" widgetData={widget} />;
         case "paragraph__section":
             return (<>
-				{contentExists(widget.field_section_title) === true && <h2>{widget.field_section_title}</h2>}
-				<div key={widget.drupal_id} className={widget.field_section_classes}>                    
+				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
+				<div key={widget.drupal_id} className="row mt-5">                    
                     <SectionWidgets pageData={widget.relationships.field_section_content}/>
                 </div>
 			</>);
         case "paragraph__section_tabs":
-            return( <PageTabs pageData={widget} />);
+            return <PageTabs pageData={widget} />;
         case "paragraph__stats_widget":
             return <StatsWidget statsWidgetData={widget} />;
         default:

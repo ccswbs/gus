@@ -1,113 +1,97 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import CtaPara from 'components/shared/ctaPara'
 import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
 import SectionButtons from 'components/shared/sectionButtons';
 import StatsWidget from 'components/shared/statsWidget';
-import { contentExists } from 'utils/ug-utils'
-import 'styles/widgets.css';
-// 
-// add to the if statement each widget in the section widget, 
-// widgets will call each function in the order that it appears in the Drupal Backend. 
-// props.pageData - an array that contains all widgets (paragraphs) in field_widget 
-// if contenet exists - step through each element in props.pageData 
-// widgetData - contains an array for the current element in the props.pageData array 
-// if widgetData.__typename === "paragraph__{name of widget}" pass that current data to the correct widget component
-// will return all the widgets in the order they were entered. 
-//
+import { ConditionalWrapper } from 'utils/ug-utils';
+
+// For the left column
+function renderPrimary(widget) {
+    switch (widget?.__typename) {
+        case "paragraph__general_text":
+            return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
+        case "paragraph__lead_paragraph":
+            return( <LeadPara key={widget.drupal_id} pageData={widget} />);        
+        case "paragraph__links_widget":
+            const gridFirstHeadingLevel = "h2";
+            const listFirstHeadingLevel = "h2";
+            const linksDisplayType = widget.relationships.field_link_items[0].relationships.field_link_image ? "grid" : "list";
+            const headingLevel = (linksDisplayType === "grid") ? gridFirstHeadingLevel : listFirstHeadingLevel;
+            const numColumns = (linksDisplayType === "grid") ? 4 : null;
+            return <LinksItems key={widget.drupal_id}
+                    pageData={widget.relationships.field_link_items} 
+                    displayType={linksDisplayType} 
+                    heading={widget.field_link_items_title} 
+                    headingLevel={headingLevel} 
+                    description={widget.field_link_items_description}
+                    numColumns={numColumns} />
+        case "paragraph__media_text":
+            return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
+        case "paragraph__stats_widget":
+            return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
+        case "paragraph__section_buttons":
+            return <SectionButtons key={widget.drupal_id} pageData={widget} />;
+        default:
+            return <></>;                          
+    }
+}
+
+//For the right column
+function renderSecondary(widget) {
+    switch (widget?.__typename) {
+        case "paragraph__general_text":
+            return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;                        
+        case "paragraph__media_text":
+            return <MediaText key={widget.drupal_id} widgetData={widget} region="Secondary" />;
+        case "paragraph__section_buttons":
+            return <SectionButtons key={widget.drupal_id} pageData={widget} />;
+        default:
+            return <></>;                          
+    }
+}
 
 function SectionWidgets (props) {
 
-    if (contentExists(props.pageData) && props.pageData.length !== 0) {
-        return (props.pageData.map(widgetData => {
-            if (widgetData.__typename==="paragraph__links_widget") {
-                
-                const gridFirstHeadingLevel = "h2";
-                const listFirstHeadingLevel = "h2";
-
-        // if there is at least one links widget (paragarph__links_widget) - step through each one to display links 
-        // if there are link items on the page display them using LinksItems
-        // if the first element has an image - display as a grid otherwise display as a list with no images (not srue if this is the best way to do this, but it works)
-        // logic could be added to have a selction of layout - 
-        // to use - call LinksItems - passing the array of links (pictures optional)
-        // - set level heading to start at h2 for grid and list, option to change. 
+    if (props.pageData?.length > 0) {        
+        let primary = [];
+        let secondary = [];
+        let primaryClass;
+        let allWidgets = props.pageData;
         
-                const linksDisplayType = (contentExists(widgetData.relationships.field_link_items[0].relationships.field_link_image))? 'grid': 'list';
-                const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
-                const numColumns = (linksDisplayType === 'grid')? 4: null;
-            
-                return ( <div className="flex-even">
-                            <LinksItems key={widgetData.drupal_id}
-                                        pageData={widgetData.relationships.field_link_items} 
-                                        displayType={linksDisplayType} 
-                                        heading={widgetData.field_link_items_title} 
-                                        headingLevel={headingLevel} 
-                                        description={widgetData.field_link_items_description}
-                                        numColumns={numColumns}/>
-                        </div>
-                )
+        allWidgets.forEach(widgetData => {
+            let secCol = widgetData.relationships.field_section_column?.name;
+            if (secCol === "right" || secCol === "Secondary") {
+                secondary.push(widgetData);
+            } else {
+                primary.push(widgetData);
             }
-            else if (widgetData.__typename==="paragraph__call_to_action") {
-                const ctaClassName = contentExists(widgetData.relationships.field_section_column)? "flex-even section-"+widgetData.relationships.field_section_column.name: '';
-                return <div className={ctaClassName}><CtaPara pageData={widgetData} /></div>;
-            }
-            else if (widgetData.__typename==="paragraph__media_text") {
-                let divColClass;
-                let mediaColClass;
-                let headingClass;
-                const isImage = contentExists(widgetData.relationships.field_media_text_media.relationships.field_media_image) ? true : false;
-                const mediaSectionCol = contentExists(widgetData.relationships.field_section_column) ? widgetData.relationships.field_section_column.name : '';
-                
-                if (isImage) {
-                    divColClass = "col-md-6 mt-5";                     
-                    if (mediaSectionCol === "left" || mediaSectionCol === "right") {                                               
-                        mediaColClass = "col-md-6";
-                        headingClass = "mt-md-0";
-                    } else {
-                        mediaColClass = "col-xs-12";
-                        headingClass = "";
-                    }                  
-                } else {
-                    headingClass = "";
-                    mediaColClass = "col-xs-12";
-                    switch(mediaSectionCol) {
-                        case "left":
-                        divColClass = "section-left";
-                        break;
-                        case "right":
-                        divColClass = "section-right";
-                        break;
-                        default:
-                        divColClass = "col-md-6 mt-5";
-                    }
-                }            
-                return <div className={divColClass}><div className="row"><MediaText colClass={mediaColClass} headingClass={headingClass} widgetData={widgetData} /></div></div>;			
-            }
-            else if (widgetData.__typename==="paragraph__stats_widget") {
-                const statsClassName=contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
-                return <div className={statsClassName}><StatsWidget statsWidgetData={widgetData} /></div>;                
-            }
-            else if (widgetData.__typename==="paragraph__lead_paragraph") {
-                const leadClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
-                return <div className={leadClassName}><LeadPara pageData={widgetData} /></div>;
-            }
-            else if (widgetData.__typename==="paragraph__general_text" && contentExists(widgetData.field_general_text.processed)) {
-                const textClass = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
-                return <GeneralText textClass={textClass} processed={widgetData.field_general_text.processed} />; 
-            }
-            else if (widgetData.__typename==="paragraph__section_buttons") {
-                const sbtnClassName = contentExists(widgetData.relationships.field_section_column)? "section-"+widgetData.relationships.field_section_column.name: '';
-                return <div className={sbtnClassName}><SectionButtons pageData={widgetData} /></div>;
-            }
-            else if (widgetData.__typename==="paragraph__new_widget") {
-                return <p>This is Paragraph_new_widget</p>;
-           }
-           return null;
-        }))
+        })
+
+        if (secondary.length > 0) {
+            primaryClass = "col-md-9";
+        } else {
+            primaryClass = "row";
+        }
+        
+        return (<>
+            <div className={primaryClass}>
+                <ConditionalWrapper condition={secondary.length > 0} wrapper={children => <div className="row" title="primary sub-row when right column exists">{children}</div>}>
+                {primary && primary.map(widget => {
+                    return renderPrimary(widget)
+                })}                
+                </ConditionalWrapper>
+            </div>
+            {secondary.length > 0 && 
+            <div className="col-md-3">
+            {secondary.map(widget => {
+                return renderSecondary(widget)
+            })}    
+            </div>}
+        </>)
     }
     return null;
 }
@@ -123,36 +107,32 @@ SectionWidgets.defaultProps = {
 export default SectionWidgets
 
 export const query = graphql`
-
-    fragment SectionParagraphFragment on paragraph__section {
-        drupal_id
-        field_section_title
-        field_section_classes
-        relationships {
-            field_section_content {
-                __typename
-                ... on paragraph__call_to_action {
-                    ...CallToActionParagraphFragment
-                }
-                ... on paragraph__general_text {
-                    ...GeneralTextParagraphFragment
-                }
-                ... on paragraph__links_widget {
-                    ...LinksWidgetParagraphFragment
-                }
-                ... on paragraph__media_text {
-                    ...MediaTextParagraphFragment
-                }
-                ... on paragraph__stats_widget {
-                    ...StatsWidgetParagraphFragment
-                }
-                ... on paragraph__lead_paragraph {
-                    ...LeadParagraphFragment
-                }
-                ... on paragraph__section_buttons {
-                    ...SectionButtonsParagraphFragment
-                }
-            }
+  fragment SectionParagraphFragment on paragraph__section {
+    drupal_id
+    field_section_title
+    field_section_classes
+    relationships {
+      field_section_content {
+        __typename
+        ... on paragraph__general_text {
+            ...GeneralTextParagraphFragment
         }
+        ... on paragraph__links_widget {
+            ...LinksWidgetParagraphFragment
+        }
+        ... on paragraph__media_text {
+            ...MediaTextParagraphFragment
+        }
+        ... on paragraph__stats_widget {
+            ...StatsWidgetParagraphFragment
+        }
+        ... on paragraph__lead_paragraph {
+            ...LeadParagraphFragment
+        }
+        ... on paragraph__section_buttons {
+            ...SectionButtonsParagraphFragment
+        }
+      }
     }
+  }
 `

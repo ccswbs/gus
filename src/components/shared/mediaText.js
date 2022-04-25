@@ -4,90 +4,197 @@ import { graphql, Link } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
-import { contentExists } from 'utils/ug-utils';
+import { ConditionalWrapper } from 'utils/ug-utils';
 
 function MediaText (props) {
+    
+    const region = props.region;
 
-    const mediaTitle = (contentExists(props.widgetData.field_media_text_title) ? props.widgetData.field_media_text_title : ``);
-    const mediaDescription = (contentExists(props.widgetData.field_media_text_desc) ? props.widgetData.field_media_text_desc.processed: ``);
-    const mediaLinks = props.widgetData.field_media_text_links;	
-    const mediaRelationships = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.relationships: ``);
+    const mediaTitle = props.widgetData?.field_media_text_title;
+    const mediaDescription = props.widgetData.field_media_text_desc?.processed;
+    const mediaLinks = props.widgetData?.field_media_text_links;
+    const mediaButtons = props.widgetData.relationships?.field_button_section;
+    const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
-    const imageURL = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.localFile : ``);	
-    const imageAlt = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_image) ? mediaRelationships.field_media_image.alt : ``);
-    const imageSize = (contentExists(imageURL) && contentExists(props.widgetData.field_media_image_size) ? props.widgetData.field_media_image_size : ``);
-
-    const playerID = (contentExists(props.widgetData.relationships.field_media_text_media) ? props.widgetData.relationships.field_media_text_media.drupal_id : ``);
-    const videoURL = (contentExists(mediaRelationships) ? props.widgetData.relationships.field_media_text_media.field_media_oembed_video : ``);
-    const videoTranscript = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_media_file) ? mediaRelationships.field_media_file.localFile.publicURL : ``);
-    const videoCC = (contentExists(mediaRelationships) && contentExists(mediaRelationships.field_video_cc) ? mediaRelationships.field_video_cc.localFile.publicURL : ``);
+    const imageURL = mediaRelationships?.field_media_image?.localFile;	
+    const imageAlt = mediaRelationships?.field_media_image?.alt;
+    const mediaSize = props.widgetData?.field_media_image_size;
+    
+    const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
+    const videoTranscript = mediaRelationships?.field_media_file?.localFile.publicURL;
+    const videoURL = props.widgetData.relationships.field_media_text_media?.field_media_oembed_video;
+    const videoHeight = props.widgetData.relationships.field_media_text_media?.field_video_height;
+    const videoWidth = props.widgetData.relationships.field_media_text_media?.field_video_width;
     const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
     const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
     
-  let mediaCol;
-  let textCol;
-    
-    if (contentExists(mediaDescription)) {
-        if (contentExists(imageURL) && contentExists(imageSize)) {
-            switch(imageSize) {
+    let mediaCol = "col-xs-12";
+    let textCol = "col-xs-12";
+    let wrapperCol;
+    let headingClass;
+    let textOrButtons = mediaDescription || mediaButtons ? true : false;
+
+    if (region === "Primary") {
+        // For images
+        if (imageURL) {
+            if (mediaDescription || mediaButtons) {
+                switch(mediaSize) {
+                    case "small":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-4";
+                        textCol = "col-md-8";
+                        wrapperCol = "col-md-6 row mt-4";
+                    break;
+                    case "medium":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                        wrapperCol = "col-md-6 row mt-4";
+                    break;
+                    case "large":
+                        mediaCol = "col-xs-12";
+                        textCol = "col-xs-12";
+                        wrapperCol = "col-md-6";
+                    break;
+                    default:
+                        mediaCol = "col-xs-12";
+                        textCol = "col-xs-12";
+                        wrapperCol = "col-sm mb-3";
+                    break;
+                }
+            } else {
+                switch(mediaSize) {
+                    case "small":
+                        mediaCol = "col-md-4";                    
+                    break;
+                    case "medium":
+                        mediaCol = "col-md-6";
+                    break;
+                    case "large":
+                        mediaCol = "col-xs-12";
+                    break;
+                    default:
+                        mediaCol = "col-sm mb-3";
+                    break;
+                }
+            }
+        // For videos in Primary section, text and/or buttons will always appear underneath
+        } else {
+            switch(mediaSize) {
                 case "small":
-                    mediaCol = "col-md-3";
-                    textCol = "col-md-9";
+                    wrapperCol = "col-md-4";
                 break;
                 case "medium":
-                    mediaCol = "col-md-4";
-                    textCol = "col-md-8";
+                    wrapperCol = "col-md-6";
                 break;
                 case "large":
-                    mediaCol = "col-md-6";
-                    textCol = "col-md-6";
+                    wrapperCol = "col-xs-12";
                 break;
                 default:
-                    mediaCol = "col-md-6";
-                    textCol = "col-md-6";
+                    wrapperCol = "col-sm";
                 break;
-            }        
-        } else {
-            mediaCol = props.colClass;
-            textCol = props.colClass;
+            }
         }
+    // Everything in the Secondary column is stacked
+    } else if (region === "Secondary") {
+        wrapperCol = "col-xs-12";        
+    // Region is null, widget not in section 
     } else {
-        mediaCol = "col-xs-12";
-    }
-    
-    return <>
+        wrapperCol = "row mt-5";
+        if (imageURL) {
+            if (mediaDescription || mediaButtons) {
+                switch(mediaSize) {
+                    case "small":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-3";
+                        textCol = "col-md-9";
+                    break;
+                    case "medium":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-4";
+                        textCol = "col-md-8";
+                    break;
+                    case "large":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                    default:
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                }
+            } else {
+                mediaCol = "col-xs-12";
+            }
+        } else {
+            if (mediaDescription || mediaButtons) {
+                switch(mediaSize) {
+                    case "small":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-4";
+                        textCol = "col-md-8";
+                    break;
+                    case "medium":
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                    case "large":
+                        mediaCol = "col-md-12";
+                        textCol = "col-md-12";
+                    break;
+                    default:
+                        headingClass = "mt-md-0";
+                        mediaCol = "col-md-6";
+                        textCol = "col-md-6";
+                    break;
+                }
+            } else {
+                mediaCol = "col-xs-12";
+            }
+        }        
+    }        
+
+    return (
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <div className={wrapperCol}>{children}</div>}>
         <section className={mediaCol}>
-            {contentExists(videoURL) ?
-            <Video playerID={playerID} videoType={videoType} videoID={videoID} videoURL={videoURL} videoTranscript={videoTranscript} videoCC={videoCC} />
-            : ``}
-            {contentExists(imageURL) ? <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} /> : ``}
+            {videoURL &&
+            <Video videoID={videoID}
+                videoTitle={videoTitle}
+                videoTranscript={videoTranscript}
+                videoType={videoType}
+                videoURL={videoURL}
+                videoHeight={videoHeight}
+                videoWidth={videoWidth}
+            />}
+            {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
         </section>
-        {contentExists(mediaDescription) ?
-        <section className={textCol}>
-            {contentExists(mediaTitle) ? <h3 {...(contentExists(props.headingClass) ? {className:props.headingClass} : {})}>{mediaTitle}</h3> : ``}
-            <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />
-            {contentExists(props.widgetData.relationships.field_button_section) === true && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
-            {contentExists(props.widgetData.relationships.field_button_section) === false && <div>{mediaLinks.map(mediaLink => {
+        {textOrButtons &&
+        <section className={textCol + " text-break"}>
+            {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
+            {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
+            {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
+            {!mediaButtons && mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
                 return ( 
                 <React.Fragment>
                     {(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={mediaLink.url}>{mediaLink.title}</a> </> :
                     <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
                 </React.Fragment>)                
             })}</div>}
-        </section>
-        : null} 
-    </>;
+        </section>}
+    </ConditionalWrapper>    
+    );
 }
 
 MediaText.propTypes = {
     widgetData: PropTypes.object,
-    colClass: PropTypes.string,
-    headingClass: PropTypes.string,
+    region: PropTypes.string,
 }
 MediaText.defaultProps = {
     widgetData: null,
-    colClass: `col-md-6`,
-    headingClass: ``,
+    region: ``,
 }
 
 export default MediaText
@@ -112,6 +219,7 @@ export const query = graphql`
   }
 
   fragment MediaTextParagraphFragment on paragraph__media_text {
+    drupal_id
     field_media_image_size
     field_media_text_title
     field_media_text_desc {
