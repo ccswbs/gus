@@ -50,7 +50,12 @@ export const query = graphql`
     drupal_id
     relationships {
       field_section_column {
-        name
+        ... on taxonomy_term__section_columns {
+          name
+        }
+        ... on taxonomy_term__special_regions {
+          name
+        }
       }
       field_buttons {
         drupal_id

@@ -87,10 +87,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     union media__imagemedia__remote_videoUnion =
       media__image
       | media__remote_video
-      
+    
     union relatedParagraphUnion = 
       paragraph__program_variants
       | paragraph__general_text
+      
+    union relatedRegionUnion = 
+      taxonomy_term__section_columns
+      | taxonomy_term__special_regions
 
     union relatedTaxonomyUnion =
       taxonomy_term__tags
@@ -543,7 +547,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       relationships: paragraph__section_buttonsRelationships
     }
     type paragraph__section_buttonsRelationships {
-      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+      field_section_column: relatedRegionUnion @link(from: "field_section_column___NODE")
       field_buttons: [paragraph__button_widget] @link(from:"field_buttons___NODE")
     }
     type paragraph__section_tabs implements Node {
@@ -622,6 +626,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
+    }
+    type taxonomy_term__special_regions implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String        
     }
     type taxonomy_term__specializations implements Node & TaxonomyInterface {
       drupal_id: String
