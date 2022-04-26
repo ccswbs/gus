@@ -17,13 +17,14 @@ import NavTabContent from 'components/shared/navTabContent';
 import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
 import Testimonials from 'components/shared/testimonial';
-import Variants from 'components/shared/variants'; 
+import Variants from 'components/shared/variants';
+import Widget from 'components/shared/widget';
 import { sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
 
-function renderProgramOverview(description) {
-    if (description) {
-        return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: description }} /></>
+function renderProgramOverview(overview) {
+    if (overview) {
+        return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: overview }} /></>
     }    
     return null;
 }
@@ -288,7 +289,8 @@ const ProgramPage = ({data, location}) => {
     const nodeID = progData.drupal_internal__nid;
     const title = progData.title;
     const acronym = (progData.relationships.field_program_acronym?.name);
-    const description = progData.field_program_overview?.processed;
+    const overview = progData.field_program_overview?.processed;
+    const widgets = progData.relationships?.field_widgets;
     const courseNotes = progData.field_course_notes?.processed;
 
     // set last modified date
@@ -317,8 +319,12 @@ const ProgramPage = ({data, location}) => {
         { /**** Program Overview ****/ }
         <div className="container page-container">
             <div className="row site-content">
-                <section className="content-area">
-                    {renderProgramOverview(description)}
+                {overview && <section className="content-area">
+                        {renderProgramOverview(overview)}
+                </section>}
+                { /**** Widgets content ****/} 
+                <section className="col-md-12">
+                    {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
                 </section>
             </div>
         </div>
@@ -346,7 +352,7 @@ const ProgramPage = ({data, location}) => {
         <div className="container page-container apply-footer">
             <section className="row row-with-vspace site-content">
                 <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
-                    <h3><span>Are you ready to</span> Improve Life?</h3>
+                    <h3 className="text-dark text-center">Are you ready to Improve Life?</h3>
                     {callToActionData.map((cta, index) => (
                         <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
                             goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name} 
@@ -468,6 +474,9 @@ export const query = graphql`query ($id: String) {
                 }
               }
             }
+          }
+          field_widgets {
+            ...FieldWidgetsFragment
           }
         }
       }
