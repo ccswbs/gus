@@ -389,6 +389,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_specializations: [taxonomy_term__specializations] @link(from: "field_specializations___NODE")
       field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
       field_prog_image: media__image @link(from: "field_prog_image___NODE")
+      field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
     }
     type node__testimonial implements Node {
       changed: Date
