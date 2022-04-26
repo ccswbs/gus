@@ -188,7 +188,7 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
     return null;
   }
 if (courseNotes || courseData?.length>0 || variantDataHeading || careerData?.length>0 ||employerData?.length > 0) {
-  return <React.Fragment>
+  return (
       <div className="container page-container">
       <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
@@ -202,7 +202,7 @@ if (courseNotes || courseData?.length>0 || variantDataHeading || careerData?.len
           </div>
       </section>
     </div>    
-  </React.Fragment>
+)
 }
 return null;
 }
