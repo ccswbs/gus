@@ -189,13 +189,19 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
   }
 if (courseNotes || courseData?.length>0 || variantDataHeading || careerData?.length>0 ||employerData?.length > 0) {
   return <React.Fragment>
-      <h2>Program Information</h2>
-      <div className="accordion" id="ProgramPageAccordion">
-      {programCourseItem()}
-      {programVariantItem()}
-      {programCareersItem()}
-      {programEmployersItem()}
-      </div>
+      <div className="container page-container">
+      <section className="row row-with-vspace site-content">
+          <div className="col-md-12 content-area">
+          <h2>Program Information</h2>
+            <div className="accordion" id="ProgramPageAccordion">
+              {programCourseItem()}
+              {programVariantItem()}
+              {programCareersItem()}
+              {programEmployersItem()}
+            </div>
+          </div>
+      </section>
+    </div>    
   </React.Fragment>
 }
 return null;
@@ -311,13 +317,8 @@ const ProgramPage = ({data, location}) => {
         {renderProgramStats(degreesData, variantData, statsData)}
    
         { /**** Program Information Accordion ****/ }
-        <div className="container page-container">
-            <section className="row row-with-vspace site-content">
-                <div className="col-md-12 content-area">
-                    {renderProgramInfoAccordion(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
-                </div>
-            </section>
-        </div>                 
+        {renderProgramInfoAccordion(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
+             
 
         { /**** Testimonials ****/ }
         {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel='h3' />}
