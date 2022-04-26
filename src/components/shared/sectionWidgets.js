@@ -60,7 +60,9 @@ function SectionWidgets (props) {
         let primary = [];
         let secondary = [];
         let primaryClass;
+        let secondaryClass;
         let allWidgets = props.pageData;
+        let sectionClasses = props.sectionClasses;
         
         allWidgets.forEach(widgetData => {
             let secCol = widgetData.relationships.field_section_column?.name;
@@ -72,7 +74,13 @@ function SectionWidgets (props) {
         })
 
         if (secondary.length > 0) {
-            primaryClass = "col-md-9";
+            if (sectionClasses === "col-md-6") {
+                primaryClass = "col-md-6";
+                secondaryClass = "col-md-6";
+            } else {
+                primaryClass = "col-md-9";
+                secondaryClass = "col-md-3";
+            }
         } else {
             primaryClass = "row";
         }
@@ -86,7 +94,7 @@ function SectionWidgets (props) {
                 </ConditionalWrapper>
             </div>
             {secondary.length > 0 && 
-            <div className="col-md-3">
+            <div className={secondaryClass}>
             {secondary.map(widget => {
                 return renderSecondary(widget)
             })}    
@@ -98,10 +106,11 @@ function SectionWidgets (props) {
 
 SectionWidgets.propTypes = {
     pageData: PropTypes.array,
-   
+    sectionClasses: PropTypes.string,
 }
 SectionWidgets.defaultProps = {
     pageData: ``,
+    sectionClasses: ``,
 }
 
 export default SectionWidgets
