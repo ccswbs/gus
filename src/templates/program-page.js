@@ -11,9 +11,6 @@ import CustomFooter from 'components/shared/customFooter';
 import Degrees from 'components/shared/degrees';
 import Employers from 'components/shared/employers';
 import HeroVideo from 'components/shared/heroVideo';
-import NavTabs from 'components/shared/navTabs';
-import NavTabHeading from 'components/shared/navTabHeading';
-import NavTabContent from 'components/shared/navTabContent';
 import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
 import Testimonials from 'components/shared/testimonial';
@@ -113,7 +110,7 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
       return (
         <div className="accordion-item">
           <h3 className="accordion-header" id="selectedCourses-heading">
-            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#selectedCourses-courses" aria-expanded="false" aria-controls="selectedCourses-courses">
+            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#selectedCourses-courses" aria-expanded="false" aria-controls="selectedCourses-courses">
               Selected Courses
             </button>
           </h3>
