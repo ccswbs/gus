@@ -11,9 +11,6 @@ import CustomFooter from 'components/shared/customFooter';
 import Degrees from 'components/shared/degrees';
 import Employers from 'components/shared/employers';
 import HeroVideo from 'components/shared/heroVideo';
-import NavTabs from 'components/shared/navTabs';
-import NavTabHeading from 'components/shared/navTabHeading';
-import NavTabContent from 'components/shared/navTabContent';
 import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
 import Testimonials from 'components/shared/testimonial';
@@ -106,118 +103,111 @@ function CountProgramVariants(variantData) {
     return null;
 }
 
-function renderProgramInfo (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
-    let activeValue = true;
-    let activeTabExists = false;
-    let navTabHeadings = [];
-    let navTabContent = [];
-    let key = 0;
-    let tabContentExists = false;
-
-    // prep TAB 1 - Courses
-    if (courseNotes || courseData?.length>0) {
-        tabContentExists = true;
-        const courseHeading = "Selected Courses";
-        const courseID = "pills-courses";
-        if (!activeTabExists) {
-            activeTabExists = true;
-        } else {
-            activeValue = false;
-        }
-        key++;
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={courseHeading} controls={courseID} />);
-
-        navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                          active={activeValue} 
-                                          heading={courseHeading} 
-                                          headingLevel="h3" 
-                                          id={courseID} 
-                                          content={<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />} 
-                            />);
-        }
-
-    // prep TAB 2 - Variants
-    if (variantDataHeading) {
-        tabContentExists = true;
-        const variantID = "pills-variants";
-        if (!activeTabExists) {
-            activeTabExists = true;
-        } else {
-            activeValue = false;
-        }
-        key++;
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={variantDataHeading} controls={variantID} />);
-
-        navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                          active={activeValue} 
-                                          heading={variantDataHeading} 
-                                          headingLevel="h3" 
-                                          id={variantID} 
-                                          content={<Variants variantData={variantData} />} 
-                            />);
+function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
+  
+  // accordion - Courses Item
+ const programCourseItem = () => { 
+   if (courseNotes || courseData?.length>0) {
+      return (
+        <div className="accordion-item">
+          <h3 className="accordion-header" id="selectedCourses-heading">
+            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#selectedCourses-courses" aria-expanded="false" aria-controls="selectedCourses-courses">
+              Selected Courses
+            </button>
+          </h3>
+          <div id="selectedCourses-courses" className="accordion-collapse collapse" aria-labelledby="selectedCourses-heading">
+            <div className="accordion-body">
+            {<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />}
+            </div>
+          </div>
+        </div>
+      )
     }
+      return null;
+  }
 
-    // prep TAB 3 - Careers
-    if (careerData?.length>0) {
-        tabContentExists = true;
-        if (!activeTabExists) {
-            activeTabExists = true;
-        } else {
-            activeValue = false;
-        }
-        const careersHeading = "Careers";
-        const careersID = "pills-careers";
-        key++;
-
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={careersHeading} controls={careersID} />);
-
-        navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                          active={activeValue} 
-                                          heading={careersHeading} 
-                                          headingLevel="h3" 
-                                          id={careersID} 
-                                          content={<Careers careerData={careerData} numColumns={3} />} 
-                            />);
+  // accordion - Variants Item
+  const programVariantItem = () => { 
+    if(variantDataHeading) {
+      return (
+        <div className="accordion-item">
+          <h3 className="accordion-header" id="programVariants-heading">
+            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programVariants-variants" aria-expanded="false" aria-controls="programVariants-variants">
+              {variantDataHeading}
+            </button>
+          </h3>
+          <div id="programVariants-variants" className="accordion-collapse collapse" aria-labelledby="programVariants-heading">
+            <div className="accordion-body">
+              {<Variants variantData={variantData} />}
+            </div>
+          </div>
+        </div>
+      )
     }
-    
-    // prep TAB 4 - Employers
-    if (employerData?.length > 0) {
-        tabContentExists = true;
-        if (activeTabExists === false) {
-            activeTabExists = true;
-        } else {
-            activeValue = false;
-        }
-        const employerHeading = "Employers";
-        const employerID = "pills-employer";
-        key++;
+      return null;
+  }
 
-        navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + key} active={activeValue} heading={employerHeading} controls={employerID} />);
-
-        navTabContent.push(<NavTabContent key={`navTabContent-` + key} 
-                                          active={activeValue} 
-                                          heading={employerHeading} 
-                                          headingLevel="h3" 
-                                          id={employerID} 
-                                          content={<Employers employerData={employerData} />} 
-                            />);
+  // accordion - Careers Item
+ const programCareersItem = () => { 
+   if (careerData?.length>0) {
+      return (
+        <div className="accordion-item">
+          <h3 className="accordion-header" id="programCareers-heading">
+            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programCareers-careers" aria-expanded="false" aria-controls="programCareers-careers">
+              Careers
+            </button>
+          </h3>
+          <div id="programCareers-careers" className="accordion-collapse collapse" aria-labelledby="programCareers-heading">
+            <div className="accordion-body">
+            <Careers careerData={careerData} numColumns={3}/>
+            </div>
+          </div>
+        </div>
+      )
     }
-    if (tabContentExists) {
-        return <React.Fragment>
-                <h2>Program Information</h2>
-                <NavTabs headings={
-                    navTabHeadings.map((heading) => {
-                        return heading;
-                        })
-                    }>
-                    {navTabContent.map((content) => {
-                        return content;
-                    })}
-                </NavTabs>
-            </React.Fragment>
+    return null; 
+  }
+  
+  // Accordion - Employers Item
+ const programEmployersItem = () => {
+   if (employerData?.length > 0) {
+      return (
+        <div className="accordion-item">
+          <h3 className="accordion-header" id="programEmployers-heading">
+            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programEmployers-employers" aria-expanded="false" aria-controls="programEmployers-employers">
+              Employers
+            </button>
+          </h3>
+          <div id="programEmployers-employers" className="accordion-collapse collapse" aria-labelledby="programEmployers-heading">
+            <div className="accordion-body">
+            <Employers employerData={employerData} />
+            </div>
+          </div>
+        </div>
+      )
     }
     return null;
+  }
+if (courseNotes || courseData?.length>0 || variantDataHeading || careerData?.length>0 ||employerData?.length > 0) {
+  return (
+      <div className="container page-container">
+      <section className="row row-with-vspace site-content">
+          <div className="col-md-12 content-area">
+          <h2>Program Information</h2>
+            <div className="accordion" id="ProgramPageAccordion">
+              {programCourseItem()}
+              {programVariantItem()}
+              {programCareersItem()}
+              {programEmployersItem()}
+            </div>
+          </div>
+      </section>
+    </div>    
+)
 }
+return null;
+}
+
 
 function retrieveLastModifiedDates (content) {
     let dates = [];
@@ -331,15 +321,10 @@ const ProgramPage = ({data, location}) => {
     
         { /**** Program Stats ****/ }
         {renderProgramStats(degreesData, variantData, statsData)}
-
-        { /**** Program Information Tabs ****/ }
-        <div className="container page-container">
-            <section className="row row-with-vspace site-content">
-                <div className="col-md-12 content-area">
-                    {renderProgramInfo(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
-                </div>
-            </section>
-        </div>                    
+   
+        { /**** Program Information Accordion ****/ }
+        {renderProgramInfoAccordion(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
+             
 
         { /**** Testimonials ****/ }
         {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel='h3' />}
