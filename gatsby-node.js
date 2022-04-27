@@ -171,7 +171,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       alt: String
     }
     
-
+    type block_content__basic implements Node {
+      drupal_id: String
+      body: BodyFieldWithSummary
+    }
+    
     type media__image implements Node {
       drupal_id: String
       name: String
@@ -427,10 +431,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__block_widget implements Node {
       drupal_id: String
-      relationships: paragraph__block_widgetRelationships
+	  relationships: paragraph__block_widgetRelationships  
     }
     type paragraph__block_widgetRelationships implements Node {
-      field_custom_block: block_content__basic
+      field_custom_block: block_content__basic @link(from: "field_custom_block___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__button_widget implements Node {
       drupal_id: String
