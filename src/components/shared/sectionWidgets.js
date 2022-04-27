@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
+import BlockWidget from 'components/shared/blockWidget';
 import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
@@ -12,6 +13,8 @@ import { ConditionalWrapper } from 'utils/ug-utils';
 // For the left column
 function renderPrimary(widget) {
     switch (widget?.__typename) {
+        case "paragraph_block_widget":
+            return <BlockWidget key={widget.drupal_id} processed={widget.field_custom_block.body.processed} />;
         case "paragraph__general_text":
             return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
         case "paragraph__lead_paragraph":
@@ -43,6 +46,8 @@ function renderPrimary(widget) {
 //For the right column
 function renderSecondary(widget) {
     switch (widget?.__typename) {
+        case "paragraph_block_widget":
+            return <BlockWidget key={widget.drupal_id} processed={widget.field_custom_block.processed} />;
         case "paragraph__general_text":
             return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;                        
         case "paragraph__media_text":
@@ -123,6 +128,9 @@ export const query = graphql`
     relationships {
       field_section_content {
         __typename
+        ... on paragraph__block_widget {
+            ...BlockWidgetParagraphFragment
+        }
         ... on paragraph__general_text {
             ...GeneralTextParagraphFragment
         }

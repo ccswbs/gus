@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Accordion from 'components/shared/accordion';
-import CtaPara from 'components/shared/ctaPara';
+import BlockWidget from 'components/shared/blockWidget';
 import Events from 'components/shared/events';
 import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
@@ -15,8 +15,8 @@ const Widget = ({widget}) => {
     switch (widget?.__typename) {
         case "paragraph__accordion_section":
             return <Accordion pageData={widget} />;
-        case "paragraph__call_to_action":
-            return <CtaPara pageData={widget} />;
+        case "paragraph_block_widget":
+            return <BlockWidget processed={widget.field_custom_block.body.processed} />;
         case "paragraph__events_widget":
             return <Events eventData={widget} />;
         case "paragraph__general_text":
@@ -63,8 +63,8 @@ export const query = graphql`
     ... on paragraph__accordion_section {
         ...AccordionSectionParagraphFragment
     }
-    ... on paragraph__call_to_action {
-        ...CallToActionParagraphFragment
+    ... on paragraph__block_widget {
+        ...BlockWidgetParagraphFragment
     }
     ... on paragraph__events_widget {
         ...EventsParagraphFragment

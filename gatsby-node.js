@@ -106,7 +106,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | taxonomy_term__testimonial_type
 
     union widgetParagraphUnion =
-      paragraph__call_to_action
+      paragraph__block_widget
       | paragraph__events_widget
       | paragraph__general_text
       | paragraph__lead_paragraph
@@ -120,7 +120,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__accordion_section
 
     union widgetSectionParagraphUnion =
-      paragraph__call_to_action
+      paragraph__block_widget
       | paragraph__general_text
       | paragraph__lead_paragraph
       | paragraph__link_item
@@ -171,6 +171,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       alt: String
     }
     
+
     type media__image implements Node {
       drupal_id: String
       name: String
@@ -423,7 +424,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__accordion_sectionRelationships implements Node {
       field_accordion_block_elements: [paragraph__accordion_block] @link(from: "field_accordion_block_elements___NODE")
-    } 
+    }
+    type paragraph__block_widget implements Node {
+      drupal_id: String
+      relationships: paragraph__block_widgetRelationships
+    }
+    type paragraph__block_widgetRelationships implements Node {
+      field_custom_block: block_content__basic
+    }
     type paragraph__button_widget implements Node {
       drupal_id: String
       field_button_link: FieldLink
