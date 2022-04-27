@@ -2,21 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
+
 const BlockWidget = (props) => {    
-    let processed = props.body.processed;
-    let textClass = props.textClass;
-    console.log(processed);
-    return <div {...(textClass !== `` ? {className:textClass} : {})} dangerouslySetInnerHTML={{__html: processed}}></div>    
+    let processed = props.blockData.relationships.field_custom_block?.body.processed;    
+    return <div dangerouslySetInnerHTML={{__html: processed}}></div>  
 }
 
 BlockWidget.propTypes = {
-    processed: PropTypes.string,
-    textClass: PropTypes.string,
+    blockData: PropTypes.string,
 }
 
 BlockWidget.defaultProps = {
-    processed: ``,
-    textClass: ``,
+    blockData: ``,
 }
 
 export default BlockWidget
@@ -26,9 +23,13 @@ export const query = graphql`
     drupal_id
     relationships {
       field_custom_block {
+        info
         body { 
           processed
         }
+      }
+      field_section_column {
+        name
       }
     }
   }

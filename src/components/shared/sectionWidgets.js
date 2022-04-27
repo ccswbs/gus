@@ -13,8 +13,8 @@ import { ConditionalWrapper } from 'utils/ug-utils';
 // For the left column
 function renderPrimary(widget) {
     switch (widget?.__typename) {
-        case "paragraph_block_widget":
-            return <BlockWidget key={widget.drupal_id} processed={widget.field_custom_block.body.processed} />;
+        case "paragraph__block_widget":
+            return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
             return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
         case "paragraph__lead_paragraph":
@@ -46,8 +46,8 @@ function renderPrimary(widget) {
 //For the right column
 function renderSecondary(widget) {
     switch (widget?.__typename) {
-        case "paragraph_block_widget":
-            return <BlockWidget key={widget.drupal_id} processed={widget.field_custom_block.processed} />;
+        case "paragraph__block_widget":
+            return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
             return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;                        
         case "paragraph__media_text":
