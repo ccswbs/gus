@@ -173,6 +173,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     
     type block_content__basic implements Node {
       drupal_id: String
+      info: String
       body: BodyFieldWithSummary
     }
     
