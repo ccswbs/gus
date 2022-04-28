@@ -106,7 +106,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | taxonomy_term__testimonial_type
 
     union widgetParagraphUnion =
-      paragraph__call_to_action
+      paragraph__block_widget
       | paragraph__events_widget
       | paragraph__general_text
       | paragraph__lead_paragraph
@@ -120,7 +120,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__accordion_section
 
     union widgetSectionParagraphUnion =
-      paragraph__call_to_action
+      paragraph__block_widget
       | paragraph__general_text
       | paragraph__lead_paragraph
       | paragraph__link_item
@@ -169,6 +169,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     
     type ImageField implements Node {
       alt: String
+    }
+    
+    type block_content__basic implements Node {
+      drupal_id: String
+      info: String
+      body: BodyFieldWithSummary
     }
     
     type media__image implements Node {
@@ -389,6 +395,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_specializations: [taxonomy_term__specializations] @link(from: "field_specializations___NODE")
       field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
       field_prog_image: media__image @link(from: "field_prog_image___NODE")
+      field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
     }
     type node__testimonial implements Node {
       changed: Date
@@ -422,7 +429,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__accordion_sectionRelationships implements Node {
       field_accordion_block_elements: [paragraph__accordion_block] @link(from: "field_accordion_block_elements___NODE")
-    } 
+    }
+    type paragraph__block_widget implements Node {
+      drupal_id: String
+	  relationships: paragraph__block_widgetRelationships  
+    }
+    type paragraph__block_widgetRelationships implements Node {
+      field_custom_block: block_content__basic @link(from: "field_custom_block___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+    }
     type paragraph__button_widget implements Node {
       drupal_id: String
       field_button_link: FieldLink

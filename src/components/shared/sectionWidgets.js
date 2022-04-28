@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
+import BlockWidget from 'components/shared/blockWidget';
 import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
@@ -12,6 +13,8 @@ import { ConditionalWrapper } from 'utils/ug-utils';
 // For the left column
 function renderPrimary(widget) {
     switch (widget?.__typename) {
+        case "paragraph__block_widget":
+            return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
             return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
         case "paragraph__lead_paragraph":
@@ -43,6 +46,8 @@ function renderPrimary(widget) {
 //For the right column
 function renderSecondary(widget) {
     switch (widget?.__typename) {
+        case "paragraph__block_widget":
+            return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
             return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;                        
         case "paragraph__media_text":
@@ -60,7 +65,9 @@ function SectionWidgets (props) {
         let primary = [];
         let secondary = [];
         let primaryClass;
+        let secondaryClass;
         let allWidgets = props.pageData;
+        let sectionClasses = props.sectionClasses;
         
         allWidgets.forEach(widgetData => {
             let secCol = widgetData.relationships.field_section_column?.name;
@@ -72,7 +79,13 @@ function SectionWidgets (props) {
         })
 
         if (secondary.length > 0) {
-            primaryClass = "col-md-9";
+            if (sectionClasses === "col-md-6") {
+                primaryClass = "col-md-6";
+                secondaryClass = "col-md-6";
+            } else {
+                primaryClass = "col-md-9";
+                secondaryClass = "col-md-3";
+            }
         } else {
             primaryClass = "row";
         }
@@ -86,7 +99,7 @@ function SectionWidgets (props) {
                 </ConditionalWrapper>
             </div>
             {secondary.length > 0 && 
-            <div className="col-md-3">
+            <div className={secondaryClass}>
             {secondary.map(widget => {
                 return renderSecondary(widget)
             })}    
@@ -98,10 +111,11 @@ function SectionWidgets (props) {
 
 SectionWidgets.propTypes = {
     pageData: PropTypes.array,
-   
+    sectionClasses: PropTypes.string,
 }
 SectionWidgets.defaultProps = {
     pageData: ``,
+    sectionClasses: ``,
 }
 
 export default SectionWidgets
@@ -114,6 +128,9 @@ export const query = graphql`
     relationships {
       field_section_content {
         __typename
+        ... on paragraph__block_widget {
+            ...BlockWidgetParagraphFragment
+        }
         ... on paragraph__general_text {
             ...GeneralTextParagraphFragment
         }

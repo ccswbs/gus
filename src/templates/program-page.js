@@ -14,13 +14,14 @@ import HeroVideo from 'components/shared/heroVideo';
 import NewsGrid from 'components/shared/newsGrid';
 import Stats from 'components/shared/stats'
 import Testimonials from 'components/shared/testimonial';
-import Variants from 'components/shared/variants'; 
+import Variants from 'components/shared/variants';
+import Widget from 'components/shared/widget';
 import { sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
 
-function renderProgramOverview(description) {
-    if (description) {
-        return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: description }} /></>
+function renderProgramOverview(overview) {
+    if (overview) {
+        return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: overview }} /></>
     }    
     return null;
 }
@@ -104,109 +105,108 @@ function CountProgramVariants(variantData) {
 
 function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
   
-  // accordion - Courses Item
- const programCourseItem = () => { 
-   if (courseNotes || courseData?.length>0) {
-      return (
-        <div className="accordion-item">
-          <h3 className="accordion-header" id="selectedCourses-heading">
-            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#selectedCourses-courses" aria-expanded="false" aria-controls="selectedCourses-courses">
-              Selected Courses
-            </button>
-          </h3>
-          <div id="selectedCourses-courses" className="accordion-collapse collapse" aria-labelledby="selectedCourses-heading">
-            <div className="accordion-body">
-            {<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />}
+    // accordion - Courses Item
+    const programCourseItem = () => { 
+        if (courseNotes || courseData?.length>0) {
+          return (
+            <div className="accordion-item">
+              <h3 className="accordion-header" id="selectedCourses-heading">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#selectedCourses-courses" aria-expanded="false" aria-controls="selectedCourses-courses">
+                  Selected Courses
+                </button>
+              </h3>
+              <div id="selectedCourses-courses" className="accordion-collapse collapse" aria-labelledby="selectedCourses-heading">
+                <div className="accordion-body">
+                {<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )
+          )
+        }
+        return null;
     }
-      return null;
-  }
 
-  // accordion - Variants Item
-  const programVariantItem = () => { 
-    if(variantDataHeading) {
-      return (
-        <div className="accordion-item">
-          <h3 className="accordion-header" id="programVariants-heading">
-            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programVariants-variants" aria-expanded="false" aria-controls="programVariants-variants">
-              {variantDataHeading}
-            </button>
-          </h3>
-          <div id="programVariants-variants" className="accordion-collapse collapse" aria-labelledby="programVariants-heading">
-            <div className="accordion-body">
-              {<Variants variantData={variantData} />}
+    // accordion - Variants Item
+    const programVariantItem = () => { 
+        if(variantDataHeading) {
+          return (
+            <div className="accordion-item">
+              <h3 className="accordion-header" id="programVariants-heading">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programVariants-variants" aria-expanded="false" aria-controls="programVariants-variants">
+                  {variantDataHeading}
+                </button>
+              </h3>
+              <div id="programVariants-variants" className="accordion-collapse collapse" aria-labelledby="programVariants-heading">
+                <div className="accordion-body">
+                  {<Variants variantData={variantData} />}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )
+          )
+        }
+        return null;
     }
-      return null;
-  }
 
-  // accordion - Careers Item
- const programCareersItem = () => { 
-   if (careerData?.length>0) {
-      return (
-        <div className="accordion-item">
-          <h3 className="accordion-header" id="programCareers-heading">
-            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programCareers-careers" aria-expanded="false" aria-controls="programCareers-careers">
-              Careers
-            </button>
-          </h3>
-          <div id="programCareers-careers" className="accordion-collapse collapse" aria-labelledby="programCareers-heading">
-            <div className="accordion-body">
-            <Careers careerData={careerData} numColumns={3}/>
+    // accordion - Careers Item
+    const programCareersItem = () => { 
+        if (careerData?.length>0) {
+          return (
+            <div className="accordion-item">
+              <h3 className="accordion-header" id="programCareers-heading">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programCareers-careers" aria-expanded="false" aria-controls="programCareers-careers">
+                  Careers
+                </button>
+              </h3>
+              <div id="programCareers-careers" className="accordion-collapse collapse" aria-labelledby="programCareers-heading">
+                <div className="accordion-body">
+                <Careers careerData={careerData} numColumns={3}/>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )
+          )
+        }
+        return null; 
     }
-    return null; 
-  }
   
-  // Accordion - Employers Item
- const programEmployersItem = () => {
-   if (employerData?.length > 0) {
-      return (
-        <div className="accordion-item">
-          <h3 className="accordion-header" id="programEmployers-heading">
-            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programEmployers-employers" aria-expanded="false" aria-controls="programEmployers-employers">
-              Employers
-            </button>
-          </h3>
-          <div id="programEmployers-employers" className="accordion-collapse collapse" aria-labelledby="programEmployers-heading">
-            <div className="accordion-body">
-            <Employers employerData={employerData} />
+    // accordion - Employers Item
+    const programEmployersItem = () => {
+        if (employerData?.length > 0) {
+          return (
+            <div className="accordion-item">
+              <h3 className="accordion-header" id="programEmployers-heading">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programEmployers-employers" aria-expanded="false" aria-controls="programEmployers-employers">
+                  Employers
+                </button>
+              </h3>
+              <div id="programEmployers-employers" className="accordion-collapse collapse" aria-labelledby="programEmployers-heading">
+                <div className="accordion-body">
+                <Employers employerData={employerData} />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )
+          )
+        }
+        return null;
+    }
+    if (courseNotes || courseData?.length>0 || variantDataHeading || careerData?.length>0 ||employerData?.length > 0) {
+      return (
+            <div className="container page-container">
+              <section className="row row-with-vspace site-content">
+                  <div className="col-md-12 content-area">
+                  <h2>Program Information</h2>
+                    <div className="accordion" id="ProgramPageAccordion">
+                      {programCourseItem()}
+                      {programVariantItem()}
+                      {programCareersItem()}
+                      {programEmployersItem()}
+                    </div>
+                  </div>
+              </section>
+            </div>    
+        )
     }
     return null;
-  }
-if (courseNotes || courseData?.length>0 || variantDataHeading || careerData?.length>0 ||employerData?.length > 0) {
-  return (
-      <div className="container page-container">
-      <section className="row row-with-vspace site-content">
-          <div className="col-md-12 content-area">
-          <h2>Program Information</h2>
-            <div className="accordion" id="ProgramPageAccordion">
-              {programCourseItem()}
-              {programVariantItem()}
-              {programCareersItem()}
-              {programEmployersItem()}
-            </div>
-          </div>
-      </section>
-    </div>    
-)
 }
-return null;
-}
-
 
 function retrieveLastModifiedDates (content) {
     let dates = [];
@@ -221,7 +221,7 @@ function retrieveLastModifiedDates (content) {
 function prepareVariantHeading (variantData) {
     let labels = [];
 
-  // prepare variant data labels
+    // prepare variant data labels
     variantData.forEach((edge) => {
         if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
             labels.push(edge.relationships.field_variant_type.name);
@@ -278,7 +278,8 @@ const ProgramPage = ({data, location}) => {
     const nodeID = progData.drupal_internal__nid;
     const title = progData.title;
     const acronym = (progData.relationships.field_program_acronym?.name);
-    const description = progData.field_program_overview?.processed;
+    const overview = progData.field_program_overview?.processed;
+    const widgets = progData.relationships?.field_widgets;
     const courseNotes = progData.field_course_notes?.processed;
 
     // set last modified date
@@ -307,9 +308,13 @@ const ProgramPage = ({data, location}) => {
         { /**** Program Overview ****/ }
         <div className="container page-container">
             <div className="row site-content">
-                <section className="content-area">
-                    {renderProgramOverview(description)}
-                </section>
+                {overview && <section className="content-area">
+                        {renderProgramOverview(overview)}
+                </section>}
+                { /**** Widgets content ****/} 
+                {widgets && <section className="col-md-12">
+                    {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
+                </section>}
             </div>
         </div>
     
@@ -331,7 +336,7 @@ const ProgramPage = ({data, location}) => {
         <div className="container page-container apply-footer">
             <section className="row row-with-vspace site-content">
                 <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
-                    <h3><span>Are you ready to</span> Improve Life?</h3>
+                    <h3 className="text-dark text-center">Are you ready to Improve Life?</h3>
                     {callToActionData.map((cta, index) => (
                         <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
                             goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name} 
@@ -453,6 +458,9 @@ export const query = graphql`query ($id: String) {
                 }
               }
             }
+          }
+          field_widgets {
+            ...FieldWidgetsFragment
           }
         }
       }
@@ -584,15 +592,6 @@ export const query = graphql`query ($id: String) {
           }
           field_widgets {
             __typename
-            ... on paragraph__call_to_action {
-              id
-              field_cta_title
-              field_cta_description
-              field_cta_primary_link {
-                title
-                uri
-              }
-            }
             ... on paragraph__lead_paragraph {
               id
               field_lead_paratext {
@@ -637,15 +636,6 @@ export const query = graphql`query ($id: String) {
               relationships {
                 field_section_content {
                   __typename
-                  ... on paragraph__call_to_action {
-                    id
-                    field_cta_title
-                    field_cta_description
-                    field_cta_primary_link {
-                      title
-                      uri
-                    }
-                  }
                   ... on paragraph__links_widget {
                     drupal_id
                     field_link_items_title
