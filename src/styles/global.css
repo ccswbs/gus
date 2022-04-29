@@ -57,3 +57,23 @@ html {
         padding-top: 0 !important;
     }
 }
+
+/* Custom card styles */
+
+.uog-blue-muted {background:var(--uog-blue-muted);}
+
+.card .uog-card-border {
+	border-left: 1rem solid var(--uog-red);
+}
+
+.card:nth-of-type(9n+2) .uog-card-border,
+.card:nth-of-type(9n+4) .uog-card-border,
+.card:nth-of-type(9n+9) .uog-card-border {
+	border-left: 1rem solid var(--uog-yellow);
+}
+
+.card:nth-of-type(9n+3) .uog-card-border,
+.card:nth-of-type(9n+5) .uog-card-border,
+.card:nth-of-type(9n+7) .uog-card-border {
+	border-left: 1rem solid var(--uog-blue);
+}
