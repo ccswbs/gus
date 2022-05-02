@@ -41,7 +41,7 @@ const Widget = ({widget}) => {
         case "paragraph__section":
             return (<>
 				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
-				<div key={widget.drupal_id} className="row mt-5">                    
+				<div key={widget.drupal_id} className="row mb-5">                    
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>
 			</>);
