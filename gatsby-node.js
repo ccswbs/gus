@@ -20,9 +20,9 @@
 
   Excellent Reading Material:
   https://www.jamesdflynn.com/development/gatsbyjs-drupal-create-custom-graphql-schema-empty-fields
-   
+
   SAMPLE SCHEMA
-  Note: for taxonomy, you would use 
+  Note: for taxonomy, you would use
   ```type taxonomy_term__vocabularyname implements Node & TaxonomyInterface```
   ---
 
@@ -69,11 +69,10 @@ const yaml = require('js-yaml');
 const util = require('util');
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
-    
+
   const { createTypes } = actions
-  
+
   const typeDefs = [
-    
     `interface TaxonomyInterface implements Node {
       id: ID!
       drupal_id: String
@@ -87,12 +86,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     union media__imagemedia__remote_videoUnion =
       media__image
       | media__remote_video
-    
-    union relatedParagraphUnion = 
+
+    union relatedParagraphUnion =
       paragraph__program_variants
       | paragraph__general_text
-      
-    union relatedRegionUnion = 
+
+    union relatedRegionUnion =
       taxonomy_term__section_columns
       | taxonomy_term__special_regions
 
@@ -118,6 +117,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__section_tabs
       | paragraph__tab_content
       | paragraph__accordion_section
+      | paragraph__playback_button_widget
 
     union widgetSectionParagraphUnion =
       paragraph__block_widget
@@ -166,17 +166,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       content: String
       tags: [String]
     }
-    
+
     type ImageField implements Node {
       alt: String
     }
-    
+
     type block_content__basic implements Node {
       drupal_id: String
       info: String
       body: BodyFieldWithSummary
     }
-    
+
     type media__image implements Node {
       drupal_id: String
       name: String
@@ -206,7 +206,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_video_cc: file__file @link(from: "field_video_cc___NODE")
       node__program: [node__program] @link(from: "node__program___NODE")
     }
-    
+
     type menu_link_content__menu_link_content implements Node {
       bundle: String
       drupal_id: String
@@ -218,14 +218,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       link: menu_link_content__menu_link_contentLink
       menu_name: String
       title: String
-      weight: Int      
+      weight: Int
     }
     type menu_link_content__menu_link_contentLink implements Node {
       uri: String
       url: String
       title: String
     }
-    
+
     type node__article implements Node {
       changed: Date @dateformat
       created: Date @dateformat
@@ -349,6 +349,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_hero_widgets: [widgetParagraphUnion] @link(from:"field_hero_widgets___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
@@ -363,7 +364,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       changed: Date @dateformat
       field_course_notes: node__programField_course_notes
       field_domain_access: [node__programField_domain_access]
-      field_prog_image: ImageField      
+      field_prog_image: ImageField
       field_metatags: node__programField_metatags
       field_program_overview: node__programField_program_overview
       relationships: node__programRelationships
@@ -384,7 +385,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type node__programField_program_overview implements Node {
       value: String
       format: String
-      processed: String     
+      processed: String
     }
     type node__programRelationships implements Node {
       field_program_acronym: taxonomy_term__programs @link(from: "field_program_acronym___NODE")
@@ -395,6 +396,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_specializations: [taxonomy_term__specializations] @link(from: "field_specializations___NODE")
       field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
       field_prog_image: media__image @link(from: "field_prog_image___NODE")
+      field_hero_widgets: [widgetParagraphUnion] @link(from:"field_hero_widgets___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
     }
     type node__testimonial implements Node {
@@ -416,10 +418,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
-    }  
+    }
     type paragraph__accordion_block implements Node {
       drupal_id: String
-      field_accordion_block_text: FieldAccordionBlockText      
+      field_accordion_block_text: FieldAccordionBlockText
       field_accordion_title: String
     }
     type paragraph__accordion_section implements Node {
@@ -432,7 +434,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__block_widget implements Node {
       drupal_id: String
-	  relationships: paragraph__block_widgetRelationships  
+	  relationships: paragraph__block_widgetRelationships
     }
     type paragraph__block_widgetRelationships implements Node {
       field_custom_block: block_content__basic @link(from: "field_custom_block___NODE")
@@ -496,7 +498,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__links_widget implements Node {
       drupal_id: String
       field_link_items_description: String
-      field_link_items_title: String      
+      field_link_items_title: String
       relationships: paragraph__links_widgetRelationships
     }
     type paragraph__links_widgetRelationships implements Node {
@@ -516,9 +518,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__media_text implements Node {
       field_media_image_size: String
-      field_media_text_desc: BodyField      
-      field_media_text_title: String      
-      field_media_text_links: [FieldLink]    
+      field_media_text_desc: BodyField
+      field_media_text_title: String
+      field_media_text_links: [FieldLink]
       relationships: paragraph__media_textRelationships
     }
     type paragraph__media_textRelationships implements Node {
@@ -526,8 +528,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
       field_button_section: paragraph__section_buttons @link(from:"field_button_section___NODE")
     }
+    type paragraph__playback_button_widget implements Node {
+      relationships: paragraph__playback_button_widgetRelationships
+    }
+    type paragraph__playback_button_widgetRelationships implements Node {
+      field_media_video: media__remote_video @link(from: "field_media_video___NODE")
+    }
     type paragraph__program_statistic implements Node {
-      drupal_id: String   
+      drupal_id: String
       field_stat_range: Boolean
       field_stat_value: String
       field_stat_value_end: String
@@ -580,7 +588,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
-    
+
     type PathAlias implements Node {
       value: String
       alias: String
@@ -645,7 +653,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type taxonomy_term__special_regions implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
-      name: String        
+      name: String
     }
     type taxonomy_term__specializations implements Node & TaxonomyInterface {
       drupal_id: String
@@ -688,15 +696,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       name: String
       description: TaxonomyDescription
     }
-    
+
     type WpEventToEventsCategoryConnection implements Node {
       nodes: [WpEventsCategory]
     }
     type WpEventsCategory implements Node {
       name: String
-    }    
+    }
     `,
-    
+
     schema.buildObjectType({
       name: `WpEvent`,
       interfaces: [`Node`],
@@ -722,14 +730,14 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
     // Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
     // INSTRUCTION: If you've added a new content-type and it contains a field that references
     // multiple vocabularies, then add it to the if statement
-    if (node.internal.type === `media__image` || 
-        node.internal.type === `node__article` || 
+    if (node.internal.type === `media__image` ||
+        node.internal.type === `node__article` ||
         node.internal.type === `node__call_to_action` ||
-        node.internal.type === `node__career` || 
-        node.internal.type === `node__course` || 
+        node.internal.type === `node__career` ||
+        node.internal.type === `node__course` ||
         node.internal.type === `node__custom_footer` ||
         node.internal.type === `node__employer` ||
-        node.internal.type === `node__page` || 
+        node.internal.type === `node__page` ||
         node.internal.type === `node__testimonial`
     ) {
     createNodeField({
@@ -742,10 +750,10 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
     // Handle nodes that require page aliases
     // INSTRUCTION: If you've added a new content-type and need each node to generate a page
     // then add it to the following if statement
-    if (node.internal.type === `node__article` || 
-        node.internal.type === `node__page` || 
+    if (node.internal.type === `node__article` ||
+        node.internal.type === `node__page` ||
         node.internal.type === `node__program` ) {
-        
+
         /* Create page path */
         const aliasID = createNodeId(`alias-${node.drupal_id}`);
 
@@ -778,7 +786,7 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
 }
 
 // Suppress chunk out-of-order warnings
-exports.onCreateWebpackConfig = helper => {    
+exports.onCreateWebpackConfig = helper => {
     const { actions, getConfig } = helper
     const config = getConfig()
     const miniCssExtractPlugin = config.plugins.find(
@@ -787,7 +795,7 @@ exports.onCreateWebpackConfig = helper => {
     if (miniCssExtractPlugin) {
         miniCssExtractPlugin.options.ignoreOrder = true
     }
-    actions.replaceWebpackConfig(config)        
+    actions.replaceWebpackConfig(config)
 }
 
 exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
@@ -796,7 +804,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     const pageTemplate = path.resolve('./src/templates/page.js');
     //const articleTemplate = path.resolve('./src/templates/article-page.js');
     const programTemplate = path.resolve('./src/templates/program-page.js');
-    
+
     const helpers = Object.assign({}, actions, {
         createNodeId,
     })
@@ -854,7 +862,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         }
       }
 
-    
+
     }
   `)
 
@@ -874,12 +882,12 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             const pages = result.data.pages.edges;
             pages.forEach(( { node }, index) => {
                 aliases[node.drupal_internal__nid] = processPage(
-                    node, 
+                    node,
                     node.id,
                     node.drupal_internal__nid,
                     node.fields.tags,
-                    node.path, 
-                    pageTemplate, 
+                    node.path,
+                    pageTemplate,
                     helpers
                 );
             })
@@ -890,10 +898,10 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             const articles = result.data.articles.edges;
             articles.forEach(( { node }, index) => {
                 aliases[node.drupal_internal__nid] = processPage(
-                    node, 
-                    node.id, 
-                    node.path, 
-                    articleTemplate, 
+                    node,
+                    node.id,
+                    node.path,
+                    articleTemplate,
                     helpers
                 );
             })
@@ -908,8 +916,8 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                     node.relationships.field_program_acronym.id,
                     node.drupal_internal__nid,
                     null,
-                    node.path, 
-                    programTemplate, 
+                    node.path,
+                    programTemplate,
                     helpers
                 );
             })
