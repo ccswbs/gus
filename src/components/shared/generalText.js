@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import InlineImage from 'components/shared/inlineImage';
 
 const GeneralText = (props) => {    
     let processed = props.processed;
     let textClass = props.textClass;    
-    return <div {...(textClass !== `` ? {className:textClass} : {})} dangerouslySetInnerHTML={{__html: processed}}></div>    
+    let replaced = InlineImage(processed)
+    return <div {...(textClass !== `` ? {className:textClass} : {})} >{replaced}</div>     
 }
 
 GeneralText.propTypes = {
