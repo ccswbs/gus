@@ -14,7 +14,6 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "@ebay/nice-modal-react": "^1.2.5",
     "@fontsource/roboto": "^4.5.5",
     "axios": "^0.26.1",
     "babel-plugin-styled-components": "^2.0.7",
