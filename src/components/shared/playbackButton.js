@@ -15,7 +15,6 @@ const PlaybackButton = ({ widgetData }) => {
     ? "vimeo"
     : "youtube"
   const modalId = `modal-${widgetData.drupal_id}`
-  const playerId = `player-${video.drupal_id}`
 
   return contentExists(videoId) ? (
     <div
@@ -36,7 +35,6 @@ const PlaybackButton = ({ widgetData }) => {
             videoID={videoId}
             videoType={videoType}
             videoTitle={video.name}
-            playerID={playerId}
             videoTranscript={
               video.relationships?.field_media_file?.localFile.publicURL
             }
