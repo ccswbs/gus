@@ -22,9 +22,11 @@ function InlineImage(processed) {
 
   const inlineImageClass = (clazz) => {
     if (clazz === 'align-left')
-      return 'd-block img-fluid float-lg-left img-thumbnail mx-auto mr-lg-4 mt-1 mb-3'
+      return 'align-left img-fluid'
     else if (clazz === 'align-right')
-      return 'd-block img-fluid float-lg-right img-thumbnail mx-auto ml-lg-4 mt-1 mb-3'
+      return 'align-right img-fluid'
+    else if (clazz === 'align-center')
+      return 'align-center img-fluid'
     else
       return 'img-fluid'
   }
@@ -32,9 +34,11 @@ function InlineImage(processed) {
   const inlineFigureClass = (clazz) => {
     const c = 'figure border p-1';
     if (clazz && clazz.match(/align-left/g))
-      return c + ' float-lg-left mx-auto mr-lg-4 mt-1 mb-3'
+      return c + ' align-left mx-auto mr-lg-4 mt-1 mb-3'
     else if (clazz && clazz.match(/align-right/g))
-      return c + ' float-lg-right mx-auto ml-lg-4 mt-1 mb-3'
+      return c + ' align-right mx-auto ml-lg-4 mt-1 mb-3'
+    else if (clazz && clazz.match(/align-centre/g))
+      return c + ' align-centre mx-auto ml-lg-4 mt-1 mb-3'
     else
       return c
   }
