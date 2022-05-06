@@ -316,17 +316,18 @@ const ProgramPage = ({data, location}) => {
               }
             />
           ) : (
-            <Hero imgData={heroImage} />
+            <>
+              <Hero imgData={heroImage} />
+              {/**** Hero Widgets content ****/}
+              {heroWidgets && (
+                <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
+                  {heroWidgets.map((widget, index) => (
+                    <Widget widget={widget} key={index} />
+                  ))}
+                </div>
+              )}
+            </>
           )}
-          {/**** Hero Widgets content ****/}
-          {heroWidgets && (
-            <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-              {heroWidgets.map((widget, index) => (
-                <Widget widget={widget} key={index} />
-              ))}
-            </div>
-          )}
-
           <div className="container ft-container">
             <h1 className="fancy-title">{title}</h1>
           </div>
