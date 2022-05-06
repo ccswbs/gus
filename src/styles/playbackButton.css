@@ -30,3 +30,15 @@
     -o-filter: drop-shadow(-1px 0px 0px black);
     filter: drop-shadow(-1px 0px 0px black);
 }
+
+/**
+ * The ReactPlayer component.
+ */
+.video-modal .modal-body > div {
+  height: 0 !important;
+  padding-bottom: 56.25%;
+}
+/* The video itself. */
+.video-modal .modal-body > div > div {
+  position: absolute;
+}

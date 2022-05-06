@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 import { Modal as BootstrapModal, Button } from "react-bootstrap"
 import NiceModal, { useModal, bootstrapDialog } from "@ebay/nice-modal-react"
 
+import "../../styles/modal.css"
+
 const Modal = NiceModal.create(
   // See allowed modalProps: https://react-bootstrap-v4.netlify.app/components/modal/#modal-props
   ({

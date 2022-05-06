@@ -50,6 +50,7 @@
     "react-inlinesvg": "^2.3.0",
     "react-number-format": "^4.9.1",
     "react-player": "^2.10.0",
+    "react-portal": "^4.2.2",
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5"
