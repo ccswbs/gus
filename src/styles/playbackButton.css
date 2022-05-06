@@ -1,0 +1,32 @@
+.playback-button .play {
+  background: none;
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  opacity: 1;
+  border: none;
+}
+
+.playback-button .play i {
+  font-size: 10rem;
+  color: var(--uog-black);
+  line-height: 10rem;
+  height: 10rem;
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+.playback-button .play i:before {
+  color: var(--white);
+}
+
+.playback-button .play:hover {
+    cursor: pointer;
+    opacity: 1;
+    -webkit-filter: drop-shadow(-1px 0px 0px black);
+    -moz-filter: drop-shadow(-1px 0px 0px black);
+    -ms-filter: drop-shadow(-1px 0px 0px black);
+    -o-filter: drop-shadow(-1px 0px 0px black);
+    filter: drop-shadow(-1px 0px 0px black);
+}
