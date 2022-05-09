@@ -53,9 +53,7 @@ function InlineImage(processed) {
       const height   = domNode.attribs['height'];
       const alt      = domNode.attribs['alt'];
       return <>
-        <span className='float-start'/>
         <img src={imgSrc} alt={alt} className={imgClass} width={width} height={height} />
-        <span className='float-end'/>
        </>
     }
     if (domNode.name === 'figure') {
