@@ -22,11 +22,11 @@ function InlineImage(processed) {
 
   const inlineImageClass = (clazz) => {
     if (clazz === 'align-left')
-      return 'float-left img-fluid'
-    else if (clazz === 'align-right1')
-      return 'align-right img-fluid'
-    else if (clazz === 'align-center1')
-      return 'align-center img-fluid'
+      return 'd-block img-fluid float-lg-left img-thumbnail mx-auto mr-lg-4 mt-1 mb-3'
+    else if (clazz === 'align-right')
+      return 'd-block img-fluid float-lg-right img-thumbnail mx-auto ml-lg-4 mt-1 mb-3'
+    else if (clazz === 'align-center')
+      return 'd-block img-fluid float-lg-center img-thumbnail mx-auto ml-lg-4 mt-1 mb-3'
     else
       return clazz
   }
@@ -51,7 +51,12 @@ function InlineImage(processed) {
       const imgSrc   = inlineImageSrc(src, baseUrl);
       const width    = domNode.attribs['width'];
       const height   = domNode.attribs['height'];
-      return <img src={imgSrc} alt="" className={imgClass} width={width} height={height} />
+      const alt      = domNode.attribs['alt'];
+      return <>
+        <span className='float-start'/>
+        <img src={imgSrc} alt={alt} className={imgClass} width={width} height={height} />
+        <span className='float-end'/>
+       </>
     }
     if (domNode.name === 'figure') {
       const clazz = domNode.attribs['class'];
