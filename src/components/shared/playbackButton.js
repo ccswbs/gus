@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
-import { contentExists } from "../../utils/ug-utils"
 import Overlay from "./overlay"
 import Video from "./video"
 import { Portal } from "react-portal"
@@ -16,7 +15,7 @@ const PlaybackButton = ({ widgetData }) => {
     : "youtube"
   const modalId = `modal-${widgetData.drupal_id}`
 
-  return contentExists(videoId) ? (
+  return videoId ? (
     <div
       className="playback-button"
       id={`playback-button-${widgetData.drupal_id}`}
@@ -27,7 +26,7 @@ const PlaybackButton = ({ widgetData }) => {
           // onclick="ga('send', 'event', 'Play Video', 'play', 'Careers Video');"
           aria-hidden="true"
         ></i>
-        <span className="sr-only">Play video: {video.name}</span>
+        <span className="visually-hidden">Play video: {video.name}</span>
       </Overlay.ModalButton>
       <Portal>
         <Overlay.Modal id={modalId}>
