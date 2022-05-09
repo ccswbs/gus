@@ -5,9 +5,9 @@ import Overlay from "./overlay"
 import Video from "./video"
 import { Portal } from "react-portal"
 
-import "../../styles/playbackButton.css"
+import "../../styles/modalVideo.css"
 
-const PlaybackButton = ({ widgetData }) => {
+const ModalVideo = ({ widgetData }) => {
   const video = widgetData.relationships?.field_media_video
   const videoId = video?.field_media_oembed_video.split("/").pop()
   const videoType = video?.field_media_oembed_video.includes("vimeo")
@@ -16,11 +16,8 @@ const PlaybackButton = ({ widgetData }) => {
   const modalId = `modal-${widgetData.drupal_id}`
 
   return videoId ? (
-    <div
-      className="playback-button"
-      id={`playback-button-${widgetData.drupal_id}`}
-    >
-      <Overlay.ModalButton id={modalId} className="play">
+    <div className="modal-video" id={`modal-video-${widgetData.drupal_id}`}>
+      <Overlay.ModalButton id={modalId} className="play" btnClass={false}>
         <i
           class="fad fa-play-circle"
           // onclick="ga('send', 'event', 'Play Video', 'play', 'Careers Video');"
@@ -45,14 +42,14 @@ const PlaybackButton = ({ widgetData }) => {
   ) : null
 }
 
-export default PlaybackButton
+export default ModalVideo
 
-PlaybackButton.propTypes = {
+ModalVideo.propTypes = {
   widgetData: PropTypes.object.isRequired,
 }
 
 export const query = graphql`
-  fragment ParagraphPlaybackButtonWidgetFragment on paragraph__playback_button_widget {
+  fragment ParagraphModalVideoWidgetFragment on paragraph__modal_video_widget {
     id
     drupal_id
     relationships {

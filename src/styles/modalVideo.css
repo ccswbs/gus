@@ -1,4 +1,4 @@
-.playback-button .play {
+.modal-video .play {
   background: none;
   display: block;
   margin: 0 auto;
@@ -7,7 +7,7 @@
   border: none;
 }
 
-.playback-button .play i {
+.modal-video .play i {
   font-size: 10rem;
   color: var(--uog-black);
   line-height: 10rem;
@@ -17,16 +17,25 @@
   transition: all 0.25s ease-in-out;
 }
 
-.playback-button .play i:before {
+.modal-video .play i:before {
   color: var(--white);
 }
 
-.playback-button .play:hover {
+.modal-video .play:focus,
+.modal-video .play:hover {
   cursor: pointer;
   opacity: 1;
+  outline: none;
   -webkit-filter: drop-shadow(-1px 0px 0px black);
   -moz-filter: drop-shadow(-1px 0px 0px black);
   -ms-filter: drop-shadow(-1px 0px 0px black);
   -o-filter: drop-shadow(-1px 0px 0px black);
   filter: drop-shadow(-1px 0px 0px black);
+}
+.modal-video .play:active {
+  -webkit-filter: drop-shadow(-2px 0px 5px #c20430);
+  -moz-filter: drop-shadow(-2px 0px 5px #c20430);
+  -ms-filter: drop-shadow(-2px 0px 5px #c20430);
+  -o-filter: drop-shadow(-2px 0px 5px #c20430);
+  filter: drop-shadow(-2px 0px 5px #c20430);
 }

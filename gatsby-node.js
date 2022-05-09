@@ -117,7 +117,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__section_tabs
       | paragraph__tab_content
       | paragraph__accordion_section
-      | paragraph__playback_button_widget
+      | paragraph__modal_video_widget
 
     union widgetSectionParagraphUnion =
       paragraph__block_widget
@@ -527,10 +527,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
       field_button_section: paragraph__section_buttons @link(from:"field_button_section___NODE")
     }
-    type paragraph__playback_button_widget implements Node {
-      relationships: paragraph__playback_button_widgetRelationships
+    type paragraph__modal_video_widget implements Node {
+      relationships: paragraph__modal_video_widgetRelationships
     }
-    type paragraph__playback_button_widgetRelationships implements Node {
+    type paragraph__modal_video_widgetRelationships implements Node {
       field_media_video: media__remote_video @link(from: "field_media_video___NODE")
     }
     type paragraph__program_statistic implements Node {

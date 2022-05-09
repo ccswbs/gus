@@ -7,8 +7,8 @@ import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
+import ModalVideo from 'components/shared/modalVideo';
 import PageTabs from 'components/shared/pageTabs';
-import PlaybackButton from 'components/shared/playbackButton';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
 
@@ -39,8 +39,8 @@ const Widget = ({widget}) => {
                         numColumns={numColumns} />
         case "paragraph__media_text":
           return <MediaText headingClass="mt-md-0" widgetData={widget} />;
-        case "paragraph__playback_button_widget":
-          return <PlaybackButton widgetData={widget} />
+        case "paragraph__modal_video_widget":
+          return <ModalVideo widgetData={widget} />
         case "paragraph__section":
             return (<>
 				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
@@ -83,8 +83,8 @@ export const query = graphql`
     ... on paragraph__media_text {
       ...MediaTextParagraphFragment
     }
-    ... on paragraph__playback_button_widget {
-      ...ParagraphPlaybackButtonWidgetFragment
+    ... on paragraph__modal_video_widget {
+      ...ParagraphModalVideoWidgetFragment
     }
     ... on paragraph__section {
       ...SectionParagraphFragment
