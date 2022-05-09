@@ -22,13 +22,13 @@ function InlineImage(processed) {
 
   const inlineImageClass = (clazz) => {
     if (clazz === 'align-left')
-      return 'align-left img-fluid'
-    else if (clazz === 'align-right')
+      return 'float-left img-fluid'
+    else if (clazz === 'align-right1')
       return 'align-right img-fluid'
-    else if (clazz === 'align-center')
+    else if (clazz === 'align-center1')
       return 'align-center img-fluid'
     else
-      return 'img-fluid'
+      return clazz
   }
 
   const inlineFigureClass = (clazz) => {
