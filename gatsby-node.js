@@ -176,6 +176,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       info: String
       body: BodyFieldWithSummary
     }
+
+    type block_content__yaml_block implements Node {
+      drupal_id: String
+      info: String
+      field_yaml_id: String
+      field_yaml_map: String
+      relationships: block_content__yaml_blockRelationships
+    }
+    type block_content__yaml_blockRelationships implements Node {
+      field_yaml_files: [media__image] @link(from: "field_yaml_files___NODE")
+    }
     
     type media__image implements Node {
       drupal_id: String
@@ -183,6 +194,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_media_image: ImageField
       fields: media__imageFields
       relationships: media__imageRelationships
+      path: AliasPath
     }
     type media__imageFields implements Node {
       tags: [String]
@@ -854,7 +866,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         }
       }
 
-    
+
     }
   `)
 
