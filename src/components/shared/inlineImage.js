@@ -33,11 +33,12 @@ function InlineImage(processed) {
 
   const inlineFigureClass = (clazz) => {
     const c = 'figure border p-1';
+    console.log(clazz)
     if (clazz && clazz.match(/align-left/g))
       return c + ' float-start mx-auto me-4 mt-1 mb-3'
     else if (clazz && clazz.match(/align-right/g))
       return c + ' float-end mx-auto ms-4 mt-1 mb-3'
-    else if (clazz && clazz.match(/align-centre/g))
+    else if (clazz && clazz.match(/align-center/g))
       return c + ' mx-auto mt-1 mb-3'
     else
       return c
@@ -59,6 +60,7 @@ function InlineImage(processed) {
     if (domNode.name === 'figure') {
       const clazz = domNode.attribs['class'];
       const figclass = inlineFigureClass(clazz);
+      console.log(figclass)
       return <figure className={figclass}>
         {domNode.children.map(child => replaceInlineImages(child, baseUrl))}
       </figure>
