@@ -528,6 +528,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_button_section: paragraph__section_buttons @link(from:"field_button_section___NODE")
     }
     type paragraph__modal_video_widget implements Node {
+      drupal_id: String
       relationships: paragraph__modal_video_widgetRelationships
     }
     type paragraph__modal_video_widgetRelationships implements Node {
