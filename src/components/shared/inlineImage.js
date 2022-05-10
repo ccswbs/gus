@@ -3,6 +3,15 @@ import { useStaticQuery, graphql } from "gatsby"
 import HTMLReactParser, { domToReact } from "html-react-parser"
 import { propTypes } from "react-bootstrap/esm/Image"
 
+// This Function will take a string that contains HTML tags and parce it to add the BASEURL (environmental variable)
+// to the begining of the image source tag so that inline images placed by Drupal will have the proper URL. 
+// It will deal with the regular img tag as well as the figure tag (with caption) aswell as float the image start (left)
+// or end (right), or centre. The appropriate classes are added to format the image and add space between it and the text.
+// 
+// InlineImage() function will return an array of HTML tags that can be displayed directly. 
+
+
+
 function InlineImage(processed) {
 
   const data = useStaticQuery(graphql`
