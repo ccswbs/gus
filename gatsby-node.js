@@ -796,10 +796,41 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     const pageTemplate = path.resolve('./src/templates/page.js');
     //const articleTemplate = path.resolve('./src/templates/article-page.js');
     const programTemplate = path.resolve('./src/templates/program-page.js');
+    const { createRedirect } = actions;
     
     const helpers = Object.assign({}, actions, {
         createNodeId,
     })
+
+    // Query for redirects
+    const redirects = await graphql(`
+    {
+      allRedirectRedirect {
+        edges {
+          node {
+            redirect_source {
+              path
+            }
+            redirect_redirect {
+              uri
+            }
+          }
+        }
+      }
+    }
+  `).then(result => {
+    const data = [];
+    if (!result.errors) {
+      result.data.allRedirectRedirect.edges.forEach(({ node }) => {
+        const source_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, '/')
+        if (!(source_uri in data)) {
+          data[source_uri] = [];
+        }
+        data[source_uri].push(node);
+      })
+    }
+    return data;
+  });
 
     // INSTRUCTION: Query for menu and page template content here
 
@@ -880,7 +911,8 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                     node.fields.tags,
                     node.path, 
                     pageTemplate, 
-                    helpers
+                    helpers,
+                    redirects
                 );
             })
         }
@@ -910,14 +942,15 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                     null,
                     node.path, 
                     programTemplate, 
-                    helpers
+                    helpers,
+                    redirects
                 );
             })
         }
     }
 }
 
-function processPage(node, contextID, nodeNid, tagID, nodePath, template, helpers) {
+function processPage(node, contextID, nodeNid, tagID, nodePath, template, helpers, redirects) {
     let alias = createContentTypeAlias(nodePath);
 
     helpers.createPage({
@@ -929,6 +962,18 @@ function processPage(node, contextID, nodeNid, tagID, nodePath, template, helper
         tid: tagID,
       },
     })
+
+    if (redirects[`/node/${node.drupal_internal__nid}`]) {
+      redirects[`/node/${node.drupal_internal__nid}`].forEach(redirect => {
+        let sourcePath = createContentTypeAlias(redirect.redirect_source.path);
+        createRedirect({
+          fromPath: sourcePath,
+          toPath: alias,
+          isPermanent: true,
+          status: 301
+        });
+      })
+    }
 
     return alias;
 }
