@@ -21,7 +21,7 @@ function Video (props) {
         <div className={"embed-responsive embed-responsive-" + aspectRatio}>
             <iframe allowfullscreen="true" src={videoSrc} title={videoTitle ? videoTitle : videoType + " video player"} />
         </div>
-        {videoTranscript && <p><a href={videoTranscript}>Download transcript</a><span className="visually-hidden"> for {videoTitle + " video"}</span></p>}
+        {videoTranscript && <a className="btn btn-primary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
     </>)
 }
 Video.propTypes = {
