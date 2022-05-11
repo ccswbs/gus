@@ -279,7 +279,11 @@ const ProgramPage = ({data, location}) => {
     const title = progData.title;
     const acronym = (progData.relationships.field_program_acronym?.name);
     const overview = progData.field_program_overview?.processed;
-    const heroWidgets = progData.relationships?.field_hero_widgets;
+
+    // `field_hero_widgets` only allows a single widget (at the moment), and
+    // Drupal doesn't return an array, so force it into an array.
+    const heroWidgets = [progData.relationships?.field_hero_widgets];
+
     const widgets = progData.relationships?.field_widgets;
     const courseNotes = progData.field_course_notes?.processed;
 
