@@ -14,12 +14,10 @@ const colourOptions = [
 
 const render = ({ field_yaml_map, relationships }) => {
   const yamlMap = yaml.load(field_yaml_map);
-  // let yamlImage = fetchYamlImage("./images/grce/economic-impact/humber-building.jpg");
-
-  console.log(yamlMap);
-  console.log(relationships);
-  // console.log(yamlImage);
-  // console.log(getImage("/static/f28ef9269c5a3c8a9a11ee2a580232c1/johnston-hall-building.jpg"));
+  const yamlFiles = {};
+  relationships.field_yaml_files.forEach(file => {
+    yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
+  });
   
   return (
     <Container>
@@ -36,7 +34,7 @@ const render = ({ field_yaml_map, relationships }) => {
                         <Statistic.Type className="mb-4 px-5"><a href={link.url} className="fs-3 text-white">{type}</a></Statistic.Type>
                         : <Statistic.Type className="mb-4 px-5">{type}</Statistic.Type>
                       }
-                      <GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" />
+                      <GatsbyImage image={getImage(yamlFiles[image.src])} alt={image.alt} className="h-100 card-img-bottom" />
                   </Statistic.SolidCard>
                 </div>
             )}
@@ -59,7 +57,7 @@ const query = graphql`
             field_media_image {
               localFile {
                 childImageSharp {
-                  gatsbyImageData
+                  gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
                 }
               }
             }
@@ -68,25 +66,6 @@ const query = graphql`
             alias
           }
         }
-      }
-    }
-    economicImpactYaml(yamlId: {eq: "economic_impact_community_campus_stats"}) {
-      id
-      title
-      stats {
-          value
-          type
-          image {
-              src{
-                childImageSharp {
-                    gatsbyImageData
-                }
-              }
-              alt
-          }
-          link {
-            url
-          }
       }
     }
   }
