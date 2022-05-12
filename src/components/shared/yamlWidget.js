@@ -6,7 +6,7 @@ import { graphql } from 'gatsby';
 import InternationalStatsGlobal from 'components/blocks/international/international-stats-global'
 
 const YamlWidget = (props) => {
-    let component = props.blockData.relationships.field_custom_block.field_yaml_id;
+    let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
 
     // add new custom components to conditional rendering below
     return ({
