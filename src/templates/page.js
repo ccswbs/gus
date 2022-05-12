@@ -25,14 +25,14 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
         
         { /**** Body content ****/ }
-        <div className="container page-container">
+        {/* <div className="container page-container"> */}
             { /**** Widgets content ****/}      
-            <div className="row site-content">
-                <section className="col-md-12">
-                    {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
-                </section>
+            {/* <div className="row site-content"> */}
+                {/* <section className="col-md-12"> */}
+                  {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
+                {/* </section>
             </div>
-        </div>
+        </div> */}
         {contentExists(footer) && footer.length !== 0 &&
         <CustomFooter footerData={footer[0]} />}
     </Layout>

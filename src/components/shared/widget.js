@@ -10,8 +10,10 @@ import MediaText from 'components/shared/mediaText';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
+import YamlWidget from 'components/shared/yamlWidget';
+import { ConditionalWrapper } from 'utils/ug-utils';
 
-const Widget = ({widget}) => {
+const WidgetSelector = ({widget}) => {
     switch (widget?.__typename) {
         case "paragraph__accordion_section":
             return <Accordion pageData={widget} />;
@@ -41,7 +43,7 @@ const Widget = ({widget}) => {
         case "paragraph__section":
             return (<>
 				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
-				<div key={widget.drupal_id} className="row mb-5">                    
+				<div key={widget.drupal_id} className="row">
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>
 			</>);
@@ -49,10 +51,27 @@ const Widget = ({widget}) => {
             return <PageTabs pageData={widget} />;
         case "paragraph__stats_widget":
             return <StatsWidget statsWidgetData={widget} />;
+        case "paragraph__yaml_widget":
+            return <YamlWidget key={widget.drupal_id} blockData={widget} />;
         default:
             return <></>
     }
-  }
+}
+
+const Widget = ({widget}) => {
+    return <ConditionalWrapper 
+        condition={widget?.__typename !== "paragraph__yaml_widget"} 
+        wrapper={children => 
+            <div className="container page-container">   
+                <div className="row site-content">
+                    <section className="col-md-12">
+                        {children}
+                    </section>
+                </div>
+            </div>}>
+        <WidgetSelector widget={widget} />
+    </ConditionalWrapper>
+}
 
 export default Widget
 
@@ -89,6 +108,9 @@ export const query = graphql`
     }
     ... on paragraph__stats_widget {
         ...StatsWidgetParagraphFragment
+    }
+    ... on paragraph__yaml_widget {
+        ...YamlWidgetParagraphFragment
     }
   }
 `

@@ -306,18 +306,19 @@ const ProgramPage = ({data, location}) => {
         <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 
         { /**** Program Overview ****/ }
-        <div className="container page-container">
-            <div className="row site-content">
-                {overview && <section className="content-area">
-                        {renderProgramOverview(overview)}
-                </section>}
-                { /**** Widgets content ****/} 
-                {widgets && <section className="col-md-12">
-                    {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
-                </section>}
+        {overview && 
+          <div className="container page-container">
+            <div className="row site-content">        
+              <section className="content-area">
+                    {renderProgramOverview(overview)}
+              </section>
             </div>
-        </div>
-    
+          </div>
+        }
+
+        { /**** Widgets content ****/} 
+        {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
+
         { /**** Program Stats ****/ }
         {renderProgramStats(degreesData, variantData, statsData)}
    
