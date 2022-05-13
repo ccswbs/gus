@@ -1,6 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { getImage } from "gatsby-plugin-image"
+import Overlay from "components/shared/overlay"
 import { Container, Col } from "react-bootstrap"
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
@@ -26,23 +27,33 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   });
   
   return (
-    <Gradient className="d-flex flex-column">
-      <Container className="page-container p-0">
-          <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
-              {yamlMap.stats.map(({value, type}, index) => 
-                <Col key={`international-stat-${index}`}>
-                  <Statistic.SolidCard 
-                    background={colourOptions[index].background} 
-                    colour={colourOptions[index].colour} 
-                    className="p-5" >
-                    <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
-                    <Statistic.Type>{type}</Statistic.Type>
-                  </Statistic.SolidCard>
-                </Col>
-              )}
-          </Statistic>
-      </Container>
-    </Gradient>
+    <>
+      <div className="d-flex flex-column bg-light">
+        <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
+          <div className="mt-5 mr-3 pb-5 px-5 text-center justify-content-center align-self-center row">
+              <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
+              <p><a href={yamlMap.link.url}>{yamlMap.link.title}</a></p>
+          </div>
+        </Overlay.GatsbyImage>
+      </div>
+      <Gradient className="d-flex flex-column">
+        <Container className="page-container p-0">
+            <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
+                {yamlMap.stats.map(({value, type}, index) => 
+                  <Col key={`international-stat-${index}`}>
+                    <Statistic.SolidCard 
+                      background={colourOptions[index].background} 
+                      colour={colourOptions[index].colour} 
+                      className="p-5" >
+                      <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
+                      <Statistic.Type>{type}</Statistic.Type>
+                    </Statistic.SolidCard>
+                  </Col>
+                )}
+            </Statistic>
+        </Container>
+      </Gradient>
+    </>
   )}
 
 const query = graphql`
@@ -59,7 +70,7 @@ const query = graphql`
             field_media_image {
               localFile {
                 childImageSharp {
-                  gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                  gatsbyImageData(width: 1400, height: 250, placeholder: BLURRED, layout: CONSTRAINED)
                 }
               }
             }
