@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { fontAwesomeIconColour } from 'utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
+import { ConditionalWrapper } from 'utils/ug-utils';
 
 function buttonStyle(styleOfButton) {
     switch(styleOfButton){
@@ -54,12 +55,29 @@ function Button (buttonCol, buttonData, buttonSpacing) {
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
     let buttonTitleClasses = "align-middle d-table-cell lh-sm" + (buttonCol === "Call to Action" ? " fs-1" : null);
+    let ButtonTag = buttonData.field_button_link.uri.includes("http") ? <a href={urlLink} /> : <Link to={urlLink} />;
     
     return (
     <React.Fragment key={buttonData.drupal_id}>
     {buttonData.field_cta_heading && <h2 className="h3 text-dark text-center" dangerouslySetInnerHTML={{__html: buttonData.field_cta_heading.processed}} />}    
+
+    {/* { btnAnalyticsGoal && btnAnalyticsAction ? 
+        <ButtonTag className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>
+            {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
+            <span className={buttonTitleClasses} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+        </ButtonTag>
+        :
+        <ButtonTag className={buttonClasses}>
+            {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
+            <span className={buttonTitleClasses} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
+        </ButtonTag>       
+    } */}
+
+
+
+
     {buttonData.field_button_link.uri.includes("http") ? btnAnalyticsGoal && btnAnalyticsAction ? 
-        <a href={urlLink} className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
+        <a href={urlLink} className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>
             {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
             <span className={buttonTitleClasses} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>

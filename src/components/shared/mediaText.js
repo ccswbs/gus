@@ -17,7 +17,7 @@ function MediaText (props) {
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
     const imageURL = mediaRelationships?.field_media_image?.localFile;	
-    const imageAlt = mediaRelationships?.field_media_image?.alt;
+    const imageAlt = mediaRelationships?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
     
     const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
@@ -169,6 +169,7 @@ function MediaText (props) {
                 videoHeight={videoHeight}
                 videoWidth={videoWidth}
             />}
+
             {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
         </section>
         {textOrButtons &&

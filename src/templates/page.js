@@ -15,7 +15,7 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
         
         { /**** Header and Title ****/ }
-        <div className={!contentExists(imageData) && "no-thumb"} id="rotator">
+        <div className={imageData?.length > 0 ? imageData : "no-thumb"} id="rotator">
             <Hero imgData={imageData} />
             <div className="container ft-container">
                 <h1 className="fancy-title">{pageTitle}</h1>
@@ -23,16 +23,10 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         </div>
         
         <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
-        
-        { /**** Body content ****/ }
-        {/* <div className="container page-container"> */}
-            { /**** Widgets content ****/}      
-            {/* <div className="row site-content"> */}
-                {/* <section className="col-md-12"> */}
-                  {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
-                {/* </section>
-            </div>
-        </div> */}
+        { /**** Widgets content ****/}
+        {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
+
+        { /**** Custom Footer content ****/}
         {contentExists(footer) && footer.length !== 0 &&
         <CustomFooter footerData={footer[0]} />}
     </Layout>
