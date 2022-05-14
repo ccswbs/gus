@@ -7,7 +7,7 @@ import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
-import PageContainer from 'components/shared/PageContainer';
+import PageContainer from 'components/shared/pageContainer';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
