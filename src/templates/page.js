@@ -7,7 +7,6 @@ import Hero from 'components/shared/hero';
 import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
-import { contentExists } from 'utils/ug-utils';
 
 const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, footer, menuName, domains}) => (
     <Layout menuName={menuName}>
@@ -15,7 +14,7 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
         
         { /**** Header and Title ****/ }
-        <div className={imageData?.length > 0 ? imageData : "no-thumb"} id="rotator">
+        <div className={imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
             <Hero imgData={imageData} />
             <div className="container ft-container">
                 <h1 className="fancy-title">{pageTitle}</h1>
@@ -27,7 +26,7 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
 
         { /**** Custom Footer content ****/}
-        {contentExists(footer) && footer.length !== 0 &&
+        {footer?.length > 0 &&
         <CustomFooter footerData={footer[0]} />}
     </Layout>
 )

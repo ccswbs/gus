@@ -4,6 +4,7 @@ import { graphql } from 'gatsby';
 // @todo - add index of components in components/blocks and import all in one line
 // until then, import each component manually below
 import InternationalStatsGlobal from 'components/blocks/international/international-stats-global'
+import InternationalExploreThingsToKnow from 'components/blocks/international/international-things-to-know'
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -11,6 +12,7 @@ const YamlWidget = (props) => {
     // add new custom components to conditional rendering below
     return ({
         'international_stats_global_impact': <InternationalStatsGlobal />,
+        'international_explore_things_to_know': <InternationalExploreThingsToKnow />,
     }[component] || null )
 }
 

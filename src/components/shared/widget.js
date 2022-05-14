@@ -7,6 +7,7 @@ import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
+import PageContainer from 'components/shared/PageContainer';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
@@ -62,13 +63,12 @@ const Widget = ({widget}) => {
     return <ConditionalWrapper 
         condition={widget?.__typename !== "paragraph__yaml_widget"} 
         wrapper={children => 
-            <div className="container page-container">   
-                <div className="row site-content">
-                    <section className="col-md-12">
-                        {children}
-                    </section>
-                </div>
-            </div>}>
+            <PageContainer.SiteContent>
+                {/* <section className="col-md-12"> */}
+                    {children}
+                {/* </section> */}
+            </PageContainer.SiteContent>
+        }>
         <WidgetSelector widget={widget} />
     </ConditionalWrapper>
 }
