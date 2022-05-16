@@ -92,7 +92,7 @@ function SectionWidgets (props) {
         
         return (<>
             <div className={primaryClass}>
-                <ConditionalWrapper condition={secondary.length > 0} wrapper={children => <div className="row" title="primary sub-row when right column exists">{children}</div>}>
+                <ConditionalWrapper condition={secondary.length > 0} wrapper={children => <div className="row">{children}</div>}>
                 {primary && primary.map(widget => {
                     return renderPrimary(widget)
                 })}                
