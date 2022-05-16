@@ -31,13 +31,15 @@ function InlineImage(processed) {
 
   const inlineImageClass = (clazz) => {
     if (clazz === 'align-left')
-      return 'd-block float-md-start mx-auto me-4 mt-1 mb-3'
+      return 'd-block img-fluid float-md-start mx-auto me-4 mt-1 mb-3'
     else if (clazz === 'align-right')
-      return 'd-block float-md-end mx-auto ms-4 mt-1 mb-3'
+      return 'd-block img-fluid float-md-end mx-auto ms-4 mt-1 mb-3'
     else if (clazz === 'align-center')
-      return 'd-block mx-auto mt-1 mb-3'
+      return 'd-block img-fluid mx-auto mt-1 mb-3'
+    else if (clazz !== undefined)
+      return "img-fluid" + clazz
     else
-      return " img-fluid" + clazz
+      return "img-fluid"
   }
 
   const inlineFigureClass = (clazz) => {
