@@ -31,17 +31,17 @@ function InlineImage(processed) {
 
   const inlineImageClass = (clazz) => {
     if (clazz === 'align-left')
-      return 'd-block img-fluid float-md-start mx-auto me-4 mt-1 mb-3'
+      return 'd-block float-md-start mx-auto me-4 mt-1 mb-3'
     else if (clazz === 'align-right')
-      return 'd-block img-fluid float-md-end mx-auto ms-4 mt-1 mb-3'
+      return 'd-block float-md-end mx-auto ms-4 mt-1 mb-3'
     else if (clazz === 'align-center')
-      return 'd-block img-fluid mx-auto mt-1 mb-3'
+      return 'd-block mx-auto mt-1 mb-3'
     else
-      return clazz
+      return " img-fluid" + clazz
   }
 
   const inlineFigureClass = (clazz) => {
-    const c = 'figure p-1 img-fluid';
+    const c = 'figure p-1';
     if (clazz && clazz.match(/align-left/g))
       return c + ' float-start mx-auto me-4 mt-1 mb-3'
     else if (clazz && clazz.match(/align-right/g))
@@ -67,7 +67,7 @@ function InlineImage(processed) {
       const clazz = domNode.attribs['class'];
       const figclass = inlineFigureClass(clazz);
       return <figure className={figclass}>
-        {domNode.children.map(child => replaceInlineImages(child, baseUrl))}
+        {domNode.children.map(child =>  replaceInlineImages(child, baseUrl))}
       </figure>
     }
     if (domNode.name === 'figcaption') {
