@@ -41,13 +41,13 @@ function InlineImage(processed) {
   }
 
   const inlineFigureClass = (clazz) => {
-    const c = 'figure p-1';
+    const c = 'figure p-1 img-fluid';
     if (clazz && clazz.match(/align-left/g))
       return c + ' float-start mx-auto me-4 mt-1 mb-3'
     else if (clazz && clazz.match(/align-right/g))
       return c + ' float-end mx-auto ms-4 mt-1 mb-3'
     else if (clazz && clazz.match(/align-center/g))
-      return c + ' d-block text-center mt-1 mb-3'
+      return c + ' d-block text-center mx-auto mt-1 mb-3'
     else
       return c
   }
