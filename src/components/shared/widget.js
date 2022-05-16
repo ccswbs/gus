@@ -64,9 +64,7 @@ const Widget = ({widget}) => {
         condition={widget?.__typename !== "paragraph__yaml_widget"} 
         wrapper={children => 
             <PageContainer.SiteContent>
-                {/* <section className="col-md-12"> */}
-                    {children}
-                {/* </section> */}
+                {children}
             </PageContainer.SiteContent>
         }>
         <WidgetSelector widget={widget} />
