@@ -8,6 +8,7 @@ import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
 import PageContainer from 'components/shared/pageContainer';
+import ModalVideo from 'components/shared/modalVideo';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
@@ -25,7 +26,7 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__general_text":
             return <GeneralText processed={widget.field_general_text.processed} />;
         case "paragraph__lead_paragraph":
-            return( <LeadPara pageData={widget} />);        
+            return( <LeadPara pageData={widget} />);
         case "paragraph__links_widget":
             const gridFirstHeadingLevel = "h2";
             const listFirstHeadingLevel = "h2";
@@ -33,14 +34,16 @@ const WidgetSelector = ({widget}) => {
             const headingLevel = (linksDisplayType === "grid") ? gridFirstHeadingLevel : listFirstHeadingLevel;
             const numColumns = (linksDisplayType === "grid") ? 4 : null;
             return <LinksItems key={widget.drupal_id}
-                        pageData={widget.relationships.field_link_items} 
-                        displayType={linksDisplayType} 
-                        heading={widget.field_link_items_title} 
-                        headingLevel={headingLevel} 
+                        pageData={widget.relationships.field_link_items}
+                        displayType={linksDisplayType}
+                        heading={widget.field_link_items_title}
+                        headingLevel={headingLevel}
                         description={widget.field_link_items_description}
                         numColumns={numColumns} />
         case "paragraph__media_text":
-            return <MediaText headingClass="mt-md-0" widgetData={widget} />;
+          return <MediaText headingClass="mt-md-0" widgetData={widget} />;
+        case "paragraph__modal_video_widget":
+          return <ModalVideo widgetData={widget} />
         case "paragraph__section":
             return (<>
 				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
@@ -74,38 +77,40 @@ const Widget = ({widget}) => {
 export default Widget
 
 export const query = graphql`
- 
   fragment FieldWidgetsFragment on Node {
     __typename
     ... on paragraph__accordion_section {
-        ...AccordionSectionParagraphFragment
+      ...AccordionSectionParagraphFragment
     }
     ... on paragraph__block_widget {
-        ...BlockWidgetParagraphFragment
+      ...BlockWidgetParagraphFragment
     }
     ... on paragraph__events_widget {
-        ...EventsParagraphFragment
+      ...EventsParagraphFragment
     }
     ... on paragraph__general_text {
-        ...GeneralTextParagraphFragment
+      ...GeneralTextParagraphFragment
     }
     ... on paragraph__lead_paragraph {
-        ...LeadParagraphFragment
-    }    
+      ...LeadParagraphFragment
+    }
     ... on paragraph__links_widget {
-        ...LinksWidgetParagraphFragment
+      ...LinksWidgetParagraphFragment
     }
     ... on paragraph__media_text {
-        ...MediaTextParagraphFragment
-    }    
+      ...MediaTextParagraphFragment
+    }
+    ... on paragraph__modal_video_widget {
+      ...ParagraphModalVideoWidgetFragment
+    }
     ... on paragraph__section {
-        ...SectionParagraphFragment
+      ...SectionParagraphFragment
     }
     ... on paragraph__section_tabs {
-        ...SectionTabsParagraphFragment
+      ...SectionTabsParagraphFragment
     }
     ... on paragraph__stats_widget {
-        ...StatsWidgetParagraphFragment
+      ...StatsWidgetParagraphFragment
     }
     ... on paragraph__yaml_widget {
         ...YamlWidgetParagraphFragment

@@ -22,12 +22,12 @@ import { graphql } from 'gatsby';
 function renderProgramOverview(overview) {
     if (overview) {
         return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: overview }} /></>
-    }    
+    }
     return null;
 }
 
 function renderProgramStats(degreesData, variantData, statsData) {
-    
+
     if (statsData?.length>0 || degreesData?.length>0) {
         return (
         <div className="full-width-container stats-bg">
@@ -44,7 +44,7 @@ function renderProgramStats(degreesData, variantData, statsData) {
                 </section>
             </div>
         </div>)
-    }    
+    }
     return null;
 }
 
@@ -54,7 +54,7 @@ function CountProgramVariants(variantData) {
     let minors = [];
     let certificates = [];
     let assocDiplomas = [];
-    
+
     if (variantData?.length > 0) {
         variantData.forEach((edge) => {
             if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
@@ -66,14 +66,14 @@ function CountProgramVariants(variantData) {
                         certificates.push(edge.relationships.field_variant_type.name);
                     break;
                     case "Minors":
-                        minors.push(edge.relationships.field_variant_type.name);                        
-                    break;  
+                        minors.push(edge.relationships.field_variant_type.name);
+                    break;
                     default:
                         majors.push(edge.relationships.field_variant_type.name);
                 }
             }
-        }); 
-        return <>     
+        });
+        return <>
             {majors?.length>0 && <>
                 <div className="uog-card">
                     <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {majors.length}</dt>
@@ -99,14 +99,14 @@ function CountProgramVariants(variantData) {
                 </div>
             </>}
         </>
-    }    
+    }
     return null;
 }
 
 function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
-  
+
     // accordion - Courses Item
-    const programCourseItem = () => { 
+    const programCourseItem = () => {
         if (courseNotes || courseData?.length>0) {
           return (
             <div className="accordion-item">
@@ -127,7 +127,7 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
     }
 
     // accordion - Variants Item
-    const programVariantItem = () => { 
+    const programVariantItem = () => {
         if(variantDataHeading) {
           return (
             <div className="accordion-item">
@@ -148,7 +148,7 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
     }
 
     // accordion - Careers Item
-    const programCareersItem = () => { 
+    const programCareersItem = () => {
         if (careerData?.length>0) {
           return (
             <div className="accordion-item">
@@ -165,9 +165,9 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
             </div>
           )
         }
-        return null; 
+        return null;
     }
-  
+
     // accordion - Employers Item
     const programEmployersItem = () => {
         if (employerData?.length > 0) {
@@ -202,7 +202,7 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
                     </div>
                   </div>
               </section>
-            </div>    
+            </div>
         )
     }
     return null;
@@ -210,7 +210,7 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
 
 function retrieveLastModifiedDates (content) {
     let dates = [];
-    if (content?.length > 0) {  
+    if (content?.length > 0) {
         content.forEach((edge) => {
             dates.push(edge.node.changed);
         })
@@ -233,7 +233,7 @@ function prepareVariantHeading (variantData) {
     let variantHeading = "";
 
     for (let i=0; i<uniqueLabels.length; i++) {
-        if (i > 0) { 
+        if (i > 0) {
             if (uniqueLabels.length > 2) {
                 variantHeading += ",";
             }
@@ -244,12 +244,12 @@ function prepareVariantHeading (variantData) {
         }
         variantHeading += uniqueLabels[i];
     }
-  
+
   return variantHeading;
 }
 
 const ProgramPage = ({data, location}) => {
-        
+
     let progData = data.programs.edges[0]?.node;
     let callToActionData = data.ctas?.edges;
     let careerData = data.careers?.edges;
@@ -259,16 +259,16 @@ const ProgramPage = ({data, location}) => {
     let employerData = data.employers?.edges;
     let footerData = data.footer?.edges;
     let imageData =  data.images?.edges;
-    let imageTaggedData = data.imagesTagged?.edges;    
+    let imageTaggedData = data.imagesTagged?.edges;
     let newsData = data.news?.edges;
     let statsData = progData.relationships?.field_program_statistics;
     let testimonialData = data.testimonials?.edges;
     let variantData = progData.relationships?.field_program_variants;
     let variantDataHeading = prepareVariantHeading(variantData);
     let videoData = data.videos.edges[0]?.node;
-  
+
     const heroImage = (imageData?.length>0 ? imageData : (imageTaggedData?.length>0 ? imageTaggedData : null));
-    
+
     // Open Graph metatags
     const ogDescription = progData.field_metatags?.og_description;
     const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.localFile.publicURL;
@@ -279,6 +279,11 @@ const ProgramPage = ({data, location}) => {
     const title = progData.title;
     const acronym = (progData.relationships.field_program_acronym?.name);
     const overview = progData.field_program_overview?.processed;
+
+    // `field_hero_widgets` only allows a single widget (at the moment), and
+    // Drupal doesn't return an array, so force it into an array.
+    const heroWidgets = [progData.relationships?.field_hero_widgets];
+
     const widgets = progData.relationships?.field_widgets;
     const courseNotes = progData.field_course_notes?.processed;
 
@@ -287,22 +292,51 @@ const ProgramPage = ({data, location}) => {
         [progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
         );
     let lastModified = allModifiedDates[allModifiedDates.length - 1];
-    
+
     return (
-    <Layout date={lastModified} menuName="main">
-        <Helmet bodyAttributes={{ class: "program" }} />            
-        <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
-      
-        { /**** Header and Title ****/ }
-        <div className={!heroImage?.length>0 && !videoData?.length>0 ? "no-thumb" : null} id="rotator">
-            {videoData ?
-            <HeroVideo videoURL={videoData.field_media_oembed_video} videoWidth={videoData.field_video_width} videoHeight={videoData.field_video_height} videoTranscript={videoData.relationships.field_media_file?.localFile.publicURL} />
-            :
-            <Hero imgData={heroImage} />
-            }
-            <div className="container ft-container"><h1 className="fancy-title">{title}</h1></div>
+      <Layout date={lastModified} menuName="main">
+        <Helmet bodyAttributes={{ class: "program" }} />
+        <Seo
+          title={title}
+          description={ogDescription}
+          img={ogImage}
+          imgAlt={ogImageAlt}
+        />
+
+        {/**** Header and Title ****/}
+        <div
+          className={
+            !heroImage?.length > 0 && !videoData?.length > 0 ? "no-thumb" : null
+          }
+          id="rotator"
+        >
+          {videoData ? (
+            <HeroVideo
+              videoURL={videoData.field_media_oembed_video}
+              videoWidth={videoData.field_video_width}
+              videoHeight={videoData.field_video_height}
+              videoTranscript={
+                videoData.relationships.field_media_file?.localFile.publicURL
+              }
+            />
+          ) : (
+            <>
+              <Hero imgData={heroImage} />
+              {/**** Hero Widgets content ****/}
+              {heroWidgets && (
+                <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
+                  {heroWidgets.map((widget, index) => (
+                    <Widget widget={widget} key={index} />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+          <div className="container ft-container">
+            <h1 className="fancy-title">{title}</h1>
+          </div>
         </div>
-      
+
         <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 
         { /**** Program Overview ****/ }
@@ -321,38 +355,65 @@ const ProgramPage = ({data, location}) => {
 
         { /**** Program Stats ****/ }
         {renderProgramStats(degreesData, variantData, statsData)}
-   
-        { /**** Program Information Accordion ****/ }
-        {renderProgramInfoAccordion(courseData, courseNotes, variantDataHeading, variantData, careerData, employerData)}
-             
 
-        { /**** Testimonials ****/ }
-        {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel='h3' />}
+        {/**** Program Information Accordion ****/}
+        {renderProgramInfoAccordion(
+          courseData,
+          courseNotes,
+          variantDataHeading,
+          variantData,
+          careerData,
+          employerData
+        )}
 
-        { /*** News ****/}
-        {newsData && <NewsGrid newsData={newsData} heading="Program News" headingLevel='h2' />}
+        {/**** Testimonials ****/}
+        {testimonialData && (
+          <Testimonials
+            testimonialData={testimonialData}
+            programAcronym={acronym}
+            headingLevel="h3"
+          />
+        )}
 
-        { /**** Call to Actions ****/ }
-        {callToActionData.length !== 0 &&
-        <div className="container page-container apply-footer">
+        {/*** News ****/}
+        {newsData && (
+          <NewsGrid
+            newsData={newsData}
+            heading="Program News"
+            headingLevel="h2"
+          />
+        )}
+
+        {/**** Call to Actions ****/}
+        {callToActionData.length !== 0 && (
+          <div className="container page-container apply-footer">
             <section className="row row-with-vspace site-content">
-                <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
-                    <h3 className="text-dark text-center">Are you ready to Improve Life?</h3>
-                    {callToActionData.map((cta, index) => (
-                        <CallToAction key={index} href={cta.node.field_call_to_action_link.uri} 
-                            goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name} 
-                            goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
-                        >
-                            {cta.node.field_call_to_action_link.title}
-                        </CallToAction>
-                    ))}
-                </div>
+              <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
+                <h3 className="text-dark text-center">
+                  Are you ready to Improve Life?
+                </h3>
+                {callToActionData.map((cta, index) => (
+                  <CallToAction
+                    key={index}
+                    href={cta.node.field_call_to_action_link.uri}
+                    goalEventCategory={
+                      cta?.node.relationships.field_call_to_action_goal?.name
+                    }
+                    goalEventAction={
+                      cta?.node.relationships.field_call_to_action_goal
+                        ?.field_goal_action
+                    }
+                  >
+                    {cta.node.field_call_to_action_link.title}
+                  </CallToAction>
+                ))}
+              </div>
             </section>
-        </div>
-        }
-        {footerData?.length>0 && <CustomFooter footerData={footerData[0]} />}     
-    </Layout>  
-    )   
+          </div>
+        )}
+        {footerData?.length > 0 && <CustomFooter footerData={footerData[0]} />}
+      </Layout>
+    )
 }
 
 export default ProgramPage;
@@ -383,9 +444,9 @@ export const query = graphql`query ($id: String) {
           field_prog_image {
             field_media_image {
               alt
-            } 
+            }
             relationships {
-              field_media_image {               
+              field_media_image {
                 localFile {
                   publicURL
                   childImageSharp {
@@ -461,6 +522,9 @@ export const query = graphql`query ($id: String) {
             }
           }
           field_widgets {
+            ...FieldWidgetsFragment
+          }
+          field_hero_widgets {
             ...FieldWidgetsFragment
           }
         }
