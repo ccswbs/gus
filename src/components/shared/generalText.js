@@ -7,7 +7,9 @@ const GeneralText = (props) => {
     let processed = props.processed;
     let textClass = props.textClass;    
     let replaced = InlineImage(processed)
-    return <div {...(textClass !== `` ? {className:textClass} : {})} >{replaced}</div>     
+    return <div class="clearfix">
+            <div {...(textClass !== `` ? {className:textClass} : {})} >{replaced}</div>  
+          </div>  
 }
 
 GeneralText.propTypes = {
