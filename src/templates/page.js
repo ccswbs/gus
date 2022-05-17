@@ -22,8 +22,9 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         </div>
         
         <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
+        
         { /**** Widgets content ****/}
-        {widgets.map((widget, index) => <Widget widget={widget} key={index} />)} 
+        {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
 
         { /**** Custom Footer content ****/}
         {footer?.length > 0 &&
