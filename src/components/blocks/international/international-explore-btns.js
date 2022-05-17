@@ -29,30 +29,39 @@ const ListButtonItem = styled.li`
 `
 
 const render = ({ field_yaml_map, relationships }) => {
-    const yamlMap = yaml.load(field_yaml_map);
-    const yamlFiles = {};
-    relationships.field_yaml_files.forEach(file => {
-      yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
-    });
+  let yamlMap;
+  let yamlFiles = {};
+  relationships.field_yaml_files.forEach(file => {
+    yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
+  });
+
+  try {
+    yamlMap = yaml.load(field_yaml_map);
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
     
-    return (
-        <section>
-            <h2>{yamlMap.title}</h2>
-            <ListButtons className="row row-cols-1 row-cols-md-4 g-4">
-                {yamlMap.links.map(({title, url, icon}, index) =>
-                  <div className="col">
-                    <ListButtonWrapper>
-                      <ListButtonLink href={url} className="h-100">
-                          <ListButtonItem key={`international-explore-btns-${index}`}>
-                              <i className={`${icon} display-3 text-dark`} /> {title}
-                          </ListButtonItem>
-                      </ListButtonLink>
-                    </ListButtonWrapper>
-                  </div>
-                )}
-            </ListButtons>
-        </section>
-)}
+  return (
+    <section>
+        <h2>{yamlMap.title}</h2>
+        <ListButtons className="row row-cols-1 row-cols-md-4 g-4">
+            {yamlMap.links.map(({title, url, icon}, index) =>
+              <div className="col">
+                <ListButtonWrapper>
+                  <ListButtonLink href={url} className="h-100">
+                      <ListButtonItem key={`international-explore-btns-${index}`}>
+                          <i className={`${icon} display-3 text-dark`} /> {title}
+                      </ListButtonItem>
+                  </ListButtonLink>
+                </ListButtonWrapper>
+              </div>
+            )}
+        </ListButtons>
+    </section>
+  )
+
+}
 
 
 const query = graphql`

@@ -14,11 +14,18 @@ const MediaTitle = styled.h3`
 `
 
 const render = ({ field_yaml_map, relationships }) => {
-    const yamlMap = yaml.load(field_yaml_map);
-    const yamlFiles = {};
+    let yamlMap;
+    let yamlFiles = {};
     relationships.field_yaml_files.forEach(file => {
       yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
     });
+
+    try {
+      yamlMap = yaml.load(field_yaml_map);
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
     
     return (
         <section>
