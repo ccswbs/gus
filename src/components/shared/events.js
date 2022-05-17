@@ -52,7 +52,7 @@ const generateEvents = (data, eventData) => {
     
     
     return (<React.Fragment key={eventData.drupal_id}>
-        <h2>{contentExists(title) ? title : "Upcoming Events"}</h2>
+        <h2 className="mb-5">{contentExists(title) ? title : "Upcoming Events"}</h2>
         {contentExists(shownEvents) ? 
         <div className="gy-0">
           <ul className="event-list row gx-3 gy-5 mb-5">
