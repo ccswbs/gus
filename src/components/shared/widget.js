@@ -64,7 +64,8 @@ const WidgetSelector = ({widget}) => {
 
 const Widget = ({widget}) => {
     return <ConditionalWrapper 
-        condition={widget?.__typename !== "paragraph__yaml_widget"} 
+        condition={widget?.__typename !== "paragraph__yaml_widget" 
+            && widget?.__typename !== "paragraph__modal_video_widget"} 
         wrapper={children => 
             <PageContainer.SiteContent>
                 {children}
