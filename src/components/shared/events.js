@@ -52,7 +52,7 @@ const generateEvents = (data, eventData) => {
     
     
     return (<React.Fragment key={eventData.drupal_id}>
-        <h2 className="mb-5">{contentExists(title) ? title : "Upcoming Events"}</h2>
+        <h2>{contentExists(title) ? title : "Upcoming Events"}</h2>
         {contentExists(shownEvents) ? 
         <ul className="event-list row gx-3 gy-5 mb-5">
         {shownEvents.slice(0,4).map(wpEvent => {
