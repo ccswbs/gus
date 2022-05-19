@@ -77,11 +77,11 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                 ***/
                 if (domains && domains.length > 0 && menuName !== "main") {                    
                     if (domains.length === 1 && domains[0].drupal_internal__target_id.includes("liveugconthub")) {
-                        topCrumb = rootItems[0].node.title;
-                        topCrumbID = rootItems[0].node.link.uri;
-                        topCrumbURL = rootItems[0].node.link.url;
+                        topCrumb = rootItems[0]?.node.title;
+                        topCrumbID = rootItems[0]?.node.link.uri;
+                        topCrumbURL = rootItems[0]?.node.link.url;
                     } else {
-                        homeCrumbURL = rootItems[0].node.link.url;
+                        homeCrumbURL = rootItems[0]?.node.link.url;
                     }                    
                 }
             }            
@@ -95,9 +95,9 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                             <div className="site-breadcrumbs">          
                             <ol className="breadcrumb breadcrumb-right-tag">                                
                                 <li key={homeCrumbURL + `home`} className="breadcrumb-item">                                    
-                                    <a href={homeCrumbURL}>
+                                    {/* <a href={homeCrumbURL}> */}
                                         <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">{homeCrumb}</span>
-                                    </a>
+                                    {/* </a> */}
                                 </li>
                                 {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 
                                     <li key={topCrumbURL} className="breadcrumb-item"><Link to={topCrumbURL}>{topCrumb}</Link></li>}

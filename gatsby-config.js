@@ -133,6 +133,12 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: `gatsby-plugin-catch-links`,
+      options: {
+        excludePattern: /./,
+      },
+    },
     `gatsby-plugin-client-side-redirect`
   ],
   assetPrefix: process.env.ASSET_PREFIX,
