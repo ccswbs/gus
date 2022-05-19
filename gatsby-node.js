@@ -924,23 +924,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             })
         }
 
-<<<<<<< HEAD
-        // process article nodes
-        // if (result.data.pages !== undefined) {
-        //   const pages = result.data.articles.edges;
-        //   pages.forEach(( { node }, index) => {
-        //       aliases[node.drupal_internal__nid] = processPage(
-        //           node, 
-        //           node.id,
-        //           node.drupal_internal__nid,
-        //           node.fields.tags,
-        //           node.path, 
-        //           articleTemplate, 
-        //           helpers
-        //       );
-        //   })
-        // }
-=======
 /*         // process article nodes
         if (result.data.articles !== undefined) {
             const articles = result.data.articles.edges;
@@ -954,7 +937,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                 );
             })
         } */
->>>>>>> master
 
         // process program nodes
         if (result.data.programs !== undefined) {
