@@ -5,6 +5,9 @@
   padding: 0;
   opacity: 1;
   border: none;
+  -webkit-transition: all 0.25s 0.1s ease-in-out;
+  -o-transition: all 0.25s 0.1s ease-in-out;
+  transition: all 0.25s 0.1s ease-in-out;
 }
 
 .modal-video .play i {
@@ -12,9 +15,6 @@
   color: var(--uog-black);
   line-height: 10rem;
   height: 10rem;
-  -webkit-transition: all 0.25s 0.1s ease-in-out;
-  -o-transition: all 0.25s 0.1s ease-in-out;
-  transition: all 0.25s 0.1s ease-in-out;
 }
 
 .modal-video .play i:before {
