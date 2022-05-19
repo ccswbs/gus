@@ -132,7 +132,13 @@ module.exports = {
           User: {exclude: true},
         },
       },
-    }
+    },
+    {
+      resolve: `gatsby-plugin-catch-links`,
+      options: {
+        excludePattern: /./,
+      },
+    },
     
   ],
   assetPrefix: process.env.ASSET_PREFIX,
