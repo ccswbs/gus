@@ -793,7 +793,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
     const pageTemplate = path.resolve('./src/templates/page.js');
-    const articleTemplate = path.resolve('./src/templates/article-page.js');
+    // const articleTemplate = path.resolve('./src/templates/article-page.js');
     const programTemplate = path.resolve('./src/templates/program-page.js');
     const { createRedirect } = actions;
     
@@ -899,7 +899,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         // Each content type should have its own if statement code snippet
 
         let aliases = {};
-        let appconfig = {};
 
         // process page nodes
         if (result.data.pages !== undefined) {
@@ -950,38 +949,20 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         }
 
         // REDIRECTS
-        appconfig['routes'] = [];
         Object.entries(aliases).forEach(([nodeID, alias]) => {
           if (redirects[`/node/${nodeID}`]) {
             redirects[`/node/${nodeID}`].forEach(redirect => {
               let sourcePath = `/` + slugify(redirect.redirect_source.path);
 
-              // Handle redirects for Azure Static Web App
-              // appconfig['routes'].push({
-              //   route: alias,
-              //   redirect: sourcePath,
-              //   statusCode: redirect.status_code
-              // });
-
               createRedirect({ 
                 fromPath: sourcePath, 
                 toPath: alias, 
-                isPermanent: true
+                isPermanent: true,
+                status: redirect.status_code
               });
-
-              // Redirects for Gatsby Cloud Hosting
-              // createRedirect({
-              //   fromPath: sourcePath,
-              //   toPath: alias,
-              //   isPermanent: true,
-              //   status: redirect.status_code
-              // });
             })
           }
         })
-
-        // Save redirects for Azure Static Hosting
-        // fs.writeFileSync('static/staticwebapp.config.json', JSON.stringify(appconfig), 'utf8');  
     }
 }
 
