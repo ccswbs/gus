@@ -132,8 +132,8 @@ module.exports = {
           User: {exclude: true},
         },
       },
-    }
-    
+    },
+    `gatsby-plugin-client-side-redirect`
   ],
   assetPrefix: process.env.ASSET_PREFIX,
 }

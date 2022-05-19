@@ -66,7 +66,6 @@ field_name: [taxonomy_term__vocabulary_name] @link(from: "field_name___NODE")
 const path = require(`path`)
 const fs = require('fs');
 const yaml = require('js-yaml');
-const util = require('util');
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
     
@@ -794,7 +793,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
     const pageTemplate = path.resolve('./src/templates/page.js');
-    //const articleTemplate = path.resolve('./src/templates/article-page.js');
+    const articleTemplate = path.resolve('./src/templates/article-page.js');
     const programTemplate = path.resolve('./src/templates/program-page.js');
     const { createRedirect } = actions;
     
@@ -814,6 +813,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             redirect_redirect {
               uri
             }
+            status_code
           }
         }
       }
@@ -899,6 +899,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         // Each content type should have its own if statement code snippet
 
         let aliases = {};
+        let appconfig = {};
 
         // process page nodes
         if (result.data.pages !== undefined) {
@@ -911,25 +912,26 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                     node.fields.tags,
                     node.path, 
                     pageTemplate, 
-                    helpers,
-                    redirects
+                    helpers
                 );
             })
         }
 
-/*         // process article nodes
-        if (result.data.articles !== undefined) {
-            const articles = result.data.articles.edges;
-            articles.forEach(( { node }, index) => {
-                aliases[node.drupal_internal__nid] = processPage(
-                    node, 
-                    node.id, 
-                    node.path, 
-                    articleTemplate, 
-                    helpers
-                );
-            })
-        } */
+        // process article nodes
+        // if (result.data.pages !== undefined) {
+        //   const pages = result.data.articles.edges;
+        //   pages.forEach(( { node }, index) => {
+        //       aliases[node.drupal_internal__nid] = processPage(
+        //           node, 
+        //           node.id,
+        //           node.drupal_internal__nid,
+        //           node.fields.tags,
+        //           node.path, 
+        //           articleTemplate, 
+        //           helpers
+        //       );
+        //   })
+        // }
 
         // process program nodes
         if (result.data.programs !== undefined) {
@@ -942,15 +944,48 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                     null,
                     node.path, 
                     programTemplate, 
-                    helpers,
-                    redirects
+                    helpers
                 );
             })
         }
+
+        // REDIRECTS
+        appconfig['routes'] = [];
+        Object.entries(aliases).forEach(([nodeID, alias]) => {
+          if (redirects[`/node/${nodeID}`]) {
+            redirects[`/node/${nodeID}`].forEach(redirect => {
+              let sourcePath = `/` + slugify(redirect.redirect_source.path);
+
+              // Handle redirects for Azure Static Web App
+              // appconfig['routes'].push({
+              //   route: alias,
+              //   redirect: sourcePath,
+              //   statusCode: redirect.status_code
+              // });
+
+              createRedirect({ 
+                fromPath: sourcePath, 
+                toPath: alias, 
+                isPermanent: true
+              });
+
+              // Redirects for Gatsby Cloud Hosting
+              // createRedirect({
+              //   fromPath: sourcePath,
+              //   toPath: alias,
+              //   isPermanent: true,
+              //   status: redirect.status_code
+              // });
+            })
+          }
+        })
+
+        // Save redirects for Azure Static Hosting
+        // fs.writeFileSync('static/staticwebapp.config.json', JSON.stringify(appconfig), 'utf8');  
     }
 }
 
-function processPage(node, contextID, nodeNid, tagID, nodePath, template, helpers, redirects) {
+function processPage(node, contextID, nodeNid, tagID, nodePath, template, helpers) {
     let alias = createContentTypeAlias(nodePath);
 
     helpers.createPage({
@@ -962,19 +997,6 @@ function processPage(node, contextID, nodeNid, tagID, nodePath, template, helper
         tid: tagID,
       },
     })
-
-    if (redirects[`/node/${node.drupal_internal__nid}`]) {
-      redirects[`/node/${node.drupal_internal__nid}`].forEach(redirect => {
-        let sourcePath = createContentTypeAlias(redirect.redirect_source.path);
-        createRedirect({
-          fromPath: sourcePath,
-          toPath: alias,
-          isPermanent: true,
-          status: 301
-        });
-      })
-    }
-
     return alias;
 }
 
