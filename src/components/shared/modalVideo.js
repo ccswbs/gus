@@ -18,11 +18,7 @@ const ModalVideo = ({ widgetData }) => {
   return videoId ? (
     <div className="modal-video" id={`modal-video-${widgetData.drupal_id}`}>
       <Overlay.ModalButton id={modalId} className="play" btnClass={false}>
-        <i
-          class="fad fa-play-circle"
-          // onclick="ga('send', 'event', 'Play Video', 'play', 'Careers Video');"
-          aria-hidden="true"
-        ></i>
+        <i className="fad fa-play-circle" aria-hidden="true"></i>
         <span className="visually-hidden">Play video: {video.name}</span>
       </Overlay.ModalButton>
       <Portal>
