@@ -6,6 +6,7 @@ import { graphql } from 'gatsby';
 import InternationalStatsGlobal from 'components/blocks/international/international-stats-global'
 import InternationalExploreThingsToKnow from 'components/blocks/international/international-things-to-know'
 import InternationalExploreButtons from 'components/blocks/international/international-explore-btns'
+import InternationalExploreGrid from 'components/blocks/international/international-explore-grid'
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -15,6 +16,7 @@ const YamlWidget = (props) => {
         'international_stats_global_impact': <InternationalStatsGlobal />,
         'international_explore_things_to_know': <InternationalExploreThingsToKnow />,
         'international_explore_btns': <InternationalExploreButtons />,
+        'international_explore_grid': <InternationalExploreGrid />,
     }[component] || null )
 }
 
