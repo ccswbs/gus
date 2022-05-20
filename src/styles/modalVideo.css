@@ -27,16 +27,5 @@
   color: var(--uog-red);
   opacity: 1;
   outline: none;
-  -webkit-filter: drop-shadow(-1px 0px 0px black);
-  -moz-filter: drop-shadow(-1px 0px 0px black);
-  -ms-filter: drop-shadow(-1px 0px 0px black);
-  -o-filter: drop-shadow(-1px 0px 0px black);
-  filter: drop-shadow(-1px 0px 0px black);
 }
-.modal-video .play:active {
-  -webkit-filter: drop-shadow(-2px 0px 5px #c20430);
-  -moz-filter: drop-shadow(-2px 0px 5px #c20430);
-  -ms-filter: drop-shadow(-2px 0px 5px #c20430);
-  -o-filter: drop-shadow(-2px 0px 5px #c20430);
-  filter: drop-shadow(-2px 0px 5px #c20430);
-}
+
