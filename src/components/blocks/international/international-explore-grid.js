@@ -27,7 +27,7 @@ const render = ({ field_yaml_map }) => {
           <Row className="row-cols-1 row-cols-md-3 g-4">
               {yamlMap.content.map(({title, body_html, icon, icon_color}, index) => 
                   <Col key={`international-explore-grid-${index}`}>
-                    <h3 className="h4 text-dark"><HeadingIcon className={icon} iconColour={icon_color} /> {title}</h3>
+                    <h3 className="h4 text-dark mt-0"><HeadingIcon className={icon} iconColour={icon_color} /> {title}</h3>
                     <div dangerouslySetInnerHTML={{__html: body_html}}></div>
                   </Col>
               )}
