@@ -53,13 +53,14 @@ module.exports = {
     },
     {
       resolve: `gatsby-source-drupal`,
-        options: {
+      options: {
         baseUrl: process.env.DRUPAL_BASEURL,
         apiBase: process.env.DRUPAL_APIBASE,
         basicAuth: {
           username: process.env.BASIC_AUTH_USERNAME,
           password: process.env.BASIC_AUTH_PASSWORD,
         },
+        skipFileDownloads: true,
       },
     },
   
