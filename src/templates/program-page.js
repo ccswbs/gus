@@ -282,7 +282,7 @@ const ProgramPage = ({data, location}) => {
 
     // `field_hero_widgets` only allows a single widget (at the moment), and
     // Drupal doesn't return an array, so force it into an array.
-    const heroWidgets = [progData.relationships?.field_hero_widgets];
+    const heroWidgets = (progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null);
 
     const widgets = progData.relationships?.field_widgets;
     const courseNotes = progData.field_course_notes?.processed;
