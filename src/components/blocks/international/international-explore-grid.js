@@ -6,6 +6,9 @@ import styled from "styled-components"
 
 const yaml = require('js-yaml');
 
+const Background = styled(PageContainer.FullWidth)`
+  background: #f1f5f9;
+`
 const HeadingIcon = styled.i`
   color: ${props => (props.iconColour ?? "#000000")};
 `
@@ -21,19 +24,21 @@ const render = ({ field_yaml_map }) => {
     }
     
     return (
-      <PageContainer.FullWidth className="bg-light">
+      <Background>
         <PageContainer.SiteContent>
-          <h2>{yamlMap.title}</h2>
-          <Row className="row-cols-1 row-cols-md-3 g-4">
-              {yamlMap.content.map(({title, body_html, icon, icon_color}, index) => 
-                  <Col key={`international-explore-grid-${index}`}>
-                    <h3 className="h4 text-dark mt-0"><HeadingIcon className={icon} iconColour={icon_color} /> {title}</h3>
-                    <div dangerouslySetInnerHTML={{__html: body_html}}></div>
-                  </Col>
-              )}
-          </Row>
+          <PageContainer.ContentArea>
+            <h2 className="mt-4">{yamlMap.title}</h2>
+            <Row className="row-cols-1 row-cols-md-3 g-4 mt-0">
+                {yamlMap.content.map(({title, body_html, icon, icon_color}, index) => 
+                    <Col key={`international-explore-grid-${index}`} className="pe-4">
+                      <h3 className="h4 text-dark mt-0"><HeadingIcon className={`${icon} pe-2`} iconColour={icon_color} /> {title}</h3>
+                      <div dangerouslySetInnerHTML={{__html: body_html}}></div>
+                    </Col>
+                )}
+            </Row>
+          </PageContainer.ContentArea>
         </PageContainer.SiteContent>
-      </PageContainer.FullWidth>
+      </Background>
 )}
 
 

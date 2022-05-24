@@ -14,6 +14,12 @@ PageContainer.SiteContent = ({ children, className}) => (
   </PageContainer>
 )
 
+PageContainer.ContentArea = ({ children, className}) => (
+  <div className={`content-area ${className ?? '' }`}>
+    {children}
+  </div>
+)
+
 PageContainer.FullWidth = ({ children, className}) => (
   <div className={`full-width-container ${className ?? '' }`}>
     {children}

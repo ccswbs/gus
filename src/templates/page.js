@@ -24,7 +24,9 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
         
         { /**** Widgets content ****/}
-        {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
+        <div id="main-column">
+          {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
+        </div>
 
         { /**** Custom Footer content ****/}
         {footer?.length > 0 &&

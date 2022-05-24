@@ -68,7 +68,9 @@ const Widget = ({widget}) => {
             && widget?.__typename !== "paragraph__modal_video_widget"} 
         wrapper={children => 
             <PageContainer.SiteContent>
+              <PageContainer.ContentArea>
                 {children}
+              </PageContainer.ContentArea>
             </PageContainer.SiteContent>
         }>
         <WidgetSelector widget={widget} />
