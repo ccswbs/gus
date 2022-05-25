@@ -9,7 +9,9 @@ import styled from 'styled-components'
 
 const yaml = require('js-yaml');
 
-
+const Shadow = styled.p`
+  text-shadow: 0px 0px 4px #ffffff;
+`
 const Gradient = styled(PageContainer.FullWidth)`
   background: linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%);
 `
@@ -42,7 +44,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
               <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
                 <div className="text-center"> 
                   <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
-                  <p><a href={yamlMap.link.url}>{yamlMap.link.title}</a></p>
+                  <Shadow><a href={yamlMap.link.url}>{yamlMap.link.title}</a></Shadow>
                 </div>
               </Row>
             </PageContainer>
@@ -56,7 +58,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
                     <Statistic.SolidCard 
                       background={colourOptions[index].background} 
                       colour={colourOptions[index].colour} 
-                      className="p-5" >
+                      className="px-5 pt-5 pb-3" >
                       <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
                       <Statistic.Type>{type}</Statistic.Type>
                     </Statistic.SolidCard>
@@ -82,7 +84,7 @@ const query = graphql`
             field_media_image {
               localFile {
                 childImageSharp {
-                  gatsbyImageData(width: 1400, height: 250, placeholder: BLURRED, layout: CONSTRAINED)
+                  gatsbyImageData(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED)
                 }
               }
             }
