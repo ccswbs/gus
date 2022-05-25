@@ -2,14 +2,15 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { getImage } from "gatsby-plugin-image"
 import Overlay from "components/shared/overlay"
-import { Container, Col } from "react-bootstrap"
+import { Container, Col, Row } from "react-bootstrap"
+import PageContainer from 'components/shared/pageContainer'
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
 
 const yaml = require('js-yaml');
 
 
-const Gradient = styled.div`
+const Gradient = styled(PageContainer.FullWidth)`
   background: linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%);
 `
 const colourOptions = [
@@ -35,14 +36,18 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   
   return (
     <>
-      <div className="d-flex flex-column bg-light">
-        <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
-          <div className="mt-5 mr-3 pb-5 px-5 text-center justify-content-center align-self-center row">
-              <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
-              <p><a href={yamlMap.link.url}>{yamlMap.link.title}</a></p>
-          </div>
-        </Overlay.GatsbyImage>
-      </div>
+        <div className="d-flex flex-column bg-light">
+          <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
+            <PageContainer>
+              <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
+                <div className="text-center"> 
+                  <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
+                  <p><a href={yamlMap.link.url}>{yamlMap.link.title}</a></p>
+                </div>
+              </Row>
+            </PageContainer>
+          </Overlay.GatsbyImage>
+        </div>
       <Gradient className="d-flex flex-column">
         <Container className="page-container p-0">
             <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
