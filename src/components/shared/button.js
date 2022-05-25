@@ -49,7 +49,7 @@ function Button (buttonCol, buttonData, buttonSpacing) {
     let buttonLinkTitle = buttonData?.field_formatted_title ? buttonData.field_formatted_title.processed : (buttonData.field_button_link?.title ? buttonData.field_button_link.title : "No title entered");
     let buttonIcon = buttonData?.field_font_awesome_icon;
     let buttonIconColour = buttonData.relationships.field_font_awesome_icon_colour?.name;
-    let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonSpacing + " no-icon py-4 px-5 text-start";
+    let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonSpacing + " no-icon p-4 text-start";
     let buttonFontAwesomeClasses = "align-middle display-2 d-table-cell pe-3 " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
