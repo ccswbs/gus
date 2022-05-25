@@ -19,7 +19,7 @@ function SectionButtons (props) {
         buttonSpacing = "me-md-3"; 
     } else {        
         buttonColClasses = "d-grid d-md-block gap-2";
-        buttonSpacing = "me-md-3";        
+        buttonSpacing = "me-md-3";
     }
 
     return (
