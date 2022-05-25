@@ -53,7 +53,7 @@ function Button (buttonCol, buttonData, buttonSpacing) {
     let buttonFontAwesomeClasses = "align-middle display-2 d-table-cell pe-3 " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
-    let buttonTitleClasses = "align-middle d-table-cell lh-sm" + (buttonCol === "Call to Action" ? " fs-1" : null);
+    let buttonTitleClasses = "align-middle d-table-cell lh-sm" + (buttonCol === "Call to Action" ? " fs-1" : "");
 
     return (
     <React.Fragment key={buttonData.drupal_id}>
