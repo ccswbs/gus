@@ -169,7 +169,7 @@ function MediaText (props) {
                 videoHeight={videoHeight}
                 videoWidth={videoWidth}
             />}
-            {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
+            {imageURL && <GatsbyImage image={imageURL} alt={imageAlt} />}
         </section>
         {textOrButtons &&
         <section className={textCol + " text-break"}>
