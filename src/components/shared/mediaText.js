@@ -21,7 +21,7 @@ function MediaText (props) {
     const mediaSize = props.widgetData?.field_media_image_size;
     
     const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
-    const videoTranscript = mediaRelationships?.field_media_file?.publicURL;
+    const videoTranscript = mediaRelationships?.field_media_file?.uri.url;
     const videoURL = props.widgetData.relationships.field_media_text_media?.field_media_oembed_video;
     const videoHeight = props.widgetData.relationships.field_media_text_media?.field_video_height;
     const videoWidth = props.widgetData.relationships.field_media_text_media?.field_video_width;

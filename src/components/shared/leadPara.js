@@ -16,8 +16,8 @@ function leadPara (props) {
                             
             const img = (contentExists(leaditem.relationships.field_lead_para_hero) ? leaditem.relationships.field_lead_para_hero : ``) ; 
                             
-            const heroImage = (contentExists(img) && contentExists(img.relationships) ? img.relationships.field_media_image.localFile : ``);
-		    const pubImage = (contentExists(heroImage) ? encodeURI(heroImage.publicURL) : ``);
+            const heroImage = (contentExists(img) && contentExists(img.relationships) ? img.relationships.field_media_image.gatsbyImage : ``);
+		    const pubImage = (contentExists(heroImage) ? encodeURI(heroImage.publicUrl) : ``);
 					
             let imageFile = null;
 			    
@@ -76,32 +76,28 @@ export default leadPara
 
 export const query = graphql`
     fragment LeadParagraphFragment on paragraph__lead_paragraph {
-        id
-        field_lead_paratext {
-            value
+      id
+      field_lead_paratext {
+        value
+      }
+      relationships {
+        field_section_column {
+          name
         }
-        relationships {
-            field_section_column {
-            name
-            }
-            field_lead_para_hero {
+        field_lead_para_hero {
+          field_media_image {
+            alt
+          }
+          relationships {
             field_media_image {
-                alt
+              publicUrl
+              gatsbyImage(
+                placeholder: BLURRED
+                layout: FULL_WIDTH
+              )
             }
-            relationships {
-                field_media_image {
-                localFile {
-                    publicURL
-                    childImageSharp {
-                    gatsbyImageData(
-                        placeholder: BLURRED
-                        layout: FULL_WIDTH
-                    )
-                    }
-                }
-                }
-            }
-            }
+          }
         }
+      }
     }
 `

@@ -28,7 +28,7 @@ const DefaultFooter = ({logos, text, widgets}) => (
       <div className="col-md-3 content-area">
       {logos.map(logo => (
         <GatsbyImage
-                        image={logo.relationships.field_media_image.localFile.childImageSharp.gatsbyImageData}
+                        image={logo.relationships.field_media_image.gatsbyImage}
                         className="footer-logo"
                         alt={logo.field_media_image.alt} />
       ))}
@@ -93,12 +93,12 @@ export const query = graphql`
                 }
                 relationships {
                   field_media_image {
-                    localFile {
-                      publicURL
-                      childImageSharp {
-                        gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
-                      }
-                    }
+                    publicUrl
+                    gatsbyImage(
+                      width: 400
+                      placeholder: BLURRED
+                      layout: CONSTRAINED
+                    ) 
                   }
                 }
               }

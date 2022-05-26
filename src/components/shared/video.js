@@ -49,13 +49,13 @@ export const query = graphql`
     field_video_width
     relationships {
       field_media_file {
-        localFile {
-          publicURL
+        uri {
+          url
         }
       }
       field_video_cc {
-        localFile {
-          publicURL
+        uri {
+          url
         }
       }
     }
