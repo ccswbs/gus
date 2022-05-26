@@ -8,7 +8,7 @@ import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
 
-const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, footer, menuName, domains}) => (
+const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
@@ -16,6 +16,13 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         { /**** Header and Title ****/ }
         <div className={imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
             <Hero imgData={imageData} />
+            {heroWidgets && (
+              <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
+                {heroWidgets.map((widget, index) => (
+                  <Widget widget={widget} key={index} />
+                ))}
+              </div>
+            )}
             <div className="container ft-container">
                 <h1 className="fancy-title">{pageTitle}</h1>
             </div>
@@ -61,6 +68,9 @@ export const query = graphql`
         field_widgets {
           ...FieldWidgetsFragment
         }
+        field_hero_widgets {
+          ...FieldWidgetsFragment
+        }
       }
     }
 
@@ -101,6 +111,7 @@ const PageTemplate = ({data}) => (
         ogImageAlt={data.images.edges[0]?.node?.field_media_image.alt}
         imageData={data.images.edges}
         widgets={data.nodePage.relationships.field_widgets}
+        heroWidgets={(data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null)}
         footer={data.footer.edges}
         menuName={data.menu?.menu_name || `main`}
         domains={data.nodePage.field_domain_access}

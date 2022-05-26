@@ -362,6 +362,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_hero_widgets: widgetParagraphUnion @link(from:"field_hero_widgets___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
