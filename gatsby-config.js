@@ -61,10 +61,7 @@ module.exports = {
           password: process.env.BASIC_AUTH_PASSWORD,
         },
         fastBuilds: true,
-        //skipFileDownloads: true,
-        //filters: {
-        //  "file--file": "filter[filemime]=text/plain",
-        //},
+        skipFileDownloads: true,
       },
     },
   
