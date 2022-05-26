@@ -24,7 +24,7 @@ function leadPara (props) {
             if(contentExists(img) && contentExists(heroImage)) {
 	                           
                 imageFile = <GatsbyImage
-                    image={heroImage.childImageSharp.gatsbyImageData}
+                    image={heroImage.gatsbyImage}
                     className="leadimg"
                     alt={leaditem.relationships.field_lead_para_hero.field_media_image.alt} />
                                
