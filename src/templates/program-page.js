@@ -453,6 +453,7 @@ export const query = graphql`query ($id: String) {
             relationships {
               field_media_image {
                 gatsbyImage(
+                  width: 1920
                   cropFocus: CENTER
                   placeholder: BLURRED
                   aspectRatio: 3
@@ -818,6 +819,7 @@ export const query = graphql`query ($id: String) {
         relationships {
           field_media_image {
             gatsbyImage(
+              width: 1920
               cropFocus: CENTER
               placeholder: BLURRED
               aspectRatio: 3
@@ -837,6 +839,7 @@ export const query = graphql`query ($id: String) {
         relationships {
           field_media_image {
             gatsbyImage(
+              width: 1920
               cropFocus: CENTER
               placeholder: BLURRED
               aspectRatio: 3

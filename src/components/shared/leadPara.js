@@ -92,6 +92,7 @@ export const query = graphql`
             field_media_image {
               publicUrl
               gatsbyImage(
+                width: 1000
                 placeholder: BLURRED
                 layout: FULL_WIDTH
               )
