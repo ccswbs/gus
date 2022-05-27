@@ -22,7 +22,7 @@ const StatSolidCard = styled(StatCard)`
 `;
 const StatValue = styled.dt`
   color: #000;
-  font-size: 4.25rem;
+  font-size: ${props => (props.fontsize ?? "4.25rem")};
   line-height: 1.2;
   margin-bottom: 1.2rem;
 `
@@ -62,8 +62,8 @@ Statistic.Icon = ({icon}) => (
   <StatIcon className={`${icon} mt-3 fa-4x`} aria-hidden="true" />
 )
 
-Statistic.Value = ({children}) => (
-  <StatValue>
+Statistic.Value = ({children, fontsize, className=""}) => (
+  <StatValue className={className} fontsize={fontsize}>
     {children}
   </StatValue>
 )

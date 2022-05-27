@@ -12,26 +12,29 @@ const NewsHeading = styled.h4`
 const render = ({ title, body, examples, news, video }) => (
     <Container className="page-container mt-5">
         <Row className="site-content">
-          <h2 id="sustainability">{title}</h2>
-          <Col lg={6} className="mb-5 pe-4">
-              {body.map((paragraph, index) => <p key={`sustainability-text-${index}`}>{paragraph}</p>)}
-              <h3>Examples:</h3>
-              <ul>
-                {examples.map(({title, url}, index) => <li key={`sustainability-example-${index}`}><a href={url}>{title}</a></li>)}
-              </ul>
+          <Row className="content-area">
+            <h2 id="sustainability">{title}</h2>
+            <Col lg={6} className="mb-5 pe-4">
+                {body.map((paragraph, index) => <p key={`sustainability-text-${index}`}>{paragraph}</p>)}
+                <h3>Examples:</h3>
+                <ul>
+                  {examples.map(({title, url}, index) => <li key={`sustainability-example-${index}`}><a href={url}>{title}</a></li>)}
+                </ul>
 
-              <h3>{news.heading}</h3>
-              {news.articles.map(({ title, lead, url }, index) => 
-                <div key={`sustainability-news-${index}`}>
-                    <NewsHeading>{title}</NewsHeading>
-                    <p>{lead}</p>
-                    <a href={url} className="btn btn-info">Read Full Article<span className="visually-hidden">: {title}</span></a>
-                </div>
-                )}
-          </Col>
-          <Col lg={6} className="mb-5">
-            <Video videoID={video.id} videoType={video.type} playerID={`player-${video.id}`} videoTranscript={video.transcript} videoCC={video.captions} />
-          </Col>
+                <h3>{news.heading}</h3>
+                {news.articles.map(({ title, lead, url }, index) => 
+                  <div key={`sustainability-news-${index}`}>
+                      <NewsHeading>{title}</NewsHeading>
+                      <p>{lead}</p>
+                      <a href={url} className="btn btn-info">Read Full Article<span className="visually-hidden">: {title}</span></a>
+                  </div>
+                  )}
+            </Col>
+            
+            <Col lg={6} className="mb-5">
+              <Video videoID={video.id} videoType={video.type} playerID={`player-${video.id}`} videoTranscript={video.transcript} videoCC={video.captions} />
+            </Col>
+          </Row>
         </Row>
     </Container>
 )

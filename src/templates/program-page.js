@@ -282,7 +282,7 @@ const ProgramPage = ({data, location}) => {
 
     // `field_hero_widgets` only allows a single widget (at the moment), and
     // Drupal doesn't return an array, so force it into an array.
-    const heroWidgets = [progData.relationships?.field_hero_widgets];
+    const heroWidgets = (progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null);
 
     const widgets = progData.relationships?.field_widgets;
     const courseNotes = progData.field_course_notes?.processed;
@@ -339,26 +339,21 @@ const ProgramPage = ({data, location}) => {
 
         <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
 
-        {/**** Program Overview ****/}
-        <div className="container page-container">
-          <div className="row site-content">
-            {overview && (
+        { /**** Program Overview ****/ }
+        {overview && 
+          <div className="container page-container">
+            <div className="row site-content">        
               <section className="content-area">
-                {renderProgramOverview(overview)}
+                    {renderProgramOverview(overview)}
               </section>
-            )}
-            {/**** Widgets content ****/}
-            {widgets && (
-              <section className="col-md-12">
-                {widgets.map((widget, index) => (
-                  <Widget widget={widget} key={index} />
-                ))}
-              </section>
-            )}
+            </div>
           </div>
-        </div>
+        }
 
-        {/**** Program Stats ****/}
+        { /**** Widgets content ****/} 
+        {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
+
+        { /**** Program Stats ****/ }
         {renderProgramStats(degreesData, variantData, statsData)}
 
         {/**** Program Information Accordion ****/}

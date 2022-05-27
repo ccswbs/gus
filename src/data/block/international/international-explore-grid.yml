@@ -1,0 +1,28 @@
+id: international_explore_grid
+title: Explore U of G
+content:
+  - title: Housing For Your Needs
+    body_html: |
+      <p>Affordable, convenient, and <a href="https://www.macleans.ca/education/canadas-best-universities-by-student-satisfaction-rankings-2022/">ranked #1 in Housing</a>! Visit the <a href="https://housing.uoguelph.ca/">Student Housing Services</a> today!</p>
+    icon: fa-solid fa-house-building
+    icon_color: "#69A3B9"
+  - title: Explore The Arboretum
+    body_html: |
+      <p>Get outside! Recharge and go for a nature walk between classes. <a href="https://arboretum.uoguelph.ca/">Explore The Arboretum</a>.</p>
+    icon: fa-solid fa-tree-deciduous
+    icon_color: "#4cae3e"
+  - title: The Athletics Centre
+    body_html: |
+      <p>Want to join a sports team? Learn how to dance? Shoot hoops between classes? You can, in our new, state of the art <a href="https://fitandrec.gryphons.ca/">Athletics Centre</a>.</p>
+    icon: fa-solid fa-basketball
+    icon_color: "#f86624"
+  - title: Find Community in Clubs and Organizations
+    body_html: |
+      <p>Your unique interests require unique communities – find them at U of G. <a href="https://gryphlife.uoguelph.ca/">Explore GryphLife</a>.</p>
+    icon: fa-solid fa-users
+    icon_color: "#FFC72A"
+  - title: Experience Student Life
+    body_html: |
+      <p>Explore the unique features at U of G with our <a href="https://www.uoguelph.ca/maps/">interactive map</a>.</p>
+    icon: fa-solid fa-users
+    icon_color: "#C20430"

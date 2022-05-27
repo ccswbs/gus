@@ -20,7 +20,7 @@ const render = ({ quote, source, background_image }) => (
     <Overlay.GatsbyImage gatsbyImageData={getImage(background_image.src)} alt={background_image.alt}>
       <Container className="page-container">
         <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
-          <Col sm={9}className="ps-5">
+          <Col sm={9} className="ps-5">
             <QuoteShadow>
               <QuoteText className="display-4 my-5">
                   <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 

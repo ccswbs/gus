@@ -158,8 +158,8 @@ function MediaText (props) {
     }        
 
     return (
-    <ConditionalWrapper condition={wrapperCol} wrapper={children => <div className={wrapperCol}>{children}</div>}>
-        <section className={mediaCol}>
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section className={wrapperCol}>{children}</section>}>
+        <div className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
                 videoTitle={videoTitle}
@@ -172,7 +172,7 @@ function MediaText (props) {
             {imageURL && <GatsbyImage image={imageURL} alt={imageAlt} />}
         </section>
         {textOrButtons &&
-        <section className={textCol + " text-break"}>
+        <div className={textCol + " text-break"}>
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
             {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
@@ -183,7 +183,7 @@ function MediaText (props) {
                     <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
                 </React.Fragment>)                
             })}</div>}
-        </section>}
+        </div>}
     </ConditionalWrapper>    
     );
 }
