@@ -34,6 +34,9 @@ Overlay.Modal = ({ id, children }) => (
   <div id={id} className="modal fade" tabIndex="-1">
     <div className="modal-dialog modal-lg modal-dialog-centered">
       <div className="modal-content">
+        <div className="modal-header">
+            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
         <div className="modal-body p-0 bg-dark">{children}</div>
       </div>
     </div>
