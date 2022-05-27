@@ -8,6 +8,7 @@ import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
 import SectionButtons from 'components/shared/sectionButtons';
 import StatsWidget from 'components/shared/statsWidget';
+import YamlWidget from 'components/shared/yamlWidget';
 import { ConditionalWrapper } from 'utils/ug-utils';
 
 // For the left column
@@ -38,6 +39,8 @@ function renderPrimary(widget) {
             return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
         case "paragraph__section_buttons":
             return <SectionButtons key={widget.drupal_id} pageData={widget} />;
+        case "paragraph__yaml_widget":
+            return <YamlWidget key={widget.drupal_id} blockData={widget} />;
         default:
             return <></>;                          
     }
@@ -54,6 +57,8 @@ function renderSecondary(widget) {
             return <MediaText key={widget.drupal_id} widgetData={widget} region="Secondary" />;
         case "paragraph__section_buttons":
             return <SectionButtons key={widget.drupal_id} pageData={widget} />;
+        case "paragraph__yaml_widget":
+            return <YamlWidget key={widget.drupal_id} blockData={widget} />;
         default:
             return <></>;                          
     }
@@ -148,6 +153,9 @@ export const query = graphql`
         }
         ... on paragraph__section_buttons {
             ...SectionButtonsParagraphFragment
+        }
+        ... on paragraph__yaml_widget {
+            ...YamlWidgetParagraphFragment
         }
       }
     }

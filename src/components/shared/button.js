@@ -53,13 +53,13 @@ function Button (buttonCol, buttonData, buttonSpacing) {
     let buttonFontAwesomeClasses = "align-middle display-2 d-table-cell pe-3 " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
-    let buttonTitleClasses = "align-middle d-table-cell lh-sm" + (buttonCol === "Call to Action" ? " fs-1" : null);
-    
+    let buttonTitleClasses = "align-middle d-table-cell lh-sm" + (buttonCol === "Call to Action" ? " fs-1 px-5 py-2" : "");
+
     return (
     <React.Fragment key={buttonData.drupal_id}>
-    {buttonData.field_cta_heading && <div className="text-center fs-1" dangerouslySetInnerHTML={{__html: buttonData.field_cta_heading.processed}} />}    
+    {buttonData.field_cta_heading && <h2 className="h3 text-dark text-center" dangerouslySetInnerHTML={{__html: buttonData.field_cta_heading.processed}} />}    
     {buttonData.field_button_link.uri.includes("http") ? btnAnalyticsGoal && btnAnalyticsAction ? 
-        <a href={urlLink} className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>		
+        <a href={urlLink} className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>
             {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
             <span className={buttonTitleClasses} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
         </a>

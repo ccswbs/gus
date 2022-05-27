@@ -1,7 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import { Container } from "react-bootstrap"
+import { Container, Row } from "react-bootstrap"
 import Statistic from "components/shared/statistic"
 
 const colourOptions = [
@@ -12,6 +12,7 @@ const colourOptions = [
 
 const render = ({ title, stats }) => (
   <Container>
+    <Row className="content-area">
       <h3 className="h4">{title}</h3>
       <Statistic className="row mb-5 g-4">
           {stats.map(({value, type, image, link}, index) =>
@@ -30,6 +31,7 @@ const render = ({ title, stats }) => (
               </div>
           )}
       </Statistic>
+    </Row>
   </Container>
 )
 

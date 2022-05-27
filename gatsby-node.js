@@ -117,6 +117,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__section_tabs
       | paragraph__tab_content
       | paragraph__accordion_section
+      | paragraph__yaml_widget
       | paragraph__modal_video_widget
 
     union widgetSectionParagraphUnion =
@@ -129,6 +130,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__stats_widget
       | paragraph__section_buttons
       | paragraph__button_widget
+      | paragraph__yaml_widget
 
     type BodyField {
       processed: String
@@ -176,13 +178,24 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       info: String
       body: BodyFieldWithSummary
     }
-
+    type block_content__yaml_block implements Node {
+      drupal_id: String
+      info: String
+      field_yaml_id: String
+      field_yaml_map: String
+      relationships: block_content__yaml_blockRelationships
+    }
+    type block_content__yaml_blockRelationships implements Node {
+      field_yaml_files: [media__image] @link(from: "field_yaml_files___NODE")
+    }
+    
     type media__image implements Node {
       drupal_id: String
       name: String
       field_media_image: ImageField
       fields: media__imageFields
       relationships: media__imageRelationships
+      path: AliasPath
     }
     type media__imageFields implements Node {
       tags: [String]
@@ -349,6 +362,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_hero_widgets: widgetParagraphUnion @link(from:"field_hero_widgets___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
@@ -433,7 +447,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__block_widget implements Node {
       drupal_id: String
-	  relationships: paragraph__block_widgetRelationships
+      relationships: paragraph__block_widgetRelationships  
     }
     type paragraph__block_widgetRelationships implements Node {
       field_custom_block: block_content__basic @link(from: "field_custom_block___NODE")
@@ -586,6 +600,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__stats_widgetRelationships implements Node {
       field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+    }
+    type paragraph__yaml_widget implements Node {
+      drupal_id: String
+      relationships: paragraph__yaml_widgetRelationships  
+    }
+    type paragraph__yaml_widgetRelationships implements Node {
+      field_custom_block: block_content__yaml_block @link(from: "field_custom_block___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
 
