@@ -17,7 +17,7 @@ function MediaText (props) {
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
     const imageURL = mediaRelationships?.field_media_image?.gatsbyImage;	
-    const imageAlt = mediaRelationships?.field_media_image?.alt;
+    const imageAlt = mediaRelationships?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
     
     const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
@@ -170,7 +170,7 @@ function MediaText (props) {
                 videoWidth={videoWidth}
             />}
             {imageURL && <GatsbyImage image={imageURL} alt={imageAlt} />}
-        </section>
+        </div>
         {textOrButtons &&
         <div className={textCol + " text-break"}>
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
