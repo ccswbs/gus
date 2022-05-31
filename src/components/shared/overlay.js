@@ -1,8 +1,14 @@
 import React from "react"
 import { GatsbyImage } from "gatsby-plugin-image"
 import classNames from "classnames"
+import { Modal } from "react-bootstrap";
 
 const Overlay = ({ children, className }) => (
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   <div className={`bg-black-65 h-100 ${className}`}>{children}</div>
 )
 
@@ -30,17 +36,10 @@ Overlay.ModalButton = ({ id, children, className, btnClass = true }) => (
   </button>
 )
 
-Overlay.Modal = ({ id, children }) => (
-  <div id={id} className="modal fade" tabIndex="-1">
-    <div className="modal-dialog modal-lg modal-dialog-centered">
-      <div className="modal-content">
-        <div className="modal-header">
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div className="modal-body p-0 bg-dark">{children}</div>
-      </div>
-    </div>
-  </div>
+Overlay.ModalTest = ({ id, children }) => (
+  <Modal id={id} className="modal fade" onHide={handleClose} tabIndex="-1">
+  <Modal.Body>{children}</Modal.Body>
+  </Modal>
 )
 
 export default Overlay

@@ -22,7 +22,7 @@ const ModalVideo = ({ widgetData }) => {
         <span className="visually-hidden">Play video: {video.name}</span>
       </Overlay.ModalButton>
       <Portal>
-        <Overlay.Modal id={modalId}>
+        <Overlay.ModalTest id={modalId}>
           <Video
             videoID={videoId}
             videoType={videoType}
@@ -32,7 +32,7 @@ const ModalVideo = ({ widgetData }) => {
             }
             videoCC={video.relationships?.field_video_cc?.uri.url}
           />
-        </Overlay.Modal>
+        </Overlay.ModalTest>
       </Portal>
     </div>
   ) : null
