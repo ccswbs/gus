@@ -9,6 +9,7 @@ import InternationalExploreButtons from 'components/blocks/international/interna
 import InternationalExploreGrid from 'components/blocks/international/international-explore-grid'
 import InternationalTalkCurrentStudent from 'components/blocks/international/international-talk-current-student'
 import InternationalExploreLead from 'components/blocks/international/international-explore-lead'
+import DVMApplicationSelection from 'components/blocks/dvm/dvm-application-selection'
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -20,7 +21,8 @@ const YamlWidget = (props) => {
         'international_explore_btns': <InternationalExploreButtons />,
         'international_explore_grid': <InternationalExploreGrid />,
         'international_talk_current_student':<InternationalTalkCurrentStudent />,
-        'international_explore_lead':<InternationalExploreLead />
+        'international_explore_lead':<InternationalExploreLead />,
+        'dvm_application_selection':<DVMApplicationSelection />
     }[component] || null )
 }
 
