@@ -16,10 +16,7 @@ const Gradient = styled(PageContainer.FullWidth)`
   background: linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%);
 `
 const colourOptions = [
-  {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
   {background: "var(--uog-yellow)", colour: "#000000"},
-  {background: "var(--uog-blue)", colour: "#000000"},
 ];
 
 const render = ({ field_yaml_map, relationships }, colourOptions) => {
@@ -40,31 +37,11 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
     <>
         <div className="d-flex flex-column bg-light">
           <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
-            <PageContainer>
-              <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
-                <div className="text-center"> 
-                  <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
-                  <Shadow><a href={yamlMap.link.url}>{yamlMap.link.title}</a></Shadow>
-                </div>
-              </Row>
-            </PageContainer>
           </Overlay.GatsbyImage>
         </div>
       <Gradient className="d-flex flex-column">
         <Container className="page-container p-0">
-            <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
-                {yamlMap.stats.map(({value, type}, index) => 
-                  <Col key={`international-stat-${index}`}>
-                    <Statistic.SolidCard 
-                      background={colourOptions[index].background} 
-                      colour={colourOptions[index].colour} 
-                      className="px-5 pt-5 pb-3" >
-                      <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
-                      <Statistic.Type>{type}</Statistic.Type>
-                    </Statistic.SolidCard>
-                  </Col>
-                )}
-            </Statistic>
+         <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
         </Container>
       </Gradient>
     </>
