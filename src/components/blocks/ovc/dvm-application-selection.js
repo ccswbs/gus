@@ -36,14 +36,12 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   return (
     <>
         <div className="d-flex flex-column bg-light">
-          <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
-          </Overlay.GatsbyImage>
+            <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt} />
         </div>
-      <Gradient className="d-flex flex-column">
+
         <Container className="page-container p-0">
          <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
         </Container>
-      </Gradient>
     </>
   )}
 
