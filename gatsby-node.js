@@ -490,6 +490,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
+      relationships: paragraph__general_textRelationships
     }
     type paragraph__general_textRelationships {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
@@ -530,6 +531,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_link_image: media__image @link(from: "field_link_image___NODE")
     }
     type paragraph__media_text implements Node {
+      drupal_id: String
       field_media_image_size: String
       field_media_text_desc: BodyField
       field_media_text_title: String
