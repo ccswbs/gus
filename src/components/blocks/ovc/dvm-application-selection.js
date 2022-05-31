@@ -4,7 +4,7 @@ import { getImage } from "gatsby-plugin-image"
 import Overlay from "components/shared/overlay"
 import { Container, Col, Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
-import Statistic from "components/shared/statistic"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import styled from 'styled-components'
 
 const yaml = require('js-yaml');
