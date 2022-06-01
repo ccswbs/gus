@@ -1,6 +1,5 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { getImage } from "gatsby-plugin-image"
 import Overlay from "components/shared/overlay"
 import { Container, Col, Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
