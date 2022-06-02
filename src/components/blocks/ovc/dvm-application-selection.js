@@ -4,6 +4,7 @@ import Overlay from "components/shared/overlay"
 import { Container, Col, Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
 
 const yaml = require('js-yaml');
@@ -11,12 +12,7 @@ const yaml = require('js-yaml');
 const Shadow = styled.p`
   text-shadow: 0px 0px 4px #ffffff;
 `
-const Gradient = styled(PageContainer.FullWidth)`
-  background: linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%);
-`
-const colourOptions = [
-  {background: "var(--uog-yellow)", colour: "#000000"},
-];
+const colourOptions = {background: "var(--uog-yellow)", colour: "#000000"};
 
 const render = ({ field_yaml_map, relationships }, colourOptions) => {
   let yamlMap;
@@ -35,11 +31,18 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   return (
     <>
         <div className="d-flex flex-column bg-light">
-            <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt} />
+            <GatsbyImage image={yamlMap.image.src} alt={yamlMap.image.alt} />
         </div>
-
+  
         <Container className="page-container p-0">
-         <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
+            <Statistic className="row g-0 row-cols-1 mb-0">
+                    <Statistic.SolidCard 
+                      background={colourOptions.background}  
+                      colour={colourOptions.colour} 
+                      className="px-5 pt-5 pb-3" >
+                      <Statistic.Value fontsize="3.25rem"><strong>{yamlMap.title}</strong></Statistic.Value>
+                    </Statistic.SolidCard>
+            </Statistic>
         </Container>
     </>
   )}
