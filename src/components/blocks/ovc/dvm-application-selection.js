@@ -30,11 +30,8 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   
   return (
     <>
-        <div className="d-flex flex-column bg-light">
-          <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt} />
-          </div> 
-
         <Container className="page-container p-0">
+        <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt} />
             <Statistic className="row g-0 row-cols-1 mb-0">
                     <Statistic.SolidCard 
                       background={colourOptions.background}  
