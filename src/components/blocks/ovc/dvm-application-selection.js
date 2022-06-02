@@ -20,7 +20,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   relationships.field_yaml_files.forEach(file => {
     yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
   });
-
+  console.log(yamlFiles)
   try {
     yamlMap = yaml.load(field_yaml_map);
   } catch (e) {
@@ -30,9 +30,10 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   
   return (
     <>
-        <div className="d-flex flex-column bg-light">
-            <GatsbyImage image={yamlMap.image.src} alt={yamlMap.image.alt} />
-        </div>
+        {/* <div className="d-flex flex-column bg-light">
+          <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.background_image.alt}>
+          </Overlay.GatsbyImage>
+          </div> */}
   
         <Container className="page-container p-0">
             <Statistic className="row g-0 row-cols-1 mb-0">
