@@ -48,6 +48,7 @@
     "react-helmet": "^6.1.0",
     "react-icons": "^4.4.0",
     "react-inlinesvg": "^3.0.0",
+    "react-modal-video": "^1.2.8",
     "react-number-format": "^4.9.3",
     "react-player": "^2.10.1",
     "react-portal": "^4.2.2",
