@@ -3,7 +3,7 @@ import { StaticQuery, graphql } from "gatsby"
 import Overlay from "components/shared/overlay"
 import { Container, Col, Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage, StaticImage} from "gatsby-plugin-image"
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
 
@@ -20,7 +20,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   relationships.field_yaml_files.forEach(file => {
     yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
   });
-  console.log(yamlFiles)
+  
   try {
     yamlMap = yaml.load(field_yaml_map);
   } catch (e) {
@@ -30,11 +30,10 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   
   return (
     <>
-        {/* <div className="d-flex flex-column bg-light">
-          <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.background_image.alt}>
-          </Overlay.GatsbyImage>
-          </div> */}
-  
+        <div className="d-flex flex-column bg-light">
+          <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt} />
+          </div> 
+
         <Container className="page-container p-0">
             <Statistic className="row g-0 row-cols-1 mb-0">
                     <Statistic.SolidCard 

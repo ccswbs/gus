@@ -28,7 +28,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   relationships.field_yaml_files.forEach(file => {
     yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
   });
-console.log(yamlFiles)
+
   try {
     yamlMap = yaml.load(field_yaml_map);
   } catch (e) {
