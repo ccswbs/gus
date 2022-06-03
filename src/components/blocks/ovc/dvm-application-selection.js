@@ -35,7 +35,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
                       colour={colourOptions.colour} 
                       className="px-5 pt-5 pb-3" >
                       <Statistic.Value fontsize="3.25rem" className="text-left">
-                           <i class="fa-duotone fa-circle-3 fa-lg"> </i> <strong>{yamlMap.title}</strong></Statistic.Value>
+                           <i class="fa-light fa-circle-3 fa-lg"> </i> <strong>{yamlMap.title}</strong></Statistic.Value>
                     </Statistic.SolidCard>
             </Statistic>
 
