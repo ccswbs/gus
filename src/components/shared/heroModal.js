@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 import ModalVideo from 'react-modal-video'
 //import '../../../node_modules/react-modal-video/scss/modal-video.scss'
-import "../../styles/modalVideo.css"
+//import "../../styles/modalVideo.css"
 
 class HeroModal extends React.Component {
 

@@ -26,12 +26,11 @@ module.exports = {
     menus: metaConfig['menus'],
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-image`,
-    `gatsby-plugin-root-import`,
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
     `gatsby-plugin-gatsby-cloud`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-root-import`,
+    `gatsby-plugin-sass`, 
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -39,16 +38,16 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaultQuality: 90,
+      },
+    },
+    {
       resolve: `gatsby-transformer-sharp`,
       options: {
         // defaults to true - changed to false to mute SVG warnings
         checkSupportedExtensions: false,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-sharp`,
-      options: {
-        defaultQuality: 90,
       },
     },
     {
@@ -62,8 +61,7 @@ module.exports = {
         },
         skipFileDownloads: true,
       },
-    },
-  
+    },  
     {
       resolve: `gatsby-source-filesystem`,
       options: {
