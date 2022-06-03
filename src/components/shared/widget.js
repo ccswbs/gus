@@ -8,8 +8,7 @@ import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
 import PageContainer from 'components/shared/pageContainer';
-//import ModalVideo from 'components/shared/modalVideo';
-import HeroModal from 'components/shared/heroModal';
+import ModalVideo from 'components/shared/modalVideo';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
@@ -44,7 +43,7 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__media_text":
           return <MediaText headingClass="mt-md-0" widgetData={widget} />;
         case "paragraph__modal_video_widget":
-          return <HeroModal widgetData={widget} />
+          return <ModalVideo widgetData={widget} />
         case "paragraph__section":
             return (<>
 				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
@@ -105,7 +104,7 @@ export const query = graphql`
       ...MediaTextParagraphFragment
     }
     ... on paragraph__modal_video_widget {
-      ...ModalVideoWidgetFragment
+      ...ParagraphModalVideoWidgetFragment
     }
     ... on paragraph__section {
       ...SectionParagraphFragment
