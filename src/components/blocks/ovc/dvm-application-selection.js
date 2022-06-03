@@ -4,7 +4,7 @@ import Overlay from "components/shared/overlay"
 import { Container, Col, Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
 import { GatsbyImage, getImage, StaticImage} from "gatsby-plugin-image"
-import Statistic from "components/shared/statistic"
+import Statistic from "components/blocks/ovc/heading-layout"
 import styled from 'styled-components'
 
 const yaml = require('js-yaml');
@@ -35,9 +35,10 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
                       colour={colourOptions.colour} 
                       className="px-5 pt-5 pb-3" >
                       <Statistic.Value fontsize="3.25rem" className="text-left">
-                           <i class="fa-duotone fa-circle-3"></i><strong>{yamlMap.title}</strong></Statistic.Value>
+                           <i class="fa-duotone fa-circle-3 fa-lg"> </i> <strong>{yamlMap.title}</strong></Statistic.Value>
                     </Statistic.SolidCard>
             </Statistic>
+
         </Container>
     </>
   )}
