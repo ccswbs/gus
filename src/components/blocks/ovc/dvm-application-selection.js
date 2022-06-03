@@ -9,9 +9,6 @@ import styled from 'styled-components'
 
 const yaml = require('js-yaml');
 
-const Shadow = styled.p`
-  text-shadow: 0px 0px 4px #ffffff;
-`
 const colourOptions = {background: "var(--uog-yellow)", colour: "#000000"};
 
 const render = ({ field_yaml_map, relationships }, colourOptions) => {
@@ -37,7 +34,8 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
                       background={colourOptions.background}  
                       colour={colourOptions.colour} 
                       className="px-5 pt-5 pb-3" >
-                      <Statistic.Value fontsize="3.25rem"><strong>{yamlMap.title}</strong></Statistic.Value>
+                      <Statistic.Value fontsize="3.25rem" className="text-left">
+                           <i class="fa-duotone fa-circle-3"></i><strong>{yamlMap.title}</strong></Statistic.Value>
                     </Statistic.SolidCard>
             </Statistic>
         </Container>
