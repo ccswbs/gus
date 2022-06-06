@@ -7,7 +7,10 @@ import styled from 'styled-components'
 
 const yaml = require('js-yaml');
 
-const colourOptions = {background: "var(--uog-yellow)", colour: "#000000"};
+const Shadow = styled.p`
+  text-shadow: 0px 0px 4px #ffffff;
+`
+const colourOptions = {background: "var(--uog-red)", colour: "#ffffff"};
 
 const render = ({ field_yaml_map, relationships }, colourOptions) => {
   let yamlMap;
@@ -29,17 +32,19 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
           <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt}>
             <Container className="page-container">
               <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
-                  <p className="display-2 text-dark"> <i class="fa-light fa-circle-3 fa-lg"> </i> <strong>{yamlMap.title}</strong></p>
+                  <p className="display-2 text-light"> <i class="fa-light fa-circle-4 fa-lg"> </i> <strong>{yamlMap.title}</strong></p>
               </Row>
             </Container>
           </Overlay.GatsbyImage>
         </div>
+
+        
     </>
   )}
 
 const query = graphql`
   query {
-    blockContentYamlBlock(field_yaml_id: {glob: "dvm_application_selection"}) {
+    blockContentYamlBlock(field_yaml_id: {glob: "dvm_application_offers"}) {
       id
       field_yaml_id
       field_yaml_map
@@ -65,6 +70,6 @@ const query = graphql`
   }
 `
 
-export default function DVMApplicationSelection() {
+export default function DVMApplicationOffers() {
   return <StaticQuery query={query} render={({blockContentYamlBlock}) => render(blockContentYamlBlock, colourOptions)} />
 }

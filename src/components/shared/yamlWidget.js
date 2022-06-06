@@ -12,6 +12,7 @@ import InternationalExploreLead from 'components/blocks/international/internatio
 import DVMApplicationSelection from 'components/blocks/ovc/dvm-application-selection'
 import DVMApplicationRequirements from 'components/blocks/ovc/dvm-application-requirements'
 import DVMApplicationProcess from 'components/blocks/ovc/dvm-application-process'
+import DVMApplicationOffers from 'components/blocks/ovc/dvm-application-offers'
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -26,7 +27,8 @@ const YamlWidget = (props) => {
         'international_explore_lead':<InternationalExploreLead />,
         'dvm_application_selection':<DVMApplicationSelection />,
         'dvm_application_requirements':<DVMApplicationRequirements />,
-        'dvm_application_process':<DVMApplicationProcess />
+        'dvm_application_process':<DVMApplicationProcess />,
+        'dvm_application_offers':<DVMApplicationOffers />
     }[component] || null )
 }
 
