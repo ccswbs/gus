@@ -20,7 +20,7 @@ function NewsGrid (props) {
 			return (
                 <GridCell key={newsItem.node.drupal_id} 
                             url={newsItem.node.fields.alias.value} 
-                            image={<GatsbyImage image={image.gatsbyImage} alt="" />}
+                            image={<GatsbyImage image={getImage(image)} alt="" />}
                             heading={title}
                             headingLevel={nextHeadingLevel} 
                             text={categoryElement}
