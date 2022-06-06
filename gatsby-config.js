@@ -117,6 +117,9 @@ module.exports = {
                 : // and we don't actually need more than 50 in production for this particular site
                   50,
           },
+          MediaItem: {
+            createFileNodes: false,
+          },
           Comment: {exclude: true},
           Menu: {exclude: true},
           MenuItem: {exclude: true},
