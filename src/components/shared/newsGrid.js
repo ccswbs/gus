@@ -1,6 +1,6 @@
 import Grid from 'components/shared/grid';
 import GridCell from 'components/shared/gridCell';
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getNextHeadingLevel } from 'utils/ug-utils.js';
@@ -20,7 +20,7 @@ function NewsGrid (props) {
 			return (
                 <GridCell key={newsItem.node.drupal_id} 
                             url={newsItem.node.fields.alias.value} 
-                            image={<GatsbyImage image={image.gatsbyImage} alt="" />}
+                            image={<GatsbyImage image={getImage(image)} alt="" />}
                             heading={title}
                             headingLevel={nextHeadingLevel} 
                             text={categoryElement}
