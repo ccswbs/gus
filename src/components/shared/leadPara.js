@@ -5,7 +5,7 @@ import { graphql } from 'gatsby';
 function leadPara (props) {
 
     const retStr = <div dangerouslySetInnerHTML={{ __html: props.pageData.field_lead_paratext?.value}} />
-    const imageURL = props.pageData.relationships.field_lead_para_hero.relationships.field_media_image?.publicUrl;
+    const imageURL = props.pageData.relationships.field_lead_para_hero?.relationships.field_media_image?.publicUrl;
         
     if (imageURL) {
                
