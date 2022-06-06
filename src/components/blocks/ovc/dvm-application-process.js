@@ -1,12 +1,16 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { Container } from "react-bootstrap"
-import { GatsbyImage, getImage} from "gatsby-plugin-image"
-import Statistic from "components/blocks/ovc/heading-layout"
+import { Container, Row } from "react-bootstrap"
+import {getImage} from "gatsby-plugin-image"
+import Overlay from "components/shared/overlay"
+import styled from 'styled-components'
 
 const yaml = require('js-yaml');
 
-const colourOptions = {background: "var(--uog-yellow)", colour: "#000000"};
+const Shadow = styled.p`
+  text-shadow: 0px 0px 4px #ffffff;
+`
+const colourOptions = {background: "var(--uog-red)", colour: "#ffffff"};
 
 const render = ({ field_yaml_map, relationships }, colourOptions) => {
   let yamlMap;
@@ -24,25 +28,23 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   
   return (
     <>
-        <Container className="page-container p-0">
-        <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt} />
-            <Statistic className="row g-0 row-cols-1 mb-0">
-                    <Statistic.SolidCard 
-                      background={colourOptions.background}  
-                      colour={colourOptions.colour} 
-                      className="px-5 pt-5 pb-3" >
-                      <Statistic.Value fontsize="3.25rem" className="text-left">
-                           <i class="fa-light fa-circle-3 fa-lg"> </i> <strong>{yamlMap.title}</strong></Statistic.Value>
-                    </Statistic.SolidCard>
-            </Statistic>
+        <div className="d-flex flex-column bg-light">
+          <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt}>
+            <Container>
+              <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
+                  <p className="display-2 text-light"> <i class="fa-light fa-circle-2 fa-lg"> </i> <strong>{yamlMap.title}</strong></p>
+              </Row>
+            </Container>
+          </Overlay.GatsbyImage>
+        </div>
 
-        </Container>
+        
     </>
   )}
 
 const query = graphql`
   query {
-    blockContentYamlBlock(field_yaml_id: {glob: "dvm_application_selection"}) {
+    blockContentYamlBlock(field_yaml_id: {glob: "dvm_application_process"}) {
       id
       field_yaml_id
       field_yaml_map
@@ -68,6 +70,6 @@ const query = graphql`
   }
 `
 
-export default function DVMApplicationSelection() {
+export default function DVMApplicationProcess() {
   return <StaticQuery query={query} render={({blockContentYamlBlock}) => render(blockContentYamlBlock, colourOptions)} />
 }
