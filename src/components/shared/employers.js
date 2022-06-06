@@ -6,7 +6,7 @@ function Employers (props) {
     return (<>
     <ul className="no-icon row">
         {props.employerData.map (employer => {
-            let employerImage = getImage(employer.node.relationships.field_image?.gatsbyImage);
+            let employerImage = getImage(employer.node.relationships.field_image?);
             let employerImageAlt = employer.node.field_image_alt ? employer.node.field_image_alt : ``;
             let employerSummary = employer.node.field_employer_summary;
             let employerJobPostingsLink = employer.node.field_link?.uri;
