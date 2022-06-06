@@ -17,16 +17,15 @@ function leadPara (props) {
         };
         
         const paraStyle = {
-            fontSize: "3rem",
-            fontWeight: "300",
-            lineHeight: "1.3",
+            background: `rgba(0,0,0,0.75)`,
+            padding: `6rem`,
         };
 
         return (
             <React.Fragment>
                <div className="full-width-container"> 
                     <div className="row justify-content-end" style={bgStyle}>
-                        <div className="col-md-6 text-white" dangerouslySetInnerHTML={{ __html: props.pageData.field_lead_paratext.value}} />
+                        <div className="col-md-6 text-white" style={paraStyle} dangerouslySetInnerHTML={{ __html: props.pageData.field_lead_paratext.value}} />
                     </div>
                </div> 
             </React.Fragment>
