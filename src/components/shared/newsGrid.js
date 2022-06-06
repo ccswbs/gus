@@ -1,6 +1,6 @@
 import Grid from 'components/shared/grid';
 import GridCell from 'components/shared/gridCell';
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getNextHeadingLevel } from 'utils/ug-utils.js';
