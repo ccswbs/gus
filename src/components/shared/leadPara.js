@@ -1,67 +1,38 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import { GatsbyImage } from "gatsby-plugin-image";
-import { contentExists } from 'utils/ug-utils';
-import 'styles/cta.css';
 
 function leadPara (props) {
 
-        const leaditem = props.pageData;
-
-        const retStr = <div className="lead" dangerouslySetInnerHTML={{ __html: leaditem.field_lead_paratext.value}} />
+    const retStr = <div dangerouslySetInnerHTML={{ __html: props.pageData.field_lead_paratext?.value}} />
+    const imageURL = props.pageData.relationships.field_lead_para_hero.relationships.field_media_image?.publicUrl;
         
-                                
-        if(contentExists(leaditem.relationships)) {
-                            
-            const img = (contentExists(leaditem.relationships.field_lead_para_hero) ? leaditem.relationships.field_lead_para_hero : ``) ; 
-                            
-            const heroImage = (contentExists(img) && contentExists(img.relationships) ? img.relationships.field_media_image.gatsbyImage : ``);
-		    const pubImage = (contentExists(heroImage) ? encodeURI(heroImage.publicUrl) : ``);
-					
-            let imageFile = null;
-			    
-            if(contentExists(img) && contentExists(heroImage)) {
-	                           
-                imageFile = <GatsbyImage
-                    image={heroImage.gatsbyImage}
-                    className="leadimg"
-                    alt={leaditem.relationships.field_lead_para_hero.field_media_image.alt} />
-                               
- 			       
-            } 
+    if (imageURL) {
+               
+        const bgStyle = {			
+            backgroundImage: `url(${imageURL})`,
+            backgroundPosition: `center center`,
+            backgroundRepeat: `no-repeat`,
+            backgroundSize: `cover`,
+        };
+        
+        const paraStyle = {
+            fontSize: "3rem",
+            fontWeight: "300",
+            lineHeight: "1.3",
+        };
 
-            const myDivStyle = {
-  			    display: 'flex', opacity: 0.8, 				
-			    backgroundImage: `url(${pubImage})`
-				                
-  			};
-
-                                                      
-            if (imageFile !== null) {
-                return (
-			        <React.Fragment>
-				       <div className="full-width-container"> 
-			                <div className="container-fluid">
-			                    <div className="row leadimg">
-
-				                    <div className="col-md-6">{imageFile}</div>
-			                        <div className="col-md-6" style={myDivStyle} >{retStr}</div>
-				                        
-				                </div>
-			                </div>
-				       </div> 
-				        <br />
-
-				    </React.Fragment>
-			    )
-                 
-            } 
-
-        }
-
-        return retStr
-                                        
+        return (
+            <React.Fragment>
+               <div className="full-width-container"> 
+                    <div className="row justify-content-end" style={bgStyle}>
+                        <div className="col-md-6 text-white" dangerouslySetInnerHTML={{ __html: props.pageData.field_lead_paratext.value}} />
+                    </div>
+               </div> 
+            </React.Fragment>
+        )
+    }
+    return retStr
 }
 
 leadPara.propTypes = {
@@ -85,17 +56,9 @@ export const query = graphql`
           name
         }
         field_lead_para_hero {
-          field_media_image {
-            alt
-          }
           relationships {
             field_media_image {
               publicUrl
-              gatsbyImage(
-                width: 1000
-                placeholder: BLURRED
-                layout: FULL_WIDTH
-              )
             }
           }
         }
