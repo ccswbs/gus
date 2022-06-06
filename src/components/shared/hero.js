@@ -1,5 +1,5 @@
 import React from 'react';
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { graphql } from 'gatsby';
 import PropTypes from "prop-types";
 import 'styles/hero.css';
@@ -9,7 +9,7 @@ function Hero (props) {
         <React.Fragment>
 			{props.imgData && props.imgData.length > 0 && <>
 				{props.imgData.map (img => {	
-					let heroImage = img.node.relationships.field_media_image.gatsbyImage;
+					let heroImage = getImage(img.node.relationships.field_media_image);
 					let altText = img.node.field_media_image.alt;					
 					return heroImage ? 
                         <React.Fragment key={img.node.drupal_id}>
