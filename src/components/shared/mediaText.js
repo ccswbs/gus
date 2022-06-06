@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql, Link } from 'gatsby';
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
 import { ConditionalWrapper } from 'utils/ug-utils';
@@ -16,7 +16,7 @@ function MediaText (props) {
     const mediaButtons = props.widgetData.relationships?.field_button_section;
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
-    const imageURL = mediaRelationships?.field_media_image?.gatsbyImage;	
+    const imageURL = getImage(mediaRelationships?.field_media_image);	
     const imageAlt = mediaRelationships?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
     
