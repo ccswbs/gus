@@ -447,6 +447,7 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
+                publicUrl
                 gatsbyImage(
                   width: 1920
                   cropFocus: CENTER
@@ -671,6 +672,7 @@ export const query = graphql`query ($id: String) {
                         field_media_image {
                           gatsbyImage(
                             width: 400
+                            height: 300
                             cropFocus: CENTER
                           )
                         }
@@ -706,6 +708,7 @@ export const query = graphql`query ($id: String) {
                                 gatsbyImage( 
                                   cropFocus: CENTER
                                   width: 400
+                                  height: 300
                                 )
                               }
                             }
@@ -833,6 +836,7 @@ export const query = graphql`query ($id: String) {
         }
         relationships {
           field_media_image {
+            publicUrl
             gatsbyImage(
               width: 1920
               cropFocus: CENTER
