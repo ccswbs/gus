@@ -107,7 +107,7 @@ const PageTemplate = ({data}) => (
     <Page nodeID={data.nodePage.drupal_internal__nid}
         pageTitle={data.nodePage.title} 
         ogDescription={data.nodePage.field_metatags?.og_description}
-        ogImage={data.images.edges[0]?.node.relationships.field_media_image.publicUrl}
+        ogImage={data.images.edges[0]?.node.relationships.field_media_image?.publicUrl}
         ogImageAlt={data.images.edges[0]?.node?.field_media_image.alt}
         imageData={data.images.edges}
         widgets={data.nodePage.relationships.field_widgets}
