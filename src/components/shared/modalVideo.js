@@ -28,9 +28,9 @@ const ModalVideo = ({ widgetData }) => {
             videoType={videoType}
             videoTitle={video.name}
             videoTranscript={
-              video.relationships?.field_media_file?.uri.url
+              video.relationships?.field_media_file?.localFile.publicURL
             }
-            videoCC={video.relationships?.field_video_cc?.uri.url}
+            videoCC={video.relationships?.field_video_cc?.localFile.publicURL}
           />
         </Overlay.Modal>
       </Portal>

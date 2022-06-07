@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 import OVCCustomFooter from 'components/blocks/ovc/footerOVC';
 import Widget from 'components/shared/widget';
 import { contentExists } from 'utils/ug-utils';
@@ -28,7 +28,7 @@ const DefaultFooter = ({logos, text, widgets}) => (
       <div className="col-md-3 content-area">
       {logos.map(logo => (
         <GatsbyImage
-                        image={getImage(logo.relationships.field_media_image)}
+                        image={logo.relationships.field_media_image.localFile.childImageSharp.gatsbyImageData}
                         className="footer-logo"
                         alt={logo.field_media_image.alt} />
       ))}
@@ -93,12 +93,12 @@ export const query = graphql`
                 }
                 relationships {
                   field_media_image {
-                    publicUrl
-                    gatsbyImage(
-                      width: 400
-                      placeholder: BLURRED
-                      layout: CONSTRAINED
-                    ) 
+                    localFile {
+                      publicURL
+                      childImageSharp {
+                        gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                      }
+                    }
                   }
                 }
               }

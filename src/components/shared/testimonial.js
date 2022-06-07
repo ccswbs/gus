@@ -29,7 +29,7 @@ function Testimonials (props) {
 		const testimonialUnits  = () => props.testimonialData.map((testimonial) => {
 		
 			let testimonialContent = stripHTMLTags(testimonial.node.body.processed);
-			let testimonialPicture = getImage(testimonial.node.relationships.field_hero_image?.relationships.field_media_image);
+			let testimonialPicture = getImage(testimonial.node.relationships.field_hero_image?.relationships.field_media_image.localFile);
 			let testimonialHomeProfileTitle = testimonial.node.field_home_profile?.title;
 			let testimonialHomeProfileLink= testimonial.node.field_home_profile?.uri;
     

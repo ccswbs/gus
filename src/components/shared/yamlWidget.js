@@ -40,11 +40,11 @@ export const query = graphql`
                 name
                 relationships {
                   field_media_image {
-                    gatsbyImage(
-                      width: 400
-                      placeholder: BLURRED
-                      layout: CONSTRAINED
-                    )
+                    localFile {
+                      childImageSharp {
+                        gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                      }
+                    }
                   }
                 }
                 path {

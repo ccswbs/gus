@@ -4,12 +4,14 @@ export const useIconData = () => {
   const data = useStaticQuery(
     graphql`
       query {
-        allMediaImage(filter: {relationships: {field_media_image: {mimeType: {eq: "image/svg+xml"}}}}) {
+        allMediaImage(filter: {relationships: {field_media_image: {localFile: {extension: {eq: "svg"}}}}}) {
 		  edges {
 			node {
 			  relationships {
 				field_media_image {
-                  publicUrl
+				  localFile {
+					publicURL
+				  }
 				}
 				field_tags {
 				__typename
