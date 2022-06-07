@@ -1,48 +1,47 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
+import styled from 'styled-components';
 
-function leadPara (props) {
+const StyledBG = styled.div`
+    background-image: url(${props => props.imageURL});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+`
+const StyledText = styled.div`
+    background: rgba(0,0,0,0.75);
+    padding: 6rem;
+`
 
-    const retStr = <div dangerouslySetInnerHTML={{ __html: props.pageData.field_lead_paratext?.value}} />
-    const imageURL = props.pageData.relationships.field_lead_para_hero?.relationships.field_media_image?.publicUrl;
-        
-    if (imageURL) {
-               
-        const bgStyle = {			
-            backgroundImage: `url(${imageURL})`,
-            backgroundPosition: `center center`,
-            backgroundRepeat: `no-repeat`,
-            backgroundSize: `cover`,
-        };
-        
-        const paraStyle = {
-            background: `rgba(0,0,0,0.75)`,
-            padding: `6rem`,
-        };
-
+function LeadPara (props) {
+    
+    const paraBG = props.pageData?.relationships?.field_lead_para_hero?.relationships.field_media_image?.publicUrl;
+    const paraText = props.pageData.field_lead_paratext?.value;
+    
+    if (paraBG) {               
         return (
             <React.Fragment>
                <div className="full-width-container"> 
-                    <div className="row justify-content-end" style={bgStyle}>
-                        <div className="col-md-6 text-white" style={paraStyle} dangerouslySetInnerHTML={{ __html: props.pageData.field_lead_paratext.value}} />
-                    </div>
+                    <StyledBG className="row justify-content-end" imageURL={paraBG}>
+                        <StyledText className="col-md-6 text-white" dangerouslySetInnerHTML={{ __html: paraText}} />
+                    </StyledBG>
                </div> 
             </React.Fragment>
         )
     }
-    return retStr
+    return <div dangerouslySetInnerHTML={{ __html: paraText}} />
 }
 
-leadPara.propTypes = {
+LeadPara.propTypes = {
     pageData: PropTypes.object,
 }
   
-leadPara.defaultProps = {
+LeadPara.defaultProps = {
     pageData: ``,
 }
 
-export default leadPara
+export default LeadPara
 
 export const query = graphql`
     fragment LeadParagraphFragment on paragraph__lead_paragraph {
