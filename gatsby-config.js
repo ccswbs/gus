@@ -26,50 +26,24 @@ module.exports = {
     menus: metaConfig['menus'],
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-image`,
-    `gatsby-plugin-root-import`,
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
     `gatsby-plugin-gatsby-cloud`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-root-import`,
+    `gatsby-plugin-sass`,
+    `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-plugin-catch-links`,
+      options: {
+        excludePattern: /./,
+      },
+    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: metaConfig['GAtrackingID'],
       },
     },
-    {
-      resolve: `gatsby-transformer-sharp`,
-      options: {
-        // defaults to true - changed to false to mute SVG warnings
-        checkSupportedExtensions: false,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-sharp`,
-      options: {
-        defaultQuality: 90,
-      },
-    },
-    {
-      resolve: `gatsby-source-drupal`,
-        options: {
-        baseUrl: process.env.DRUPAL_BASEURL,
-        apiBase: process.env.DRUPAL_APIBASE,
-        basicAuth: {
-          username: process.env.BASIC_AUTH_USERNAME,
-          password: process.env.BASIC_AUTH_PASSWORD,
-        },
-      },
-    },
-  
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `src`,
-        path: `${__dirname}/src/`,
-      },
-    },    
     {
       resolve: `gatsby-plugin-google-tagmanager`,
       options: {
@@ -83,9 +57,33 @@ module.exports = {
         host: `https://livechugendpoint.azureedge.net/`,
         sitemap: null,
         policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
-      }
+      },
     },
-    `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaultQuality: 90,
+      },
+    },    
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: process.env.DRUPAL_BASEURL,
+        apiBase: process.env.DRUPAL_APIBASE,
+        basicAuth: {
+          username: process.env.BASIC_AUTH_USERNAME,
+          password: process.env.BASIC_AUTH_PASSWORD,
+        },
+        skipFileDownloads: true,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `src`,
+        path: `${__dirname}/src/`,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -119,6 +117,9 @@ module.exports = {
                 : // and we don't actually need more than 50 in production for this particular site
                   50,
           },
+          MediaItem: {
+            createFileNodes: false,
+          },
           Comment: {exclude: true},
           Menu: {exclude: true},
           MenuItem: {exclude: true},
@@ -134,12 +135,12 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-catch-links`,
+      resolve: `gatsby-transformer-sharp`,
       options: {
-        excludePattern: /./,
+        // defaults to true - changed to false to mute SVG warnings
+        checkSupportedExtensions: false,
       },
     },
-    
   ],
   assetPrefix: process.env.ASSET_PREFIX,
 }

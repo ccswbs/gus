@@ -26,7 +26,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   let yamlMap;
   let yamlFiles = {};
   relationships.field_yaml_files.forEach(file => {
-    yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
+    yamlFiles[file.path.alias] = file.relationships.field_media_image.gatsbyImage;
   });
 
   try {
@@ -82,11 +82,12 @@ const query = graphql`
           name
           relationships {
             field_media_image {
-              localFile {
-                childImageSharp {
-                  gatsbyImageData(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED)
-                }
-              }
+              gatsbyImage(
+                width: 1400
+                height: 190
+                placeholder: BLURRED
+                layout: CONSTRAINED
+              ) 
             }
           }
           path {

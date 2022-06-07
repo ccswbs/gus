@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql, Link } from 'gatsby';
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
 import { ConditionalWrapper } from 'utils/ug-utils';
@@ -16,12 +16,12 @@ function MediaText (props) {
     const mediaButtons = props.widgetData.relationships?.field_button_section;
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
-    const imageURL = mediaRelationships?.field_media_image?.localFile;	
+    const imageURL = getImage(mediaRelationships?.field_media_image);	
     const imageAlt = mediaRelationships?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
     
     const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
-    const videoTranscript = mediaRelationships?.field_media_file?.localFile.publicURL;
+    const videoTranscript = mediaRelationships?.field_media_file?.uri.url;
     const videoURL = props.widgetData.relationships.field_media_text_media?.field_media_oembed_video;
     const videoHeight = props.widgetData.relationships.field_media_text_media?.field_video_height;
     const videoWidth = props.widgetData.relationships.field_media_text_media?.field_video_width;
@@ -169,8 +169,7 @@ function MediaText (props) {
                 videoHeight={videoHeight}
                 videoWidth={videoWidth}
             />}
-
-            {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
+            {imageURL && <GatsbyImage image={imageURL} alt={imageAlt} />}
         </div>
         {textOrButtons &&
         <div className={textCol + " text-break"}>
@@ -209,12 +208,11 @@ export const query = graphql`
     }
     relationships {
       field_media_image {
-        localFile {
-          publicURL
-          childImageSharp {
-            gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
-          }
-        }
+        gatsbyImage(
+          width: 1000
+          placeholder: BLURRED
+          layout: FULL_WIDTH
+        )
       }
     }
   }
