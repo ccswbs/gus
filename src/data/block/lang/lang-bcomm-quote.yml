@@ -4,5 +4,5 @@ source:
   name: First and Lastname
   desc: Student | BComm '00
 background_image:
-  src: ../../../images/grce/economic-impact/plant-bg.jpg
-  alt: Plant background
+  src: /images/gryphon-placeholder.jpg
+  alt: Gryphon statue placeholder

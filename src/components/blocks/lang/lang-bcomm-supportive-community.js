@@ -61,7 +61,7 @@ const render = ({ title, body_html, testimonial, aside }) => (
 
 const query = graphql`
   query {
-    blockContentYamlBlock(yamlId: {eq: "lang_bcomm_supportive_community"}) {
+    blockContentYamlBlock(field_yaml_id: {glob: "lang_bcomm_supportive_community"}) {
         id
         title
         body_html

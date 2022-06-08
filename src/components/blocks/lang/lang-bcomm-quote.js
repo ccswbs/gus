@@ -39,7 +39,7 @@ const render = ({ quote, source, background_image }) => (
 
 const query = graphql`
   query {
-    blockContentYamlBlock(yamlId: {eq: "lang_bcomm_quote"}) {
+    blockContentYamlBlock(field_yaml_id: {glob: "lang_bcomm_quote"}) {
         id
         title
         quote

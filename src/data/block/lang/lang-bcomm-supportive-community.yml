@@ -9,8 +9,8 @@ testimonial:
     name: First and lastname
     desc: Title
     image:
-      src: ../../../images/grce/economic-impact/testimonial-1.jpg
-      alt: Circuit board
+      src: /images/gryphon-placeholder.jpg
+      alt: Gryphon statue placeholder
 
 aside:
   title: Fist-Year Tool Kit
@@ -19,5 +19,5 @@ aside:
     <a href="#" class="btn btn-outline-light">Learn More</a>
   
   image:
-    src: ../../../images/grce/economic-impact/blueoverlay-thin.jpg
-    alt: ""
+    src: /images/gryphon-placeholder.jpg
+    alt: Gryphon statue placeholder
