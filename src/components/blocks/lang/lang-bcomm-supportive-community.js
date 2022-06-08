@@ -4,6 +4,8 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Row, Col } from "react-bootstrap"
 import styled from "styled-components"
 
+const yaml = require('js-yaml');
+
 const QuoteMark = styled.i`
     color: var(--uog-blue);
 `

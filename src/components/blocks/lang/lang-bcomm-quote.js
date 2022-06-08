@@ -5,6 +5,8 @@ import { Col, Container, Row } from "react-bootstrap"
 import Overlay from "components/shared/overlay"
 import styled from "styled-components"
 
+const yaml = require('js-yaml');
+
 const QuoteMark = styled.i`
     color: var(--uog-blue);
 `
