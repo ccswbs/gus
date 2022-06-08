@@ -74,7 +74,7 @@ module.exports = {
           username: process.env.BASIC_AUTH_USERNAME,
           password: process.env.BASIC_AUTH_PASSWORD,
         },
-        skipFileDownloads: true,
+        skipFileDownloads: process.env.SKIP_FILE_DOWNLOADS,
       },
     },
     {
