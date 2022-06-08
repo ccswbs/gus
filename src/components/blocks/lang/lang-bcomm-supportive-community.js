@@ -39,62 +39,68 @@ const Testimony = ({ testimonial }) => (
     </div>
 )
 
-const render = ({ title, body_html, testimonial, aside }) => (
-    <div className="d-flex flex-column bg-light">
-        <div className="full-width-container">
-            <Container className="page-container pe-0">
-                <Row className="site-content mx-4 py-0 pe-0">
-                    <Col md={6} className="pe-5 pt-4">
-                        <h2>{title}</h2>
-                        <div dangerouslySetInnerHTML={{__html: body_html}}></div>
-                        <Testimony testimonial={testimonial} />
-                    </Col>
-                    <Col md={6} className="d-flex position-relative p-0">
-                        <GatsbyImage image={getImage(aside.image.src)} alt={aside.image.alt} className="position-absolute top-0 end-0" />
-                        <Aside aside={aside} />    
-                    </Col>
-                </Row>
-            </Container>
+const render = ({ field_yaml_map, relationships }) => {
+    let yamlMap;
+    let yamlFiles = {};
+    relationships.field_yaml_files.forEach(file => {
+        yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
+    });
+    
+    try {
+        yamlMap = yaml.load(field_yaml_map);
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+    
+    return(
+        <div className="d-flex flex-column bg-light">
+            <div className="full-width-container">
+                <Container className="page-container pe-0">
+                    <Row className="site-content mx-4 py-0 pe-0">
+                        <Col md={6} className="pe-5 pt-4">
+                            <h2>{yamlMap.title}</h2>
+                            <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}}></div>
+                            <Testimony testimonial={yamlMap.testimonial} />
+                        </Col>
+                        <Col md={6} className="d-flex position-relative p-0">
+                            <GatsbyImage image={getImage(yamlFiles[yamlMap.aside.image.src])} alt={yamlMap.aside.image.alt} className="position-absolute top-0 end-0" />
+                            <Aside aside={yamlMap.aside} />    
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </div>
-    </div>
-)
+    )
+}
 
 const query = graphql`
   query {
     blockContentYamlBlock(field_yaml_id: {glob: "lang_bcomm_supportive_community"}) {
         id
-        title
-        body_html
-        testimonial {
-            quote
-            source {
-                name
-                desc
-                image {
-                    src {
-                      childImageSharp {
-                        gatsbyImageData
-                      }
-                    }
-                    alt
-                }
-            }
-        }
-        aside {
-            title
-            body_html
-            image {
-                src {
+        field_yaml_id
+        field_yaml_map
+        relationships {
+          field_yaml_files {
+            id
+            name
+            relationships {
+              field_media_image {
+                localFile {
                   childImageSharp {
-                    gatsbyImageData
+                    gatsbyImageData(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED)
                   }
                 }
-                alt
+              }
             }
+            path {
+              alias
+            }
+          }
         }
+      }
     }
-  }
-`
+  `
 
 export default function LangBcommSupportiveCommunity () {
   return <StaticQuery query={query} render={({blockContentYamlBlock}) => render(blockContentYamlBlock)} />
