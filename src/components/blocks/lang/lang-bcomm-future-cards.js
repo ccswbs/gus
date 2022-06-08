@@ -29,7 +29,6 @@ const render = ({ field_yaml_map, relationships }) => {
     
     return (
         <section>
-            <h2>{yamlMap.title}</h2>
             <Row className="row-cols-1 row-cols-md-3 g-4">
                 {yamlMap.cards.map(({title, text, image, links}, index) => 
                     <Col key={`lang-bcomm-cards-${index}`}>
