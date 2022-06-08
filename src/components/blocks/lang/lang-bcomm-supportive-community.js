@@ -90,7 +90,7 @@ const query = graphql`
               field_media_image {
                 localFile {
                   childImageSharp {
-                    gatsbyImageData(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED)
+                    gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
                   }
                 }
               }
