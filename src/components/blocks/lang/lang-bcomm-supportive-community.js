@@ -56,7 +56,7 @@ const render = ({ field_yaml_map, relationships }) => {
     }
     
     return(
-        <div className="d-flex flex-column bg-light">
+        <div className="d-flex flex-column bg-light overflow-hidden">
             <div className="full-width-container">
                 <Container className="page-container pe-0">
                     <Row className="site-content mx-4 py-0 pe-0">
