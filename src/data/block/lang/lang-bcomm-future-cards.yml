@@ -1,0 +1,29 @@
+id: lang_bcomm_future_cards
+title: Things You Should Know About the City of Guelph
+cards:
+  - title: Future You is a Global Leader
+    text: Become a leader of diverse and inclusive teams and become a more rounded, global citizen by embarking on a study abroad program at one of our many international partner institutions.
+    image: 
+      src: /international/images/airport-pexels-1008155.jpg
+      alt: Person walking through airport terminal
+    links:
+      - title: Learn More
+        url: '#'
+  - title: Future You has the Expertise
+    text: Specialize your degree in one of 9 majors and benefit from Lang’s team-based approach to learning. Gain valuable, future focused expertise that employers demand like ethics, sustainability and analytics.
+    image: 
+      src: /international/images/trail-pexels-6039195.jpg
+      alt: Hiking trail
+    links:
+      - title: Learn More
+        url: '#'
+  - title: Future You is Career-Ready
+    text: Lang’s popular co-op program, support services and industry connections will give you real world experiences to launch your career. If you would rather be your own boss, the John F. Wood Centre for Business and Student Enterprise will help you fund and launch your startup.
+    image: 
+      src: /international/images/food-pexels-9961870.jpg
+      alt: People eating from food platter
+    links:
+      - title: Learn More
+        url: '#'
+
+    

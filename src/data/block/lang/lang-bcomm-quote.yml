@@ -1,0 +1,8 @@
+id: lang_bcomm_quote
+quote: Students are very thoughtful and conscious of the impact humans are having on the health of individuals, populations and ecosystems, and they want to make positive change.
+source:
+  name: First and Lastname
+  desc: Student | BComm '00
+background_image:
+  src: ../../../images/grce/economic-impact/plant-bg.jpg
+  alt: Plant background

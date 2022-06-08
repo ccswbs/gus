@@ -1,0 +1,23 @@
+id: lang_bcomm_supportive_community
+title: Supportive Community
+body_html: |
+  <p>The student community you join at Lang is collaborative and supportive – not cutthroat and competitive. Whether you need support with choosing your major or minor, networking with employers or funding for your startup, Lang’s support services ensure you are successful. With dozens of student clubs and organizations to get involved with, you will find like-minded individuals that will become some of your closest friends while completing your undergraduate degree.</p>
+
+testimonial: 
+  quote: Quote will go here
+  source:
+    name: First and lastname
+    desc: Title
+    image:
+      src: ../../../images/grce/economic-impact/testimonial-1.jpg
+      alt: Circuit board
+
+aside:
+  title: Fist-Year Tool Kit
+  body_html: |
+    <p>This toolkit will provide you with the information and resources that you need to be successful in your first-year and beyond at the Lang School. It includes information on accepting your offer, choosing courses and what your first-year will look like, student life, how to get involved and other important resources that will help you succeed.</p>
+    <a href="#" class="btn btn-outline-light">Learn More</a>
+  
+  image:
+    src: ../../../images/grce/economic-impact/blueoverlay-thin.jpg
+    alt: ""
