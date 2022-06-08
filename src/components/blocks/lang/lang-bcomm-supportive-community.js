@@ -26,7 +26,7 @@ const Testimony = ({ testimonial, files }) => (
     <div className="mt-5 me-3 pb-5">
         <Row className="justify-content-center g-5">
             <Col xs={5} sm={4} md={3}>
-                <GatsbyImage image={getImage(yamlFiles[testimonial.source.image.src])} alt={testimonial.source.image.alt} imgClassName="rounded-circle" />
+                <GatsbyImage image={getImage(files[testimonial.source.image.src])} alt={testimonial.source.image.alt} imgClassName="rounded-circle" />
             </Col>
             <Col sm={8} md={9} className="ps-5 fs-2">
                 <QuoteText className="fs-1">
