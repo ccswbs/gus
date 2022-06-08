@@ -22,11 +22,11 @@ const Aside = ({aside}) => (
     </div>
 )
 
-const Testimony = ({ testimonial }) => (
+const Testimony = ({ testimonial, files }) => (
     <div className="mt-5 me-3 pb-5">
         <Row className="justify-content-center g-5">
             <Col xs={5} sm={4} md={3}>
-                <GatsbyImage image={getImage(testimonial.source.image.src)} alt={testimonial.source.image.alt} imgClassName="rounded-circle" />
+                <GatsbyImage image={getImage(yamlFiles[testimonial.source.image.src])} alt={testimonial.source.image.alt} imgClassName="rounded-circle" />
             </Col>
             <Col sm={8} md={9} className="ps-5 fs-2">
                 <QuoteText className="fs-1">
@@ -63,7 +63,7 @@ const render = ({ field_yaml_map, relationships }) => {
                         <Col md={6} className="pe-5 pt-4">
                             <h2>{yamlMap.title}</h2>
                             <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}}></div>
-                            <Testimony testimonial={yamlMap.testimonial} />
+                            <Testimony testimonial={yamlMap.testimonial} files={yamlFiles} />
                         </Col>
                         <Col md={6} className="d-flex position-relative p-0">
                             <GatsbyImage image={getImage(yamlFiles[yamlMap.aside.image.src])} alt={yamlMap.aside.image.alt} className="position-absolute top-0 end-0" />
@@ -90,7 +90,10 @@ const query = graphql`
               field_media_image {
                 localFile {
                   childImageSharp {
-                    gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+                    gatsbyImageData(
+                        placeholder: BLURRED, 
+                        layout: CONSTRAINED
+                    )
                   }
                 }
               }

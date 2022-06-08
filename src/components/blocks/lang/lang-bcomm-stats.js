@@ -1,6 +1,6 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { Container, Col, Row } from "react-bootstrap"
+import { Container, Col } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
@@ -17,12 +17,8 @@ const colourOptions = [
   {background: "var(--uog-blue)", colour: "#000000"},
 ];
 
-const render = ({ field_yaml_map, relationships }, colourOptions) => {
+const render = ({ field_yaml_map }, colourOptions) => {
   let yamlMap;
-  let yamlFiles = {};
-  relationships.field_yaml_files.forEach(file => {
-    yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
-  });
 
   try {
     yamlMap = yaml.load(field_yaml_map);
@@ -57,24 +53,6 @@ const query = graphql`
       id
       field_yaml_id
       field_yaml_map
-      relationships {
-        field_yaml_files {
-          id
-          name
-          relationships {
-            field_media_image {
-              localFile {
-                childImageSharp {
-                  gatsbyImageData(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED)
-                }
-              }
-            }
-          }
-          path {
-            alias
-          }
-        }
-      }
     }
   }
 `
