@@ -17,7 +17,7 @@ function MediaText (props) {
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
     const imageURL = mediaRelationships?.field_media_image?.localFile;	
-    const imageAlt = mediaRelationships?.field_media_image?.alt;
+    const imageAlt = mediaRelationships?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
     
     const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
@@ -158,8 +158,8 @@ function MediaText (props) {
     }        
 
     return (
-    <ConditionalWrapper condition={wrapperCol} wrapper={children => <div className={wrapperCol}>{children}</div>}>
-        <section className={mediaCol}>
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section className={wrapperCol}>{children}</section>}>
+        <div className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
                 videoTitle={videoTitle}
@@ -169,10 +169,11 @@ function MediaText (props) {
                 videoHeight={videoHeight}
                 videoWidth={videoWidth}
             />}
+
             {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
-        </section>
+        </div>
         {textOrButtons &&
-        <section className={textCol + " text-break"}>
+        <div className={textCol + " text-break"}>
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
             {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
@@ -183,7 +184,7 @@ function MediaText (props) {
                     <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
                 </React.Fragment>)                
             })}</div>}
-        </section>}
+        </div>}
     </ConditionalWrapper>    
     );
 }

@@ -15,11 +15,11 @@ function SectionButtons (props) {
         buttonColClasses = "d-grid gap-2";
         buttonSpacing = "";        
     } else if (buttonCol === "Call to Action") {
-        buttonColClasses = "col-sm-12 col-md-6 d-grid offset-md-3 col-lg-4 offset-lg-4";
-        buttonSpacing = ""; 
+        buttonColClasses = "d-grid gap-2 d-md-block gap-2 text-center mb-5";
+        buttonSpacing = "me-md-3"; 
     } else {        
         buttonColClasses = "d-grid d-md-block gap-2";
-        buttonSpacing = "me-md-3";        
+        buttonSpacing = "me-md-3";
     }
 
     return (
