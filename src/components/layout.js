@@ -11,7 +11,7 @@ import "@fontsource/roboto/400-italic.css"
 
 const Layout = ({ children, date, menuName }) => (
       <>
-        {/* <uofg-header><HeaderMenu menuName={menuName} /></uofg-header> */}
+        <uofg-header><HeaderMenu menuName={menuName} /></uofg-header>
         <main id="content">
           {children}
           <DateModified date={date}/>
