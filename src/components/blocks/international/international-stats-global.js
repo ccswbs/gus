@@ -37,35 +37,35 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   }
   
   return (
-    <>
+    <PageContainer.SiteContent>
+      <PageContainer.ContentArea>
+          <div className="d-flex flex-column">
+            <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
+                <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
+                  <div className="text-center"> 
+                    <h2 className="display-2 text-dark">{yamlMap.title}</h2>
+                    <Shadow><a href={yamlMap.link.url}>{yamlMap.link.title}</a></Shadow>
+                  </div>
+                </Row>
+            </Overlay.GatsbyImage>
+          </div>
         <div className="d-flex flex-column">
-          <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
-            <PageContainer>
-              <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
-                <div className="text-center"> 
-                  <h2 className="display-2 text-dark">{yamlMap.title}</h2>
-                  <Shadow><a href={yamlMap.link.url}>{yamlMap.link.title}</a></Shadow>
-                </div>
-              </Row>
-            </PageContainer>
-          </Overlay.GatsbyImage>
+              <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
+                  {yamlMap.stats.map(({value, type}, index) => 
+                    <Col key={`international-stat-${index}`}>
+                      <Statistic.SolidCard 
+                        background={colourOptions[index].background} 
+                        colour={colourOptions[index].colour} 
+                        className="px-5 pt-5 pb-3" >
+                        <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
+                        <Statistic.Type>{type}</Statistic.Type>
+                      </Statistic.SolidCard>
+                    </Col>
+                  )}
+              </Statistic>
         </div>
-      <div className="d-flex flex-column">
-            <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
-                {yamlMap.stats.map(({value, type}, index) => 
-                  <Col key={`international-stat-${index}`}>
-                    <Statistic.SolidCard 
-                      background={colourOptions[index].background} 
-                      colour={colourOptions[index].colour} 
-                      className="px-5 pt-5 pb-3" >
-                      <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
-                      <Statistic.Type>{type}</Statistic.Type>
-                    </Statistic.SolidCard>
-                  </Col>
-                )}
-            </Statistic>
-      </div>
-    </>
+      </PageContainer.ContentArea>
+    </PageContainer.SiteContent>
   )}
 
 const query = graphql`
