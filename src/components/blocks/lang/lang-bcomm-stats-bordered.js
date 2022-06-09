@@ -2,7 +2,6 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { Container, Col } from "react-bootstrap";
 import Statistic from 'components/shared/statistic';
-import Statistic from "components/shared/statistic"
 
 const yaml = require('js-yaml');
 
@@ -24,13 +23,12 @@ const render = ({ field_yaml_map }, colourOptions) => {
   
   return (
     <Container>
-      <h3 className="visually-hidden">{yamlMap.title}</h3>
       <Statistic className="row row-cols-1 row-cols-md-3 mb-5 g-4">
-        {yamlMap.stats.map(({value, type}, index) => 
+        {yamlMap.stats.map(({value, type, footnote_marker}, index) => 
           <Col key={`bcomm-stat-bordered-${index}`} className="col-lg">
             <Statistic.BorderCard border={colourOptions[index].border} >
               <Statistic.Value><strong>{value}</strong></Statistic.Value>
-              <Statistic.Type>{type}</Statistic.Type>
+              <Statistic.Type>{type} {footnote_marker}</Statistic.Type>
             </Statistic.BorderCard>
           </Col>
         )}

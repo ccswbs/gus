@@ -31,7 +31,7 @@ const render = ({ field_yaml_map }, colourOptions) => {
       <Gradient className="d-flex flex-column">
         <Container className="page-container p-0">
             <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
-                {yamlMap.stats.map(({value, type, footnote_marker, footnote}, index) => 
+                {yamlMap.stats.map(({value, type, footnote_marker}, index) => 
                   <Col key={`lang-bcomm-stat-${index}`}>
                     <Statistic.SolidCard 
                       background={colourOptions[index].background} 
