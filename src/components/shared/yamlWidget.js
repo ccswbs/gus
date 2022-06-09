@@ -13,6 +13,7 @@ import LangBcommStats from 'components/blocks/lang/lang-bcomm-stats'
 import LangBcommFutureCards from 'components/blocks/lang/lang-bcomm-future-cards';
 import LangBcommQuote from 'components/blocks/lang/lang-bcomm-quote';
 import LangBcommSupportiveCommunity from 'components/blocks/lang/lang-bcomm-supportive-community';
+import LangBcommStatsBordered from 'components/blocks/lang/lang-bcomm-stats-bordered';
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -28,7 +29,8 @@ const YamlWidget = (props) => {
         'lang_bcomm_stats':<LangBcommStats />,
         'lang_bcomm_future_cards':<LangBcommFutureCards />,
         'lang_bcomm_quote':<LangBcommQuote />,
-        'lang_bcomm_supportive_community':<LangBcommSupportiveCommunity />
+        'lang_bcomm_supportive_community':<LangBcommSupportiveCommunity />,
+        'lang_bcomm_stats_bordered':<LangBcommStatsBordered />,
     }[component] || null )
 }
 
