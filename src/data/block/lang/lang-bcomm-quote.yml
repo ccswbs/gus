@@ -4,5 +4,5 @@ source:
   name: First and Lastname
   desc: Student | BComm '00
 background_image:
-  src: /images/gryphon-placeholder.jpg
-  alt: Gryphon statue placeholder
+  src: /images/placeholder-1920x600-notext.png
+  alt: placeholder

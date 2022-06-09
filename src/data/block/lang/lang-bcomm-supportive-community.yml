@@ -9,15 +9,15 @@ testimonial:
     name: First and lastname
     desc: Title
     image:
-      src: /images/gryphon-placeholder.jpg
-      alt: Gryphon statue placeholder
+      src: /images/placeholder-600x600.png
+      alt: Placeholder
 
 aside:
   title: Fist-Year Tool Kit
   body_html: |
     <p>This toolkit will provide you with the information and resources that you need to be successful in your first-year and beyond at the Lang School. It includes information on accepting your offer, choosing courses and what your first-year will look like, student life, how to get involved and other important resources that will help you succeed.</p>
-    <a href="#" class="btn btn-outline-light">Learn More</a>
+    <a href="#" class="btn btn-outline-white">Learn More</a>
   
   image:
-    src: /images/gryphon-placeholder.jpg
-    alt: Gryphon statue placeholder
+    src: /images/placeholder-400x720.png
+    alt: Placeholder
