@@ -2,6 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { Row, Col } from "react-bootstrap";
 import styled from "styled-components"
+import PageContainer from 'components/shared/pageContainer'
 
 const yaml = require('js-yaml');
 
@@ -33,15 +34,19 @@ const render = ({ field_yaml_map, relationships }) => {
     }
     
     return (
-        <>
-          <h2>{yamlMap.title}</h2>
-          <Col md={9} className="pe-5">
-            <Lead dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
-          </Col>
-          <Col md={3}>
-            <Button href={yamlMap.link.url} className="btn btn-primary text-uppercase text-center">{yamlMap.link.title}</Button>
-          </Col>
-        </>
+      <PageContainer.SiteContent>
+        <PageContainer.ContentArea>
+          <Row className="mt-5">
+            <h2>{yamlMap.title}</h2>
+            <Col md={9} className="pe-5">
+              <Lead dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
+            </Col>
+            <Col md={3}>
+              <Button href={yamlMap.link.url} className="btn btn-primary text-uppercase text-center">{yamlMap.link.title}</Button>
+            </Col>
+          </Row>
+        </PageContainer.ContentArea>
+      </PageContainer.SiteContent>
 )}
 
 
