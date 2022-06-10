@@ -136,7 +136,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-catch-links`,
       options: {
-        excludePattern: /./,
+        excludePattern: /[a-zA-Z]+\.ca/,
       },
     },
     
