@@ -3,7 +3,6 @@ import styled from "styled-components"
 
 const StatCard = styled.div`
   background: var(--uog-blue-muted);
-  flex: 1 0;
   padding: 1.25rem;
   min-width: 25%;
   word-wrap: break-word;
