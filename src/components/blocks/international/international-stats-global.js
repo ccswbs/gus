@@ -50,18 +50,18 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
             </Overlay.GatsbyImage>
           </div>
         <div className="d-flex flex-column">
-              <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
-                  {yamlMap.stats.map(({value, type}, index) => 
-                      <Statistic.SolidCard 
-                        key={`international-stat-${index}`}
-                        background={colourOptions[index].background} 
-                        colour={colourOptions[index].colour} 
-                        className="px-5 pt-5 pb-3" >
-                        <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
-                        <Statistic.Type>{type}</Statistic.Type>
-                      </Statistic.SolidCard>
-                  )}
-              </Statistic>
+          <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
+            {yamlMap.stats.map(({value, type}, index) => 
+              <Statistic.SolidCard 
+                key={`international-stat-${index}`}
+                background={colourOptions[index].background} 
+                colour={colourOptions[index].colour} 
+                className="px-5 pt-5 pb-3 col" >
+                <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
+                <Statistic.Type>{type}</Statistic.Type>
+              </Statistic.SolidCard>
+            )}
+          </Statistic>
         </div>
       </PageContainer.ContentArea>
     </PageContainer.SiteContent>
