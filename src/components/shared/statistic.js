@@ -53,7 +53,7 @@ Statistic.BorderCard = ({border, children, className=""}) => (
 )
 
 Statistic.SolidCard = ({background, colour, children, className=""}) => (
-    <StatSolidCard background={background} colour={colour} className={`${className} h-100`}>
+    <StatSolidCard background={background} colour={colour} className={`${className} align-self-stretch`}>
       {children}
     </StatSolidCard>
 )

@@ -2,7 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { getImage } from "gatsby-plugin-image"
 import Overlay from "components/shared/overlay"
-import { Col, Row } from "react-bootstrap"
+import { Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
@@ -52,15 +52,14 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
         <div className="d-flex flex-column">
               <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
                   {yamlMap.stats.map(({value, type}, index) => 
-                    <Col key={`international-stat-${index}`}>
                       <Statistic.SolidCard 
+                        key={`international-stat-${index}`}
                         background={colourOptions[index].background} 
                         colour={colourOptions[index].colour} 
                         className="px-5 pt-5 pb-3" >
                         <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
                         <Statistic.Type>{type}</Statistic.Type>
                       </Statistic.SolidCard>
-                    </Col>
                   )}
               </Statistic>
         </div>
