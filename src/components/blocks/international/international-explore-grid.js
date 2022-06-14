@@ -7,7 +7,7 @@ import styled from "styled-components"
 const yaml = require('js-yaml');
 
 const Background = styled(PageContainer.FullWidth)`
-  background: #f1f5f9;
+  background: #F4F7FA;
 `
 const HeadingIcon = styled.i`
   color: ${props => (props.iconColour ?? "#000000")};

@@ -39,7 +39,7 @@ const render = ({ field_yaml_map, relationships }) => {
           <Row className="mt-5">
             <h2>{yamlMap.title}</h2>
             <Col md={9} className="pe-5">
-              <Lead dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
+              <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
             </Col>
             <Col md={3}>
               <Button href={yamlMap.link.url} className="btn btn-primary text-uppercase text-center">{yamlMap.link.title}</Button>
