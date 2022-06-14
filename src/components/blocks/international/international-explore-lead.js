@@ -36,7 +36,7 @@ const render = ({ field_yaml_map, relationships }) => {
     return (
       <PageContainer.SiteContent>
         <PageContainer.ContentArea>
-          <Row className="mt-5">
+          <Row className="mt-sm-5">
             <h2>{yamlMap.title}</h2>
             <Col md={9} className="pe-5">
               <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
