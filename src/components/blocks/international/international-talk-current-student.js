@@ -2,15 +2,8 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { Row, Col } from "react-bootstrap";
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import styled from "styled-components";
 
 const yaml = require('js-yaml');
-
-const Wrapper = styled(Row)`
-  @media only screen and (min-width: 768px) {
-    margin: 8rem 0;
-  }
-`
 
 const render = ({ field_yaml_map, relationships }) => {
     let yamlMap;
@@ -27,7 +20,7 @@ const render = ({ field_yaml_map, relationships }) => {
     }
     
     return (
-      <Wrapper>
+      <Row className="my-sm-5">
         <Col md={7}>
           <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src])} alt={yamlMap.image.alt} />
         </Col>
@@ -36,7 +29,7 @@ const render = ({ field_yaml_map, relationships }) => {
           <p>{yamlMap.body}</p>
           <a href={yamlMap.link.url}>{yamlMap.link.title}</a>
         </Col>
-      </Wrapper>
+      </Row>
 )}
 
 
