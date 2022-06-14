@@ -27,7 +27,7 @@ const render = ({ field_yaml_map, relationships }) => {
         <Col md={5} className="mt-5 ps-5">
           <h3>{yamlMap.title}</h3>
           <p>{yamlMap.body}</p>
-          <a href={yamlMap.link.url}>{yamlMap.link.title}</a>
+          <p><a href={yamlMap.link.url}>{yamlMap.link.title}</a></p>
         </Col>
       </Row>
 )}
