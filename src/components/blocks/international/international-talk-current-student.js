@@ -7,7 +7,9 @@ import styled from "styled-components";
 const yaml = require('js-yaml');
 
 const Wrapper = styled(Row)`
-  margin: 8rem 0;
+  @media only screen and (min-width: 768px) {
+    margin: 8rem 0;
+  }
 `
 
 const render = ({ field_yaml_map, relationships }) => {
