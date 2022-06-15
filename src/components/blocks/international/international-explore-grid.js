@@ -7,7 +7,7 @@ import styled from "styled-components"
 const yaml = require('js-yaml');
 
 const Background = styled(PageContainer.FullWidth)`
-  background: #f1f5f9;
+  background: #F4F7FA;
 `
 const HeadingIcon = styled.i`
   color: ${props => (props.iconColour ?? "#000000")};
@@ -31,7 +31,7 @@ const render = ({ field_yaml_map }) => {
             <Row className="row-cols-1 row-cols-md-3 g-4 mt-0">
                 {yamlMap.content.map(({title, body_html, icon, icon_color}, index) => 
                     <Col key={`international-explore-grid-${index}`} className="pe-4">
-                      <h3 className="h4 text-dark mt-0"><HeadingIcon className={`${icon} pe-2`} iconColour={icon_color} /> {title}</h3>
+                      <h3 className="h4 text-dark mt-0 d-flex align-items-start"><HeadingIcon aria-hidden={true} className={`${icon} pe-3`} iconColour={icon_color} /> {title}</h3>
                       <div dangerouslySetInnerHTML={{__html: body_html}}></div>
                     </Col>
                 )}
