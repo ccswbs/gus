@@ -6,13 +6,6 @@ import PageContainer from 'components/shared/pageContainer'
 
 const yaml = require('js-yaml');
 
-const Lead = styled.div`
-  & p {
-    color: #000000;
-    font-size: 2.8rem !important;
-    font-weight: 300;
-  }
-`
 const Button = styled.a`
   width: 100%;
   padding: 2rem;
