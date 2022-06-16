@@ -14,9 +14,6 @@ const useShowState = () => {
 }
 
 const Overlay = ({ children, className }) => {
-  const [show, setShow] = useState(false);    
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);  
   <div className={`bg-black-65 h-100 ${className}`}>{children}</div>  
 }
 
@@ -35,7 +32,7 @@ const BgImage = ({ children, gatsbyImageData, alt }) => {
 Overlay.BgImage = BgImage;
 
 const ModalButton = ({ id, children, className, btnClass = true }) => {    
-  const { show, setShow } = useBetween(useShowState);
+  const { setShow } = useBetween(useShowState);
   const handleShow = () => setShow(true);  
   <button
     type="button"
@@ -48,7 +45,7 @@ const ModalButton = ({ id, children, className, btnClass = true }) => {
 Overlay.ModalButton = ModalButton;
 
 const ModalVideo = ({ id, videoSrc, videoTitle, videoTranscript }) => {
-  const { show, setShow } = useBetween(useShareableState);
+  const { show, setShow } = useBetween(useShowState);
   const handleClose = () => setShow(false);    
   <Modal id={id} dialogClassName="modal-dialog-centered fade" show={show} size="lg" onHide={handleClose}>
     <Modal.Header className="bg-dark border-bottom-0">
