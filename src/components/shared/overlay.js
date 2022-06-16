@@ -3,18 +3,24 @@ import ReactPlayer from 'react-player'
 import { Modal, CloseButton } from "react-bootstrap"
 import { GatsbyImage } from "gatsby-plugin-image"
 import classNames from "classnames"
+import { useBetween } from 'use-between';
 
-const Overlay = ({ children, className }) => {
-
-  const [show, setShow] = useState(false);    
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  
-  <div className={`bg-black-65 h-100 ${className}`}>{children}</div>
-  
+const useShowState = () => {
+  const [show, setShow] = useState(false);  
+  return {
+    show,
+    setShow
+  }
 }
 
-Overlay.GatsbyImage = ({ children, gatsbyImageData, alt }) => (
+const Overlay = ({ children, className }) => {
+  const [show, setShow] = useState(false);    
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);  
+  <div className={`bg-black-65 h-100 ${className}`}>{children}</div>  
+}
+
+const BgImage = ({ children, gatsbyImageData, alt }) => {  
   <div style={{ display: "grid" }}>
     <GatsbyImage
       style={{ gridArea: "1/1" }}
@@ -25,9 +31,12 @@ Overlay.GatsbyImage = ({ children, gatsbyImageData, alt }) => (
       {children}
     </div>
   </div>
-)
+}
+Overlay.BgImage = BgImage;
 
-Overlay.ModalButton = ({ id, children, className, btnClass = true }) => (
+const ModalButton = ({ id, children, className, btnClass = true }) => {    
+  const { show, setShow } = useBetween(useShowState);
+  const handleShow = () => setShow(true);  
   <button
     type="button"
     className={classNames({ btn: btnClass }, className)}
@@ -35,13 +44,16 @@ Overlay.ModalButton = ({ id, children, className, btnClass = true }) => (
   >
     {children}
   </button>
-)
+}
+Overlay.ModalButton = ModalButton;
 
-Overlay.Modal = ({ id, videoSrc, videoTitle, videoTranscript }) => (
+const ModalVideo = ({ id, videoSrc, videoTitle, videoTranscript }) => {
+  const { show, setShow } = useBetween(useShareableState);
+  const handleClose = () => setShow(false);    
   <Modal id={id} dialogClassName="modal-dialog-centered fade" show={show} size="lg" onHide={handleClose}>
     <Modal.Header className="bg-dark border-bottom-0">
       <Modal.Title className="text-white m-0">{videoTitle}</Modal.Title>
-      <CloseButton variant="white" />
+      <CloseButton variant="white" onClick={handleClose} />
     </Modal.Header>
     <Modal.Body className="bg-dark">
       <div className="embed-responsive embed-responsive-16by9">
@@ -56,6 +68,7 @@ Overlay.Modal = ({ id, videoSrc, videoTitle, videoTranscript }) => (
       </a>}
     </Modal.Footer>
   </Modal>
-)
+}
+Overlay.ModalVideo = ModalVideo;
 
 export default Overlay

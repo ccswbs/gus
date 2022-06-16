@@ -26,7 +26,7 @@ const QuoteSource = styled.p`
 
 const render = ({ title, body, images, video, testimonial }) => (        
         <div className="d-flex flex-column bg-dark">
-            <Overlay.GatsbyImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
+            <Overlay.BgImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
                 <Container className="page-container">
                     <Row className="site-content bg-transparent h-100 text-white pb-0">
                         <Col lg={6} className="fs-3 mb-4">
@@ -35,7 +35,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                             <Overlay.ModalButton id={`modal-${video.id}`} className="btn-primary my-4">
                                 <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
                             </Overlay.ModalButton>
-                            <Overlay.Modal 
+                            <Overlay.ModalVideo
                               id={`modal-${video.id}`}
                               videoSrc={video.url}
                               videoTitle={video.title}
@@ -47,7 +47,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                         </Col>
                     </Row>
                 </Container>
-            </Overlay.GatsbyImage>
+            </Overlay.BgImage>
 
             <Testimonial className="d-flex justify-content-center">
                 <Row className="w-100 p-5 text-center">
