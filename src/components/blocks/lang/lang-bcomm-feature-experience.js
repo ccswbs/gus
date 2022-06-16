@@ -23,7 +23,7 @@ const QuoteSource = styled.p`
     color: var(--uog-blue);
 `
 
-const render = ({ field_yaml_map }, colourOptions) => {
+const render = ({ field_yaml_map, relationships }) => {
   let yamlMap;
   let yamlFiles = {};
   relationships.field_yaml_files.forEach(file => {
@@ -98,5 +98,5 @@ const render = ({ field_yaml_map }, colourOptions) => {
   `
 
 export default function LangBcommFeatureExperience() {
-  return <StaticQuery query={query} render={({blockContentYamlBlock}) => render(blockContentYamlBlock, colourOptions)} />
+  return <StaticQuery query={query} render={({blockContentYamlBlock}) => render(blockContentYamlBlock)} />
 }
