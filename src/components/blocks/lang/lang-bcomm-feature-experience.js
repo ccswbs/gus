@@ -1,6 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { Container, Col } from "react-bootstrap"
+import Overlay from "components/shared/overlay"
 import styled from 'styled-components'
 
 const yaml = require('js-yaml');
