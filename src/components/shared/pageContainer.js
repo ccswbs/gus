@@ -15,7 +15,7 @@ PageContainer.SiteContent = ({ children, className}) => (
 )
 
 PageContainer.ContentArea = ({ children, className}) => (
-  <div className={`content-area ${className ?? '' }`}>
+  <div className={`content-area${` ${className}` ?? '' }`}>
     {children}
   </div>
 )
