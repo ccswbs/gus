@@ -6,10 +6,10 @@ body:
 
 images:
   foreground:
-    src: ../../../images/grce/economic-impact/banky-cut-out.png
+    src: /images/meal-care-students.png
     alt: ""
   background:
-    src: ../../../images/grce/economic-impact/banky-bg.jpg
+    src: /images/meal-care-bg.jpg
     alt: ""
 
 video:

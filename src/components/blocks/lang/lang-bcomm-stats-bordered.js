@@ -23,16 +23,14 @@ const render = ({ field_yaml_map }, colourOptions) => {
   
   return (
     <Container>
-      <Statistic className="row row-cols-1 row-cols-md-3 mb-5 g-4">
+      <Statistic.Grid columns="3" className="mb-5 gap-4">
         {yamlMap.stats.map(({value, type, footnote_marker}, index) => 
-          <Col key={`bcomm-stat-bordered-${index}`} className="col-lg">
-            <Statistic.BorderCard border={colourOptions[index].border} >
-              <Statistic.Value><strong>{value}</strong></Statistic.Value>
-              <Statistic.Type>{type} {footnote_marker}</Statistic.Type>
-            </Statistic.BorderCard>
-          </Col>
+          <Statistic.BorderCard key={`bcomm-stat-bordered-${index}`} border={colourOptions[index].border} >
+            <Statistic.Value><strong>{value}</strong></Statistic.Value>
+            <Statistic.Type>{type} {footnote_marker}</Statistic.Type>
+          </Statistic.BorderCard>
         )}
-        </Statistic>
+      </Statistic.Grid>
     </Container>
   )}
 

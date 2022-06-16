@@ -1,12 +1,9 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { Container, Col } from "react-bootstrap"
-import PageContainer from 'components/shared/pageContainer'
-import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
 
 const yaml = require('js-yaml');
-
 
 const SectionTitle = styled.h3`
   font-size: 2.5rem;
@@ -48,12 +45,6 @@ const render = ({ field_yaml_map }, colourOptions) => {
                 <Col lg={6} className="fs-3 mb-4">
                     <SectionTitle>{yamlMap.title}</SectionTitle>
                     {yamlMap.body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
-                    <Overlay.ModalButton id={`modal-${yamlMap.video.id}`} className="btn-primary my-4">
-                        <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {yamlMap.video.title}</span>
-                    </Overlay.ModalButton>
-                    <Overlay.Modal id={`modal-${yamlMap.video.id}`}>
-                        <Video videoID={yamlMap.video.id} videoType={yamlMap.video.type} playerID={`player-${yamlMap.video.id}`} videoTranscript={yamlMap.video.transcript} videoCC={yamlMap.video.captions} />
-                    </Overlay.Modal>
                 </Col>
                 <Col lg={6} className="d-flex justify-content-center">
                     <GatsbyImage image={getImage(yamlFiles[yamlMap.images.foreground.src])} alt={images.foreground.alt} className="align-self-end img-fluid" />

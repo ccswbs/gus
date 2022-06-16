@@ -32,15 +32,14 @@ const render = ({ field_yaml_map }, colourOptions) => {
         <Container className="page-container p-0">
             <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
                 {yamlMap.stats.map(({value, type, footnote_marker}, index) => 
-                  <Col key={`lang-bcomm-stat-${index}`}>
-                    <Statistic.SolidCard 
-                      background={colourOptions[index].background} 
-                      colour={colourOptions[index].colour} 
-                      className="px-5 pt-5 pb-3" >
-                      <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
-                      <Statistic.Type>{type} {footnote_marker}</Statistic.Type>
-                    </Statistic.SolidCard>
-                  </Col>
+                  <Statistic.SolidCard 
+                    key={`lang-bcomm-stat-${index}`}
+                    background={colourOptions[index].background} 
+                    colour={colourOptions[index].colour} 
+                    className="px-5 pt-5 pb-3 col" >
+                    <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
+                    <Statistic.Type>{type} {footnote_marker}</Statistic.Type>
+                  </Statistic.SolidCard>
                 )}
             </Statistic>
         </Container>
