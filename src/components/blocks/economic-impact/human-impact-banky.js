@@ -26,6 +26,7 @@ const QuoteSource = styled.p`
 
 const render = ({ title, body, images, video, testimonial }) => (        
         <div className="d-flex flex-column bg-dark">
+            <Overlay>
             <Overlay.BgImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
                 <Container className="page-container">
                     <Row className="site-content bg-transparent h-100 text-white pb-0">
@@ -48,6 +49,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                     </Row>
                 </Container>
             </Overlay.BgImage>
+            </Overlay>
 
             <Testimonial className="d-flex justify-content-center">
                 <Row className="w-100 p-5 text-center">
