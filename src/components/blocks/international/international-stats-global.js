@@ -39,7 +39,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   return (
     <>
         <div className="d-flex flex-column bg-light">
-          <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
+          <Overlay.BgImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
             <PageContainer>
               <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
                 <div className="text-center"> 
@@ -48,7 +48,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
                 </div>
               </Row>
             </PageContainer>
-          </Overlay.GatsbyImage>
+          </Overlay.BgImage>
         </div>
       <Gradient className="d-flex flex-column">
         <Container className="page-container p-0">
