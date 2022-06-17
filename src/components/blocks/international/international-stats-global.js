@@ -1,7 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { getImage } from "gatsby-plugin-image"
-import { OverlayImage, ModalButton, ModalVideo } from "components/shared/overlay"
+import { OverlayImage, ModalButton, OverlayModal } from "components/shared/overlay"
 import { Container, Col, Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
 import Statistic from "components/shared/statistic"

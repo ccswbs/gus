@@ -42,13 +42,13 @@ export const ModalButton = ({ id, children, className, btnClass = true }) => {
   </button>
 }
 
-export const ModalVideo = ({ id, videoSrc, videoTitle, videoTranscript }) => {
+export const OverlayModal = ({ id, videoSrc, videoTitle, videoTranscript }) => {
   const { show, setShow } = useBetween(useShowState);
   const handleClose = () => setShow(false);    
   <Modal id={id} dialogClassName="modal-dialog-centered fade" show={show} size="lg" onHide={handleClose}>
     <Modal.Header className="bg-dark border-bottom-0">
-      <Modal.Title className="text-white m-0">{videoTitle}</Modal.Title>
-      <CloseButton variant="white" onClick={handleClose} />
+      <Modal.Title className="fw-normal text-white m-0">{videoTitle}</Modal.Title>
+      <CloseButton variant="white" aria-label="Hide" onClick={handleClose} />
     </Modal.Header>
     <Modal.Body className="bg-dark">
       <div className="embed-responsive embed-responsive-16by9">

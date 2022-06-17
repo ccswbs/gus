@@ -2,7 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { getImage } from "gatsby-plugin-image"
 import { Col, Container, Row } from "react-bootstrap"
-import { OverlayImage, ModalButton, ModalVideo } from "components/shared/overlay"
+import { OverlayImage } from "components/shared/overlay"
 import styled from "styled-components"
 
 const QuoteMark = styled.i`

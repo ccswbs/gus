@@ -2,7 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Row, Col } from "react-bootstrap"
-import { OverlayImage, ModalButton, ModalVideo } from "components/shared/overlay"
+import { OverlayImage, ModalButton, OverlayModal } from "components/shared/overlay"
 import styled from "styled-components"
 
 const SectionTitle = styled.h3`
@@ -34,7 +34,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                         <ModalButton id={`modal-${video.id}`} className="btn-primary my-4">
                             <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
                         </ModalButton>
-                        <ModalVideo 
+                        <OverlayModal 
                           id={`modal-${video.id}`}
                           videoSrc={video.url}
                           videoTitle={video.title}
