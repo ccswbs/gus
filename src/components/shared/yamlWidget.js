@@ -27,6 +27,7 @@ const YamlWidget = (props) => {
         'international_explore_btns': <InternationalExploreButtons />,
         'international_explore_grid': <InternationalExploreGrid />,
         'international_talk_current_student':<InternationalTalkCurrentStudent />,
+        'international_talk_current_student_blue':<InternationalTalkCurrentStudent background="#F4F7FA" />,
         'international_explore_lead':<InternationalExploreLead />,
         'lang_bcomm_stats':<LangBcommStats />,
         'lang_bcomm_future_cards':<LangBcommFutureCards />,
@@ -35,6 +36,7 @@ const YamlWidget = (props) => {
         'lang_bcomm_stats_bordered':<LangBcommStatsBordered />,
         'lang_bcomm_feature_experience':<LangBcommFeatureExperience />,
         'lang_bcomm_future_cards_advantage':<LangBcommFutureCardsAdvantage />
+
     }[component] || null )
 }
 
