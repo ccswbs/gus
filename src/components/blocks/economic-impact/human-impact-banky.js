@@ -2,7 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Col, Row } from "react-bootstrap"
-import Overlay from "components/shared/overlay"
+import { OverlayImage, ModalButton, ModalVideo } from "components/shared/overlay"
 import styled from "styled-components"
 
 const SectionTitle = styled.h3`
@@ -25,16 +25,16 @@ const QuoteSource = styled.p`
 
 const render = ({ title, body, images, video, testimonial }) => (        
         <div className="d-flex flex-column bg-dark">
-            <Overlay.BgImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
+            <OverlayImage gatsbyImageData={getImage(images.background.src)} alt={images.background.alt}>
                 <Container className="page-container">
                     <Row className="site-content bg-transparent h-100 text-white pb-0">
                         <Col lg={6} className="fs-3 mb-4">
                             <SectionTitle>{title}</SectionTitle>
                             {body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
-                            <Overlay.ModalButton id={`modal-${video.id}`} className="btn-primary my-4">
+                            <ModalButton id={`modal-${video.id}`} className="btn-primary my-4">
                                 <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
-                            </Overlay.ModalButton>
-                            <Overlay.ModalVideo
+                            </ModalButton>
+                            <ModalVideo
                               id={`modal-${video.id}`}
                               videoSrc={video.url}
                               videoTitle={video.title}
@@ -46,7 +46,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                         </Col>
                     </Row>
                 </Container>
-            </Overlay.BgImage>
+            </OverlayImage>
 
             <Testimonial className="d-flex justify-content-center">
                 <Row className="w-100 p-5 text-center">

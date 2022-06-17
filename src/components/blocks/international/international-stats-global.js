@@ -1,7 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { getImage } from "gatsby-plugin-image"
-import Overlay from "components/shared/overlay"
+import { OverlayImage, ModalButton, ModalVideo } from "components/shared/overlay"
 import { Container, Col, Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
 import Statistic from "components/shared/statistic"
@@ -39,7 +39,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   return (
     <>
         <div className="d-flex flex-column bg-light">
-          <Overlay.BgImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
+          <OverlayImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
             <PageContainer>
               <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
                 <div className="text-center"> 
@@ -48,7 +48,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
                 </div>
               </Row>
             </PageContainer>
-          </Overlay.BgImage>
+          </OverlayImage>
         </div>
       <Gradient className="d-flex flex-column">
         <Container className="page-container p-0">

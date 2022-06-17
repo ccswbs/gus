@@ -2,7 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { getImage } from "gatsby-plugin-image"
 import { Col, Container, Row } from "react-bootstrap"
-import Overlay from "components/shared/overlay"
+import { OverlayImage, ModalButton, ModalVideo } from "components/shared/overlay"
 import styled from "styled-components"
 
 const QuoteMark = styled.i`
@@ -17,7 +17,7 @@ const QuoteShadow = styled.div`
 
 const render = ({ quote, source, background_image }) => (
   <div className="d-flex flex-column bg-light mb-4">
-    <Overlay.BgImage gatsbyImageData={getImage(background_image.src)} alt={background_image.alt}>
+    <OverlayImage gatsbyImageData={getImage(background_image.src)} alt={background_image.alt}>
       <Container className="page-container">
         <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
           <Col sm={9} className="ps-5">
@@ -33,7 +33,7 @@ const render = ({ quote, source, background_image }) => (
           </Col>
         </Row>
       </Container>
-    </Overlay.BgImage>
+    </OverlayImage>
   </div>
 )
 

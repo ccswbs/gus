@@ -17,7 +17,7 @@ const Overlay = ({ children, className }) => {
   <div className={`bg-black-65 h-100 ${className}`}>{children}</div>
 }
 
-Overlay.BgImage = ({ children, gatsbyImageData, alt }) => {
+export const OverlayImage = ({ children, gatsbyImageData, alt }) => {
   <div style={{ display: "grid" }}>
     <GatsbyImage
       style={{ gridArea: "1/1" }}
@@ -29,9 +29,8 @@ Overlay.BgImage = ({ children, gatsbyImageData, alt }) => {
     </div>
   </div>
 }
-//Overlay.BgImage = BgImage;
 
-const ModalButton = ({ id, children, className, btnClass = true }) => {    
+export const ModalButton = ({ id, children, className, btnClass = true }) => {    
   const { setShow } = useBetween(useShowState);
   const handleShow = () => setShow(true);  
   <button
@@ -42,9 +41,8 @@ const ModalButton = ({ id, children, className, btnClass = true }) => {
     {children}
   </button>
 }
-Overlay.ModalButton = ModalButton;
 
-const ModalVideo = ({ id, videoSrc, videoTitle, videoTranscript }) => {
+export const ModalVideo = ({ id, videoSrc, videoTitle, videoTranscript }) => {
   const { show, setShow } = useBetween(useShowState);
   const handleClose = () => setShow(false);    
   <Modal id={id} dialogClassName="modal-dialog-centered fade" show={show} size="lg" onHide={handleClose}>
@@ -66,6 +64,5 @@ const ModalVideo = ({ id, videoSrc, videoTitle, videoTranscript }) => {
     </Modal.Footer>
   </Modal>
 }
-Overlay.ModalVideo = ModalVideo;
 
 export default Overlay

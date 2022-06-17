@@ -2,7 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Col } from "react-bootstrap"
-import Overlay from "components/shared/overlay"
+import { OverlayImage, ModalButton, ModalVideo } from "components/shared/overlay"
 import styled from "styled-components"
 
 const Heading = styled.h3`
@@ -29,10 +29,10 @@ const render = ({ title, image, sections }) => (
                   <div dangerouslySetInnerHTML={{__html: body_html}}></div>
                   { video && 
                     <>
-                      <Overlay.ModalButton id={`modal-${video.id}`} className="btn-outline-info my-4">
+                      <ModalButton id={`modal-${video.id}`} className="btn-outline-info my-4">
                           <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
-                      </Overlay.ModalButton>
-                      <Overlay.ModalVideo
+                      </ModalButton>
+                      <ModalVideo
                         id={`modal-${video.id}`}
                         videoSrc={video.url}
                         videoTitle={video.title}
