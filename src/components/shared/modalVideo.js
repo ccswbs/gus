@@ -23,7 +23,7 @@ const ModalVideo = ({ widgetData }) => {
                 <i className="fad fa-play-circle" aria-hidden="true"></i>
                 <span className="visually-hidden">Play video: {videoTitle}</span>
             </button>
-            <Modal dialogClassName="modal-dialog-centered fade" show={show} size="lg" onHide={handleClose}>
+            <Modal dialogClassName="modal-dialog-centered" show={show} size="lg" onHide={handleClose}>
                 <Modal.Header className="bg-dark border-bottom-0">
                     <Modal.Title className="fw-normal text-white m-0">{videoTitle}</Modal.Title>
                     <CloseButton variant="white" aria-label="Hide" onClick={handleClose} />
