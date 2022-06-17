@@ -2,7 +2,6 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Row, Col } from "react-bootstrap"
-//import Video from "components/shared/video"
 import Overlay from "components/shared/overlay"
 import styled from "styled-components"
 

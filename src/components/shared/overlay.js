@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player"
 import { Modal, CloseButton } from "react-bootstrap"
 import { GatsbyImage } from "gatsby-plugin-image"
 import classNames from "classnames"
-import { useBetween } from 'use-between';
+import { useBetween } from "use-between"
 
 const useShowState = () => {
   const [show, setShow] = useState(false);  
@@ -13,11 +13,11 @@ const useShowState = () => {
   }
 }
 
-const Overlay = ({ children, className }) => {
-  <div className={`bg-black-65 h-100 ${className}`}>{children}</div>  
+const Overlay = ({ children, className }) => {  
+  <div className={`bg-black-65 h-100 ${className}`}>{children}</div>
 }
 
-const BgImage = ({ children, gatsbyImageData, alt }) => {  
+Overlay.BgImage = ({ children, gatsbyImageData, alt }) => {
   <div style={{ display: "grid" }}>
     <GatsbyImage
       style={{ gridArea: "1/1" }}
@@ -29,7 +29,7 @@ const BgImage = ({ children, gatsbyImageData, alt }) => {
     </div>
   </div>
 }
-Overlay.BgImage = BgImage;
+//Overlay.BgImage = BgImage;
 
 const ModalButton = ({ id, children, className, btnClass = true }) => {    
   const { setShow } = useBetween(useShowState);
@@ -54,7 +54,7 @@ const ModalVideo = ({ id, videoSrc, videoTitle, videoTranscript }) => {
     </Modal.Header>
     <Modal.Body className="bg-dark">
       <div className="embed-responsive embed-responsive-16by9">
-        <ReactPlayer url={videoSrc} width="100%" height="100%" controls="true" playing={show} />
+        <ReactPlayer url={videoSrc} width="100%" height="100%" controls playing={show} />
       </div>                
     </Modal.Body>
     <Modal.Footer className="bg-dark border-top-0">

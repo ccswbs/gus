@@ -17,7 +17,7 @@ const QuoteShadow = styled.div`
 
 const render = ({ quote, source, background_image }) => (
   <div className="d-flex flex-column bg-light mb-4">
-    <Overlay.GatsbyImage gatsbyImageData={getImage(background_image.src)} alt={background_image.alt}>
+    <Overlay.BgImage gatsbyImageData={getImage(background_image.src)} alt={background_image.alt}>
       <Container className="page-container">
         <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
           <Col sm={9} className="ps-5">
@@ -33,7 +33,7 @@ const render = ({ quote, source, background_image }) => (
           </Col>
         </Row>
       </Container>
-    </Overlay.GatsbyImage>
+    </Overlay.BgImage>
   </div>
 )
 

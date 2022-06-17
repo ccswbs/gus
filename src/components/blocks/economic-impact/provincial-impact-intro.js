@@ -2,7 +2,6 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Col } from "react-bootstrap"
-import Video from "components/shared/video"
 import Overlay from "components/shared/overlay"
 import styled from "styled-components"
 
@@ -33,9 +32,13 @@ const render = ({ title, image, sections }) => (
                       <Overlay.ModalButton id={`modal-${video.id}`} className="btn-outline-info my-4">
                           <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
                       </Overlay.ModalButton>
-                      <Overlay.Modal id={`modal-${video.id}`}>
-                          <Video videoID={video.id} videoType={video.type} playerID={`player-${video.id}`} videoTranscript={video.transcript} videoCC={video.captions} />
-                      </Overlay.Modal>
+                      <Overlay.ModalVideo
+                        id={`modal-${video.id}`}
+                        videoSrc={video.url}
+                        videoTitle={video.title}
+                        videoTranscript={video.transcript}
+                      />
+                      <p>Video supposed to be here</p>
                     </>
                   }
                 </Section>
