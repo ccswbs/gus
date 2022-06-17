@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import ReactPlayer from 'react-player';
+import ReactPlayer from "react-player"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
-import { Modal, CloseButton } from "react-bootstrap";
+import { Modal, CloseButton } from "react-bootstrap"
 import "../../styles/modalVideo.css"
 
 const ModalVideo = ({ widgetData }) => {
@@ -13,8 +13,7 @@ const ModalVideo = ({ widgetData }) => {
     const videoTitle = video?.name;
     const videoTranscript = video?.relationships?.field_media_file?.localFile.publicURL;
 
-    const [show, setShow] = useState(false);
-    
+    const [show, setShow] = useState(false);    
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -24,14 +23,14 @@ const ModalVideo = ({ widgetData }) => {
                 <i className="fad fa-play-circle" aria-hidden="true"></i>
                 <span className="visually-hidden">Play video: {videoTitle}</span>
             </button>
-            <Modal dialogClassName="modal-dialog-centered" show={show} size="lg" onHide={handleClose}>
+            <Modal dialogClassName="modal-dialog-centered fade" show={show} size="lg" onHide={handleClose}>
                 <Modal.Header className="bg-dark border-bottom-0">
-                    <Modal.Title className="text-white m-0">{videoTitle}</Modal.Title>
+                    <Modal.Title className="fw-normal text-white m-0">{videoTitle}</Modal.Title>
                     <CloseButton variant="white" aria-label="Hide" onClick={handleClose} />
                 </Modal.Header>
                 <Modal.Body className="bg-dark">
                     <div className="embed-responsive embed-responsive-16by9">
-                        <ReactPlayer url={videoSrc} width="100%" height="100%" controls="true" playing={show} />
+                        <ReactPlayer url={videoSrc} width="100%" height="100%" controls playing={show} />
                     </div>                
                 </Modal.Body>
                 <Modal.Footer className="bg-dark border-top-0">
