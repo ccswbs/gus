@@ -31,9 +31,9 @@ const render = ({ field_yaml_map, relationships }) => {
     return (
       <PageContainer.SiteContent>
         <PageContainer.ContentArea>
-            <Row className="row-cols-1 row-cols-md-3 g-4">
+            <Row className="row-cols-1 row-cols-md-2 g-4">
                 {yamlMap.cards.map(({title, text, image, links}, index) => 
-                    <Col key={`lang-bcomm-cards-${index}`}>
+                    <Col key={`lang-bcomm-cards-advantage-${index}`}>
                         <div className="card h-100 border-0">
                             <GatsbyImage image={getImage(yamlFiles[image.src])} alt={image.alt} className="card-img-bottom" />
                             <MediaCardBody className="card-body">
@@ -41,7 +41,7 @@ const render = ({ field_yaml_map, relationships }) => {
                                 <p>{text}</p>
                                 <div className="d-grid d-md-block gap-2">
                                     {links.map(({title, url}, index) => 
-                                        <a key={`lang-bcomm-cards-${index}`} href ={url} className="btn btn-info me-md-3 no-icon p-4 text-start">{title}</a>
+                                        <a key={`lang-bcomm-cards-advantage-${index}`} href ={url} className="btn btn-info me-md-3 no-icon p-4 text-start">{title}</a>
                                     )}
                                 </div>
                             </MediaCardBody>
@@ -56,7 +56,7 @@ const render = ({ field_yaml_map, relationships }) => {
 
 const query = graphql`
   query {
-    blockContentYamlBlock(field_yaml_id: {glob: "lang_bcomm_future_cards"}) {
+    blockContentYamlBlock(field_yaml_id: {glob: "lang_bcomm_future_cards_advantage"}) {
       id
       field_yaml_id
       field_yaml_map
@@ -82,6 +82,6 @@ const query = graphql`
   }
 `
 
-export default function LangBcommFutureCards() {
+export default function LangBcommFutureCardsAdvantage() {
   return <StaticQuery query={query} render={({blockContentYamlBlock}) => render(blockContentYamlBlock)} />
 }

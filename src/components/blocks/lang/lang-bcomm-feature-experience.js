@@ -1,6 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { Container, Col } from "react-bootstrap"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { Container, Row, Col } from "react-bootstrap"
 import Overlay from "components/shared/overlay"
 import styled from 'styled-components'
 
@@ -40,7 +41,7 @@ const render = ({ field_yaml_map, relationships }) => {
   
   return (
     <div className="d-flex flex-column bg-dark">
-    <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.images.background.src])} alt={images.background.alt}>
+    <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.images.background.src])} alt={yamlMap.images.background.alt}>
         <Container className="page-container">
             <Row className="site-content bg-transparent h-100 text-white pb-0">
                 <Col lg={6} className="fs-3 mb-4">
@@ -48,7 +49,7 @@ const render = ({ field_yaml_map, relationships }) => {
                     {yamlMap.body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
                 </Col>
                 <Col lg={6} className="d-flex justify-content-center">
-                    <GatsbyImage image={getImage(yamlFiles[yamlMap.images.foreground.src])} alt={images.foreground.alt} className="align-self-end img-fluid" />
+                    <GatsbyImage image={getImage(yamlFiles[yamlMap.images.foreground.src])} alt={yamlMap.images.foreground.alt} className="align-self-end img-fluid" />
                 </Col>
             </Row>
         </Container>

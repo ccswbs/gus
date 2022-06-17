@@ -1,6 +1,6 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { Container, Col } from "react-bootstrap";
+import PageContainer from 'components/shared/pageContainer'
 import Statistic from 'components/shared/statistic';
 
 const yaml = require('js-yaml');
@@ -22,16 +22,18 @@ const render = ({ field_yaml_map }, colourOptions) => {
   }
   
   return (
-    <Container>
-      <Statistic.Grid columns="3" className="mb-5 gap-4">
-        {yamlMap.stats.map(({value, type, footnote_marker}, index) => 
-          <Statistic.BorderCard key={`bcomm-stat-bordered-${index}`} border={colourOptions[index].border} >
-            <Statistic.Value><strong>{value}</strong></Statistic.Value>
-            <Statistic.Type>{type} {footnote_marker}</Statistic.Type>
-          </Statistic.BorderCard>
-        )}
-      </Statistic.Grid>
-    </Container>
+    <PageContainer.SiteContent>
+      <PageContainer.ContentArea>
+        <Statistic.Grid columns="3" className="mb-5 gap-4">
+          {yamlMap.stats.map(({value, type, footnote_marker}, index) => 
+            <Statistic.BorderCard key={`bcomm-stat-bordered-${index}`} border={colourOptions[index].border} >
+              <Statistic.Value><strong>{value}</strong></Statistic.Value>
+              <Statistic.Type>{type} {footnote_marker}</Statistic.Type>
+            </Statistic.BorderCard>
+          )}
+        </Statistic.Grid>
+      </PageContainer.ContentArea>
+    </PageContainer.SiteContent>
   )}
 
 const query = graphql`

@@ -1,6 +1,6 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { Container, Col } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
