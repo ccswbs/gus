@@ -31,7 +31,7 @@ const ModalVideo = ({ widgetData }) => {
                 </Modal.Header>
                 <Modal.Body className="bg-dark">
                     <div className="embed-responsive embed-responsive-16by9">
-                        <ReactPlayer url={videoSrc} width="100%" height="100%" controls="true" playing={show} />
+                        <ReactPlayer url={videoSrc} width="100%" height="100%" controls playing={show} />
                     </div>                
                 </Modal.Body>
                 <Modal.Footer className="bg-dark border-top-0">
