@@ -2,8 +2,7 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Col } from "react-bootstrap"
-import Video from "components/shared/video"
-import Overlay from "components/shared/overlay"
+import ModalVideo from "components/shared/modalVideo"
 import styled from "styled-components"
 
 const Heading = styled.h3`
@@ -29,14 +28,17 @@ const render = ({ title, image, sections }) => (
                 <Section borderColour={colourOptions[index]} className="px-4 mb-5">
                   <div dangerouslySetInnerHTML={{__html: body_html}}></div>
                   { video && 
-                    <>
-                      <Overlay.ModalButton id={`modal-${video.id}`} className="btn-outline-info my-4">
-                          <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
-                      </Overlay.ModalButton>
-                      <Overlay.Modal id={`modal-${video.id}`}>
-                          <Video videoID={video.id} videoType={video.type} playerID={`player-${video.id}`} videoTranscript={video.transcript} videoCC={video.captions} />
-                      </Overlay.Modal>
-                    </>
+                      <ModalVideo 
+                            id={video.id} 
+                            src={video.url} 
+                            title={video.title} 
+                            transcript={video.transcript} 
+                            modalButton = {
+                                <button type="button" className="btn btn-outline-info my-4">
+                                    <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
+                                </button>
+                            }
+                        />
                   }
                 </Section>
             </div>
