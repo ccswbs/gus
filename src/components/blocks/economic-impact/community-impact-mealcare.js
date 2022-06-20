@@ -38,7 +38,7 @@ const render = ({ title, body, images, video, testimonial }) => (
                             title={video.title} 
                             transcript={video.transcript} 
                             modalButton = {
-                                <button type="button" className="btn-primary my-4">
+                                <button type="button" className="btn btn-primary my-4">
                                     <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
                                 </button>
                             }
