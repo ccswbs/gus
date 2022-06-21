@@ -29,7 +29,7 @@ function ModalVideo (props) {
         <Modal dialogClassName="modal-dialog-centered" show={show} size="lg" onHide={handleClose}>
             <Modal.Header className="bg-dark border-bottom-0">
                 <Modal.Title className="fw-normal text-white m-0">{videoTitle}</Modal.Title>
-                <CloseButton variant="white" aria-label="Hide" onClick={handleClose} />
+                <CloseButton variant="white" aria-label="Close video" onClick={handleClose} />
             </Modal.Header>
             <Modal.Body className="bg-dark">
                 <div className="embed-responsive embed-responsive-16by9">
