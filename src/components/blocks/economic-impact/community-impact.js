@@ -21,17 +21,15 @@ const render = ({ title, intro, stats }) => (
               {intro.body.map((paragraph, index) => <p key={`community-text-${index}`}>{paragraph}</p>)}
           </Col>
           <Col lg={7}>
-              <Statistic className="row g-4 row-cols-1 row-cols-sm-3">
-                  {stats.map(({value, type, icon}, index) => 
-                      <Col key={`community-stat-${index}`}>
-                          <Statistic.Card className="px-5">
-                              <Statistic.Icon icon={icon} />
-                              <Statistic.Value><strong>{value}</strong></Statistic.Value>
-                              <Statistic.Type>{type}</Statistic.Type>
-                          </Statistic.Card>
-                      </Col>
-                  )}
-              </Statistic>
+              <Statistic.Grid columns="3" className="mb-5 gap-4">
+                {stats.map(({value, type, icon}, index) => 
+                  <Statistic.Card key={`community-stat-${index}`} className="px-5">
+                      <Statistic.Icon icon={icon} />
+                      <Statistic.Value><strong>{value}</strong></Statistic.Value>
+                      <Statistic.Type>{type}</Statistic.Type>
+                  </Statistic.Card>
+                )}
+              </Statistic.Grid>
           </Col>
           <EconImpactCommunityImpactCampusStats />
         </Row>
