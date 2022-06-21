@@ -614,6 +614,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       value: String
       alias: String
     }
+    type redirect__redirect implements Node {
+      redirect_redirect: RedirectRedirect
+      redirect_source: RedirectSource
+      status_code: Int
+    }
+    type RedirectRedirect {
+      uri: String
+    }
+    type RedirectSource {
+      path: String
+    }
     type TaxonomyDescription {
       processed: String
       value: String
@@ -980,7 +991,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         Object.entries(aliases).forEach(([nodeID, alias]) => {
           if (redirects[`/node/${nodeID}`]) {
             redirects[`/node/${nodeID}`].forEach(redirect => {
-              let sourcePath = `/` + slugify(redirect.redirect_source.path);
+              const sourcePath = '/' + redirect.redirect_source.path;
 
               createRedirect({ 
                 fromPath: sourcePath, 
