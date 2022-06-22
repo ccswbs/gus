@@ -76,6 +76,7 @@ i.green {color:#4cae3e;}
 .card:nth-of-type(9n+7) .uog-card-border {
 	border-left: 1rem solid var(--uog-blue);
 }
+.card a:hover, .card a:focus {background:light-blue !important; border-bottom:none;}
 
 /* for social media icons */
 
