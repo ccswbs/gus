@@ -139,7 +139,7 @@ module.exports = {
         excludePattern: /[a-zA-Z]+\.ca/,
       },
     },
-    
+    `gatsby-plugin-client-side-redirect`
   ],
   assetPrefix: process.env.ASSET_PREFIX,
 }
