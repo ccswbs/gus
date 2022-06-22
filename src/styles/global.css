@@ -77,7 +77,7 @@ i.green {color:#4cae3e;}
 	border-left: 1rem solid var(--uog-blue);
 }
 
-.card-body:hover, .card-body:focus {background:#99ccff !important; border-bottom:none;}
+.card-body:hover, .card-body:focus {background:#ddd !important; border-bottom:none;}
 
 /* for social media icons */
 
