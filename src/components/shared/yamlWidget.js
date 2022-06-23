@@ -27,6 +27,62 @@ const YamlWidget = (props) => {
 export default YamlWidget
 
 export const query = graphql`
+  fragment YamlMediaImageFragment on media__image {
+    id
+    name
+    field_media_image {
+      alt
+    }
+    relationships {
+      field_media_image {
+        localFile {
+          publicURL
+          childImageSharp {
+            gatsbyImageData(width: 1000, placeholder: BLURRED, layout: CONSTRAINED)
+          }
+        }
+      }
+    }
+    path {
+      alias
+    }
+  }
+  fragment YamlMediaFileFragment on media__file {
+    id
+    drupal_id
+    name
+    relationships {
+      field_media_file {
+        localFile {
+          publicURL
+        }
+      }
+    }
+    path {
+      alias
+    }
+  }
+  fragment YamlMediaRemoteVideoFragment on media__remote_video {
+    id
+    drupal_id
+    name
+    field_media_oembed_video
+    field_video_height
+    field_video_width
+    relationships {
+      field_media_file {
+        localFile {
+          publicURL
+        }
+      }
+      field_video_cc {
+        localFile {
+          publicURL
+        }
+      }
+    }
+  }
+  
   fragment YamlWidgetParagraphFragment on paragraph__yaml_widget {
     drupal_id
     relationships {
@@ -35,22 +91,18 @@ export const query = graphql`
         field_yaml_id
         field_yaml_map
         relationships {
-            field_yaml_files{
-                id
-                name
-                relationships {
-                  field_media_image {
-                    localFile {
-                      childImageSharp {
-                        gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
-                      }
-                    }
-                  }
-                }
-                path {
-                  alias
-                }
+          field_yaml_files{
+            __typename
+            ... on media__image {
+              ...YamlMediaImageFragment
             }
+            ... on media__file {
+              ...YamlMediaFileFragment
+            }
+            ... on media__remote_video {
+              ...YamlMediaRemoteVideoFragment
+            }
+          }
         }
       }
       field_section_column {

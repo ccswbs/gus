@@ -83,6 +83,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
     }
 
+    union relatedMediaUnion =
+      media__file
+      | media__image
+      | media__remote_video
+
     union media__imagemedia__remote_videoUnion =
       media__image
       | media__remote_video
@@ -186,9 +191,19 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       relationships: block_content__yaml_blockRelationships
     }
     type block_content__yaml_blockRelationships implements Node {
-      field_yaml_files: [media__image] @link(from: "field_yaml_files___NODE")
+      field_yaml_files: [relatedMediaUnion] @link(from: "field_yaml_files___NODE")
     }
     
+    type media__file implements Node {
+      drupal_id: String
+      name: String
+      relationships: media__fileRelationships
+      path: AliasPath
+    }
+    type media__fileRelationships implements Node {
+      field_media_file: file__file @link(from: "field_media_file___NODE")
+    }
+
     type media__image implements Node {
       drupal_id: String
       name: String
