@@ -81,6 +81,9 @@ export const query = graphql`
         }
       }
     }
+    path {
+      alias
+    }
   }
   
   fragment YamlWidgetParagraphFragment on paragraph__yaml_widget {
