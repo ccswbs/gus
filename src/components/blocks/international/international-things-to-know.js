@@ -18,7 +18,7 @@ const render = ({ field_yaml_map, relationships }) => {
     let yamlMap;
     let yamlFiles = {};
     relationships.field_yaml_files.forEach(file => {
-      yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
+      yamlFiles[file.path.alias] = file;
     });
 
     try {
@@ -27,7 +27,7 @@ const render = ({ field_yaml_map, relationships }) => {
       console.log(e);
       return null;
     }
-    
+
     return (
       <PageContainer.SiteContent>
         <PageContainer.ContentArea>
@@ -36,7 +36,7 @@ const render = ({ field_yaml_map, relationships }) => {
               {yamlMap.cards.map(({title, text, image, links}, index) => 
                   <Col key={`international-explore-${index}`}>
                       <div className="card h-100 border-0">
-                          <GatsbyImage image={getImage(yamlFiles[image.src])} alt={image.alt} className="card-img-bottom" />
+                          <GatsbyImage image={getImage(yamlFiles[image.src].relationships.field_media_image.localFile)} alt={image.alt} className="card-img-bottom" />
                           <MediaCardBody className="card-body">
                               <MediaTitle>{title}</MediaTitle>
                               <p>{text}</p>
