@@ -18,7 +18,9 @@ const render = ({ field_yaml_map, relationships }) => {
     let yamlMap;
     let yamlFiles = {};
     relationships.field_yaml_files.forEach(file => {
-      yamlFiles[file.path.alias] = file;
+      if( file.path?.alias) {
+        yamlFiles[file.path.alias] = file;
+      }
     });
 
     try {
