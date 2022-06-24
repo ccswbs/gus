@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import ReactPlayer from "react-player"
-import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 import { Modal, CloseButton } from "react-bootstrap"
 import "../../styles/modalVideo.css"
@@ -45,10 +44,6 @@ function ModalVideo (props) {
 }
 
 export default ModalVideo
-
-ModalVideo.propTypes = {
-  widgetData: PropTypes.object.isRequired,
-}
 
 export const query = graphql`
   fragment ParagraphModalVideoWidgetFragment on paragraph__modal_video_widget {
