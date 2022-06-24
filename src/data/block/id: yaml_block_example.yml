@@ -1,0 +1,18 @@
+id: yaml_block_example
+title: Example File with Image, Video and File Attached
+body: Ensure  image, video and/or file are attached to the block.
+body_paragraphs:
+  - Line of text in one paragraph.
+  - Another line of text.
+body_html: |
+  <p>Content in the body field that contains <strong>emphasized</strong> elements</p>
+  <p>Another line of text in a different paragraph</p>
+image: 
+  src: /images/placeholder-1200x600.png
+  alt: Example image
+video:
+  title: Name of Video
+  alias: /video/remote/youtube/YIFSRE8SjtM
+file:
+  title: Name of File
+  alias: /media/files/UofG-Fact-Book-2019-2020.pdf
