@@ -1,39 +1,45 @@
-import React from "react"
+import React, { useState } from "react"
+import ReactPlayer from "react-player"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
-import Overlay from "./overlay"
-import Video from "./video"
-import { Portal } from "react-portal"
-
+import { Modal, CloseButton } from "react-bootstrap"
 import "../../styles/modalVideo.css"
 
-const ModalVideo = ({ widgetData }) => {
-  const video = widgetData.relationships?.field_media_video
-  const videoId = video?.field_media_oembed_video.split("/").pop()
-  const videoType = video?.field_media_oembed_video.includes("vimeo")
-    ? "vimeo"
-    : "youtube"
-  const modalId = `modal-${widgetData.drupal_id}`
+function ModalVideo (props) {
+  const modalId = `modal-${props.id}`;
+  const videoSrc = props.src;
+  const videoTitle = props.title;
+  const videoTranscript = props.transcript;
 
-  return videoId ? (
-    <div className="modal-video" id={`modal-video-${widgetData.drupal_id}`}>
-      <Overlay.ModalButton id={modalId} className="play" btnClass={false}>
-        <i className="fad fa-play-circle" aria-hidden="true"></i>
-        <span className="visually-hidden">Play video: {video.name}</span>
-      </Overlay.ModalButton>
-      <Portal>
-        <Overlay.Modal id={modalId}>
-          <Video
-            videoID={videoId}
-            videoType={videoType}
-            videoTitle={video.name}
-            videoTranscript={
-              video.relationships?.field_media_file?.localFile.publicURL
-            }
-            videoCC={video.relationships?.field_video_cc?.localFile.publicURL}
-          />
-        </Overlay.Modal>
-      </Portal>
+  const [show, setShow] = useState(false);    
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return videoSrc ? (
+    <div id={modalId} className="modal-video">
+        {props.modalButton ?
+          React.cloneElement(props.modalButton, { onClick: handleShow })
+          : 
+          <button type="button" className="play" onClick={handleShow}>
+            <i className="fad fa-play-circle" aria-hidden="true"></i>
+            <span className="visually-hidden">Play video: {videoTitle}</span>
+          </button>
+        }
+
+        <Modal dialogClassName="modal-dialog-centered" show={show} size="lg" onHide={handleClose}>
+            <Modal.Header className="bg-dark border-bottom-0">
+                <Modal.Title className="fw-normal text-white m-0">{videoTitle}</Modal.Title>
+                <CloseButton variant="white" aria-label="Close video" onClick={handleClose} />
+            </Modal.Header>
+            <Modal.Body className="bg-dark">
+                <div className="embed-responsive embed-responsive-16by9">
+                    <ReactPlayer url={videoSrc} width="100%" height="100%" controls playing={show} />
+                </div>                
+            </Modal.Body>
+            <Modal.Footer className="bg-dark border-top-0">
+                {videoTranscript && <a className="btn btn-primary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
+            </Modal.Footer>
+        </Modal>
     </div>
   ) : null
 }
@@ -50,7 +56,23 @@ export const query = graphql`
     drupal_id
     relationships {
       field_media_video {
-        ...MediaRemoteVideoFragment
+        drupal_id
+        name
+        field_media_oembed_video
+        field_video_height
+        field_video_width
+        relationships {
+          field_media_file {
+            localFile {
+              publicURL
+            }
+          }
+          field_video_cc {
+            localFile {
+              publicURL
+            }
+          }
+        }
       }
     }
   }
