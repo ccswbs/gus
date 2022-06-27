@@ -40,7 +40,7 @@ const render = ({ field_yaml_map, relationships }) => {
             id={video.id} 
             src={video.field_media_oembed_video} 
             title={video.name} 
-            transcript={video.relationships.field_media_file?.localFile.publicURL} 
+            transcript={video.relationships?.field_media_file?.localFile.publicURL} 
             modalButton = {
               <button type="button" className="btn btn-primary my-4">
                   <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.name}</span>
