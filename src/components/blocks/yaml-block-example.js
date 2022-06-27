@@ -36,7 +36,6 @@ const render = ({ field_yaml_map, relationships }) => {
           <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
           {fileURL && <p><a href={fileURL}>{yamlMap.file.title}</a></p>}
           {imageURL && <GatsbyImage image={getImage(imageURL)} alt={yamlMap.image.alt} />}
-          <p>{video.name}</p>
           {video && <ModalVideo 
             id={video.id} 
             src={video.field_media_oembed_video} 
