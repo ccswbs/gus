@@ -31,7 +31,7 @@ const render = ({ field_yaml_map, relationships }) => {
       <PageContainer.SiteContent>
         <PageContainer.ContentArea>
           <h2>{yamlMap.title}</h2>
-          <p>yamlMap.body</p>
+          <p>{yamlMap.body}</p>
           {yamlMap.body_paragraphs.map((paragraph, index) => <p key={`example-text-${index}`}>{paragraph}</p>)}
           <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
           {fileURL && <p><a href={fileURL}>{yamlMap.file.title}</a></p>}
