@@ -227,6 +227,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_video_width: Int
       field_video_height: Int
       relationships: media__remote_videoRelationships
+      path: AliasPath
     }
     type media__remote_videoRelationships implements Node {
       field_media_file: file__file @link(from: "field_media_file___NODE")
