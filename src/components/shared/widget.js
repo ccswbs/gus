@@ -43,14 +43,20 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__media_text":
           return <MediaText headingClass="mt-md-0" widgetData={widget} />;
         case "paragraph__modal_video_widget":
-          return <ModalVideo widgetData={widget} />
+          const video = widget.relationships?.field_media_video;
+          return video ? <ModalVideo 
+            id={widget.drupal_id}
+            src={video?.field_media_oembed_video}
+            title={video?.name}
+            transcript={video?.relationships?.field_media_file?.localFile.publicURL} /> 
+            : null;
         case "paragraph__section":
             return (<>
-				{widget.field_section_title && <h2>{widget.field_section_title}</h2>}
-				<div key={widget.drupal_id} className="row">
+              {widget.field_section_title && <h2>{widget.field_section_title}</h2>}
+                <div key={widget.drupal_id} className="row">
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>
-			</>);
+            </>);
         case "paragraph__section_tabs":
             return <PageTabs pageData={widget} />;
         case "paragraph__stats_widget":
