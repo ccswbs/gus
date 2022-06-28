@@ -25,10 +25,10 @@ const render = ({ field_yaml_map }, colourOptions) => {
     <PageContainer.SiteContent>
       <PageContainer.ContentArea>
         <Statistic.Grid columns="3" className="mb-5 gap-4">
-          {yamlMap.stats.map(({value, type, footnote_marker}, index) => 
+          {yamlMap.stats.map(({value, type, footnote, footnote_marker}, index) => 
             <Statistic.BorderCard key={`bcomm-stat-bordered-${index}`} border={colourOptions[index].border} >
               <Statistic.Value><strong>{value}</strong></Statistic.Value>
-              <Statistic.Type>{type} {footnote_marker}</Statistic.Type>
+              <Statistic.Type>{type}</Statistic.Type>
             </Statistic.BorderCard>
           )}
         </Statistic.Grid>
