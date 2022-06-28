@@ -77,8 +77,6 @@ i.green {color:#4cae3e;}
 	border-left: 1rem solid var(--uog-blue);
 }
 
-.campus-cards .card-body:hover, .campus-cards .card-body:focus {background:#ddd !important; border-bottom:none;}
-
-/* for social media icons */
+/* social media icons */
 
 .social-wrapper a:hover, .social-wrapper a:focus {background:#000 !important; border-bottom:none;}
