@@ -2,16 +2,10 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { Row, Col } from "react-bootstrap";
 import styled from "styled-components"
+import PageContainer from 'components/shared/pageContainer'
 
 const yaml = require('js-yaml');
 
-const Lead = styled.div`
-  & p {
-    color: #000000;
-    font-size: 2.8rem !important;
-    font-weight: 300;
-  }
-`
 const Button = styled.a`
   width: 100%;
   padding: 2rem;
@@ -33,17 +27,19 @@ const render = ({ field_yaml_map, relationships }) => {
     }
     
     return (
-        <section>
+      <PageContainer.SiteContent>
+        <PageContainer.ContentArea>
+          <Row className="mt-sm-5">
             <h2>{yamlMap.title}</h2>
-            <Row>
-              <Col md={9} className="pe-5">
-                <Lead dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
-              </Col>
-              <Col md={3}>
-                <Button href={yamlMap.link.url} className="btn btn-primary text-uppercase text-center">{yamlMap.link.title}</Button>
-              </Col>
-            </Row>
-        </section>
+            <Col md={9} className="pe-5">
+              <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}} />
+            </Col>
+            <Col md={3}>
+              <Button href={yamlMap.link.url} className="btn btn-primary text-uppercase text-center">{yamlMap.link.title}</Button>
+            </Col>
+          </Row>
+        </PageContainer.ContentArea>
+      </PageContainer.SiteContent>
 )}
 
 

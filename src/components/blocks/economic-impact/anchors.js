@@ -5,11 +5,11 @@ const render = ({ title, anchors }) => (
     <>
         <h4>{title}</h4>
         <div id="menubox1">
-            <ul className="menu list-group">
-                {anchors.map(({title, url}, index) =>
-                    <li key={`anchor-${title}-${index}`} className="list-group-item"><a href={url}>{title}</a></li>
-                )}
-            </ul>
+          <ul className="menu list-group">
+            {anchors.map(({title, url}, index) =>
+                <li key={`anchor-${title}-${index}`} className="list-group-item"><a href={url}>{title}</a></li>
+            )}
+          </ul>
         </div>
     </>
 )
