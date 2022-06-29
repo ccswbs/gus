@@ -1,0 +1,12 @@
+id: lang_bcomm_stats
+stats:
+  - value: 96%
+    type: Graduate employment rate
+    footnote_marker: '*'
+    footnote: Text for the footnote
+  - value: Top 6% 
+    type: of the world's business schools - AACSB Accredited
+  - value: $25,792
+    type: Average annual salary during co-op
+  - value: '#5'
+    type: in the world for sustainability focus
