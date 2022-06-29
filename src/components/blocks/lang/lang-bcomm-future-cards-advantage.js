@@ -62,19 +62,22 @@ const query = graphql`
       field_yaml_map
       relationships {
         field_yaml_files {
-          id
-          name
-          relationships {
-            field_media_image {
-              localFile {
-                childImageSharp {
-                  gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+          __typename
+          ... on media__image {
+            id
+            name
+            relationships {
+              field_media_image {
+                localFile {
+                  childImageSharp {
+                    gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+                  }
                 }
               }
             }
-          }
-          path {
-            alias
+            path {
+              alias
+            }
           }
         }
       }
