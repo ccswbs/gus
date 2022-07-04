@@ -14,6 +14,7 @@ import DVMApplicationRequirements from 'components/blocks/ovc/dvm-application-re
 import DVMApplicationProcess from 'components/blocks/ovc/dvm-application-process'
 import DVMApplicationOffers from 'components/blocks/ovc/dvm-application-offers'
 
+
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
 
