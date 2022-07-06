@@ -76,3 +76,7 @@ i.green {color:#4cae3e;}
 .card:nth-of-type(9n+7) .uog-card-border {
 	border-left: 1rem solid var(--uog-blue);
 }
+
+/* social media icons */
+
+.social-wrapper a:hover, .social-wrapper a:focus {background:#000 !important; border-bottom:none;}
