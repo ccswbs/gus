@@ -617,6 +617,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       value: String
       alias: String
     }
+    type redirect__redirect implements Node {
+      redirect_redirect: RedirectRedirect
+      redirect_source: RedirectSource
+      status_code: Int
+    }
+    type RedirectRedirect {
+      uri: String
+    }
+    type RedirectSource {
+      path: String
+    }
     type TaxonomyDescription {
       processed: String
       value: String
@@ -826,12 +837,44 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
     const pageTemplate = path.resolve('./src/templates/page.js');
-    //const articleTemplate = path.resolve('./src/templates/article-page.js');
+    // const articleTemplate = path.resolve('./src/templates/article-page.js');
     const programTemplate = path.resolve('./src/templates/program-page.js');
-
+    const { createRedirect } = actions;
+    
     const helpers = Object.assign({}, actions, {
         createNodeId,
     })
+
+    // Query for redirects
+    const redirects = await graphql(`
+    {
+      allRedirectRedirect {
+        edges {
+          node {
+            redirect_source {
+              path
+            }
+            redirect_redirect {
+              uri
+            }
+            status_code
+          }
+        }
+      }
+    }
+  `).then(result => {
+    const data = [];
+    if (!result.errors) {
+      result.data.allRedirectRedirect.edges.forEach(({ node }) => {
+        const source_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, '/')
+        if (!(source_uri in data)) {
+          data[source_uri] = [];
+        }
+        data[source_uri].push(node);
+      })
+    }
+    return data;
+  });
 
     // INSTRUCTION: Query for menu and page template content here
 
@@ -946,6 +989,22 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
                 );
             })
         }
+
+        // REDIRECTS
+        Object.entries(aliases).forEach(([nodeID, alias]) => {
+          if (redirects[`/node/${nodeID}`]) {
+            redirects[`/node/${nodeID}`].forEach(redirect => {
+              const sourcePath = '/' + redirect.redirect_source.path;
+
+              createRedirect({ 
+                fromPath: sourcePath, 
+                toPath: alias, 
+                isPermanent: true,
+                status: redirect.status_code
+              });
+            })
+          }
+        })
     }
 }
 
@@ -961,7 +1020,6 @@ function processPage(node, contextID, nodeNid, tagID, nodePath, template, helper
         tid: tagID,
       },
     })
-
     return alias;
 }
 
