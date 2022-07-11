@@ -88,7 +88,7 @@ const query = graphql`
             name
             relationships {
               field_media_image {
-                gatsbyImageData(
+                gatsbyImage(
                   width: 1000
                   placeholder: BLURRED
                   layout: CONSTRAINED
