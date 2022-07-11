@@ -1,5 +1,5 @@
 import React from "react"
-import { Container, Col } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 import { StaticQuery, graphql } from "gatsby"
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
@@ -20,15 +20,14 @@ const render = ({ title, stats }, colourOptions) => (
       <h3 className="visually-hidden">{title}</h3>
         <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
             {stats.map(({value, type}, index) => 
-              <Col key={`nationalimpact-stat-${index}`}>
                 <Statistic.SolidCard 
+                  key={`nationalimpact-stat-${index}`} 
                   background={colourOptions[index].background} 
                   colour={colourOptions[index].colour} 
-                  className="p-5" >
+                  className="p-5 col">
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type>{type}</Statistic.Type>
                 </Statistic.SolidCard>
-              </Col>
             )}
         </Statistic>
     </Container>

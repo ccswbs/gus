@@ -1,8 +1,8 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { getImage } from "gatsby-plugin-image"
-import { OverlayImage, ModalButton, OverlayModal } from "components/shared/overlay"
-import { Container, Col, Row } from "react-bootstrap"
+import Overlay from "components/shared/overlay"
+import { Row } from "react-bootstrap"
 import PageContainer from 'components/shared/pageContainer'
 import Statistic from "components/shared/statistic"
 import styled from 'styled-components'
@@ -11,9 +11,9 @@ const yaml = require('js-yaml');
 
 const Shadow = styled.p`
   text-shadow: 0px 0px 4px #ffffff;
-`
-const Gradient = styled(PageContainer.FullWidth)`
-  background: linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%);
+  &:hover, &:focus {
+    text-shadow: none;
+  }
 `
 const colourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
@@ -26,7 +26,7 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   let yamlMap;
   let yamlFiles = {};
   relationships.field_yaml_files.forEach(file => {
-    yamlFiles[file.path.alias] = file.relationships.field_media_image.gatsbyImage;
+    yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
   });
 
   try {
@@ -37,37 +37,34 @@ const render = ({ field_yaml_map, relationships }, colourOptions) => {
   }
   
   return (
-    <>
-        <div className="d-flex flex-column bg-light">
-          <OverlayImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
-            <PageContainer>
-              <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
-                <div className="text-center"> 
-                  <p className="display-2 text-dark"><strong>{yamlMap.title}</strong></p>
-                  <Shadow><a href={yamlMap.link.url}>{yamlMap.link.title}</a></Shadow>
-                </div>
-              </Row>
-            </PageContainer>
-          </OverlayImage>
+    <PageContainer.SiteContent>
+      <PageContainer.ContentArea>
+          <div className="d-flex flex-column">
+            <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
+                <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
+                  <div className="text-center"> 
+                    <h2 className="display-2 text-dark">{yamlMap.title}</h2>
+                    <Shadow><a href={yamlMap.link.url}>{yamlMap.link.title}</a></Shadow>
+                  </div>
+                </Row>
+            </Overlay.GatsbyImage>
+          </div>
+        <div className="d-flex flex-column">
+          <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
+            {yamlMap.stats.map(({value, type}, index) => 
+              <Statistic.SolidCard 
+                key={`international-stat-${index}`}
+                background={colourOptions[index].background} 
+                colour={colourOptions[index].colour} 
+                className="px-5 pt-5 pb-3 col" >
+                <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
+                <Statistic.Type>{type}</Statistic.Type>
+              </Statistic.SolidCard>
+            )}
+          </Statistic>
         </div>
-      <Gradient className="d-flex flex-column">
-        <Container className="page-container p-0">
-            <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
-                {yamlMap.stats.map(({value, type}, index) => 
-                  <Col key={`international-stat-${index}`}>
-                    <Statistic.SolidCard 
-                      background={colourOptions[index].background} 
-                      colour={colourOptions[index].colour} 
-                      className="px-5 pt-5 pb-3" >
-                      <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
-                      <Statistic.Type>{type}</Statistic.Type>
-                    </Statistic.SolidCard>
-                  </Col>
-                )}
-            </Statistic>
-        </Container>
-      </Gradient>
-    </>
+      </PageContainer.ContentArea>
+    </PageContainer.SiteContent>
   )}
 
 const query = graphql`
@@ -82,12 +79,11 @@ const query = graphql`
           name
           relationships {
             field_media_image {
-              gatsbyImage(
-                width: 1400
-                height: 190
-                placeholder: BLURRED
-                layout: CONSTRAINED
-              ) 
+              localFile {
+                childImageSharp {
+                  gatsbyImageData(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED)
+                }
+              }
             }
           }
           path {
