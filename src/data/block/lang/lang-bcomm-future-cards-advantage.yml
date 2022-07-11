@@ -1,0 +1,19 @@
+id: lang_bcomm_future_cards_advantage
+title: Explore the Future You Advantage
+cards:
+  - title: Future You has the Expertise
+    text: Develop your own unique career path and develop expertise that employers demand such as analytics, ethics and teamwork to become a skilled and inclusive leader.
+    image: 
+      src: /images/placeholder-1920x600-notext.png
+      alt: Placeholder
+    links:
+      - title: Learn More
+        url: '#'
+  - title: Future You is a Global Leader
+    text: Business leaders need to think ‘big-picture.’ Lang’s strength in responsible business and leadership development will inspire you to use business as a force for good.
+    image: 
+      src: /images/placeholder-1920x600-notext.png
+      alt: Placeholder
+    links:
+      - title: Learn More
+        url: '#'

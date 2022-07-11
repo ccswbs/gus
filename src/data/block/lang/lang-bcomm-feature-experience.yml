@@ -1,0 +1,27 @@
+id: lang_bcomm_feature_experience
+title: Future You has the Experience
+body:
+  - "For Lang Commerce grad Tara Lalani (BComm ’20), starting her career was as simple as beginning her first co-op term. Tara began her first co-op term at RBC during her second year, and quickly left an impression. Tara is a typical Lang Commerce student: hardworking, collaborative and determined. RBC quickly saw potential in Tara and brought her back for all of her co-op terms. Before graduating, Tara was informed she had a job waiting for her at RBC in marketing and communications."
+  - And it all started at Lang.
+
+images:
+  foreground:
+    src: /images/meal-care-students.png
+    alt: ""
+  background:
+    src: /images/meal-care-bg.jpg
+    alt: ""
+
+video:
+  id: ~
+  type: vimeo
+  title: ""
+  url: "#"
+  transcript: ~
+  captions: ~
+
+testimonial:
+  quote: Quote goes here
+  source:
+    name: Firstname Lastname
+    desc: ""
