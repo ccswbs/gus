@@ -139,6 +139,9 @@ export const query = graphql`
     relationships {
       field_section_content {
         __typename
+        ... on paragraph__accordion_section {
+            ...AccordionSectionParagraphFragment
+        }
         ... on paragraph__block_widget {
             ...BlockWidgetParagraphFragment
         }
@@ -159,6 +162,9 @@ export const query = graphql`
         }
         ... on paragraph__section_buttons {
             ...SectionButtonsParagraphFragment
+        }
+        ... on paragraph__section_tabs {
+            ...SectionTabsParagraphFragment
         }
         ... on paragraph__yaml_widget {
             ...YamlWidgetParagraphFragment
