@@ -120,12 +120,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__modal_video_widget
 
     union widgetSectionParagraphUnion =
-      paragraph__block_widget
+      paragraph__accordion_section
+      | paragraph__block_widget
       | paragraph__general_text
       | paragraph__lead_paragraph
       | paragraph__link_item
       | paragraph__links_widget
       | paragraph__media_text
+      | paragraph__section_tabs
+      | paragraph__tab_content
       | paragraph__stats_widget
       | paragraph__section_buttons
       | paragraph__button_widget
