@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import Accordion from 'components/shared/accordion';
 import BlockWidget from 'components/shared/blockWidget';
 import GeneralText from 'components/shared/generalText';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
-import PageTabs from 'components/shared/pageTabs';
 import SectionButtons from 'components/shared/sectionButtons';
 import StatsWidget from 'components/shared/statsWidget';
 import YamlWidget from 'components/shared/yamlWidget';
@@ -15,9 +13,7 @@ import { ConditionalWrapper } from 'utils/ug-utils';
 
 // For the left column
 function renderPrimary(widget) {
-    switch (widget?.__typename) 
-        case "paragraph__accordion_section":
-            return <Accordion pageData={widget} />;
+    switch (widget?.__typename) {
         case "paragraph__block_widget":
             return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
@@ -39,8 +35,6 @@ function renderPrimary(widget) {
                     numColumns={numColumns} />
         case "paragraph__media_text":
             return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
-        case "paragraph__section_tabs":
-            return <PageTabs pageData={widget} />;
         case "paragraph__stats_widget":
             return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
         case "paragraph__section_buttons":
@@ -139,9 +133,6 @@ export const query = graphql`
     relationships {
       field_section_content {
         __typename
-        ... on paragraph__accordion_section {
-            ...AccordionSectionParagraphFragment
-        }
         ... on paragraph__block_widget {
             ...BlockWidgetParagraphFragment
         }
@@ -162,9 +153,6 @@ export const query = graphql`
         }
         ... on paragraph__section_buttons {
             ...SectionButtonsParagraphFragment
-        }
-        ... on paragraph__section_tabs {
-            ...SectionTabsParagraphFragment
         }
         ... on paragraph__yaml_widget {
             ...YamlWidgetParagraphFragment
