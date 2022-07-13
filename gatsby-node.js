@@ -444,6 +444,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__accordion_sectionRelationships implements Node {
       field_accordion_block_elements: [paragraph__accordion_block] @link(from: "field_accordion_block_elements___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__block_widget implements Node {
       drupal_id: String
@@ -595,6 +596,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__section_tabsRelationships {
       field_tabs: [paragraph__tab_content] @link(from:"field_tabs___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__stats_widget implements Node {
       drupal_id: String
