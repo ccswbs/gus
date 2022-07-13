@@ -66,6 +66,7 @@ field_name: [taxonomy_term__vocabulary_name] @link(from: "field_name___NODE")
 const path = require(`path`)
 const fs = require('fs');
 const yaml = require('js-yaml');
+const util = require('util');
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
 
@@ -128,7 +129,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__links_widget
       | paragraph__media_text
       | paragraph__section_tabs
-      | paragraph__tab_content
       | paragraph__stats_widget
       | paragraph__section_buttons
       | paragraph__button_widget
@@ -446,7 +446,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__accordion_sectionRelationships implements Node {
       field_accordion_block_elements: [paragraph__accordion_block] @link(from: "field_accordion_block_elements___NODE")
-      field_section_column: relatedRegionUnion @link(from: "field_section_column___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__block_widget implements Node {
       drupal_id: String
@@ -493,6 +493,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__general_text implements Node {
       drupal_id: String
       field_general_text: BodyField
+      relationships: paragraph__general_textRelationships
     }
     type paragraph__general_textRelationships {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
@@ -533,6 +534,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_link_image: media__image @link(from: "field_link_image___NODE")
     }
     type paragraph__media_text implements Node {
+      drupal_id: String
       field_media_image_size: String
       field_media_text_desc: BodyField
       field_media_text_title: String
@@ -595,8 +597,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       relationships: paragraph__section_tabsRelationships
     }
     type paragraph__section_tabsRelationships {
-      field_section_column: relatedRegionUnion @link(from: "field_section_column___NODE")
       field_tabs: [paragraph__tab_content] @link(from:"field_tabs___NODE")
+      field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__stats_widget implements Node {
       drupal_id: String
