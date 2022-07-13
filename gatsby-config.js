@@ -136,7 +136,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-catch-links`,
       options: {
-        excludePattern: /[a-zA-Z]+\.ca/,
+        excludePattern: /(https?:\/\/(.+?\.)?uoguelph\.ca(\/[A-Za-z0-9\-\._~:\/\?#\[\]@!$&'\(\)\*\+,;\=]*)?)/,
       },
     },
     `gatsby-plugin-client-side-redirect`
