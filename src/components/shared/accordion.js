@@ -51,6 +51,9 @@ export const query = graphql`
           processed
         }        
       }
+      field_section_column {
+        name
+      }
     }
   }
 `

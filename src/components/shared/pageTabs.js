@@ -78,13 +78,16 @@ export const query = graphql`
     fragment SectionTabsParagraphFragment on paragraph__section_tabs {
         id
         relationships {
-        field_tabs {
+          field_tabs {
             drupal_id
             field_tab_title
             field_tab_body {
-            processed
+              processed
             }
-        }
+          }
+          field_section_column {
+            name
+          }
         }
     }
 `
