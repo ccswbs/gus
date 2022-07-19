@@ -57,9 +57,7 @@ const query = graphql`
         title
         image {
             src {
-              childImageSharp {
-                gatsbyImageData
-              }
+              gatsbyImage
             }
             alt
         }

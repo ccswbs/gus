@@ -84,9 +84,7 @@ const query = graphql`
                 pronouns
                 image {
                     src {
-                      childImageSharp {
-                        gatsbyImageData
-                      }
+                        gatsbyImage
                     }
                     alt
                 }
@@ -97,9 +95,7 @@ const query = graphql`
             body
             image {
                 src {
-                  childImageSharp {
-                    gatsbyImageData
-                  }
+                    gatsbyImage
                 }
                 alt
             }

@@ -48,18 +48,14 @@ const query = graphql`
             desc
             image {
                 src {
-                  childImageSharp {
-                    gatsbyImageData
-                  }
+                    gatsbyImage
                 }
                 alt
             }
         }
         background_image {
             src {
-              childImageSharp {
-                gatsbyImageData (height:300)
-              }
+                gatsbyImage(height:300)
             }
             alt
         }

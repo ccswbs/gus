@@ -41,9 +41,7 @@ const query = graphql`
           type
           image {
               src{
-                childImageSharp {
-                    gatsbyImageData
-                }
+                gatsbyImage
               }
               alt
           }
