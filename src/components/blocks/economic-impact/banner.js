@@ -19,7 +19,7 @@ const query = graphql`
       title
       image {
         src {
-          gatsbyImage
+          gatsbyImage(width: 1000)
         }
         alt
       }

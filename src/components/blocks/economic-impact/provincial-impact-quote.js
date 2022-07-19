@@ -48,7 +48,7 @@ const query = graphql`
             desc
             image {
                 src {
-                    gatsbyImage
+                    gatsbyImage(width: 1000)
                 }
                 alt
             }

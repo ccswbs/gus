@@ -84,7 +84,7 @@ const query = graphql`
                 pronouns
                 image {
                     src {
-                        gatsbyImage
+                        gatsbyImage(width: 1000)
                     }
                     alt
                 }
@@ -95,7 +95,7 @@ const query = graphql`
             body
             image {
                 src {
-                    gatsbyImage
+                    gatsbyImage(width: 1000)
                 }
                 alt
             }
