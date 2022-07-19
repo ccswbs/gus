@@ -95,6 +95,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
+        catchLinks: false,
         url:
         // allows a fallback url if WPGRAPHQL_URL is not set in the env, this may be a local or remote WP instance.
           process.env.WPGRAPHQL_URL ||
@@ -131,12 +132,6 @@ module.exports = {
           Tag: {exclude: true},
           User: {exclude: true},
         },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-catch-links`,
-      options: {
-        excludePattern: /(https?:\/\/(.+?\.)?uoguelph\.ca(\/[A-Za-z0-9\-\._~:\/\?#\[\]@!$&'\(\)\*\+,;\=]*)?)/,
       },
     },
     `gatsby-plugin-client-side-redirect`
