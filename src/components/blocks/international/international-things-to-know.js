@@ -32,7 +32,7 @@ const render = ({ field_yaml_map, relationships }) => {
       <PageContainer.SiteContent>
         <PageContainer.ContentArea>
           <h2>{yamlMap.title}</h2>
-          <Row className="row-cols-1 row-cols-md-3 g-4">
+          <Row className="row-cols-1 row-cols-md-2 g-4">
               {yamlMap.cards.map(({title, text, image, links}, index) => 
                   <Col key={`international-explore-${index}`}>
                       <div className="card h-100 border-0">
@@ -40,11 +40,13 @@ const render = ({ field_yaml_map, relationships }) => {
                           <MediaCardBody className="card-body">
                               <MediaTitle>{title}</MediaTitle>
                               <p>{text}</p>
-                              <div className="d-grid d-md-block gap-2">
-                                  {links.map(({title, url}, index) => 
-                                      <a key={`international-explore-btns-${index}`} href ={url} className="btn btn-info me-md-3 no-icon p-4 text-start">{title}</a>
-                                  )}
-                              </div>
+                              if (links.map.url !== '') {
+                                <div className="d-grid d-md-block gap-2">
+                                    {links.map(({title, url}, index) => 
+                                        <a key={`international-explore-btns-${index}`} href ={url} className="btn btn-info me-md-3 no-icon p-4 text-start">{title}</a>
+                                    )}
+                                </div>
+                              }
                           </MediaCardBody>
                       </div>
                   </Col>
