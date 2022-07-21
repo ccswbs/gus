@@ -40,13 +40,11 @@ const render = ({ field_yaml_map, relationships }) => {
                           <MediaCardBody className="card-body">
                               <MediaTitle>{title}</MediaTitle>
                               <p>{text}</p>
-                              if (links.map.url !== '') {
-                                <div className="d-grid d-md-block gap-2">
-                                    {links.map(({title, url}, index) => 
-                                        <a key={`international-explore-btns-${index}`} href ={url} className="btn btn-info me-md-3 no-icon p-4 text-start">{title}</a>
-                                    )}
-                                </div>
-                              }
+                              <div className="d-grid d-md-block gap-2">
+                                  {links.map(({title, url}, index) => 
+                                      {$url !== '' && <a key={`international-explore-btns-${index}`} href ={url} className="btn btn-info me-md-3 no-icon p-4 text-start">{title}</a>}
+                                  )}
+                              </div>
                           </MediaCardBody>
                       </div>
                   </Col>
