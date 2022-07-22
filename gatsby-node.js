@@ -1040,7 +1040,7 @@ function createContentTypeAlias(nodePath) {
 }
 
 // list of pages for SE site
-function createSitePageList(helpers) {
+/* function createSitePageList(helpers) {
 
     helpers.createPage({
       path: `/sitemap-se/`,
@@ -1051,7 +1051,7 @@ function createSitePageList(helpers) {
     })
 
     return;
-}
+} */
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function slugify(string) {
