@@ -58,7 +58,7 @@ function Button (buttonCol, buttonData, buttonSpacing) {
     return (
     <React.Fragment key={buttonData.drupal_id}>
     {buttonData.field_cta_heading && <h2 className="h3 text-dark text-center" dangerouslySetInnerHTML={{__html: buttonData.field_cta_heading.processed}} />}    
-    {buttonData.field_button_link.uri.includes("http") ? btnAnalyticsGoal && btnAnalyticsAction ? 
+    {urlLink && urlLink.includes("http") ? btnAnalyticsGoal && btnAnalyticsAction ? 
         <a href={urlLink} className={buttonClasses} onClick={e => {trackCustomEvent({category: btnAnalyticsGoal,action: btnAnalyticsAction,})}}>
             {buttonIcon && <i aria-hidden="true" className={buttonFontAwesomeClasses}> </i>}
             <span className={buttonTitleClasses} dangerouslySetInnerHTML={{__html: buttonLinkTitle}} />
