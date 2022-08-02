@@ -102,7 +102,7 @@ function SectionWidgets (props) {
         }
         
         return (<>
-            <div className={primaryClass}>
+            <div className={primaryClass} data-title="Primary section">
                 <ConditionalWrapper condition={secondary.length > 0} wrapper={children => <div className="row">{children}</div>}>
                 {primary && primary.map(widget => {
                     return renderPrimary(widget)
@@ -110,7 +110,7 @@ function SectionWidgets (props) {
                 </ConditionalWrapper>
             </div>
             {secondary.length > 0 && 
-            <div className={secondaryClass}>
+            <div className={secondaryClass} data-title="Secondary section">
             {secondary.map(widget => {
                 return renderSecondary(widget)
             })}    
