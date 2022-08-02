@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
@@ -12,7 +12,7 @@ function MediaText (props) {
 
     const mediaTitle = props.widgetData?.field_media_text_title;
     const mediaDescription = props.widgetData.field_media_text_desc?.processed;
-    const mediaLinks = props.widgetData?.field_media_text_links;
+    const mediaBgColor = props.widgetData.relationships?.field_bg_color?.name;
     const mediaButtons = props.widgetData.relationships?.field_button_section;
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
@@ -30,9 +30,30 @@ function MediaText (props) {
     
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";
+    let textColBg;
+    let textColPadding;
     let wrapperCol;
     let headingClass;
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
+    
+    switch(mediaBgColor) {
+        case "Blue Muted":
+            textColBg = " uog-blue-muted";
+        break;
+        case "Light Gray":
+            textColBg = " bg-light";
+        break;
+        case "Dark Gray":
+            textColBg = " bg-dark";
+        break;
+        default:
+            textColBg = " bg-white";
+        break;
+    }
+    
+    if (textColBg !== " bg-white") {
+        textColPadding = " p-3";
+    }
 
     if (region === "Primary") {
         // For images
@@ -124,7 +145,7 @@ function MediaText (props) {
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
                     break;
-                }
+                }                
             } else {
                 mediaCol = "col-xs-12";
             }
@@ -158,8 +179,8 @@ function MediaText (props) {
     }        
 
     return (
-    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section className={wrapperCol}>{children}</section>}>
-        <div className={mediaCol}>
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-section" className={wrapperCol}>{children}</section>}>
+        <div data-title="media-imgOrVid" className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
                 videoTitle={videoTitle}
@@ -173,17 +194,10 @@ function MediaText (props) {
             {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
         </div>
         {textOrButtons &&
-        <div className={textCol + " text-break"}>
+        <div data-title="media-description" className={textCol + textColBg + textColPadding + " text-break"}>
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
             {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
-            {!mediaButtons && mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
-                return ( 
-                <React.Fragment>
-                    {(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={mediaLink.url}>{mediaLink.title}</a> </> :
-                    <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
-                </React.Fragment>)                
-            })}</div>}
         </div>}
     </ConditionalWrapper>    
     );
@@ -226,15 +240,13 @@ export const query = graphql`
     field_media_text_desc {
       processed
     }
-    field_media_text_links {
-      title
-      uri
-      url
-    }
     relationships {
+      field_bg_color {
+        name
+      }
       field_section_column {
-          name
-        }
+        name
+      }
       field_media_text_media {
         ... on media__image {
           ...MediaImageFragment
