@@ -538,10 +538,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_media_image_size: String
       field_media_text_desc: BodyField
       field_media_text_title: String
-      field_media_text_links: [FieldLink]
       relationships: paragraph__media_textRelationships
     }
     type paragraph__media_textRelationships implements Node {
+      field_bg_color: taxonomy_term__bg_colors @link(from: "field_bg_color___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
       field_media_text_media: media__imagemedia__remote_videoUnion @link(from: "field_media_text_media___NODE")
       field_button_section: paragraph__section_buttons @link(from:"field_button_section___NODE")
@@ -636,6 +636,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       processed: String
       value: String
       format: String
+    }
+    type taxonomy_term__bg_colors implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
     }
     type taxonomy_term__button_styles implements Node & TaxonomyInterface {
       drupal_id: String
