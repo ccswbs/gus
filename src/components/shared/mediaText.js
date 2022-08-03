@@ -51,11 +51,11 @@ function MediaText (props) {
             headingColor = " text-light";
         break;
         default:
-            textColBg = " bg-white";            
+            textColBg = "";            
         break;
     }
     
-    if (textColBg !== " bg-white") {
+    if (textColBg) {
         textColPadding = " p-4";
     } else {
         textColPadding = "";
@@ -127,7 +127,7 @@ function MediaText (props) {
         wrapperCol = "col-xs-12 border-0 card";        
     // Region is null, widget not in section 
     } else {
-        wrapperCol = "row mt-5";
+        wrapperCol = "row mt-5" + textColBg;
         if (imageURL) {
             if (mediaDescription || mediaButtons) {
                 switch(mediaSize) {
@@ -181,8 +181,11 @@ function MediaText (props) {
             } else {
                 mediaCol = "col-xs-12";
             }
-        }        
-    }        
+        }
+        if (textColBg) {
+            mediaCol = mediaCol + " ps-0";
+        }
+    }
 
     return (
     <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
@@ -205,7 +208,7 @@ function MediaText (props) {
             {mediaDescription && <div {...(textColBg === ` bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
-    </ConditionalWrapper>    
+    </ConditionalWrapper>
     );
 }
 
