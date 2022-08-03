@@ -179,8 +179,8 @@ function MediaText (props) {
     }        
 
     return (
-    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-section" className={wrapperCol}>{children}</section>}>
-        <div data-title="media-imgOrVid" className={mediaCol}>
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol + " card"}>{children}</section>}>
+        <div data-title="media" className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
                 videoTitle={videoTitle}
@@ -194,7 +194,7 @@ function MediaText (props) {
             {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
         </div>
         {textOrButtons &&
-        <div data-title="media-description" className={textCol + textColBg + textColPadding + " text-break"}>
+        <div data-title="media-description" className={textCol + textColBg + textColPadding + " text-break h-100"}>
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
             {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
