@@ -77,12 +77,12 @@ function MediaText (props) {
                     case "large":
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
-                        wrapperCol = "col-md-6";
+                        wrapperCol = "col-md-6 border-0 card";
                     break;
                     default:
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
-                        wrapperCol = "col-sm mb-3";
+                        wrapperCol = "col-sm mb-3 border-0 card";
                     break;
                 }
             } else {
@@ -105,22 +105,22 @@ function MediaText (props) {
         } else {
             switch(mediaSize) {
                 case "small":
-                    wrapperCol = "col-md-4";
+                    wrapperCol = "col-md-4 border-0 card";
                 break;
                 case "medium":
-                    wrapperCol = "col-md-6";
+                    wrapperCol = "col-md-6 border-0 card";
                 break;
                 case "large":
-                    wrapperCol = "col-xs-12";
+                    wrapperCol = "col-xs-12 border-0 card";
                 break;
                 default:
-                    wrapperCol = "col-sm";
+                    wrapperCol = "col-sm border-0 card";
                 break;
             }
         }
     // Everything in the Secondary column is stacked
     } else if (region === "Secondary") {
-        wrapperCol = "col-xs-12";        
+        wrapperCol = "col-xs-12 border-0 card";        
     // Region is null, widget not in section 
     } else {
         wrapperCol = "row mt-5";
@@ -181,7 +181,7 @@ function MediaText (props) {
     }        
 
     return (
-    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol + " border-0 card"}>{children}</section>}>
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
         <div data-title="media" className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
