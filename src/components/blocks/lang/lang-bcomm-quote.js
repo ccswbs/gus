@@ -11,10 +11,13 @@ const QuoteMark = styled.i`
     color: var(--uog-blue);
 `
 const QuoteText = styled.p`
-    color: #000;
+    color: #FFF;
+    & strong {
+      color: #FFF;
+    }
 `
 const QuoteShadow = styled.div`
-  text-shadow: #fff 1px 0 4px;
+  text-shadow: #000 1px 0 4px;
 `
 
 const render = ({ field_yaml_map, relationships }) => {
@@ -33,7 +36,9 @@ const render = ({ field_yaml_map, relationships }) => {
 
   return(
     <div className="d-flex flex-column bg-light mb-4">
-      <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
+      <Overlay.GatsbyImage 
+        gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} 
+        alt={yamlMap.background_image.alt} >
         <Container className="page-container">
           <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
             <Col sm={9} className="ps-5">
@@ -43,8 +48,8 @@ const render = ({ field_yaml_map, relationships }) => {
                         <em>{yamlMap.quote}</em>
                     <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
                 </QuoteText>
-                <p className="author text-dark fs-2"><strong>{yamlMap.source.name}</strong>
-                <br /><em>{yamlMap.source.desc}</em></p>
+                <QuoteText className="author fs-2"><strong>{yamlMap.source.name}</strong>
+                <br /><em>{yamlMap.source.desc}</em></QuoteText>
               </QuoteShadow>
             </Col>
           </Row>
@@ -68,7 +73,15 @@ const query = graphql`
             field_media_image {
               localFile {
                 childImageSharp {
-                  gatsbyImageData(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED)
+                  gatsbyImageData(
+                    width: 1400, 
+                    height: 190, 
+                    placeholder: BLURRED, 
+                    layout: CONSTRAINED,
+                    transformOptions: {
+                      duotone: { highlight: "#000000", shadow: "#000000", opacity: 35 },
+                    }
+                  )
                 }
               }
             }

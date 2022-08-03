@@ -16,6 +16,7 @@ import LangBcommSupportiveCommunity from 'components/blocks/lang/lang-bcomm-supp
 import LangBcommStatsBordered from 'components/blocks/lang/lang-bcomm-stats-bordered';
 import LangBcommFeatureExperience from 'components/blocks/lang/lang-bcomm-feature-experience';
 import LangBcommFutureCardsAdvantage from 'components/blocks/lang/lang-bcomm-future-cards-advantage';
+import LangBcommStudentBlog from 'components/blocks/lang/lang-bcomm-student-blog';
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -35,7 +36,8 @@ const YamlWidget = (props) => {
         'lang_bcomm_supportive_community':<LangBcommSupportiveCommunity />,
         'lang_bcomm_stats_bordered':<LangBcommStatsBordered />,
         'lang_bcomm_feature_experience':<LangBcommFeatureExperience />,
-        'lang_bcomm_future_cards_advantage':<LangBcommFutureCardsAdvantage />
+        'lang_bcomm_future_cards_advantage':<LangBcommFutureCardsAdvantage />,
+        'lang_bcomm_student_blog':<LangBcommStudentBlog />
 
     }[component] || null )
 }

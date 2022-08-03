@@ -13,6 +13,11 @@ const QuoteText = styled.p`
     color: #000;
 `
 
+const StyledImage = styled(GatsbyImage)`
+    height: 700px;
+    width: 400px;
+`
+
 const Aside = ({aside}) => (
     <div className="card bg-dark border-0 text-white p-5 rounded-0 align-self-center me-5">
         <div className="card-body px-5">
@@ -66,7 +71,11 @@ const render = ({ field_yaml_map, relationships }) => {
                             <Testimony testimonial={yamlMap.testimonial} files={yamlFiles} />
                         </Col>
                         <Col md={6} className="d-flex position-relative p-0">
-                            <GatsbyImage image={getImage(yamlFiles[yamlMap.aside.image.src])} alt={yamlMap.aside.image.alt} className="position-absolute top-0 end-0" />
+                            <StyledImage 
+                                image={getImage(yamlFiles[yamlMap.aside.image.src])} 
+                                alt={yamlMap.aside.image.alt} 
+                                className="position-absolute top-0 end-0"
+                            />
                             <Aside aside={yamlMap.aside} />    
                         </Col>
                     </Row>
