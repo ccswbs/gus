@@ -52,7 +52,9 @@ function MediaText (props) {
     }
     
     if (textColBg !== " bg-white") {
-        textColPadding = " p-3";
+        textColPadding = " p-4";
+    } else {
+        textColPadding = "";
     }
 
     if (region === "Primary") {
@@ -196,7 +198,7 @@ function MediaText (props) {
         {textOrButtons &&
         <div data-title="media-description" className={textCol + textColBg + textColPadding + " text-break h-100"}>
             {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
-            {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
+            {mediaDescription && <div {...(textColBg === ` bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
     </ConditionalWrapper>    
