@@ -454,7 +454,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__block_widgetRelationships implements Node {
       field_custom_block: block_content__basic @link(from: "field_custom_block___NODE")
-      field_widget_block: block_content__widget_block @link(from: "field_widget_block___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__button_widget implements Node {
