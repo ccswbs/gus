@@ -34,20 +34,24 @@ function MediaText (props) {
     let textColPadding;
     let wrapperCol;
     let headingClass;
+    let headingColor;
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
     
     switch(mediaBgColor) {
         case "Blue Muted":
             textColBg = " uog-blue-muted";
+            headingColor = " text-dark";            
         break;
         case "Light Gray":
             textColBg = " bg-light";
+            headingColor = " text-dark";
         break;
         case "Dark Gray":
             textColBg = " bg-dark";
+            headingColor = " text-light";
         break;
         default:
-            textColBg = " bg-white";
+            textColBg = " bg-white";            
         break;
     }
     
@@ -197,7 +201,7 @@ function MediaText (props) {
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol + textColBg + textColPadding + " text-break h-100"}>
-            {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
+            {mediaTitle && <h3 className={(headingClass ? headingClass : undefined) + (headingColor ? headingColor : undefined)}>{mediaTitle}</h3>}
             {mediaDescription && <div {...(textColBg === ` bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
