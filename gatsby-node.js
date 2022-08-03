@@ -134,11 +134,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__button_widget
       | paragraph__yaml_widget
 
-    union widgetBlockParagraphUnion =
-      paragraph__section_buttons
-      | paragraph__general_text
-      | paragraph__media_text
-
     type BodyField {
       processed: String
       value: String
@@ -184,14 +179,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       info: String
       body: BodyFieldWithSummary
-    }
-    type block_content__widget_block implements Node {
-      drupal_id: String
-      info: String
-      relationships: block_content__widget_blockRelationships
-    }
-    type block_content__widget_blockRelationships implements Node {
-      field_block_widgets: [widgetBlockParagraphUnion] @link(from: "field_block_widgets___NODE")
     }
     type block_content__yaml_block implements Node {
       drupal_id: String
