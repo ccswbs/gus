@@ -179,7 +179,7 @@ function MediaText (props) {
     }        
 
     return (
-    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol + " card"}>{children}</section>}>
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol + " border-0 card"}>{children}</section>}>
         <div data-title="media" className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
