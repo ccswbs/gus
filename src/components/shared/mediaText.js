@@ -109,22 +109,22 @@ function MediaText (props) {
         } else {
             switch(mediaSize) {
                 case "small":
-                    wrapperCol = "col-md-4 border-0 card";
+                    wrapperCol = "col-md-4 border-0 card mb-4";
                 break;
                 case "medium":
-                    wrapperCol = "col-md-6 border-0 card";
+                    wrapperCol = "col-md-6 border-0 card mb-4";
                 break;
                 case "large":
-                    wrapperCol = "col-xs-12 border-0 card";
+                    wrapperCol = "col-xs-12 border-0 card mb-4";
                 break;
                 default:
-                    wrapperCol = "col-sm border-0 card";
+                    wrapperCol = "col-sm border-0 card mb-4";
                 break;
             }
         }
     // Everything in the Secondary column is stacked
     } else if (region === "Secondary") {
-        wrapperCol = "col-xs-12 border-0 card";        
+        wrapperCol = "col-xs-12 border-0 card mb-4";        
     // Region is null, widget not in section 
     } else {
         wrapperCol = "row mt-5" + textColBg;
