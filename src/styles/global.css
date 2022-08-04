@@ -60,6 +60,10 @@ html {
 
 /* Custom card styles */
 
+.bg-dark a {
+	color: var(--uog-blue) !important;
+}
+
 .uog-blue-muted {background:#edf2f5);}
 i.green {color:#4cae3e;}
 
