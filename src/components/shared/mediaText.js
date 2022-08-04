@@ -78,7 +78,7 @@ function MediaText (props) {
                     case "large":
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
-                        wrapperCol = "col-md-6 border-0 card";
+                        wrapperCol = "col-md-6 mb-4 border-0 card";
                     break;
                     default:
                         mediaCol = "col-xs-12";
