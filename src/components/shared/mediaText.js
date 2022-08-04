@@ -40,12 +40,12 @@ function MediaText (props) {
     
     switch(mediaBgColor) {
         case "Blue Muted":
-            textColBg = classNames("uog-blue-muted");
-            headingColor = classNames("text-dark");            
+            textColBg = classNames('uog-blue-muted');
+            headingColor = classNames('text-dark');            
         break;
         case "Dark Gray":
-            textColBg = classNames("bg-dark");
-            headingColor = classNames("text-light");
+            textColBg = classNames('bg-dark');
+            headingColor = classNames('text-light');
         break;
         default:
             textColBg = "";            
@@ -53,7 +53,7 @@ function MediaText (props) {
     }
     
     if (textColBg) {
-        textColPadding = classNames("p-4");
+        textColPadding = classNames('p-4');
     } else {
         textColPadding = "";
     }
@@ -124,7 +124,7 @@ function MediaText (props) {
         wrapperCol = "col-xs-12 border-0 card mb-4";        
     // Region is null, widget not in section 
     } else {
-        wrapperCol = classNames("row mt-5", textColBg);
+        wrapperCol = classNames('row mt-5', textColBg);
         if (imageURL) {
             if (mediaDescription || mediaButtons) {
                 switch(mediaSize) {
@@ -180,7 +180,7 @@ function MediaText (props) {
             }
         }
         if (textColBg) {
-            mediaCol = classNames(mediaCol, "ps-0");
+            mediaCol = classNames(mediaCol, 'ps-0');
         }
     }
 
