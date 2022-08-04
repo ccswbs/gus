@@ -63,8 +63,13 @@ html {
 .bg-dark a {
 	color: var(--uog-blue) !important;
 }
+.bg-dark a:focus, 
+.bg-dark a:hover {
+	background: #edf2f5 !important;
+	color: black !important;
+}
 
-.uog-blue-muted {background:#edf2f5);}
+.uog-blue-muted {background:#edf2f5;}
 i.green {color:#4cae3e;}
 
 .card .uog-card-border {
