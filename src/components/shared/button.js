@@ -31,13 +31,13 @@ function buttonStyle(styleOfButton) {
         case 'Danger (Outline)':
             return 'btn-outline-danger'
         case 'Light':
-            return 'btn-white';
+            return 'btn-light';
         case 'Light (Outline)':
-            return 'btn-outline-white'
+            return 'btn-outline-light'
         case 'Dark':
-            return 'btn-black';
+            return 'btn-dark';
         case 'Dark (Outline)':
-            return 'btn-outline-black'
+            return 'btn-outline-dark'
         default:
             return 'btn-primary';
     }
