@@ -24,7 +24,10 @@ const render = ({ field_yaml_map, relationships }) => {
   let yamlMap;
   let yamlFiles = {};
   relationships.field_yaml_files.forEach(file => {
-    yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
+    yamlFiles[file.path.alias] = {
+      src: file.relationships.field_media_image.localFile,
+      alt: file.relationships.field_media_image.relationships.media__image[0].field_media_image.alt,
+    }
   });
 
   try {
@@ -37,8 +40,8 @@ const render = ({ field_yaml_map, relationships }) => {
   return(
     <div className="d-flex flex-column bg-light mb-4">
       <Overlay.GatsbyImage 
-        gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} 
-        alt={yamlMap.background_image.alt} >
+        gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src].src)} 
+        alt={yamlFiles[yamlMap.background_image.src].alt} >
         <Container className="page-container">
           <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
             <Col sm={9} className="ps-5">
@@ -75,13 +78,19 @@ const query = graphql`
                 childImageSharp {
                   gatsbyImageData(
                     width: 1400, 
-                    height: 190, 
                     placeholder: BLURRED, 
                     layout: CONSTRAINED,
                     transformOptions: {
                       duotone: { highlight: "#000000", shadow: "#000000", opacity: 35 },
                     }
                   )
+                }
+              }
+              relationships {
+                media__image {
+                  field_media_image {
+                    alt
+                  }
                 }
               }
             }

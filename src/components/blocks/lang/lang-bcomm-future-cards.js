@@ -7,7 +7,7 @@ import styled from "styled-components"
 
 const yaml = require('js-yaml');
 const MediaCardBody = styled.div`
-  background: #edf2f5;
+  background: #F5F7FA;
   padding: 2rem;
 `
 const MediaTitle = styled.h3`
