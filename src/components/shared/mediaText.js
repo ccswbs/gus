@@ -181,10 +181,11 @@ function MediaText (props) {
         }
         if (textColBg) {
             mediaCol = classNames(mediaCol, 'ps-0');
-        }
-        textCol = classNames(textCol, textColBg, textColPadding, "text-break", "h-100");
+        }        
     }
-
+    headingClass = classNames(headingClass, headingColor);
+    textCol = classNames(textCol, textColBg, textColPadding, "text-break", "h-100");
+    
     return (
     <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
         <div data-title="media" className={mediaCol}>
@@ -202,8 +203,8 @@ function MediaText (props) {
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol}>
-            {mediaTitle && <h3 className={(headingClass ? headingClass : undefined) + (headingColor ? headingColor : undefined)}>{mediaTitle}</h3>}
-            {mediaDescription && <div {...(textColBg === ` bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
+            {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
+            {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
     </ConditionalWrapper>
