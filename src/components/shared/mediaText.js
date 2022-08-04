@@ -1,9 +1,10 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
-import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
+import Video from 'components/shared/video';
 import { ConditionalWrapper } from 'utils/ug-utils';
 
 function MediaText (props) {
@@ -39,16 +40,12 @@ function MediaText (props) {
     
     switch(mediaBgColor) {
         case "Blue Muted":
-            textColBg = " uog-blue-muted";
-            headingColor = " text-dark";            
-        break;
-        case "Light Gray":
-            textColBg = " bg-light";
-            headingColor = " text-dark";
+            textColBg = classNames("uog-blue-muted");
+            headingColor = classNames("text-dark");            
         break;
         case "Dark Gray":
-            textColBg = " bg-dark";
-            headingColor = " text-light";
+            textColBg = classNames("bg-dark");
+            headingColor = classNames("text-light");
         break;
         default:
             textColBg = "";            
@@ -56,7 +53,7 @@ function MediaText (props) {
     }
     
     if (textColBg) {
-        textColPadding = " p-4";
+        textColPadding = classNames("p-4");
     } else {
         textColPadding = "";
     }
@@ -127,7 +124,7 @@ function MediaText (props) {
         wrapperCol = "col-xs-12 border-0 card mb-4";        
     // Region is null, widget not in section 
     } else {
-        wrapperCol = "row mt-5" + textColBg;
+        wrapperCol = classNames("row mt-5", textColBg);
         if (imageURL) {
             if (mediaDescription || mediaButtons) {
                 switch(mediaSize) {
@@ -183,7 +180,7 @@ function MediaText (props) {
             }
         }
         if (textColBg) {
-            mediaCol = mediaCol + " ps-0";
+            mediaCol = classNames(mediaCol, "ps-0");
         }
     }
 
