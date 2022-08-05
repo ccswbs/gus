@@ -69,6 +69,10 @@ html {
 	color: black !important;
 	text-decoration-color: #edf2f5 !important;
 }
+.bg-dark .btn-secondary {
+	color: black !important;
+	background: white !important;
+}
 .bg-dark h2,
 .bg-dark h3,
 .bg-dark h4 {
