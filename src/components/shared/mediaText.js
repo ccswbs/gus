@@ -39,7 +39,7 @@ function MediaText (props) {
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
     
     switch(mediaBgColor) {
-        case "Blue Muted":
+        case "Light Blue":
             textColBg = classNames('uog-blue-muted');
             headingColor = classNames('text-dark');            
         break;
