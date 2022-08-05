@@ -77,11 +77,13 @@ const query = graphql`
               localFile {
                 childImageSharp {
                   gatsbyImageData(
-                    width: 1400, 
+                    width: 1400,
+                    height: 640,
                     placeholder: BLURRED, 
                     layout: CONSTRAINED,
                     transformOptions: {
-                      duotone: { highlight: "#000000", shadow: "#000000", opacity: 35 },
+                      duotone: { highlight: "#000000", shadow: "#000000", opacity: 40 },
+                      cropFocus: CENTER,
                     }
                   )
                 }
