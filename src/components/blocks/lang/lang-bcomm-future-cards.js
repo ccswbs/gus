@@ -43,8 +43,8 @@ const render = ({ field_yaml_map, relationships }) => {
                                 <MediaTitle>{title}</MediaTitle>
                                 <p>{text}</p>
                                 <div className="d-grid d-md-block gap-2">
-                                    {links.map(({title, url}, index) => 
-                                        <a key={`lang-bcomm-cards-${index}`} href={url} className="btn btn-info me-md-3 no-icon p-4 text-start">{title}</a>
+                                    {links.map(({title, context, url}, index) => 
+                                        <a key={`lang-bcomm-cards-${index}`} href={url} className="btn btn-info me-md-3 no-icon p-4 text-start">{title} <span className="visually-hidden">{context}</span></a>
                                     )}
                                 </div>
                             </MediaCardBody>
