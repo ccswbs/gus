@@ -88,6 +88,15 @@ module.exports = {
     },
     `gatsby-transformer-yaml`,
     {
+      resolve: `gatsby-plugin-robots-txt`,
+      options: {
+        host: `https://livechugendpoint.azureedge.net/`,
+        sitemap: null,
+        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
+      }
+    },
+    `gatsby-transformer-yaml`,
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `./src/data/`,
@@ -96,6 +105,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
+        catchLinks: process.env.WORDPRESS_CATCH_LINKS,
         url:
         // allows a fallback url if WPGRAPHQL_URL is not set in the env, this may be a local or remote WP instance.
           process.env.WPGRAPHQL_URL ||
@@ -132,12 +142,6 @@ module.exports = {
           Tag: {exclude: true},
           User: {exclude: true},
         },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-catch-links`,
-      options: {
-        excludePattern: /(https?:\/\/(.+?\.)?uoguelph\.ca(\/[A-Za-z0-9\-\._~:\/\?#\[\]@!$&'\(\)\*\+,;\=]*)?)/,
       },
     },
     `gatsby-plugin-client-side-redirect`

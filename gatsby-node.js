@@ -1039,6 +1039,7 @@ function createContentTypeAlias(nodePath) {
     return alias;
 }
 
+<<<<<<< HEAD
 // list of pages for SE site
 /* function createSitePageList(helpers) {
 
@@ -1053,6 +1054,8 @@ function createContentTypeAlias(nodePath) {
     return;
 } */
 
+=======
+>>>>>>> master
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function slugify(string) {
     const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'

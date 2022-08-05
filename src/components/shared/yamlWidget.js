@@ -9,6 +9,13 @@ import InternationalExploreButtons from 'components/blocks/international/interna
 import InternationalExploreGrid from 'components/blocks/international/international-explore-grid'
 import InternationalTalkCurrentStudent from 'components/blocks/international/international-talk-current-student'
 import InternationalExploreLead from 'components/blocks/international/international-explore-lead'
+import LangBcommStats from 'components/blocks/lang/lang-bcomm-stats'
+import LangBcommFutureCards from 'components/blocks/lang/lang-bcomm-future-cards';
+import LangBcommQuote from 'components/blocks/lang/lang-bcomm-quote';
+import LangBcommSupportiveCommunity from 'components/blocks/lang/lang-bcomm-supportive-community';
+import LangBcommStatsBordered from 'components/blocks/lang/lang-bcomm-stats-bordered';
+import LangBcommFeatureExperience from 'components/blocks/lang/lang-bcomm-feature-experience';
+import LangBcommFutureCardsAdvantage from 'components/blocks/lang/lang-bcomm-future-cards-advantage';
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -20,7 +27,16 @@ const YamlWidget = (props) => {
         'international_explore_btns': <InternationalExploreButtons />,
         'international_explore_grid': <InternationalExploreGrid />,
         'international_talk_current_student':<InternationalTalkCurrentStudent />,
-        'international_explore_lead':<InternationalExploreLead />
+        'international_talk_current_student_blue':<InternationalTalkCurrentStudent background="#F4F7FA" />,
+        'international_explore_lead':<InternationalExploreLead />,
+        'lang_bcomm_stats':<LangBcommStats />,
+        'lang_bcomm_future_cards':<LangBcommFutureCards />,
+        'lang_bcomm_quote':<LangBcommQuote />,
+        'lang_bcomm_supportive_community':<LangBcommSupportiveCommunity />,
+        'lang_bcomm_stats_bordered':<LangBcommStatsBordered />,
+        'lang_bcomm_feature_experience':<LangBcommFeatureExperience />,
+        'lang_bcomm_future_cards_advantage':<LangBcommFutureCardsAdvantage />
+
     }[component] || null )
 }
 
@@ -40,11 +56,11 @@ export const query = graphql`
                 name
                 relationships {
                   field_media_image {
-                    gatsbyImage(
-                      width: 400
-                      placeholder: BLURRED
-                      layout: CONSTRAINED
-                    )
+                    localFile {
+                      childImageSharp {
+                        gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                      }
+                    }
                   }
                 }
                 path {

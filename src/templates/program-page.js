@@ -271,7 +271,7 @@ const ProgramPage = ({data, location}) => {
 
     // Open Graph metatags
     const ogDescription = progData.field_metatags?.og_description;
-    const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image?.publicUrl;
+    const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.localFile.publicURL;
     const ogImageAlt = heroImage && heroImage[0]?.node.field_media_image.alt;
 
     // set program details
@@ -316,7 +316,7 @@ const ProgramPage = ({data, location}) => {
               videoWidth={videoData.field_video_width}
               videoHeight={videoData.field_video_height}
               videoTranscript={
-                videoData.relationships.field_media_file?.uri.url
+                videoData.relationships.field_media_file?.localFile.publicURL
               }
             />
           ) : (
@@ -447,13 +447,16 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                publicUrl
-                gatsbyImage(
-                  width: 1920
-                  cropFocus: CENTER
+                localFile {
+                  publicURL
+                  childImageSharp {
+                      gatsbyImageData(
+                  transformOptions: {cropFocus: CENTER}
                   placeholder: BLURRED
                   aspectRatio: 3
                 )
+                   }
+                }
               }
             }
           }
@@ -605,12 +608,17 @@ export const query = graphql`query ($id: String) {
             }
           }
           field_image {
-            gatsbyImage(
-              width: 400
-              height: 400
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
+            localFile {
+              url
+              childImageSharp {
+                gatsbyImageData(
+                  width: 400
+                  height: 400
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+              }
+            }
           }
         }
       }
@@ -638,11 +646,12 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                gatsbyImage(
-                  width: 400
-                  placeholder: BLURRED
-                  layout: CONSTRAINED
-                )
+                localFile {
+                  publicURL
+                  childImageSharp {
+                    gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                  }
+                }
               }
             }
           }
@@ -670,11 +679,14 @@ export const query = graphql`query ($id: String) {
                     field_link_image {
                       relationships {
                         field_media_image {
-                          gatsbyImage(
-                            width: 400
-                            height: 300
-                            cropFocus: CENTER
-                          )
+                          localFile {
+                            publicURL
+                            childImageSharp {
+                              resize(width: 400, height: 300, cropFocus: CENTER) {
+                                src
+                              }
+                            }
+                          }
                         }
                       }
                     }
@@ -705,11 +717,14 @@ export const query = graphql`query ($id: String) {
                           field_link_image {
                             relationships {
                               field_media_image {
-                                gatsbyImage( 
-                                  cropFocus: CENTER
-                                  width: 400
-                                  height: 300
-                                )
+                                localFile {
+                                  publicURL
+                                  childImageSharp {
+                                    resize(width: 400, height: 300, cropFocus: CENTER) {
+                                      src
+                                    }
+                                  }
+                                }
                               }
                             }
                           }
@@ -735,11 +750,12 @@ export const query = graphql`query ($id: String) {
                           }
                           relationships {
                             field_media_image {
-                              gatsbyImage(
-                                width: 800
-                                placeholder: BLURRED
-                                layout: CONSTRAINED
-                              )
+                              localFile {
+                                publicURL
+                                childImageSharp {
+                                  gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
+                                }
+                              }
                             }
                           }
                         }
@@ -749,8 +765,8 @@ export const query = graphql`query ($id: String) {
                           field_media_oembed_video
                           relationships {
                             field_media_file {
-                              uri {
-                                url
+                              localFile {
+                                publicURL
                               }
                             }
                           }
@@ -779,11 +795,12 @@ export const query = graphql`query ($id: String) {
                     }
                     relationships {
                       field_media_image {
-                        gatsbyImage(
-                          width: 800
-                          placeholder: BLURRED
-                          layout: CONSTRAINED
-                        )
+                        localFile {
+                          publicURL
+                          childImageSharp {
+                            gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
+                          }
+                        }
                       }
                     }
                   }
@@ -793,9 +810,9 @@ export const query = graphql`query ($id: String) {
                     field_media_oembed_video
                     relationships {
                       field_media_file {
-                        uri {
-                          url
-                        }                        
+                        localFile {
+                          publicURL
+                        }
                       }
                     }
                   }
@@ -816,12 +833,17 @@ export const query = graphql`query ($id: String) {
         }
         relationships {
           field_media_image {
-            gatsbyImage(
-              width: 1920
-              cropFocus: CENTER
-              placeholder: BLURRED
-              aspectRatio: 3
-            )
+            localFile {
+              publicURL
+              childImageSharp {
+                 gatsbyImageData(
+                  transformOptions: {cropFocus: CENTER}
+                  placeholder: BLURRED
+                  aspectRatio: 3
+                )
+              }
+              extension
+            }
           }
         }
       }
@@ -836,13 +858,17 @@ export const query = graphql`query ($id: String) {
         }
         relationships {
           field_media_image {
-            publicUrl
-            gatsbyImage(
-              width: 1920
-              cropFocus: CENTER
-              placeholder: BLURRED
-              aspectRatio: 3
-            )
+            localFile {
+              publicURL
+              childImageSharp {
+                 gatsbyImageData(
+                  transformOptions: {cropFocus: CENTER}
+                  placeholder: BLURRED
+                  aspectRatio: 3
+                )
+              }
+              extension
+            }
           }
           field_tags {
             __typename
@@ -866,8 +892,8 @@ export const query = graphql`query ($id: String) {
           name
           relationships {
             field_media_file {
-              uri {
-                url
+              localFile {
+                publicURL
               }
             }
           }
@@ -900,11 +926,12 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                gatsbyImage(
-                  width: 400
-                  placeholder: BLURRED
-                  layout: CONSTRAINED
-                )
+                localFile {
+                  url
+                  childImageSharp {
+                    gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                  }
+                }
               }
             }
           }
@@ -949,12 +976,17 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                gatsbyImage(
-                  width: 400
-                  height: 400
-                  placeholder: BLURRED
-                  layout: CONSTRAINED
-                )
+                localFile {
+                  url
+                  childImageSharp {
+                    gatsbyImageData(
+                      width: 400
+                      height: 400
+                      placeholder: BLURRED
+                      layout: CONSTRAINED
+                    )
+                  }
+                }
               }
             }
           }
