@@ -78,12 +78,12 @@ html {
 	color: black !important;
 	background: var(--light-grey) !important;
 }
-.bg-dark .btn-secondary-outline {
+.bg-dark .btn-outline-secondary {
 	color: white !important;
 	border: white !important;
 }
-.bg-dark .btn-secondary-outline:focus,
-.bg-dark .btn-secondary-outline:hover {
+.bg-dark .btn-outline-secondary:focus,
+.bg-dark .btn-outline-secondary:hover {
 	color: black !important;
 	background: var(--light-grey) !important;
 }
