@@ -71,12 +71,26 @@ html {
 }
 .bg-dark .btn-secondary {
 	color: black !important;
-	background: white !important;
+	background: var(--off-white) !important;
+}
+.bg-dark .btn-secondary:focus,
+.bg-dark .btn-secondary:hover {
+	color: black !important;
+	background: var(--light-grey) !important;
+}
+.bg-dark .btn-secondary-outline {
+	color: white !important;
+	border: white !important;
+}
+.bg-dark .btn-secondary-outline:focus,
+.bg-dark .btn-secondary-outline:hover {
+	color: black !important;
+	background: var(--light-grey) !important;
 }
 .bg-dark h2,
 .bg-dark h3,
 .bg-dark h4 {
-	color: white !important;
+	color: var(--off-white) !important;
 }
 .uog-blue-muted {background:#edf2f5;}
 i.green {color:#4cae3e;}
