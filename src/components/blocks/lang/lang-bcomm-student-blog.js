@@ -33,7 +33,7 @@ const render = ({ field_yaml_map, relationships }, background ) => {
           <PageContainer.ContentArea>
             <Row className="my-sm-5">
               <Col md={7}>
-                <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src].src)} alt={yamlFiles[yamlMap.image.src].alt} />
+                <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src]?.src)} alt={yamlFiles[yamlMap.image.src]?.alt ?? ""} />
               </Col>
               <Col md={5} className="mt-5 ps-5">
                 <h3>{yamlMap.title}</h3>

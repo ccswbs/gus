@@ -31,7 +31,7 @@ const Testimony = ({ testimonial, files }) => (
     <div className="mt-5 me-3 pb-5">
         <Row className="justify-content-center g-5">
             <Col xs={5} sm={4} md={3}>
-                <GatsbyImage image={getImage(files[testimonial.source.image.src].src)} alt={files[testimonial.source.image.src].alt} imgClassName="rounded-circle" />
+                {files[testimonial.source.image.src] && <GatsbyImage image={getImage(files[testimonial.source.image.src]?.src)} alt={files[testimonial.source.image?.src]?.alt ?? ""} imgClassName="rounded-circle" />}
             </Col>
             <Col sm={8} md={9} className="ps-5 fs-2">
                 <QuoteText className="fs-1">
@@ -51,8 +51,8 @@ const render = ({ field_yaml_map, relationships }) => {
     let yamlFiles = {};
     relationships.field_yaml_files.forEach(file => {
         yamlFiles[file.path.alias] = {
-          src: file.relationships.field_media_image.localFile,
-          alt: file.relationships.field_media_image.relationships.media__image[0].field_media_image.alt,
+          src: file.relationships.field_media_image?.localFile,
+          alt: file.relationships.field_media_image?.relationships.media__image[0].field_media_image.alt,
         }
       });
     
@@ -74,11 +74,12 @@ const render = ({ field_yaml_map, relationships }) => {
                             <Testimony testimonial={yamlMap.testimonial} files={yamlFiles} />
                         </Col>
                         <Col md={6} className="d-flex position-relative p-0">
-                            <StyledImage 
-                                image={getImage(yamlFiles[yamlMap.aside.image.src].src)} 
-                                alt={yamlFiles[yamlMap.aside.image.src].alt} 
-                                className="position-absolute top-0 end-0"
-                            />
+                            {yamlFiles[yamlMap.aside.image.src] && 
+                                <StyledImage 
+                                    image={getImage(yamlFiles[yamlMap.aside.image.src]?.src)} 
+                                    alt={yamlFiles[yamlMap.aside.image.src]?.alt ?? ""} 
+                                    className="position-absolute top-0 end-0"
+                                />}
                             <Aside aside={yamlMap.aside} />    
                         </Col>
                     </Row>

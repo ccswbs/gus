@@ -18,7 +18,10 @@ const render = ({ field_yaml_map, relationships }) => {
     let yamlMap;
     let yamlFiles = {};
     relationships.field_yaml_files.forEach(file => {
-      yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
+      yamlFiles[file.path.alias] = {
+        src: file.relationships.field_media_image.localFile,
+        alt: file.relationships.field_media_image.relationships.media__image[0].field_media_image.alt,
+      }
     });
 
     try {
@@ -35,7 +38,7 @@ const render = ({ field_yaml_map, relationships }) => {
                 {yamlMap.cards.map(({title, text, image, links}, index) => 
                     <Col key={`lang-bcomm-cards-${index}`}>
                         <div className="card h-100 border-0">
-                            <GatsbyImage image={getImage(yamlFiles[image.src])} alt={image.alt} className="card-img-bottom" />
+                            {yamlFiles[image.src] && <GatsbyImage image={getImage(yamlFiles[image.src]?.src)} alt={yamlFiles[image.src]?.alt ?? ""} className="card-img-bottom" />}
                             <MediaCardBody className="card-body">
                                 <MediaTitle>{title}</MediaTitle>
                                 <p>{text}</p>
@@ -71,6 +74,13 @@ const query = graphql`
                   gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
                 }
               }
+              relationships {
+                media__image {
+                  field_media_image {
+                    alt
+                  }
+                }
+            }
             }
           }
           path {

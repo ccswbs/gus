@@ -38,10 +38,10 @@ const render = ({ field_yaml_map, relationships }) => {
   }
 
   return(
-    <div className="d-flex flex-column bg-light mb-4">
+    <div className="d-flex flex-column bg-dark mb-4">
       <Overlay.GatsbyImage 
-        gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src].src)} 
-        alt={yamlFiles[yamlMap.background_image.src].alt} >
+        gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src]?.src)} 
+        alt={yamlFiles[yamlMap.background_image.src]?.alt ?? ""} >
         <Container className="page-container">
           <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
             <Col sm={9} className="ps-5">
