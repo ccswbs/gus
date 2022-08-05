@@ -80,12 +80,12 @@ html {
 }
 .bg-dark .btn-outline-secondary {
 	color: white !important;
-	border: white !important;
+	border-color: white !important;
 }
 .bg-dark .btn-outline-secondary:focus,
 .bg-dark .btn-outline-secondary:hover {
 	color: black !important;
-	background: var(--light-grey) !important;
+	background: var(--off-white) !important;
 }
 .bg-dark h2,
 .bg-dark h3,
