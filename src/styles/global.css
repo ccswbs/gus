@@ -69,7 +69,11 @@ html {
 	color: black !important;
 	text-decoration-color: #edf2f5 !important;
 }
-
+.bg-dark h2,
+.bg-dark h3,
+.bg-dark h4 {
+	color: white !important;
+}
 .uog-blue-muted {background:#edf2f5;}
 i.green {color:#4cae3e;}
 
