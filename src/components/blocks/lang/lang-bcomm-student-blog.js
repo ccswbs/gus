@@ -39,7 +39,7 @@ const render = ({ field_yaml_map, relationships }, background ) => {
                 <h3>{yamlMap.title}</h3>
                 <p><em>{yamlMap.subtitle}</em></p>
                 <p>{yamlMap.body}</p>
-                <p><a href={yamlMap.link.url}>{yamlMap.link.title}</a></p>
+                <p><a href={yamlMap.link.url}>{yamlMap.link.title} <span className="visually-hidden">{yamlMap.link.context}</span></a></p>
               </Col>
             </Row>
           </PageContainer.ContentArea>
