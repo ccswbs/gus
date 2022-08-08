@@ -50,9 +50,9 @@ function LinksItems (props) {
 					{props.pageData.map (paragraph  => {
 						if(contentExists(paragraph.relationships)){
 						// if images exists - set the images to use in the grid display
-						const image = (contentExists(paragraph.relationships.field_link_image)) ? paragraph.relationships.field_link_image.relationships.field_media_image : null;
-						const imageFile = (contentExists(image) && contentExists(image.localFile.childImageSharp)) ? 
-													<GatsbyImage image={image.localFile.childImageSharp.gatsbyImageData} alt ={""} /> : null;
+						const image = paragraph.relationships?.field_link_image;
+						const imageFile = (contentExists(image) && contentExists(image.gatsbyImage)) ? 
+													<GatsbyImage image={image.gatsbyImage} alt ={""} /> : null;
 						
 						const urlLink = (contentExists(paragraph.field_link_url.url)) ? paragraph.field_link_url.url : null;
 						
@@ -118,12 +118,8 @@ fragment LinksWidgetParagraphFragment on paragraph__links_widget {
           field_link_image {
             relationships {
               field_media_image {
-                localFile {
-                  publicURL
-                  childImageSharp {
-                    gatsbyImageData(width: 400, height: 300, transformOptions: {cropFocus: CENTER})
-                  }
-                }
+                publicUrl
+                gatsbyImage(width: 400, height: 300, cropFocus: CENTER)
               }
             }
           }

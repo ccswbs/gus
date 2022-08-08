@@ -271,7 +271,7 @@ const ProgramPage = ({data, location}) => {
 
     // Open Graph metatags
     const ogDescription = progData.field_metatags?.og_description;
-    const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.localFile.publicURL;
+    const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.publicUrl;
     const ogImageAlt = heroImage && heroImage[0]?.node.field_media_image.alt;
 
     // set program details
@@ -316,7 +316,7 @@ const ProgramPage = ({data, location}) => {
               videoWidth={videoData.field_video_width}
               videoHeight={videoData.field_video_height}
               videoTranscript={
-                videoData.relationships.field_media_file?.localFile.publicURL
+                videoData.relationships.field_media_file?.publicUrl
               }
             />
           ) : (
@@ -447,16 +447,13 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                localFile {
-                  publicURL
-                  childImageSharp {
-                      gatsbyImageData(
-                  transformOptions: {cropFocus: CENTER}
+                publicUrl
+                gatsbyImage(
+                  width: 1920
+                  cropFocus: CENTER
                   placeholder: BLURRED
                   aspectRatio: 3
                 )
-                   }
-                }
               }
             }
           }
@@ -608,17 +605,13 @@ export const query = graphql`query ($id: String) {
             }
           }
           field_image {
-            localFile {
-              url
-              childImageSharp {
-                gatsbyImageData(
-                  width: 400
-                  height: 400
-                  placeholder: BLURRED
-                  layout: CONSTRAINED
-                )
-              }
-            }
+            url
+            gatsbyImage(
+              width: 400
+              height: 400
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
           }
         }
       }
@@ -627,200 +620,7 @@ export const query = graphql`query ($id: String) {
   footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id]}}}) {
     edges {
       node {
-        drupal_id
-        body {
-          processed
-        }
-        relationships {
-          field_tags {
-            __typename
-            ... on TaxonomyInterface {
-              drupal_id
-              id
-              name
-            }
-          }
-          field_footer_logo {
-            field_media_image {
-              alt
-            }
-            relationships {
-              field_media_image {
-                localFile {
-                  publicURL
-                  childImageSharp {
-                    gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
-                  }
-                }
-              }
-            }
-          }
-          field_widgets {
-            __typename
-            ... on paragraph__lead_paragraph {
-              id
-              field_lead_paratext {
-                value
-              }
-            }
-            ... on paragraph__links_widget {
-              drupal_id
-              field_link_items_title
-              field_link_items_description
-              relationships {
-                field_link_items {
-                  drupal_id
-                  field_link_description
-                  field_link_url {
-                    title
-                    uri
-                  }
-                  relationships {
-                    field_link_image {
-                      relationships {
-                        field_media_image {
-                          localFile {
-                            publicURL
-                            childImageSharp {
-                              resize(width: 400, height: 300, cropFocus: CENTER) {
-                                src
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            ... on paragraph__section {
-              drupal_id
-              field_section_title
-              field_section_classes
-              relationships {
-                field_section_content {
-                  __typename
-                  ... on paragraph__links_widget {
-                    drupal_id
-                    field_link_items_title
-                    field_link_items_description
-                    relationships {
-                      field_link_items {
-                        drupal_id
-                        field_link_description
-                        field_link_url {
-                          title
-                          uri
-                        }
-                        relationships {
-                          field_link_image {
-                            relationships {
-                              field_media_image {
-                                localFile {
-                                  publicURL
-                                  childImageSharp {
-                                    resize(width: 400, height: 300, cropFocus: CENTER) {
-                                      src
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                  ... on paragraph__media_text {
-                    field_media_text_title
-                    field_media_text_desc {
-                      processed
-                    }
-                    field_media_text_links {
-                      title
-                      uri
-                    }
-                    relationships {
-                      field_media_text_media {
-                        ... on media__image {
-                          name
-                          field_media_image {
-                            alt
-                          }
-                          relationships {
-                            field_media_image {
-                              localFile {
-                                publicURL
-                                childImageSharp {
-                                  gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
-                                }
-                              }
-                            }
-                          }
-                        }
-                        ... on media__remote_video {
-                          drupal_id
-                          name
-                          field_media_oembed_video
-                          relationships {
-                            field_media_file {
-                              localFile {
-                                publicURL
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            ... on paragraph__media_text {
-              field_media_text_title
-              field_media_text_desc {
-                processed
-              }
-              field_media_text_links {
-                title
-                uri
-              }
-              relationships {
-                field_media_text_media {
-                  ... on media__image {
-                    name
-                    field_media_image {
-                      alt
-                    }
-                    relationships {
-                      field_media_image {
-                        localFile {
-                          publicURL
-                          childImageSharp {
-                            gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
-                          }
-                        }
-                      }
-                    }
-                  }
-                  ... on media__remote_video {
-                    drupal_id
-                    name
-                    field_media_oembed_video
-                    relationships {
-                      field_media_file {
-                        localFile {
-                          publicURL
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+      ...CustomFooterFragment
       }
     }
   }
@@ -833,17 +633,13 @@ export const query = graphql`query ($id: String) {
         }
         relationships {
           field_media_image {
-            localFile {
-              publicURL
-              childImageSharp {
-                 gatsbyImageData(
-                  transformOptions: {cropFocus: CENTER}
-                  placeholder: BLURRED
-                  aspectRatio: 3
-                )
-              }
-              extension
-            }
+            publicUrl
+            gatsbyImage(
+              width: 1920
+              cropFocus: CENTER
+              placeholder: BLURRED
+              aspectRatio: 3
+            )
           }
         }
       }
@@ -858,17 +654,13 @@ export const query = graphql`query ($id: String) {
         }
         relationships {
           field_media_image {
-            localFile {
-              publicURL
-              childImageSharp {
-                 gatsbyImageData(
-                  transformOptions: {cropFocus: CENTER}
-                  placeholder: BLURRED
-                  aspectRatio: 3
-                )
-              }
-              extension
-            }
+            publicUrl
+            gatsbyImage(
+              width: 1920
+              cropFocus: CENTER
+              placeholder: BLURRED
+              aspectRatio: 3
+            )
           }
           field_tags {
             __typename
@@ -892,9 +684,7 @@ export const query = graphql`query ($id: String) {
           name
           relationships {
             field_media_file {
-              localFile {
-                publicURL
-              }
+              publicUrl
             }
           }
         }
@@ -926,12 +716,8 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                localFile {
-                  url
-                  childImageSharp {
-                    gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
-                  }
-                }
+                url
+                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
               }
             }
           }
@@ -976,17 +762,13 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                localFile {
-                  url
-                  childImageSharp {
-                    gatsbyImageData(
-                      width: 400
-                      height: 400
-                      placeholder: BLURRED
-                      layout: CONSTRAINED
-                    )
-                  }
-                }
+                url
+                gatsbyImage(
+                  width: 400
+                  height: 400
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
               }
             }
           }

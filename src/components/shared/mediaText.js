@@ -209,12 +209,8 @@ export const query = graphql`
     }
     relationships {
       field_media_image {
-        localFile {
-          publicURL
-          childImageSharp {
-            gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
-          }
-        }
+        publicUrl
+        gatsbyImage(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
       }
     }
   }
