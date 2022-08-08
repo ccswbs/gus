@@ -48,7 +48,7 @@ const WidgetSelector = ({widget}) => {
             id={widget.drupal_id}
             src={video?.field_media_oembed_video}
             title={video?.name}
-            transcript={video?.relationships?.field_media_file?.localFile.publicURL} /> 
+            transcript={video?.relationships?.field_media_file?.publicUrl} /> 
             : null;
         case "paragraph__section":
             return (<>

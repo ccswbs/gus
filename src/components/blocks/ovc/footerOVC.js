@@ -21,7 +21,7 @@ function OVCCustomFooter (props) {
 					<div className="col-md-4 content-area">
 					{footerLogos.map(logo => (
 						<GatsbyImage
-                            image={logo.relationships.field_media_image.localFile.childImageSharp.gatsbyImageData}
+                            image={logo.relationships.field_media_image.gatsbyImage}
                             className="footer-logo"
                             alt={logo.field_media_image.alt} />
 					))}
