@@ -605,7 +605,6 @@ export const query = graphql`query ($id: String) {
             }
           }
           field_image {
-            url
             gatsbyImage(
               width: 400
               height: 400
@@ -716,7 +715,6 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                url
                 gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
               }
             }
@@ -762,7 +760,6 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                url
                 gatsbyImage(
                   width: 400
                   height: 400
