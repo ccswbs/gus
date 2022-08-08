@@ -170,7 +170,7 @@ function MediaText (props) {
                 videoWidth={videoWidth}
             />}
 
-            {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
+            {imageURL && <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} />}
         </div>
         {textOrButtons &&
         <div className={textCol + " text-break"}>
