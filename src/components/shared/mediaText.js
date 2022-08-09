@@ -53,7 +53,7 @@ function MediaText (props) {
     }
     
     if (textColBg) {
-        textColPadding = classNames('p-4');
+        textColPadding = classNames('px-4 pb-4');
     } else {
         textColPadding = "";
     }
@@ -67,12 +67,14 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
+                        textColPadding = textColBg ? "p-4" : "";
                         wrapperCol = "col-md-6 row mt-4";
                     break;
                     case "medium":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColPadding = textColBg ? "p-4" : "";
                         wrapperCol = "col-md-6 row mt-4";
                     break;
                     case "large":
@@ -132,21 +134,25 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-3";
                         textCol = "col-md-9";
+                        textColPadding = textColBg ? "p-4" : "";
                     break;
                     case "medium":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
+                        textColPadding = textColBg ? "p-4" : "";
                     break;
                     case "large":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColPadding = textColBg ? "p-4" : "";
                     break;
                     default:
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColPadding = textColBg ? "p-4" : "";
                     break;
                 }                
             } else {
