@@ -69,6 +69,13 @@ html {
 	color: black !important;
 	text-decoration-color: #edf2f5 !important;
 }
+
+.bg-dark .btn-outline-info {
+	color: white !important;
+}
+.bg-dark .btn-outline-primary {
+	color: white !important;
+}
 .bg-dark .btn-secondary {
 	color: black !important;
 	background: var(--off-white) !important;
