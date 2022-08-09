@@ -14,7 +14,7 @@ const render = ({ field_yaml_map, relationships }, background ) => {
     let yamlMap;
     let yamlFiles = {};
     relationships.field_yaml_files.forEach(file => {
-      yamlFiles[file.path.alias] = {
+      yamlFiles[file.drupal_internal__mid] = {
         src: file.relationships.field_media_image.localFile,
         alt: file.relationships.field_media_image.relationships.media__image[0].field_media_image.alt,
       }
@@ -33,7 +33,7 @@ const render = ({ field_yaml_map, relationships }, background ) => {
           <PageContainer.ContentArea>
             <Row className="my-sm-5">
               <Col md={7}>
-                <GatsbyImage image={getImage(yamlFiles[yamlMap.image.src]?.src)} alt={yamlFiles[yamlMap.image.src]?.alt ?? ""} />
+                <GatsbyImage image={getImage(yamlFiles[yamlMap.image.mid]?.src)} alt={yamlFiles[yamlMap.image.mid]?.alt ?? ""} />
               </Col>
               <Col md={5} className="mt-5 ps-5">
                 <h3>{yamlMap.title}</h3>
@@ -74,9 +74,7 @@ const query = graphql`
               }
             }
           }
-          path {
-            alias
-          }
+          drupal_internal__mid
         }
       }
     }

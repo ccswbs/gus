@@ -24,7 +24,7 @@ const render = ({ field_yaml_map, relationships }) => {
   let yamlMap;
   let yamlFiles = {};
   relationships.field_yaml_files.forEach(file => {
-    yamlFiles[file.path.alias] = {
+    yamlFiles[file.drupal_internal__mid] = {
       src: file.relationships.field_media_image.localFile,
       alt: file.relationships.field_media_image.relationships.media__image[0].field_media_image.alt,
     }
@@ -40,8 +40,8 @@ const render = ({ field_yaml_map, relationships }) => {
   return(
     <div className="d-flex flex-column bg-dark mb-4">
       <Overlay.GatsbyImage 
-        gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src]?.src)} 
-        alt={yamlFiles[yamlMap.background_image.src]?.alt ?? ""} >
+        gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.mid]?.src)} 
+        alt={yamlFiles[yamlMap.background_image.mid]?.alt ?? ""} >
         <Container className="page-container">
           <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
             <Col sm={9} className="ps-5">
@@ -97,9 +97,7 @@ const query = graphql`
               }
             }
           }
-          path {
-            alias
-          }
+          drupal_internal__mid
         }
       }
     }
