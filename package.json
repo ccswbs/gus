@@ -14,7 +14,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "@fontsource/roboto": "^4.5.7",
+    "@fontsource/roboto": "^4.5.8",
     "axios": "^0.27.2",
     "babel-plugin-styled-components": "^2.0.7",
     "classnames": "^2.3.1",
@@ -41,10 +41,10 @@
     "js-yaml": "^4.1.0",
     "moment-timezone": "^0.5.34",
     "node-fetch": "^3.2.10",
-    "npm": "^8.15.1",
+    "npm": "^8.16.0",
     "npm-check-updates": "^16.0.5",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.4.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.4.0",
