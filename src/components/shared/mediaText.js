@@ -1,9 +1,10 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
-import Video from 'components/shared/video';
 import SectionButtons from 'components/shared/sectionButtons';
+import Video from 'components/shared/video';
 import { ConditionalWrapper } from 'utils/ug-utils';
 
 function MediaText (props) {
@@ -12,7 +13,7 @@ function MediaText (props) {
 
     const mediaTitle = props.widgetData?.field_media_text_title;
     const mediaDescription = props.widgetData.field_media_text_desc?.processed;
-    const mediaLinks = props.widgetData?.field_media_text_links;
+    const mediaBgColor = props.widgetData.relationships?.field_bg_color?.name;
     const mediaButtons = props.widgetData.relationships?.field_button_section;
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
@@ -30,9 +31,33 @@ function MediaText (props) {
     
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";
+    let textColBg;
+    let textColHeight;
+    let textColPadding;
     let wrapperCol;
     let headingClass;
+    let headingColor;
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
+    
+    switch(mediaBgColor) {
+        case "Light Blue":
+            textColBg = classNames('uog-blue-muted');
+            headingColor = classNames('text-dark');            
+        break;
+        case "Dark Gray":
+            textColBg = classNames('bg-dark');
+            headingColor = classNames('text-light');
+        break;
+        default:
+            textColBg = "";            
+        break;
+    }
+    
+    if (textColBg) {
+        textColPadding = classNames('px-4 pb-4');
+    } else {
+        textColPadding = "";
+    }
 
     if (region === "Primary") {
         // For images
@@ -43,23 +68,27 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
+                        textColPadding = textColBg ? "p-4" : "";
                         wrapperCol = "col-md-6 row mt-4";
                     break;
                     case "medium":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColPadding = textColBg ? "p-4" : "";
                         wrapperCol = "col-md-6 row mt-4";
                     break;
                     case "large":
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
-                        wrapperCol = "col-md-6";
+                        textColHeight = "h-100"
+                        wrapperCol = "col-md-6 mb-4 border-0 card";
                     break;
                     default:
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
-                        wrapperCol = "col-sm mb-3";
+                        textColHeight = "h-100"
+                        wrapperCol = "col-sm mb-3 border-0 card";
                     break;
                 }
             } else {
@@ -82,25 +111,25 @@ function MediaText (props) {
         } else {
             switch(mediaSize) {
                 case "small":
-                    wrapperCol = "col-md-4";
+                    wrapperCol = "col-md-4 border-0 card mb-4";
                 break;
                 case "medium":
-                    wrapperCol = "col-md-6";
+                    wrapperCol = "col-md-6 border-0 card mb-4";
                 break;
                 case "large":
-                    wrapperCol = "col-xs-12";
+                    wrapperCol = "col-xs-12 border-0 card mb-4";
                 break;
                 default:
-                    wrapperCol = "col-sm";
+                    wrapperCol = "col-sm border-0 card mb-4";
                 break;
             }
         }
     // Everything in the Secondary column is stacked
     } else if (region === "Secondary") {
-        wrapperCol = "col-xs-12";        
+        wrapperCol = "col-xs-12 border-0 card mb-4";        
     // Region is null, widget not in section 
     } else {
-        wrapperCol = "row mt-5";
+        wrapperCol = classNames('row mt-5', textColBg);
         if (imageURL) {
             if (mediaDescription || mediaButtons) {
                 switch(mediaSize) {
@@ -108,23 +137,31 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-3";
                         textCol = "col-md-9";
+                        textColHeight = "h-100"
+                        textColPadding = textColBg ? "p-4" : "";
                     break;
                     case "medium":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
+                        textColHeight = "h-100"
+                        textColPadding = textColBg ? "p-4" : "";
                     break;
                     case "large":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColHeight = "h-100"
+                        textColPadding = textColBg ? "p-4" : "";
                     break;
                     default:
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColHeight = "h-100"
+                        textColPadding = textColBg ? "p-4" : "";
                     break;
-                }
+                }                
             } else {
                 mediaCol = "col-xs-12";
             }
@@ -135,31 +172,40 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
+                        textColHeight = "h-100"
                     break;
                     case "medium":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColHeight = "h-100"
                     break;
                     case "large":
                         mediaCol = "col-md-12";
                         textCol = "col-md-12";
+                        textColHeight = "h-100"
                     break;
                     default:
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColHeight = "h-100"
                     break;
                 }
             } else {
                 mediaCol = "col-xs-12";
             }
+        }
+        if (textColBg) {
+            mediaCol = classNames(mediaCol, 'ps-0');
         }        
-    }        
-
+    }
+    headingClass = classNames(headingClass, headingColor);
+    textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
+    
     return (
-    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section className={wrapperCol}>{children}</section>}>
-        <div className={mediaCol}>
+    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
+        <div data-title="media" className={mediaCol}>
             {videoURL &&
             <Video videoID={videoID}
                 videoTitle={videoTitle}
@@ -173,19 +219,12 @@ function MediaText (props) {
             {imageURL && <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} />}
         </div>
         {textOrButtons &&
-        <div className={textCol + " text-break"}>
-            {mediaTitle && <h3 className={headingClass ? headingClass : undefined}>{mediaTitle}</h3>}
-            {mediaDescription && <div dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
+        <div data-title="media-description" className={textCol}>
+            {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
+            {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
-            {!mediaButtons && mediaLinks?.length>0 && <div>{mediaLinks.map(mediaLink => {
-                return ( 
-                <React.Fragment>
-                    {(mediaLink.uri.includes("http"))? <><a className="btn btn-outline-info" href={mediaLink.url}>{mediaLink.title}</a> </> :
-                    <Link to={mediaLink.url} className="btn btn-outline-info" >{mediaLink.title}</Link>}
-                </React.Fragment>)                
-            })}</div>}
         </div>}
-    </ConditionalWrapper>    
+    </ConditionalWrapper>
     );
 }
 
@@ -222,15 +261,13 @@ export const query = graphql`
     field_media_text_desc {
       processed
     }
-    field_media_text_links {
-      title
-      uri
-      url
-    }
     relationships {
+      field_bg_color {
+        name
+      }
       field_section_column {
-          name
-        }
+        name
+      }
       field_media_text_media {
         ... on media__image {
           ...MediaImageFragment
