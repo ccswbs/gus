@@ -29,7 +29,10 @@ const render = ({ field_yaml_map, relationships }) => {
   let yamlMap;
   let yamlFiles = {};
   relationships.field_yaml_files.forEach(file => {
-      yamlFiles[file.path.alias] = file.relationships.field_media_image.localFile;
+    yamlFiles[file.drupal_internal__mid] = {
+      src: file.relationships.field_media_image.localFile,
+      alt: file.relationships.field_media_image.relationships.media__image[0].field_media_image.alt,
+    }
   });
   
   try {
@@ -41,7 +44,7 @@ const render = ({ field_yaml_map, relationships }) => {
   
   return (
     <div className="d-flex flex-column bg-dark">
-    <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.images.background.src])} alt={yamlMap.images.background.alt}>
+    <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.images.background.mid]?.src)} alt={yamlFiles[yamlMap.images.background.mid]?.alt ?? ""}>
         <Container className="page-container">
             <Row className="site-content bg-transparent h-100 text-white pb-0">
                 <Col lg={6} className="fs-3 mb-4">
@@ -49,7 +52,7 @@ const render = ({ field_yaml_map, relationships }) => {
                     {yamlMap.body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
                 </Col>
                 <Col lg={6} className="d-flex justify-content-center">
-                    <GatsbyImage image={getImage(yamlFiles[yamlMap.images.foreground.src])} alt={yamlMap.images.foreground.alt} className="align-self-end img-fluid" />
+                    <GatsbyImage image={getImage(yamlFiles[yamlMap.images.foreground.mid]?.src)} alt={yamlFiles[yamlMap.images.foreground.mid]?.alt ?? ""} className="align-self-end img-fluid" />
                 </Col>
             </Row>
         </Container>
@@ -88,11 +91,16 @@ const render = ({ field_yaml_map, relationships }) => {
                     )
                   }
                 }
+                relationships {
+                  media__image {
+                    field_media_image {
+                      alt
+                    }
+                  }
+                }
               }
             }
-            path {
-              alias
-            }
+            drupal_internal__mid
           }
         }
       }
