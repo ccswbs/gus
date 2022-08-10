@@ -737,10 +737,6 @@ export const query = graphql`query ($id: String) {
                     field_media_text_desc {
                       processed
                     }
-                    field_media_text_links {
-                      title
-                      uri
-                    }
                     relationships {
                       field_media_text_media {
                         ... on media__image {
@@ -781,10 +777,6 @@ export const query = graphql`query ($id: String) {
               field_media_text_title
               field_media_text_desc {
                 processed
-              }
-              field_media_text_links {
-                title
-                uri
               }
               relationships {
                 field_media_text_media {
