@@ -32,6 +32,7 @@ function MediaText (props) {
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";
     let textColBg;
+    let textColHeight;
     let textColPadding;
     let wrapperCol;
     let headingClass;
@@ -80,11 +81,13 @@ function MediaText (props) {
                     case "large":
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
+                        textColHeight = "h-100"
                         wrapperCol = "col-md-6 mb-4 border-0 card";
                     break;
                     default:
                         mediaCol = "col-xs-12";
                         textCol = "col-xs-12";
+                        textColHeight = "h-100"
                         wrapperCol = "col-sm mb-3 border-0 card";
                     break;
                 }
@@ -134,24 +137,28 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-3";
                         textCol = "col-md-9";
+                        textColHeight = "h-100"
                         textColPadding = textColBg ? "p-4" : "";
                     break;
                     case "medium":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
+                        textColHeight = "h-100"
                         textColPadding = textColBg ? "p-4" : "";
                     break;
                     case "large":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColHeight = "h-100"
                         textColPadding = textColBg ? "p-4" : "";
                     break;
                     default:
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColHeight = "h-100"
                         textColPadding = textColBg ? "p-4" : "";
                     break;
                 }                
@@ -165,20 +172,24 @@ function MediaText (props) {
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-4";
                         textCol = "col-md-8";
+                        textColHeight = "h-100"
                     break;
                     case "medium":
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColHeight = "h-100"
                     break;
                     case "large":
                         mediaCol = "col-md-12";
                         textCol = "col-md-12";
+                        textColHeight = "h-100"
                     break;
                     default:
                         headingClass = "mt-md-0";
                         mediaCol = "col-md-6";
                         textCol = "col-md-6";
+                        textColHeight = "h-100"
                     break;
                 }
             } else {
@@ -190,7 +201,7 @@ function MediaText (props) {
         }        
     }
     headingClass = classNames(headingClass, headingColor);
-    textCol = classNames(textCol, textColBg, textColPadding, "text-break", "h-100");
+    textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
     
     return (
     <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
