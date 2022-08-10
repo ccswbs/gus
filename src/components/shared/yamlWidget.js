@@ -37,7 +37,8 @@ const YamlWidget = (props) => {
         'lang_bcomm_stats_bordered':<LangBcommStatsBordered />,
         'lang_bcomm_feature_experience':<LangBcommFeatureExperience />,
         'lang_bcomm_future_cards_advantage':<LangBcommFutureCardsAdvantage />,
-        'lang_bcomm_student_blog':<LangBcommStudentBlog />
+        'lang_bcomm_student_blog':<LangBcommStudentBlog />,
+        'lang_bcomm_student_blog_blue':<LangBcommStudentBlog background="#F4F7FA" />,
 
     }[component] || null )
 }
