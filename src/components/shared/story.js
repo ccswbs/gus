@@ -7,12 +7,16 @@ const StorySelector = ({story}) => {
         case "paragraph__story_image_cutout_background":
             return <StoryImageCutout storyData={story} />;
         default:
-            return <></>
+            return null;
     }
 }
 
-const Story = ({props}) => {
-    return <StorySelector story={props.storyData} />
+const Story = (props) => {
+    let storyContent = props.storyData?.relationships.field_story_content;
+    return storyContent ? 
+      <>
+        {storyContent?.map((story, index) => <StorySelector story={story} key={index} />)} 
+      </> : null
 }
 
 export default Story

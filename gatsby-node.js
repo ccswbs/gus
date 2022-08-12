@@ -122,6 +122,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__section
       | paragraph__stats_widget
       | paragraph__section_tabs
+      | paragraph__story_widget
       | paragraph__tab_content
       | paragraph__accordion_section
       | paragraph__yaml_widget
@@ -626,6 +627,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       field_story_title: String
       field_story_text: BodyField
+      relationships: paragraph__story_image_cutout_backgroundRelationships
+    }
+    type paragraph__story_image_cutout_backgroundRelationships implements Node {
       field_story_image: media__image @link(from: "field_story_image___NODE")
       field_story_image_bg: media__image @link(from: "field_story_image_bg___NODE")
       field_story_content: [storyCutoutParagraphUnion] @link(from:"field_story_content___NODE")

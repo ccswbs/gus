@@ -24,14 +24,29 @@ const QuoteText = styled.p`
 const QuoteSource = styled.p`
     color: var(--uog-blue);
 `
-// const render = ({ title, body, images, video, testimonial }) => (        
+
 function StoryImageCutout (props) {
-  let title = props.field_story_title;
-  let body = props.field_story_text;
-  let foreground = props.field_story_image;
-  let background = props.field_story_image_bg;
-  let video = props.field_story_content.relationships?.field_media_video;
-  // let testimonial = props.field_story_content.relationships?.field_media_video;
+  let story = props.storyData;
+  let title = story?.field_story_title;
+  let body = story?.field_story_text;
+
+  let storyRelationships = story?.relationships;
+  let foreground = {
+    src: storyRelationships?.field_story_image?.relationships?.field_media_image.localFile,
+    alt: storyRelationships?.field_story_image?.field_media_image?.alt,
+  }
+  let background = {
+    src: storyRelationships?.field_story_image_bg?.relationships.field_media_image.localFile,
+    alt: storyRelationships?.field_story_image_bg?.field_media_image?.alt,
+  }
+
+  // const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
+  // const imageURL = mediaRelationships?.field_media_image?.localFile;	
+  // const imageAlt = props.widgetData.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
+
+
+  // let video = story?.field_story_content.relationships?.field_media_video;
+  // let testimonial = props.storyData?.field_story_content.relationships?.field_media_video;
 
   return foreground ? (
     <div className="d-flex flex-column bg-dark">
@@ -40,8 +55,8 @@ function StoryImageCutout (props) {
                 <Row className="site-content bg-transparent h-100 text-white pb-0">
                     <Col lg={6} className="fs-3 mb-4">
                         <SectionTitle>{title}</SectionTitle>
-                        {body.map((paragraph, index) => <p key={`banky-text-${index}`}>{paragraph}</p>)}
-                        {video ?? <ModalVideo 
+                        <div dangerouslySetInnerHTML={{__html: body.processed}}></div>    
+                        {/* {video ?? <ModalVideo 
                             id={video.id} 
                             src={video.url} 
                             title={video.title} 
@@ -51,14 +66,14 @@ function StoryImageCutout (props) {
                                     <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {video.title}</span>
                                 </button>
                             }
-                        />}
-                    </Col>
-                    <Col lg={6} className="d-flex justify-content-center">
-                        <GatsbyImage image={getImage(foreground.src)} alt={foreground.alt} className="align-self-end img-fluid" />
-                    </Col>
-                </Row>
-            </Container>
-        </Overlay.GatsbyImage>
+                        />} */}
+                     </Col>
+                     <Col lg={6} className="d-flex justify-content-center">
+                         <GatsbyImage image={getImage(foreground.src)} alt={foreground.alt} className="align-self-end img-fluid" />
+                     </Col>
+                 </Row>
+             </Container>
+         </Overlay.GatsbyImage>
 
         {/* <Testimonial className="d-flex justify-content-center">
             <Row className="w-100 p-5 text-center">
@@ -70,8 +85,8 @@ function StoryImageCutout (props) {
                 <QuoteSource className="fs-3">~ {testimonial.source.name}</QuoteSource>
             </Row>
         </Testimonial> */}
-    </div>
-  ) : null
+      </div>
+    ) : null
 }
 
 export default StoryImageCutout
@@ -84,53 +99,62 @@ export const query = graphql`
     field_story_text {
       processed
     }
-    field_story_image {
-      ... on media__image {
-        name
-        field_media_image {
-          alt
-        }
-        relationships {
+    relationships {
+      field_story_image {
+        ... on media__image {
+          name
           field_media_image {
-            localFile {
-              publicURL
-              childImageSharp {
-                gatsbyImageData
+            alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                publicURL
+                childImageSharp {
+                  gatsbyImageData
+                }
               }
             }
           }
         }
       }
-    }
 
-    field_story_image_bg {
-      ... on media__image {
-        name
-        field_media_image {
-          alt
-        }
-        relationships {
+      field_story_image_bg {
+        ... on media__image {
+          name
           field_media_image {
-            localFile {
-              publicURL
-              childImageSharp {
-                gatsbyImageData(layout: FULL_WIDTH)
+            alt
+          }
+          relationships {
+            field_media_image {
+              localFile {
+                publicURL
+                childImageSharp {
+                  gatsbyImageData(
+                    layout: CONSTRAINED,
+                    placeholder: BLURRED,
+                    height: 600,
+                    transformOptions: {
+                      cropFocus: CENTER,
+                    }
+                  )
+                }
               }
             }
           }
         }
       }
-    }
 
-    field_story_content {
-      ... on paragraph__story_modal_video {
-        drupal_id
-        field_modal_video_button_title {
-          processed
-        }
-        field_media_video {
-          ... on media__remote_video {
-            ...MediaRemoteVideoFragment
+      field_story_content {
+        ... on paragraph__story_modal_video {
+          drupal_id
+          field_modal_video_button_title {
+            processed
+          }
+          field_media_video {
+            ... on media__remote_video {
+              ...MediaRemoteVideoFragment
+            }
           }
         }
       }

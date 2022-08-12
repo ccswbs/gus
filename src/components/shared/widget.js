@@ -63,8 +63,7 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__stats_widget":
             return <StatsWidget statsWidgetData={widget} />;
         case "paragraph__story_widget":
-            // return <Story storyData={widget} />;
-            return <h1>HERE</h1>;
+            return <Story storyData={widget} />;
         case "paragraph__yaml_widget":
             return <YamlWidget key={widget.drupal_id} blockData={widget} />;
         default:
