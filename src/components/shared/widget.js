@@ -12,6 +12,7 @@ import ModalVideo from 'components/shared/modalVideo';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
 import StatsWidget from 'components/shared/statsWidget';
+import Story from 'components/shared/story';
 import YamlWidget from 'components/shared/yamlWidget';
 import { ConditionalWrapper } from 'utils/ug-utils';
 
@@ -61,6 +62,9 @@ const WidgetSelector = ({widget}) => {
             return <PageTabs pageData={widget} />;
         case "paragraph__stats_widget":
             return <StatsWidget statsWidgetData={widget} />;
+        case "paragraph__story_widget":
+            // return <Story storyData={widget} />;
+            return <h1>HERE</h1>;
         case "paragraph__yaml_widget":
             return <YamlWidget key={widget.drupal_id} blockData={widget} />;
         default:
@@ -71,7 +75,8 @@ const WidgetSelector = ({widget}) => {
 const Widget = ({widget}) => {
     return <ConditionalWrapper 
         condition={widget?.__typename !== "paragraph__yaml_widget" 
-            && widget?.__typename !== "paragraph__modal_video_widget"} 
+            && widget?.__typename !== "paragraph__modal_video_widget" 
+            && widget?.__typename !== "paragraph__story_widget" } 
         wrapper={children => 
             <PageContainer.SiteContent>
               <PageContainer.ContentArea>
@@ -121,8 +126,11 @@ export const query = graphql`
     ... on paragraph__stats_widget {
       ...StatsWidgetParagraphFragment
     }
+    ... on paragraph__story_widget {
+      ...StoryWidgetParagraphFragment
+    }
     ... on paragraph__yaml_widget {
-        ...YamlWidgetParagraphFragment
+      ...YamlWidgetParagraphFragment
     }
   }
 `
