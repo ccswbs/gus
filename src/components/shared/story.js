@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import StoryImageCutout from 'components/shared/StoryImageCutout';
+import StoryImageCutout from 'components/shared/storyImageCutout';
 
 const StorySelector = ({story}) => {
     switch (story?.__typename) {
