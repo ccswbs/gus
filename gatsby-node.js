@@ -103,6 +103,13 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | taxonomy_term__topics
       | taxonomy_term__units
       | taxonomy_term__testimonial_type
+    
+    union storyWidgetParagraphUnion =
+      paragraph__story_image_cutout_background
+
+    union storyCutoutParagraphUnion =
+      paragraph__story_quote
+      | paragraph__story_modal_video
 
     union widgetParagraphUnion =
       paragraph__block_widget
@@ -607,6 +614,33 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__stats_widgetRelationships implements Node {
       field_statistic: [paragraph__program_statistic] @link(from: "field_statistic___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+    }
+    type paragraph__story_widget implements Node {
+      drupal_id: String
+      relationships: paragraph__story_widgetRelationships  
+    }
+    type paragraph__story_widgetRelationships implements Node {
+      field_story_content: [storyWidgetParagraphUnion] @link(from:"field_story_content___NODE")
+    }
+    type paragraph__story_image_cutout_background implements Node {
+      drupal_id: String
+      field_story_title: String
+      field_story_text: BodyField
+      field_story_image: media__image @link(from: "field_story_image___NODE")
+      field_story_image_bg: media__image @link(from: "field_story_image_bg___NODE")
+      field_story_content: [storyCutoutParagraphUnion] @link(from:"field_story_content___NODE")
+    }
+    type paragraph__story_quote implements Node {
+      drupal_id: String
+      field_story_quote: BodyField
+      field_quote_source: String
+      field_quote_source_description: String
+      field_story_image: media__image @link(from: "field_story_image___NODE")
+    }
+    type paragraph__story_modal_video implements Node {
+      drupal_id: String
+      field_media_video: media__remote_video @link(from: "field_media_video___NODE")
+      field_modal_video_button_title: BodyField
     }
     type paragraph__yaml_widget implements Node {
       drupal_id: String
