@@ -11,17 +11,23 @@ const QuoteMark = styled.i`
     color: var(--uog-blue);
 `
 const QuoteText = styled.p`
-    color: #000;
+    color: #FFF;
+    & strong {
+      color: #FFF;
+    }
 `
 const QuoteShadow = styled.div`
-  text-shadow: #fff 1px 0 4px;
+  text-shadow: #000 1px 0 4px;
 `
 
 const render = ({ field_yaml_map, relationships }) => {
   let yamlMap;
   let yamlFiles = {};
   relationships.field_yaml_files.forEach(file => {
-    yamlFiles[file.path.alias] = file.relationships.field_media_image;
+    yamlFiles[file.drupal_internal__mid] = {
+      src: file.relationships?.field_media_image,
+      alt: file.relationships?.field_media_image?.relationships.media__image[0].field_media_image.alt,
+    }
   });
 
   try {
@@ -32,8 +38,10 @@ const render = ({ field_yaml_map, relationships }) => {
   }
 
   return(
-    <div className="d-flex flex-column bg-light mb-4">
-      <Overlay.GatsbyImage gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.src])} alt={yamlMap.background_image.alt}>
+    <div className="d-flex flex-column bg-dark mb-4">
+      <Overlay.GatsbyImage 
+        gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.mid]?.src)} 
+        alt={yamlFiles[yamlMap.background_image.mid]?.alt ?? ""} >
         <Container className="page-container">
           <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
             <Col sm={9} className="ps-5">
@@ -43,8 +51,8 @@ const render = ({ field_yaml_map, relationships }) => {
                         <em>{yamlMap.quote}</em>
                     <QuoteMark className="fad fa-quote-right ps-2" aria-hidden="true" />
                 </QuoteText>
-                <p className="author text-dark fs-2"><strong>{yamlMap.source.name}</strong>
-                <br /><em>{yamlMap.source.desc}</em></p>
+                <QuoteText className="author fs-2"><strong>{yamlMap.source.name}</strong>
+                <br /><em>{yamlMap.source.desc}</em></QuoteText>
               </QuoteShadow>
             </Col>
           </Row>
@@ -71,12 +79,21 @@ const query = graphql`
                 height: 190
                 placeholder: BLURRED
                 layout: CONSTRAINED
+                cropFocus: CENTER,
+                transformOptions: {
+                  duotone: { highlight: "#000000", shadow: "#000000", opacity: 40 },
+                }
               )
+              relationships {
+                media__image {
+                  field_media_image {
+                    alt
+                  }
+                }
+              }
             }
           }
-          path {
-            alias
-          }
+          drupal_internal__mid
         }
       }
     }

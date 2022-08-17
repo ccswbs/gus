@@ -3,19 +3,18 @@ import { graphql } from 'gatsby';
 
 // @todo - add index of components in components/blocks and import all in one line
 // until then, import each component manually below
-import InternationalStatsGlobal from 'components/blocks/international/international-stats-global'
-import InternationalExploreThingsToKnow from 'components/blocks/international/international-things-to-know'
-import InternationalExploreButtons from 'components/blocks/international/international-explore-btns'
-import InternationalExploreGrid from 'components/blocks/international/international-explore-grid'
-import InternationalTalkCurrentStudent from 'components/blocks/international/international-talk-current-student'
-import InternationalExploreLead from 'components/blocks/international/international-explore-lead'
-import LangBcommStats from 'components/blocks/lang/lang-bcomm-stats'
-import LangBcommFutureCards from 'components/blocks/lang/lang-bcomm-future-cards';
+import InternationalStatsGlobal from 'components/blocks/international/international-stats-global';
+import InternationalExploreThingsToKnow from 'components/blocks/international/international-things-to-know';
+import InternationalExploreButtons from 'components/blocks/international/international-explore-btns';
+import InternationalExploreGrid from 'components/blocks/international/international-explore-grid';
+import InternationalTalkCurrentStudent from 'components/blocks/international/international-talk-current-student';
+import InternationalExploreLead from 'components/blocks/international/international-explore-lead';
+import LangBcommStats from 'components/blocks/lang/lang-bcomm-stats';
 import LangBcommQuote from 'components/blocks/lang/lang-bcomm-quote';
 import LangBcommSupportiveCommunity from 'components/blocks/lang/lang-bcomm-supportive-community';
 import LangBcommStatsBordered from 'components/blocks/lang/lang-bcomm-stats-bordered';
 import LangBcommFeatureExperience from 'components/blocks/lang/lang-bcomm-feature-experience';
-import LangBcommFutureCardsAdvantage from 'components/blocks/lang/lang-bcomm-future-cards-advantage';
+import LangBcommStudentBlog from 'components/blocks/lang/lang-bcomm-student-blog';
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -30,12 +29,12 @@ const YamlWidget = (props) => {
         'international_talk_current_student_blue':<InternationalTalkCurrentStudent background="#F4F7FA" />,
         'international_explore_lead':<InternationalExploreLead />,
         'lang_bcomm_stats':<LangBcommStats />,
-        'lang_bcomm_future_cards':<LangBcommFutureCards />,
         'lang_bcomm_quote':<LangBcommQuote />,
         'lang_bcomm_supportive_community':<LangBcommSupportiveCommunity />,
         'lang_bcomm_stats_bordered':<LangBcommStatsBordered />,
         'lang_bcomm_feature_experience':<LangBcommFeatureExperience />,
-        'lang_bcomm_future_cards_advantage':<LangBcommFutureCardsAdvantage />
+        'lang_bcomm_student_blog':<LangBcommStudentBlog />,
+        'lang_bcomm_student_blog_blue':<LangBcommStudentBlog background="#F4F7FA" />,
 
     }[component] || null )
 }

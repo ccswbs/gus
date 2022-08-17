@@ -31,14 +31,14 @@ const render = ({ field_yaml_map }, colourOptions) => {
       <Gradient className="d-flex flex-column">
         <Container className="page-container p-0">
             <Statistic className="row g-0 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center mb-0">
-                {yamlMap.stats.map(({value, type, footnote, footnote_marker}, index) => 
+                {yamlMap.stats.map(({value, type, footnote}, index) => 
                   <Statistic.SolidCard 
                     key={`lang-bcomm-stat-${index}`}
                     background={colourOptions[index].background} 
                     colour={colourOptions[index].colour} 
                     className="px-5 pt-5 pb-3 col" >
                     <Statistic.Value fontsize="3.25rem"><strong>{value}</strong></Statistic.Value>
-                    <Statistic.Type>{type}</Statistic.Type>
+                    <Statistic.Type>{type} {footnote && <a href={footnote.href} id={footnote.id} aria-describedby={footnote.describedby} role="doc-noteref">{footnote.marker}</a>}</Statistic.Type>
                   </Statistic.SolidCard>
                 )}
             </Statistic>
