@@ -4,6 +4,9 @@ import { Helmet } from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
 function Seo({ description, img, imgAlt, lang, meta, keywords, title }) {
+    
+  let imgURL = img ? "https://cdn.uoguelph.ca" + img : ``;
+    
   return (
     <StaticQuery
       query={detailsQuery}
@@ -11,7 +14,7 @@ function Seo({ description, img, imgAlt, lang, meta, keywords, title }) {
         const metaDescription =
           description || data.site.siteMetadata.description	
         const metaImage = 
-          img || data.site.siteMetadata.ogImage
+          imgURL || data.site.siteMetadata.ogImage
         const metaImageAlt = 
           imgAlt || data.site.siteMetadata.ogImageAlt
         return (
