@@ -23,7 +23,7 @@ function LeadPara (props) {
         return (
             <React.Fragment>
                <div className="full-width-container"> 
-                    <StyledBG className="row justify-content-end" imageURL={paraBG}>
+                    <StyledBG className="container-fluid justify-content-end pe-0 row" imageURL={paraBG}>
                         <StyledText className="col-md-6 text-white" dangerouslySetInnerHTML={{ __html: paraText}} />
                     </StyledBG>
                </div> 
