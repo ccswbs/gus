@@ -76,10 +76,11 @@ const query = graphql`
             field_media_image {
               gatsbyImage(
                 width: 1400 
-                height: 190
+                height: 640
                 placeholder: BLURRED
                 layout: CONSTRAINED
-                cropFocus: CENTER,
+                cropFocus: CENTER
+                duotone: { highlight: "#000000", shadow: "#000000", opacity: 40 }
               )
               relationships {
                 media__image {
