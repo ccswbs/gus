@@ -175,7 +175,7 @@ export const query = graphql`
                     layout: CONSTRAINED,
                     transformOptions: {
                       duotone: { highlight: "#000000", shadow: "#000000", opacity: 40 },
-                      cropFocus: NORTH,
+                      cropFocus: ENTROPY,
                     }
                   )
                 }
