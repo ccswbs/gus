@@ -104,8 +104,10 @@ function StoryImageCutout (props) {
              </Container>
          </Overlay.GatsbyImage>
 
-        {testimonial && <Testimonial className="d-flex justify-content-center">
-            <Row className="w-100 p-5 text-center">
+        {testimonial && 
+        <Testimonial className="d-flex justify-content-center">
+          <Container className="page-container">
+            <Row className="bg-transparent w-100 p-5 text-center">
                 <QuoteText className="display-3 text-white">
                     <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
                         <em>{testimonial.field_story_quote}</em>
@@ -115,6 +117,7 @@ function StoryImageCutout (props) {
                   <QuoteSource className="fs-3">~ {testimonial.field_quote_source}{testimonialQuoteSource}</QuoteSource>
                 }
             </Row>
+          </Container>
         </Testimonial>}
       </div>
     ) : null
