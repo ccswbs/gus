@@ -80,7 +80,6 @@ const query = graphql`
                 placeholder: BLURRED
                 layout: CONSTRAINED
                 cropFocus: CENTER
-                duotone: { highlight: "#000000", shadow: "#000000", opacity: 40 }
               )
               relationships {
                 media__image {
