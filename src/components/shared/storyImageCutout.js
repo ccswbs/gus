@@ -52,7 +52,7 @@ function StoryImageCutout (props) {
   let title = story?.field_story_title;
   let body = story?.field_story_text;
 
-  // images
+  // Images
   let storyRelationships = story?.relationships;
   let foreground = {
     src: storyRelationships?.field_story_image?.relationships?.field_media_image.localFile,
@@ -63,17 +63,19 @@ function StoryImageCutout (props) {
     alt: storyRelationships?.field_story_image_bg?.field_media_image?.alt,
   }
 
-  // quote
+  // Additional Content
   const additionalContent = SortContent(storyRelationships?.field_story_content);
 
+  // Video
   let video = additionalContent.videos[0]?.relationships?.field_media_video;
-  let videoID = video.drupal_id;
-  let videoName = video.name;
-  let videoSrc = video.field_media_oembed_video;
-  let videoTranscript = video.relationships?.field_media_file?.localFile.publicURL;
+  let videoID = video?.drupal_id;
+  let videoName = video?.name;
+  let videoSrc = video?.field_media_oembed_video;
+  let videoTranscript = video?.relationships?.field_media_file?.localFile.publicURL;
 
+  // Testimonial Quote
   let testimonial = additionalContent.quotes[0];
-  let testimonialQuoteSource = testimonial.field_quote_source_description ? ', ' + testimonial.field_quote_source_description : '';
+  let testimonialQuoteSource = testimonial?.field_quote_source_description ? ', ' + testimonial.field_quote_source_description : '';
 
   return foreground ? (
     <div className="d-flex flex-column bg-dark">
@@ -83,7 +85,7 @@ function StoryImageCutout (props) {
                     <Col lg={6} className="fs-3 mb-4">
                         <SectionTitle>{title}</SectionTitle>
                         <div dangerouslySetInnerHTML={{__html: body.processed}}></div>  
-                        {videoSrc ? <ModalVideo 
+                        {video ? <ModalVideo 
                             id={videoID} 
                             src={videoSrc} 
                             title={videoName} 
@@ -102,7 +104,7 @@ function StoryImageCutout (props) {
              </Container>
          </Overlay.GatsbyImage>
 
-        {testimonial.field_story_quote && <Testimonial className="d-flex justify-content-center">
+        {testimonial && <Testimonial className="d-flex justify-content-center">
             <Row className="w-100 p-5 text-center">
                 <QuoteText className="display-3 text-white">
                     <QuoteMark className="fad fa-quote-left pe-2" aria-hidden="true" /> 
@@ -169,6 +171,7 @@ export const query = graphql`
                     placeholder: BLURRED, 
                     layout: CONSTRAINED,
                     transformOptions: {
+                      duotone: { highlight: "#000000", shadow: "#000000", opacity: 40 },
                       cropFocus: NORTH,
                     }
                   )
