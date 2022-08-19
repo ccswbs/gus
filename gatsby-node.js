@@ -636,15 +636,18 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__story_quote implements Node {
       drupal_id: String
-      field_story_quote: BodyField
+      field_story_quote: String
       field_quote_source: String
       field_quote_source_description: String
       field_story_image: media__image @link(from: "field_story_image___NODE")
     }
     type paragraph__story_modal_video implements Node {
       drupal_id: String
-      field_media_video: media__remote_video @link(from: "field_media_video___NODE")
       field_modal_video_button_title: BodyField
+      relationships: paragraph__story_modal_videoRelationships
+    }
+    type paragraph__story_modal_videoRelationships implements Node {
+      field_media_video: media__remote_video @link(from: "field_media_video___NODE")
     }
     type paragraph__yaml_widget implements Node {
       drupal_id: String
