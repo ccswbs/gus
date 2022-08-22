@@ -148,6 +148,7 @@ export const query = graphql`
                   gatsbyImageData(
                     layout: CONSTRAINED,
                     placeholder: BLURRED,
+                    height: 540,
                   )
                 }
               }
@@ -169,6 +170,7 @@ export const query = graphql`
                 childImageSharp {
                   gatsbyImageData(
                     width: 1400,
+                    height: 600,
                     placeholder: BLURRED, 
                     layout: CONSTRAINED,
                     transformOptions: {
