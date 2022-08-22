@@ -6,6 +6,9 @@ import Overlay from "components/shared/overlay"
 import ModalVideo from "components/shared/modalVideo"
 import styled from "styled-components"
 
+const SectionText = styled.div`
+  text-shadow: 2px 2px 8px rgb(0 0 0 / 99%);
+`
 const SectionTitle = styled.h3`
   font-size: 2.5rem;
   color: #fff;
@@ -84,7 +87,7 @@ function StoryImageCutout (props) {
                 <Row className="site-content bg-transparent h-100 text-white pb-0">
                     <Col lg={6} className="fs-3 mb-4 d-flex flex-column justify-content-center">
                         <SectionTitle>{title}</SectionTitle>
-                        <div dangerouslySetInnerHTML={{__html: body.processed}}></div>  
+                        <SectionText dangerouslySetInnerHTML={{__html: body.processed}}></SectionText>  
                         {video ? <ModalVideo 
                             id={videoID} 
                             src={videoSrc} 
