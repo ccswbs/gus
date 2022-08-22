@@ -82,7 +82,7 @@ function StoryImageCutout (props) {
         <Overlay.GatsbyImage gatsbyImageData={getImage(background.src)} alt={background.alt}>
             <Container className="page-container">
                 <Row className="site-content bg-transparent h-100 text-white pb-0">
-                    <Col lg={6} className="fs-3 mb-4">
+                    <Col lg={6} className="fs-3 mb-4 d-flex flex-column justify-content-center">
                         <SectionTitle>{title}</SectionTitle>
                         <div dangerouslySetInnerHTML={{__html: body.processed}}></div>  
                         {video ? <ModalVideo 
