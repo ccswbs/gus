@@ -119,3 +119,8 @@ i.green {color:#4cae3e;}
 /* social media icons */
 
 .social-wrapper a:hover, .social-wrapper a:focus {background:#000 !important; border-bottom:none;}
+
+/* image overlay */
+.img-dark {
+	filter: brightness(0.6); 
+}

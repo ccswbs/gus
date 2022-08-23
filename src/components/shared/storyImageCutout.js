@@ -82,7 +82,7 @@ function StoryImageCutout (props) {
 
   return foreground ? (
     <div className="d-flex flex-column bg-dark">
-        <Overlay.GatsbyImage gatsbyImageData={getImage(background.src)} alt={background.alt}>
+        <Overlay.GatsbyImage gatsbyImageData={getImage(background.src)} alt={background.alt} className="img-dark">
             <Container className="page-container">
                 <Row className="site-content bg-transparent h-100 text-white pb-0">
                     <Col lg={6} className="fs-3 mb-4 d-flex flex-column justify-content-center">

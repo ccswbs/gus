@@ -9,6 +9,7 @@ Overlay.GatsbyImage = ({ children, gatsbyImageData, alt }) => (
   <div style={{ display: "grid" }}>
     <GatsbyImage
       style={{ gridArea: "1/1" }}
+      className="img-dark"
       image={gatsbyImageData}
       alt={alt}
     />
