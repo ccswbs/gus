@@ -146,7 +146,7 @@ export const query = graphql`
           relationships {
             field_media_image {
               publicUrl
-              gatsbyImageData(
+              gatsbyImage(
                 layout: CONSTRAINED,
                 placeholder: BLURRED,
                 height: 540,
@@ -165,7 +165,7 @@ export const query = graphql`
           relationships {
             field_media_image {
               publicUrl
-              gatsbyImageData(
+              gatsbyImage(
                 width: 1400,
                 height: 600,
                 placeholder: BLURRED, 
