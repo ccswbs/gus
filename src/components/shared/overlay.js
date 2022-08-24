@@ -5,11 +5,11 @@ const Overlay = ({ children, className }) => (
   <div className={`bg-black-65 h-100 ${className}`}>{children}</div>
 )
 
-Overlay.GatsbyImage = ({ children, gatsbyImageData, alt }) => (
+Overlay.GatsbyImage = ({ children, gatsbyImageData, alt, className="" }) => (
   <div style={{ display: "grid" }}>
     <GatsbyImage
       style={{ gridArea: "1/1" }}
-      className="img-dark"
+      className={className}
       image={gatsbyImageData}
       alt={alt}
     />
