@@ -63,7 +63,7 @@ function StoryImageCutout (props) {
   }
   let background = {
     src: storyRelationships?.field_story_image_bg?.relationships.field_media_image,
-    alt: storyRelationships?.field_story_image?.field_media_image?.alt,
+    alt: storyRelationships?.field_story_image_bg?.field_media_image?.alt,
   }
 
   // Additional Content
