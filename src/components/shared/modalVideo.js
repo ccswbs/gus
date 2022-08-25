@@ -58,14 +58,10 @@ export const query = graphql`
         field_video_width
         relationships {
           field_media_file {
-            localFile {
-              publicURL
-            }
+            publicUrl
           }
           field_video_cc {
-            localFile {
-              publicURL
-            }
+            publicUrl
           }
         }
       }

@@ -1,107 +1,65 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import { GatsbyImage } from "gatsby-plugin-image";
-import { contentExists } from 'utils/ug-utils';
-import 'styles/cta.css';
+import styled from 'styled-components';
 
-function leadPara (props) {
+const StyledBG = styled.div`
+    background-image: url(${props => props.imageURL});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+`
+const StyledText = styled.div`
+    background: rgba(0,0,0,0.75);
+    padding: 6rem;
+`
 
-        const leaditem = props.pageData;
-
-        const retStr = <div className="lead" dangerouslySetInnerHTML={{ __html: leaditem.field_lead_paratext.value}} />
-        
-                                
-        if(contentExists(leaditem.relationships)) {
-                            
-            const img = (contentExists(leaditem.relationships.field_lead_para_hero) ? leaditem.relationships.field_lead_para_hero : ``) ; 
-                            
-            const heroImage = (contentExists(img) && contentExists(img.relationships) ? img.relationships.field_media_image.localFile : ``);
-		    const pubImage = (contentExists(heroImage) ? encodeURI(heroImage.publicURL) : ``);
-					
-            let imageFile = null;
-			    
-            if(contentExists(img) && contentExists(heroImage)) {
-	                           
-                imageFile = <GatsbyImage
-                    image={heroImage.childImageSharp.gatsbyImageData}
-                    className="leadimg"
-                    alt={leaditem.relationships.field_lead_para_hero.field_media_image.alt} />
-                               
- 			       
-            } 
-
-            const myDivStyle = {
-  			    display: 'flex', opacity: 0.8, 				
-			    backgroundImage: `url(${pubImage})`
-				                
-  			};
-
-                                                      
-            if (imageFile !== null) {
-                return (
-			        <React.Fragment>
-				       <div className="full-width-container"> 
-			                <div className="container-fluid">
-			                    <div className="row leadimg">
-
-				                    <div className="col-md-6">{imageFile}</div>
-			                        <div className="col-md-6" style={myDivStyle} >{retStr}</div>
-				                        
-				                </div>
-			                </div>
-				       </div> 
-				        <br />
-
-				    </React.Fragment>
-			    )
-                 
-            } 
-
-        }
-
-        return retStr
-                                        
+function LeadPara (props) {
+    
+    const paraBG = props.pageData?.relationships?.field_lead_para_hero?.relationships.field_media_image?.publicUrl;
+    const paraText = props.pageData.field_lead_paratext?.value;
+    
+    if (paraBG) {               
+        return (
+            <React.Fragment>
+               <div className="full-width-container"> 
+                    <StyledBG className="container-fluid justify-content-end pe-0 row" imageURL={paraBG}>
+                        <StyledText className="col-md-6 text-white" dangerouslySetInnerHTML={{ __html: paraText}} />
+                    </StyledBG>
+               </div> 
+            </React.Fragment>
+        )
+    }
+    return <div dangerouslySetInnerHTML={{ __html: paraText}} />
 }
 
-leadPara.propTypes = {
+LeadPara.propTypes = {
     pageData: PropTypes.object,
 }
   
-leadPara.defaultProps = {
+LeadPara.defaultProps = {
     pageData: ``,
 }
 
-export default leadPara
+export default LeadPara
 
 export const query = graphql`
     fragment LeadParagraphFragment on paragraph__lead_paragraph {
-        id
-        field_lead_paratext {
-            value
+      id
+      field_lead_paratext {
+        value
+      }
+      relationships {
+        field_section_column {
+          name
         }
-        relationships {
-            field_section_column {
-            name
-            }
-            field_lead_para_hero {
+        field_lead_para_hero {
+          relationships {
             field_media_image {
-                alt
+              publicUrl
             }
-            relationships {
-                field_media_image {
-                localFile {
-                    publicURL
-                    childImageSharp {
-                    gatsbyImageData(
-                        placeholder: BLURRED
-                        layout: FULL_WIDTH
-                    )
-                    }
-                }
-                }
-            }
-            }
+          }
         }
+      }
     }
 `

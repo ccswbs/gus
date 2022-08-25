@@ -77,12 +77,15 @@ const query = graphql`
                         gatsbyImageData
                     }
                 }
-                alt
+                 alt
             }
             background {
                 src {
-                    childImageSharp {
-                        gatsbyImageData(layout: FULL_WIDTH)
+                    childImageSharp{
+                        gatsbyImageData(
+                            width: 1000
+                            layout: FULL_WIDTH
+                        )
                     }
                 }
                 alt

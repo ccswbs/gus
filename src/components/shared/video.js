@@ -19,7 +19,7 @@ function Video (props) {
 
     return (<>
         <div className={"embed-responsive embed-responsive-" + aspectRatio}>
-            <iframe allowfullscreen="true" src={videoSrc} title={videoTitle ? videoTitle : videoType + " video player"} />
+            <iframe allowFullScreen src={videoSrc} title={videoTitle ? videoTitle : videoType + " video player"} />
         </div>
         {videoTranscript && <a className="btn btn-primary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
     </>)
@@ -49,14 +49,10 @@ export const query = graphql`
     field_video_width
     relationships {
       field_media_file {
-        localFile {
-          publicURL
-        }
+        publicUrl
       }
       field_video_cc {
-        localFile {
-          publicURL
-        }
+        publicUrl
       }
     }
   }

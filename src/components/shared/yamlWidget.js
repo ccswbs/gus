@@ -50,22 +50,18 @@ export const query = graphql`
         field_yaml_id
         field_yaml_map
         relationships {
-            field_yaml_files{
-                id
-                name
-                relationships {
-                  field_media_image {
-                    localFile {
-                      childImageSharp {
-                        gatsbyImageData(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
-                      }
-                    }
-                  }
-                }
-                path {
-                  alias
-                }
+          field_yaml_files{
+            id
+            name
+            relationships {
+              field_media_image {
+                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+              }
             }
+            path {
+              alias
+            }
+          }
         }
       }
       field_section_column {

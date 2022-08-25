@@ -17,12 +17,12 @@ function MediaText (props) {
     const mediaButtons = props.widgetData.relationships?.field_button_section;
     const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
 
-    const imageURL = mediaRelationships?.field_media_image?.localFile;	
+    const imageURL = mediaRelationships?.field_media_image;	
     const imageAlt = props.widgetData.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
     
     const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
-    const videoTranscript = mediaRelationships?.field_media_file?.localFile.publicURL;
+    const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
     const videoURL = props.widgetData.relationships.field_media_text_media?.field_media_oembed_video;
     const videoHeight = props.widgetData.relationships.field_media_text_media?.field_video_height;
     const videoWidth = props.widgetData.relationships.field_media_text_media?.field_video_width;
@@ -216,7 +216,7 @@ function MediaText (props) {
                 videoWidth={videoWidth}
             />}
 
-            {imageURL && <GatsbyImage image={imageURL.childImageSharp.gatsbyImageData} alt={imageAlt} />}
+            {imageURL && <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} />}
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol}>
@@ -248,12 +248,8 @@ export const query = graphql`
     }
     relationships {
       field_media_image {
-        localFile {
-          publicURL
-          childImageSharp {
-            gatsbyImageData(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
-          }
-        }
+        publicUrl
+        gatsbyImage(width: 800, placeholder: BLURRED, layout: CONSTRAINED)
       }
     }
   }
