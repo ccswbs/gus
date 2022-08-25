@@ -25,8 +25,8 @@ const render = ({ field_yaml_map, relationships }) => {
   let yamlFiles = {};
   relationships.field_yaml_files.forEach(file => {
     yamlFiles[file.drupal_internal__mid] = {
-      src: file.relationships.field_media_image.localFile,
-      alt: file.relationships.field_media_image.relationships.media__image[0].field_media_image.alt,
+      src: file.relationships?.field_media_image,
+      alt: file.relationships?.field_media_image?.relationships.media__image[0].field_media_image.alt,
     }
   });
 
@@ -41,7 +41,8 @@ const render = ({ field_yaml_map, relationships }) => {
     <div className="d-flex flex-column bg-dark mb-4">
       <Overlay.GatsbyImage 
         gatsbyImageData={getImage(yamlFiles[yamlMap.background_image.mid]?.src)} 
-        alt={yamlFiles[yamlMap.background_image.mid]?.alt ?? ""} >
+        alt={yamlFiles[yamlMap.background_image.mid]?.alt ?? ""} 
+        className="img-dark" >
         <Container className="page-container">
           <Row className="h-100 w-100 p-5 justify-content-center align-items-center">
             <Col sm={9} className="ps-5">
@@ -74,20 +75,13 @@ const query = graphql`
           name
           relationships {
             field_media_image {
-              localFile {
-                childImageSharp {
-                  gatsbyImageData(
-                    width: 1400,
-                    height: 640,
-                    placeholder: BLURRED, 
-                    layout: CONSTRAINED,
-                    transformOptions: {
-                      duotone: { highlight: "#000000", shadow: "#000000", opacity: 40 },
-                      cropFocus: CENTER,
-                    }
-                  )
-                }
-              }
+              gatsbyImage(
+                width: 1400 
+                height: 640
+                placeholder: BLURRED
+                layout: CONSTRAINED
+                cropFocus: CENTER
+              )
               relationships {
                 media__image {
                   field_media_image {

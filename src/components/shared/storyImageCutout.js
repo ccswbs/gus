@@ -58,11 +58,11 @@ function StoryImageCutout (props) {
   // Images
   let storyRelationships = story?.relationships;
   let foreground = {
-    src: storyRelationships?.field_story_image?.relationships?.field_media_image.localFile,
+    src: storyRelationships?.field_story_image?.relationships?.field_media_image,
     alt: storyRelationships?.field_story_image?.field_media_image?.alt,
   }
   let background = {
-    src: storyRelationships?.field_story_image_bg?.relationships.field_media_image.localFile,
+    src: storyRelationships?.field_story_image_bg?.relationships.field_media_image,
     alt: storyRelationships?.field_story_image_bg?.field_media_image?.alt,
   }
 
@@ -74,7 +74,7 @@ function StoryImageCutout (props) {
   let videoID = video?.drupal_id;
   let videoName = video?.name;
   let videoSrc = video?.field_media_oembed_video;
-  let videoTranscript = video?.relationships?.field_media_file?.localFile.publicURL;
+  let videoTranscript = video?.relationships?.field_media_file?.publicUrl;
 
   // Testimonial Quote
   let testimonial = additionalContent.quotes[0];
@@ -82,7 +82,7 @@ function StoryImageCutout (props) {
 
   return foreground ? (
     <div className="d-flex flex-column bg-dark">
-        <Overlay.GatsbyImage gatsbyImageData={getImage(background.src)} alt={background.alt}>
+        <Overlay.GatsbyImage gatsbyImageData={getImage(background.src)} alt={background.alt} className="img-dark">
             <Container className="page-container">
                 <Row className="site-content bg-transparent h-100 text-white pb-0">
                     <Col lg={6} className="fs-3 mb-4 d-flex flex-column justify-content-center">
@@ -145,16 +145,12 @@ export const query = graphql`
           }
           relationships {
             field_media_image {
-              localFile {
-                publicURL
-                childImageSharp {
-                  gatsbyImageData(
-                    layout: CONSTRAINED,
-                    placeholder: BLURRED,
-                    height: 540,
-                  )
-                }
-              }
+              publicUrl
+              gatsbyImage(
+                layout: CONSTRAINED,
+                placeholder: BLURRED,
+                height: 540,
+              )
             }
           }
         }
@@ -168,21 +164,14 @@ export const query = graphql`
           }
           relationships {
             field_media_image {
-              localFile {
-                publicURL
-                childImageSharp {
-                  gatsbyImageData(
-                    width: 1400,
-                    height: 600,
-                    placeholder: BLURRED, 
-                    layout: CONSTRAINED,
-                    transformOptions: {
-                      duotone: { highlight: "#000000", shadow: "#000000", opacity: 40 },
-                      cropFocus: ENTROPY,
-                    }
-                  )
-                }
-              }
+              publicUrl
+              gatsbyImage(
+                width: 1400,
+                height: 600,
+                placeholder: BLURRED, 
+                layout: CONSTRAINED,
+                cropFocus: ENTROPY,
+              )
             }
           }
         }
@@ -219,14 +208,10 @@ export const query = graphql`
     field_video_width
     relationships {
       field_media_file {
-        localFile {
-          publicURL
-        }
+        publicUrl
       }
       field_video_cc {
-        localFile {
-          publicURL
-        }
+        publicUrl
       }
     }
   }

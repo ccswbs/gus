@@ -5,7 +5,6 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import LinksOuter from 'components/shared/linksOuter'
 import LinksElement from 'components/shared/linksElement'
 
-import { contentExists } from 'utils/ug-utils';
 /*
 
 LinksItems.propTypes = {
@@ -42,23 +41,23 @@ Example Usage:
 
 function LinksItems (props) {
 
-		if(contentExists(props.pageData) && props.pageData.length !== 0){
+		if (props.pageData && props.pageData.length !== 0) {
 			return (
 				<React.Fragment>
 				<LinksOuter key={props.pageData.drupal_id} heading={props.heading} headingLevel={props.headingLevel} description={props.description} 
 								displayType={props.displayType}>
 					{props.pageData.map (paragraph  => {
-						if(contentExists(paragraph.relationships)){
+						if (paragraph.relationships) {
 						// if images exists - set the images to use in the grid display
-						const image = (contentExists(paragraph.relationships.field_link_image)) ? paragraph.relationships.field_link_image.relationships.field_media_image : null;
-						const imageFile = (contentExists(image) && contentExists(image.localFile.childImageSharp)) ? 
-													<GatsbyImage image={image.localFile.childImageSharp.gatsbyImageData} alt ={""} /> : null;
+						const image = (paragraph.relationships?.field_link_image ? paragraph.relationships.field_link_image.relationships.field_media_image : null);
+						const imageFile = (image && image.gatsbyImage) ? 
+													<GatsbyImage image={image.gatsbyImage} alt="" /> : null;
 						
-						const urlLink = (contentExists(paragraph.field_link_url.url)) ? paragraph.field_link_url.url : null;
+						const urlLink = (paragraph.field_link_url?.url ? paragraph.field_link_url.url : null);
 						
 						// set heading level to one lower based on the heading level of the header, if header does not exists set to h2
-						const nextHeadingLevel = (props.displayType ==='grid')? (contentExists(props.heading))? (props.headingLevel === "h2")? "h3": 
-										(props.headingLevel==="h3") ? "h4" : "h5": "h2": '';
+						const nextHeadingLevel = props.displayType ==="grid" ? props?.heading ? (props.headingLevel === "h2") ? "h3" : 
+										(props.headingLevel==="h3") ? "h4" : "h5" : "h2" : "";
 						const setTag = (props.displayType === 'list') ? 'li': 'div';
 						return <LinksElement key={paragraph.drupal_id} 
 									url={urlLink} 
@@ -118,12 +117,11 @@ fragment LinksWidgetParagraphFragment on paragraph__links_widget {
           field_link_image {
             relationships {
               field_media_image {
-                localFile {
-                  publicURL
-                  childImageSharp {
-                    gatsbyImageData(width: 400, height: 300, transformOptions: {cropFocus: CENTER})
-                  }
-                }
+                gatsbyImage(
+                  width: 400
+                  height: 300
+                  cropFocus: CENTER
+                )
               }
             }
           }

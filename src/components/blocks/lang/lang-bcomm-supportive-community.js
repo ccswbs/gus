@@ -51,8 +51,8 @@ const render = ({ field_yaml_map, relationships }) => {
     let yamlFiles = {};
     relationships.field_yaml_files.forEach(file => {
         yamlFiles[file.drupal_internal__mid] = {
-          src: file.relationships.field_media_image?.localFile,
-          alt: file.relationships.field_media_image?.relationships.media__image[0].field_media_image.alt,
+          src: file.relationships?.field_media_image,
+          alt: file.relationships?.field_media_image?.relationships.media__image[0].field_media_image.alt,
         }
       });
     
@@ -101,14 +101,11 @@ const query = graphql`
             name
             relationships {
               field_media_image {
-                localFile {
-                  childImageSharp {
-                    gatsbyImageData(
-                        placeholder: BLURRED, 
-                        layout: CONSTRAINED
-                    )
-                  }
-                }
+                gatsbyImage(
+                  width: 1000
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
                 relationships {
                     media__image {
                       field_media_image {
