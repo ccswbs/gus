@@ -1,5 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { Container } from "react-bootstrap"
 import Statistic from 'components/shared/statistic'
 import styled from "styled-components"
@@ -35,6 +36,10 @@ const SolidColourStatistic = ({stats}) => {
               let type = stat.field_statistic_represents;
               let value = stat.field_stat_value;
               let icon = stat.field_font_awesome_icon;
+              let image = {
+                src: stat.relationships?.field_media_text_media?.relationships?.field_media_image,
+                alt: stat.relationships?.field_media_text_media?.field_media_image?.alt,
+              }
 
               return <Statistic.SolidCard  
                 key={`solid-stat-${stat.drupal_id}`} 
@@ -44,8 +49,7 @@ const SolidColourStatistic = ({stats}) => {
                   {icon && <Statistic.Icon icon={icon} />}
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type className="mb-4 px-5"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
-                  {/* @todo: ADD IMAGE */}
-                  {/* <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" /></dd> */}
+                  <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" /></dd>
               </Statistic.SolidCard>
             }
           )}
