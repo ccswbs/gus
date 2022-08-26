@@ -120,8 +120,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__links_widget
       | paragraph__media_text
       | paragraph__section
-      | paragraph__stats_widget
       | paragraph__section_tabs
+      | paragraph__stats_widget
+      | paragraph__statistic_widget
       | paragraph__story_widget
       | paragraph__tab_content
       | paragraph__accordion_section
@@ -608,6 +609,24 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_tabs: [paragraph__tab_content] @link(from:"field_tabs___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
+    type paragraph__statistic_item implements Node {
+      drupal_id: String
+      field_stat_value: String
+      field_statistic_represents: BodyField
+      field_font_awesome_icon: String
+      relationships: paragraph__statistic_itemRelationships
+    }
+    type paragraph__statistic_itemRelationships implements Node {
+      field_media_text_media: media__image @link(from: "field_media_text_media___NODE")
+    }
+    type paragraph__statistic_widget implements Node {
+      drupal_id: String
+      relationships: paragraph__statistic_widgetRelationships
+    }
+    type paragraph__statistic_widgetRelationships implements Node {
+      field_statistic: [paragraph__statistic_item] @link(from: "field_statistic___NODE")
+      field_statistic_style: taxonomy_term__statistic_styles @link(from: "field_statistic_style___NODE")
+    }
     type paragraph__stats_widget implements Node {
       drupal_id: String
       relationships: paragraph__stats_widgetRelationships
@@ -752,6 +771,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_units: [taxonomy_term__units]
     }
     type taxonomy_term__statistic_type implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+    }
+    type taxonomy_term__statistic_styles implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
