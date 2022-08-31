@@ -106,6 +106,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     
     union storyWidgetParagraphUnion =
       paragraph__story_image_cutout_background
+      | paragraph__statistic_widget
 
     union storyCutoutParagraphUnion =
       paragraph__story_quote
