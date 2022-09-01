@@ -1,10 +1,10 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import { Container } from "react-bootstrap"
+import { Container } from "react-bootstrap";
 import PageContainer from 'components/shared/pageContainer';
-import Statistic from 'components/shared/statistic'
-import styled from "styled-components"
+import Statistic from 'components/shared/statistic';
+import styled from "styled-components";
 
 
 const Gradient = styled.div`
