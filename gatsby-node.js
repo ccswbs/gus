@@ -613,7 +613,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__statistic_item implements Node {
       drupal_id: String
-      field_stat_value: String
+      field_statistic_value: String
       field_statistic_represents: BodyField
       field_font_awesome_icon: String
       relationships: paragraph__statistic_itemRelationships

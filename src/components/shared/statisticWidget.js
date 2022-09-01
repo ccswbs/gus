@@ -49,7 +49,7 @@ const GradientStatistic = ({stats}) => {
           <Statistic className={`row g-0 row-cols-1 ${rowClasses} justify-content-center mb-0`}>
               {stats.map((stat, index) => {
                 let type = stat.field_statistic_represents;
-                let value = stat.field_stat_value;
+                let value = stat.field_statistic_value;
                 let icon = stat.field_font_awesome_icon;
 
                 return <Statistic.SolidCard 
@@ -81,7 +81,7 @@ const SolidColourStatistic = ({stats, numColumns}) => {
         <Statistic.Grid columns={numColumns} className="gap-4">
           {stats.map((stat, index) => {
               let type = stat.field_statistic_represents;
-              let value = stat.field_stat_value;
+              let value = stat.field_statistic_value;
               let icon = stat.field_font_awesome_icon;
               let image = {
                 src: stat.relationships?.field_media_text_media?.relationships?.field_media_image,
@@ -112,7 +112,7 @@ const NoBorderStatistic = ({stats, numColumns}) => {
         <Statistic.Grid columns={numColumns} className="gap-4">
           {stats.map((stat) => {
             let type = stat.field_statistic_represents;
-            let value = stat.field_stat_value;
+            let value = stat.field_statistic_value;
             let icon = stat.field_font_awesome_icon;
 
             return <Statistic.Card key={`noborder-stat-${stat.drupal_id}`} className="px-5">
@@ -143,7 +143,7 @@ const LeftBorderStatistic = ({stats, numColumns}) => {
         <Statistic.Grid columns={numColumns} className="gap-4">
           {stats.map((stat, index) => {
             let type = stat.field_statistic_represents;
-            let value = stat.field_stat_value;
+            let value = stat.field_statistic_value;
             let icon = stat.field_font_awesome_icon;
 
             return <Statistic.BorderCard 
@@ -197,7 +197,7 @@ fragment StatisticWidgetParagraphFragment on paragraph__statistic_widget {
       __typename
       ... on paragraph__statistic_item {
         drupal_id
-        field_stat_value
+        field_statistic_value
         field_statistic_represents {
           processed
         }
