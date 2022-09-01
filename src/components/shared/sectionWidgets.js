@@ -94,10 +94,10 @@ function SectionWidgets (props) {
 
         if (secondary.length > 0) {
             if (sectionClasses === "col-md-6") {
-                primaryClass = "col-md-6";
+                primaryClass = "col-md-6 mb-5 mb-md-0";
                 secondaryClass = "col-md-6";
             } else {
-                primaryClass = "col-md-9";
+                primaryClass = "col-md-9 mb-5 mb-md-0";
                 secondaryClass = "col-md-3";
             }
         } else {
