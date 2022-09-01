@@ -11,7 +11,7 @@ const StatisticGrid = styled.dl`
   }
 `;
 const StatCard = styled.div`
-  background: var(--uog-blue-muted);
+  background: #f5f7fa;
   padding: 1.25rem;
   min-width: 25%;
   word-wrap: break-word;
