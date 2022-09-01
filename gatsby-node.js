@@ -139,6 +139,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__links_widget
       | paragraph__media_text
       | paragraph__section_tabs
+      | paragraph__statistic_widget
       | paragraph__stats_widget
       | paragraph__section_buttons
       | paragraph__button_widget

@@ -9,6 +9,7 @@ import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
 import PageTabs from 'components/shared/pageTabs';
 import SectionButtons from 'components/shared/sectionButtons';
+import StatisticWidget from 'components/shared/statisticWidget';
 import StatsWidget from 'components/shared/statsWidget';
 import YamlWidget from 'components/shared/yamlWidget';
 import { ConditionalWrapper } from 'utils/ug-utils';
@@ -41,6 +42,8 @@ function renderPrimary(widget) {
             return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
         case "paragraph__section_tabs":
             return <PageTabs pageData={widget} />;
+        case "paragraph__statistic_widget":
+            return <StatisticWidget statisticData={widget} />;
         case "paragraph__stats_widget":
             return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
         case "paragraph__section_buttons":
@@ -154,6 +157,9 @@ export const query = graphql`
         ... on paragraph__media_text {
             ...MediaTextParagraphFragment
         }
+        ... on paragraph__statistic_widget {
+            ...StatisticWidgetParagraphFragment
+          } 
         ... on paragraph__stats_widget {
             ...StatsWidgetParagraphFragment
         }

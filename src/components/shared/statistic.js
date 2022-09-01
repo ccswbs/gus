@@ -50,7 +50,7 @@ const StatType = styled.dd`
   }
 `;
 const StatIcon = styled.i`
-  color: #000;
+  color: ${props => (props.colour ?? "#000")};
 `;
 
 const Statistic = ({id, children, className=""}) => (
@@ -83,8 +83,8 @@ Statistic.SolidCard = ({background, colour, children, className=""}) => (
     </StatSolidCard>
 )
 
-Statistic.Icon = ({icon}) => (
-  <StatIcon className={`${icon} mt-3 fa-4x`} aria-hidden="true" />
+Statistic.Icon = ({icon, colour}) => (
+  <StatIcon colour={colour} className={`${icon} mt-3 fa-4x`} aria-hidden="true" />
 )
 
 Statistic.Value = ({children, fontsize, className=""}) => (
