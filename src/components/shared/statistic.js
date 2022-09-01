@@ -9,15 +9,14 @@ const StatisticGrid = styled.dl`
   @media (min-width: 992px) {
     grid-template-columns: repeat(${props => (props.columns ?? "3")}, 1fr);
   }
-`
-
+`;
 const StatCard = styled.div`
-  background: var(--uog-blue-muted);
+  background: #f5f7fa;
   padding: 1.25rem;
   min-width: 25%;
   word-wrap: break-word;
   text-align: center;
-`
+`;
 const StatBorderCard = styled(StatCard)`
   border-left: 1rem solid ${props => (props.border ?? "#000000")};
   text-align: left;
@@ -25,7 +24,7 @@ const StatBorderCard = styled(StatCard)`
 const StatSolidCard = styled(StatCard)`
   background: ${props => (props.background ?? "#000000")};
   color: ${props => (props.colour ?? "#ffffff")};
-  && > dd > a {
+  && > dd a {
     color: ${props => (props.colour ?? "#ffffff")} !important;
   }
   & > dt {
@@ -49,10 +48,10 @@ const StatType = styled.dd`
   & > a:focus {
     color: #ffffff !important;
   }
-`
+`;
 const StatIcon = styled.i`
-  color: #000;
-`
+  color: ${props => (props.colour ?? "#000")};
+`;
 
 const Statistic = ({id, children, className=""}) => (
   <dl id={id} className={`${className}`}>
@@ -84,8 +83,8 @@ Statistic.SolidCard = ({background, colour, children, className=""}) => (
     </StatSolidCard>
 )
 
-Statistic.Icon = ({icon}) => (
-  <StatIcon className={`${icon} mt-3 fa-4x`} aria-hidden="true" />
+Statistic.Icon = ({icon, colour}) => (
+  <StatIcon colour={colour} className={`${icon} mt-3 fa-4x`} aria-hidden="true" />
 )
 
 Statistic.Value = ({children, fontsize, className=""}) => (

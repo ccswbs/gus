@@ -11,6 +11,7 @@ import PageContainer from 'components/shared/pageContainer';
 import ModalVideo from 'components/shared/modalVideo';
 import PageTabs from 'components/shared/pageTabs';
 import SectionWidgets from 'components/shared/sectionWidgets';
+import StatisticWidget from 'components/shared/statisticWidget';
 import StatsWidget from 'components/shared/statsWidget';
 import Story from 'components/shared/story';
 import YamlWidget from 'components/shared/yamlWidget';
@@ -60,6 +61,8 @@ const WidgetSelector = ({widget}) => {
             </>);
         case "paragraph__section_tabs":
             return <PageTabs pageData={widget} />;
+        case "paragraph__statistic_widget":
+            return <StatisticWidget statisticData={widget} />;
         case "paragraph__stats_widget":
             return <StatsWidget statsWidgetData={widget} />;
         case "paragraph__story_widget":
@@ -75,7 +78,8 @@ const Widget = ({widget}) => {
     return <ConditionalWrapper 
         condition={widget?.__typename !== "paragraph__yaml_widget" 
             && widget?.__typename !== "paragraph__modal_video_widget" 
-            && widget?.__typename !== "paragraph__story_widget" } 
+            && widget?.__typename !== "paragraph__story_widget"
+            && widget?.__typename !== "paragraph__statistic_widget" } 
         wrapper={children => 
             <PageContainer.SiteContent>
               <PageContainer.ContentArea>
@@ -121,6 +125,9 @@ export const query = graphql`
     }
     ... on paragraph__section_tabs {
       ...SectionTabsParagraphFragment
+    }
+    ... on paragraph__statistic_widget {
+      ...StatisticWidgetParagraphFragment
     }
     ... on paragraph__stats_widget {
       ...StatsWidgetParagraphFragment
