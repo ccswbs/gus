@@ -6,7 +6,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=16.0.0"
-  }
+  },
   "scripts": {
     "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
