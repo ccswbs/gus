@@ -8,6 +8,15 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - master
+env:
+  ASSET_PREFIX: 'https://cdn.uoguelph.ca'
+  BASIC_AUTH_USERNAME: gatsbyview
+  BASIC_AUTH_PASSWORD: ${{ secrets.BASIC_AUTH_PASSWORD }}
+  DRUPAL_APIBASE: jsonapi
+  DRUPAL_BASEURL: 'https://api.liveugconthub.uoguelph.dev/'
+  PREFIX_PATHS: true
+  WPGRAPHQL_URL: 'https://news.uoguelph.ca/graphql'
+  
 
 jobs:
   build_and_deploy_job:
