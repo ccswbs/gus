@@ -4,6 +4,9 @@
   "description": "U of G starter for Gatsby",
   "version": "0.1.0",
   "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
   "scripts": {
     "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
