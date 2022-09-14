@@ -41,12 +41,7 @@ jobs:
           output_location: "public" # Built app content directory - optional
           build_timeout_in_minutes: 45
           ###### End of Repository/Build Configurations ######
-      - name: Upload to blob storage
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az storage blob upload-batch --account-name gcchugstorage  --auth-mode key -d '$web' -s .
-        # blob upload added for testing
+      
         
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
