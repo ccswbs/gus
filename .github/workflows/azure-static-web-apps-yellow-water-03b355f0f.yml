@@ -45,7 +45,7 @@ jobs:
         with:
           inlineScript: |
             az storage blob upload-batch --account-name gcchugstorage  --auth-mode key -d '$web' -s .
-        ## blob upload added for testing
+        # blob upload added for testing
         
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
