@@ -4,6 +4,7 @@ import { graphql } from 'gatsby';
 import Accordion from 'components/shared/accordion';
 import BlockWidget from 'components/shared/blockWidget';
 import GeneralText from 'components/shared/generalText';
+import ImageOverlay from 'components/shared/imageOverlay';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
@@ -23,6 +24,8 @@ function renderPrimary(widget) {
             return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
             return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
+        case "paragraph__image_overlay":
+            return <ImageOverlay key={widget.drupal_id} data={widget} />;
         case "paragraph__lead_paragraph":
             return( <LeadPara key={widget.drupal_id} pageData={widget} />);        
         case "paragraph__links_widget":
@@ -150,6 +153,9 @@ export const query = graphql`
         }
         ... on paragraph__general_text {
             ...GeneralTextParagraphFragment
+        }
+        ... on paragraph__image_overlay {
+            ...ImageOverlayParagraphFragment
         }
         ... on paragraph__links_widget {
             ...LinksWidgetParagraphFragment
