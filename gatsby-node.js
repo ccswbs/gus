@@ -76,12 +76,19 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     `interface TaxonomyInterface implements Node {
       id: ID!
       drupal_id: String
+      drupal_internal__tid: Int
       name: String
     }
     interface WidgetParagraphInterface implements Node {
       id: ID!
       drupal_id: String
     }
+
+    union imageOverlayParagraphUnion =
+      paragraph__section_buttons
+      | paragraph__general_text
+      | paragraph__story_modal_video
+      | paragraph__story_quote
 
     union media__imagemedia__remote_videoUnion =
       media__image
@@ -116,6 +123,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       paragraph__block_widget
       | paragraph__events_widget
       | paragraph__general_text
+      | paragraph__image_overlay
       | paragraph__lead_paragraph
       | paragraph__link_item
       | paragraph__links_widget
@@ -134,6 +142,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       paragraph__accordion_section
       | paragraph__block_widget
       | paragraph__general_text
+      | paragraph__image_overlay
       | paragraph__lead_paragraph
       | paragraph__link_item
       | paragraph__links_widget
@@ -509,6 +518,16 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__general_textRelationships {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
+    type paragraph__image_overlay implements Node {
+      drupal_id: String
+      relationships: paragraph__image_overlayRelationships
+    }
+    type paragraph__image_overlayRelationships implements Node {
+      field_display_alignment: [taxonomy_term__alignment_styles] @link(from: "field_display_alignment___NODE")
+      field_display_style: [taxonomy_term__image_overlay_styles] @link(from: "field_display_style___NODE")
+      field_story_content: [imageOverlayParagraphUnion] @link(from: "field_story_content___NODE")
+      field_story_image_bg: media__image @link(from: "field_story_image_bg___NODE")
+    }
     type paragraph__lead_paragraph implements Node {
       drupal_id: String
       field_lead_paratext: BodyField
@@ -699,6 +718,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       value: String
       format: String
     }
+    type taxonomy_term__alignment_styles implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+    }
     type taxonomy_term__bg_colors implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -730,6 +754,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__tid: Int
       name: String
       field_goal_action: String
+    }
+    type taxonomy_term__image_overlay_styles implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
     }
     type taxonomy_term__news_category implements Node & TaxonomyInterface {
       drupal_id: String
