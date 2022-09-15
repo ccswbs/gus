@@ -124,3 +124,8 @@ i.green {color:#4cae3e;}
 .img-dark {
 	filter: brightness(0.6); 
 }
+
+.img-light {
+	filter: brightness(1.6); 
+    opacity: 0.1;
+}
