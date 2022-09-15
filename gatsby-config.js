@@ -54,7 +54,7 @@ module.exports = {
     {
       resolve: `gatsby-source-drupal`,
         options: {
-        baseUrl: process.env.PANTHEON_CMS_ENDPOINT,
+        baseUrl: `https://${process.env.PANTHEON_CMS_ENDPOINT}/`,
         apiBase: process.env.DRUPAL_APIBASE,
         basicAuth: {
           username: process.env.BASIC_AUTH_USERNAME,
