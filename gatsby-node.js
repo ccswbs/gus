@@ -144,6 +144,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__section_buttons
       | paragraph__button_widget
       | paragraph__yaml_widget
+    
+    union customBlockUnion = 
+      block_content__basic
+      | block_content__widget_block
+      
+    union widgetBlockUnion = 
+      paragraph__accordion_section
+      | paragraph__general_text
+      | paragraph__media_text
+      | paragraph__section_buttons
+      | paragraph__section_tabs
 
     type BodyField {
       processed: String
@@ -191,6 +202,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       info: String
       body: BodyFieldWithSummary
     }
+    type block_content__widget_block implements Node {
+      drupal_id: String
+      info: String
+      relationships: block_content__widget_blockRelationships
+    }
+    type block_content__widget_blockRelationships implements Node {
+      field_widget_block_content: [widgetBlockUnion] @link(from: "field_widget_block_content___NODE")
+    }    
     type block_content__yaml_block implements Node {
       drupal_id: String
       info: String
@@ -464,7 +483,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       relationships: paragraph__block_widgetRelationships  
     }
     type paragraph__block_widgetRelationships implements Node {
-      field_custom_block: block_content__basic @link(from: "field_custom_block___NODE")
+      field_custom_block: customBlockUnion @link(from: "field_custom_block___NODE")
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
     }
     type paragraph__button_widget implements Node {
