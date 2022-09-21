@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import Accordion from 'components/shared/accordion';
+/* import Accordion from 'components/shared/accordion';
 import GeneralText from 'components/shared/generalText';
 import MediaText from 'components/shared/mediaText';
 import PageTabs from 'components/shared/pageTabs';
-import SectionButtons from 'components/shared/sectionButtons';
+import SectionButtons from 'components/shared/sectionButtons'; */
+import Widget from 'components/shared/widget';
 
-function renderWidgetBlocks(thing) {
+/* function renderWidgetBlocks(thing) {
     switch (thing?.__typename) {
         case "paragraph__accordion_section":
             console.log("accordion yes");
@@ -24,7 +25,7 @@ function renderWidgetBlocks(thing) {
         default:
             return <></>;
     }  
-}
+} */
 
 const BlockWidget = (props) => {
     
@@ -38,7 +39,7 @@ const BlockWidget = (props) => {
     }
     
     if (widgetBlockContent) {
-        widgetBlockContent.forEach(renderWidgetBlocks);
+        {widgetBlockContent?.map((widget, index) => <Widget widget={widget} key={index} />)}
     }
     return <div dangerouslySetInnerHTML={{__html: basicBlockContent}}></div>
 }
@@ -69,22 +70,7 @@ export const query = graphql`
         ... on block_content__widget_block {
           relationships {
             field_widget_block_content {            
-              __typename
-              ... on paragraph__accordion_section {
-                ...AccordionSectionParagraphFragment
-              }
-              ... on paragraph__general_text {
-                ...GeneralTextParagraphFragment
-              }
-              ... on paragraph__media_text {
-                ...MediaTextParagraphFragment
-              }
-              ... on paragraph__section_buttons {
-                ...SectionButtonsParagraphFragment
-              }
-              ... on paragraph__section_tabs {
-                ...SectionTabsParagraphFragment
-              }
+              ...FieldWidgetsFragment
             }
           }
         }
