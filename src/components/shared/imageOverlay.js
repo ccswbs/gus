@@ -1,12 +1,13 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { getImage } from "gatsby-plugin-image";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { ConditionalWrapper } from 'utils/ug-utils';
 import GeneralText from 'components/shared/generalText';
-// import ModalVideo from "components/shared/modalVideo"
+import ModalVideo from "components/shared/modalVideo"
 import Overlay from "components/shared/overlay";
 import PageContainer from 'components/shared/pageContainer';
+import Quote from 'components/shared/quote';
 import SectionButtons from 'components/shared/sectionButtons';
 import styled from "styled-components";
 
@@ -62,15 +63,19 @@ const StyleSelector = ({styles, image_bg, children}) => {
 // Currently allowing only one selection (can add support for multiple selections in future)
 function selectAlignment (alignment) {
   // DEFAULT SETTING: Centre middle
-  let alignmentClasses = "justify-content-center align-items-center text-center";
+  let alignmentClasses = {
+    position: "justify-content-center align-items-center",
+    text: "text-center",
+  }
 
   if(alignment.length === 1){
     switch (alignment[0].name) {
       case "Left middle":
-        alignmentClasses = "text-start justify-content-start align-items-center";
+        alignmentClasses.position = "justify-content-start align-items-center";
+        alignmentClasses.text = "text-start";
         break;
       case "Centre bottom":
-        alignmentClasses = "text-center justify-content-center align-items-end";
+        alignmentClasses.position = "justify-content-center align-items-end";
         break;
       default:
         break;
@@ -79,30 +84,36 @@ function selectAlignment (alignment) {
   return alignmentClasses;  
 }
 
-const ContentSelector = ({data, }) => {
+const ContentSelector = ({data, textAlignment }) => {
     switch (data?.__typename) {
         case "paragraph__general_text":
-          return <GeneralText processed={data.field_general_text.processed} />;
+          return <div className={textAlignment}>
+                    <GeneralText processed={data.field_general_text.processed} />
+                  </div>;
         case "paragraph__section_buttons":
-          return <SectionButtons key={data.drupal_id} pageData={data} />;
-        // case "paragraph__story_modal_video":
-        //   let video = data.relationships?.field_media_video;
-        //   let videoID = video?.drupal_id;
-        //   let videoName = video?.name;
-        //   let videoSrc = video?.field_media_oembed_video;
-        //   let videoTranscript = video?.relationships?.field_media_file?.publicUrl;
-        //   return <ModalVideo 
-        //   id={videoID} 
-        //   src={videoSrc} 
-        //   title={videoName} 
-        //   transcript={videoTranscript} 
-        //   modalButton = {
-        //       <button type="button" className="btn btn-primary my-4">
-        //           <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {videoName}</span>
-        //       </button>
-        //   } />;
-        // case "paragraph__story_quote":
-        //     return "Testimonial";
+          return <div className={textAlignment}>
+                    <SectionButtons key={data.drupal_id} pageData={data} />
+                  </div>;
+        case "paragraph__story_modal_video":
+          let video = data.relationships?.field_media_video;
+          let videoID = video?.drupal_id;
+          let videoName = video?.name;
+          let videoSrc = video?.field_media_oembed_video;
+          let videoTranscript = video?.relationships?.field_media_file?.publicUrl;
+          return <div className={textAlignment}><ModalVideo 
+          id={videoID} 
+          src={videoSrc} 
+          title={videoName} 
+          transcript={videoTranscript} 
+          modalButton = {
+              <button type="button" className="btn btn-primary my-4">
+                  <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {videoName}</span>
+              </button>
+          } /></div>;
+        case "paragraph__story_quote":
+          return <Quote text={data.field_story_quote} 
+                    source={data.field_quote_source} 
+                    source_description={data.field_quote_source_description} />;
         default:
           return null;
     }
@@ -125,13 +136,13 @@ const ImageOverlay = (props) => {
 
     return content ? 
       <StyleSelector styles={styles} image_bg={image_bg}>
-          <PageContainer.SiteContent className={`bg-transparent h-100`}>
-            <PageContainer.ContentArea className={`d-flex ${alignmentClasses}`}>
+        <PageContainer className={`bg-transparent h-100`}>
+          <Row className={`h-100 w-100 p-5 ${alignmentClasses.position}`}>
               <Col lg={9}>
-                {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} />)} 
+                {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} textAlignment={alignmentClasses.text} />)}
               </Col>
-            </PageContainer.ContentArea>
-          </PageContainer.SiteContent>
+          </Row>
+        </PageContainer>
       </StyleSelector> : null
 }
 
