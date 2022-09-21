@@ -10,9 +10,10 @@ import SectionButtons from 'components/shared/sectionButtons';
 function renderWidgetBlocks(thing) {
     switch (thing?.__typename) {
         case "paragraph__accordion_section":
-            console.log("accordion yes");
+            console.log("accordion yes");            
             return <Accordion pageData={thing} />;
         case "paragraph__general_text":
+            console.log(thing);
             return <GeneralText key={thing.drupal_id} processed={thing.field_general_text.processed} />;
         case "paragraph__media_text":
             return <MediaText key={thing.drupal_id} thingData={thing} />;
