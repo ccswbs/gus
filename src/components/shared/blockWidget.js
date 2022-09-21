@@ -1,23 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-/* import Accordion from 'components/shared/accordion';
+import Accordion from 'components/shared/accordion';
 import GeneralText from 'components/shared/generalText';
 import MediaText from 'components/shared/mediaText';
 import PageTabs from 'components/shared/pageTabs';
-import SectionButtons from 'components/shared/sectionButtons'; */
-import Widget from 'components/shared/widget';
+import SectionButtons from 'components/shared/sectionButtons';
 
-/* function renderWidgetBlocks(thing) {
+function renderWidgetBlocks(thing) {
     switch (thing?.__typename) {
         case "paragraph__accordion_section":
             console.log("accordion yes");
             return <Accordion pageData={thing} />;
         case "paragraph__general_text":
-            return "text yes";
-            //return <GeneralText key={thing.drupal_id} processed={thing.field_general_text.processed} />;
+            return <GeneralText key={thing.drupal_id} processed={thing.field_general_text.processed} />;
         case "paragraph__media_text":
-            return <MediaText key={thing.drupal_id} thingData={thing} region="Primary" />;
+            return <MediaText key={thing.drupal_id} thingData={thing} />;
         case "paragraph__section_tabs":
             return <PageTabs pageData={thing} />;
         case "paragraph__section_buttons":
@@ -25,7 +23,7 @@ import Widget from 'components/shared/widget';
         default:
             return <></>;
     }  
-} */
+}
 
 const BlockWidget = (props) => {
     
@@ -39,7 +37,7 @@ const BlockWidget = (props) => {
     }
     
     if (widgetBlockContent) {
-        {widgetBlockContent?.map((widget, index) => <Widget widget={widget} key={index} />)}
+        {widgetBlockContent?.map((widget) => renderWidgetBlocks(widget))}
     }
     return <div dangerouslySetInnerHTML={{__html: basicBlockContent}}></div>
 }
@@ -70,7 +68,22 @@ export const query = graphql`
         ... on block_content__widget_block {
           relationships {
             field_widget_block_content {            
-              ...FieldWidgetsFragment
+              __typename
+              ... on paragraph__accordion_section {
+                ...AccordionSectionParagraphFragment
+              }
+              ... on paragraph__general_text {
+                ...GeneralTextParagraphFragment
+              }
+              ... on paragraph__media_text {
+                ...MediaTextParagraphFragment
+              }
+              ... on paragraph__section_buttons {
+                ...SectionButtonsParagraphFragment
+              }
+              ... on paragraph__section_tabs {
+                ...SectionTabsParagraphFragment
+              }
             }
           }
         }
