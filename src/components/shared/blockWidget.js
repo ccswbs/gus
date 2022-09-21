@@ -14,7 +14,8 @@ function renderWidgetBlocks(thing) {
             return <Accordion pageData={thing} />;
         case "paragraph__general_text":
             console.log(thing);
-            return <GeneralText key={thing.drupal_id} processed={thing.field_general_text.processed} />;
+            return <>thing.field_general_text.processed</>
+            //<GeneralText key={thing.drupal_id} processed={thing.field_general_text.processed} />;
         case "paragraph__media_text":
             return <MediaText key={thing.drupal_id} thingData={thing} />;
         case "paragraph__section_tabs":
