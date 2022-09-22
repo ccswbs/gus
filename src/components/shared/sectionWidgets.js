@@ -46,7 +46,7 @@ function renderPrimary(widget) {
         case "paragraph__section_tabs":
             return <PageTabs pageData={widget} />;
         case "paragraph__statistic_widget":
-            return <StatisticWidget statisticData={widget} />;
+            return <StatisticWidget key={widget.drupal_id} statisticData={widget} />;
         case "paragraph__stats_widget":
             return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
         case "paragraph__section_buttons":

@@ -19,6 +19,12 @@ const Wrapper = styled.div`
   && p a {
     color: ${props => (props.textColour ?? "")} !important;
   }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    max-height: 100%;
+  }
 `
 
 // Currently allowing only one selection (can add support for multiple selections in future)
@@ -27,22 +33,20 @@ const StyleSelector = ({styles, image_bg, children}) => {
   let backgroundColour;
   let textColour; 
 
-  if(styles.length === 1){
-    switch (styles[0].name) {
-      case "No overlay":
-        overlayClasses = "";
-        break;
-      case "Light overlay":
-        overlayClasses = "img-light";
-        backgroundColour = "#fff"
-        break;
-      default:
-        // DEFAULT SETTING: Dark overlay
-        overlayClasses = "img-dark"
-        backgroundColour = "#000"
-        textColour = "#fff";
-        break;
-    }
+  switch (styles.name) {
+    case "No overlay":
+      overlayClasses = "";
+      break;
+    case "Light overlay":
+      overlayClasses = "img-light";
+      backgroundColour = "#fff"
+      break;
+    default:
+      // DEFAULT SETTING: Dark overlay
+      overlayClasses = "img-dark"
+      backgroundColour = "#000"
+      textColour = "#fff";
+      break;
   }
 
   return (
@@ -70,19 +74,18 @@ function selectAlignment (alignment) {
     text: "text-center",
   }
 
-  if(alignment.length === 1){
-    switch (alignment[0].name) {
-      case "Left middle":
-        alignmentClasses.position = "justify-content-start align-items-center";
-        alignmentClasses.text = "ps-5 text-start";
-        break;
-      case "Centre bottom":
-        alignmentClasses.position = "justify-content-center align-items-end";
-        break;
-      default:
-        break;
-    }
+  switch (alignment.name) {
+    case "Left middle":
+      alignmentClasses.position = "justify-content-start align-items-center";
+      alignmentClasses.text = "ps-5 text-start";
+      break;
+    case "Centre bottom":
+      alignmentClasses.position = "justify-content-center align-items-end";
+      break;
+    default:
+      break;
   }
+
   return alignmentClasses;  
 }
 

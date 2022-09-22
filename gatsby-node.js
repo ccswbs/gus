@@ -523,8 +523,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       relationships: paragraph__image_overlayRelationships
     }
     type paragraph__image_overlayRelationships implements Node {
-      field_display_alignment: [taxonomy_term__alignment_styles] @link(from: "field_display_alignment___NODE")
-      field_display_style: [taxonomy_term__image_overlay_styles] @link(from: "field_display_style___NODE")
+      field_display_alignment: taxonomy_term__alignment_styles @link(from: "field_display_alignment___NODE")
+      field_display_style: taxonomy_term__image_overlay_styles @link(from: "field_display_style___NODE")
       field_story_content: [imageOverlayParagraphUnion] @link(from: "field_story_content___NODE")
       field_story_image_bg: media__image @link(from: "field_story_image_bg___NODE")
     }
