@@ -23,10 +23,9 @@ const Wrapper = styled.div`
 
 // Currently allowing only one selection (can add support for multiple selections in future)
 const StyleSelector = ({styles, image_bg, children}) => { 
-  // DEFAULT SETTING: Dark overlay
-  let overlayClasses = "img-dark";
-  let backgroundColour = "#000";
-  let textColour = "#fff";
+  let overlayClasses;
+  let backgroundColour;
+  let textColour; 
 
   if(styles.length === 1){
     switch (styles[0].name) {
@@ -36,9 +35,12 @@ const StyleSelector = ({styles, image_bg, children}) => {
       case "Light overlay":
         overlayClasses = "img-light";
         backgroundColour = "#fff"
-        textColour = undefined;
         break;
       default:
+        // DEFAULT SETTING: Dark overlay
+        overlayClasses = "img-dark"
+        backgroundColour = "#000"
+        textColour = "#fff";
         break;
     }
   }
@@ -111,11 +113,11 @@ const ContentSelector = ({data, textAlignment }) => {
               </button>
           } /></div>;
         case "paragraph__story_quote":
-          return <div className="ps-5">
+          return <Col lg={9} className="ps-5">
                     <Quote text={data.field_story_quote} 
                       source={data.field_quote_source} 
                       source_description={data.field_quote_source_description} />
-                  </div>;
+                  </Col>;
         default:
           return null;
     }
@@ -140,9 +142,7 @@ const ImageOverlay = (props) => {
       <StyleSelector styles={styles} image_bg={image_bg}>
         <PageContainer className={`bg-transparent h-100`}>
           <Row className={`h-100 w-100 p-5 ${alignmentClasses.position}`}>
-              <Col lg={9}>
-                {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} textAlignment={alignmentClasses.text} />)}
-              </Col>
+              {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} textAlignment={alignmentClasses.text} />)}
           </Row>
         </PageContainer>
       </StyleSelector> : null
