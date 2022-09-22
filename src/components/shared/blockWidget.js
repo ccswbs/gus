@@ -24,7 +24,7 @@ const BlockWidget = (props) => {
                 case "paragraph__general_text":
                     return <GeneralText processed={widget.field_general_text.processed} />;
                 case "paragraph__media_text":
-                    return <MediaText key={widget.drupal_id} thingData={widget} />;
+                    return <MediaText key={widget.drupal_id} widgetData={widget} />;
                 case "paragraph__section_tabs":
                     return <PageTabs pageData={widget} />;
                 case "paragraph__section_buttons":
