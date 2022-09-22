@@ -22,7 +22,7 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__accordion_section":
             return <Accordion pageData={widget} />;
         case "paragraph_block_widget":
-            return <BlockWidget processed={widget.field_custom_block.body.processed} />;
+            return <BlockWidget blockData={widget} />;
         case "paragraph__events_widget":
             return <Events eventData={widget} />;
         case "paragraph__general_text":

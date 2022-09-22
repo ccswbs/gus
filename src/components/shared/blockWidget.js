@@ -30,7 +30,7 @@ const BlockWidget = (props) => {
                 case "paragraph__section_buttons":
                     return <SectionButtons key={widget.drupal_id} pageData={widget} />;
                 default:
-                    return "No widget";
+                    return <></>;
             }
         }))
     }
