@@ -72,7 +72,7 @@ function selectAlignment (alignment) {
     switch (alignment[0].name) {
       case "Left middle":
         alignmentClasses.position = "justify-content-start align-items-center";
-        alignmentClasses.text = "text-start";
+        alignmentClasses.text = "ps-5 text-start";
         break;
       case "Centre bottom":
         alignmentClasses.position = "justify-content-center align-items-end";
@@ -111,9 +111,11 @@ const ContentSelector = ({data, textAlignment }) => {
               </button>
           } /></div>;
         case "paragraph__story_quote":
-          return <Quote text={data.field_story_quote} 
-                    source={data.field_quote_source} 
-                    source_description={data.field_quote_source_description} />;
+          return <div className="ps-5">
+                    <Quote text={data.field_story_quote} 
+                      source={data.field_quote_source} 
+                      source_description={data.field_quote_source_description} />
+                  </div>;
         default:
           return null;
     }
