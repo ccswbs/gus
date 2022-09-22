@@ -7,26 +7,6 @@ import MediaText from 'components/shared/mediaText';
 import PageTabs from 'components/shared/pageTabs';
 import SectionButtons from 'components/shared/sectionButtons';
 
-function renderWidgetBlocks(thing) {
-    switch (thing?.__typename) {
-        case "paragraph__accordion_section":
-            console.log("accordion yes");            
-            return <Accordion pageData={thing} />;
-        case "paragraph__general_text":
-            console.log(thing);
-            return <>thing.field_general_text.processed</>
-            //<GeneralText key={thing.drupal_id} processed={thing.field_general_text.processed} />;
-        case "paragraph__media_text":
-            return <MediaText key={thing.drupal_id} thingData={thing} />;
-        case "paragraph__section_tabs":
-            return <PageTabs pageData={thing} />;
-        case "paragraph__section_buttons":
-            return <SectionButtons key={thing.drupal_id} pageData={thing} />;
-        default:
-            return <></>;
-    }  
-}
-
 const BlockWidget = (props) => {
     
     let basicBlockContent;
@@ -34,12 +14,25 @@ const BlockWidget = (props) => {
     
     if (props.blockData.relationships.field_custom_block.__typename === "block_content__basic") {
         basicBlockContent = props.blockData.relationships.field_custom_block?.body.processed;
-    } else if (props.blockData.relationships.field_custom_block.__typename === "block_content__widget_block") {
-        widgetBlockContent = props.blockData.relationships.field_custom_block?.relationships?.field_widget_block_content;
     }
-    
-    if (widgetBlockContent) {
-        {widgetBlockContent?.map((widget) => renderWidgetBlocks(widget))}
+    if (props.blockData.relationships.field_custom_block.__typename === "block_content__widget_block") {
+        widgetBlockContent = props.blockData.relationships.field_custom_block?.relationships?.field_widget_block_content;
+        return (widgetBlockContent.map(widget => {
+            switch(widget.__typename) {
+                case "paragraph__accordion_section":
+                    return <Accordion pageData={widget} />;
+                case "paragraph__general_text":
+                    return <GeneralText processed={widget.field_general_text.processed} />;
+                case "paragraph__media_text":
+                    return <MediaText key={widget.drupal_id} thingData={widget} />;
+                case "paragraph__section_tabs":
+                    return <PageTabs pageData={widget} />;
+                case "paragraph__section_buttons":
+                    return <SectionButtons key={widget.drupal_id} pageData={widget} />;
+                default:
+                    return "No widget";
+            }
+        }))
     }
     return <div dangerouslySetInnerHTML={{__html: basicBlockContent}}></div>
 }
