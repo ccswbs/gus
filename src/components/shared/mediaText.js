@@ -222,7 +222,7 @@ function MediaText (props) {
         <div data-title="media-description" className={textCol}>
             {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
             {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
-            {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
+            {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
     </ConditionalWrapper>
     );
