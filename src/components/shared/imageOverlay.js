@@ -218,8 +218,7 @@ export const query = graphql`
             field_media_image {
               publicUrl
               gatsbyImage(
-                width: 1400,
-                height: 600,
+                width: 1400, 
                 placeholder: BLURRED, 
                 layout: CONSTRAINED,
                 cropFocus: ENTROPY,
