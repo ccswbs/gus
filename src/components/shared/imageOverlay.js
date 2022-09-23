@@ -54,7 +54,9 @@ const StyleSelector = ({styles, image_bg, children}) => {
     case "No overlay with dark text":
       overlayClasses = "";
       backgroundColour = "#fff";
+      textColour = "#000";
       break;
+
     default:
       // DEFAULT SETTING: Dark overlay
       overlayClasses = "img-dark";
@@ -106,11 +108,9 @@ function selectAlignment (alignment) {
 const ContentSelector = ({data, textAlignment }) => {
     switch (data?.__typename) {
         case "paragraph__general_text":
-          return <Col lg={10}>
-                    <div className={textAlignment}>
-                      <GeneralText processed={data.field_general_text.processed} />
-                    </div>
-                  </Col>;
+          return <div className={textAlignment}>
+                    <GeneralText processed={data.field_general_text.processed} />
+                  </div>;
         case "paragraph__section_buttons":
           return <div className={textAlignment}>
                     <SectionButtons key={data.drupal_id} pageData={data} />
@@ -132,11 +132,11 @@ const ContentSelector = ({data, textAlignment }) => {
               </button>
           } /></div>;
         case "paragraph__story_quote":
-          return <Col lg={9} className="ps-5">
+          return <div className="ps-5">
                     <Quote text={data.field_story_quote} 
                       source={data.field_quote_source} 
                       source_description={data.field_quote_source_description} />
-                  </Col>;
+                  </div>;
         default:
           return null;
     }
@@ -161,7 +161,9 @@ const ImageOverlay = (props) => {
       <StyleSelector styles={styles} image_bg={image_bg}>
         <PageContainer className={`bg-transparent h-100`}>
           <Row className={`h-100 w-100 p-5 ${alignmentClasses.position}`}>
+            <Col lg={10}>
               {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} textAlignment={alignmentClasses.text} />)}
+            </Col>
           </Row>
         </PageContainer>
       </StyleSelector> : null
