@@ -14,9 +14,14 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   background: ${props => (props.backgroundColour ?? "#000")};
   color: ${props => (props.textColour ?? "")};
+  text-shadow: ${props => (props.backgroundColour ?? "#000")} 1px 0 4px;
 
   h1, h2, h3, h4, h5, h6,
   && p a {
+    color: ${props => (props.textColour ?? "")} !important;
+  }
+
+  && strong {
     color: ${props => (props.textColour ?? "")} !important;
   }
 
@@ -34,17 +39,26 @@ const StyleSelector = ({styles, image_bg, children}) => {
   let textColour; 
 
   switch (styles.name) {
-    case "No overlay":
-      overlayClasses = "";
-      break;
     case "Light overlay":
       overlayClasses = "img-light";
       backgroundColour = "#fff"
       break;
+    case "No overlay":
+      overlayClasses = "";
+      break;
+    case "No overlay with light text":
+      overlayClasses = "";
+      backgroundColour = "#000";
+      textColour = "#fff";
+      break;
+    case "No overlay with dark text":
+      overlayClasses = "";
+      backgroundColour = "#fff";
+      break;
     default:
       // DEFAULT SETTING: Dark overlay
-      overlayClasses = "img-dark"
-      backgroundColour = "#000"
+      overlayClasses = "img-dark";
+      backgroundColour = "#000";
       textColour = "#fff";
       break;
   }
@@ -92,9 +106,11 @@ function selectAlignment (alignment) {
 const ContentSelector = ({data, textAlignment }) => {
     switch (data?.__typename) {
         case "paragraph__general_text":
-          return <div className={textAlignment}>
-                    <GeneralText processed={data.field_general_text.processed} />
-                  </div>;
+          return <Col lg={10}>
+                    <div className={textAlignment}>
+                      <GeneralText processed={data.field_general_text.processed} />
+                    </div>
+                  </Col>;
         case "paragraph__section_buttons":
           return <div className={textAlignment}>
                     <SectionButtons key={data.drupal_id} pageData={data} />
