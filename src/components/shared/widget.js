@@ -21,7 +21,7 @@ const WidgetSelector = ({widget}) => {
     switch (widget?.__typename) {
         case "paragraph__accordion_section":
             return <Accordion pageData={widget} />;
-        case "paragraph_block_widget":
+        case "paragraph__block_widget":
             return <BlockWidget blockData={widget} />;
         case "paragraph__events_widget":
             return <Events eventData={widget} />;
@@ -68,7 +68,7 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__story_widget":
             return <Story storyData={widget} />;
         case "paragraph__yaml_widget":
-            return <YamlWidget key={widget.drupal_id} blockData={widget} />;
+            return <YamlWidget blockData={widget} />;
         default:
             return <></>
     }
