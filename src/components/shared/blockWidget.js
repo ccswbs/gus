@@ -12,10 +12,10 @@ const BlockWidget = (props) => {
     let basicBlockContent;
     let widgetBlockContent = [];
     
-    if (props.blockData.relationships.field_custom_block.__typename === "block_content__basic") {
-        basicBlockContent = props.blockData.relationships.field_custom_block?.body.processed;
+    if (props.blockData?.relationships?.field_custom_block?.__typename === "block_content__basic") {
+        basicBlockContent = props.blockData?.relationships?.field_custom_block?.body.processed;
     }
-    if (props.blockData.relationships.field_custom_block.__typename === "block_content__widget_block") {
+    if (props.blockData?.relationships?.field_custom_block?.__typename === "block_content__widget_block") {
         widgetBlockContent = props.blockData.relationships.field_custom_block?.relationships?.field_widget_block_content;
         return (widgetBlockContent.map(widget => {
             switch(widget.__typename) {
