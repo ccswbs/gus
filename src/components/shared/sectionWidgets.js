@@ -41,9 +41,9 @@ function renderPrimary(widget) {
         case "paragraph__media_text":
             return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
         case "paragraph__section_tabs":
-            return <PageTabs pageData={widget} />;
+            return <PageTabs key={widget.drupal_id} pageData={widget} />;
         case "paragraph__statistic_widget":
-            return <StatisticWidget statisticData={widget} />;
+            return <StatisticWidget key={widget.drupal_id} statisticData={widget} />;
         case "paragraph__stats_widget":
             return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
         case "paragraph__section_buttons":
