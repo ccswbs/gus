@@ -5,16 +5,28 @@ import Seo from 'components/seo';
 
 const IndexPage = ({ data }) => {
 
+    const pageTags = [];
     const pubPages = [];
     const unpubPages = [];
     const pubPrograms = [];
     const unpubPrograms = [];
     const pages = data.allNodePage.edges;
     const programs = data.programs.edges;
+    const tags = data.tags.edges;
+    
+    console.log(tags);
+    
+    for (let i=0; i<tags.length; i++) {
+        if (tags[i].node.relationships.node__page?.length > 0) {
+            pageTags.push(tags[i])
+        }
+    }
     
     for (let i=0; i<pages.length; i++) {
         if (pages[i].node.status === true) {
-            pubPages.push(pages[i])
+            if (!pages[i].node.field_tags) {
+                pubPages.push(pages[i])
+            }
         } else {
             unpubPages.push(pages[i])
         }
@@ -35,6 +47,16 @@ const IndexPage = ({ data }) => {
             <div className="content-area">
               <h1>Gatsby UG Starter Theme</h1>
               <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
+              
+              {pageTags.map((tag) => (
+                <><h2>{tag.node.name}</h2>
+                <ul className="two-col-md">
+                  {tag.node.relationships.node__page.map((taggedPage) => (
+                    <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
+                  ))}
+                </ul></>
+              ))}
+              
               <h2>Pages</h2>
               <ul className="two-col-md">
                   {pubPages.map((page) => (
@@ -81,6 +103,16 @@ export const query = graphql`
             path {
               alias
             }
+            relationships {
+              field_tags {
+                __typename
+                ... on TaxonomyInterface {
+                  drupal_id
+                  id
+                  name
+                }
+              }
+            }
             status
           }
         }
@@ -95,6 +127,21 @@ export const query = graphql`
               alias
             }
             status
+          }
+        }
+      }
+      tags: allTaxonomyTermTags {
+        edges {
+          node {
+            name
+            relationships {
+              node__page {
+                title
+                path {
+                  alias
+                }
+              }
+            }
           }
         }
       }
