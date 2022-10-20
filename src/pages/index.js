@@ -7,33 +7,27 @@ const IndexPage = ({ data }) => {
 
     const pageTags = [];    
     const pubPages = [];
-    const pubPagesTagged = [];
     const unpubPages = [];
-    const unpubPagesTagged = [];
     const pubPrograms = [];
     const unpubPrograms = [];
     const pages = data.allNodePage.edges;
     const programs = data.programs.edges;
     const tags = data.tags.edges;
     
-    // Fetch tags used on pages
+      // Fetch tags used on pages
     for (let i=0; i<tags.length; i++) {
         if (tags[i].node.relationships.node__page?.length > 0) {
             pageTags.push(tags[i])            
         }
     }
-    // Sort pages into pubbed vs unpubbed and tagged vs not
+    // Sort untagged pages into pubbed vs unpubbed
     for (let i=0; i<pages.length; i++) {
         if (pages[i].node.status === true) {
-            if (pages[i].node.field_tags) {
-                pubPagesTagged.push(pages[i])
-            } else {
+            if (!pages[i].node.field_tags) {
                 pubPages.push(pages[i])
             }
         } else {
-            if (pages[i].node.field_tags) {
-                unpubPagesTagged.push(pages[i])
-            } else {
+            if (!pages[i].node.field_tags) {
                 unpubPages.push(pages[i])
             }
         }
@@ -58,26 +52,29 @@ const IndexPage = ({ data }) => {
               
               {pageTags.map((tag) => {
                 const taggedPages = tag.node.relationships.node__page;
-                taggedPages.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
+                const taggedPagesPubbed = taggedPages.filter(page => page.status === true);
+                taggedPagesPubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
                 return (<>
                   <h2>{tag.node.name}</h2>
-                    <ul className="two-col-md">
-                      {taggedPages.map((taggedPage) => (
-                          taggedPage.status && <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
+                  <p>Total pages: {taggedPagesPubbed.length}</p>
+                    <ul className="three-col-md">
+                      {taggedPagesPubbed.map((taggedPage) => (
+                          <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
                       ))}
                     </ul>
                 </>)
               })}
               
               <h2>Untagged Pages</h2>
-              <ul className="two-col-md">
+              <p>Total: {pubPages.length}</p>
+              <ul className="three-col-md">
                   {pubPages.map((page) => (
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
 
               <h2>Programs</h2>
-              <ul className="two-col-md">
+              <ul className="three-col-md">
                   {pubPrograms.map((program) => (
                       <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                   ))}
@@ -85,23 +82,31 @@ const IndexPage = ({ data }) => {
               
               <h2>Unpublished Content</h2>
               
-              {pageTags.map((tag) => (
-                <><h3>{tag.node.name}</h3>
-                <ul className="two-col-md">
-                  {tag.node.relationships.node__page.map((taggedPage) => (
-                      !taggedPage.status && <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
-                  ))}
-                </ul></>
-              ))}
+              {pageTags.map((tag) => {
+                const taggedPages = tag.node.relationships.node__page;
+                const taggedPagesUnpubbed = taggedPages.filter(page => page.status === false);
+                taggedPagesUnpubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
+                return (<>
+                  <h3>{tag.node.name}</h3>
+                  <p>Total: {taggedPagesUnpubbed.length}</p>
+                  <ul className="three-col-md">
+                    {taggedPagesUnpubbed.map((taggedPage) => (
+                      <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
+                    ))}
+                  </ul>
+                </>)
+              })}
               
               <h3>Untagged Pages</h3>
-              <ul className="two-col-md">
+              <p>Total: {unpubPages.length}</p>
+              <ul className="three-col-md">
                   {unpubPages.map((page) => (
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
               <h3>Programs</h3>
-              <ul className="two-col-md">
+              <p>Total: {unpubPrograms.length}</p>
+              <ul className="three-col-md">
                   {unpubPrograms.map((program) => (
                       <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                   ))}
