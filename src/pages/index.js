@@ -86,8 +86,8 @@ const IndexPage = ({ data }) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesUnpubbed = taggedPages.filter(page => page.status === false);
                 taggedPagesUnpubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
-                return (<>
-                  <h3>{tag.node.name}</h3>
+                return (taggedPagesUnpubbed.length > 0 && <>
+                  <h3>{tag.node.name}</h3> 
                   <p>Total: {taggedPagesUnpubbed.length}</p>
                   <ul className="three-col-md">
                     {taggedPagesUnpubbed.map((taggedPage) => (
