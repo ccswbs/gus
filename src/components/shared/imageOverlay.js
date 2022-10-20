@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import { getImage } from "gatsby-plugin-image";
+import { getImage, StaticImage } from "gatsby-plugin-image";
 import { Col, Row } from "react-bootstrap";
 import { ConditionalWrapper } from 'utils/ug-utils';
 import GeneralText from 'components/shared/generalText';
@@ -11,14 +11,42 @@ import Quote from 'components/shared/quote';
 import SectionButtons from 'components/shared/sectionButtons';
 import styled from "styled-components";
 
+const TextShadow = styled.div`
+  text-shadow: ${props => (props.backgroundColour ?? "#000")} 1px 0 4px;
+
+  i.fa-quote-left,
+  i.fa-quote-right,
+  a.btn {
+    text-shadow: none !important;
+  }
+`
+const YellowQuotes = styled.div`
+  i.fa-quote-left,
+  i.fa-quote-right {
+    color: var(--uog-yellow);
+  }
+`
+const RedQuotes = styled.div`
+  i.fa-quote-left,
+  i.fa-quote-right {
+    color: var(--uog-red);
+  }
+
+  .author {
+    border-left-color: var(--uog-red)
+  }
+`
 const Wrapper = styled.div`
   background: ${props => (props.backgroundColour ?? "#000")};
   color: ${props => (props.textColour ?? "")};
-  text-shadow: ${props => (props.backgroundColour ?? "#000")} 1px 0 4px;
 
   h1, h2, h3, h4, h5, h6,
   && p a {
     color: ${props => (props.textColour ?? "")} !important;
+  }
+
+  p a:hover, p a:focus {
+    color: #fff !important;
   }
 
   && strong {
@@ -32,57 +60,103 @@ const Wrapper = styled.div`
   }
 `
 
-// Currently allowing only one selection (can add support for multiple selections in future)
-const StyleSelector = ({styles, image_bg, children}) => { 
-  let overlayClasses;
-  let backgroundColour;
-  let textColour; 
+const StyleSelector = ({styles, image_bg, children}) => {
+  // DEFAULT SETTING: Dark overlay
+  let overlayClasses = "img-dark";
+  let backgroundColour = "#000";
+  let textColour = "#fff";
 
-  switch (styles.name) {
+  let image = {
+    src: image_bg?.src,
+    alt: image_bg?.alt,
+  }
+
+  switch (styles?.name) {
     case "Light overlay":
       overlayClasses = "img-light";
       backgroundColour = "#fff"
-      break;
-    case "No overlay":
-      overlayClasses = "";
-      break;
-    case "No overlay with light text":
-      overlayClasses = "";
-      backgroundColour = "#000";
-      textColour = "#fff";
-      break;
-    case "No overlay with dark text":
-      overlayClasses = "";
-      backgroundColour = "#fff";
       textColour = "#000";
-      break;
-
+      return (
+        <Wrapper backgroundColour={backgroundColour} textColour={textColour} className={`d-flex flex-column p-0`}>
+          <ConditionalWrapper 
+            condition={image.src} 
+            wrapper={children => 
+                <Overlay.GatsbyImage 
+                  gatsbyImageData={getImage(image.src)} 
+                  alt={image.alt ?? ""} 
+                  className={overlayClasses}>
+                    {children}
+                </Overlay.GatsbyImage>}>
+              {children}
+          </ConditionalWrapper>
+        </Wrapper>
+      )
+    case "Blue background":
+      textColour = "#000";
+      return (
+        <YellowQuotes>
+          <Wrapper textColour={textColour} className={`d-flex flex-column p-0`}>
+              <div style={{ display: "grid" }}>
+                <StaticImage src="../../images/blue-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
+                <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
+                  {children}
+                </div>
+              </div>
+          </Wrapper>
+        </YellowQuotes>
+      )
+    case "Red background":
+      return (
+        <TextShadow>
+          <YellowQuotes>
+            <Wrapper textColour={textColour} className={`d-flex flex-column p-0`}>
+                <div style={{ display: "grid" }}>
+                  <StaticImage src="../../images/red-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
+                  <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
+                    {children}
+                  </div>
+                </div>
+            </Wrapper>
+          </YellowQuotes>
+        </TextShadow>
+      )
+    case "Yellow background":
+      textColour = "#000";
+      return (
+        <RedQuotes>
+          <Wrapper textColour={textColour} className={`d-flex flex-column p-0`}>
+              <div style={{ display: "grid" }}>
+                <StaticImage src="../../images/yellow-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
+                <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
+                  {children}
+                </div>
+              </div>
+          </Wrapper>
+        </RedQuotes>
+      )
     default:
-      // DEFAULT SETTING: Dark overlay
-      overlayClasses = "img-dark";
-      backgroundColour = "#000";
-      textColour = "#fff";
       break;
   }
 
   return (
-    <Wrapper backgroundColour={backgroundColour} textColour={textColour} className={`d-flex flex-column p-0`}>
-      <ConditionalWrapper 
-        condition={image_bg?.src} 
-        wrapper={children => 
-            <Overlay.GatsbyImage 
-              gatsbyImageData={getImage(image_bg?.src)} 
-              alt={image_bg?.alt ?? ""} 
-              className={overlayClasses}>
-                {children}
-            </Overlay.GatsbyImage>}>
-          {children}
-      </ConditionalWrapper>
-    </Wrapper>
+    <TextShadow>
+      <Wrapper backgroundColour={backgroundColour} textColour={textColour} className={`d-flex flex-column p-0`}>
+        <ConditionalWrapper 
+          condition={image.src} 
+          wrapper={children => 
+              <Overlay.GatsbyImage 
+                gatsbyImageData={getImage(image.src)} 
+                alt={image.alt ?? ""} 
+                className={overlayClasses}>
+                  {children}
+              </Overlay.GatsbyImage>}>
+            {children}
+        </ConditionalWrapper>
+      </Wrapper>
+    </TextShadow>
   )
 }
 
-// Currently allowing only one selection (can add support for multiple selections in future)
 function selectAlignment (alignment) {
   // DEFAULT SETTING: Centre middle
   let alignmentClasses = {
