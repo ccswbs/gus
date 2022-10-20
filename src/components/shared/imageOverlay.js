@@ -16,7 +16,7 @@ const TextShadow = styled.div`
 
   i.fa-quote-left,
   i.fa-quote-right,
-  a.btn {
+  a.btn, a:hover, a:focus {
     text-shadow: none !important;
   }
 `
@@ -31,128 +31,132 @@ const RedQuotes = styled.div`
   i.fa-quote-right {
     color: var(--uog-red);
   }
-
   .author {
     border-left-color: var(--uog-red)
   }
 `
-const Wrapper = styled.div`
-  background: ${props => (props.backgroundColour ?? "#000")};
-  color: ${props => (props.textColour ?? "")};
-
-  h1, h2, h3, h4, h5, h6,
-  && p a {
-    color: ${props => (props.textColour ?? "")} !important;
+const DarkText = styled.div`
+  color: #000;
+  h1, h2, h3, h4, h5, h6, && strong {
+    color: #000 !important;
   }
-
   p a:hover, p a:focus {
     color: #fff !important;
   }
+`
+const LightText = styled.div`
+  color: #fff;
+  h1, h2, h3, h4, h5, h6, && p a, && strong,
+  p a:hover, p a:focus {
+    color: #fff !important;
+  }
+`
+const DarkOverlay = styled.div`
+  background: #000;
 
-  && strong {
-    color: ${props => (props.textColour ?? "")} !important;
+  img {
+    filter: brightness(0.5); 
+    max-height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+`
+const LightOverlay = styled.div`
+  background: #fff;
+  .gatsby-image-wrapper {
+    filter: brightness(1.1); 
+    opacity: 0.25;
   }
 
   img {
+    max-height: 100%;
     object-fit: cover;
     width: 100%;
-    max-height: 100%;
   }
 `
 
 const StyleSelector = ({styles, image_bg, children}) => {
-  // DEFAULT SETTING: Dark overlay
-  let overlayClasses = "img-dark";
-  let backgroundColour = "#000";
-  let textColour = "#fff";
-
-  let image = {
-    src: image_bg?.src,
-    alt: image_bg?.alt,
-  }
 
   switch (styles?.name) {
     case "Light overlay":
-      overlayClasses = "img-light";
-      backgroundColour = "#fff"
-      textColour = "#000";
       return (
-        <Wrapper backgroundColour={backgroundColour} textColour={textColour} className={`d-flex flex-column p-0`}>
-          <ConditionalWrapper 
-            condition={image.src} 
-            wrapper={children => 
-                <Overlay.GatsbyImage 
-                  gatsbyImageData={getImage(image.src)} 
-                  alt={image.alt ?? ""} 
-                  className={overlayClasses}>
-                    {children}
-                </Overlay.GatsbyImage>}>
-              {children}
-          </ConditionalWrapper>
-        </Wrapper>
+        <LightOverlay className={`d-flex flex-column p-0`}>
+          <DarkText>
+            <ConditionalWrapper 
+              condition={image_bg?.src} 
+              wrapper={children => 
+                  <Overlay.GatsbyImage 
+                    gatsbyImageData={getImage(image_bg?.src)} 
+                    alt={image_bg?.alt ?? ""} >
+                      {children}
+                  </Overlay.GatsbyImage>}>
+                {children}
+            </ConditionalWrapper>
+          </DarkText>
+        </LightOverlay>
       )
     case "Blue background":
-      textColour = "#000";
       return (
         <YellowQuotes>
-          <Wrapper textColour={textColour} className={`d-flex flex-column p-0`}>
-              <div style={{ display: "grid" }}>
-                <StaticImage src="../../images/blue-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
-                <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
-                  {children}
-                </div>
+          <DarkText>
+            <div style={{ display: "grid" }}>
+              <StaticImage src="../../images/blue-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
+              <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
+                {children}
               </div>
-          </Wrapper>
+            </div>
+          </DarkText>
         </YellowQuotes>
       )
     case "Red background":
       return (
         <TextShadow>
           <YellowQuotes>
-            <Wrapper textColour={textColour} className={`d-flex flex-column p-0`}>
-                <div style={{ display: "grid" }}>
-                  <StaticImage src="../../images/red-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
-                  <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
-                    {children}
-                  </div>
-                </div>
-            </Wrapper>
-          </YellowQuotes>
-        </TextShadow>
-      )
-    case "Yellow background":
-      textColour = "#000";
-      return (
-        <RedQuotes>
-          <Wrapper textColour={textColour} className={`d-flex flex-column p-0`}>
+            <LightText>
               <div style={{ display: "grid" }}>
-                <StaticImage src="../../images/yellow-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
+                <StaticImage src="../../images/red-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
                 <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
                   {children}
                 </div>
               </div>
-          </Wrapper>
+            </LightText>
+          </YellowQuotes>
+        </TextShadow>
+      )
+    case "Yellow background":
+      return (
+        <RedQuotes>
+          <DarkText>
+            <div style={{ display: "grid" }}>
+              <StaticImage src="../../images/yellow-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
+              <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
+                {children}
+              </div>
+            </div>
+          </DarkText>
         </RedQuotes>
       )
     default:
       break;
   }
 
+  // DEFAULT SETTING: Dark overlay
   return (
     <TextShadow>
-      <Wrapper backgroundColour={backgroundColour} textColour={textColour} className={`d-flex flex-column p-0`}>
-        <ConditionalWrapper 
-          condition={image.src} 
-          wrapper={children => 
-              <Overlay.GatsbyImage 
-                gatsbyImageData={getImage(image.src)} 
-                alt={image.alt ?? ""} 
-                className={overlayClasses}>
-                  {children}
-              </Overlay.GatsbyImage>}>
-            {children}
-        </ConditionalWrapper>
-      </Wrapper>
+      <DarkOverlay className={`d-flex flex-column p-0`}>
+        <LightText>
+          <ConditionalWrapper 
+            condition={image_bg?.src} 
+            wrapper={children => 
+                <Overlay.GatsbyImage 
+                  gatsbyImageData={getImage(image_bg?.src)} 
+                  alt={image_bg?.alt ?? ""} >
+                    {children}
+                </Overlay.GatsbyImage>}>
+              {children}
+          </ConditionalWrapper>
+        </LightText>
+      </DarkOverlay>
     </TextShadow>
   )
 }
