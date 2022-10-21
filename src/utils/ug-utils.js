@@ -73,5 +73,5 @@ export {
 	setHeadingLevel,
 	sortLastModifiedDates,
 	stripHTMLTags,
-    ConditionalWrapper
-   };
+	ConditionalWrapper
+};

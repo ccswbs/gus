@@ -1,6 +1,8 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { Container, Row } from 'react-bootstrap';
 import { ConditionalWrapper } from 'utils/ug-utils';
+// import { PageContainer } from 'components/shared/pageContainer';
 
 const Accordion = React.lazy(() => import('components/shared/accordion'));
 const BlockWidget = React.lazy(() => import('components/shared/blockWidget'));
@@ -9,7 +11,7 @@ const GeneralText = React.lazy(() => import('components/shared/generalText'));
 const LeadPara = React.lazy(() => import('components/shared/leadPara'));
 const LinksItems = React.lazy(() => import('components/shared/linksItems'));
 const MediaText = React.lazy(() => import('components/shared/mediaText'));
-const PageContainer = React.lazy(() => import('components/shared/pageContainer'));
+// const PageContainer = React.lazy(() => import('components/shared/pageContainer'));
 const ModalVideo = React.lazy(() => import('components/shared/modalVideo'));
 const PageTabs = React.lazy(() => import('components/shared/pageTabs'));
 const SectionWidgets = React.lazy(() => import('components/shared/sectionWidgets'));
@@ -82,11 +84,13 @@ const Widget = ({widget}) => {
             && widget?.__typename !== "paragraph__story_widget"
             && widget?.__typename !== "paragraph__statistic_widget" } 
         wrapper={children => 
-            <PageContainer.SiteContent>
-              <PageContainer.ContentArea>
-                {children}
-              </PageContainer.ContentArea>
-            </PageContainer.SiteContent>
+            <Container className="page-container">
+              <Row className="site-content">
+                <div className="content-area">
+                  {children}
+                </div>
+              </Row>
+            </Container>
         }>
         <WidgetSelector widget={widget} />
     </ConditionalWrapper>
