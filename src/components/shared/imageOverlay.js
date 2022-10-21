@@ -3,13 +3,14 @@ import { graphql } from 'gatsby';
 import { getImage, StaticImage } from "gatsby-plugin-image";
 import { Col, Row } from "react-bootstrap";
 import { ConditionalWrapper } from 'utils/ug-utils';
-import GeneralText from 'components/shared/generalText';
-import ModalVideo from "components/shared/modalVideo"
 import Overlay from "components/shared/overlay";
 import PageContainer from 'components/shared/pageContainer';
-import Quote from 'components/shared/quote';
-import SectionButtons from 'components/shared/sectionButtons';
 import styled from "styled-components";
+
+const GeneralText = React.lazy(() => import('components/shared/generalText'));
+const ModalVideo = React.lazy(() => import('components/shared/modalVideo'));
+const Quote = React.lazy(() => import('components/shared/quote'));
+const SectionButtons = React.lazy(() => import('components/shared/sectionButtons'));
 
 const TextShadow = styled.div`
   text-shadow: ${props => (props.backgroundColour ?? "#000")} 1px 0 4px;
