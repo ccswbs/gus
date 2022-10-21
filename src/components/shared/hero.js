@@ -39,13 +39,14 @@ export const query = graphql`
 		  }
 		  relationships {
 			field_media_image {
-              publicUrl
-              gatsbyImage(
-                width: 1920
-                cropFocus: CENTER
-                placeholder: BLURRED
-                aspectRatio: 3
-              )
+				publicUrl
+				gatsbyImage(
+					height: 600
+					width: 1920
+					cropFocus: CENTER
+					placeholder: BLURRED
+					aspectRatio: 3
+				)
 			}
 			field_tags {
 			  __typename
