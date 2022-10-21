@@ -4,8 +4,6 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
- process.env.NODE_ENV = "development"
-
 let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
@@ -34,12 +32,12 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-gatsby-cloud`,
-    // {
-    //   resolve: `gatsby-plugin-google-analytics`,
-    //   options: {
-    //     trackingId: metaConfig['GAtrackingID'],
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: metaConfig['GAtrackingID'],
+      },
+    },
     {
       resolve: `gatsby-transformer-sharp`,
       options: {
@@ -74,13 +72,13 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },    
-    // {
-    //   resolve: `gatsby-plugin-google-tagmanager`,
-    //   options: {
-    //     id: "GTM-NRSSDKW",
-    //     includeInDevelopment: false,
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-google-tagmanager`,
+      options: {
+        id: "GTM-NRSSDKW",
+        includeInDevelopment: false,
+      },
+    },
     {
       resolve: `gatsby-plugin-robots-txt`,
       options: {

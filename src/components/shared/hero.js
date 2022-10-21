@@ -1,5 +1,5 @@
 import React from 'react';
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { graphql } from 'gatsby';
 import PropTypes from "prop-types";
 import { contentExists } from 'utils/ug-utils';
@@ -14,7 +14,7 @@ function Hero (props) {
 					let altText = img.node.field_media_image.alt;					
 					return contentExists(heroImage) ? 
                         <React.Fragment key={img.node.drupal_id}>
-                            <GatsbyImage image={heroImage.gatsbyImage} alt={altText} loading="eager" />
+                            <GatsbyImage image={getImage(heroImage.gatsbyImage)} alt={altText} loading="eager" />
                         </React.Fragment>
                     : null;
 				})}
@@ -41,7 +41,6 @@ export const query = graphql`
 			field_media_image {
 				publicUrl
 				gatsbyImage(
-					height: 600
 					width: 1920
 					cropFocus: CENTER
 					placeholder: BLURRED
