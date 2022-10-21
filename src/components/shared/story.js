@@ -1,7 +1,8 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import StatisticWidget from 'components/shared/statisticWidget';
-import StoryImageCutout from 'components/shared/storyImageCutout';
+
+const StatisticWidget = React.lazy(() => import('components/shared/statisticWidget'));
+const StoryImageCutout = React.lazy(() => import('components/shared/storyImageCutout'));
 
 const StorySelector = ({story}) => {
     switch (story?.__typename) {

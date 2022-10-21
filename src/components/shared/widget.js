@@ -1,21 +1,22 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Accordion from 'components/shared/accordion';
-import BlockWidget from 'components/shared/blockWidget';
-import Events from 'components/shared/events';
-import GeneralText from 'components/shared/generalText';
-import LeadPara from 'components/shared/leadPara';
-import LinksItems from 'components/shared/linksItems';
-import MediaText from 'components/shared/mediaText';
-import PageContainer from 'components/shared/pageContainer';
-import ModalVideo from 'components/shared/modalVideo';
-import PageTabs from 'components/shared/pageTabs';
-import SectionWidgets from 'components/shared/sectionWidgets';
-import StatisticWidget from 'components/shared/statisticWidget';
-import StatsWidget from 'components/shared/statsWidget';
-import Story from 'components/shared/story';
-import YamlWidget from 'components/shared/yamlWidget';
 import { ConditionalWrapper } from 'utils/ug-utils';
+
+const Accordion = React.lazy(() => import('components/shared/accordion'));
+const BlockWidget = React.lazy(() => import('components/shared/blockWidget'));
+const Events = React.lazy(() => import('components/shared/events'));
+const GeneralText = React.lazy(() => import('components/shared/generalText'));
+const LeadPara = React.lazy(() => import('components/shared/leadPara'));
+const LinksItems = React.lazy(() => import('components/shared/linksItems'));
+const MediaText = React.lazy(() => import('components/shared/mediaText'));
+const PageContainer = React.lazy(() => import('components/shared/pageContainer'));
+const ModalVideo = React.lazy(() => import('components/shared/modalVideo'));
+const PageTabs = React.lazy(() => import('components/shared/pageTabs'));
+const SectionWidgets = React.lazy(() => import('components/shared/sectionWidgets'));
+const StatisticWidget = React.lazy(() => import('components/shared/statisticWidget'));
+const StatsWidget = React.lazy(() => import('components/shared/statsWidget'));
+const Story = React.lazy(() => import('components/shared/story'));
+const YamlWidget = React.lazy(() => import('components/shared/yamlWidget'));
 
 const WidgetSelector = ({widget}) => {
     switch (widget?.__typename) {
