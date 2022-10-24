@@ -36,19 +36,23 @@ const RedQuotes = styled.div`
     border-left-color: var(--uog-red)
   }
 `
+// overriding hover/focus colour
+// while background hover/focus style still in use
 const DarkText = styled.div`
   color: #000;
   h1, h2, h3, h4, h5, h6, && strong {
     color: #000 !important;
   }
-  p a:hover, p a:focus {
+  .site-content .content-area p a:hover, p a:focus {
     color: #fff !important;
   }
 `
+// overriding hover/focus colour
+// while background hover/focus style still in use
 const LightText = styled.div`
   color: #fff;
   h1, h2, h3, h4, h5, h6, && p a, && strong,
-  p a:hover, p a:focus {
+  .site-content .content-area p a:hover, p a:focus {
     color: #fff !important;
   }
 `
@@ -236,13 +240,13 @@ const ImageOverlay = (props) => {
     let alignment = relationships?.field_display_alignment;
     let alignmentClasses = selectAlignment(alignment);
 
-    return content ? 
+    return content.length > 0 ? 
       <StyleSelector styles={styles} image_bg={image_bg}>
         <PageContainer className={`bg-transparent h-100`}>
           <Row className={`h-100 w-100 p-5 ${alignmentClasses.position}`}>
-            <Col lg={10}>
-              {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} textAlignment={alignmentClasses.text} />)}
-            </Col>
+              <Col lg={10}>
+                {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} textAlignment={alignmentClasses.text} />)}
+              </Col>
           </Row>
         </PageContainer>
       </StyleSelector> : null
