@@ -50,13 +50,15 @@ const IndexPage = ({ data }) => {
               <h1>Gatsby UG Starter Theme</h1>
               <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
               
+              <h2>Published Content</h2>
+              
               {pageTags.map((tag) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesPubbed = taggedPages.filter(page => page.status === true);
                 taggedPagesPubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
                 return (<>
-                  <h2>{tag.node.name}</h2>
-                  <p>Total pages: {taggedPagesPubbed.length}</p>
+                  <h3 className="text-dark">{tag.node.name}</h3>
+                  <p>Total pages: <strong>{taggedPagesPubbed.length}</strong></p>
                     <ul className="three-col-md">
                       {taggedPagesPubbed.map((taggedPage) => (
                           <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
@@ -65,15 +67,16 @@ const IndexPage = ({ data }) => {
                 </>)
               })}
               
-              <h2>Untagged Pages</h2>
-              <p>Total: {pubPages.length}</p>
+              <h3 className="text-dark">Untagged Pages</h3>
+              <p>Total: <strong>{pubPages.length}</strong></p>
               <ul className="three-col-md">
                   {pubPages.map((page) => (
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
 
-              <h2>Programs</h2>
+              <h3 className="text-dark">Programs</h3>
+              <p>Total: <strong>{pubPages.length}</strong></p>
               <ul className="three-col-md">
                   {pubPrograms.map((program) => (
                       <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
@@ -87,8 +90,8 @@ const IndexPage = ({ data }) => {
                 const taggedPagesUnpubbed = taggedPages.filter(page => page.status === false);
                 taggedPagesUnpubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
                 return (taggedPagesUnpubbed.length > 0 && <>
-                  <h3>{tag.node.name}</h3> 
-                  <p>Total: {taggedPagesUnpubbed.length}</p>
+                  <h3 className="text-dark">{tag.node.name}</h3> 
+                  <p>Total: <strong>{taggedPagesUnpubbed.length}</strong></p>
                   <ul className="three-col-md">
                     {taggedPagesUnpubbed.map((taggedPage) => (
                       <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
@@ -97,15 +100,15 @@ const IndexPage = ({ data }) => {
                 </>)
               })}
               
-              <h3>Untagged Pages</h3>
-              <p>Total: {unpubPages.length}</p>
+              <h3 className="text-dark">Untagged Pages</h3>
+              <p>Total: <strong>{unpubPages.length}</strong></p>
               <ul className="three-col-md">
                   {unpubPages.map((page) => (
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
               <h3>Programs</h3>
-              <p>Total: {unpubPrograms.length}</p>
+              <p>Total: <strong>{unpubPrograms.length}</strong></p>
               <ul className="three-col-md">
                   {unpubPrograms.map((program) => (
                       <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
