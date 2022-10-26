@@ -67,7 +67,7 @@ const IndexPage = ({ data }) => {
                 </>)
               })}
               
-              <h3 className="text-dark">Untagged Pages</h3>
+              <h3>Untagged Pages</h3>
               <p>Total: <strong>{pubPages.length}</strong></p>
               <ul className="three-col-md">
                   {pubPages.map((page) => (
@@ -75,7 +75,7 @@ const IndexPage = ({ data }) => {
                   ))}
               </ul>
 
-              <h3 className="text-dark">Programs</h3>
+              <h3>Programs</h3>
               <p>Total: <strong>{pubPages.length}</strong></p>
               <ul className="three-col-md">
                   {pubPrograms.map((program) => (
@@ -100,7 +100,7 @@ const IndexPage = ({ data }) => {
                 </>)
               })}
               
-              <h3 className="text-dark">Untagged Pages</h3>
+              <h3>Untagged Pages</h3>
               <p>Total: <strong>{unpubPages.length}</strong></p>
               <ul className="three-col-md">
                   {unpubPages.map((page) => (
