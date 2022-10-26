@@ -43,8 +43,9 @@ const DarkText = styled.div`
   h1, h2, h3, h4, h5, h6, && strong {
     color: #000 !important;
   }
-  .site-content .content-area p a:hover, p a:focus {
+  && p a:hover, && p a:focus {
     color: #fff !important;
+    background: var(--blue);
   }
 `
 // overriding hover/focus colour
@@ -52,7 +53,8 @@ const DarkText = styled.div`
 const LightText = styled.div`
   color: #fff;
   h1, h2, h3, h4, h5, h6, && p a, && strong,
-  .site-content .content-area p a:hover, p a:focus {
+  .site-content .content-area p a:hover, 
+  .site-content .content-area p a:focus {
     color: #fff !important;
   }
 `
