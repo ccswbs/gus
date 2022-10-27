@@ -16,7 +16,7 @@ const IndexPage = ({ data }) => {
     
       // Fetch tags used on pages
     for (let i=0; i<tags.length; i++) {
-        if (tags[i].node.relationships.node__page?.length > 0) {
+        if (tags[i].node?.relationships?.node__page?.length > 0) {
             pageTags.push(tags[i])            
         }
     }
@@ -47,17 +47,19 @@ const IndexPage = ({ data }) => {
         <div className="container page-container">
           <div className="site-content">
             <div className="content-area">
-              <h1>Gatsby UG Starter Theme</h1>
-              <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>
+              <h1>University of Guelph Content Hub</h1>
+              <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>              
+              <p>Basic pages are listed according to tag. If a page has more than one tag, it will be listed more than once, with untagged pages listed at the end. Programs appear after basic pages in their own section.</p>              
               
-              <h2>Published Content</h2>
+              <h2>Basic Pages</h2>
               
               {pageTags.map((tag) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesPubbed = taggedPages.filter(page => page.status === true);
                 taggedPagesPubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
-                return (<>
+                return (taggedPagesPubbed.length > 0 && <>
                   <h3 className="text-dark">{tag.node.name}</h3>
+                  {tag.node.description?.processed && <div dangerouslySetInnerHTML={{__html: tag.node.description.processed}}></div>}
                   <p>Total pages: <strong>{taggedPagesPubbed.length}</strong></p>
                     <ul className="three-col-md">
                       {taggedPagesPubbed.map((taggedPage) => (
@@ -75,7 +77,7 @@ const IndexPage = ({ data }) => {
                   ))}
               </ul>
 
-              <h3>Programs</h3>
+              <h2>Programs</h2>
               <p>Total: <strong>{pubPages.length}</strong></p>
               <ul className="three-col-md">
                   {pubPrograms.map((program) => (
@@ -84,13 +86,15 @@ const IndexPage = ({ data }) => {
               </ul>
               
               <h2>Unpublished Content</h2>
+              <p>This section is only visible on preview and test sites.</p>
+              <h3>Basic Pages</h3>
               
               {pageTags.map((tag) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesUnpubbed = taggedPages.filter(page => page.status === false);
                 taggedPagesUnpubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
                 return (taggedPagesUnpubbed.length > 0 && <>
-                  <h3 className="text-dark">{tag.node.name}</h3> 
+                  <h4 className="text-dark">{tag.node.name}</h4> 
                   <p>Total: <strong>{taggedPagesUnpubbed.length}</strong></p>
                   <ul className="three-col-md">
                     {taggedPagesUnpubbed.map((taggedPage) => (
@@ -100,7 +104,7 @@ const IndexPage = ({ data }) => {
                 </>)
               })}
               
-              <h3>Untagged Pages</h3>
+              <h4>Untagged Pages</h4>
               <p>Total: <strong>{unpubPages.length}</strong></p>
               <ul className="three-col-md">
                   {unpubPages.map((page) => (
@@ -160,17 +164,37 @@ export const query = graphql`
           }
         }
       }
-      tags: allTaxonomyTermTags(sort: {fields: [name], order: ASC}) {
+      tags: allTaxonomyInterface(sort: {fields: [name], order: ASC}) {
         edges {
           node {
-            name
-            relationships {
-              node__page {
-                title
-                path {
-                  alias
+            ... on taxonomy_term__tags {
+              name
+              description {
+                processed
+              }
+              relationships {
+                node__page {
+                  status
+                  title
+                  path {
+                    alias
+                  }
                 }
-                status
+              }
+            }
+            ... on taxonomy_term__units {
+              name
+              description {
+                processed
+              }
+              relationships {
+                node__page {
+                  status
+                  title
+                  path {
+                    alias
+                  }
+                }
               }
             }
           }
