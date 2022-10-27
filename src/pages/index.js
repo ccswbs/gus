@@ -14,7 +14,7 @@ const IndexPage = ({ data }) => {
     const programs = data.programs.edges;
     const tags = data.tags.edges;
     
-      // Fetch tags used on pages
+    // Fetch tags used on pages
     for (let i=0; i<tags.length; i++) {
         if (tags[i].node?.relationships?.node__page?.length > 0) {
             pageTags.push(tags[i])            
@@ -86,9 +86,9 @@ const IndexPage = ({ data }) => {
               </ul>
               
               <h2>Unpublished Content</h2>
-              <p>This section is only visible on preview and test sites.</p>
-              <h3>Basic Pages</h3>
+              <p>Unpublished pages and programs are only visible on preview and test sites.</p>
               
+              <h3>Basic Pages</h3>            
               {pageTags.map((tag) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesUnpubbed = taggedPages.filter(page => page.status === false);
@@ -104,6 +104,7 @@ const IndexPage = ({ data }) => {
                 </>)
               })}
               
+              {unpubPages.length > 0 && <>
               <h4>Untagged Pages</h4>
               <p>Total: <strong>{unpubPages.length}</strong></p>
               <ul className="three-col-md">
@@ -111,13 +112,17 @@ const IndexPage = ({ data }) => {
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
+              </>}              
+              
               <h3>Programs</h3>
+              {unpubPrograms.length > 0 && <>
               <p>Total: <strong>{unpubPrograms.length}</strong></p>
               <ul className="three-col-md">
                   {unpubPrograms.map((program) => (
                       <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
                   ))}
               </ul>
+              </>}
             </div>
           </div>
         </div>
