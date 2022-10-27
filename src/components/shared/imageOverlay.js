@@ -2,7 +2,6 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { getImage, StaticImage } from "gatsby-plugin-image";
 import { Col, Row } from "react-bootstrap";
-import { ConditionalWrapper } from 'utils/ug-utils';
 import Overlay from "components/shared/overlay";
 import PageContainer from 'components/shared/pageContainer';
 import styled from "styled-components";
@@ -11,6 +10,13 @@ const GeneralText = React.lazy(() => import('components/shared/generalText'));
 const ModalVideo = React.lazy(() => import('components/shared/modalVideo'));
 const Quote = React.lazy(() => import('components/shared/quote'));
 const SectionButtons = React.lazy(() => import('components/shared/sectionButtons'));
+
+/****
+ * OVERRIDES - Mea Culpa
+ * - links: adding blue background on hover/focus style while still in use
+ * - setting 1.8 rem fontsize / 1.58 line-height in styled components
+ *  (size & line-height styles only exist for content within .page-container .site-content)
+ */
 
 const TextShadow = styled.div`
   text-shadow: ${props => (props.backgroundColour ?? "#000")} 1px 0 4px;
@@ -36,26 +42,31 @@ const RedQuotes = styled.div`
     border-left-color: var(--uog-red)
   }
 `
-// overriding hover/focus colour
-// while background hover/focus style still in use
 const DarkText = styled.div`
   color: #000;
+
   h1, h2, h3, h4, h5, h6, && strong {
     color: #000 !important;
   }
   && p a:hover, && p a:focus {
-    color: #fff !important;
     background: var(--blue);
+    color: #fff !important;
   }
 `
-// overriding hover/focus colour
-// while background hover/focus style still in use
 const LightText = styled.div`
   color: #fff;
-  h1, h2, h3, h4, h5, h6, && p a, && strong,
-  .site-content .content-area p a:hover, 
-  .site-content .content-area p a:focus {
+  h1, h2, h3, h4, h5, h6, && p a, && strong {
     color: #fff !important;
+  }
+
+  && p a:hover, && p a:focus {
+    background: var(--blue);
+    color: #fff !important;
+  }
+`
+const BlueBackground = styled.div`
+  && p a {
+    color: #000 !important;
   }
 `
 const DarkOverlay = styled.div`
@@ -63,9 +74,6 @@ const DarkOverlay = styled.div`
 
   img {
     filter: brightness(0.5); 
-    max-height: 100%;
-    object-fit: cover;
-    width: 100%;
   }
 `
 const LightOverlay = styled.div`
@@ -74,7 +82,12 @@ const LightOverlay = styled.div`
     filter: brightness(1.1); 
     opacity: 0.25;
   }
-
+`
+const OverlayWrapper = styled.div`
+  p {
+    font-size: 1.8rem;
+    line-height: 1.58;
+  }
   img {
     max-height: 100%;
     object-fit: cover;
@@ -83,37 +96,55 @@ const LightOverlay = styled.div`
 `
 
 const StyleSelector = ({styles, image_bg, children}) => {
-
+  let backgroundClasses = "bg-light";
   switch (styles?.name) {
+    case "Dark overlay":
+      if(image_bg?.src) {
+        return (
+          <DarkOverlay className={`d-flex flex-column p-0`}>
+            <LightText>
+              <TextShadow>
+                <Overlay.GatsbyImage 
+                  gatsbyImageData={getImage(image_bg?.src)} 
+                  alt={image_bg?.alt ?? ""} >
+                    {children}
+                </Overlay.GatsbyImage>
+              </TextShadow>
+            </LightText>
+          </DarkOverlay>
+        )
+      }
+      backgroundClasses = "bg-dark text-white";
+      break;
     case "Light overlay":
-      return (
-        <LightOverlay className={`d-flex flex-column p-0`}>
-          <DarkText>
-            <ConditionalWrapper 
-              condition={image_bg?.src} 
-              wrapper={children => 
-                  <Overlay.GatsbyImage 
-                    gatsbyImageData={getImage(image_bg?.src)} 
-                    alt={image_bg?.alt ?? ""} >
-                      {children}
-                  </Overlay.GatsbyImage>}>
-                {children}
-            </ConditionalWrapper>
-          </DarkText>
-        </LightOverlay>
-      )
+      if(image_bg?.src){
+        return (
+          <LightOverlay className={`d-flex flex-column p-0`}>
+            <DarkText>
+              <Overlay.GatsbyImage 
+                gatsbyImageData={getImage(image_bg?.src)} 
+                alt={image_bg?.alt ?? ""} >
+                  {children}
+              </Overlay.GatsbyImage>
+            </DarkText>
+          </LightOverlay>
+        )
+      } 
+      break;
     case "Blue background":
       return (
-        <YellowQuotes>
-          <DarkText>
-            <div style={{ display: "grid" }}>
-              <StaticImage src="../../images/blue-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
-              <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
-                {children}
+        <BlueBackground>
+          <YellowQuotes>
+            <DarkText>
+              <div style={{ display: "grid" }}>
+                <StaticImage src="../../images/blue-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
+                <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
+                  {children}
+                </div>
               </div>
-            </div>
-          </DarkText>
-        </YellowQuotes>
+            </DarkText>
+          </YellowQuotes>
+        </BlueBackground>
       )
     case "Red background":
       return (
@@ -147,24 +178,15 @@ const StyleSelector = ({styles, image_bg, children}) => {
       break;
   }
 
-  // DEFAULT SETTING: Dark overlay
+  // DEFAULT SETTING: No overlay
   return (
-    <TextShadow>
-      <DarkOverlay className={`d-flex flex-column p-0`}>
-        <LightText>
-          <ConditionalWrapper 
-            condition={image_bg?.src} 
-            wrapper={children => 
-                <Overlay.GatsbyImage 
-                  gatsbyImageData={getImage(image_bg?.src)} 
-                  alt={image_bg?.alt ?? ""} >
-                    {children}
-                </Overlay.GatsbyImage>}>
-              {children}
-          </ConditionalWrapper>
-        </LightText>
-      </DarkOverlay>
-    </TextShadow>
+    <Row>
+      <PageContainer.SiteContent className={backgroundClasses}>
+        <PageContainer.ContentArea>
+          {children}
+        </PageContainer.ContentArea>
+      </PageContainer.SiteContent>
+    </Row>
   )
 }
 
@@ -243,15 +265,17 @@ const ImageOverlay = (props) => {
     let alignmentClasses = selectAlignment(alignment);
 
     return content.length > 0 ? 
-      <StyleSelector styles={styles} image_bg={image_bg}>
-        <PageContainer className={`bg-transparent h-100`}>
-          <Row className={`h-100 w-100 p-5 ${alignmentClasses.position}`}>
-              <Col lg={10}>
-                {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} textAlignment={alignmentClasses.text} />)}
-              </Col>
-          </Row>
-        </PageContainer>
-      </StyleSelector> : null
+      <OverlayWrapper>
+        <StyleSelector styles={styles} image_bg={image_bg}>
+          <PageContainer className={`bg-transparent h-100`}>
+            <Row className={`h-100 w-100 p-5 ${alignmentClasses.position}`}>
+                <Col lg={10}>
+                  {content?.map((contentItem, index) => <ContentSelector data={contentItem} key={index} textAlignment={alignmentClasses.text} />)}
+                </Col>
+            </Row>
+          </PageContainer>
+        </StyleSelector>
+      </OverlayWrapper> : null
 }
 
 export default ImageOverlay

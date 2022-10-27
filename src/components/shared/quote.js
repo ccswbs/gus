@@ -1,8 +1,23 @@
 import React from "react"
 import styled from "styled-components"
 
+const BlockQuote = styled.blockquote`
+  background: none;
+  margin: 0;
+  padding: 0;
+  text-align: start;
+
+  :before, :after {
+    content: none;
+`
+const Author = styled.p`
+    strong {
+      color: inherit;
+    }
+`
+
 const QuoteMark = styled.i`
-    color: var(--uog-blue);
+  color: var(--uog-blue);
 `
 
 function Quote (props) {
@@ -12,14 +27,14 @@ function Quote (props) {
 
   return text ? (
     <div>
-      <p className="display-4 my-5">
+      <BlockQuote className="display-4 my-5">
         <QuoteMark className="fa-solid fa-quote-left pe-2" aria-hidden="true" /> 
             <em>{text}</em>
         <QuoteMark className="fa-solid fa-quote-right ps-2" aria-hidden="true" />
-      </p>
+      </BlockQuote>
 
-      <p className="author fs-2"><strong>{source}</strong>
-        <br /><em>{source_description}</em></p>
+      <Author className="author fs-2"><strong>{source}</strong>
+        <br /><em>{source_description}</em></Author>
     </div>
   ) : null
 }
