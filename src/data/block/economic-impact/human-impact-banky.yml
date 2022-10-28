@@ -14,10 +14,10 @@ images:
     alt: ""
 
 video:
-  id: "522002889"
-  type: vimeo
+  id: "RkgY41AqkRc"
+  type: youtube
   title: Banky Alade
-  url: https://player.vimeo.com/video/522002889?api=1
+  url: https://www.youtube.com/watch?v=RkgY41AqkRc
   transcript: /grce/economic-impact/transcripts/banky-transcript.txt
   captions: /grce/economic-impact/captions/banky-captions.srt
 

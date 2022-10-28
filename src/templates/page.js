@@ -32,7 +32,7 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         
         { /**** Widgets content ****/}
         <div id="main-column">
-          {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
+          {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)} 
         </div>
 
         { /**** Custom Footer content ****/}

@@ -76,7 +76,7 @@ export default pageTabs
 
 export const query = graphql`
     fragment SectionTabsParagraphFragment on paragraph__section_tabs {
-        id
+        drupal_id
         relationships {
           field_tabs {
             drupal_id

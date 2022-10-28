@@ -12,20 +12,20 @@ function MediaText (props) {
     const region = props.region;
 
     const mediaTitle = props.widgetData?.field_media_text_title;
-    const mediaDescription = props.widgetData.field_media_text_desc?.processed;
-    const mediaBgColor = props.widgetData.relationships?.field_bg_color?.name;
-    const mediaButtons = props.widgetData.relationships?.field_button_section;
-    const mediaRelationships = props.widgetData.relationships.field_media_text_media?.relationships;
+    const mediaDescription = props.widgetData?.field_media_text_desc?.processed;
+    const mediaBgColor = props.widgetData?.relationships?.field_bg_color?.name;
+    const mediaButtons = props.widgetData?.relationships?.field_button_section;
+    const mediaRelationships = props.widgetData?.relationships.field_media_text_media?.relationships;
 
     const imageURL = mediaRelationships?.field_media_image;	
-    const imageAlt = props.widgetData.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
+    const imageAlt = props.widgetData?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
     
-    const videoTitle = props.widgetData.relationships.field_media_text_media?.name;
+    const videoTitle = props.widgetData?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
-    const videoURL = props.widgetData.relationships.field_media_text_media?.field_media_oembed_video;
-    const videoHeight = props.widgetData.relationships.field_media_text_media?.field_video_height;
-    const videoWidth = props.widgetData.relationships.field_media_text_media?.field_video_width;
+    const videoURL = props.widgetData?.relationships.field_media_text_media?.field_media_oembed_video;
+    const videoHeight = props.widgetData?.relationships.field_media_text_media?.field_video_height;
+    const videoWidth = props.widgetData?.relationships.field_media_text_media?.field_video_width;
     const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
     const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
     
@@ -222,7 +222,7 @@ function MediaText (props) {
         <div data-title="media-description" className={textCol}>
             {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
             {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
-            {mediaButtons && <SectionButtons pageData={props.widgetData.relationships.field_button_section} />}
+            {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
     </ConditionalWrapper>
     );
