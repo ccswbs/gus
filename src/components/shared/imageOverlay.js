@@ -148,7 +148,6 @@ const StyleSelector = ({styles, image_bg, children}) => {
       )
     case "Red background":
       return (
-        <TextShadow>
           <YellowQuotes>
             <LightText>
               <div style={{ display: "grid" }}>
@@ -159,7 +158,6 @@ const StyleSelector = ({styles, image_bg, children}) => {
               </div>
             </LightText>
           </YellowQuotes>
-        </TextShadow>
       )
     case "Yellow background":
       return (
@@ -180,8 +178,8 @@ const StyleSelector = ({styles, image_bg, children}) => {
 
   // DEFAULT SETTING: No overlay
   return (
-    <Row>
-      <PageContainer.SiteContent className={backgroundClasses}>
+    <Row className={backgroundClasses}>
+      <PageContainer.SiteContent className="bg-transparent">
         <PageContainer.ContentArea>
           {children}
         </PageContainer.ContentArea>
