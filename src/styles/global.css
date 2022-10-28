@@ -58,6 +58,19 @@ html {
     }
 }
 
+.blockquote-plain {
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: start !important;
+}
+
+.blockquote-plain:before,
+.blockquote-plain:after {
+    content: none !important;
+    border: none !important;
+}
+
 /* Custom card styles */
 
 .bg-dark a:not(.btn) {

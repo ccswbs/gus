@@ -69,6 +69,11 @@ const BlueBackground = styled.div`
     color: #000 !important;
   }
 `
+const YellowBackground = styled.div`
+  && p a {
+    color: #000 !important;
+  }
+`
 const DarkOverlay = styled.div`
   background: #000;
 
@@ -161,16 +166,18 @@ const StyleSelector = ({styles, image_bg, children}) => {
       )
     case "Yellow background":
       return (
-        <RedQuotes>
-          <DarkText>
-            <div style={{ display: "grid" }}>
-              <StaticImage src="../../images/yellow-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
-              <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
-                {children}
+        <YellowBackground>
+          <RedQuotes>
+            <DarkText>
+              <div style={{ display: "grid" }}>
+                <StaticImage src="../../images/yellow-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
+                <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
+                  {children}
+                </div>
               </div>
-            </div>
-          </DarkText>
-        </RedQuotes>
+            </DarkText>
+          </RedQuotes>
+        </YellowBackground>
       )
     default:
       break;
