@@ -17,7 +17,7 @@ function Quote (props) {
 
   return text ? (
     <div>
-      <blockquote className="my-5 display-4 fw-normal blockquote-plain">
+      <blockquote className="my-5 display-4 blockquote-plain">
         <QuoteMark className="display-4 fa-solid fa-quote-left pe-2" aria-hidden="true" /> 
           <em>{text}</em>
         <QuoteMark className="display-4 fa-solid fa-quote-right ps-2" aria-hidden="true" />
