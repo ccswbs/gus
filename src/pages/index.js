@@ -78,7 +78,7 @@ const IndexPage = ({ data }) => {
               </ul>
 
               <h2>Programs</h2>
-              <p>Total: <strong>{pubPages.length}</strong></p>
+              <p>Total: <strong>{pubPrograms.length}</strong></p>
               <ul className="three-col-md">
                   {pubPrograms.map((program) => (
                       <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
