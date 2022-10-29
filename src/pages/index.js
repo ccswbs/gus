@@ -23,11 +23,11 @@ const IndexPage = ({ data }) => {
     // Sort untagged pages into pubbed vs unpubbed
     for (let i=0; i<pages.length; i++) {
         if (pages[i].node.status === true) {
-            if (!pages[i].node.field_tags.length > 0) {
+            if (pages[i].node?.field_tags?.length <= 0) {
                 pubPages.push(pages[i])
             }
         } else {
-            if (!pages[i].node.field_tags.length > 0) {
+            if (pages[i].node?.field_tags?.length <= 0) {
                 unpubPages.push(pages[i])
             }
         }
