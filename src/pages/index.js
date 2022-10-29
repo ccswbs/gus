@@ -13,6 +13,8 @@ const IndexPage = ({ data }) => {
     const pages = data.allNodePage.edges;
     const programs = data.programs.edges;
     const tags = data.tags.edges;
+	
+	const pubPagesUntagged = [];
     
     // Fetch tags used on pages
     for (let i=0; i<tags.length; i++) {
@@ -20,16 +22,12 @@ const IndexPage = ({ data }) => {
             pageTags.push(tags[i])            
         }
     }
-    // Sort untagged pages into pubbed vs unpubbed
+    // Sort pages into pubbed vs unpubbed
     for (let i=0; i<pages.length; i++) {
         if (pages[i].node.status === true) {
-            if (pages[i].node?.field_tags?.length <= 0) {
-                pubPages.push(pages[i])
-            }
+            pubPages.push(pages[i])
         } else {
-            if (pages[i].node?.field_tags?.length <= 0) {
-                unpubPages.push(pages[i])
-            }
+            unpubPages.push(pages[i])
         }
     }
     // Sort programs into pubbed vs unpubbed
@@ -40,6 +38,11 @@ const IndexPage = ({ data }) => {
             unpubPrograms.push(programs[i])
         }
     }
+	// Sort published pages into tagged vs untagged
+	for (let i=0; i<pubPages.length; i++ {
+		pubPagesUntagged = pubPages.filter(pubPages[i] => pubPages[i].node.relationships.field_tags.length === 0)
+	}
+	console.log(pubPagesUntagged);
     
     return (
     <Layout menuName="main">
