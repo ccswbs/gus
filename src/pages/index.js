@@ -13,8 +13,9 @@ const IndexPage = ({ data }) => {
     const pages = data.allNodePage.edges;
     const programs = data.programs.edges;
     const tags = data.tags.edges;
-	
-	const pubPagesUntagged = [];
+
+    let pubPagesUntagged = [];
+    let unpubPagesUntagged = [];
     
     // Fetch tags used on pages
     for (let i=0; i<tags.length; i++) {
@@ -38,11 +39,9 @@ const IndexPage = ({ data }) => {
             unpubPrograms.push(programs[i])
         }
     }
-	// Sort published pages into tagged vs untagged
-	for (let i=0; i<pubPages.length; i++ {
-		pubPagesUntagged = pubPages.filter(pubPages[i] => pubPages[i].node.relationships.field_tags.length === 0)
-	}
-	console.log(pubPagesUntagged);
+    // Collect untagged pages
+    pubPagesUntagged = pubPages.filter(page => page.node.relationships.field_tags.length === 0);
+    unpubPagesUntagged = unpubPages.filter(page => page.node.relationships.field_tags.length === 0);
     
     return (
     <Layout menuName="main">
@@ -73,9 +72,9 @@ const IndexPage = ({ data }) => {
               })}
               
               <h3>Untagged Pages</h3>
-              <p>Total: <strong>{pubPages.length}</strong></p>
+              <p>Total: <strong>{pubPagesUntagged.length}</strong></p>
               <ul className="three-col-md">
-                  {pubPages.map((page) => (
+                  {pubPagesUntagged.map((page) => (
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
@@ -109,9 +108,9 @@ const IndexPage = ({ data }) => {
               
               {unpubPages.length > 0 && <>
               <h4>Untagged Pages</h4>
-              <p>Total: <strong>{unpubPages.length}</strong></p>
+              <p>Total: <strong>{unpubPagesUntagged.length}</strong></p>
               <ul className="three-col-md">
-                  {unpubPages.map((page) => (
+                  {unpubPagesUntagged.map((page) => (
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
