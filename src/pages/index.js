@@ -90,7 +90,7 @@ const IndexPage = ({ data }) => {
               <h2>Unpublished Content</h2>
               <p>Unpublished pages and programs are only visible on preview and test sites.</p>
               
-              <h3>Basic Pages</h3>            
+              {unpubPages.length > 0 && <h3>Basic Pages</h3>}
               {pageTags.map((tag) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesUnpubbed = taggedPages.filter(page => page.status === false);
@@ -106,7 +106,7 @@ const IndexPage = ({ data }) => {
                 </>)
               })}
               
-              {unpubPages.length > 0 && <>
+              {unpubPagesUntagged.length > 0 && <>
               <h4>Untagged Pages</h4>
               <p>Total: <strong>{unpubPagesUntagged.length}</strong></p>
               <ul className="three-col-md">
@@ -115,9 +115,9 @@ const IndexPage = ({ data }) => {
                   ))}
               </ul>
               </>}              
-              
-              <h3>Programs</h3>
+                            
               {unpubPrograms.length > 0 && <>
+			  <h3>Programs</h3>
               <p>Total: <strong>{unpubPrograms.length}</strong></p>
               <ul className="three-col-md">
                   {unpubPrograms.map((program) => (
