@@ -13,6 +13,9 @@ const IndexPage = ({ data }) => {
     const pages = data.allNodePage.edges;
     const programs = data.programs.edges;
     const tags = data.tags.edges;
+
+    let pubPagesUntagged = [];
+    let unpubPagesUntagged = [];
     
     // Fetch tags used on pages
     for (let i=0; i<tags.length; i++) {
@@ -20,16 +23,12 @@ const IndexPage = ({ data }) => {
             pageTags.push(tags[i])            
         }
     }
-    // Sort untagged pages into pubbed vs unpubbed
+    // Sort pages into pubbed vs unpubbed
     for (let i=0; i<pages.length; i++) {
         if (pages[i].node.status === true) {
-            if (!pages[i].node.field_tags) {
-                pubPages.push(pages[i])
-            }
+            pubPages.push(pages[i])
         } else {
-            if (!pages[i].node.field_tags) {
-                unpubPages.push(pages[i])
-            }
+            unpubPages.push(pages[i])
         }
     }
     // Sort programs into pubbed vs unpubbed
@@ -40,6 +39,9 @@ const IndexPage = ({ data }) => {
             unpubPrograms.push(programs[i])
         }
     }
+    // Collect untagged pages
+    pubPagesUntagged = pubPages.filter(page => page.node.relationships.field_tags.length === 0);
+    unpubPagesUntagged = unpubPages.filter(page => page.node.relationships.field_tags.length === 0);
     
     return (
     <Layout menuName="main">
@@ -70,15 +72,15 @@ const IndexPage = ({ data }) => {
               })}
               
               <h3>Untagged Pages</h3>
-              <p>Total: <strong>{pubPages.length}</strong></p>
+              <p>Total: <strong>{pubPagesUntagged.length}</strong></p>
               <ul className="three-col-md">
-                  {pubPages.map((page) => (
+                  {pubPagesUntagged.map((page) => (
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
 
               <h2>Programs</h2>
-              <p>Total: <strong>{pubPages.length}</strong></p>
+              <p>Total: <strong>{pubPrograms.length}</strong></p>
               <ul className="three-col-md">
                   {pubPrograms.map((program) => (
                       <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
@@ -88,7 +90,7 @@ const IndexPage = ({ data }) => {
               <h2>Unpublished Content</h2>
               <p>Unpublished pages and programs are only visible on preview and test sites.</p>
               
-              <h3>Basic Pages</h3>            
+              {unpubPages.length > 0 && <h3>Basic Pages</h3>}
               {pageTags.map((tag) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesUnpubbed = taggedPages.filter(page => page.status === false);
@@ -104,18 +106,18 @@ const IndexPage = ({ data }) => {
                 </>)
               })}
               
-              {unpubPages.length > 0 && <>
+              {unpubPagesUntagged.length > 0 && <>
               <h4>Untagged Pages</h4>
-              <p>Total: <strong>{unpubPages.length}</strong></p>
+              <p>Total: <strong>{unpubPagesUntagged.length}</strong></p>
               <ul className="three-col-md">
-                  {unpubPages.map((page) => (
+                  {unpubPagesUntagged.map((page) => (
                       <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
                   ))}
               </ul>
               </>}              
-              
-              <h3>Programs</h3>
+                            
               {unpubPrograms.length > 0 && <>
+			  <h3>Programs</h3>
               <p>Total: <strong>{unpubPrograms.length}</strong></p>
               <ul className="three-col-md">
                   {unpubPrograms.map((program) => (
