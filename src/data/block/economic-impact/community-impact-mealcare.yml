@@ -14,10 +14,10 @@ images:
     alt: Student volunteers
 
 video:
-  id: "522360252"
-  type: vimeo
+  id: "xOL5GVOMfCw"
+  type: youtube
   title: MealCare
-  url: https://player.vimeo.com/video/522360252?api=1
+  url: https://www.youtube.com/watch?v=xOL5GVOMfCw
   transcript: /grce/economic-impact/transcripts/mealcare-transcript.txt
   captions: /grce/economic-impact/captions/mealcare-captions.srt
 

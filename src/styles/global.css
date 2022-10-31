@@ -45,7 +45,7 @@
 }
 
 .no-icon li:before {
-	content: "" !important;
+    content: "" !important;
 }
 
 html {
@@ -61,59 +61,59 @@ html {
 /* Custom card styles */
 
 .bg-dark a:not(.btn) {
-	color: var(--uog-blue) !important;
+    color: var(--uog-blue) !important;
 }
 .bg-dark a:not(.btn):focus, 
 .bg-dark a:not(.btn):hover {
-	background: #edf2f5 !important;
-	color: black !important;
-	text-decoration-color: #edf2f5 !important;
+    background: #edf2f5 !important;
+    color: black !important;
+    text-decoration-color: #edf2f5 !important;
 }
 
 .bg-dark .btn-outline-info {
-	color: white !important;
+    color: white !important;
 }
 .bg-dark .btn-outline-primary {
-	color: white !important;
+    color: white !important;
 }
 .bg-dark .btn-secondary {
-	color: black !important;
-	background: var(--off-white) !important;
+    color: black !important;
+    background: var(--off-white) !important;
 }
 .bg-dark .btn-secondary:focus,
 .bg-dark .btn-secondary:hover {
-	color: black !important;
-	background: var(--light-grey) !important;
+    color: black !important;
+    background: var(--light-grey) !important;
 }
 .bg-dark .btn-outline-secondary {
-	color: white !important;
-	border-color: white !important;
+    color: white !important;
+    border-color: white !important;
 }
 .bg-dark .btn-outline-secondary:focus,
 .bg-dark .btn-outline-secondary:hover {
-	color: black !important;
-	background: var(--off-white) !important;
+    color: black !important;
+    background: var(--off-white) !important;
 }
 .bg-dark h2,
 .bg-dark h3,
 .bg-dark h4 {
-	color: var(--off-white) !important;
+    color: var(--off-white) !important;
 }
 .uog-blue-muted {background:#edf2f5;}
 i.green {color:#4cae3e;}
 
 .card .uog-card-border {
-	border-left: 1rem solid var(--uog-red);
+    border-left: 1rem solid var(--uog-red);
 }
 .card:nth-of-type(9n+2) .uog-card-border,
 .card:nth-of-type(9n+4) .uog-card-border,
 .card:nth-of-type(9n+9) .uog-card-border {
-	border-left: 1rem solid var(--uog-yellow);
+    border-left: 1rem solid var(--uog-yellow);
 }
 .card:nth-of-type(9n+3) .uog-card-border,
 .card:nth-of-type(9n+5) .uog-card-border,
 .card:nth-of-type(9n+7) .uog-card-border {
-	border-left: 1rem solid var(--uog-blue);
+    border-left: 1rem solid var(--uog-blue);
 }
 
 /* social media icons */
@@ -122,5 +122,17 @@ i.green {color:#4cae3e;}
 
 /* image overlay */
 .img-dark {
-	filter: brightness(0.6); 
+    filter: brightness(0.6); 
+}
+
+/* Quick columns */
+/* the two-col-md class is in UofG-styles.css but can be moved here later */
+
+.three-col-md {
+    column-width: auto;
+    column-count: 3;
+}
+.four-col-md {
+    column-width: auto;
+    column-count: 4;
 }
