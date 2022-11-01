@@ -736,50 +736,17 @@ export const query = graphql`query ($id: String) {
       }
     }
   }
+
   testimonials: allNodeTestimonial(
     sort: {fields: created}
     filter: {fields: {tags: {in: [$id]}}}
   ) {
     edges {
       node {
-        changed
-        drupal_id
-        body {
-          processed
-        }
-        title
-        field_testimonial_person_desc
-        field_home_profile {
-          title
-          uri
-        }
-        relationships {
-          field_hero_image {
-            field_media_image {
-              alt
-            }
-            relationships {
-              field_media_image {
-                gatsbyImage(
-                  width: 400
-                  height: 400
-                  placeholder: BLURRED
-                  layout: CONSTRAINED
-                )
-              }
-            }
-          }
-          field_tags {
-            __typename
-            ... on TaxonomyInterface {
-              drupal_id
-              id
-              name
-            }
-          }
-        }
+        ...TestimonialNodeFragment
       }
     }
   }
+
 }
 `

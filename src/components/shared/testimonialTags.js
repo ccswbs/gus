@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import TestimonialTitle from 'components/shared/testimonialTitle';
-// this checks for the tesimonial tags and returns an array that has all of the testmionial types included for this page.  
+// this checks for the testimonial tags and returns an array that has all of the testimonial types included for this page.  
 function TestimonialTags (props){
 
     if ((props.testimonialData !== null) && (props.testimonialData !== undefined)){

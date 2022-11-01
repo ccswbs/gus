@@ -102,7 +102,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | taxonomy_term__degrees
       | taxonomy_term__topics
       | taxonomy_term__units
-      | taxonomy_term__testimonial_type
     
     union storyWidgetParagraphUnion =
       paragraph__story_image_cutout_background
@@ -451,6 +450,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__nid: Int
       title: String
       body: BodyFieldWithSummary
+      field_testimonial_person_name: String
       field_testimonial_person_desc: String
       field_hero_image: ImageField
       field_home_profile: FieldLink
@@ -462,6 +462,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_testimonial_type: [taxonomy_term__testimonial_type] @link(from: "field_testimonial_type___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type paragraph__accordion_block implements Node {

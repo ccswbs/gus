@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 function TestimonialTitle (props){
    let typeList = null;
    
-   const testimonialTypeTitle= () => props.relationships.field_tags.map((testimonialType) => {
+   const testimonialTypeTitle= () => props.relationships.field_testimonial_type.map((testimonialType) => {
     if (testimonialType.__typename === 'taxonomy_term__testimonial_type') {
 
         switch(testimonialType.name) {
@@ -24,13 +24,13 @@ function TestimonialTitle (props){
 
     typeList = testimonialTypeTitle()
    
-    const highetstTestimonialType = (typeList.includes ('Faculty'))? ', Faculty' : 
+    const highestTestimonialType = (typeList.includes ('Faculty'))? ', Faculty' : 
         (typeList.includes ('Alumni'))? ', Alumni' : 
         (typeList.includes ('Graduate Student')) ? ', Graduate Student' : 
         (typeList.includes ('Undergraduate Student')) ? ', Undergraduate Student' : '';
 
     
-    return highetstTestimonialType;
+    return highestTestimonialType;
 
 }
 
