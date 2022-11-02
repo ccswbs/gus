@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import DateModified from 'components/dateModified';
 import HeaderMenu from 'components/shared/headerMenu';
 import 'styles/global.css';
+import 'styles/ug.scss';
 import "@fontsource/roboto"
 import "@fontsource/roboto/700.css"
 import "@fontsource/roboto/300.css"
