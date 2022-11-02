@@ -12,11 +12,6 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
             defer
         />,
-        <link
-            key="https://www.uoguelph.ca/css/UofG-styles-dist.css" 
-            rel="stylesheet" 
-            href="https://www.uoguelph.ca/css/UofG-styles-dist.css" 
-        />
     ])
 
     setPostBodyComponents([
