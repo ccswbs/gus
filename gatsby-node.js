@@ -129,6 +129,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__statistic_widget
       | paragraph__story_widget
       | paragraph__tab_content
+      | paragraph__testimonial_slider
       | paragraph__accordion_section
       | paragraph__yaml_widget
       | paragraph__modal_video_widget
