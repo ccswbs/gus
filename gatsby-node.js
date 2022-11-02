@@ -102,7 +102,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | taxonomy_term__degrees
       | taxonomy_term__topics
       | taxonomy_term__units
-    
+
+    union relatedTestimonialTaxonomyUnion =
+      taxonomy_term__tags
+      | taxonomy_term__testimonial_type
+
     union storyWidgetParagraphUnion =
       paragraph__story_image_cutout_background
       | paragraph__statistic_widget
@@ -689,6 +693,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__story_modal_videoRelationships implements Node {
       field_media_video: media__remote_video @link(from: "field_media_video___NODE")
+    }
+    type paragraph__testimonial_slider implements Node {
+      drupal_id: String
+      relationships: paragraph__testimonial_sliderRelationships
+    }
+    type paragraph__testimonial_sliderRelationships implements Node {
+      field_tags: [relatedTestimonialTaxonomyUnion] @link(from: "field_tags___NODE")
+      field_testimonial_nodes: [node__testimonial] @link(from: "field_testimonial_nodes___NODE")
     }
     type paragraph__yaml_widget implements Node {
       drupal_id: String
