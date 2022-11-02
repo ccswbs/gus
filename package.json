@@ -15,8 +15,10 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.8",
+    "@uoguelph/snowdrop": "^github:ccswbs/snowdrop#main",
     "axios": "^1.1.3",
     "babel-plugin-styled-components": "^2.0.7",
+    "bootstrap": "^5.2.2",
     "classnames": "^2.3.2",
     "express": "^4.18.2",
     "gatsby": "^4.24.5",
@@ -30,6 +32,7 @@
     "gatsby-plugin-manifest": "^4.24.0",
     "gatsby-plugin-react-helmet": "^5.24.0",
     "gatsby-plugin-robots-txt": "^1.7.1",
+    "gatsby-plugin-sass": "^5.24.0",
     "gatsby-plugin-sharp": "^4.24.0",
     "gatsby-plugin-styled-components": "^5.24.0",
     "gatsby-source-drupal": "^5.25.0",
@@ -53,6 +56,7 @@
     "react-player": "^2.11.0",
     "react-portal": "^4.2.2",
     "react-slick": "^0.29.0",
+    "sass": "^1.55.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6"
   },
