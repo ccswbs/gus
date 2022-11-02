@@ -1,0 +1,5 @@
+/* Header/footer components are dependent on legacy font sizes */
+html { font-size: 10px; }
+$font-size-base: 1.8rem;
+
+@import "@uoguelph/snowdrop/scss/snowdrop.scss"
