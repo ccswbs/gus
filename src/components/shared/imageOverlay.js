@@ -202,7 +202,7 @@ function selectAlignment (alignment) {
     text: "text-center",
   }
 
-  switch (alignment.name) {
+  switch (alignment?.name) {
     case "Left middle":
       alignmentClasses.position = "justify-content-start align-items-center";
       alignmentClasses.text = "ps-5 text-start";
