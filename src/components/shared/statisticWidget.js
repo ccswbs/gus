@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 const Gradient = styled.div`
   background: ${props => (props.gradientStyle ?? "none")};
+  padding: 0;
 `
 
 const gradientColourOptions = [
