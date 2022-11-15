@@ -28,9 +28,9 @@ const DefaultFooter = ({logos, text, widgets}) => (
       <div className="col-md-3 content-area">
       {logos.map(logo => (
         <GatsbyImage
-                        image={logo.relationships.field_media_image.gatsbyImage}
-                        className="footer-logo"
-                        alt={logo.field_media_image.alt} />
+          image={logo.relationships.field_media_image.gatsbyImage}
+          className="footer-logo"
+          alt={logo.field_media_image.alt} />
       ))}
       </div>}
       <div className="col-md-9 content-area">
