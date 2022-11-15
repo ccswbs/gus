@@ -697,6 +697,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__testimonial_slider implements Node {
       drupal_id: String
+      field_title: String
       relationships: paragraph__testimonial_sliderRelationships
     }
     type paragraph__testimonial_sliderRelationships implements Node {
