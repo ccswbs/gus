@@ -106,6 +106,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     union relatedTestimonialTaxonomyUnion =
       taxonomy_term__tags
       | taxonomy_term__testimonial_type
+      | taxonomy_term__specializations
+      | taxonomy_term__programs
+      | taxonomy_term__degrees
+      | taxonomy_term__units
 
     union storyWidgetParagraphUnion =
       paragraph__story_image_cutout_background
@@ -754,6 +758,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_degree_acronym: String
       name: String
       description: TaxonomyDescription
+      relationships: taxonomy_term__degreesRelationships
+    }
+    type taxonomy_term__degreesRelationships {
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__event_categories implements Node & TaxonomyInterface {
       drupal_id: String
@@ -775,12 +783,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
+      relationships: taxonomy_term__programsRelationships
     }
     type taxonomy_term__programsRelationships {
       field_degrees: [taxonomy_term__degrees] @link(from: "field_degrees___NODE")
       field_specializations: [taxonomy_term__specializations]
       field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
       field_tags: [taxonomy_term__tags]
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__program_variant_type implements Node {
       name: String
@@ -805,6 +815,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type taxonomy_term__specializationsRelationships {
       field_units: [taxonomy_term__units]
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__statistic_type implements Node & TaxonomyInterface {
       drupal_id: String
@@ -821,11 +832,19 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
+      relationships: taxonomy_term__tagsRelationships
+    }
+    type taxonomy_term__tagsRelationships {
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__testimonial_type implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
+      relationships: taxonomy_term__testimonial_typeRelationships
+    }
+    type taxonomy_term__testimonial_typeRelationships implements Node {
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__topics implements Node & TaxonomyInterface {
       drupal_id: String
@@ -840,6 +859,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_unit_acronym: String
       name: String
       description: TaxonomyDescription
+      relationships: taxonomy_term__unitsRelationships
+    }
+    type taxonomy_term__unitsRelationships {
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
 
     type WpEventToEventsCategoryConnection implements Node {
