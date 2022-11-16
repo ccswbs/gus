@@ -27,7 +27,7 @@ const QuoteSource = styled.p`
     color: var(--uog-blue);
 `
 
-function SortContent(content) {
+function sortContent(content) {
   let sortedContent = {
     quotes: [],
     videos: [],
@@ -67,7 +67,7 @@ function StoryImageCutout (props) {
   }
 
   // Additional Content
-  const additionalContent = SortContent(storyRelationships?.field_story_content);
+  const additionalContent = sortContent(storyRelationships?.field_story_content);
 
   // Video
   let video = additionalContent.videos[0]?.relationships?.field_media_video;
