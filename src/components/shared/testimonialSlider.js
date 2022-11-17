@@ -26,8 +26,8 @@ const TestimonialSlider = (props) => {
     return tag.relationships.node__testimonial;
   })
 
-  // remove duplicate values from array of objects using drupal_id
-  let testimonialData = myUnionBy([testimonialNodes, testimonialTaggedNodes], 'drupal_id');
+  // remove duplicate values from array of objects using drupal_id + limit to 10 testimonials
+  let testimonialData = myUnionBy([testimonialNodes, testimonialTaggedNodes], 'drupal_id').slice(0,10);
 
   return testimonialData ? 
     <Testimonials
