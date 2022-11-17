@@ -740,6 +740,7 @@ export const query = graphql`query ($id: String) {
   testimonials: allNodeTestimonial(
     sort: {fields: created}
     filter: {fields: {tags: {in: [$id]}}}
+    limit: 10
   ) {
     edges {
       node {
