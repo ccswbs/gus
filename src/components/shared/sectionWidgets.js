@@ -6,6 +6,7 @@ import { ConditionalWrapper } from 'utils/ug-utils';
 const Accordion = React.lazy(() => import('components/shared/accordion'));
 const BlockWidget = React.lazy(() => import('components/shared/blockWidget'));
 const GeneralText = React.lazy(() => import('components/shared/generalText'));
+const ImageOverlay = React.lazy(() => import('components/shared/imageOverlay'));
 const LeadPara = React.lazy(() => import('components/shared/leadPara'));
 const LinksItems = React.lazy(() => import('components/shared/linksItems'));
 const MediaText = React.lazy(() => import('components/shared/mediaText'));
@@ -24,6 +25,8 @@ function renderPrimary(widget) {
             return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
             return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
+        case "paragraph__image_overlay":
+            return <ImageOverlay key={widget.drupal_id} data={widget} />;
         case "paragraph__lead_paragraph":
             return( <LeadPara key={widget.drupal_id} pageData={widget} />);        
         case "paragraph__links_widget":
@@ -151,6 +154,9 @@ export const query = graphql`
         }
         ... on paragraph__general_text {
             ...GeneralTextParagraphFragment
+        }
+        ... on paragraph__image_overlay {
+            ...ImageOverlayParagraphFragment
         }
         ... on paragraph__links_widget {
             ...LinksWidgetParagraphFragment
