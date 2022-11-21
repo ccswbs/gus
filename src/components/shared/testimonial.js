@@ -65,8 +65,8 @@ function Testimonials (props) {
 						<GatsbyImage image={testimonialPicture}
 							className="testimonial-pic"
 							alt={testimonialNode.relationships.field_hero_image.field_media_image.alt} />}
-					<blockquote className="testimonial-quote" dangerouslySetInnerHTML={{__html: testimonialContent}} />
-					<p className="testimonial-tagline">
+					<blockquote className="testimonial-quote mb-0" dangerouslySetInnerHTML={{__html: testimonialContent}} />
+					<p className="testimonial-tagline author">
 						<strong className="testimonial-title">{testimonialName}{testimonialTitle ? ', ' + testimonialTitle : '' }</strong>
 						<br />
 						<span className="testimonial-person-desc">{testimonialNode.field_testimonial_person_desc}</span>
