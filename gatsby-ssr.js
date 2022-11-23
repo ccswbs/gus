@@ -8,8 +8,8 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
         />,
         <script
-            key="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
-            src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
+            key="https://www.uoguelph.ca/web-components/UofGWebComponents-dist-tiktok.js"
+            src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist-tiktok.js"
             defer
         />,
         <link
