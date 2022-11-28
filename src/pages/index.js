@@ -59,16 +59,17 @@ const IndexPage = ({ data }) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesPubbed = taggedPages.filter(page => page.status === true);
                 taggedPagesPubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
-                return (taggedPagesPubbed.length > 0 && <>
-                  <h3 className="text-dark">{tag.node.name}</h3>
-                  {tag.node.description?.processed && <div dangerouslySetInnerHTML={{__html: tag.node.description.processed}}></div>}
-                  <p>Total pages: <strong>{taggedPagesPubbed.length}</strong></p>
-                    <ul className="three-col-md">
-                      {taggedPagesPubbed.map((taggedPage) => (
-                          <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
-                      ))}
-                    </ul>
-                </>)
+                return (taggedPagesPubbed.length > 0 && 
+                  <React.Fragment key={`tagged-fragment-${tag.node.name}`}>
+                    <h3 className="text-dark">{tag.node.name}</h3>
+                    {tag.node.description?.processed && <div dangerouslySetInnerHTML={{__html: tag.node.description.processed}}></div>}
+                    <p>Total pages: <strong>{taggedPagesPubbed.length}</strong></p>
+                      <ul className="three-col-md">
+                        {taggedPagesPubbed.map((taggedPage, index) => (
+                            <li key={`tagged-${index}`}><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
+                        ))}
+                      </ul>
+                  </React.Fragment>)
               })}
               
               <h3>Untagged Pages</h3>
@@ -95,15 +96,16 @@ const IndexPage = ({ data }) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesUnpubbed = taggedPages.filter(page => page.status === false);
                 taggedPagesUnpubbed.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0));
-                return (taggedPagesUnpubbed.length > 0 && <>
+                return (taggedPagesUnpubbed.length > 0 && 
+                  <React.Fragment key={`tagged-fragment-${tag.node.name}`}>
                   <h4 className="text-dark">{tag.node.name}</h4> 
                   <p>Total: <strong>{taggedPagesUnpubbed.length}</strong></p>
                   <ul className="three-col-md">
-                    {taggedPagesUnpubbed.map((taggedPage) => (
-                      <li><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
+                    {taggedPagesUnpubbed.map((taggedPage, index) => (
+                      <li key={`tagged-${index}`}><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
                     ))}
                   </ul>
-                </>)
+                </React.Fragment>)
               })}
               
               {unpubPagesUntagged.length > 0 && <>
@@ -117,13 +119,13 @@ const IndexPage = ({ data }) => {
               </>}              
                             
               {unpubPrograms.length > 0 && <>
-			  <h3>Programs</h3>
-              <p>Total: <strong>{unpubPrograms.length}</strong></p>
-              <ul className="three-col-md">
-                  {unpubPrograms.map((program) => (
-                      <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
-                  ))}
-              </ul>
+                <h3>Programs</h3>
+                <p>Total: <strong>{unpubPrograms.length}</strong></p>
+                <ul className="three-col-md">
+                    {unpubPrograms.map((program) => (
+                        <li key={program.node.drupal_id}><Link to={program.node.path.alias}>{program.node.title}</Link></li>
+                    ))}
+                </ul>
               </>}
             </div>
           </div>
