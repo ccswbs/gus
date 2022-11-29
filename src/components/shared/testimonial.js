@@ -49,7 +49,7 @@ function Testimonials (props) {
 			let testimonialTitle = TestimonialTitle(testimonialNode);
 			let testimonialContent = stripHTMLTags(testimonialNode.body.processed);
 			let testimonialPicture = getImage(testimonialNode.relationships.field_hero_image?.relationships.field_media_image);
-			let testimonialHomeProfileTitle = testimonialNode.field_home_profile?.title;
+			let testimonialHomeProfileTitle = testimonialNode.field_home_profile?.title ?? "Associated Profile";
 			let testimonialHomeProfileLink= testimonialNode.field_home_profile?.uri;
     
 			const testimonialHomeProfile = () => {
