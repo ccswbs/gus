@@ -27,7 +27,7 @@ export default class ResponsiveSlider extends React.Component {
 			nextArrow: <SliderArrow type="next" addToControlLabel={this.props.addToControlLabel} />,
 			prevArrow: <SliderArrow type="prev"addToControlLabel={this.props.addToControlLabel} />,
 			dots: false,
-			infinite: true,
+			infinite: false,
 			slidesToShow: maxSlidesToShow,
 			slidesToScroll: 1,
 			responsive: [
@@ -36,7 +36,7 @@ export default class ResponsiveSlider extends React.Component {
 					settings: {
 					slidesToShow: 1,
 					slidesToScroll: 1,
-					infinite: true,
+					infinite: false,
 					dots: false
 					}
 				}
