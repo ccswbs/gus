@@ -49,12 +49,13 @@ function Testimonials (props) {
 			let testimonialTitle = TestimonialTitle(testimonialNode);
 			let testimonialContent = stripHTMLTags(testimonialNode.body.processed);
 			let testimonialPicture = getImage(testimonialNode.relationships.field_hero_image?.relationships.field_media_image);
-			let testimonialHomeProfileTitle = testimonialNode.field_home_profile?.title;
-			let testimonialHomeProfileLink= testimonialNode.field_home_profile?.uri;
     
 			const testimonialHomeProfile = () => {
-				if (testimonialNode.field_home_profile) {
-					return <a href= {testimonialHomeProfileLink}> {testimonialHomeProfileTitle} </a>
+				let testimonialHomeProfileTitle = (testimonialNode.field_home_profile?.title === "") ? "Associated Profile" : testimonialNode.field_home_profile?.title;
+				let testimonialHomeProfileLink = testimonialNode.field_home_profile?.uri;
+
+				if (testimonialHomeProfileLink) {
+					return <a href= {testimonialHomeProfileLink}>{testimonialHomeProfileTitle}</a>
 				} 
 				return null;
 			};
@@ -71,7 +72,7 @@ function Testimonials (props) {
 						<br />
 						<span className="testimonial-person-desc">{testimonialNode.field_testimonial_person_desc}</span>
 						<br/>
-						{testimonialHomeProfile()}
+						{testimonialNode.field_home_profile && testimonialHomeProfile()}
 					</p>
 				</div>
 		);
