@@ -79,30 +79,28 @@ const generateMenu = (menuLinks, menuName) => {
 const HeaderMenu = ({menuName}) => (
    <StaticQuery
       query={
-        graphql`
-        query HeaderMenuQuery {
-          allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}) {
-            edges {
-              node {
-                enabled
-                title
-                expanded
-                external
-                langcode
-                weight
-                link {
-                  uri
-                  url
-                }
-                drupal_parent_menu_item
-                bundle
-                drupal_id
-                menu_name
-              }
-            }
-          }
+        graphql`query HeaderMenuQuery {
+  allMenuLinkContentMenuLinkContent(sort: {weight: ASC}) {
+    edges {
+      node {
+        enabled
+        title
+        expanded
+        external
+        langcode
+        weight
+        link {
+          uri
+          url
         }
-      `
+        drupal_parent_menu_item
+        bundle
+        drupal_id
+        menu_name
+      }
+    }
+  }
+}`
       }
       render={data => generateMenu(data, menuName)}
    />

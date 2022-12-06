@@ -29,31 +29,29 @@ const ProgramsPage = ({ data }) => (
 
 export default ProgramsPage
 
-export const query = graphql`
-    query {
-      allNodeProgram(sort: {fields: [title], order: ASC}) {
-        edges {
-          node {
-            drupal_id
-            drupal_internal__nid
-            title
-            path {
-              alias
-            }
-            status
-            relationships {
-              field_program_acronym {
-                name
-              }
-              field_tags {
-                name
-              }
-            }
-            field_program_overview {
-              processed
-            }
+export const query = graphql`{
+  allNodeProgram(sort: {title: ASC}) {
+    edges {
+      node {
+        drupal_id
+        drupal_internal__nid
+        title
+        path {
+          alias
+        }
+        status
+        relationships {
+          field_program_acronym {
+            name
+          }
+          field_tags {
+            name
           }
         }
-      }        
+        field_program_overview {
+          processed
+        }
+      }
     }
-`
+  }
+}`

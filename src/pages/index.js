@@ -136,78 +136,76 @@ const IndexPage = ({ data }) => {
 
 export default IndexPage
 
-export const query = graphql`
-    query {
-      allNodePage(sort: {fields: [title], order: ASC}) {
-        edges {
-          node {
-            title
-            drupal_id
-            path {
-              alias
+export const query = graphql`{
+  allNodePage(sort: {title: ASC}) {
+    edges {
+      node {
+        title
+        drupal_id
+        path {
+          alias
+        }
+        relationships {
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              drupal_id
+              id
+              name
             }
-            relationships {
-              field_tags {
-                __typename
-                ... on TaxonomyInterface {
-                  drupal_id
-                  id
-                  name
-                }
-              }
-            }
-            status
           }
         }
+        status
       }
-      programs: allNodeProgram(sort: {fields: [title], order: ASC}) {
-        edges {
-          node {
-            drupal_id
-            drupal_internal__nid
-            title
-            path {
-              alias
+    }
+  }
+  programs: allNodeProgram(sort: {title: ASC}) {
+    edges {
+      node {
+        drupal_id
+        drupal_internal__nid
+        title
+        path {
+          alias
+        }
+        status
+      }
+    }
+  }
+  tags: allTaxonomyInterface(sort: {name: ASC}) {
+    edges {
+      node {
+        ... on taxonomy_term__tags {
+          name
+          description {
+            processed
+          }
+          relationships {
+            node__page {
+              status
+              title
+              path {
+                alias
+              }
             }
-            status
           }
         }
-      }
-      tags: allTaxonomyInterface(sort: {fields: [name], order: ASC}) {
-        edges {
-          node {
-            ... on taxonomy_term__tags {
-              name
-              description {
-                processed
-              }
-              relationships {
-                node__page {
-                  status
-                  title
-                  path {
-                    alias
-                  }
-                }
-              }
-            }
-            ... on taxonomy_term__units {
-              name
-              description {
-                processed
-              }
-              relationships {
-                node__page {
-                  status
-                  title
-                  path {
-                    alias
-                  }
-                }
+        ... on taxonomy_term__units {
+          name
+          description {
+            processed
+          }
+          relationships {
+            node__page {
+              status
+              title
+              path {
+                alias
               }
             }
           }
         }
       }
     }
-`
+  }
+}`

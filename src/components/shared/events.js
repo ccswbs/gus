@@ -91,40 +91,36 @@ const generateEvents = (data, eventData) => {
 const Events = ({eventData}) => (
   <StaticQuery
     query={
-      graphql`
-        query EventsQuery {
-          allWpEvent(
-            filter: {isPast: {eq: false}}
-            sort: {fields: startDate, order: ASC}
-          ) {
-            edges {
-              node {
-                id
-                title
-                startDate
-                endDate
-                uri
-                url
-                eventsCategories {
-                  nodes {
-                    name
-                  }
-                }
-              }
-            }
+      graphql`query EventsQuery {
+  allWpEvent(filter: {isPast: {eq: false}}, sort: {startDate: ASC}) {
+    edges {
+      node {
+        id
+        title
+        startDate
+        endDate
+        uri
+        url
+        eventsCategories {
+          nodes {
+            name
           }
         }
-        fragment EventsParagraphFragment on paragraph__events_widget {
-            drupal_id
-            field_match_categories
-            field_title
-            relationships {
-              field_event_category {
-                name
-              }      
-            }
-          }
-      `
+      }
+    }
+  }
+}
+
+fragment EventsParagraphFragment on paragraph__events_widget {
+  drupal_id
+  field_match_categories
+  field_title
+  relationships {
+    field_event_category {
+      name
+    }
+  }
+}`
       }
     render={data => generateEvents(data, eventData)}
   />
