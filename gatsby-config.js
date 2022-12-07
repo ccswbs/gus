@@ -17,6 +17,7 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
 }
 
 module.exports = {
+  assetPrefix: process.env.ASSET_PREFIX,
   siteMetadata: {
     title: metaConfig['title'],
     description: metaConfig['description'],
@@ -26,12 +27,13 @@ module.exports = {
     menus: metaConfig['menus'],
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-client-side-redirect`,
+    `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-image`,
+    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-root-import`,
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-gatsby-cloud`,
+    `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -39,11 +41,19 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-transformer-sharp`,
+      resolve: `gatsby-plugin-google-tagmanager`,
       options: {
-        // defaults to true - changed to false to mute SVG warnings
-        checkSupportedExtensions: false,
+        id: "GTM-NRSSDKW",
+        includeInDevelopment: false,
       },
+    },
+    {
+      resolve: `gatsby-plugin-robots-txt`,
+      options: {
+        host: `https://livechugendpoint.azureedge.net/`,
+        sitemap: null,
+        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
+      }
     },
     {
       resolve: `gatsby-plugin-sharp`,
@@ -63,40 +73,14 @@ module.exports = {
         fastBuilds: true,
         skipFileDownloads: true,
       },
-    },
-  
+    },  
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `src`,
         path: `${__dirname}/src/`,
       },
-    },    
-    {
-      resolve: `gatsby-plugin-google-tagmanager`,
-      options: {
-        id: "GTM-NRSSDKW",
-        includeInDevelopment: false,
-      },
     },
-    {
-      resolve: `gatsby-plugin-robots-txt`,
-      options: {
-        host: `https://livechugendpoint.azureedge.net/`,
-        sitemap: null,
-        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
-      }
-    },
-    `gatsby-transformer-yaml`,
-    {
-      resolve: `gatsby-plugin-robots-txt`,
-      options: {
-        host: `https://livechugendpoint.azureedge.net/`,
-        sitemap: null,
-        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
-      }
-    },
-    `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -145,7 +129,12 @@ module.exports = {
         },
       },
     },
-    `gatsby-plugin-client-side-redirect`
-  ],
-  assetPrefix: process.env.ASSET_PREFIX,
+    {
+      resolve: `gatsby-transformer-sharp`,
+      options: {
+        // defaults to true - changed to false to mute SVG warnings
+        checkSupportedExtensions: false,
+      },
+    },    
+  ],  
 }
