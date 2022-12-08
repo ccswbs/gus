@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { fontAwesomeIconColour } from 'utils/ug-utils';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
+import classNames from 'classnames';
 
 function buttonStyle(styleOfButton) {
     switch(styleOfButton){
@@ -49,22 +50,22 @@ function Button (buttonCol, buttonData, buttonSpacing) {
     let buttonLinkTitle = buttonData?.field_formatted_title ? buttonData.field_formatted_title.processed : (buttonData.field_button_link?.title ? buttonData.field_button_link.title : "No title entered");
     let buttonIcon = buttonData?.field_font_awesome_icon;
     let buttonIconColour = buttonData.relationships.field_font_awesome_icon_colour?.name;
-    let buttonClasses = "btn " + buttonStyle(buttonData.relationships.field_button_style?.name) + " " + buttonSpacing + " no-icon p-4";
-    let buttonFontAwesomeClasses = "align-middle display-2 pe-3 " + buttonIcon + (buttonIconColour ? " " + fontAwesomeIconColour(buttonIconColour) : null);
+    let buttonClasses = classNames('btn', buttonStyle(buttonData.relationships.field_button_style?.name), buttonSpacing, 'no-icon', 'p-4');
+    let buttonFontAwesomeClasses = classNames('align-middle','display-2','pe-3', buttonIcon, (buttonIconColour ? fontAwesomeIconColour(buttonIconColour) : null));
     let btnAnalyticsGoal = buttonData.relationships.field_cta_analytics_goal?.name;
     let btnAnalyticsAction = buttonData.relationships.field_cta_analytics_goal?.field_goal_action;
-    let buttonTitleClasses = "align-middle lh-sm";
+    let buttonTitleClasses = classNames('align-middle','lh-sm');
 
     // call to action settings
     if (buttonCol === "Call to Action") {
-        buttonClasses += " text-center";
-        buttonTitleClasses += " fs-1 py-2" + (buttonIcon ? " pe-5" : " px-5");
-        buttonFontAwesomeClasses += " ps-5"
+        buttonClasses = classNames(buttonClasses,'text-center');
+        buttonTitleClasses = classNames(buttonTitleClasses,'fs-1', 'py-2',(buttonIcon ? 'pe-5' : 'px-5'));
+        buttonFontAwesomeClasses = classNames(buttonFontAwesomeClasses,'ps-5');
     } else {
         // default settings
-        buttonClasses += " text-start";
-        buttonTitleClasses += " d-table-cell";
-        buttonFontAwesomeClasses += " d-table-cell"
+        buttonClasses = classNames(buttonClasses,'text-start');
+        buttonTitleClasses = classNames(buttonTitleClasses, 'd-table-cell');
+        buttonFontAwesomeClasses = classNames(buttonFontAwesomeClasses,'d-table-cell');
     }
 
     return (
