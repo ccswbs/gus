@@ -76,7 +76,7 @@ const generateEvents = (data, eventData) => {
                   </div>
                   <div className="card-body col d-flex flex-column pt-0 pb-0 ps-0">
                       <a className="event-title border-0 fs-4 fw-bold lh-base stretched-link text-decoration-none" href={eventLink}>{wpEvent.node.title}</a>
-                      <p className="fs-4 mt-auto mb-0"><span className="visually-hidden">Happening on {srDayName} {srMonth} {srDayNumber} from </span><time datetime={wpEvent.node.startDate}>{eventStartTime}</time> to <time datetime={wpEvent.node.endDate}>{eventEndTime}</time></p>
+                      <p className="fs-4 mt-auto mb-0"><span className="visually-hidden">Happening on {srDayName} {srMonth} {srDayNumber} from </span><time dateTime={wpEvent.node.startDate}>{eventStartTime}</time> to <time dateTime={wpEvent.node.endDate}>{eventEndTime}</time></p>
                   </div>
               </li>
               </>)

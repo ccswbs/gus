@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import Accordion from 'components/shared/accordion';
-import GeneralText from 'components/shared/generalText';
-import MediaText from 'components/shared/mediaText';
-import PageTabs from 'components/shared/pageTabs';
-import SectionButtons from 'components/shared/sectionButtons';
+
+const Accordion = React.lazy(() => import('components/shared/accordion'));
+const GeneralText = React.lazy(() => import('components/shared/generalText'));
+const MediaText = React.lazy(() => import('components/shared/mediaText'));
+const PageTabs = React.lazy(() => import('components/shared/pageTabs'));
+const SectionButtons = React.lazy(() => import('components/shared/sectionButtons'));
 
 const BlockWidget = (props) => {
     

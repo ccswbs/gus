@@ -3,8 +3,9 @@ import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { Container, Col, Row } from "react-bootstrap"
 import Overlay from "components/shared/overlay"
-import ModalVideo from "components/shared/modalVideo"
 import styled from "styled-components"
+
+const ModalVideo = React.lazy(() => import('components/shared/modalVideo'));
 
 const SectionText = styled.div`
   text-shadow: 2px 2px 8px rgb(0 0 0 / 99%);

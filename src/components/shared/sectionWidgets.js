@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-import Accordion from 'components/shared/accordion';
-import BlockWidget from 'components/shared/blockWidget';
-import GeneralText from 'components/shared/generalText';
-import ImageOverlay from 'components/shared/imageOverlay';
-import LeadPara from 'components/shared/leadPara';
-import LinksItems from 'components/shared/linksItems';
-import MediaText from 'components/shared/mediaText';
-import PageTabs from 'components/shared/pageTabs';
-import SectionButtons from 'components/shared/sectionButtons';
-import StatisticWidget from 'components/shared/statisticWidget';
-import StatsWidget from 'components/shared/statsWidget';
-import YamlWidget from 'components/shared/yamlWidget';
 import { ConditionalWrapper } from 'utils/ug-utils';
+
+const Accordion = React.lazy(() => import('components/shared/accordion'));
+const BlockWidget = React.lazy(() => import('components/shared/blockWidget'));
+const GeneralText = React.lazy(() => import('components/shared/generalText'));
+const ImageOverlay = React.lazy(() => import('components/shared/imageOverlay'));
+const LeadPara = React.lazy(() => import('components/shared/leadPara'));
+const LinksItems = React.lazy(() => import('components/shared/linksItems'));
+const MediaText = React.lazy(() => import('components/shared/mediaText'));
+const PageTabs = React.lazy(() => import('components/shared/pageTabs'));
+const SectionButtons = React.lazy(() => import('components/shared/sectionButtons'));
+const StatisticWidget = React.lazy(() => import('components/shared/statisticWidget'));
+const StatsWidget = React.lazy(() => import('components/shared/statsWidget'));
+const YamlWidget = React.lazy(() => import('components/shared/yamlWidget'));
 
 // For the left column
 function renderPrimary(widget) {

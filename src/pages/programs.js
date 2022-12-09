@@ -6,7 +6,6 @@ import 'styles/programsList.css';
 
 const ProgramsPage = ({ data }) => (
     <Layout>
-        <Seo title="Program List" description={[`Univeristy of Guelph Programs`]} />
         <div className="container page-container">
             <div className="site-content">
                 <h1>Programs</h1>       
@@ -28,6 +27,12 @@ const ProgramsPage = ({ data }) => (
 )
 
 export default ProgramsPage
+
+export function Head () {
+  return (
+    <Seo title="Program List" description={[`University of Guelph Programs`]} />
+  )
+}
 
 export const query = graphql`{
   allNodeProgram(sort: {title: ASC}) {

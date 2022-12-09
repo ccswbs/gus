@@ -16,6 +16,14 @@ export default ({data}) => {
 	)
 }
 
+export function Head ({ data }) {
+	let pageTitle = data.articles.edges[0].node.title;
+  
+	return (
+		<Seo title={pageTitle} />
+	)
+  }
+
 /* export const query = graphql`
   query ($id: String) {
 	articles: allNodeArticle(filter: {id: {eq: $id}}) {

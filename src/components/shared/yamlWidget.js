@@ -1,20 +1,18 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 
-// @todo - add index of components in components/blocks and import all in one line
-// until then, import each component manually below
-import InternationalStatsGlobal from 'components/blocks/international/international-stats-global';
-import InternationalExploreThingsToKnow from 'components/blocks/international/international-things-to-know';
-import InternationalExploreButtons from 'components/blocks/international/international-explore-btns';
-import InternationalExploreGrid from 'components/blocks/international/international-explore-grid';
-import InternationalTalkCurrentStudent from 'components/blocks/international/international-talk-current-student';
-import InternationalExploreLead from 'components/blocks/international/international-explore-lead';
-import LangBcommStats from 'components/blocks/lang/lang-bcomm-stats';
-import LangBcommQuote from 'components/blocks/lang/lang-bcomm-quote';
-import LangBcommSupportiveCommunity from 'components/blocks/lang/lang-bcomm-supportive-community';
-import LangBcommStatsBordered from 'components/blocks/lang/lang-bcomm-stats-bordered';
-import LangBcommFeatureExperience from 'components/blocks/lang/lang-bcomm-feature-experience';
-import LangBcommStudentBlog from 'components/blocks/lang/lang-bcomm-student-blog';
+const InternationalStatsGlobal = React.lazy(() => import('components/blocks/international/international-stats-global'));
+const InternationalExploreThingsToKnow = React.lazy(() => import('components/blocks/international/international-things-to-know'));
+const InternationalExploreButtons = React.lazy(() => import('components/blocks/international/international-explore-btns'));
+const InternationalExploreGrid = React.lazy(() => import('components/blocks/international/international-explore-grid'));
+const InternationalTalkCurrentStudent = React.lazy(() => import('components/blocks/international/international-talk-current-student'));
+const InternationalExploreLead = React.lazy(() => import('components/blocks/international/international-explore-lead'));
+const LangBcommStats = React.lazy(() => import('components/blocks/lang/lang-bcomm-stats'));
+const LangBcommQuote = React.lazy(() => import('components/blocks/lang/lang-bcomm-quote'));
+const LangBcommSupportiveCommunity = React.lazy(() => import('components/blocks/lang/lang-bcomm-supportive-community'));
+const LangBcommStatsBordered = React.lazy(() => import('components/blocks/lang/lang-bcomm-stats-bordered'));
+const LangBcommFeatureExperience = React.lazy(() => import('components/blocks/lang/lang-bcomm-feature-experience'));
+const LangBcommStudentBlog = React.lazy(() => import('components/blocks/lang/lang-bcomm-student-blog'));
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;

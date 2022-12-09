@@ -248,7 +248,7 @@ function prepareVariantHeading (variantData) {
   return variantHeading;
 }
 
-const ProgramPage = ({data, location}) => {
+const ProgramPage = ({data}) => {
 
     let progData = data.programs.edges[0]?.node;
     let callToActionData = data.ctas?.edges;
@@ -268,11 +268,6 @@ const ProgramPage = ({data, location}) => {
     let videoData = data.videos.edges[0]?.node;
 
     const heroImage = (imageData?.length>0 ? imageData : (imageTaggedData?.length>0 ? imageTaggedData : null));
-
-    // Open Graph metatags
-    const ogDescription = progData.field_metatags?.og_description;
-    const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.publicUrl;
-    const ogImageAlt = heroImage && heroImage[0]?.node.field_media_image.alt;
 
     // set program details
     const nodeID = progData.drupal_internal__nid;
@@ -296,12 +291,6 @@ const ProgramPage = ({data, location}) => {
     return (
       <Layout date={lastModified} menuName="main">
         <Helmet bodyAttributes={{ class: "program" }} />
-        <Seo
-          title={title}
-          description={ogDescription}
-          img={ogImage}
-          imgAlt={ogImageAlt}
-        />
 
         {/**** Header and Title ****/}
         <div
@@ -417,6 +406,24 @@ const ProgramPage = ({data, location}) => {
 }
 
 export default ProgramPage;
+
+export function Head ({ data }) {
+  let progData = data.programs.edges[0]?.node;
+  let title = progData.title;
+
+  let imageData =  data.images?.edges;
+  let imageTaggedData = data.imagesTagged?.edges;
+  let heroImage = (imageData?.length>0 ? imageData : (imageTaggedData?.length>0 ? imageTaggedData : null));
+  
+  // Open Graph metatags
+  let ogDescription = progData.field_metatags?.og_description;  
+  let ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.publicUrl;
+  let ogImageAlt = heroImage && heroImage[0]?.node.field_media_image.alt;
+
+  return (
+    <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
+  )
+}
 
 export const query = graphql`query ($id: String) {
   programs: allNodeProgram(

@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
-import OVCCustomFooter from 'components/blocks/ovc/footerOVC';
 import Widget from 'components/shared/widget';
 import { contentExists } from 'utils/ug-utils';
 import 'styles/customFooter.css';
+
+const OVCCustomFooter = React.lazy(() => import('components/blocks/ovc/footerOVC'));
 
 function chooseFooter (footer) {
   let footerSelection = ``;
