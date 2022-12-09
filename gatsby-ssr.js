@@ -1,4 +1,5 @@
 import React from 'react';
+import { withPrefix } from 'gatsby';
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   
@@ -16,7 +17,15 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             key="https://www.uoguelph.ca/css/UofG-styles-dist.css" 
             rel="stylesheet" 
             href="https://www.uoguelph.ca/css/UofG-styles-dist.css" 
-        />
+        />,
+        <script 
+            key={withPrefix("/web-components/ug-header.js")} 
+            src={withPrefix("/web-components/ug-header.js")} 
+        />,
+        <script 
+            key={withPrefix("/web-components/ug-footer.js")} 
+            src={withPrefix("/web-components/ug-footer.js")} 
+        />,
     ])
 
     setPostBodyComponents([
