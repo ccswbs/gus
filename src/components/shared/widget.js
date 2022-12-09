@@ -17,6 +17,7 @@ const SectionWidgets = React.lazy(() => import('components/shared/sectionWidgets
 const StatisticWidget = React.lazy(() => import('components/shared/statisticWidget'));
 const StatsWidget = React.lazy(() => import('components/shared/statsWidget'));
 const Story = React.lazy(() => import('components/shared/story'));
+const TestimonialSlider = React.lazy(() => import('components/shared/testimonialSlider'));
 const YamlWidget = React.lazy(() => import('components/shared/yamlWidget'));
 
 const WidgetSelector = ({widget}) => {
@@ -71,6 +72,8 @@ const WidgetSelector = ({widget}) => {
             return <StatsWidget statsWidgetData={widget} />;
         case "paragraph__story_widget":
             return <Story storyData={widget} />;
+        case "paragraph__testimonial_slider":
+          return <TestimonialSlider testimonialData={widget} />;
         case "paragraph__yaml_widget":
             return <YamlWidget blockData={widget} />;
         default:
@@ -85,7 +88,8 @@ const Widget = ({widget}) => {
             && widget?.__typename !== "paragraph__image_overlay"
             && widget?.__typename !== "paragraph__modal_video_widget" 
             && widget?.__typename !== "paragraph__story_widget"
-            && widget?.__typename !== "paragraph__statistic_widget" } 
+            && widget?.__typename !== "paragraph__statistic_widget" 
+            && widget?.__typename !== "paragraph__testimonial_slider" } 
         wrapper={children => 
             <Container className="page-container">
               <Row className="site-content">
@@ -145,6 +149,9 @@ export const query = graphql`
     }
     ... on paragraph__story_widget {
       ...StoryWidgetParagraphFragment
+    }
+    ... on paragraph__testimonial_slider {
+      ...TestimonialSliderParagraphFragment
     }
     ... on paragraph__yaml_widget {
       ...YamlWidgetParagraphFragment

@@ -64,11 +64,6 @@ const LightText = styled.div`
     color: #fff !important;
   }
 `
-const BlueBackground = styled.div`
-  && p a {
-    color: #000 !important;
-  }
-`
 const YellowBackground = styled.div`
   && p a {
     color: #000 !important;
@@ -136,21 +131,6 @@ const StyleSelector = ({styles, image_bg, children}) => {
         )
       } 
       break;
-    case "Blue background":
-      return (
-        <BlueBackground>
-          <YellowQuotes>
-            <DarkText>
-              <div style={{ display: "grid" }}>
-                <StaticImage src="../../images/blue-quote-bg.jpg" alt="" style={{ gridArea: "1/1" }} />
-                <div style={{ gridArea: "1/1", position: "relative", display: "grid" }}>
-                  {children}
-                </div>
-              </div>
-            </DarkText>
-          </YellowQuotes>
-        </BlueBackground>
-      )
     case "Red background":
       return (
           <YellowQuotes>

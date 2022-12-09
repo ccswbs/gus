@@ -73,35 +73,35 @@ export default CustomFooter
 export const query = graphql`
 	fragment CustomFooterFragment on node__custom_footer {
 		drupal_id
-            body {
-              processed
-            }
-            fields {
-              tags
-            }
-            relationships {
-              field_tags {
-                __typename
-                ... on taxonomy_term__units {
-                  drupal_id
-                  id
-                  name
-                }
-              }
-              field_footer_logo {
-                field_media_image {
-                  alt
-                }
-                relationships {
-                  field_media_image {
-                    publicUrl
-                    gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
-                  }
-                }
-              }
-              field_widgets {
-                ...FieldWidgetsFragment
-              }
-            }
+    body {
+      processed
+    }
+    fields {
+      tags
+    }
+    relationships {
+      field_tags {
+        __typename
+        ... on taxonomy_term__units {
+          drupal_id
+          id
+          name
+        }
+      }
+      field_footer_logo {
+        field_media_image {
+          alt
+        }
+        relationships {
+          field_media_image {
+            publicUrl
+            gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+          }
+        }
+      }
+      field_widgets {
+        ...FieldWidgetsFragment
+      }
+    }
 	}
 `
