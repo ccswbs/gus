@@ -30,6 +30,7 @@ fragment StatsWidgetParagraphFragment on paragraph__stats_widget {
         name
       }
       field_statistic {
+        drupal_id
         field_stat_range
         field_stat_value
         field_stat_value_end
