@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
-import { contentExists } from 'utils/ug-utils.js';
 import moment from 'moment';
 import 'styles/events.css';
 
@@ -48,12 +47,11 @@ const generateEvents = (data, eventData) => {
         default:
             colClasses = " col-xl-3 col-md-6";
         break;
-    }
-    
+    }    
     
     return (<React.Fragment key={eventData.drupal_id}>
-        <h2 className="mb-5">{contentExists(title) ? title : "Upcoming Events"}</h2>
-        {contentExists(shownEvents) ? 
+        <h2 className="mb-5">{title ? title : "Upcoming Events"}</h2>
+        {shownEvents ? 
         <div className="gy-0">
           <ul className="event-list row gx-3 gy-5 mb-5">
           {shownEvents.slice(0,4).map(wpEvent => {
@@ -61,7 +59,7 @@ const generateEvents = (data, eventData) => {
               let eventDay = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("D");
               let eventStartTime = moment(wpEvent.node.startDate,"YYYY-MM-DD HH:mm").format("h:mm A");
               let eventEndTime = moment(wpEvent.node.endDate,"YYYY-MM-DD HH:mm").format("h:mm A");
-              let eventLink = (contentExists(wpEvent.node.url) ? wpEvent.node.url : "https://news.uoguelph.ca" + wpEvent.node.uri);
+              let eventLink = (wpEvent.node.url ? wpEvent.node.url : "https://news.uoguelph.ca" + wpEvent.node.uri);
               
               let srMonth = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("MMMM");
               let srDayName = moment(wpEvent.node.startDate,"YYYY-MM-DD").format("dddd");
