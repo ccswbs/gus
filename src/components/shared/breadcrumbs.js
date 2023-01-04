@@ -121,25 +121,26 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
 const Breadcrumbs = (props) => (
    <StaticQuery
       query={
-        graphql`
-        query BreadcrumbMenuQuery {
-          allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}, filter: {enabled: {eq: true}}) {
-            edges {
-              node {
-                drupal_id
-                drupal_parent_menu_item
-                menu_name
-                link {
-                  uri
-                  url
-                }
-                title
-                weight
-              }
-            }
-          }
+        graphql`query BreadcrumbMenuQuery {
+  allMenuLinkContentMenuLinkContent(
+    sort: {weight: ASC}
+    filter: {enabled: {eq: true}}
+  ) {
+    edges {
+      node {
+        drupal_id
+        drupal_parent_menu_item
+        menu_name
+        link {
+          uri
+          url
         }
-      `
+        title
+        weight
+      }
+    }
+  }
+}`
       }
       render={data => makeBreadcrumbTrail(data, props.domains, props.menuName, props.nodeID, props.nodeTitle)}
    />
