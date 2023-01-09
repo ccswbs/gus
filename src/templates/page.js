@@ -34,7 +34,8 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         
         { /**** Widgets content ****/}
         <div id="main-column">
-          // no banner  
+            
+          { /**** No banner ****/}  
           { !(imageData?.length > 0 || heroWidgets?.length > 0) && <h1>{pageTitle}</h1> }
 
           {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)} 
