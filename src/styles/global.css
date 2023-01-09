@@ -71,6 +71,10 @@ html {
     border: none !important;
 }
 
+/* h1 title within page body */
+#main-column h1 { margin-left: 3rem; }
+
+
 /* Custom card styles */
 
 .bg-dark a:not(.btn) {
