@@ -37,7 +37,7 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
             
           { /**** No banner ****/}  
           { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
-              <div className="container ft-container">
+              <div className="container page-container">
                 <div className="row site-content">
                     <div className="content-area">
                         <h1>{pageTitle}</h1>
