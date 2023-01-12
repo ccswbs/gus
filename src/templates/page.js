@@ -36,7 +36,15 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         <div id="main-column">
             
           { /**** No banner ****/}  
-          { !(imageData?.length > 0 || heroWidgets?.length > 0) && <div className="container ft-container"><h1>{pageTitle}</h1></div>}
+          { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
+              <div className="container ft-container">
+                <div className="row site-content">
+                    <div className="content-area">
+                        <h1>{pageTitle}</h1>
+                    </div>
+                </div>
+              </div>
+          }
 
           {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)} 
         </div>
