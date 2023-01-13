@@ -7,6 +7,7 @@ import Hero from 'components/shared/hero';
 import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
+import EconImpactPresMessage from 'components/blocks/economic-impact/pres-message'
 
 const Page = ({nodeID, pageTitle, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
     <Layout menuName={menuName}>
@@ -29,6 +30,7 @@ const Page = ({nodeID, pageTitle, imageData, widgets, heroWidgets, footer, menuN
         
         <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
         
+        <EconImpactPresMessage />
         { /**** Widgets content ****/}
         <div id="main-column">
           {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)} 
