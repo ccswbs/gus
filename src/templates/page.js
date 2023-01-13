@@ -14,6 +14,7 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
         
         { /**** Header and Title ****/ }
+        { (imageData?.length > 0 || heroWidgets?.length > 0) &&
         <div className={imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
             <Hero imgData={imageData} />
             {heroWidgets && (
@@ -27,11 +28,24 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
                 <h1 className="fancy-title">{pageTitle}</h1>
             </div>
         </div>
+        }
         
         <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
         
         { /**** Widgets content ****/}
         <div id="main-column">
+            
+          { /**** No banner ****/}  
+          { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
+              <div className="container page-container">
+                <div className="row site-content">
+                    <div className="content-area">
+                        <h1>{pageTitle}</h1>
+                    </div>
+                </div>
+              </div>
+          }
+
           {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)} 
         </div>
 
