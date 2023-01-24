@@ -27,7 +27,6 @@ function NavTabContent (props) {
 
     return(
         <div className={classes} id={props.id} role="tabpanel" aria-labelledby={arialabel}>
-            <Heading className="visually-hidden">{props.heading}</Heading>
             {props.content}
         </div>
     )
