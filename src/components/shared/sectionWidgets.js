@@ -61,7 +61,7 @@ function renderPrimary(widget) {
 
 //For the right column
 //Only render certain widgets if there's enough space, i.e. class of col-md-6
-function renderSecondary(widget, secondaryClass) {
+function renderSecondary(widget, sectionClasses) {
     switch (widget?.__typename) {
         case "paragraph__block_widget":
             return <BlockWidget key={widget.drupal_id} blockData={widget} />;
@@ -74,13 +74,13 @@ function renderSecondary(widget, secondaryClass) {
         case "paragraph__yaml_widget":
             return <YamlWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__section_tabs":
-            if (secondaryClass === "col-md-6") {
+            if (sectionClasses === "col-md-6") {
                 return <PageTabs key={widget.drupal_id} pageData={widget} />; 
             } else {
                 return <></>; 
             }
         case "paragraph__accordion_section":
-            if (secondaryClass === "col-md-6") {
+            if (sectionClasses === "col-md-6") {
                 return <Accordion key={widget.drupal_id} pageData={widget} />; 
             } else {
                 return <></>; 
@@ -132,7 +132,7 @@ function SectionWidgets (props) {
             {secondary.length > 0 && 
             <div className={secondaryClass} data-title="Secondary column">
             {secondary.map(widget => {
-                return renderSecondary(widget, secondaryClass)
+                return renderSecondary(widget, sectionClasses)
             })}    
             </div>}
         </>)
