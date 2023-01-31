@@ -2,7 +2,7 @@ import { graphql, Link } from 'gatsby';
 import Layout from 'components/layout';
 import React from 'react';
 import Seo from 'components/seo';
-import BuildingCapacityNotice from 'components/shared/buildingCapacityNotice';
+
 
 const IndexPage = ({ data }) => {
 
@@ -49,7 +49,7 @@ const IndexPage = ({ data }) => {
         <Seo title="Home" />
         <div className="container page-container">
           <div className="site-content">
-            <BuildingCapacityNotice />
+            
             <div className="content-area">
               <h1>University of Guelph Content Hub</h1>
               <p>The University of Guelph, and everyone who studies here, explores here, teaches here and works here, is committed to one simple purpose: To Improve Life.</p>              
