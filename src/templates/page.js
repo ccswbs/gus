@@ -36,14 +36,8 @@ const Page = ({nodeID, pageAlias, pageTags, pageTitle, ogDescription, ogImage, o
         { /**** Widgets content ****/}
         <div id="main-column">
 
-        {pageTags.map((tag) => {
-            return tag.name === "Linc" && 
-            <>
-            <p>Yes, it has the Linc tag so here's the notice:</p>
-            <BuildingCapacityNotice />
-            </>         
-        })}
-            
+        <BuildingCapacityNotice pageTags={pageTags} />
+             
           { /**** No banner ****/}  
           { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
               <div className="container page-container">

@@ -6,18 +6,19 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Notice from './notice';
 import * as styles from '../../styles/buildingCapacity.module.css'
 
-function BuildingCapacityNotice () {
+function BuildingCapacityNotice (props) {
 
 	let [capacity, setCapacity] = useState("...");
 	let [icon, setIcon] = useState("fa-info-circle");
 	let [color, setColor] = useState("var(--uog-yellow)");
 	let [visible, setVisible] = useState(false);
-
-	useEffect(() => {
+    
+ 	useEffect(() => {
 		const fetch_occupancy = () => {
 			const baseUrl = `https://display.safespace.io`;
 			const spaceCode = 'e81c82f9';
@@ -27,6 +28,17 @@ function BuildingCapacityNotice () {
 			let occupants = 0;
 			let max_capacity = 0;
 			var building_open = false;
+            
+            let pageTags = props.pageTags;
+            let correctTag = false;
+        
+            if (pageTags && pageTags.length > 0) {
+                for (let i=0; i<pageTags.length; i++) {
+                    if (pageTags[i].name === "Linc") {
+                        correctTag = true;
+                    }
+                }
+            }
 		
 			Promise.all([
 				fetch(hoursUrl)
@@ -42,7 +54,7 @@ function BuildingCapacityNotice () {
 					.then((body) => max_capacity = body.space.maxCapacity),
 		
 			]).then(() => {
-				if (!building_open) {
+				if (!building_open || !correctTag) {
 					setVisible(false);
 				} else {
 					setVisible(true);
@@ -94,6 +106,13 @@ function BuildingCapacityNotice () {
 	}
 	
 	
+}
+
+BuildingCapacityNotice.propTypes = {
+    pageTags: PropTypes.object,
+}
+BuildingCapacityNotice.defaultProps = {
+    pageTags: null,
 }
 
 export default BuildingCapacityNotice
