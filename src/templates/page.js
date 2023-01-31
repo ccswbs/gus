@@ -7,6 +7,7 @@ import Hero from 'components/shared/hero';
 import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
+import BuildingCapacityNotice from 'components/shared/buildingCapacityNotice';
 
 const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
     <Layout menuName={menuName}>
@@ -34,6 +35,8 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         
         { /**** Widgets content ****/}
         <div id="main-column">
+        
+        {pageTitle === "Lincoln Alexander Student Service Centre" && <BuildingCapacityNotice />}
             
           { /**** No banner ****/}  
           { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
