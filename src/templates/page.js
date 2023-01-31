@@ -9,7 +9,7 @@ import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
 import BuildingCapacityNotice from 'components/shared/buildingCapacityNotice';
 
-const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
+const Page = ({nodeID, pageAlias, pageTags, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
@@ -35,8 +35,14 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         
         { /**** Widgets content ****/}
         <div id="main-column">
-        
-        {pageTitle === "Lincoln Alexander Student Service Centre" && <BuildingCapacityNotice />}
+
+        {pageTags.map((tag) => {
+            return tag.name === "Linc" && 
+            <>
+            <p>Yes, it has the Linc tag so here's the notice:</p>
+            <BuildingCapacityNotice />
+            </>         
+        })}
             
           { /**** No banner ****/}  
           { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
@@ -122,7 +128,9 @@ export const query = graphql`
 
 const PageTemplate = ({data}) => (
     <Page nodeID={data.nodePage.drupal_internal__nid}
-        pageTitle={data.nodePage.title} 
+        pageAlias={data.nodePage.path.alias}
+        pageTags={data.nodePage.relationships?.field_tags}
+        pageTitle={data.nodePage.title}
         ogDescription={data.nodePage.field_metatags?.og_description}
         ogImage={data.images.edges[0]?.node.relationships.field_media_image.publicUrl}
         ogImageAlt={data.images.edges[0]?.node?.field_media_image.alt}
