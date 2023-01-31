@@ -18,6 +18,8 @@ function BuildingCapacityNotice () {
 	let [visible, setVisible] = useState(false);
 
 	useEffect(() => {
+		const url = typeof window !== 'undefined' ? window.location.href : '';
+		
 		const fetch_occupancy = () => {
 			const baseUrl = `https://display.safespace.io`;
 			const spaceCode = 'e81c82f9';
@@ -74,9 +76,11 @@ function BuildingCapacityNotice () {
 				setColor('var(--danger)');
 			}
 		}
-
-		fetch_occupancy();
-		setInterval(fetch_occupancy, 120000);
+		
+		if (url.match("/thelinc/contact/?")) {
+		   fetch_occupancy();
+		   setInterval(fetch_occupancy, 120000);
+		}
 
 	}, []);
 
