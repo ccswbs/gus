@@ -5,9 +5,8 @@
  * Usage: <BuildingCapacityNotice />
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Notice from './notice';
 import * as styles from '../../styles/buildingCapacity.module.css'
 
@@ -17,8 +16,23 @@ function BuildingCapacityNotice (props) {
 	let [icon, setIcon] = useState("fa-info-circle");
 	let [color, setColor] = useState("var(--uog-yellow)");
 	let [visible, setVisible] = useState(false);
+    let [correctTag, setCorrectTag] = useState(false);
     
+    const memoizedCallback = useCallback(() => {
+    // Your effect logic that references `pageTags` goes here
+        let pageTags = props.pageTags;
+          
+        if (pageTags && pageTags.length > 0) {
+            for (let i=0; i<pageTags.length; i++) {
+                if (pageTags[i].name === "Linc") {
+                    setCorrectTag(true);
+                }
+            }
+        }
+    }, [props.pageTags]);
+
  	useEffect(() => {
+        memoizedCallback();
 		const fetch_occupancy = () => {
 			const baseUrl = `https://display.safespace.io`;
 			const spaceCode = 'e81c82f9';
@@ -29,17 +43,6 @@ function BuildingCapacityNotice (props) {
 			let max_capacity = 0;
 			var building_open = false;
             
-            let pageTags = props.pageTags;
-            let correctTag = false;
-        
-            if (pageTags && pageTags.length > 0) {
-                for (let i=0; i<pageTags.length; i++) {
-                    if (pageTags[i].name === "Linc") {
-                        correctTag = true;
-                    }
-                }
-            }
-		
 			Promise.all([
 				fetch(hoursUrl)
 					.then((response) => response.json())
@@ -90,7 +93,7 @@ function BuildingCapacityNotice (props) {
 		fetch_occupancy();
 		setInterval(fetch_occupancy, 120000);
 
-	}, []);
+	}, [memoizedCallback, correctTag]);
 
 	if (!visible) {
 		return (<></>);
