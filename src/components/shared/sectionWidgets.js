@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import classNames from 'classnames';
 import { graphql } from 'gatsby';
 import { ConditionalWrapper } from 'utils/ug-utils';
 
@@ -60,7 +61,8 @@ function renderPrimary(widget) {
 }
 
 //For the right column
-function renderSecondary(widget) {
+//Only render certain widgets if there's enough space, i.e. class of col-md-6
+function renderSecondary(widget, sectionClasses) {
     switch (widget?.__typename) {
         case "paragraph__block_widget":
             return <BlockWidget key={widget.drupal_id} blockData={widget} />;
@@ -72,6 +74,18 @@ function renderSecondary(widget) {
             return <SectionButtons key={widget.drupal_id} pageData={widget} />;
         case "paragraph__yaml_widget":
             return <YamlWidget key={widget.drupal_id} blockData={widget} />;
+        case "paragraph__section_tabs":
+            if (sectionClasses === "col-md-6") {
+                return <PageTabs key={widget.drupal_id} pageData={widget} />; 
+            } else {
+                return <></>; 
+            }
+        case "paragraph__accordion_section":
+            if (sectionClasses === "col-md-6") {
+                return <Accordion key={widget.drupal_id} pageData={widget} />; 
+            } else {
+                return <></>; 
+            }  
         default:
             return <></>;                          
     }
@@ -98,11 +112,11 @@ function SectionWidgets (props) {
 
         if (secondary.length > 0) {
             if (sectionClasses === "col-md-6") {
-                primaryClass = "col-md-6 mb-5 mb-md-0";
-                secondaryClass = "col-md-6";
+                primaryClass = classNames("col-md-6 mb-5 mb-md-0");
+                secondaryClass = classNames("col-md-6 d-grid gap-4");
             } else {
-                primaryClass = "col-md-9 mb-5 mb-md-0";
-                secondaryClass = "col-md-3";
+                primaryClass = classNames("col-md-9 mb-5 mb-md-0");
+                secondaryClass = classNames("col-md-3 d-grid gap-4");
             }
         } else {
             primaryClass = "row";
@@ -119,7 +133,7 @@ function SectionWidgets (props) {
             {secondary.length > 0 && 
             <div className={secondaryClass} data-title="Secondary column">
             {secondary.map(widget => {
-                return renderSecondary(widget)
+                return renderSecondary(widget, sectionClasses)
             })}    
             </div>}
         </>)
