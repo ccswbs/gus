@@ -1,15 +1,16 @@
 import React from "react"
 import styled from "styled-components"
+import classNames from "classnames"
+import "styles/stats.css"
 
 /* Accessible definition lists can only have one nested div.
 In order to achieve gap between bordered stats, use grid instead of row-cols-* */
-const StatisticGrid = styled.dl`
-  display: grid;
-  grid-template-columns: none;
-  @media (min-width: 992px) {
-    grid-template-columns: repeat(${props => (props.columns ?? "3")}, 1fr);
-  }
-`;
+
+let txtAlign = 
+
+const classStatCard = classNames("default-card-bg",txtAlign);
+
+
 const StatCard = styled.div`
   background: #f5f7fa;
   padding: 1.25rem;
@@ -53,22 +54,22 @@ const StatIcon = styled.i`
   color: ${props => (props.colour ?? "#000")};
 `;
 
-const Statistic = ({id, children, className=""}) => (
-  <dl id={id} className={`${className}`}>
+const Statistic = ({id, children, classes=""}) => (
+  <dl id={id} className={classNames("statistic-grid",classes)}>
       {children}
   </dl>
 )
 
 Statistic.Grid = ({id, children, columns, className=""}) => (
-  <StatisticGrid id={id} columns={columns} className={`${className}`}>
+  <dl id={id} columns={columns} className={`${className}`}>
       {children}
-  </StatisticGrid>
+  </dl>
 )
 
 Statistic.Card = ({children}) => (
-  <StatCard className="h-100">
+  <div className="h-100">
     {children}
-  </StatCard>
+  </div>
 )
 
 Statistic.BorderCard = ({border, children, className=""}) => (
@@ -78,9 +79,9 @@ Statistic.BorderCard = ({border, children, className=""}) => (
 )
 
 Statistic.SolidCard = ({background, colour, children, className=""}) => (
-    <StatSolidCard background={background} colour={colour} className={`${className} align-self-stretch`}>
+    <div className={`${className} align-self-stretch`}>
       {children}
-    </StatSolidCard>
+    </div>
 )
 
 Statistic.Icon = ({icon, colour}) => (

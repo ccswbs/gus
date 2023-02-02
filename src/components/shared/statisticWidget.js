@@ -4,13 +4,8 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { Container } from "react-bootstrap";
 import PageContainer from 'components/shared/pageContainer';
 import Statistic from 'components/shared/statistic';
-import styled from "styled-components";
-
-
-const Gradient = styled.div`
-  background: ${props => (props.gradientStyle ?? "none")};
-  padding: 0;
-`
+import classNames from "classnames"
+import "styles/stats.css"
 
 const gradientColourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
@@ -27,27 +22,30 @@ const GradientStatistic = ({stats}) => {
   let numStats = stats.length;
 
   // default is displaying 3 colours in a row
-  let rowClasses = "row-cols-md-3";
-  let gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#ffc72a 60%,#ffc72a 100%)";
+  let rowClasses = classNames("row-cols-md-3");
+  let gradientStyle = "gradient3";
 
-  if (numStats === 1){
+  if (numStats === 1) {
     // one colour
-    rowClasses = "row-cols-sm-1";
-    gradientStyle = "#000000";
+    rowClasses = classNames("row-cols-sm-1");
+    gradientStyle = "gradient1";
   } else if (numStats === 2) {
     // two colours
-    rowClasses = "row-cols-sm-2";
-    gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#c20430 60%,#c20430 100%)";
+    rowClasses = classNames("row-cols-sm-2");
+    gradientStyle = "gradient2";
   } else if (numStats % 4 === 0) {
     // four colour
-    rowClasses = "row-cols-sm-2 row-cols-lg-4";
-    gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%)";
+    rowClasses = classNames("row-cols-sm-2 row-cols-lg-4");
+    gradientStyle = "gradient4";
   }
+  
+  let statClasses = classNames("row g-0 row-cols-1 justify-content-center mb-0",rowClasses);
+  let gradientClasses = classNames("d-flex flex-column mb-4 p-0",gradientStyle);
 
   return (
-    <Gradient className="d-flex flex-column mb-4" gradientStyle={gradientStyle}>
+    <div className={gradientClasses}>
       <Container className="page-container p-0">
-          <Statistic className={`row g-0 row-cols-1 ${rowClasses} justify-content-center mb-0`}>
+          <Statistic classes={statClasses}>
               {stats.map((stat, index) => {
                 let type = stat.field_statistic_represents;
                 let value = stat.field_statistic_value;
@@ -66,7 +64,7 @@ const GradientStatistic = ({stats}) => {
               )}
           </Statistic>
       </Container>
-    </Gradient>
+    </div>
 )}
 
 const solidColourOptions = [
