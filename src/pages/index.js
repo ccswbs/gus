@@ -79,7 +79,7 @@ const IndexPage = ({ data }) => {
               <p>"Control+F" (or "Command+F" on a Mac) is the keyboard shortcut for the Find command. While on this webpage, press the Ctrl key and the F key at the same time to bring up a search box in the top right corner of the screen.</p>
 
               
-              <h2 id="published">Published Pages</h2>
+              <h2 id="published">Published Content</h2>
               <h3>Basic Pages</h3>
               
               {pageTags.map((tag) => {
