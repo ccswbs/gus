@@ -112,10 +112,10 @@ function SectionWidgets (props) {
         if (secondary.length > 0) {
             if (sectionClasses === "col-md-6") {
                 primaryClass = classNames("col-md-6 mb-5 mb-md-0");
-                secondaryClass = classNames("col-md-6 d-grid gap-4");
+                secondaryClass = classNames("col-md-6");
             } else {
                 primaryClass = classNames("col-md-9 mb-5 mb-md-0");
-                secondaryClass = classNames("col-md-3 d-grid gap-4");
+                secondaryClass = classNames("col-md-3");
             }
         } else {
             primaryClass = "row";
