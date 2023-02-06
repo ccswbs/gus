@@ -4,7 +4,7 @@ accordion:
     content: <p>A "Mathematical Science" page is overseen by COA and CBS. Both colleges would like to see this page listed under their tag, so when tagging the page they will use the tags "COA" and "CBS".</p>
   - title: One owner has multiple sites.
     content: |
-      <p>The Office of Ceremonies and Events has created a micro-site for Convocation. Some days they need to see only the Convocation pages, but other days they want to see all the pages that they manage. They can tag the Convocation pages with the tags "The Office of Ceremonies and Events" and "Convocation".</p>
+      <p>The Office of Ceremonies and Events has created a micro-site for Convocation. Some days they need to see only the Convocation pages, but other days they want to see all the pages that they manage. They can tag the Convocation pages with the tags "OCE" and "Convocation".</p>
       <p>Please note that in most cases you won't need a micro-site. Rules on "When you may want a micro-site" coming soon.</p>
   - title: One page has one owner.
     content: <p>Most pages will have only one tag. These pages will be tagged by the college or department that manages them.</p>
