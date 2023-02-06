@@ -6,7 +6,7 @@ import "styles/stats.css"
 /* Accessible definition lists can only have one nested div.
 In order to achieve gap between bordered stats, use grid instead of row-cols-* */
 
-let txtAlign = 
+let txtAlign = "center";
 
 const classStatCard = classNames("default-card-bg",txtAlign);
 
@@ -50,12 +50,9 @@ const StatType = styled.dd`
     color: #ffffff !important;
   }
 `;
-const StatIcon = styled.i`
-  color: ${props => (props.colour ?? "#000")};
-`;
 
 const Statistic = ({id, children, classes=""}) => (
-  <dl id={id} className={classNames("statistic-grid",classes)}>
+  <dl id={id} className={classNames(classes)}>
       {children}
   </dl>
 )
@@ -72,32 +69,32 @@ Statistic.Card = ({children}) => (
   </div>
 )
 
-Statistic.BorderCard = ({border, children, className=""}) => (
-  <StatBorderCard border={border} className={`${className} h-100`}>
+Statistic.BorderCard = ({border, children, classes=""}) => (
+  <div className={classNames("h-100",classes)}>
     {children}
-  </StatBorderCard>
+  </div>
 )
 
-Statistic.SolidCard = ({background, colour, children, className=""}) => (
-    <div className={`${className} align-self-stretch`}>
+Statistic.SolidCard = ({children, classes=""}) => (
+    <div className={classNames("align-self-stretch",classes)}>
       {children}
     </div>
 )
 
 Statistic.Icon = ({icon, colour}) => (
-  <StatIcon colour={colour} className={`${icon} mt-3 fa-4x`} aria-hidden="true" />
+  <i colour={colour} className={classNames("mt-3 fa-4x",icon)} aria-hidden="true" />
 )
 
-Statistic.Value = ({children, fontsize, className=""}) => (
-  <StatValue className={className} fontsize={fontsize}>
+Statistic.Value = ({children, fontsize, classes=""}) => (
+  <dt className={classNames("stat-value",classes)} fontsize={fontsize}>
     {children}
-  </StatValue>
+  </dt>
 )
 
-Statistic.Type = ({children, className=""}) => (
-  <StatType className={className}>
+Statistic.Type = ({children, classes=""}) => (
+  <dd className={classNames("stat-type",classes)}>
     {children}
-  </StatType>
+  </dd>
 )
 
 export default Statistic

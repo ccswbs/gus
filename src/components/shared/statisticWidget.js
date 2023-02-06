@@ -7,43 +7,28 @@ import Statistic from 'components/shared/statistic';
 import classNames from "classnames"
 import "styles/stats.css"
 
-const gradientColourOptions = [
-  {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
-  {background: "var(--uog-blue)", colour: "#000000"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
-  {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-blue)", colour: "#000000"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
-];
-
 const GradientStatistic = ({stats}) => {
   let numStats = stats.length;
 
   // default is displaying 3 colours in a row
   let rowClasses = classNames("row-cols-md-3");
-  let gradientStyle = "gradient3";
 
   if (numStats === 1) {
     // one colour
     rowClasses = classNames("row-cols-sm-1");
-    gradientStyle = "gradient1";
   } else if (numStats === 2) {
     // two colours
     rowClasses = classNames("row-cols-sm-2");
-    gradientStyle = "gradient2";
   } else if (numStats % 4 === 0) {
     // four colour
     rowClasses = classNames("row-cols-sm-2 row-cols-lg-4");
-    gradientStyle = "gradient4";
   }
   
-  let statClasses = classNames("row g-0 row-cols-1 justify-content-center mb-0",rowClasses);
-  let gradientClasses = classNames("d-flex flex-column mb-4 p-0",gradientStyle);
+  let statClasses = classNames("gradient-stats row g-0 row-cols-1 justify-content-center mb-0",rowClasses);
+  let gradientClasses = classNames("d-flex flex-column mb-4 p-0");
 
   return (
-    <div className={gradientClasses}>
+    <div data-title="Gradient Statistic" className={gradientClasses}>
       <Container className="page-container p-0">
           <Statistic classes={statClasses}>
               {stats.map((stat, index) => {
@@ -51,12 +36,8 @@ const GradientStatistic = ({stats}) => {
                 let value = stat.field_statistic_value;
                 let icon = stat.field_font_awesome_icon;
 
-                return <Statistic.SolidCard 
-                      key={`gradient-stat-${stat.drupal_id}`} 
-                      background={gradientColourOptions[index%gradientColourOptions.length].background} 
-                      colour={gradientColourOptions[index%gradientColourOptions.length].colour} 
-                      className="p-5 col">
-                        {icon && <Statistic.Icon icon={icon} colour={gradientColourOptions[index%gradientColourOptions.length].colour} />}
+                return <Statistic.SolidCard key={`gradient-stat-${stat.drupal_id}`} classes="stat-solid-card p-5 col">
+                        {icon && <Statistic.Icon icon={icon} />}
                         <Statistic.Value><strong>{value}</strong></Statistic.Value>
                         <Statistic.Type><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
                     </Statistic.SolidCard>
@@ -66,12 +47,6 @@ const GradientStatistic = ({stats}) => {
       </Container>
     </div>
 )}
-
-const solidColourOptions = [
-  {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
-];
 
 const SolidColourStatistic = ({stats, numColumns}) => {
   return (
@@ -87,14 +62,10 @@ const SolidColourStatistic = ({stats, numColumns}) => {
                 alt: stat.relationships?.field_media_text_media?.field_media_image?.alt,
               }
 
-              return <Statistic.SolidCard  
-                key={`solid-stat-${stat.drupal_id}`} 
-                background={solidColourOptions[index%solidColourOptions.length].background} 
-                colour={solidColourOptions[index%solidColourOptions.length].colour}
-                className="pt-4 pb-0 px-0 h-100 card border-0" >
-                  {icon && <Statistic.Icon icon={icon} colour={solidColourOptions[index%solidColourOptions.length].colour} />}
+              return <Statistic.SolidCard key={`solid-stat-${stat.drupal_id}`} classes="pt-4 pb-0 px-0 h-100 card border-0">
+                  {icon && <Statistic.Icon icon={icon} />}
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
-                  <Statistic.Type className="mb-4 px-5"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
+                  <Statistic.Type classes="mb-4 px-5"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
                   {image.src && <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" /></dd>}
               </Statistic.SolidCard>
             }
@@ -114,7 +85,7 @@ const NoBorderStatistic = ({stats, numColumns}) => {
             let value = stat.field_statistic_value;
             let icon = stat.field_font_awesome_icon;
 
-            return <Statistic.Card key={`noborder-stat-${stat.drupal_id}`} className="px-5">
+            return <Statistic.Card key={`noborder-stat-${stat.drupal_id}`} classes="px-5">
                   {icon && <Statistic.Icon icon={icon} />}
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
@@ -127,27 +98,17 @@ const NoBorderStatistic = ({stats, numColumns}) => {
   )
 } 
 
-const borderColourOptions = [
-  {border: "var(--black)"},
-  {border: "var(--uog-red)"},
-  {border: "var(--uog-yellow)"},
-  {border: "var(--uog-blue)"},
-  {border: "var(--black)"},
-]
-
 const LeftBorderStatistic = ({stats, numColumns}) => {
   return (
     <PageContainer.SiteContent>
       <Container>
-        <Statistic.Grid columns={numColumns} className="gap-4">
+        <Statistic.Grid columns={numColumns} classes="gap-4">
           {stats.map((stat, index) => {
             let type = stat.field_statistic_represents;
             let value = stat.field_statistic_value;
             let icon = stat.field_font_awesome_icon;
 
-            return <Statistic.BorderCard 
-                key={`border-stat-${stat.drupal_id}`} 
-                border={borderColourOptions[index%borderColourOptions.length].border} >
+            return <Statistic.BorderCard key={`border-stat-${stat.drupal_id}`}>
                   {icon && <Statistic.Icon icon={icon} />}
                   <Statistic.Value><strong>{value}</strong></Statistic.Value>
                   <Statistic.Type><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>

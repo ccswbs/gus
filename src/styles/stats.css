@@ -129,16 +129,6 @@ body.basic-page div.uog-card:nth-of-type(9n+7) {
 
 /* Moved from styled-components */
 
-
-
-dl.statistic-grid {
-	display: grid;
-	grid-template-columns: none;
-	@media (min-width: 992px) {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-
 div.stat-card {  
   padding: 1.25rem;
   min-width: 25%;
@@ -148,8 +138,8 @@ div.stat-border-card {
   text-align: left;
 }
 div.stat-solid-card {
-  background: #000000;
-  color: #ffffff;
+  background: black;
+  color: white;
 }
 div.stat-solid-card > dd a {
     color: #ffffff !important;
@@ -180,19 +170,23 @@ i.stat-icon {
   color: black;
 }
 
-.gradient1 {
-	background: black;
-}
-.gradient2 {
-	background: linear-gradient(to right,#000 0%,#000 60%,#c20430 60%,#c20430 100%);
-}
-.gradient3 {
-	background: linear-gradient(to right,#000 0%,#000 60%,#ffc72a 60%,#ffc72a 100%);
-}
-.gradient4 {
-	background: linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%);
-}
-
 .default-card-bg {
 	background: #f5f7fa;
+}
+
+
+dl.gradient-stats {
+	background: #eee;
+}
+
+dl.gradient-stats div.stat-solid-card:nth-of-type(4n+2) {
+	background: var(--uog-red);
+}
+dl.gradient-stats div.stat-solid-card:nth-of-type(4n+3) {
+	background: var(--uog-yellow);
+	color: black;
+}
+dl.gradient-stats div.stat-solid-card:nth-of-type(4n+4) {
+	background: var(--uog-blue);
+	color: black;
 }
