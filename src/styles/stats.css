@@ -137,10 +137,10 @@ div.stat-border-card {
   border-left: 1rem solid black;
   text-align: left;
 }
-div.stat-solid-card {
+/* div.stat-solid-card {
   background: black;
   color: white;
-}
+} */
 div.stat-solid-card > dd a {
     color: #ffffff !important;
   }
@@ -176,9 +176,12 @@ i.stat-icon {
 
 
 dl.gradient-stats {
-	background: #eee;
+	background: var(--black);
 }
-
+dl.gradient-stats div.stat-solid-card,
+dl.solid-stats div.stat-solid-card div.card-body {
+	background: var(--black);
+}
 dl.gradient-stats div.stat-solid-card:nth-of-type(4n+2) {
 	background: var(--uog-red);
 }
@@ -190,3 +193,19 @@ dl.gradient-stats div.stat-solid-card:nth-of-type(4n+4) {
 	background: var(--uog-blue);
 	color: black;
 }
+
+dl.solid-stats {
+	background: #eee;
+}
+
+dl.solid-stats div.stat-solid-card:nth-of-type(4n+2) div.card-body {
+	background: var(--uog-red);
+}
+dl.solid-stats div.stat-solid-card:nth-of-type(4n+3) div.card-body {
+	background: var(--uog-yellow);
+	color: black;
+}
+/* dl.solid-stats div.stat-solid-card:nth-of-type(4n+4) {
+	background: var(--uog-blue);
+	color: black;
+} */

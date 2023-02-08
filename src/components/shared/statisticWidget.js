@@ -25,7 +25,7 @@ const GradientStatistic = ({stats}) => {
   }
   
   let statClasses = classNames("gradient-stats row g-0 row-cols-1 justify-content-center mb-0",rowClasses);
-  let gradientClasses = classNames("d-flex flex-column mb-4 p-0");
+  let gradientClasses = classNames("d-flex flex-column mb-4 p-0 bg-dark");
 
   return (
     <div data-title="Gradient Statistic" className={gradientClasses}>
@@ -49,10 +49,19 @@ const GradientStatistic = ({stats}) => {
 )}
 
 const SolidColourStatistic = ({stats, numColumns}) => {
+
+  let rowClasses;
+  
+  if (numColumns === 2 || numColumns >= 4) {
+    rowClasses = "row-cols-sm-2 gy-4"; 
+  } else {
+    rowClasses = "row-cols-md-3";
+  }
+  
   return (
     <PageContainer.SiteContent>
       <Container>
-        <Statistic.Grid columns={numColumns} className="gap-4">
+        <Statistic.Grid classes={classNames("solid-stats row",rowClasses)}>
           {stats.map((stat, index) => {
               let type = stat.field_statistic_represents;
               let value = stat.field_statistic_value;
@@ -61,12 +70,13 @@ const SolidColourStatistic = ({stats, numColumns}) => {
                 src: stat.relationships?.field_media_text_media?.relationships?.field_media_image,
                 alt: stat.relationships?.field_media_text_media?.field_media_image?.alt,
               }
-
-              return <Statistic.SolidCard key={`solid-stat-${stat.drupal_id}`} classes="pt-4 pb-0 px-0 h-100 card border-0">
-                  {icon && <Statistic.Icon icon={icon} />}
-                  <Statistic.Value><strong>{value}</strong></Statistic.Value>
-                  <Statistic.Type classes="mb-4 px-5"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
-                  {image.src && <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" /></dd>}
+              return <Statistic.SolidCard key={`solid-stat-${stat.drupal_id}`} classes="border-0 card col stat-solid-card">
+                  <div className="card-body py-5">
+                    {icon && <Statistic.Icon icon={icon} />}
+                    <Statistic.Value><strong>{value}</strong></Statistic.Value>
+                    <Statistic.Type classes="mb-4 px-5"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
+                    {image.src && <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" /></dd>}
+                  </div>
               </Statistic.SolidCard>
             }
           )}

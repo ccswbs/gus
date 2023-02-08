@@ -51,14 +51,14 @@ const StatType = styled.dd`
   }
 `;
 
-const Statistic = ({id, children, classes=""}) => (
+const Statistic = ({id, children, classes}) => (
   <dl id={id} className={classNames(classes)}>
       {children}
   </dl>
 )
 
-Statistic.Grid = ({id, children, columns, className=""}) => (
-  <dl id={id} columns={columns} className={`${className}`}>
+Statistic.Grid = ({id, children, classes}) => (
+  <dl id={id} className={classNames(classes)} data-title="Solid Color Stats">
       {children}
   </dl>
 )
@@ -69,14 +69,14 @@ Statistic.Card = ({children}) => (
   </div>
 )
 
-Statistic.BorderCard = ({border, children, classes=""}) => (
+Statistic.BorderCard = ({border, children, classes}) => (
   <div className={classNames("h-100",classes)}>
     {children}
   </div>
 )
 
-Statistic.SolidCard = ({children, classes=""}) => (
-    <div className={classNames("align-self-stretch",classes)}>
+Statistic.SolidCard = ({children, classes}) => (
+    <div className={classNames(classes)}>
       {children}
     </div>
 )
@@ -85,13 +85,13 @@ Statistic.Icon = ({icon, colour}) => (
   <i colour={colour} className={classNames("mt-3 fa-4x",icon)} aria-hidden="true" />
 )
 
-Statistic.Value = ({children, fontsize, classes=""}) => (
-  <dt className={classNames("stat-value",classes)} fontsize={fontsize}>
+Statistic.Value = ({children, classes}) => (
+  <dt className={classNames("stat-value",classes)}>
     {children}
   </dt>
 )
 
-Statistic.Type = ({children, classes=""}) => (
+Statistic.Type = ({children, classes}) => (
   <dd className={classNames("stat-type",classes)}>
     {children}
   </dd>
