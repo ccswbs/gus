@@ -38,7 +38,7 @@ const YamlWidget = (props) => {
         'lang_bcomm_student_blog':<LangBcommStudentBlog />,
         'lang_bcomm_student_blog_blue':<LangBcommStudentBlog background="#F4F7FA" />,
         'south_asia_explore_grid': <SouthAsiaExploreGrid />,
-        'test_form': <SouthAsiaExploreForm />,
+        'south_asia_explore_form': <SouthAsiaExploreForm />,
 
     }[component] || null )
 }
