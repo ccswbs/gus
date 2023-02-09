@@ -173,7 +173,10 @@ i.green {color:#4cae3e;}
 @media (min-width: 992px) {
     .ug-slate {
         width: 75%;
-    }   
+    }
+    .ug-slate .form_button_submit {
+        font-size: 2.5rem!important;
+    }
 }
 
 .ug-slate input {
@@ -239,12 +242,6 @@ i.green {color:#4cae3e;}
     box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
 }
 
-@media (min-width: 1200px) {
-    .ug-slate .form_button_submit {
-        font-size: 2.5rem!important;
-    }
-}
-
 .ug-slate .form_button_submit {
     background-color: #c20430 !important;
     border: 2px solid transparent;
@@ -257,6 +254,7 @@ i.green {color:#4cae3e;}
     font-size: calc(1.375rem + 1.5vw)!important;
     font-weight: 400;
     margin-bottom: 1rem;
+    margin-top: 1rem;
     padding: 0.75rem 1rem;
     text-align: center;
     vertical-align: middle;
