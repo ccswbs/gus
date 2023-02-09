@@ -172,7 +172,7 @@ i.green {color:#4cae3e;}
     display: block;
     width: 100%;
     padding: .375rem .75rem;
-    font-size: 1rem;
+    font-size: 1.8rem;
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
@@ -218,7 +218,7 @@ i.green {color:#4cae3e;}
 
 .ug-slate .form_birthdate .form_responses select {
     flex-wrap: 0 0 auto;
-    width: 30%;
+    width: 33%;
 }
 
 .ug-slate .form_birthdate .form_responses {
