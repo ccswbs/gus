@@ -16,6 +16,7 @@ import LangBcommStatsBordered from 'components/blocks/lang/lang-bcomm-stats-bord
 import LangBcommFeatureExperience from 'components/blocks/lang/lang-bcomm-feature-experience';
 import LangBcommStudentBlog from 'components/blocks/lang/lang-bcomm-student-blog';
 import SouthAsiaExploreGrid from 'components/blocks/canada/south-asia-explore-grid';
+import SouthAsiaExploreForm from 'components/blocks/canada/south-asia-form';
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -37,6 +38,7 @@ const YamlWidget = (props) => {
         'lang_bcomm_student_blog':<LangBcommStudentBlog />,
         'lang_bcomm_student_blog_blue':<LangBcommStudentBlog background="#F4F7FA" />,
         'south_asia_explore_grid': <SouthAsiaExploreGrid />,
+        'test_form': <SouthAsiaExploreForm />,
 
     }[component] || null )
 }
