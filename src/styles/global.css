@@ -164,8 +164,16 @@ i.green {color:#4cae3e;}
 /* Slate form styles (pulled from UofG-styles-dist) */
 /* @todo: clean up when time permits */
 
-.ug-slate {
-    width: 75%;
+@media (max-width: 575.98px){
+    .ug-slate .form_button_submit {
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .ug-slate {
+        width: 75%;
+    }   
 }
 
 .ug-slate input {
@@ -232,23 +240,22 @@ i.green {color:#4cae3e;}
 }
 
 .ug-slate .form_button_submit {
-    color: #ffffff;
+    background-color: #c20430 !important;
     border: 2px solid transparent;
+    border-color: #c20430 !important;
     border-radius: 0;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
-    font-weight: 400;
-    vertical-align: middle;
-    text-align: center;
-    display: inline-block;
-    outline: none !important;
-    outline: 0 !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    background-color: #c20430 !important;
-    border-color: #c20430 !important;
+    color: #ffffff;
     display: inline-block !important;
-    color: #fff !important;
+    font-size: calc(1.375rem + 1.5vw)!important;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    vertical-align: middle;
+    outline: none !important;
+    outline: 0 !important;
 }
 
 .ug-slate .form_button.active,
