@@ -239,6 +239,12 @@ i.green {color:#4cae3e;}
     box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
 }
 
+@media (min-width: 1200px) {
+    .ug-slate .form_button_submit {
+        font-size: 2.5rem!important;
+    }
+}
+
 .ug-slate .form_button_submit {
     background-color: #c20430 !important;
     border: 2px solid transparent;
