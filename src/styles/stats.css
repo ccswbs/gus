@@ -129,27 +129,13 @@ body.basic-page div.uog-card:nth-of-type(9n+7) {
 
 /* Moved from styled-components */
 
-div.stat-card {  
-  padding: 1.25rem;
-  min-width: 25%;
-}
-div.stat-border-card {
-  border-left: 1rem solid black;
-  text-align: left;
-}
-/* div.stat-solid-card {
-  background: black;
-  color: white;
-} */
+
+
 div.stat-solid-card > dd a {
     color: #ffffff !important;
   }
-div.stat-solid-card > dt {
-    color: #ffffff;
-  }
 
 dt.stat-value {
-  color: #000;
   font-size: 3.25rem;
   line-height: 1.2;
   margin-bottom: 1.2rem;
@@ -174,38 +160,88 @@ i.stat-icon {
 	background: #f5f7fa;
 }
 
+.bg-black {
+	background: var(--black);
+}
+.bg-colors-2 {
+	background: linear-gradient(to right, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 60%, rgb(194, 4, 48) 60%, rgb(194, 4, 48) 100%);
+}
+.bg-colors-3 {
+	background: linear-gradient(to right, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 60%, rgb(255, 199, 42) 60%, rgb(255, 199, 42) 100%);
+}
+.bg-colors-4 {
+	background: linear-gradient(to right, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 60%, rgb(105, 163, 185) 60%, rgb(105, 163, 185) 100%);
+}
 
-dl.gradient-stats {
-	background: var(--black);
-}
 dl.gradient-stats div.stat-solid-card,
-dl.solid-stats div.stat-solid-card div.card-body {
+dl.solid-stats div.stat-solid-card {
 	background: var(--black);
+	color: white;
 }
-dl.gradient-stats div.stat-solid-card:nth-of-type(4n+2) {
+dl.gradient-stats div.stat-solid-card:nth-of-type(8n+2) {
 	background: var(--uog-red);
+	color: white;
 }
-dl.gradient-stats div.stat-solid-card:nth-of-type(4n+3) {
+dl.gradient-stats div.stat-solid-card:nth-of-type(8n+3) {
 	background: var(--uog-yellow);
 	color: black;
 }
-dl.gradient-stats div.stat-solid-card:nth-of-type(4n+4) {
+dl.gradient-stats div.stat-solid-card:nth-of-type(8n+4) {
+	background: var(--uog-blue);
+	color: black;
+}
+dl.gradient-stats div.stat-solid-card:nth-of-type(8n+5) {
+	background: var(--uog-red);
+	color: white;
+}
+dl.gradient-stats div.stat-solid-card:nth-of-type(8n+6) {
+	background: var(--uog-yellow);
+	color: black;
+}
+dl.gradient-stats div.stat-solid-card:nth-of-type(8n+7) {
 	background: var(--uog-blue);
 	color: black;
 }
 
+dl.stat-border,
 dl.solid-stats {
 	background: #eee;
+	display: grid;
 }
 
-dl.solid-stats div.stat-solid-card:nth-of-type(4n+2) div.card-body {
+dl.solid-stats div.stat-solid-card:nth-of-type(4n+2) {
 	background: var(--uog-red);
 }
-dl.solid-stats div.stat-solid-card:nth-of-type(4n+3) div.card-body {
+dl.solid-stats div.stat-solid-card:nth-of-type(4n+3) {
 	background: var(--uog-yellow);
 	color: black;
 }
-/* dl.solid-stats div.stat-solid-card:nth-of-type(4n+4) {
-	background: var(--uog-blue);
-	color: black;
-} */
+
+.stat-grid-2,
+.stat-grid-3 {
+	grid-template-columns: none;
+}
+
+@media (min-width: 992px) {
+	.stat-grid-2 {
+		grid-template-columns: repeat(2,1fr);
+	}
+    .stat-grid-3 {
+		grid-template-columns: repeat(3,1fr);
+	}
+}
+
+div.stat-card {  
+  padding: 1.25rem;
+  min-width: 25%;
+}
+dl.stat-border div.stat-border-card {
+  padding: 1.25rem;
+  border-left: 1rem solid var(--black);
+}
+dl.stat-border div.stat-border-card:nth-of-type(4n+2) {
+	border-left: 1rem solid var(--uog-red);
+}
+dl.stat-border div.stat-border-card:nth-of-type(4n+3) {
+	border-left: 1rem solid var(--uog-yellow);
+}
