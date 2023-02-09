@@ -168,7 +168,7 @@ i.green {color:#4cae3e;}
     display: block;
     width: 100%;
     padding: .375rem .75rem;
-    font-size: 1rem;
+    font-size: 1.8rem;
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
@@ -190,12 +190,12 @@ i.green {color:#4cae3e;}
     box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
 }
 
-.ug-slate select {
+/* .ug-slate select {
     display: block;
     width: 100%;
     padding: .375rem 2.25rem .375rem .75rem;
     -moz-padding-start: calc(0.75rem - 3px);
-    font-size: 1rem;
+    font-size: 1.8rem;
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
@@ -216,7 +216,7 @@ i.green {color:#4cae3e;}
     border-color: #86b7fe;
     outline: 0;
     box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
-}
+} */
 
 .ug-slate .form_button_submit {
     color: #ffffff;
