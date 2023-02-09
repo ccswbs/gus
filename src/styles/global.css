@@ -164,7 +164,7 @@ i.green {color:#4cae3e;}
 /* Slate form styles (pulled from UofG-styles-dist) */
 /* @todo: clean up when time permits */
 
-@media (max-width: 575.98px){
+@media (max-width: 768px){
     .ug-slate .form_button_submit {
         width: 100%;
     }
@@ -255,7 +255,7 @@ i.green {color:#4cae3e;}
     font-weight: 400;
     margin-bottom: 1rem;
     margin-top: 1rem;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 3rem;
     text-align: center;
     vertical-align: middle;
     outline: none !important;
