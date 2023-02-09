@@ -75,11 +75,11 @@ const SolidColourStatistic = ({stats, numColumns}) => {
                 alt: stat.relationships?.field_media_text_media?.field_media_image?.alt,
               }
               return (
-                <Statistic.SolidCard key={`solid-stat-${stat.drupal_id}`} classes={classNames("stat-solid-card","p-5")}>
+                <Statistic.SolidCard key={`solid-stat-${stat.drupal_id}`} classes={classNames("stat-solid-card","pt-4")}>
                     {icon && <Statistic.Icon icon={icon} />}
                     <Statistic.Value classes="text-center"><strong>{value}</strong></Statistic.Value>
                     <Statistic.Type classes="mb-4 px-5 text-center"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
-                    {image.src && <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" /></dd>}
+                    {image.src && <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="card-img" /></dd>}
                 </Statistic.SolidCard>
               )
             }
