@@ -203,10 +203,24 @@ dl.gradient-stats div.stat-solid-card:nth-of-type(8n+7) {
 	color: black;
 }
 
-dl.stat-border,
-dl.solid-stats {
+dl.stats-border,
+dl.stats-grid {
 	background: #eee;
 	display: grid;
+}
+
+.stats-grid-2,
+.stats-grid-3 {
+	grid-template-columns: none;
+}
+
+@media (min-width: 992px) {
+	.stats-grid-2 {
+		grid-template-columns: repeat(2,1fr);
+	}
+    .stats-grid-3 {
+		grid-template-columns: repeat(3,1fr);
+	}
 }
 
 dl.solid-stats div.stat-solid-card:nth-of-type(4n+2) {
@@ -217,17 +231,27 @@ dl.solid-stats div.stat-solid-card:nth-of-type(4n+3) {
 	color: black;
 }
 
-.stat-grid-2,
-.stat-grid-3 {
+dl.gradient-stats {
+	display: grid;
+}
+
+
+.gradient-stats-2,
+.gradient-stats-3,
+.gradient-stats-4 {
 	grid-template-columns: none;
 }
 
 @media (min-width: 992px) {
-	.stat-grid-2 {
-		grid-template-columns: repeat(2,1fr);
+	.gradient-stats-2 {
+		grid-template-columns: auto auto;
+		/* grid-template-columns: repeat(2,1fr); */
 	}
-    .stat-grid-3 {
-		grid-template-columns: repeat(3,1fr);
+    .gradient-stats-3 {
+		grid-template-columns: 	auto 25em auto;
+	}
+	.gradient-stats-4 {
+		grid-template-columns: auto 25em 25em auto;
 	}
 }
 
@@ -235,13 +259,13 @@ div.stat-card {
   padding: 1.25rem;
   min-width: 25%;
 }
-dl.stat-border div.stat-border-card {
+dl.stats-border div.stat-border-card {
   padding: 1.25rem;
   border-left: 1rem solid var(--black);
 }
-dl.stat-border div.stat-border-card:nth-of-type(4n+2) {
+dl.stats-border div.stat-border-card:nth-of-type(4n+2) {
 	border-left: 1rem solid var(--uog-red);
 }
-dl.stat-border div.stat-border-card:nth-of-type(4n+3) {
+dl.stats-border div.stat-border-card:nth-of-type(4n+3) {
 	border-left: 1rem solid var(--uog-yellow);
 }

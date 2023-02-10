@@ -9,47 +9,36 @@ import "styles/stats.css"
 
 const GradientStatistic = ({stats}) => {
   let numStats = stats.length;
-
-  // default is displaying 3 colours in a row
-  let rowClasses = classNames("row-cols-md-3");
-  let bgClass = classNames("bg-colors-3");
-
-  if (numStats === 1) {
-    // one colour
-    rowClasses = classNames("row-cols-sm-1");
-    bgClass = classNames("bg-black");
-  } else if (numStats === 2) {
-    // two colours
-    rowClasses = classNames("row-cols-sm-2");
-    bgClass = classNames("bg-colors-2");
-  } else if (numStats % 4 === 0) {
-    // four colour
-    rowClasses = classNames("row-cols-sm-2 row-cols-lg-4");
-    bgClass = classNames("bg-colors-4");
-  }
   
-  let statClasses = classNames("gradient-stats row g-0 row-cols-1 justify-content-center mb-0",rowClasses);
-  let gradientClasses = classNames("d-flex flex-column mb-4 p-0",bgClass);
+  let rowClasses;
+  let colClasses;
+  
+  if (numStats === 2) {
+    rowClasses = "gradient-stats-2";
+    colClasses = "d-flex flex-column";
+  } else if (numStats === 3) {
+      rowClasses = "gradient-stats-3";
+      colClasses = "d-flex flex-column";  
+  } else if (numStats >= 4) {
+      rowClasses = "gradient-stats-4";
+      colClasses = "d-flex flex-column";
+  } 
 
   return (
-    <div data-title="Gradient Statistic" className={gradientClasses}>
-      <Container className="page-container p-0">
-          <Statistic classes={statClasses}>
-              {stats.map((stat, index) => {
-                let type = stat.field_statistic_represents;
-                let value = stat.field_statistic_value;
-                let icon = stat.field_font_awesome_icon;
+    <Statistic classes={classNames("gradient-stats",rowClasses)}>
+      {stats.map((stat, index) => {
+        let type = stat.field_statistic_represents;
+        let value = stat.field_statistic_value;
+        let icon = stat.field_font_awesome_icon;
 
-                return <Statistic.SolidCard key={`gradient-stat-${stat.drupal_id}`} classes="stat-solid-card p-5 col">
-                        {icon && <Statistic.Icon icon={icon} />}
-                        <Statistic.Value classes="text-center"><strong>{value}</strong></Statistic.Value>
-                        <Statistic.Type classes="text-center"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
-                    </Statistic.SolidCard>
-                }
-              )}
-          </Statistic>
-      </Container>
-    </div>
+        return <Statistic.SolidCard key={`gradient-stat-${stat.drupal_id}`} classes={classNames("stat-solid-card","p-5",colClasses)}>
+                {icon && <Statistic.Icon icon={icon} />}
+                <Statistic.Value classes="text-center"><strong>{value}</strong></Statistic.Value>
+                <Statistic.Type classes="text-center"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
+            </Statistic.SolidCard>
+        }
+      )}
+    </Statistic>
 )}
 
 const SolidColourStatistic = ({stats, numColumns}) => {
@@ -57,15 +46,15 @@ const SolidColourStatistic = ({stats, numColumns}) => {
   let colClasses;
   
   if (numColumns === 2 || numColumns >= 4) {
-    colClasses = "stat-grid-2"; 
+    colClasses = "stats-grid-2"; 
   } else {
-    colClasses = "stat-grid-3";
+    colClasses = "stats-grid-3";
   }
   
   return (
     <PageContainer.SiteContent>
       <Container>
-        <Statistic.Grid classes={classNames("solid-stats","gap-4",colClasses)}>
+        <Statistic.Grid classes={classNames("solid-stats","stats-grid","gap-4",colClasses)}>
           {stats.map((stat, index) => {
               let type = stat.field_statistic_represents;
               let value = stat.field_statistic_value;
@@ -93,15 +82,15 @@ const NoBorderStatistic = ({stats, numColumns}) => {
   let colClasses;
   
   if (numColumns === 2 || numColumns >= 4) {
-    colClasses = "stat-grid-2"; 
+    colClasses = "stats-grid-2"; 
   } else {
-    colClasses = "stat-grid-3";
+    colClasses = "stats-grid-3";
   }
   
   return (
     <PageContainer.SiteContent>
       <Container>
-        <Statistic.Grid classes={classNames("solid-stats","gap-4",colClasses)}>
+        <Statistic classes={classNames("stats-grid","gap-4",colClasses)}>
           {stats.map((stat) => {
             let type = stat.field_statistic_represents;
             let value = stat.field_statistic_value;
@@ -114,7 +103,7 @@ const NoBorderStatistic = ({stats, numColumns}) => {
               </Statistic.Card>
             }
           )}
-        </Statistic.Grid>
+        </Statistic>
       </Container>
     </PageContainer.SiteContent>
   )
@@ -124,15 +113,15 @@ const LeftBorderStatistic = ({stats, numColumns}) => {
   let colClasses;
   
   if (numColumns === 2 || numColumns >= 4) {
-    colClasses = "stat-grid-2"; 
+    colClasses = "stats-grid-2"; 
   } else {
-    colClasses = "stat-grid-3";
+    colClasses = "stats-grid-3";
   }
   
   return (
     <PageContainer.SiteContent>
       <Container>
-        <Statistic.Grid columns={numColumns} classes={classNames("stat-border","gap-4",colClasses)}>
+        <Statistic columns={numColumns} classes={classNames("stats-border","gap-4",colClasses)}>
           {stats.map((stat, index) => {
             let type = stat.field_statistic_represents;
             let value = stat.field_statistic_value;
@@ -145,7 +134,7 @@ const LeftBorderStatistic = ({stats, numColumns}) => {
               </Statistic.BorderCard>
             }
           )}
-        </Statistic.Grid>
+        </Statistic>
       </Container>
     </PageContainer.SiteContent>
 )}
