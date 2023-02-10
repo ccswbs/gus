@@ -12,16 +12,20 @@ const GradientStatistic = ({stats}) => {
   
   let rowClasses;
   let colClasses;
+
   
   if (numStats === 2) {
     rowClasses = "gradient-stats-2";
     colClasses = "d-flex flex-column";
+
   } else if (numStats === 3) {
       rowClasses = "gradient-stats-3";
-      colClasses = "d-flex flex-column";  
+      colClasses = "d-flex flex-column";
+
   } else if (numStats >= 4) {
       rowClasses = "gradient-stats-4";
       colClasses = "d-flex flex-column";
+
   } 
 
   return (
@@ -33,8 +37,8 @@ const GradientStatistic = ({stats}) => {
 
         return <Statistic.SolidCard key={`gradient-stat-${stat.drupal_id}`} classes={classNames("stat-solid-card","p-5",colClasses)}>
                 {icon && <Statistic.Icon icon={icon} />}
-                <Statistic.Value classes="text-center"><strong>{value}</strong></Statistic.Value>
-                <Statistic.Type classes="text-center"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
+                <Statistic.Value classes={classNames("text-center")}><strong>{value}</strong></Statistic.Value>
+                <Statistic.Type classes={classNames("text-center")}><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
             </Statistic.SolidCard>
         }
       )}

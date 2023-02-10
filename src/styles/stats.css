@@ -203,6 +203,15 @@ dl.gradient-stats div.stat-solid-card:nth-of-type(8n+7) {
 	color: black;
 }
 
+/* dl.gradient-stats div.stat-solid-card:nth-of-type(3n+1) dt.stat-value,
+dl.gradient-stats div.stat-solid-card:nth-of-type(3n+1) dd.stat-type {
+	max-width: 66%;
+}
+dl.gradient-stats div.stat-solid-card:nth-of-type(4) dt.stat-value,
+dl.gradient-stats div.stat-solid-card:nth-of-type(4) dd.stat-type {
+	max-width: 66%; 
+}*/
+
 dl.stats-border,
 dl.stats-grid {
 	background: #eee;
