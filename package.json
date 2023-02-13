@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.8",
+    "@uoguelph/snowdrop": "^1.0.3-dev",
     "axios": "^1.2.4",
     "babel-plugin-styled-components": "^2.0.7",
     "classnames": "^2.3.2",
