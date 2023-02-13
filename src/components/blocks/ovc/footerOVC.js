@@ -19,13 +19,14 @@ function OVCCustomFooter (props) {
 				<section className="row row-with-vspace site-content">
 					{contentExists(footerLogos) &&
 					<div className="col-md-4 content-area">
-					{footerLogos.map(logo => (
-						<GatsbyImage
-                            image={logo.relationships.field_media_image.gatsbyImage}
-                            className="footer-logo"
-                            alt={logo.field_media_image.alt} />
-					))}
-                    <OVCFooterSocial />
+						{footerLogos.map((logo, index) => (
+							<GatsbyImage
+								key={`footer-logo-key-${index}`}
+								image={logo.relationships.field_media_image.gatsbyImage}
+								className="footer-logo"
+								alt={logo.field_media_image.alt} />
+						))}
+						<OVCFooterSocial />
 					</div>}
 					<div className="col-md-8 content-area">
 						<div className="container" dangerouslySetInnerHTML={{ __html: footerText}} />

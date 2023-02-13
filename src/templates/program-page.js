@@ -554,7 +554,7 @@ export const query = graphql`query ($id: String) {
     }
   }
   careers: allNodeCareer(
-    sort: {fields: [title], order: ASC}
+    sort: {title: ASC}
     filter: {fields: {tags: {in: [$id]}}}
   ) {
     edges {
@@ -579,7 +579,7 @@ export const query = graphql`query ($id: String) {
     }
   }
   employers: allNodeEmployer(
-    sort: {fields: title}
+    sort: {title: ASC}
     filter: {fields: {tags: {in: [$id]}}}
   ) {
     edges {
@@ -605,12 +605,7 @@ export const query = graphql`query ($id: String) {
             }
           }
           field_image {
-            gatsbyImage(
-              width: 400
-              height: 400
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
+            gatsbyImage(width: 400, height: 400, placeholder: BLURRED, layout: CONSTRAINED)
           }
         }
       }
@@ -619,11 +614,13 @@ export const query = graphql`query ($id: String) {
   footer: allNodeCustomFooter(filter: {fields: {tags: {in: [$id]}}}) {
     edges {
       node {
-      ...CustomFooterFragment
+        ...CustomFooterFragment
       }
     }
   }
-  images: allMediaImage(filter: {relationships: {node__program: {elemMatch: {relationships: {field_program_acronym: {id: {eq: $id}}}} }}}) {
+  images: allMediaImage(
+    filter: {relationships: {node__program: {elemMatch: {relationships: {field_program_acronym: {id: {eq: $id}}}}}}}
+  ) {
     edges {
       node {
         drupal_id
@@ -672,26 +669,26 @@ export const query = graphql`query ($id: String) {
     }
   }
   videos: allMediaRemoteVideo(
-      filter: {relationships: {node__program: {elemMatch: {relationships: {field_program_acronym: {id: {eq: $id}}}}}}}
-    ) {
-      edges {
-        node {
-          drupal_id
-          field_media_oembed_video
-          field_video_width
-          field_video_height
-          name
-          relationships {
-            field_media_file {
-              publicUrl
-            }
+    filter: {relationships: {node__program: {elemMatch: {relationships: {field_program_acronym: {id: {eq: $id}}}}}}}
+  ) {
+    edges {
+      node {
+        drupal_id
+        field_media_oembed_video
+        field_video_width
+        field_video_height
+        name
+        relationships {
+          field_media_file {
+            publicUrl
           }
         }
       }
     }
+  }
   news: allNodeArticle(
     limit: 4
-    sort: {fields: created}
+    sort: {created: ASC}
     filter: {fields: {tags: {in: [$id]}}}
   ) {
     edges {
@@ -737,49 +734,14 @@ export const query = graphql`query ($id: String) {
     }
   }
   testimonials: allNodeTestimonial(
-    sort: {fields: created}
+    sort: {created: ASC}
     filter: {fields: {tags: {in: [$id]}}}
+    limit: 10
   ) {
     edges {
       node {
-        changed
-        drupal_id
-        body {
-          processed
-        }
-        title
-        field_testimonial_person_desc
-        field_home_profile {
-          title
-          uri
-        }
-        relationships {
-          field_hero_image {
-            field_media_image {
-              alt
-            }
-            relationships {
-              field_media_image {
-                gatsbyImage(
-                  width: 400
-                  height: 400
-                  placeholder: BLURRED
-                  layout: CONSTRAINED
-                )
-              }
-            }
-          }
-          field_tags {
-            __typename
-            ... on TaxonomyInterface {
-              drupal_id
-              id
-              name
-            }
-          }
-        }
+        ...TestimonialNodeFragment
       }
     }
   }
-}
-`
+}`

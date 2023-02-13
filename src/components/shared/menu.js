@@ -83,30 +83,28 @@ const Menu = ({menuName}) => (
 
    <StaticQuery
       query={
-        graphql`
-        query MenuQuery {
-          allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}) {
-            edges {
-              node {
-                enabled
-                title
-                expanded
-                external
-                langcode
-                weight
-                link {
-                  uri
-                  url
-                }
-                drupal_parent_menu_item
-                bundle
-                drupal_id
-                menu_name
-              }
-            }
-          }
+        graphql`query MenuQuery {
+  allMenuLinkContentMenuLinkContent(sort: {weight: ASC}) {
+    edges {
+      node {
+        enabled
+        title
+        expanded
+        external
+        langcode
+        weight
+        link {
+          uri
+          url
         }
-      `
+        drupal_parent_menu_item
+        bundle
+        drupal_id
+        menu_name
+      }
+    }
+  }
+}`
       }
       render={data => (
         <nav className={menuName}>

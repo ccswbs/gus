@@ -4,6 +4,7 @@ import Accordion from 'components/shared/accordion';
 import BlockWidget from 'components/shared/blockWidget';
 import Events from 'components/shared/events';
 import GeneralText from 'components/shared/generalText';
+import ImageOverlay from 'components/shared/imageOverlay';
 import LeadPara from 'components/shared/leadPara';
 import LinksItems from 'components/shared/linksItems';
 import MediaText from 'components/shared/mediaText';
@@ -14,6 +15,7 @@ import SectionWidgets from 'components/shared/sectionWidgets';
 import StatisticWidget from 'components/shared/statisticWidget';
 import StatsWidget from 'components/shared/statsWidget';
 import Story from 'components/shared/story';
+import TestimonialSlider from 'components/shared/testimonialSlider';
 import YamlWidget from 'components/shared/yamlWidget';
 import { ConditionalWrapper } from 'utils/ug-utils';
 
@@ -27,6 +29,8 @@ const WidgetSelector = ({widget}) => {
             return <Events eventData={widget} />;
         case "paragraph__general_text":
             return <GeneralText processed={widget.field_general_text.processed} />;
+        case "paragraph__image_overlay":
+            return <ImageOverlay data={widget} />;
         case "paragraph__lead_paragraph":
             return( <LeadPara pageData={widget} />);
         case "paragraph__links_widget":
@@ -67,6 +71,8 @@ const WidgetSelector = ({widget}) => {
             return <StatsWidget statsWidgetData={widget} />;
         case "paragraph__story_widget":
             return <Story storyData={widget} />;
+        case "paragraph__testimonial_slider":
+          return <TestimonialSlider testimonialData={widget} />;
         case "paragraph__yaml_widget":
             return <YamlWidget blockData={widget} />;
         default:
@@ -75,11 +81,14 @@ const WidgetSelector = ({widget}) => {
 }
 
 const Widget = ({widget}) => {
+    // add any full-width components to the Conditional Wrapper
     return <ConditionalWrapper 
         condition={widget?.__typename !== "paragraph__yaml_widget" 
+            && widget?.__typename !== "paragraph__image_overlay"
             && widget?.__typename !== "paragraph__modal_video_widget" 
             && widget?.__typename !== "paragraph__story_widget"
-            && widget?.__typename !== "paragraph__statistic_widget" } 
+            && widget?.__typename !== "paragraph__statistic_widget" 
+            && widget?.__typename !== "paragraph__testimonial_slider" } 
         wrapper={children => 
             <PageContainer.SiteContent>
               <PageContainer.ContentArea>
@@ -108,6 +117,9 @@ export const query = graphql`
     ... on paragraph__general_text {
       ...GeneralTextParagraphFragment
     }
+    ... on paragraph__image_overlay {
+      ...ImageOverlayParagraphFragment
+    }
     ... on paragraph__lead_paragraph {
       ...LeadParagraphFragment
     }
@@ -134,6 +146,9 @@ export const query = graphql`
     }
     ... on paragraph__story_widget {
       ...StoryWidgetParagraphFragment
+    }
+    ... on paragraph__testimonial_slider {
+      ...TestimonialSliderParagraphFragment
     }
     ... on paragraph__yaml_widget {
       ...YamlWidgetParagraphFragment

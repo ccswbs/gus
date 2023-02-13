@@ -28,9 +28,9 @@ const DefaultFooter = ({logos, text, widgets}) => (
       <div className="col-md-3 content-area">
       {logos.map(logo => (
         <GatsbyImage
-                        image={logo.relationships.field_media_image.gatsbyImage}
-                        className="footer-logo"
-                        alt={logo.field_media_image.alt} />
+          image={logo.relationships.field_media_image.gatsbyImage}
+          className="footer-logo"
+          alt={logo.field_media_image.alt} />
       ))}
       </div>}
       <div className="col-md-9 content-area">
@@ -72,35 +72,35 @@ export default CustomFooter
 export const query = graphql`
 	fragment CustomFooterFragment on node__custom_footer {
 		drupal_id
-            body {
-              processed
-            }
-            fields {
-              tags
-            }
-            relationships {
-              field_tags {
-                __typename
-                ... on taxonomy_term__units {
-                  drupal_id
-                  id
-                  name
-                }
-              }
-              field_footer_logo {
-                field_media_image {
-                  alt
-                }
-                relationships {
-                  field_media_image {
-                    publicUrl
-                    gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
-                  }
-                }
-              }
-              field_widgets {
-                ...FieldWidgetsFragment
-              }
-            }
+    body {
+      processed
+    }
+    fields {
+      tags
+    }
+    relationships {
+      field_tags {
+        __typename
+        ... on taxonomy_term__units {
+          drupal_id
+          id
+          name
+        }
+      }
+      field_footer_logo {
+        field_media_image {
+          alt
+        }
+        relationships {
+          field_media_image {
+            publicUrl
+            gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+          }
+        }
+      }
+      field_widgets {
+        ...FieldWidgetsFragment
+      }
+    }
 	}
 `

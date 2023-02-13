@@ -76,12 +76,19 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     `interface TaxonomyInterface implements Node {
       id: ID!
       drupal_id: String
+      drupal_internal__tid: Int
       name: String
     }
     interface WidgetParagraphInterface implements Node {
       id: ID!
       drupal_id: String
     }
+
+    union imageOverlayParagraphUnion =
+      paragraph__section_buttons
+      | paragraph__general_text
+      | paragraph__story_modal_video
+      | paragraph__story_quote
 
     union media__imagemedia__remote_videoUnion =
       media__image
@@ -102,8 +109,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | taxonomy_term__degrees
       | taxonomy_term__topics
       | taxonomy_term__units
+
+    union relatedTestimonialTaxonomyUnion =
+      taxonomy_term__tags
       | taxonomy_term__testimonial_type
-    
+      | taxonomy_term__specializations
+      | taxonomy_term__programs
+      | taxonomy_term__degrees
+      | taxonomy_term__units
+
     union storyWidgetParagraphUnion =
       paragraph__story_image_cutout_background
       | paragraph__statistic_widget
@@ -116,6 +130,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       paragraph__block_widget
       | paragraph__events_widget
       | paragraph__general_text
+      | paragraph__image_overlay
       | paragraph__lead_paragraph
       | paragraph__link_item
       | paragraph__links_widget
@@ -126,6 +141,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | paragraph__statistic_widget
       | paragraph__story_widget
       | paragraph__tab_content
+      | paragraph__testimonial_slider
       | paragraph__accordion_section
       | paragraph__yaml_widget
       | paragraph__modal_video_widget
@@ -134,6 +150,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       paragraph__accordion_section
       | paragraph__block_widget
       | paragraph__general_text
+      | paragraph__image_overlay
       | paragraph__lead_paragraph
       | paragraph__link_item
       | paragraph__links_widget
@@ -451,6 +468,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__nid: Int
       title: String
       body: BodyFieldWithSummary
+      field_testimonial_person_name: String
       field_testimonial_person_desc: String
       field_hero_image: ImageField
       field_home_profile: FieldLink
@@ -462,6 +480,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type node__testimonialRelationships {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
+      field_testimonial_type: [taxonomy_term__testimonial_type] @link(from: "field_testimonial_type___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type paragraph__accordion_block implements Node {
@@ -527,6 +546,16 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__general_textRelationships {
       field_section_column: taxonomy_term__section_columns @link(from: "field_section_column___NODE")
+    }
+    type paragraph__image_overlay implements Node {
+      drupal_id: String
+      relationships: paragraph__image_overlayRelationships
+    }
+    type paragraph__image_overlayRelationships implements Node {
+      field_display_alignment: taxonomy_term__alignment_styles @link(from: "field_display_alignment___NODE")
+      field_display_style: taxonomy_term__image_overlay_styles @link(from: "field_display_style___NODE")
+      field_story_content: [imageOverlayParagraphUnion] @link(from: "field_story_content___NODE")
+      field_story_image_bg: media__image @link(from: "field_story_image_bg___NODE")
     }
     type paragraph__lead_paragraph implements Node {
       drupal_id: String
@@ -689,6 +718,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__story_modal_videoRelationships implements Node {
       field_media_video: media__remote_video @link(from: "field_media_video___NODE")
     }
+    type paragraph__testimonial_slider implements Node {
+      drupal_id: String
+      field_title: String
+      relationships: paragraph__testimonial_sliderRelationships
+    }
+    type paragraph__testimonial_sliderRelationships implements Node {
+      field_tags: [relatedTestimonialTaxonomyUnion] @link(from: "field_tags___NODE")
+      field_testimonial_nodes: [node__testimonial] @link(from: "field_testimonial_nodes___NODE")
+    }
     type paragraph__yaml_widget implements Node {
       drupal_id: String
       relationships: paragraph__yaml_widgetRelationships  
@@ -718,6 +756,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       value: String
       format: String
     }
+    type taxonomy_term__alignment_styles implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+    }
     type taxonomy_term__bg_colors implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -739,6 +782,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_degree_acronym: String
       name: String
       description: TaxonomyDescription
+      relationships: taxonomy_term__degreesRelationships
+    }
+    type taxonomy_term__degreesRelationships {
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__event_categories implements Node & TaxonomyInterface {
       drupal_id: String
@@ -750,6 +797,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       name: String
       field_goal_action: String
     }
+    type taxonomy_term__image_overlay_styles implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+    }
     type taxonomy_term__news_category implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -760,12 +812,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
+      relationships: taxonomy_term__programsRelationships
     }
     type taxonomy_term__programsRelationships {
       field_degrees: [taxonomy_term__degrees] @link(from: "field_degrees___NODE")
       field_specializations: [taxonomy_term__specializations]
       field_program_variants: [relatedParagraphUnion] @link(from: "field_program_variants___NODE")
       field_tags: [taxonomy_term__tags]
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__program_variant_type implements Node {
       name: String
@@ -790,6 +844,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type taxonomy_term__specializationsRelationships {
       field_units: [taxonomy_term__units]
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__statistic_type implements Node & TaxonomyInterface {
       drupal_id: String
@@ -806,11 +861,19 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
+      relationships: taxonomy_term__tagsRelationships
+    }
+    type taxonomy_term__tagsRelationships {
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__testimonial_type implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
+      relationships: taxonomy_term__testimonial_typeRelationships
+    }
+    type taxonomy_term__testimonial_typeRelationships implements Node {
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     type taxonomy_term__topics implements Node & TaxonomyInterface {
       drupal_id: String
@@ -825,6 +888,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_unit_acronym: String
       name: String
       description: TaxonomyDescription
+      relationships: taxonomy_term__unitsRelationships
+    }
+    type taxonomy_term__unitsRelationships {
+      node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
 
     type WpEventToEventsCategoryConnection implements Node {

@@ -1,3 +1,7 @@
+/***
+ * This component has been customized and adapted from the original Gatsby plugin:
+ * https://github.com/xaviemirmon/gatsby-plugin-drupal-menus
+ ***/
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types";
@@ -61,7 +65,7 @@ const generateMenu = (menuLinks, menuName) => {
             <><uofg-dropdown-menu key={item.drupal_id}>
             <button data-for="menu-button">{item.title}</button>
             <ul data-for="menu-content">
-                <li key={item.drupal_id + `dup`}><a href={item.link.url}>{item.title}</a></li>
+                {item.link.url !== "" && <li key={item.drupal_id + `dup`}><a href={item.link.url}>{item.title}</a></li> }
                 {submenuItems}
             </ul>
             </uofg-dropdown-menu></>
@@ -75,30 +79,28 @@ const generateMenu = (menuLinks, menuName) => {
 const HeaderMenu = ({menuName}) => (
    <StaticQuery
       query={
-        graphql`
-        query HeaderMenuQuery {
-          allMenuLinkContentMenuLinkContent(sort: {order: ASC, fields: weight}) {
-            edges {
-              node {
-                enabled
-                title
-                expanded
-                external
-                langcode
-                weight
-                link {
-                  uri
-                  url
-                }
-                drupal_parent_menu_item
-                bundle
-                drupal_id
-                menu_name
-              }
-            }
-          }
+        graphql`query HeaderMenuQuery {
+  allMenuLinkContentMenuLinkContent(sort: {weight: ASC}) {
+    edges {
+      node {
+        enabled
+        title
+        expanded
+        external
+        langcode
+        weight
+        link {
+          uri
+          url
         }
-      `
+        drupal_parent_menu_item
+        bundle
+        drupal_id
+        menu_name
+      }
+    }
+  }
+}`
       }
       render={data => generateMenu(data, menuName)}
    />
