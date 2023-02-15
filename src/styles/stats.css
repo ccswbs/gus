@@ -205,7 +205,6 @@ dl.gradient-stats div.stat-solid-card:nth-of-type(8n+7) {
 
 dl.stat-border,
 dl.solid-stats {
-	background: #eee;
 	display: grid;
 }
 
@@ -214,7 +213,7 @@ dl.solid-stats div.stat-solid-card:nth-of-type(4n+2) {
 }
 dl.solid-stats div.stat-solid-card:nth-of-type(4n+3) {
 	background: var(--uog-yellow);
-	color: black;
+	color: var(--black);
 }
 
 .stat-grid-2,

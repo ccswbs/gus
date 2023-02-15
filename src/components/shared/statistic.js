@@ -11,28 +11,10 @@ const Statistic = ({children, classes}) => (
   </dl>
 )
 
-Statistic.Grid = ({children, classes}) => (
-  <dl className={classNames(classes)} data-title="Statistics Grid">
-      {children}
-  </dl>
-)
-
 Statistic.Card = ({children, classes}) => (
   <div className={classNames(classes)}>
     {children}
   </div>
-)
-
-Statistic.BorderCard = ({children, classes}) => (
-  <div className={classNames(classes)}>
-    {children}
-  </div>
-)
-
-Statistic.SolidCard = ({children, classes}) => (
-    <div className={classNames(classes)}>
-      {children}
-    </div>
 )
 
 Statistic.Icon = ({icon, colour}) => (
