@@ -1,16 +1,13 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 
-const InternationalStatsGlobal = React.lazy(() => import('components/blocks/international/international-stats-global'));
 const InternationalExploreThingsToKnow = React.lazy(() => import('components/blocks/international/international-things-to-know'));
 const InternationalExploreButtons = React.lazy(() => import('components/blocks/international/international-explore-btns'));
 const InternationalExploreGrid = React.lazy(() => import('components/blocks/international/international-explore-grid'));
 const InternationalTalkCurrentStudent = React.lazy(() => import('components/blocks/international/international-talk-current-student'));
 const InternationalExploreLead = React.lazy(() => import('components/blocks/international/international-explore-lead'));
-const LangBcommStats = React.lazy(() => import('components/blocks/lang/lang-bcomm-stats'));
 const LangBcommQuote = React.lazy(() => import('components/blocks/lang/lang-bcomm-quote'));
 const LangBcommSupportiveCommunity = React.lazy(() => import('components/blocks/lang/lang-bcomm-supportive-community'));
-const LangBcommStatsBordered = React.lazy(() => import('components/blocks/lang/lang-bcomm-stats-bordered'));
 const LangBcommFeatureExperience = React.lazy(() => import('components/blocks/lang/lang-bcomm-feature-experience'));
 const LangBcommStudentBlog = React.lazy(() => import('components/blocks/lang/lang-bcomm-student-blog'));
 
