@@ -16,17 +16,14 @@ const YamlWidget = (props) => {
 
     // add new custom components to conditional rendering below
     return ({
-        'international_stats_global_impact': <InternationalStatsGlobal />,
         'international_explore_things_to_know': <InternationalExploreThingsToKnow />,
         'international_explore_btns': <InternationalExploreButtons />,
         'international_explore_grid': <InternationalExploreGrid />,
         'international_talk_current_student':<InternationalTalkCurrentStudent />,
         'international_talk_current_student_blue':<InternationalTalkCurrentStudent background="#F4F7FA" />,
         'international_explore_lead':<InternationalExploreLead />,
-        'lang_bcomm_stats':<LangBcommStats />,
         'lang_bcomm_quote':<LangBcommQuote />,
         'lang_bcomm_supportive_community':<LangBcommSupportiveCommunity />,
-        'lang_bcomm_stats_bordered':<LangBcommStatsBordered />,
         'lang_bcomm_feature_experience':<LangBcommFeatureExperience />,
         'lang_bcomm_student_blog':<LangBcommStudentBlog />,
         'lang_bcomm_student_blog_blue':<LangBcommStudentBlog background="#F4F7FA" />,
