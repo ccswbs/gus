@@ -115,15 +115,16 @@ html {
 .bg-dark h4 {
     color: var(--off-white) !important;
 }
+.uog-blue {color: var(--uog-blue);}
 .uog-blue-muted {background:#edf2f5;}
 i.green {color:#4cae3e;}
 
-.uog-tertiary-color1 {color:#0d6efd;}
-.uog-tertiary-color2 {color:#6610f2;}
-.uog-tertiary-color3 {color:#d63384;}
-.uog-tertiary-color4 {color:#fd7e14;}
-.uog-tertiary-color5 {color:#198754;}
-.uog-tertiary-color6 {color:#20c997;}
+.uog-tertiary-color1 {color:#0d6efd;} /* Brandeis Blue */
+.uog-tertiary-color2 {color:#6610f2;} /* Electric Indigo */
+.uog-tertiary-color3 {color:#d63384;} /* Deep Cerise */
+.uog-tertiary-color4 {color:#fd7e14;} /* Pumpkin */
+.uog-tertiary-color5 {color:#198754;} /* Salem (green) */
+.uog-tertiary-color6 {color:#20c997;} /* Mountain Meadow (green) */
 
 .card .uog-card-border {
     border-left: 1rem solid var(--uog-red);
