@@ -95,6 +95,6 @@ const query = graphql`
   }
 `
 
-export default function EconImpactNationalImpact () {
+export default function EconImpactNationalStory () {
   return <StaticQuery query={query} render={({economicImpactYaml}) => render(economicImpactYaml)} />
 }

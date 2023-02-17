@@ -3,6 +3,8 @@ import { graphql } from 'gatsby';
 
 // @todo - add index of components in components/blocks and import all in one line
 // until then, import each component manually below
+import EconImpactNationalStory from 'components/blocks/economic-impact/national-impact-story';
+import EconImpactProvincialImpactOnehealth from 'components/blocks/economic-impact/provincial-impact-onehealth';
 import InternationalStatsGlobal from 'components/blocks/international/international-stats-global';
 import InternationalExploreThingsToKnow from 'components/blocks/international/international-things-to-know';
 import InternationalExploreButtons from 'components/blocks/international/international-explore-btns';
@@ -20,6 +22,8 @@ const YamlWidget = (props) => {
 
     // add new custom components to conditional rendering below
     return ({
+        'economic_impact_national_story': <EconImpactNationalStory />,
+        'economic_impact_provincial_onehealth': <EconImpactProvincialImpactOnehealth />,
         'international_stats_global_impact': <InternationalStatsGlobal />,
         'international_explore_things_to_know': <InternationalExploreThingsToKnow />,
         'international_explore_btns': <InternationalExploreButtons />,
