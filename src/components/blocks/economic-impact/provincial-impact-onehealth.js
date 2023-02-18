@@ -25,22 +25,22 @@ const render = ({ title, body_html, video }) => (
 
 const query = graphql`
   query {
-    economicImpactYaml(yamlId: {eq: "economic_impact_provincial_onehealth"}) {
+    blockContentYamlBlock(yamlId: {eq: "economic_impact_provincial_onehealth"}) {
+      id
+      title
+      body_html
+      video {
         id
+        type
         title
-        body_html
-        video {
-          id
-          type
-          title
-          url
-          transcript
-          captions
-        }
+        url
+        transcript
+        captions
+      }
     }
   }
 `
 
 export default function EconImpactProvincialImpactOnehealth () {
-  return <StaticQuery query={query} render={({economicImpactYaml}) => render(economicImpactYaml)} />
+  return <StaticQuery query={query} render={({blockContentYamlBlock}) => render(blockContentYamlBlock)} />
 }

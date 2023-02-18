@@ -58,43 +58,43 @@ const render = ({ title, lead, body_html, testimonial, aside }) => (
 
 const query = graphql`
   query {
-    economicImpactYaml(yamlId: {eq: "economic_impact_national_story"}) {
-        id
+    blockContentYamlBlock(field_yaml_id: {eq: "economic_impact_national_story"}) {
+      id
+      title
+      lead
+      body_html
+      testimonial {
+        quote
+        source {
+          name
+          desc
+          pronouns
+          image {
+            src {
+              childImageSharp {
+                gatsbyImageData
+              }
+            }
+            alt
+          }
+        }
+      }
+      aside {
         title
-        lead
-        body_html
-        testimonial {
-            quote
-            source {
-                name
-                desc
-                pronouns
-                image {
-                    src {
-                        childImageSharp {
-                            gatsbyImageData
-                          }
-                    }
-                    alt
-                }
+        body
+        image {
+          src {
+            childImageSharp {
+                gatsbyImageData
             }
+          }
+          alt
         }
-        aside {
-            title
-            body
-            image {
-                src {
-                    childImageSharp {
-                        gatsbyImageData
-                    }
-                }
-                alt
-            }
-        }
+      }
     }
   }
 `
 
 export default function EconImpactNationalStory () {
-  return <StaticQuery query={query} render={({economicImpactYaml}) => render(economicImpactYaml)} />
+  return <StaticQuery query={query} render={({blockContentYamlBlock}) => render(blockContentYamlBlock)} />
 }
