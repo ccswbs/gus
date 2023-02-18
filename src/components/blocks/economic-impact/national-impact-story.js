@@ -81,28 +81,30 @@ const query = graphql`
       id
       field_yaml_id
       field_yaml_map
-      field_yaml_files {
-        id
-        name
-        relationships {
-          field_media_image {
-            gatsbyImage(
-              width: 1400 
-              placeholder: BLURRED
-              layout: CONSTRAINED
-              cropFocus: CENTER
-            )
-            relationships {
-              media__image {
-                field_media_image {
-                  alt
+      relationships {  
+        field_yaml_files {
+          id
+          name
+          relationships {
+            field_media_image {
+                gatsbyImage(
+                  width: 1400 
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                  cropFocus: CENTER
+                )
+                relationships {
+                  media__image {
+                    field_media_image {
+                      alt
+                    }
+                  }
                 }
-              }
             }
-          }
-        }        
-        drupal_internal__mid
-      }        
+          }        
+          drupal_internal__mid
+        }
+      }
     }
   }
 `
