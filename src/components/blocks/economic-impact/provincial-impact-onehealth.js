@@ -35,7 +35,7 @@ const render = ({ field_yaml_map }) => {
 }
 const query = graphql`
   query {
-    blockContentYamlBlock(yamlId: {eq: "economic_impact_provincial_onehealth"}) {
+    blockContentYamlBlock(field_yaml_id: {glob: "economic_impact_provincial_onehealth"}) {
       id
       field_yaml_id
       field_yaml_map
