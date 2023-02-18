@@ -16,25 +16,6 @@ const NationalImpactAside = ({aside}) => (
     </div>
 )
 
-const NationalImpactTestimony = ({ testimonial }) => (
-    <div className="mt-5 me-3 pb-5">
-        <Row className="justify-content-center g-5">
-            <Col xs={5} sm={4} md={3}>
-                <GatsbyImage image={getImage(yamlFiles[testimonial.source.image.mid]?.src)} alt={yamlFiles[testimonial.source.image.mid]?.alt ?? ""} imgClassName="rounded-circle" />
-            </Col>
-            <Col sm={8} md={9} className="ps-5 fs-2">
-                <p className="fs-1 text-dark">
-                    <i className="fad fa-quote-left pe-2 uog-blue" aria-hidden="true" /> 
-                        <em>{testimonial.quote}</em>
-                    <i className="fad fa-quote-right ps-2 uog-blue" aria-hidden="true" />
-                </p>
-                <p className="author"><strong>{testimonial.source.name}</strong> {testimonial.source.pronouns}
-                <br /><em>{testimonial.source.desc}</em></p>
-            </Col>
-        </Row>
-    </div>
-)
-
 const render = ({ field_yaml_map, relationships }) => {
   let yamlMap;
   let yamlFiles = {};
@@ -61,7 +42,25 @@ const render = ({ field_yaml_map, relationships }) => {
                         <h2 id="national-impact">{yamlMap.title}</h2>
                         <p className="text-dark text-uppercase"><strong>{yamlMap.lead}</strong></p>
                         <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}}></div>
-                        <NationalImpactTestimony testimonial={yamlMap.testimonial} />
+                            <div className="mt-5 me-3 pb-5">
+                                <Row className="justify-content-center g-5">
+                                <Col xs={5} sm={4} md={3}>
+                                    <GatsbyImage 
+                                      image={getImage(yamlFiles[yamlMap.testimonial.source.image.mid]?.src)} 
+                                      alt={yamlFiles[yamlMap.testimonial.source.image.mid]?.alt ?? ""} imgClassName="rounded-circle" 
+                                    />                                    
+                                </Col>
+                                <Col sm={8} md={9} className="ps-5 fs-2">
+                                    <p className="fs-1 text-dark">
+                                        <i className="fad fa-quote-left pe-2 uog-blue" aria-hidden="true" /> 
+                                            <em>{yamlMap.testimonial.quote}</em>
+                                        <i className="fad fa-quote-right ps-2 uog-blue" aria-hidden="true" />
+                                    </p>
+                                    <p className="author"><strong>{yamlMap.testimonial.source.name}</strong> {yamlMap.testimonial.source.pronouns}
+                                    <br /><em>{yamlMap.testimonial.source.desc}</em></p>
+                                </Col>
+                            </Row>
+                        </div>
                     </Col>
                     <Col md={6} className="d-flex position-relative p-0">
                         <GatsbyImage image={getImage(yamlFiles[yamlMap.aside.image.mid]?.src)} alt={yamlFiles[yamlMap.aside.image.mid]?.alt ?? ""} className="position-absolute top-0 end-0" />
