@@ -18,7 +18,7 @@ const render = ({ field_yaml_map }) => {
     <h3 className="mt-0 text-dark text-uppercase">{field_yaml_map.title}</h3>
     <div className="border-5 border-start px-4 mb-5">
         <div dangerouslySetInnerHTML={{__html: field_yaml_map.body_html}}></div>
-        {video && 
+        {field_yaml_map.video && 
           <ModalVideo 
             id={field_yaml_map.video.id} 
             src={field_yaml_map.video.url} 
