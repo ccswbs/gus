@@ -15,18 +15,18 @@ const render = ({ field_yaml_map }) => {
   } 
   
   return (<>
-    <h3 className="mt-0 text-dark text-uppercase">{field_yaml_map.title}</h3>
+    <h3 className="mt-0 text-dark text-uppercase">{yamlMap.title}</h3>
     <div className="border-5 border-start px-4 mb-5">
-        <div dangerouslySetInnerHTML={{__html: field_yaml_map.body_html}}></div>
-        {field_yaml_map.video && 
+        <div dangerouslySetInnerHTML={{__html: yamlMap.body_html}}></div>
+        {yamlMap.video && 
           <ModalVideo 
-            id={field_yaml_map.video.id} 
-            src={field_yaml_map.video.url} 
-            title={field_yaml_map.video.title} 
-            transcript={field_yaml_map.video.transcript} 
+            id={yamlMap.video.id} 
+            src={yamlMap.video.url} 
+            title={yamlMap.video.title} 
+            transcript={yamlMap.video.transcript} 
             modalButton = {
                 <button type="button" className="btn btn-outline-info my-4">
-                    <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {field_yaml_map.video.title}</span>
+                    <i className="fa-solid fa-play"></i> Watch Video<span className="visually-hidden">: {yamlMap.video.title}</span>
                 </button>
             }
         />}
