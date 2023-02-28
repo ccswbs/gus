@@ -173,3 +173,9 @@ i.green {color:#4cae3e;}
     column-width: auto;
     column-count: 4;
 }
+
+/* List style overrides */
+.main-container .site-content ul.list-unstyled li:before, 
+.page-container .site-content ul.list-unstyled li:before {
+	all: unset;
+}
