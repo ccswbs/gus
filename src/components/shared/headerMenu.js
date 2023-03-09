@@ -29,7 +29,7 @@ const createMenuHierarchy = (menuData, menuName) => {
     if (mappedArr.hasOwnProperty(id)) {
       mappedElem = mappedArr[id]
       // If the element is not at the root level, add it to its parent array of children.
-      if (mappedElem.drupal_parent_menu_item) {
+      if (mappedElem.drupal_parent_menu_item && mappedArr[mappedElem.drupal_parent_menu_item]['children'] != null) {
         mappedArr[mappedElem.drupal_parent_menu_item]['children'].push(mappedElem)
       }
       // If the element is at the root level, add it to first level elements array.
