@@ -8,9 +8,9 @@ import PropTypes from "prop-types";
 
 const createMenuHierarchy = (menuData, menuName) => {
   let tree = [],
-     mappedArr = {},
-     arrElem,
-     mappedElem
+      mappedArr = {},
+      arrElem,
+      mappedElem
 
   // First map the nodes of the array to an object -> create a hash table.
   for (let i = 0, len = menuData.length; i < len; i++) {
@@ -29,8 +29,12 @@ const createMenuHierarchy = (menuData, menuName) => {
     if (mappedArr.hasOwnProperty(id)) {
       mappedElem = mappedArr[id]
       // If the element is not at the root level, add it to its parent array of children.
-      if (mappedElem.drupal_parent_menu_item && mappedArr[mappedElem.drupal_parent_menu_item]['children'] != null) {
-        mappedArr[mappedElem.drupal_parent_menu_item]['children'].push(mappedElem)
+      if (mappedElem.drupal_parent_menu_item) {
+        let parentElem = mappedArr[mappedElem.drupal_parent_menu_item]
+        // Check if the parent element is enabled before adding the current element as its child
+        if (parentElem?.enabled === true) {
+          parentElem['children'].push(mappedElem)
+        }
       }
       // If the element is at the root level, add it to first level elements array.
       else {
