@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { setHeadingLevel } from 'utils/ug-utils';
 
 /* 
 Example Usage:
@@ -18,7 +17,6 @@ Example Usage:
 */
 
 function NavTabContent (props) {
-    let Heading = setHeadingLevel(props.headingLevel);
     let arialabel = `${props.id}-tab`;
     let classes = (props.active === true) ? `active show tab-pane fade`:`tab-pane fade`;
     if(props.classNames !== ``){
