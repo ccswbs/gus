@@ -149,7 +149,7 @@ export const query = graphql`
               gatsbyImage(
                 layout: CONSTRAINED,
                 placeholder: BLURRED,
-                height: 540,
+                width: 1000,
               )
             }
           }

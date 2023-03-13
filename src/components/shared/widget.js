@@ -17,7 +17,7 @@ import StatsWidget from 'components/shared/statsWidget';
 import Story from 'components/shared/story';
 import TestimonialSlider from 'components/shared/testimonialSlider';
 import YamlWidget from 'components/shared/yamlWidget';
-import { ConditionalWrapper } from 'utils/ug-utils';
+import { ConditionalWrapper, slugify } from 'utils/ug-utils';
 
 const WidgetSelector = ({widget}) => {
     switch (widget?.__typename) {
@@ -58,7 +58,7 @@ const WidgetSelector = ({widget}) => {
             : null;
         case "paragraph__section":
             return (<>
-              {widget.field_section_title && <h2>{widget.field_section_title}</h2>}
+              {widget.field_section_title && <h2 id={slugify(widget.field_section_title)}>{widget.field_section_title}</h2>}
                 <div key={widget.drupal_id} className="row" data-title="Section widget">
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>
