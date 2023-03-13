@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { Container, Row } from 'react-bootstrap';
-import { ConditionalWrapper } from 'utils/ug-utils';
+import { ConditionalWrapper, slugify } from 'utils/ug-utils';
 
 const Accordion = React.lazy(() => import('components/shared/accordion'));
 const BlockWidget = React.lazy(() => import('components/shared/blockWidget'));
@@ -13,6 +13,7 @@ const LinksItems = React.lazy(() => import('components/shared/linksItems'));
 const MediaText = React.lazy(() => import('components/shared/mediaText'));
 const ModalVideo = React.lazy(() => import('components/shared/modalVideo'));
 const PageTabs = React.lazy(() => import('components/shared/pageTabs'));
+const PageContainer = React.lazy(() => import('components/shared/pageContainer'));
 const SectionWidgets = React.lazy(() => import('components/shared/sectionWidgets'));
 const StatisticWidget = React.lazy(() => import('components/shared/statisticWidget'));
 const StatsWidget = React.lazy(() => import('components/shared/statsWidget'));
@@ -59,7 +60,7 @@ const WidgetSelector = ({widget}) => {
             : null;
         case "paragraph__section":
             return (<>
-              {widget.field_section_title && <h2>{widget.field_section_title}</h2>}
+              {widget.field_section_title && <h2 id={slugify(widget.field_section_title)}>{widget.field_section_title}</h2>}
                 <div key={widget.drupal_id} className="row" data-title="Section widget">
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>

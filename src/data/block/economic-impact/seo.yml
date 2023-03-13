@@ -1,9 +1,0 @@
-id: economic_impact_seo
-title: Economic Impact Report
-description: University of Guelph Economic Impact Report
-image:
-  src: ../../../images/grce/economic-impact/eir-banner2-1920w.jpg
-  alt: University of Guelph campus
-menu: grce-main  
-domains:
-  [drupal_internal__target_id: api_liveugconthub_uoguelph_dev]
