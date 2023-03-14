@@ -20,7 +20,7 @@ import { ConditionalWrapper } from 'utils/ug-utils';
 function renderPrimary(widget) {
     switch (widget?.__typename) {
         case "paragraph__accordion_section":
-            return <Accordion pageData={widget} />;
+            return <Accordion key={widget.drupal_id} pageData={widget} />;
         case "paragraph__block_widget":
             return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
