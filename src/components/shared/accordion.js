@@ -49,6 +49,18 @@ export const query = graphql`
         field_accordion_title
         field_accordion_block_text {
           processed
+        }
+        relationships {
+          field_tagged_content {
+            relationships {
+              field_content_type {
+                name
+              }
+              field_tags {
+                name
+              }
+            }
+          }
         }        
       }
       field_section_column {
