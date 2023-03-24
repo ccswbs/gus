@@ -1,25 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import { contentExists } from 'utils/ug-utils';
+import TaggedContent from 'components/shared/taggedContent';
 
 const Accordion = (props) => {
-    let accordionData = props.pageData.relationships.field_accordion_block_elements;
-    let stayOpen = props.pageData.field_accordion_stay_open;
-    let dataParent = ("#accordion" + props.pageData.drupal_id);
+    let accordionData = props.pageData?.relationships?.field_accordion_block_elements;
+    let stayOpen = props.pageData?.field_accordion_stay_open;
+    let dataParent = ("#accordion" + props.pageData?.drupal_id);
 
-    if (contentExists(accordionData)) {
+    if (accordionData) {
+        console.log(accordionData);
         return <>
             <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
             {accordionData.map(item =>
                 <div className="accordion-item" key={"item" + item.drupal_id}>
                     <h2 className="accordion-header" id={"heading" + item.drupal_id}>
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#part" + item.drupal_id} aria-expanded="false" aria-controls={"part" + item.drupal_id}>
-                            {contentExists(item.field_accordion_title) ? item.field_accordion_title : "Read More"}
+                            {item?.field_accordion_title ? item.field_accordion_title : "Read More"}
                         </button>
                     </h2>
                     <div {...(stayOpen ? {} : {"data-bs-parent":dataParent})} id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={"heading" + item.drupal_id}>            
-                        <div className="accordion-body" dangerouslySetInnerHTML={{__html: item.field_accordion_block_text.processed}} />
+                        <div className="accordion-body">
+                            <div dangerouslySetInnerHTML={{__html: item.field_accordion_block_text.processed}} />
+                            <TaggedContent contentType={item.relationships?.field_tagged_content?.relationships.field_content_type.name} tag={item.relationships?.field_tagged_content?.relationships?.field_tags[0].name} />
+                        </div>
                     </div>
                 </div>
             )}
