@@ -9,7 +9,6 @@ const Accordion = (props) => {
     let dataParent = ("#accordion" + props.pageData?.drupal_id);
 
     if (accordionData) {
-        console.log(accordionData);
         return <>
             <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
             {accordionData.map(item =>
