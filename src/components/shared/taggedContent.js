@@ -90,10 +90,8 @@ const TaggedContent = (props) => {
     switch (contentType) {
         case "Careers":
             return (taggedCareers.length > 0 ? <Careers careerData={taggedCareers} numColumns={3} /> : "No careers :(")
-        break;
         case "Employers":
             return (taggedEmployers.length > 0 ? <Employers employerData={taggedEmployers} /> : "No employers :(")
-        break;
         default:
             return "Nothing to see here"
     }
