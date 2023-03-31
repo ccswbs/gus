@@ -29,31 +29,7 @@ const TaggedContent = (props) => {
               }
             }
           }
-          allNodeCourse(sort: {field_code: ASC}) {
-            edges {
-              node {
-                title
-                drupal_id
-                field_credits
-                field_level
-                field_code
-                title
-                field_course_url {
-                  uri
-                }
-                relationships {
-                  field_tags {
-                    __typename
-                    ... on TaxonomyInterface {
-                      drupal_id
-                      id
-                      name
-                    }
-                  }
-                }
-              }
-            }
-          }
+
           allNodeEmployer(sort: {title: ASC}) {
             edges {
               node {
