@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import Careers from 'src/components/shared/careers.js';
+import Courses from 'components/shared/courses';
 import Employers from 'src/components/shared/employers.js';
 
 const TaggedContent = (props) => {    
@@ -14,6 +15,31 @@ const TaggedContent = (props) => {
                 drupal_id
                 body {
                   processed
+                }
+                relationships {
+                  field_tags {
+                    __typename
+                    ... on TaxonomyInterface {
+                      drupal_id
+                      id
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+          allNodeCourse(sort: {field_code: ASC}) {
+            edges {
+              node {
+                title
+                drupal_id
+                field_credits
+                field_level
+                field_code
+                title
+                field_course_url {
+                  uri
                 }
                 relationships {
                   field_tags {
@@ -63,6 +89,7 @@ const TaggedContent = (props) => {
     let contentType = props.contentType;
     let tag = props.tag;
     let careers = data.allNodeCareer?.edges;
+    let courses = data.allNodeCourse?.edges;
     let employers = data.allNodeEmployer?.edges;
     let taggedCareers = [];
     let taggedCourses = [];
@@ -73,6 +100,15 @@ const TaggedContent = (props) => {
             for (let j=0; j<careers[i].node.relationships.field_tags.length; j++) {
                 if (careers[i].node.relationships.field_tags[j].name === tag) {
                     taggedCareers.push(careers[i])
+                }
+            }            
+        }
+    }
+    for (let i=0; i<courses.length; i++) {
+        if (courses[i].node?.relationships?.field_tags?.length > 0) {
+            for (let j=0; j<courses[i].node.relationships.field_tags.length; j++) {
+                if (courses[i].node.relationships.field_tags[j].name === tag) {
+                    taggedCourses.push(courses[i])
                 }
             }            
         }
@@ -88,9 +124,11 @@ const TaggedContent = (props) => {
     }
 
     switch (contentType) {
-        case "Careers":
+        case "career":
             return (taggedCareers.length > 0 ? <Careers careerData={taggedCareers} numColumns={3} /> : "No careers :(")
-        case "Employers":
+        case "course":
+            return (taggedCourses.length > 0 ? <Courses courseData={taggedCourses} headingLevel="h4" /> : "No courses :(")
+        case "employer":
             return (taggedEmployers.length > 0 ? <Employers employerData={taggedEmployers} /> : "No employers :(")
         default:
             return "Nothing to see here"
