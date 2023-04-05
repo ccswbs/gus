@@ -94,12 +94,20 @@ const TaggedContent = (props) => {
     let taggedCareers = [];
     let taggedCourses = [];
     let taggedEmployers = [];
+    let nameTags = [];
+    
+    for (let i=0; i<tags.length; i++) {
+        nameTags.push(tags[i].name);
+    }
+    
+    console.log(nameTags);
+    console.log(contentType);
     
     for (let i=0; i<careers.length; i++) {
         const careerTags = careers[i].node?.relationships?.field_tags;
         if (careerTags && careerTags.length > 0) {
             for (let j=0; j<careerTags.length; j++) {
-                if (tags.includes(careerTags[j].name)) {
+                if (nameTags.includes(careerTags[j].name)) {
                     taggedCareers.push(careers[i]);
                     break;
                 }
@@ -110,7 +118,7 @@ const TaggedContent = (props) => {
         const courseTags = courses[i].node?.relationships?.field_tags;
         if (courseTags && courseTags.length > 0) {
             for (let j=0; j<courseTags.length; j++) {
-                if (tags.includes(courseTags[j].name)) {
+                if (nameTags.includes(courseTags[j].name)) {
                     taggedCourses.push(courses[i]);
                     break;
                 }
@@ -121,7 +129,7 @@ const TaggedContent = (props) => {
         const employerTags = employers[i].node?.relationships?.field_tags;
         if (employerTags && employerTags.length > 0) {
             for (let j=0; j<employerTags.length; j++) {
-                if (tags.includes(employerTags[j].name)) {
+                if (nameTags.includes(employerTags[j].name)) {
                     taggedEmployers.push(employers[i]);
                     break;
                 }
