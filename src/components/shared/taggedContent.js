@@ -29,7 +29,31 @@ const TaggedContent = (props) => {
               }
             }
           }
-
+          allNodeCourse(sort: {field_code: ASC}) {
+            edges {
+              node {
+                title
+                drupal_id
+                field_credits
+                field_level
+                field_code
+                title
+                field_course_url {
+                  uri
+                }
+                relationships {
+                  field_tags {
+                    __typename
+                    ... on TaxonomyInterface {
+                      drupal_id
+                      id
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
           allNodeEmployer(sort: {title: ASC}) {
             edges {
               node {
@@ -63,7 +87,7 @@ const TaggedContent = (props) => {
       }
     `)
     let contentType = props.contentType;
-    let tag = props.tag;
+    let tags = props.tags;
     let careers = data.allNodeCareer?.edges;
     let courses = data.allNodeCourse?.edges;
     let employers = data.allNodeEmployer?.edges;
@@ -72,28 +96,34 @@ const TaggedContent = (props) => {
     let taggedEmployers = [];
     
     for (let i=0; i<careers.length; i++) {
-        if (careers[i].node?.relationships?.field_tags?.length > 0) {
-            for (let j=0; j<careers[i].node.relationships.field_tags.length; j++) {
-                if (careers[i].node.relationships.field_tags[j].name === tag) {
-                    taggedCareers.push(careers[i])
+        const careerTags = careers[i].node?.relationships?.field_tags;
+        if (careerTags && careerTags.length > 0) {
+            for (let j=0; j<careerTags.length; j++) {
+                if (tags.includes(careerTags[j].name)) {
+                    taggedCareers.push(careers[i]);
+                    break;
                 }
             }            
         }
     }
     for (let i=0; i<courses.length; i++) {
-        if (courses[i].node?.relationships?.field_tags?.length > 0) {
-            for (let j=0; j<courses[i].node.relationships.field_tags.length; j++) {
-                if (courses[i].node.relationships.field_tags[j].name === tag) {
-                    taggedCourses.push(courses[i])
+        const courseTags = courses[i].node?.relationships?.field_tags;
+        if (courseTags && courseTags.length > 0) {
+            for (let j=0; j<courseTags.length; j++) {
+                if (tags.includes(courseTags[j].name)) {
+                    taggedCourses.push(courses[i]);
+                    break;
                 }
             }            
         }
     }
     for (let i=0; i<employers.length; i++) {
-        if (employers[i].node?.relationships?.field_tags?.length > 0) {
-            for (let j=0; j<employers[i].node.relationships.field_tags.length; j++) {
-                if (employers[i].node.relationships.field_tags[j].name === tag) {
-                    taggedEmployers.push(employers[i])
+        const employerTags = employers[i].node?.relationships?.field_tags;
+        if (employerTags && employerTags.length > 0) {
+            for (let j=0; j<employerTags.length; j++) {
+                if (tags.includes(employerTags[j].name)) {
+                    taggedEmployers.push(employers[i]);
+                    break;
                 }
             }            
         }
@@ -113,12 +143,12 @@ const TaggedContent = (props) => {
 
 TaggedContent.propTypes = {
     contentType: PropTypes.string,
-    tag: PropTypes.string,
+    tags: PropTypes.array,
 }
 
 TaggedContent.defaultProps = {
     contentType: ``,
-    tag: ``,
+    tags: null,
 }
 
 export default TaggedContent

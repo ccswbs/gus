@@ -21,7 +21,7 @@ const Accordion = (props) => {
                     <div {...(stayOpen ? {} : {"data-bs-parent":dataParent})} id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={"heading" + item.drupal_id}>            
                         <div className="accordion-body">
                             <div dangerouslySetInnerHTML={{__html: item.field_accordion_block_text.processed}} />
-                            <TaggedContent contentType={item.relationships?.field_tagged_content?.field_content_type} tag={item.relationships?.field_tagged_content?.relationships?.field_tags[0].name} />
+                            <TaggedContent contentType={item.relationships?.field_tagged_content?.field_content_type} tags={item.relationships?.field_tagged_content?.relationships?.field_tags} />
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,10 @@ export const query = graphql`
             field_content_type
             relationships {
               field_tags {
-                name
+                __typename
+                ... on TaxonomyInterface {
+                  name
+                }
               }
             }
           }
