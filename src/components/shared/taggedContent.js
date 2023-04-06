@@ -83,7 +83,25 @@ const TaggedContent = (props) => {
                 }
               }
             }
-        }
+          }
+          allNodePage {
+            edges {
+              node {
+                title
+                path {
+                  alias
+                }
+                relationships {
+                  field_tags {
+                    __typename
+                    ... on TaxonomyInterface {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
       }
     `)
     let contentType = props.contentType;
@@ -91,15 +109,30 @@ const TaggedContent = (props) => {
     let careers = data.allNodeCareer?.edges;
     let courses = data.allNodeCourse?.edges;
     let employers = data.allNodeEmployer?.edges;
+    let pages = data.allNodePage?.edges;
     let taggedCareers = [];
     let taggedCourses = [];
     let taggedEmployers = [];
+    let taggedPages = [];
     let nameTags = [];
     
-    if (nameTags && nameTags.length > 0) {
+    if (tags && tags.length > 0) {
         for (let i=0; i<tags.length; i++) {
             nameTags.push(tags[i].name);
         }
+    }
+    
+    if (pages && pages.length > 0) {
+        pages.forEach(page => {
+            const pageTags = page.node?.relationships?.field_tags;
+            if (pageTags && pageTags.length > 0) {
+                for (let i=0; i<pageTags.length; i++) {
+                    if (nameTags.includes(pageTags[i].name)) {
+                        taggedPages.push(page);
+                    }
+                }
+            }
+        });
     }
     
     for (let i=0; i<careers.length; i++) {
@@ -137,6 +170,8 @@ const TaggedContent = (props) => {
     }
 
     switch (contentType) {
+        case "basic_page":
+            return (taggedPages.length > 0 ? "yes pages exist" : "No pages :(")
         case "career":
             return (taggedCareers.length > 0 ? <Careers careerData={taggedCareers} numColumns={3} /> : "No careers :(")
         case "course":
