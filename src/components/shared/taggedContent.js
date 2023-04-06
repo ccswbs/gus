@@ -96,12 +96,11 @@ const TaggedContent = (props) => {
     let taggedEmployers = [];
     let nameTags = [];
     
-    for (let i=0; i<tags.length; i++) {
-        nameTags.push(tags[i].name);
+    if (nameTags && nameTags.length > 0) {
+        for (let i=0; i<tags.length; i++) {
+            nameTags.push(tags[i].name);
+        }
     }
-    
-    console.log(nameTags);
-    console.log(contentType);
     
     for (let i=0; i<careers.length; i++) {
         const careerTags = careers[i].node?.relationships?.field_tags;
