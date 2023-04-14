@@ -6,8 +6,6 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
         <script 
             key="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
             src="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
-            crossOrigin="anonymous"
-            defer 
         />,
         <script
             key="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
