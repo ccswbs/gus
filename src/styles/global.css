@@ -115,15 +115,29 @@ html {
 .bg-dark h4 {
     color: var(--off-white) !important;
 }
-.uog-blue-muted {background:#edf2f5;}
+.uog-blue {color: var(--uog-blue);}
+.uog-blue-muted {background: #f5f7fa;}
 i.green {color:#4cae3e;}
 
-.uog-tertiary-color1 {color:#0d6efd;}
-.uog-tertiary-color2 {color:#6610f2;}
-.uog-tertiary-color3 {color:#d63384;}
-.uog-tertiary-color4 {color:#fd7e14;}
-.uog-tertiary-color5 {color:#198754;}
-.uog-tertiary-color6 {color:#20c997;}
+.uog-tertiary-color1 {color:#0d6efd;} /* Brandeis Blue */
+.uog-tertiary-color2 {color:#6610f2;} /* Electric Indigo */
+.uog-tertiary-color3 {color:#d63384;} /* Deep Cerise */
+.uog-tertiary-color4 {color:#fd7e14;} /* Pumpkin */
+.uog-tertiary-color5 {color:#198754;} /* Salem (green) */
+.uog-tertiary-color6 {color:#20c997;} /* Mountain Meadow (green) */
+
+.uog-border-red {
+	border-left: 1rem solid var(--uog-red);
+}
+.uog-border-yellow {
+	border-left: 1rem solid var(--uog-yellow);
+}
+.uog-border-black {
+	border-left: 1rem solid var(--black);
+}
+.uog-border-blue {
+	border-left: 1rem solid var(--uog-blue);
+}
 
 .card .uog-card-border {
     border-left: 1rem solid var(--uog-red);
@@ -158,4 +172,10 @@ i.green {color:#4cae3e;}
 .four-col-md {
     column-width: auto;
     column-count: 4;
+}
+
+/* List style overrides */
+.main-container .site-content ul.list-unstyled li:before, 
+.page-container .site-content ul.list-unstyled li:before {
+	all: unset;
 }

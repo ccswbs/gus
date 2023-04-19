@@ -21,7 +21,7 @@ const YamlWidget = React.lazy(() => import('components/shared/yamlWidget'));
 function renderPrimary(widget) {
     switch (widget?.__typename) {
         case "paragraph__accordion_section":
-            return <Accordion pageData={widget} />;
+            return <Accordion key={widget.drupal_id} pageData={widget} />;
         case "paragraph__block_widget":
             return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
@@ -113,10 +113,10 @@ function SectionWidgets (props) {
         if (secondary.length > 0) {
             if (sectionClasses === "col-md-6") {
                 primaryClass = classNames("col-md-6 mb-5 mb-md-0");
-                secondaryClass = classNames("col-md-6 d-grid gap-4");
+                secondaryClass = classNames("col-md-6");
             } else {
                 primaryClass = classNames("col-md-9 mb-5 mb-md-0");
-                secondaryClass = classNames("col-md-3 d-grid gap-4");
+                secondaryClass = classNames("col-md-3");
             }
         } else {
             primaryClass = "row";

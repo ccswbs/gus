@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DateModified from 'components/dateModified';
-import Footer from "components/footer"
-import Header from "components/header"
+import HeaderMenu from 'components/shared/headerMenu';
 import 'styles/global.css';
 import "@fontsource/roboto"
 import "@fontsource/roboto/700.css"
@@ -12,12 +11,13 @@ import "@fontsource/roboto/400-italic.css"
 
 const Layout = ({ children, date, menuName }) => (
       <>
-        <Header menuName={menuName} />
+        <uofg-header><HeaderMenu menuName={menuName} /></uofg-header>
         <main id="content">
           {children}
           <DateModified date={date}/>
         </main>
-        <Footer />     
+        <div className="be-ix-link-block"></div>
+        <uofg-footer></uofg-footer>        
       </>
 )
 
