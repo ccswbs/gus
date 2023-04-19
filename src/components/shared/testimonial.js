@@ -82,7 +82,7 @@ function Testimonials (props) {
 				<div className="full-width-container bg-light">
 					<div className="container page-container">
 						<section className="row row-with-vspace site-content">
-							<div className="col-md-12 content-area" id="main-column">
+							<div className="col-md-12 content-area">
 								{testimonialHeading && <Heading className="carousel-header text-dark">{testimonialHeading}</Heading>}
 								<div className="testimonial-wrapper">
 									<SliderResponsive addToControlLabel="Testimonial">{testimonialUnits()}</SliderResponsive>
