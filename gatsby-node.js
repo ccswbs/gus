@@ -999,7 +999,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
     const pageTemplate = path.resolve('./src/templates/page.js');
-    // const articleTemplate = path.resolve('./src/templates/article-page.js');
+    const articleTemplate = path.resolve('./src/templates/article-page.js');
     const programTemplate = path.resolve('./src/templates/program-page.js');
     const { createRedirect } = actions;
     
@@ -1065,6 +1065,9 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             drupal_id
             drupal_internal__nid
             title
+            fields {
+              tags
+            }
             path {
               alias
             }
@@ -1122,19 +1125,21 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             })
         }
 
-/*         // process article nodes
+        // process article nodes
         if (result.data.articles !== undefined) {
             const articles = result.data.articles.edges;
             articles.forEach(( { node }, index) => {
-                aliases[node.drupal_internal__nid] = processPage(
+                aliases[node.drupal_internal__nid] = processNews(
                     node,
                     node.id,
-                    node.path,
+                    node.drupal_internal__nid,
+                    node.fields.tags,
                     articleTemplate,
                     helpers
                 );
             })
-        } */
+        }
+        
 
         // process program nodes
         if (result.data.programs !== undefined) {
@@ -1184,7 +1189,25 @@ function processPage(node, contextID, nodeNid, tagID, nodePath, template, helper
     })
     return alias;
 }
+function processNews(node, contextID, nodeNid, tagID, template, helpers) {
+     let alias = createNewsContentTypeAlias(node);
 
+    helpers.createPage({
+      path: alias,
+      component: template,
+      context: {
+        id: contextID,
+        nid: `entity:node/` + nodeNid,
+        tid: tagID,
+      },
+    })
+    return alias;
+}
+function createNewsContentTypeAlias(node) {
+  let  alias = `/news/` + slugify(node.title);
+console.log(alias, "news alias");
+  return alias;
+}
 // use for content types
 function createContentTypeAlias(nodePath) {
     let alias = '';

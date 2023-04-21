@@ -36,6 +36,7 @@
     "gatsby-source-wordpress": "^7.8.0",
     "gatsby-transformer-sharp": "^5.8.0",
     "gatsby-transformer-yaml": "^5.8.0",
+    "html-react-parser": "^3.0.15",
     "is-subset": "^0.1.1",
     "js-yaml": "^4.1.0",
     "moment-timezone": "^0.5.41",
