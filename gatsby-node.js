@@ -487,6 +487,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       field_accordion_block_text: FieldAccordionBlockText
       field_accordion_title: String
+      field_heading_level: String
     }
     type paragraph__accordion_section implements Node {
       drupal_id: String
