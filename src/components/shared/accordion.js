@@ -8,8 +8,7 @@ const Accordion = (props) => {
     let dataParent = ("#accordion" + props.pageData?.drupal_id);
 
     if (accordionData) {
-      return (
-        <>
+      return (<>
           <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
             {accordionData.map((item) => {
               const accordionToggle = (
@@ -27,13 +26,7 @@ const Accordion = (props) => {
 
               let headingElement;
 
-              if (item.field_heading_level === "h2") {
-                headingElement = (
-                  <h2 className="accordion-header" id={"heading" + item.drupal_id}>
-                    {accordionToggle}
-                  </h2>
-                );
-              } else if (item.field_heading_level === "h3") {
+              if (item.field_heading_level === "h3") {
                 headingElement = (
                   <h3 className="accordion-header" id={"heading" + item.drupal_id}>
                     {accordionToggle}
@@ -46,8 +39,12 @@ const Accordion = (props) => {
                   </h4>
                 );
               } else {
-                // Handle default case or error
-                headingElement = "h2";
+                // Use h2 as default
+                headingElement = (
+                  <h2 className="accordion-header" id={"heading" + item.drupal_id}>
+                    {accordionToggle}
+                  </h2>
+                );
               }
 
               return (
@@ -60,10 +57,8 @@ const Accordion = (props) => {
               );
             })}
           </div>
-        </>
-      );
+        </>);
     }
-
     return null;
 }
 
