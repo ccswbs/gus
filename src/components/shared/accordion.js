@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import { slugify } from 'utils/ug-utils';
 
 const Accordion = (props) => {
     let accordionData = props.pageData?.relationships?.field_accordion_block_elements;
+    let accordionTitle = props.pageData?.field_accordion_title;
     let stayOpen = props.pageData?.field_accordion_stay_open;
     let dataParent = ("#accordion" + props.pageData?.drupal_id);
+    let HeadingLevel = (props.pageData?.field_heading_level ? props.pageData.field_heading_level : "h2");
 
     if (accordionData) {
       return (<>
+          {accordionTitle && <HeadingLevel id={slugify(accordionTitle)} className="mt-3">{accordionTitle}</HeadingLevel>}
           <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
             {accordionData.map((item) => {
               const accordionToggle = (
@@ -76,6 +80,8 @@ export const query = graphql`
   fragment AccordionSectionParagraphFragment on paragraph__accordion_section {
     drupal_id
     field_accordion_stay_open
+    field_accordion_title
+    field_heading_level
     relationships {
       field_accordion_block_elements {
         drupal_id
