@@ -28,32 +28,11 @@ const Accordion = (props) => {
                 </button>
               );
 
-              let headingElement;
-
-              if (item.field_heading_level === "h3") {
-                headingElement = (
-                  <h3 className="accordion-header" id={"heading" + item.drupal_id}>
-                    {accordionToggle}
-                  </h3>
-                );
-              } else if (item.field_heading_level === "h4") {
-                headingElement = (
-                  <h4 className="accordion-header" id={"heading" + item.drupal_id}>
-                    {accordionToggle}
-                  </h4>
-                );
-              } else {
-                // Use h2 as default
-                headingElement = (
-                  <h2 className="accordion-header" id={"heading" + item.drupal_id}>
-                    {accordionToggle}
-                  </h2>
-                );
-              }
-
+              let ItemHeading = (item?.field_heading_level ? item.field_heading_level : "h2");
+              
               return (
                 <div className="accordion-item" key={"item" + item.drupal_id}>
-                  {headingElement}
+                  <ItemHeading className="accordion-header" id={"heading" + item.drupal_id}>{accordionToggle}</ItemHeading>
                   <div {...(stayOpen ? {} : {"data-bs-parent": dataParent})} id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={"heading" + item.drupal_id}>
                     <div className="accordion-body" dangerouslySetInnerHTML={{__html: item.field_accordion_block_text.processed}} />
                   </div>
