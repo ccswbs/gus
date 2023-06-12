@@ -12,7 +12,7 @@ const Accordion = (props) => {
 
     if (accordionData) {
       return (<>
-          {accordionTitle && <HeadingLevel id={slugify(accordionTitle)} className="mt-3">{accordionTitle}</HeadingLevel>}
+          {accordionTitle && <HeadingLevel id={slugify(accordionTitle)} className="mt-5">{accordionTitle}</HeadingLevel>}
           <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
             {accordionData.map((item) => {
               const accordionToggle = (
