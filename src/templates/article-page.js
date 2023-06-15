@@ -5,20 +5,30 @@ import Seo from 'components/seo';
 import InlineImage from 'components/shared/inlineImage';
 import CustomFooter from 'components/shared/customFooter';
 
+function ListAsButtons (props) {
+	let ButtonToDisplay = props
+	console.log(props)
+	return (
+		<React.Fragment>
+		<span><a href="" className='btn btn-outline-info'>{ButtonToDisplay} </a>{" "}</span>
+	
+	</React.Fragment>
+	)
+}
 const ArticlePage = ({data}) => {
 	const pageData = data.articles.edges[0].node;
 	const pageTitle = pageData.title;
 	const author = pageData.field_news_author;
 	const displayDate = "Posted: " + pageData.field_publish_date;
 	const updatedDate = "Updated: " + pageData.changed;
-	const newsCategory = pageData.relationships.field_news_category;
+	// const newsCategory = pageData.relationships.field_news_category
 	const body = (pageData.body !== null ? pageData.body.processed:``);
 	const bodyInline = InlineImage(body); 
-	const newsTopics = pageData.relationships.field_tags;
+	// const newsTopics = pageData.relationships.field_news_topics;
 	const footer = data.footer.edges;
-	console.log(data.footer.edges);
-console.log(newsCategory, "Cat");
-console.log(newsTopics, "Topic");
+
+console.log(pageData.relationships.field_news_category, "Cat");
+console.log(pageData.relationships.field_news_topics, "Topic");
 	return (
 		<Layout>
 			<Seo title={pageTitle} keywords={[`gatsby`, `application`, `react`]} />
@@ -26,10 +36,11 @@ console.log(newsTopics, "Topic");
                 <div className="row site-content">
                     <div className="content-area">
                         <h1>{pageTitle}</h1>
-						<p>
-						{author && <>By: {author}<br/></>}
+						{pageData.relationships.field_news_category.map (newsCategory =>{return ListAsButtons(newsCategory.name)} )}
+						<p>{author && <>By: {author}<br/></>}
 						{displayDate}<br/>
 						{updatedDate}</p>
+						{pageData.relationships.field_news_topics.map (newsTopic => { return ListAsButtons(newsTopic.name)})}
 						<div className ="clearfix">
 							<div>{bodyInline}</div>
 						</div>
@@ -68,11 +79,8 @@ export const query = graphql`
 						}
 					  }
 					}
-					field_tags {
-					  ... on taxonomy_term__tags {
-						id
+					field_news_topics {
 						name
-					  }
 					}
 				}
 		  	}
