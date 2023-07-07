@@ -121,7 +121,14 @@ function SectionWidgets (props) {
         let onlyContainsMedia = primary.every(containsMediaTextOnly);
         let gridClasses = "";
         if(onlyContainsMedia){
-            let gridDivision = (primary.length % 4 === 0) ? "4" : "3";
+            // default is two items
+            let gridDivision = 2;
+
+            // if more than two items, allow for up to 3 or 4 columns
+            if (primary.length > 2){
+                gridDivision = (primary.length % 4 === 0) ? "4" : "3";
+            }
+
             gridClasses = `row-cols-1 row-cols-sm-2 row-cols-lg-${gridDivision}`;
         }
 
