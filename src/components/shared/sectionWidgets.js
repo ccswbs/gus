@@ -179,6 +179,7 @@ export default SectionWidgets
 export const query = graphql`
   fragment SectionParagraphFragment on paragraph__section {
     drupal_id
+    field_heading_level
     field_section_title
     field_section_classes
     relationships {
