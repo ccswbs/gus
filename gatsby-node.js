@@ -641,6 +641,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       field_section_classes: String
       field_section_title: String
+      field_heading_level: String
       relationships: paragraph__sectionRelationships
     }
     type paragraph__sectionRelationships implements Node {
