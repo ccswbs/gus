@@ -1,45 +1,45 @@
-import React from 'react';
+import React from "react"
+/*import Layout from "./src/components/layout"
+
+ export const wrapPageElement = ({ element, props }) => {
+  return <Layout {...props}>{element}</Layout>
+} */
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
-  
-    setHeadComponents([
-        <script 
-            key="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
-            src="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
-        />,
-        <script
-            key="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
-            src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
-        />,
-        <script
-            key="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
-            src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
-            defer
-        />,
-    ])
-
-    setPostBodyComponents([
-        <script 
-            key="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" 
-            src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"
-            crossOrigin="anonymous"
-        />,
-        <script
-            key="https://kit.fontawesome.com/7993323d0c.js"
-            src="https://kit.fontawesome.com/7993323d0c.js"
-            crossOrigin="anonymous"
-            defer
-        />,
-        <script
-            key="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-            crossOrigin="anonymous"
-            defer
-        />,
-        <script 
-            key="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
-            src="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js" 
-            defer 
-        />
-    ])
+  setHeadComponents([
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+      key="https://fonts.googleapis.com"
+    />,
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      key="https://fonts.gstatic.com"
+      crossOrigin="anonymous"
+    />,
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+      key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+      rel="stylesheet"
+    />,
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css"
+      key="https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css"
+    />,
+    <script
+      type="module"
+      src="https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.esm.js"
+      key="https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.esm.js"
+    ></script>,
+  ])
+  setPostBodyComponents([
+    <script
+      key="https://kit.fontawesome.com/7993323d0c.js"
+      src="https://kit.fontawesome.com/7993323d0c.js"
+      crossOrigin="anonymous"
+      defer
+    />,
+  ])
 }
