@@ -58,7 +58,7 @@ const WidgetSelector = ({widget}) => {
             : null;
         case "paragraph__section":
             return (<>
-              {widget.field_section_title && <h2 id={slugify(widget.field_section_title)}>{widget.field_section_title}</h2>}
+              {widget.field_section_title && <h2 id={slugify(widget.field_section_title)} className="mt-0">{widget.field_section_title}</h2>}
                 <div key={widget.drupal_id} className="row" data-title="Section widget">
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>

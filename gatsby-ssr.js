@@ -3,6 +3,10 @@ import React from 'react';
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   
     setHeadComponents([
+        <script 
+            key="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
+            src="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
+        />,
         <script
             key="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
             src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
