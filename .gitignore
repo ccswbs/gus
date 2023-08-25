@@ -74,3 +74,6 @@ config/aliases/*.yml
 config/sitemaps/*.yml
 # Auto-generated sitemaps
 config/sitemaps/
+
+# Visual Studio Code config
+.vscode
