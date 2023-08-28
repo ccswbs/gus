@@ -30,6 +30,7 @@ module.exports = {
     `gatsby-plugin-client-side-redirect`,
     `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-image`,
+    `gatsby-plugin-netlify`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-root-import`,
     `gatsby-plugin-sharp`,
