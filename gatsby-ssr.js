@@ -41,11 +41,6 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
     ])
 
     setPostBodyComponents([
-        <script 
-            key="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js" 
-            src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"
-            crossOrigin="anonymous"
-        />,
         <script
             key="https://kit.fontawesome.com/7993323d0c.js"
             src="https://kit.fontawesome.com/7993323d0c.js"
