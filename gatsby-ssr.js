@@ -8,19 +8,36 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
             src="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
         />,
         <script
-            key="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
-            src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.4/webcomponents-loader.js"
+            type="module"
+            src="https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.esm.js"
+            key="https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.esm.js"
         />,
-        <script
-            key="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
-            src="https://www.uoguelph.ca/web-components/UofGWebComponents-dist.js"
-            defer
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css"
+            key="https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components/uofg-web-components.css"
+        />,
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+            key="https://fonts.googleapis.com"
+        />,
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            key="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+        />,
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+            key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+            rel="stylesheet"
         />,
         <link
             key="https://www.uoguelph.ca/css/UofG-styles-dist.css" 
             rel="stylesheet" 
             href="https://www.uoguelph.ca/css/UofG-styles-dist.css" 
-        />
+        />,
     ])
 
     setPostBodyComponents([
