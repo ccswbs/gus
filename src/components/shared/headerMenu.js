@@ -53,12 +53,11 @@ const createMenuHierarchy = (menuData, menuName) => {
 }
 
 const generateMenu = (menuLinks, menuName) => {
-  return createMenuHierarchy(
-    menuLinks.allMenuLinkContentMenuLinkContent.edges,
-    menuName
-  ).map((item) => {
-    let submenu = item.children
+  let menuTree = createMenuHierarchy(menuLinks.allMenuLinkContentMenuLinkContent.edges, menuName);
+  let pageHome = menuTree.shift();
 
+  const menuItems = menuTree.map((item) => {
+    let submenu = item.children;
     return (
       <React.Fragment key={item.drupal_id + `menu`}>
         {submenu !== null && submenu.length > 0 ? (
@@ -80,9 +79,16 @@ const generateMenu = (menuLinks, menuName) => {
           </a>
         )}
       </React.Fragment>
-    )
-  })
-}
+    );
+  });
+
+  return (
+    <>
+      <uofg-header page-title={pageHome.title} page-url={pageHome.link.url}>{menuItems}</uofg-header>
+    </>
+  );
+};
+
 
 const HeaderMenu = ({ menuName }) => (
   <StaticQuery
