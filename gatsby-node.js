@@ -1139,7 +1139,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
             })
         } */
 
-        // process program nodes
+        /* // process program nodes */
         // if (result.data.programs !== undefined) {
         //     const programs = result.data.programs.edges;
         //     programs.forEach(( { node }, index) => {
