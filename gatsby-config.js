@@ -65,7 +65,7 @@ module.exports = {
         },
         fastBuilds: true,
         skipFileDownloads: true,
-        requestTimeoutMS: 300000,
+        imageCDN: false,
       },
     },  
     {
