@@ -28,7 +28,6 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-client-side-redirect`,
-    `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-image`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-root-import`,
@@ -54,12 +53,6 @@ module.exports = {
         sitemap: null,
         policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
       }
-    },
-    {
-      resolve: `gatsby-plugin-sharp`,
-      options: {
-        defaultQuality: 90,
-      },
     },
     {
       resolve: `gatsby-source-drupal`,
