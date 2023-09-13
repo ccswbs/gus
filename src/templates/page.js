@@ -30,28 +30,28 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         </div>
         }
         
-        <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
+        {/* <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} /> */}
         
         { /**** Widgets content ****/}
         <div id="main-column">
             
           { /**** No banner ****/}  
-          { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
+          {/* { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
               <div className="container page-container">
                 <div className="row site-content">
                     <div className="content-area">
                         <h1>{pageTitle}</h1>
                     </div>
                 </div>
-              </div>
+              </div> */}
           }
 
-          {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)} 
+          {/* {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)}  */}
         </div>
 
         { /**** Custom Footer content ****/}
-        {footer?.length > 0 &&
-        <CustomFooter footerData={footer[0]} />}
+        {/* {footer?.length > 0 &&
+        <CustomFooter footerData={footer[0]} />} */}
     </Layout>
 )
 
