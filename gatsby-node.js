@@ -1110,20 +1110,20 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         let aliases = {};
 
         // process page nodes
-        if (result.data.pages !== undefined) {
-            const pages = result.data.pages.edges;
-            pages.forEach(( { node }, index) => {
-                aliases[node.drupal_internal__nid] = processPage(
-                    node,
-                    node.id,
-                    node.drupal_internal__nid,
-                    node.fields.tags,
-                    node.path,
-                    pageTemplate,
-                    helpers
-                );
-            })
-        }
+        // if (result.data.pages !== undefined) {
+        //     const pages = result.data.pages.edges;
+        //     pages.forEach(( { node }, index) => {
+        //         aliases[node.drupal_internal__nid] = processPage(
+        //             node,
+        //             node.id,
+        //             node.drupal_internal__nid,
+        //             node.fields.tags,
+        //             node.path,
+        //             pageTemplate,
+        //             helpers
+        //         );
+        //     })
+        // }
 
 /*         // process article nodes
         if (result.data.articles !== undefined) {
@@ -1140,20 +1140,20 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         } */
 
         // process program nodes
-        if (result.data.programs !== undefined) {
-            const programs = result.data.programs.edges;
-            programs.forEach(( { node }, index) => {
-                aliases[node.drupal_internal__nid] = processPage(
-                    node,
-                    node.relationships.field_program_acronym.id,
-                    node.drupal_internal__nid,
-                    null,
-                    node.path,
-                    programTemplate,
-                    helpers
-                );
-            })
-        }
+        // if (result.data.programs !== undefined) {
+        //     const programs = result.data.programs.edges;
+        //     programs.forEach(( { node }, index) => {
+        //         aliases[node.drupal_internal__nid] = processPage(
+        //             node,
+        //             node.relationships.field_program_acronym.id,
+        //             node.drupal_internal__nid,
+        //             null,
+        //             node.path,
+        //             programTemplate,
+        //             helpers
+        //         );
+        //     })
+        // }
 
         // REDIRECTS
         Object.entries(aliases).forEach(([nodeID, alias]) => {
