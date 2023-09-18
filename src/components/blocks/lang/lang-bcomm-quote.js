@@ -81,6 +81,7 @@ const query = graphql`
                 placeholder: BLURRED
                 layout: CONSTRAINED
                 cropFocus: CENTER
+                formats: [AUTO, WEBP]
               )
               relationships {
                 media__image {
