@@ -16,6 +16,11 @@ import StatsWidget from 'components/shared/statsWidget';
 import YamlWidget from 'components/shared/yamlWidget';
 import { ConditionalWrapper } from 'utils/ug-utils';
 
+// Check if section only contains media and text
+function containsMediaTextOnly (widget) {
+    return widget?.__typename === "paragraph__media_text";
+}
+
 // For the left column
 function renderPrimary(widget) {
     switch (widget?.__typename) {
@@ -100,8 +105,10 @@ function SectionWidgets (props) {
         let allWidgets = props.pageData;
         let sectionClasses = props.sectionClasses;
         
+        // sort all widgets into primary or secondary regions
         allWidgets.forEach(widgetData => {
             let secCol = widgetData.relationships?.field_section_column?.name;
+
             if (secCol === "right" || secCol === "Secondary") {
                 secondary.push(widgetData);
             } else {
@@ -109,6 +116,23 @@ function SectionWidgets (props) {
             }
         })
 
+        // if only media + text widgets in Primary
+        // then automatically create a grid (up to 3 or 4 columns)
+        let onlyContainsMedia = primary.every(containsMediaTextOnly);
+        let gridClasses = "";
+        if(onlyContainsMedia){
+            // default is two items
+            let gridDivision = 2;
+
+            // if more than two items, allow for up to 3 or 4 columns
+            if (primary.length > 2){
+                gridDivision = (primary.length % 4 === 0) ? "4" : "3";
+            }
+
+            gridClasses = `row-cols-1 row-cols-sm-2 row-cols-lg-${gridDivision}`;
+        }
+
+        // if secondary region exists
         if (secondary.length > 0) {
             if (sectionClasses === "col-md-6") {
                 primaryClass = classNames("col-md-6 mb-5 mb-md-0");
@@ -118,12 +142,13 @@ function SectionWidgets (props) {
                 secondaryClass = classNames("col-md-3");
             }
         } else {
-            primaryClass = "row";
+            // only primary region exists
+            primaryClass = classNames('row', gridClasses);
         }
         
         return (<>
             <div className={primaryClass} data-title="Primary column">
-                <ConditionalWrapper condition={secondary.length > 0} wrapper={children => <div className="row">{children}</div>}>
+                <ConditionalWrapper condition={secondary.length > 0} wrapper={children => <div className={classNames('row', gridClasses)}>{children}</div>}>
                 {primary && primary.map(widget => {
                     return renderPrimary(widget)
                 })}                

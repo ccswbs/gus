@@ -294,7 +294,7 @@ const ProgramPage = ({data, location}) => {
     let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
     return (
-      <Layout date={lastModified} menuName="main">
+      <Layout date={lastModified}>
         <Helmet bodyAttributes={{ class: "program" }} />
         <Seo
           title={title}

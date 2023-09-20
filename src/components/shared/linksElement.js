@@ -64,7 +64,7 @@ const LinksElement = (props) => {
         const levelHeading = setHeadingLevel(props.headingLinkLevel);
         const HeadingElement = (contentExists(props.text)) 
             ? <levelHeading className="linkswidget-heading">{props.headingLink}</levelHeading> 
-            : <span className={`${headingClass} ${levelHeading}`}>{props.headingLink}</span>;
+            : <span className={`${headingClass} ${levelHeading} text-center mt-4`}>{props.headingLink}</span>;
         const imageLinkClass = (contentExists(props.image))? "news-link": "";
         const linksContent = () => {
             if (contentExists(props.image)){
