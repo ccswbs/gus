@@ -86,11 +86,13 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: 'az storage blob service-properties update --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
 
-- task: AzureFileCopy@3
-  displayName: 'copy files'
+steps:
+- task: AzureCLI@2
+  displayName: 'Preview: copy files'
   inputs:
-    SourcePath: 'public'
     azureSubscription: $(AZURE_SUBSCRIPTION)
-    Destination: 'AzureBlob'
-    storage: $(PREVIEW_STORAGE_ACCOUNT_NAME)
-    ContainerName: '$web'
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az storage blob sync --source public --container $web --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME)'
+
+     
