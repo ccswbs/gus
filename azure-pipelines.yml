@@ -66,25 +66,25 @@ steps:
     publishLocation: 'Container'
 
 - task: AzureResourceManagerTemplateDeployment@3
-  displayName: 'az deploy'
+  displayName: 'Preview: az deploy'
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
     subscriptionId: $(subscription_id)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: $(RESOURCE_GROUP_NAME)
+    resourceGroupName: $(PREVIEW_RESOURCE_GROUP_NAME)
     location: 'Canada East'
     templateLocation: 'Linked artifact'
     csmFile: 'azuredeploy.json'
     deploymentMode: 'Complete'
 
 - task: AzureCLI@2
-  displayName: 'enable static website'
+  displayName: 'Preview: enable static website'
   inputs:
     azureSubscription: $(AZURE_SUBSCRIPTION)
     scriptType: 'pscore'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
+    inlineScript: 'az storage blob service-properties update --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
 
 # - task: AzureFileCopy@3
 #   displayName: 'copy files'
