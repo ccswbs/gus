@@ -4,19 +4,13 @@ trigger:
   - azstaging
 
 variables:
-- group: ug-doorknob
+- group: ug-gus
 - name: _gatsby_cache_folder
   value: '.cache'
 - name: _gatsby_public_folder
   value: 'public'
 - name: _npm_node_modules
   value: 'node_modules'
-
-# variables:
-#   AZURE_SUBSCRIPTION: 'CCS-Web Development (Prod)'
-#   AZURE_RESOURCE_MANAGER_CONNECTION: 'CCS-Web Development (Prod)'
-#   RESOURCE_GROUP_NAME: 'chugstagewebrg'
-#   STORAGE_ACCOUNT_NAME: 'stagechugstorage'
 
 pool:
   vmImage: ubuntu-latest
@@ -57,13 +51,6 @@ steps:
 - script: npm run build
   displayName: 'Build gatsby'
 
-# - task: Npm@1
-#   displayName: 'npm run build'
-#   inputs:
-#     command: 'custom'
-#     customCommand: 'run build'
-#     verbose: true
-
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)/public'
@@ -78,26 +65,26 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-# - task: AzureResourceManagerTemplateDeployment@3
-#   displayName: 'az deploy'
-#   inputs:
-#     deploymentScope: 'Resource Group'
-#     azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
-#     subscriptionId: $(subscription_id)
-#     action: 'Create Or Update Resource Group'
-#     resourceGroupName: $(RESOURCE_GROUP_NAME)
-#     location: 'Canada East'
-#     templateLocation: 'Linked artifact'
-#     csmFile: 'azuredeploy.json'
-#     deploymentMode: 'Complete'
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'az deploy'
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
+    subscriptionId: $(subscription_id)
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: $(RESOURCE_GROUP_NAME)
+    location: 'Canada East'
+    templateLocation: 'Linked artifact'
+    csmFile: 'azuredeploy.json'
+    deploymentMode: 'Complete'
 
-# - task: AzureCLI@2
-#   displayName: 'enable static website'
-#   inputs:
-#     azureSubscription: $(AZURE_SUBSCRIPTION)
-#     scriptType: 'pscore'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
+- task: AzureCLI@2
+  displayName: 'enable static website'
+  inputs:
+    azureSubscription: $(AZURE_SUBSCRIPTION)
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
 
 # - task: AzureFileCopy@3
 #   displayName: 'copy files'
