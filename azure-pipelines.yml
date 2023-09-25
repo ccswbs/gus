@@ -94,6 +94,6 @@ steps:
     azureSubscription: $(AZURE_SUBSCRIPTION)
     scriptType: 'pscore'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob sync --container $(_container_name) --source $(Build.SourcesDirectory)/$(_gatsby_public_folder) --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME)'
+    inlineScript: 'az storage blob upload-batch --destination $(_container_name) --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME) --source $(Build.SourcesDirectory)/$(_gatsby_public_folder)'
 
      
