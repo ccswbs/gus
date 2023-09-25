@@ -1,73 +1,98 @@
-# Build and deploy content hub 
+# Build content hub 
 
 variables:
-  AZURE_SUBSCRIPTION: 'Pay-As-You-Go($(subscription_id))'
-  AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go($(subscription_id))'
-  RESOURCE_GROUP_NAME: 'chuglivewebrg'
-  STORAGE_ACCOUNT_NAME: 'livechugstorage'
+  AZURE_SUBSCRIPTION: 'CCS-Web Development (Prod)'
+  AZURE_RESOURCE_MANAGER_CONNECTION: 'CCS-Web Development (Prod)'
+  RESOURCE_GROUP_NAME: 'chugstagewebrg'
+  STORAGE_ACCOUNT_NAME: 'stagechugstorage'
 
 pool:
   vmImage: windows-latest
   demands: npm
 
 trigger:
-  - main
-
-resources:
-  webhooks:
-    - webhook: ccswds-gus-pipeline-trigger
-      connection: ccswds-gus-pipeline-service
-
-schedules:
-- cron: "0 0 * * *"
-  displayName: Daily midnight build
-  branches:
-    include:
-    - main
-  always: true
+  - azstaging
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '16.x'
-- task: Npm@1
-  displayName: 'npm cache clear --force'
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
+
+# - task: Npm@1
+#   displayName: 'npm cache clear --force'
+#   inputs:
+#     verbose: false
+
+- task: Cache@2
   inputs:
-    verbose: false
+    key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)"'
+    path: $(_npm_node_modules)
+  displayName: 'Retrieve cached NPM folder'
+
 - task: Npm@1
-  displayName: 'npm install'
   inputs:
-    verbose: false
+    command: 'install'
+
+- task: Cache@2
+  inputs:
+    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)"'
+    path: $(_gatsby_cache_folder)
+  displayName: 'Retrieve cached Gatsby .cache folder'
+
+- task: Cache@2
+  inputs:
+    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)"'
+    path: $(_gatsby_public_folder)
+  displayName: 'Retrieve cached Gatsby public folder'
+
 - task: Npm@1
   displayName: 'npm run build'
   inputs:
     command: 'custom'
     customCommand: 'run build'
     verbose: true
-- task: AzureResourceManagerTemplateDeployment@3
-  displayName: 'az deploy'
+
+- task: ArchiveFiles@2
   inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
-    subscriptionId: $(subscription_id)
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: $(RESOURCE_GROUP_NAME)
-    location: 'Canada East'
-    templateLocation: 'Linked artifact'
-    csmFile: 'azuredeploy.json'
-    deploymentMode: 'Complete'
-- task: AzureCLI@2
-  displayName: 'enable static website'
+    rootFolderOrFile: '$(Build.SourcesDirectory)/public'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
   inputs:
-    azureSubscription: $(AZURE_SUBSCRIPTION)
-    scriptType: 'pscore'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
-- task: AzureFileCopy@3
-  displayName: 'copy files'
-  inputs:
-    SourcePath: 'public'
-    azureSubscription: $(AZURE_SUBSCRIPTION)
-    Destination: 'AzureBlob'
-    storage: $(STORAGE_ACCOUNT_NAME)
-    ContainerName: '$web'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+# - task: AzureResourceManagerTemplateDeployment@3
+#   displayName: 'az deploy'
+#   inputs:
+#     deploymentScope: 'Resource Group'
+#     azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
+#     subscriptionId: $(subscription_id)
+#     action: 'Create Or Update Resource Group'
+#     resourceGroupName: $(RESOURCE_GROUP_NAME)
+#     location: 'Canada East'
+#     templateLocation: 'Linked artifact'
+#     csmFile: 'azuredeploy.json'
+#     deploymentMode: 'Complete'
+
+# - task: AzureCLI@2
+#   displayName: 'enable static website'
+#   inputs:
+#     azureSubscription: $(AZURE_SUBSCRIPTION)
+#     scriptType: 'pscore'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
+
+# - task: AzureFileCopy@3
+#   displayName: 'copy files'
+#   inputs:
+#     SourcePath: 'public'
+#     azureSubscription: $(AZURE_SUBSCRIPTION)
+#     Destination: 'AzureBlob'
+#     storage: $(STORAGE_ACCOUNT_NAME)
+#     ContainerName: '$web'
