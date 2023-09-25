@@ -57,7 +57,7 @@ export const query = graphql`
             name
             relationships {
               field_media_image {
-                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
               }
             }
             path {
