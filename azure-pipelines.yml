@@ -51,19 +51,19 @@ steps:
 - script: npm run build
   displayName: 'Build gatsby'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/public'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(Build.SourcesDirectory)/public'
+#     includeRootFolder: false
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'drop'
+#     publishLocation: 'Container'
 
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'Preview: az deploy'
@@ -93,6 +93,6 @@ steps:
     azureSubscription: $(AZURE_SUBSCRIPTION)
     scriptType: 'pscore'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob sync --source public --container $web --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME)'
+    inlineScript: 'az storage blob sync --source $(Build.SourcesDirectory)/$(_gatsby_public_folder) --container $web --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME)'
 
      
