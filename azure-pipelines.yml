@@ -86,7 +86,6 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: 'az storage blob service-properties update --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
 
-steps:
 - task: AzureCLI@2
   displayName: 'Preview: copy files'
   inputs:
