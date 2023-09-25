@@ -1,5 +1,7 @@
 # Build content hub 
 
+trigger:
+  - azstaging
 
 variables:
 - group: ug-doorknob
@@ -17,11 +19,7 @@ variables:
 #   STORAGE_ACCOUNT_NAME: 'stagechugstorage'
 
 pool:
-  vmImage: windows-latest
-  demands: npm
-
-trigger:
-  - azstaging
+  vmImage: ubuntu-latest
 
 steps:
 - task: NodeTool@0
@@ -56,12 +54,15 @@ steps:
     path: $(_gatsby_public_folder)
   displayName: 'Retrieve cached Gatsby public folder'
 
-- task: Npm@1
-  displayName: 'npm run build'
-  inputs:
-    command: 'custom'
-    customCommand: 'run build'
-    verbose: true
+- script: npm run build
+  displayName: 'Build gatsby'
+
+# - task: Npm@1
+#   displayName: 'npm run build'
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run build'
+#     verbose: true
 
 - task: ArchiveFiles@2
   inputs:
