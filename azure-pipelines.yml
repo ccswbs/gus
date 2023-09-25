@@ -11,6 +11,8 @@ variables:
   value: 'public'
 - name: _npm_node_modules
   value: 'node_modules'
+- name: _container_name
+  value: '$web'
 
 pool:
   vmImage: ubuntu-latest
@@ -92,6 +94,6 @@ steps:
     azureSubscription: $(AZURE_SUBSCRIPTION)
     scriptType: 'pscore'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob sync --container $web --source $(Build.SourcesDirectory)/$(_gatsby_public_folder) --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME)'
+    inlineScript: 'az storage blob sync --container $(_container_name) --source $(Build.SourcesDirectory)/$(_gatsby_public_folder) --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME)'
 
      
