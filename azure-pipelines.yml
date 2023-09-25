@@ -1,10 +1,20 @@
 # Build content hub 
 
+
 variables:
-  AZURE_SUBSCRIPTION: 'CCS-Web Development (Prod)'
-  AZURE_RESOURCE_MANAGER_CONNECTION: 'CCS-Web Development (Prod)'
-  RESOURCE_GROUP_NAME: 'chugstagewebrg'
-  STORAGE_ACCOUNT_NAME: 'stagechugstorage'
+- group: ug-doorknob
+- name: _gatsby_cache_folder
+  value: '.cache'
+- name: _gatsby_public_folder
+  value: 'public'
+- name: _npm_node_modules
+  value: 'node_modules'
+
+# variables:
+#   AZURE_SUBSCRIPTION: 'CCS-Web Development (Prod)'
+#   AZURE_RESOURCE_MANAGER_CONNECTION: 'CCS-Web Development (Prod)'
+#   RESOURCE_GROUP_NAME: 'chugstagewebrg'
+#   STORAGE_ACCOUNT_NAME: 'stagechugstorage'
 
 pool:
   vmImage: windows-latest
