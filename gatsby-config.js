@@ -66,6 +66,7 @@ module.exports = {
         },
         fastBuilds: true,
         skipFileDownloads: true,
+        requestTimeoutMS: 300000,
       },
     },  
     {
@@ -105,7 +106,7 @@ module.exports = {
             limit:
               process.env.NODE_ENV === `development`
                 ? // Lets just pull 25 posts in development to make it easy on ourselves (aka. faster).
-                  25
+                  5
                 : // and we don't actually need more than 50 in production for this particular site
                   50,
           },
