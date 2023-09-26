@@ -11,8 +11,6 @@ variables:
   value: 'public'
 - name: _npm_node_modules
   value: 'node_modules'
-- name: _container_name
-  value: '`$web'
 
 pool:
   vmImage: ubuntu-latest
@@ -80,7 +78,7 @@ steps:
     csmFile: 'azuredeploy.json'
     deploymentMode: 'Complete'
 
-pwsh: |
+- pwsh: |
     $outputs = ConvertFrom-Json '$(outputConnectionString)'
     foreach ($output in $outputs.PSObject.Properties) {
       Write-Host "##vso[task.setvariable variable=_connectionstring]$($output.Value.value)"
