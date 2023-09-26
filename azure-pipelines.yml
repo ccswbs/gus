@@ -12,7 +12,7 @@ variables:
 - name: _npm_node_modules
   value: 'node_modules'
 - name: _container_name
-  value: '$web'
+  value: '`$web'
 
 pool:
   vmImage: ubuntu-latest
