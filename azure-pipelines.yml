@@ -80,6 +80,13 @@ steps:
     csmFile: 'azuredeploy.json'
     deploymentMode: 'Complete'
 
+pwsh: |
+    $outputs = ConvertFrom-Json '$(outputConnectionString)'
+    foreach ($output in $outputs.PSObject.Properties) {
+      Write-Host "##vso[task.setvariable variable=_connectionstring]$($output.Value.value)"
+    }
+  displayName: 'Output parsed connection string'
+
 - task: AzureCLI@2
   displayName: 'Preview: enable static website'
   inputs:
@@ -93,8 +100,7 @@ steps:
   inputs:
     azureSubscription: $(AZURE_SUBSCRIPTION)
     scriptType: 'pscore'
-    arguments: '$(_container_name) $(Build.SourcesDirectory)/$(_gatsby_public_folder) $(PREVIEW_STORAGE_ACCOUNT_NAME)'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob sync --container $1 --source $2 --account-name $3'
+    inlineScript: 'az storage blob upload-batch -s ''public'' -d ''$web'' --connection-string ''$(_connectionstring)'''
 
      
