@@ -77,6 +77,7 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: 'azuredeploy.json'
     deploymentMode: 'Complete'
+    deploymentOutputs: 'outputConnectionString'
 
 - pwsh: |
     $outputs = ConvertFrom-Json '$(outputConnectionString)'
