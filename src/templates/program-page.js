@@ -453,6 +453,7 @@ export const query = graphql`query ($id: String) {
                   cropFocus: CENTER
                   placeholder: BLURRED
                   aspectRatio: 3
+                  formats: [AUTO, WEBP]
                 )
               }
             }
@@ -605,7 +606,7 @@ export const query = graphql`query ($id: String) {
             }
           }
           field_image {
-            gatsbyImage(width: 400, height: 400, placeholder: BLURRED, layout: CONSTRAINED)
+            gatsbyImage(width: 400, height: 400, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
           }
         }
       }
@@ -635,6 +636,7 @@ export const query = graphql`query ($id: String) {
               cropFocus: CENTER
               placeholder: BLURRED
               aspectRatio: 3
+              formats: [AUTO, WEBP]
             )
           }
         }
@@ -656,6 +658,7 @@ export const query = graphql`query ($id: String) {
               cropFocus: CENTER
               placeholder: BLURRED
               aspectRatio: 3
+              formats: [AUTO, WEBP]
             )
           }
           field_tags {
@@ -712,7 +715,7 @@ export const query = graphql`query ($id: String) {
             }
             relationships {
               field_media_image {
-                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
               }
             }
           }

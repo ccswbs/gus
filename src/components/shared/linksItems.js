@@ -121,6 +121,7 @@ fragment LinksWidgetParagraphFragment on paragraph__links_widget {
                   width: 400
                   height: 300
                   cropFocus: CENTER
+									formats: [AUTO, WEBP]
                 )
               }
             }
