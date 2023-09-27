@@ -3,6 +3,11 @@
 trigger:
   - azstaging
 
+resources:
+  webhooks:
+    - webhook: ccswds-gus-pipeline-trigger
+      connection: ccswds-gus-pipeline-service
+
 variables:
 - group: ug-gus
 - name: _gatsby_cache_folder
