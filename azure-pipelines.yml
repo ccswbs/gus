@@ -1,35 +1,35 @@
 # Build and deploy content hub 
 
-variables:
-  AZURE_SUBSCRIPTION: 'Pay-As-You-Go($(subscription_id))'
-  AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go($(subscription_id))'
-  RESOURCE_GROUP_NAME: 'chuglivewebrg'
-  STORAGE_ACCOUNT_NAME: 'livechugstorage'
+# variables:
+#   AZURE_SUBSCRIPTION: 'Pay-As-You-Go($(subscription_id))'
+#   AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go($(subscription_id))'
+#   RESOURCE_GROUP_NAME: 'chuglivewebrg'
+#   STORAGE_ACCOUNT_NAME: 'livechugstorage'
 
-pool:
-  vmImage: windows-latest
-  demands: npm
+# pool:
+#   vmImage: windows-latest
+#   demands: npm
 
 # trigger:
 #   - main
 
-resources:
-  webhooks:
-    - webhook: ccswds-gus-pipeline-trigger
-      connection: ccswds-gus-pipeline-service
+# resources:
+#   webhooks:
+#     - webhook: ccswds-gus-pipeline-trigger
+#       connection: ccswds-gus-pipeline-service
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '16.x'
-- task: Npm@1
-  displayName: 'npm cache clear --force'
-  inputs:
-    verbose: false
-- task: Npm@1
-  displayName: 'npm install'
-  inputs:
-    verbose: false
+# steps:
+# - task: NodeTool@0
+#   inputs:
+#     versionSpec: '16.x'
+# - task: Npm@1
+#   displayName: 'npm cache clear --force'
+#   inputs:
+#     verbose: false
+# - task: Npm@1
+#   displayName: 'npm install'
+#   inputs:
+#     verbose: false
 # - task: Npm@1
 #   displayName: 'npm run build'
 #   inputs:
