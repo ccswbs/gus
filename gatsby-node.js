@@ -1209,6 +1209,7 @@ function processNews(node, contextID, nodeNid, tagID, template, helpers) {
 function createNewsContentTypeAlias(node) {
   let  alias = `/news/` + slugify(node.title);
 console.log(alias, "news alias");
+console.log (node);
   return alias;
 }
 // use for content types
