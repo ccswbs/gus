@@ -136,6 +136,7 @@ export const query = graphql`
 							height: 400
 							placeholder: BLURRED
 							layout: CONSTRAINED
+							formats: [AUTO, WEBP]
 						)
 					}
 				}

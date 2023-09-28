@@ -94,7 +94,7 @@ export const query = graphql`
         relationships {
           field_media_image {
             publicUrl
-            gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+            gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
           }
         }
       }

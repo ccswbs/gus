@@ -56,12 +56,6 @@ module.exports = {
       }
     },
     {
-      resolve: `gatsby-plugin-sharp`,
-      options: {
-        defaultQuality: 90,
-      },
-    },
-    {
       resolve: `gatsby-source-drupal`,
         options: {
         baseUrl: process.env.DRUPAL_BASEURL,
@@ -100,7 +94,7 @@ module.exports = {
           //Prefixes all WP Types with "Wp" so "Post and allPost" become "WpPost and allWpPost".
           typePrefix: `Wp`,
           perPage: 20,
-          requestConcurrency: 5,
+          requestConcurrency: 2,
           previewRequestConcurrency: 2,
         },
         develop: {
