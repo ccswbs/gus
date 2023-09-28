@@ -1,73 +1,65 @@
 # Build and deploy content hub 
 
-variables:
-  AZURE_SUBSCRIPTION: 'Pay-As-You-Go($(subscription_id))'
-  AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go($(subscription_id))'
-  RESOURCE_GROUP_NAME: 'chuglivewebrg'
-  STORAGE_ACCOUNT_NAME: 'livechugstorage'
+# variables:
+#   AZURE_SUBSCRIPTION: 'Pay-As-You-Go($(subscription_id))'
+#   AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go($(subscription_id))'
+#   RESOURCE_GROUP_NAME: 'chuglivewebrg'
+#   STORAGE_ACCOUNT_NAME: 'livechugstorage'
 
-pool:
-  vmImage: windows-latest
-  demands: npm
+# pool:
+#   vmImage: windows-latest
+#   demands: npm
 
-trigger:
-  - main
+# trigger:
+#   - main
 
-resources:
-  webhooks:
-    - webhook: ccswds-gus-pipeline-trigger
-      connection: ccswds-gus-pipeline-service
+# resources:
+#   webhooks:
+#     - webhook: ccswds-gus-pipeline-trigger
+#       connection: ccswds-gus-pipeline-service
 
-schedules:
-- cron: "0 0 * * *"
-  displayName: Daily midnight build
-  branches:
-    include:
-    - main
-  always: true
-
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '16.x'
-- task: Npm@1
-  displayName: 'npm cache clear --force'
-  inputs:
-    verbose: false
-- task: Npm@1
-  displayName: 'npm install'
-  inputs:
-    verbose: false
-- task: Npm@1
-  displayName: 'npm run build'
-  inputs:
-    command: 'custom'
-    customCommand: 'run build'
-    verbose: true
-- task: AzureResourceManagerTemplateDeployment@3
-  displayName: 'az deploy'
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
-    subscriptionId: $(subscription_id)
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: $(RESOURCE_GROUP_NAME)
-    location: 'Canada East'
-    templateLocation: 'Linked artifact'
-    csmFile: 'azuredeploy.json'
-    deploymentMode: 'Complete'
-- task: AzureCLI@2
-  displayName: 'enable static website'
-  inputs:
-    azureSubscription: $(AZURE_SUBSCRIPTION)
-    scriptType: 'pscore'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
-- task: AzureFileCopy@3
-  displayName: 'copy files'
-  inputs:
-    SourcePath: 'public'
-    azureSubscription: $(AZURE_SUBSCRIPTION)
-    Destination: 'AzureBlob'
-    storage: $(STORAGE_ACCOUNT_NAME)
-    ContainerName: '$web'
+# steps:
+# - task: NodeTool@0
+#   inputs:
+#     versionSpec: '16.x'
+# - task: Npm@1
+#   displayName: 'npm cache clear --force'
+#   inputs:
+#     verbose: false
+# - task: Npm@1
+#   displayName: 'npm install'
+#   inputs:
+#     verbose: false
+# - task: Npm@1
+#   displayName: 'npm run build'
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run build'
+#     verbose: true
+# - task: AzureResourceManagerTemplateDeployment@3
+#   displayName: 'az deploy'
+#   inputs:
+#     deploymentScope: 'Resource Group'
+#     azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
+#     subscriptionId: $(subscription_id)
+#     action: 'Create Or Update Resource Group'
+#     resourceGroupName: $(RESOURCE_GROUP_NAME)
+#     location: 'Canada East'
+#     templateLocation: 'Linked artifact'
+#     csmFile: 'azuredeploy.json'
+#     deploymentMode: 'Complete'
+# - task: AzureCLI@2
+#   displayName: 'enable static website'
+#   inputs:
+#     azureSubscription: $(AZURE_SUBSCRIPTION)
+#     scriptType: 'pscore'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
+# - task: AzureFileCopy@3
+#   displayName: 'copy files'
+#   inputs:
+#     SourcePath: 'public'
+#     azureSubscription: $(AZURE_SUBSCRIPTION)
+#     Destination: 'AzureBlob'
+#     storage: $(STORAGE_ACCOUNT_NAME)
+#     ContainerName: '$web'
