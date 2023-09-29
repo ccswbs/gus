@@ -1,15 +1,11 @@
 # Build content hub 
 
-trigger:
-  batch: true
-  branches:
-    include:
-      - azstaging
+trigger: false
 
-resources:
-  webhooks:
-    - webhook: ccswds-gus-pipeline-trigger
-      connection: ccswds-gus-pipeline-service
+# resources:
+#   webhooks:
+#     - webhook: ccswds-gus-pipeline-trigger
+#       connection: ccswds-gus-pipeline-service
 
 variables:
 - group: ug-gus
@@ -34,11 +30,11 @@ steps:
 #   inputs:
 #     verbose: false
 
-# - task: Cache@2
-#   inputs:
-#     key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)"'
-#     path: $(_npm_node_modules)
-#   displayName: 'Retrieve cached NPM folder'
+- task: Cache@2
+  inputs:
+    key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(Build.SourceVersion)"'
+    path: $(_npm_node_modules)
+  displayName: 'Retrieve cached NPM folder'
 
 - task: Npm@1
   inputs:
@@ -46,13 +42,13 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)"'
+    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(Build.SourceVersion)"'
     path: $(_gatsby_cache_folder)
   displayName: 'Retrieve cached Gatsby .cache folder'
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)"'
+    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(Build.SourceVersion)"'
     path: $(_gatsby_public_folder)
   displayName: 'Retrieve cached Gatsby public folder'
 
