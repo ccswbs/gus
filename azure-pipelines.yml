@@ -1,7 +1,5 @@
 # Build content hub 
 
-trigger: false
-
 # resources:
 #   webhooks:
 #     - webhook: ccswds-gus-pipeline-trigger
