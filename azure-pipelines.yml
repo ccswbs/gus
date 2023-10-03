@@ -32,7 +32,7 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(Build.SourceVersion)"'
+    key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)"'
     path: $(_npm_node_modules)
   displayName: 'Retrieve cached NPM folder'
 
@@ -42,13 +42,13 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(Build.SourceVersion)"'
+    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)"'
     path: $(_gatsby_cache_folder)
   displayName: 'Retrieve cached Gatsby .cache folder'
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(Build.SourceVersion)"'
+    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)"'
     path: $(_gatsby_public_folder)
   displayName: 'Retrieve cached Gatsby public folder'
 
