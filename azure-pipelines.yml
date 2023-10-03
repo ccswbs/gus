@@ -2,10 +2,10 @@
 
 trigger: none
 
-# resources:
-#   webhooks:
-#     - webhook: ccswds-gus-pipeline-trigger
-#       connection: ccswds-gus-pipeline-service
+resources:
+  webhooks:
+    - webhook: ccswds-gus-pipeline-trigger
+      connection: ccswds-gus-pipeline-service
 
 variables:
 - group: ug-gus
