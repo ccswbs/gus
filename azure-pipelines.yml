@@ -38,7 +38,7 @@ steps:
 
 - task: Npm@1
   inputs:
-    command: 'install'
+    command: 'ci'
 
 - task: Cache@2
   inputs:
