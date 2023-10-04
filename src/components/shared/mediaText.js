@@ -20,7 +20,7 @@ function MediaText (props) {
     const imageURL = mediaRelationships?.field_media_image;	
     const imageAlt = props.widgetData?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
-    const imageLeft = props.widgetData?.field_image_side ?? 'left';
+    const imageLeft = props.widgetData?.field_image_side ?? 'Left';
     console.log(imageLeft);
 
     const videoTitle = props.widgetData?.relationships.field_media_text_media?.name;
@@ -205,7 +205,7 @@ function MediaText (props) {
     }
     headingClass = classNames(headingClass, headingColor);
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
-    if (videoURL || imageLeft === 'left'){
+    if (videoURL || imageLeft !== 'Right'){
     return (
     <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
     
