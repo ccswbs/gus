@@ -27,6 +27,12 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- pwsh: |
+   Write-Host "Setting up the date for cache build variable"
+   $date=$(Get-Date -format yyyyMMdd)
+   Write-Host "##vso[task.setvariable variable=foo]$date"
+  displayName: 'PowerShell Script'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '18.x'
@@ -39,7 +45,7 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)"'
+    key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(date)"'
     path: $(_npm_node_modules)
   displayName: 'Retrieve cached NPM folder'
 
@@ -49,13 +55,13 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)"'
+    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(date)"'
     path: $(_gatsby_cache_folder)
   displayName: 'Retrieve cached Gatsby .cache folder'
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)"'
+    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(date)"'
     path: $(_gatsby_public_folder)
   displayName: 'Retrieve cached Gatsby public folder'
 
