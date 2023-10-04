@@ -26,12 +26,21 @@ variables:
 pool:
   vmImage: ubuntu-latest
 
+schedules:
+- cron: "0 5 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - azstage
+  always: true
+
 steps:
+
 - pwsh: |
    Write-Host "Setting up the date for cache build variable"
    $date=$(Get-Date -format yyyyMMdd)
    Write-Host "##vso[task.setvariable variable=foo]$date"
-  displayName: 'PowerShell Script'
+  displayName: 'Output date variable'
 
 - task: NodeTool@0
   inputs:
