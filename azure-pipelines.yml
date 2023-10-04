@@ -1,8 +1,11 @@
 # Build content hub 
 
 trigger:
-- main
-- azstage
+  batch: true
+  branches:
+    include:
+    - main
+    - azstage
 
 pr: none
 
