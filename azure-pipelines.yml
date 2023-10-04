@@ -1,6 +1,10 @@
 # Build content hub 
 
-trigger: none
+trigger:
+- main
+- azstage
+
+pr: none
 
 resources:
   webhooks:
