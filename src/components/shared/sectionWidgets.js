@@ -180,6 +180,7 @@ export const query = graphql`
   fragment SectionParagraphFragment on paragraph__section {
     drupal_id
     field_section_title
+    field_heading_level
     field_section_classes
     relationships {
       field_section_content {
