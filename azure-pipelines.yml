@@ -37,10 +37,10 @@ schedules:
 steps:
 
 - pwsh: |
-   Write-Host "Setting up the date for cache build variable"
-   $date = Get-Date -format yyyyMMdd
-   $date.AddHours(4)
-   Write-Host "##vso[task.setvariable variable=_date]$date"
+    Write-Host "Setting up the date for cache build variable"
+    $date = $(Get-Date).AddHours(4)
+    $formattedDate = $date.ToString("yyyyMMdd")
+    Write-Host "##vso[task.setvariable variable=_date]$formattedDate"
   displayName: 'Output date variable'
 
 - task: NodeTool@0
