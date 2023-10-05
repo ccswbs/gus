@@ -20,8 +20,7 @@ function MediaText (props) {
     const imageURL = mediaRelationships?.field_media_image;	
     const imageAlt = props.widgetData?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
-    const imageLeft = props.widgetData?.field_image_side ?? 'Left';
-    console.log(imageLeft);
+    const imageLeft = props.widgetData?.field_media_image_side ?? 'Left';
 
     const videoTitle = props.widgetData?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
@@ -206,45 +205,46 @@ function MediaText (props) {
     headingClass = classNames(headingClass, headingColor);
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
     if (videoURL || imageLeft !== 'Right'){
-    return (
-    <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
-    
-            {videoURL && <div data-title="media" className={mediaCol}>
-            <Video 
-                videoID={videoID}
-                videoTitle={videoTitle}
-                videoTranscript={videoTranscript}
-                videoType={videoType}
-                videoURL={videoURL}
-                videoHeight={videoHeight}
-                videoWidth={videoWidth}
-            /> </div>}
-            
-            {imageURL && <div data-title="media" className={mediaCol}> <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} /></div>}
-      
+        return (
+        <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
+            <div data-title="media" className={mediaCol}>
+                {videoURL && 
+                    <Video 
+                        videoID={videoID}
+                        videoTitle={videoTitle}
+                        videoTranscript={videoTranscript}
+                        videoType={videoType}
+                        videoURL={videoURL}
+                        videoHeight={videoHeight}
+                        videoWidth={videoWidth}
+                    />}
+                
+                {imageURL && <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} />}
+            </div>
+
             {textOrButtons &&
                 <div data-title="media-description" className={textCol}>
                     {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
                     {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
                     {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
                 </div>}
-       
-    </ConditionalWrapper>
-    );
-        } else {
-            return (
-            <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
-                {textOrButtons &&
-                    <div data-title="media-description" className={textCol}>
-                        {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
-                        {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
-                        {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
-                    </div>}
         
-                {imageURL && <div  data-title="media" className={mediaCol}> <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} /> </div>}
-            </ConditionalWrapper>
-            );
-        }
+        </ConditionalWrapper>
+    );
+    } else {
+        return (
+        <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
+            {textOrButtons &&
+                <div data-title="media-description" className={textCol}>
+                    {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
+                    {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
+                    {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
+                </div>}
+    
+            {imageURL && <div  data-title="media" className={mediaCol}> <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} /> </div>}
+        </ConditionalWrapper>
+        );
+    }
 
 
 }
@@ -278,7 +278,7 @@ export const query = graphql`
   fragment MediaTextParagraphFragment on paragraph__media_text {
     drupal_id
     field_media_image_size
-    field_image_side
+    field_media_image_side
     field_media_text_title
     field_media_text_desc {
       processed
