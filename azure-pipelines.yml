@@ -38,7 +38,7 @@ steps:
 
 - pwsh: |
     Write-Host "Setting up the date for cache build variable"
-    $date = $(Get-Date).AddHours(4)
+    $date = $(Get-Date).AddHours(-4)
     $formattedDate = $date.ToString("yyyyMMdd")
     Write-Host "##vso[task.setvariable variable=_date]$formattedDate"
   displayName: 'Output date variable'
