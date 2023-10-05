@@ -241,7 +241,7 @@ function MediaText (props) {
                         {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
                     </div>}
         
-                {imageURL && <div className={mediaCol}> <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} /> </div>}
+                {imageURL && <div  data-title="media" className={mediaCol}> <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} /> </div>}
             </ConditionalWrapper>
             );
         }
