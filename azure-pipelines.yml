@@ -26,8 +26,8 @@ pool:
   vmImage: ubuntu-latest
 
 schedules:
-- cron: "0 5 * * *"
-  displayName: Daily 1 AM EST build
+- cron: "0 5,6 * * *"
+  displayName: Daily 1 AM (Gatsby cache) and 2 AM EST (AzCDN cache) clear
   branches:
     include:
     - azstage
