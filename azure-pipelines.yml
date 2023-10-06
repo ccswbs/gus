@@ -4,7 +4,6 @@ trigger:
   batch: true
   branches:
     include:
-    - main
     - azstage
 
 pr: none
@@ -28,11 +27,18 @@ pool:
 
 schedules:
 - cron: "0 5 * * *"
-  displayName: Daily midnight build
+  displayName: Daily 1 AM EST build
   branches:
     include:
     - azstage
   always: true
+- cron: "0 10-22 * * *"
+  displayName: Hourly build (6am - 6pm EST)
+  branches:
+    include:
+    - azstage
+  always: true
+  
 
 steps:
 
