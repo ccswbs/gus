@@ -39,7 +39,6 @@ schedules:
     - azstage
   always: true
   
-
 steps:
 
 - pwsh: |
@@ -97,42 +96,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-# - task: AzureResourceManagerTemplateDeployment@3
-#   displayName: 'Preview: az deploy'
-#   inputs:
-#     deploymentScope: 'Resource Group'
-#     azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
-#     subscriptionId: $(SUBSCRIPTION_ID)
-#     action: 'Create Or Update Resource Group'
-#     resourceGroupName: $(PREVIEW_RESOURCE_GROUP_NAME)
-#     location: 'Canada East'
-#     templateLocation: 'Linked artifact'
-#     csmFile: 'azuredeploy.json'
-#     deploymentMode: 'Complete'
-#     deploymentOutputs: 'outputConnectionString'
-
-# - pwsh: |
-#     $outputs = ConvertFrom-Json '$(outputConnectionString)'
-#     foreach ($output in $outputs.PSObject.Properties) {
-#       Write-Host "##vso[task.setvariable variable=_connectionstring]$($output.Value.value)"
-#     }
-#   displayName: 'Output parsed connection string'
-
-# - task: AzureCLI@2
-#   displayName: 'Preview: enable static website'
-#   inputs:
-#     azureSubscription: $(AZURE_SUBSCRIPTION)
-#     scriptType: 'pscore'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: 'az storage blob service-properties update --account-name $(PREVIEW_STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
-
-# - task: AzureCLI@2
-#   displayName: 'Preview: copy files'
-#   inputs:
-#     azureSubscription: $(AZURE_SUBSCRIPTION)
-#     scriptType: 'pscore'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: 'az storage blob sync --container ''$web'' --source ''public'' --connection-string ''$(_connectionstring)'''
-
-     
