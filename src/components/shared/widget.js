@@ -57,7 +57,7 @@ const WidgetSelector = ({widget}) => {
             transcript={video?.relationships?.field_media_file?.publicUrl} /> 
             : null;
         case "paragraph__section":
-            const headingLevelSec = (widget.pageData?.field_heading_level ? widget.pageData.field_heading_level : "h2");
+            const headingLevelSec = (widget.pageData?.field_section_title ? widget.pageData.field_section_title : "h2");
             return (<>
               {console.log(headingLevelSec)}
               {widget.field_section_title && <headingLevelSec id={slugify(widget.field_section_title)} className="mt-0">{widget.field_section_title}</headingLevelSec>}
