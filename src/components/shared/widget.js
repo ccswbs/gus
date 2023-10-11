@@ -60,7 +60,7 @@ const WidgetSelector = ({widget}) => {
             const headingLevelSec = (widget.pageData?.field_heading_level ? widget.pageData.field_heading_level : "h2");
             return (<>
               {console.log(headingLevelSec)}
-              {widget.field_section_title && <h2 id={slugify(widget.field_section_title)} className="mt-0">{widget.field_section_title}</h2>}
+              {widget.field_section_title && <headingLevelSec id={slugify(widget.field_section_title)} className="mt-0">{widget.field_section_title}</headingLevelSec>}
                 <div key={widget.drupal_id} className="row" data-title="Section widget">
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>
