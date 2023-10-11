@@ -5,6 +5,7 @@ trigger:
   branches:
     include:
     - azstage
+    - main
 
 pr: none
 
@@ -31,12 +32,14 @@ schedules:
   branches:
     include:
     - azstage
+    - main
   always: true
 - cron: "0 10-22 * * *"
   displayName: Hourly build (6am - 6pm EST)
   branches:
     include:
     - azstage
+    - main
   always: true
   
 steps:
