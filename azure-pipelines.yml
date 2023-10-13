@@ -4,7 +4,6 @@ trigger:
   batch: true
   branches:
     include:
-    - azstage
     - main
 
 pr: none
@@ -31,14 +30,12 @@ schedules:
   displayName: Daily 1 AM (Gatsby cache) and 2 AM EST (AzCDN cache) clear
   branches:
     include:
-    - azstage
     - main
   always: true
 - cron: "0 10-22 * * *"
   displayName: Hourly build (6am - 6pm EST)
   branches:
     include:
-    - azstage
     - main
   always: true
   
