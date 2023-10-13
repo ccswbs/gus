@@ -10,15 +10,21 @@ import "@fontsource/roboto/100-italic.css"
 import "@fontsource/roboto/400-italic.css"
 
 const Layout = ({ children, date, menuName }) => (
-      <>
-        <uofg-header><HeaderMenu menuName={menuName} /></uofg-header>
-        <main id="content">
-          {children}
-          <DateModified date={date}/>
-        </main>
-        <uofg-footer></uofg-footer>        
-      </>
-)
+  <>
+    {menuName ? (
+      <HeaderMenu menuName={menuName} />
+    ) : (
+      <uofg-header></uofg-header>
+    )}
+    <main id="content">
+      {children}
+      <DateModified date={date} />
+    </main>
+    <div className="be-ix-link-block"></div>
+    <uofg-footer></uofg-footer>
+  </>
+);
+
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
