@@ -57,7 +57,7 @@ const WidgetSelector = ({widget}) => {
             transcript={video?.relationships?.field_media_file?.publicUrl} /> 
             : null;
         case "paragraph__section":
-            const sectionTitle = widget.pageData?.field_section_title;
+            let sectionTitle = widget.pageData?.field_section_title;
             const HeadingLevelSec = (widget.pageData?.field_section_title ? widget.pageData.field_section_title : "h2");
             return (<>
               {console.log(HeadingLevelSec)}
