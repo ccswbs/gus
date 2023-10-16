@@ -57,10 +57,10 @@ const WidgetSelector = ({widget}) => {
             transcript={video?.relationships?.field_media_file?.publicUrl} /> 
             : null;
         case "paragraph__section":
-            const headingLevelSec = (widget.pageData?.field_section_title ? widget.pageData.field_section_title : "h2");
+            const HeadingLevelSec = (widget.pageData?.field_section_title ? widget.pageData.field_section_title : "h2");
             return (<>
-              {console.log(headingLevelSec)}
-              {widget.field_section_title && <headingLevelSec id={slugify(widget.field_section_title)} className="mt-0">{widget.field_section_title}</headingLevelSec>}
+              {console.log(HeadingLevelSec)}
+              {widget.field_section_title && <HeadingLevelSec id={slugify(widget.field_section_title)} className="mt-0">{widget.field_section_title}</HeadingLevelSec>}
                 <div key={widget.drupal_id} className="row" data-title="Section widget">
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>
