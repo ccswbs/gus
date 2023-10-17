@@ -115,15 +115,29 @@ html {
 .bg-dark h4 {
     color: var(--off-white) !important;
 }
-.uog-blue-muted {background:#edf2f5;}
+.uog-blue {color: var(--uog-blue);}
+.uog-blue-muted {background: #f5f7fa;}
 i.green {color:#4cae3e;}
 
-.uog-tertiary-color1 {color:#0d6efd;}
-.uog-tertiary-color2 {color:#6610f2;}
-.uog-tertiary-color3 {color:#d63384;}
-.uog-tertiary-color4 {color:#fd7e14;}
-.uog-tertiary-color5 {color:#198754;}
-.uog-tertiary-color6 {color:#20c997;}
+.uog-tertiary-color1 {color:#0d6efd;} /* Brandeis Blue */
+.uog-tertiary-color2 {color:#6610f2;} /* Electric Indigo */
+.uog-tertiary-color3 {color:#d63384;} /* Deep Cerise */
+.uog-tertiary-color4 {color:#fd7e14;} /* Pumpkin */
+.uog-tertiary-color5 {color:#198754;} /* Salem (green) */
+.uog-tertiary-color6 {color:#20c997;} /* Mountain Meadow (green) */
+
+.uog-border-red {
+	border-left: 1rem solid var(--uog-red);
+}
+.uog-border-yellow {
+	border-left: 1rem solid var(--uog-yellow);
+}
+.uog-border-black {
+	border-left: 1rem solid var(--black);
+}
+.uog-border-blue {
+	border-left: 1rem solid var(--uog-blue);
+}
 
 .card .uog-card-border {
     border-left: 1rem solid var(--uog-red);
@@ -160,113 +174,8 @@ i.green {color:#4cae3e;}
     column-count: 4;
 }
 
-
-/* Slate form styles (pulled from UofG-styles-dist) */
-/* @todo: clean up when time permits */
-
-@media (max-width: 768px){
-    .ug-slate .form_button_submit {
-        width: 100%;
-    }
-}
-
-@media (min-width: 992px) {
-    .ug-slate {
-        width: 75%;
-    }
-    .ug-slate .form_button_submit {
-        font-size: 2.5rem !important;
-    }
-}
-
-.ug-slate input {
-    display: block;
-    width: 100%;
-    padding: .375rem .75rem;
-    font-size: 1.8rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.ug-slate input:focus {
-    color: #212529;
-    background-color: #fff;
-    border-color: #86b7fe;
-    outline: 0;
-    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
-}
-
-.ug-slate select {
-    display: block;
-    width: 100%;
-    padding: .375rem 2.25rem .375rem .75rem;
-    -moz-padding-start: calc(0.75rem - 3px);
-    font-size: 1.8rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right .75rem center;
-    background-size: 16px 12px;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.ug-slate .form_birthdate .form_responses select {
-    flex-wrap: 0 0 auto;
-    width: 33%;
-}
-
-.ug-slate .form_birthdate .form_responses {
-    display: flex;
-}
-
-.ug-slate select:focus{
-    border-color: #86b7fe;
-    outline: 0;
-    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
-}
-
-.ug-slate .form_button_submit {
-    background-color: #c20430 !important;
-    border: 2px solid transparent;
-    border-color: #c20430 !important;
-    border-radius: 0;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    color: #ffffff;
-    display: inline-block !important;
-    font-size: calc(1.375rem + 1.5vw);
-    font-weight: 400;
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-    padding: 0.75rem 3rem;
-    text-align: center;
-    vertical-align: middle;
-    outline: none !important;
-    outline: 0 !important;
-}
-
-.ug-slate .form_button.active,
-.ug-slate .form_button:active,
-.ug-slate .form_button_submit:hover,
-.ug-slate .form_button_submit:focus {
-    background-color: #900324!important;
-    border-color: #900324!important;
-    color: #fff!important;
+/* List style overrides */
+.main-container .site-content ul.list-unstyled li:before, 
+.page-container .site-content ul.list-unstyled li:before {
+	all: unset;
 }
