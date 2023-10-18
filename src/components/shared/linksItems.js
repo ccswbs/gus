@@ -114,7 +114,8 @@ fragment LinksWidgetParagraphFragment on paragraph__links_widget {
             relationships {
               field_media_image {
                 gatsbyImage(
-                  width: 1000
+                  width: 800
+                  height: 600
                   cropFocus: CENTER
                   formats: [AUTO, WEBP]
                 )
