@@ -258,6 +258,7 @@ i.green {
 
 .ug-slate input[type="checkbox"],
 .ug-slate input[type="radio"] {
+  display: inline-block;
   width: 1em;
   height: 1em;
   margin-top: 0.25em;
