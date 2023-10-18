@@ -598,7 +598,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__media_text implements Node {
       drupal_id: String
       field_media_image_size: String
-      field_media_image_side: String
+      field_media_image_alignment: String
       field_media_text_desc: BodyField
       field_media_text_title: String
       relationships: paragraph__media_textRelationships

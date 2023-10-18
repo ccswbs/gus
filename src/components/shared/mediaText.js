@@ -20,7 +20,7 @@ function MediaText (props) {
     const imageURL = mediaRelationships?.field_media_image;	
     const imageAlt = props.widgetData?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
-    const imageLeft = props.widgetData?.field_media_image_side ?? 'Left';
+    const imageLeft = props.widgetData?.field_media_image_alignment ?? 'Left';
 
     const videoTitle = props.widgetData?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
@@ -278,7 +278,7 @@ export const query = graphql`
   fragment MediaTextParagraphFragment on paragraph__media_text {
     drupal_id
     field_media_image_size
-    field_media_image_side
+    field_media_image_alignment
     field_media_text_title
     field_media_text_desc {
       processed
