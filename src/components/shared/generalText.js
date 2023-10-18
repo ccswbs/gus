@@ -7,10 +7,17 @@ const GeneralText = (props) => {
   const parser = new Parser()
   const instructions = [
     {
-      shouldProcessNode: (node) => node.name === "script",
-      processNode: (node) => <Script src={node?.attribs?.src} />,
+      // Replace <script> tags with Gatsby <Script> components
+      shouldProcessNode: (node) => node.name === "script" && node.attribs?.src,
+      processNode: (node) => <Script src={node.attribs.src} />,
     },
     {
+      // Inline scripts will also be replaced but should only have one child, which is the script text
+      shouldProcessNode: (node) => node.name === "script" && node?.children.length === 1,
+      processNode: (node) => <Script>{node.children[0].data}</Script>,
+    },
+    {
+      // Process all other nodes with the default parser
       shouldProcessNode: () => true,
       processNode: new ProcessNodeDefinitions().processDefaultNode,
     },
