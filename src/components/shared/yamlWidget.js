@@ -16,6 +16,7 @@ import LangBcommSupportiveCommunity from 'components/blocks/lang/lang-bcomm-supp
 import LangBcommFeatureExperience from 'components/blocks/lang/lang-bcomm-feature-experience';
 import LangBcommStudentBlog from 'components/blocks/lang/lang-bcomm-student-blog';
 import SouthAsiaExploreGrid from 'components/blocks/canada/south-asia-explore-grid';
+import AdmissionGrid from 'components/blocks/admission/admission-grid'
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
