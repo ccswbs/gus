@@ -25,9 +25,9 @@ function setColumnClasses(numColumns) {
         case 3:
             return 'col-md-4 col-sm-6';
         case 4:
-            return 'col-md-3 col-sm-6';
+            return 'col-12 col-md-3 col-sm-6';
         default:
-            return 'col-md-3 col-sm-6';
+            return 'col-12 col-md-3 col-sm-6';
       }
 }
 function setElementClass(displayType) {
