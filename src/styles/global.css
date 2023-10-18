@@ -337,6 +337,10 @@ i.green {
   appearance: none;
 }
 
+.ug-slate select:has(optgroup) {
+  background-image: none;
+}
+
 .ug-slate .form_birthdate .form_responses select {
   flex-wrap: 0 0 auto;
   width: 33%;
