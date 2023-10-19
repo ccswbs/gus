@@ -385,6 +385,19 @@ i.green {
   color: #fff !important;
 }
 
+.suggest {
+  font-size: inherit !important;
+}
+
+.suggest .suggest_item .suggest_name {
+  font-size: 1em;
+}
+
+.suggest .suggest_item .suggest_data {
+  font-size: 0.8em;
+}
+
+
 /* List style overrides */
 .main-container .site-content ul.list-unstyled li:before,
 .page-container .site-content ul.list-unstyled li:before {
