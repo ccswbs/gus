@@ -249,7 +249,7 @@ export const query = graphql`
     relationships {
       field_media_image {
         publicUrl
-        gatsbyImage(width: 1000, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
+        gatsbyImage(width: 1000, placeholder: BLURRED, layout: FULL_WIDTH, formats: [AUTO, WEBP])
       }
     }
   }
