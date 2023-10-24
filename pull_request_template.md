@@ -13,4 +13,4 @@ List all significant changes to the Drupal site (e.g. new fields, content types,
 
 # Test Plan
 
-Insert steps. Include URLs of Gatsby Cloud test site and Drupal multidev.
+Insert steps. Include URLs of Netlify test site and Drupal multidev.
