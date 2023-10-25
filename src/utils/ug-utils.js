@@ -77,6 +77,16 @@ function stripHTMLTags(content) {
 	return content !== null ? content.replace(/(<([^>]+)>)/ig,"") : ``;
 }
 
+function extractVideoID(url) {
+	var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#]*).*/;
+	var match = url.match(regExp);
+	if (match && match[7].length === 11) {
+		return match[7];
+	} else {
+		alert('Could not extract video ID.');
+	}
+}
+
 const ConditionalWrapper = ({ condition, wrapper, children }) => 
   condition ? wrapper(children) : children;
 
@@ -86,8 +96,9 @@ export {
 	fontAwesomeIconColour,
 	getNextHeadingLevel,
 	setHeadingLevel,
-    slugify,
+	slugify,
 	sortLastModifiedDates,
 	stripHTMLTags,
-    ConditionalWrapper
-   };
+	extractVideoID,
+	ConditionalWrapper
+};
