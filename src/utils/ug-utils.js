@@ -77,6 +77,7 @@ function stripHTMLTags(content) {
 	return content !== null ? content.replace(/(<([^>]+)>)/ig,"") : ``;
 }
 
+// Source: https://www.labnol.org/code/19797-regex-youtube-id
 function extractVideoID(url) {
 	var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#]*).*/;
 	var match = url.match(regExp);
