@@ -79,12 +79,13 @@ function stripHTMLTags(content) {
 
 // Source: https://www.labnol.org/code/19797-regex-youtube-id
 function extractVideoID(url) {
-	var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#]*).*/;
-	var match = url.match(regExp);
-	if (match && match[7].length === 11) {
-		return match[7];
-	} else {
-		alert('Could not extract video ID.');
+	let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#]*).*/;
+	let match = url.match(regExp);
+
+	if (match) {
+		return match[7].split("?")[0];
+	} else{
+		console.log('Could not extract video ID.');
 	}
 }
 
