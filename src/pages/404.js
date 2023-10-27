@@ -1,56 +1,46 @@
 import React from "react"
-import { useState, useEffect } from "react"
 import Seo from "../components/seo"
 import Layout from 'components/layout';
 
 const NotFoundPage = () => {
-  const [archiveLink, setArchiveLink] = useState("https://web.archive.org/web/*/https://www.uoguelph.ca")
-
-  useEffect(() => {
-    setArchiveLink("https://web.archive.org/web/*/https://www.uoguelph.ca" + window.location.pathname)
-  }, [])
-
   return (
-
     <Layout>
       <div className="container page-container">
         <div className="site-content">
           <div className="content-area">
             <h1>HTTP 404 — File not found</h1>
             <p>
-              The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
-            </p>
-            <p>We think you will find one of the following links useful:</p>
-            <p>
-              <a href="https://www.uoguelph.ca/">University of Guelph Home Page</a>
-            </p>
-            <p>
-              <a href="https://www.uoguelph.ca/sitemap">University of Guelph Site Map</a>
-            </p>
-            <p>
-              <strong>You may not be able to find this page because of:</strong>
+              <h3 class="text-dark">Possible reasons for this error:</h3>
             </p>
             <ol type="a">
               <li>
-                An <strong>out-of-date bookmark/favourite</strong>
+                You have clicked on an out-of-date bookmark. Once you find the correct page, please update your bookmark to avoid this error in the future.
               </li>
+
               <li>
-                A search engine that has an <strong>out-of-date listing for us</strong>
+                You have mis-typed the web address into the URL bar. Please check your spelling of the URL.
               </li>
+
               <li>
-                A <strong>mis-typed address</strong>
+                The search engine has an out-of-date listing for this page - <a href="mailto:websites@uoguelph.ca">please let us know!</a>
               </li>
+
               <li>
-                If you are <strong>looking for an out-of-date page</strong> that might have been removed from this site, you
-                can search for <a href={archiveLink}>an archival copy</a> at the{" "}
-                <a href="https://www.archive.org">Internet Archive</a>. The University of Guelph is not responsible for the
-                contents of the Internet Archive.
+                The university has removed this page (either by purpose or by mistake) - <a href="mailto:websites@uoguelph.ca">please let us know!</a>
               </li>
             </ol>
             <p>
-              Please visit the University of Guelph homepage at <a href="https://www.uoguelph.ca/">www.uoguelph.ca</a> or
-              contact the website manager at <a href="mailto:webadmin@uoguelph.ca">webadmin@uoguelph.ca</a>.
+              <h3 class="text-dark">Try one of these links instead:</h3>
             </p>
+
+            <p>
+              <a href="https://www.uoguelph.ca/">Go to the University of Guelph Home Page</a>
+            </p>
+
+            <p>
+              <a href="https://www.uoguelph.ca/search">Go to the University of Guelph Search Page</a>
+            </p>
+
           </div>
         </div>
       </div>
