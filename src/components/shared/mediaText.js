@@ -5,7 +5,7 @@ import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import SectionButtons from 'components/shared/sectionButtons';
 import Video from 'components/shared/video';
-import { extractVideoID, ConditionalWrapper } from 'utils/ug-utils';
+import { extractVideoID, slugify, ConditionalWrapper } from 'utils/ug-utils';
 
 function MediaText (props) {
     
@@ -220,7 +220,7 @@ function MediaText (props) {
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol}>
-            {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
+            {mediaTitle && <h3 id={slugify(mediaTitle)} {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
             {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
         </div>}

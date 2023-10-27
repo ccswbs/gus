@@ -96,6 +96,7 @@ module.exports = {
           perPage: 20,
           requestConcurrency: 2,
           previewRequestConcurrency: 2,
+          timeout: 60000,
         },
         develop: {
           //caches media files outside of Gatsby's default cache an thus allows them to persist through a cache reset.
