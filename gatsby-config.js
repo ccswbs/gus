@@ -28,7 +28,12 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-client-side-redirect`,
-    `gatsby-plugin-gatsby-cloud`,
+    {
+      resolve: `gatsby-plugin-gatsby-cloud`,
+      options: {
+        mergeSecurityHeaders: true,
+      },
+    },
     `gatsby-plugin-image`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-root-import`,
