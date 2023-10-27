@@ -31,7 +31,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-gatsby-cloud`,
       options: {
-        mergeSecurityHeaders: true,
+        mergeSecurityHeaders: false,
       },
     },
     `gatsby-plugin-image`,
