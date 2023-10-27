@@ -38,7 +38,7 @@ const NotFoundPage = () => {
             </p>
 
             <p>
-              <a href="https://www.uoguelph.ca/search">Go to the University of Guelph Search Page</a>
+              <a href="https://www.uoguelph.ca/search">Search on the University of Guelph</a>
             </p>
 
           </div>
