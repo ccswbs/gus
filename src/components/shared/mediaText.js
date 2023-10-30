@@ -38,6 +38,7 @@ function MediaText (props) {
     let headingClass;
     let headingColor;
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
+    let HeadingLevel = (props.widgetData?.field_heading_level ? props.widgetData.field_heading_level : "h2");
     
     switch(mediaBgColor) {
         case "Light Blue":
@@ -202,7 +203,8 @@ function MediaText (props) {
     }
     headingClass = classNames(headingClass, headingColor);
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
-    
+    if (HeadingLevel === "h5" || HeadingLevel === "h6") HeadingLevel = "h4";
+
     return (
     <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
         <div data-title="media" className={mediaCol}>
@@ -220,7 +222,7 @@ function MediaText (props) {
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol}>
-            {mediaTitle && <h3 id={slugify(mediaTitle)} {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
+            {mediaTitle && <HeadingLevel id={slugify(mediaTitle)} {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</HeadingLevel>}
             {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
@@ -258,6 +260,7 @@ export const query = graphql`
     drupal_id
     field_media_image_size
     field_media_text_title
+    field_heading_level
     field_media_text_desc {
       processed
     }
