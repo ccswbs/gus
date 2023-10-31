@@ -31,7 +31,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-gatsby-cloud`,
       options: {
-        mergeSecurityHeaders: false,
+        "/*": [ 
+          'Referrer-Policy: strict-origin-when-cross-origin'
+        ],
       },
     },
     `gatsby-plugin-image`,
