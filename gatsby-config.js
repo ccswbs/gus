@@ -32,7 +32,7 @@ module.exports = {
       resolve: `gatsby-plugin-gatsby-cloud`,
       options: {
         "/*": [ 
-          'Referrer-Policy: strict-origin-when-cross-origin'
+          'Referrer-Policy: no-referrer-when-downgrade'
         ],
       },
     },
