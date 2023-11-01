@@ -5,7 +5,7 @@ import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import SectionButtons from 'components/shared/sectionButtons';
 import Video from 'components/shared/video';
-import { ConditionalWrapper } from 'utils/ug-utils';
+import { extractVideoID, slugify, ConditionalWrapper } from 'utils/ug-utils';
 
 function MediaText (props) {
     
@@ -28,8 +28,7 @@ function MediaText (props) {
     const videoHeight = props.widgetData?.relationships.field_media_text_media?.field_video_height;
     const videoWidth = props.widgetData?.relationships.field_media_text_media?.field_video_width;
     const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
-    const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
-
+    const videoID = (videoType === `youtube` ? extractVideoID(videoURL) : videoURL?.substring(18));
     
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";
@@ -204,7 +203,8 @@ function MediaText (props) {
     }
     headingClass = classNames(headingClass, headingColor);
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
-        <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
+       return(
+       <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
             <div data-title="media" className={mediaCol}>
                 {videoURL && 
                     <Video 
@@ -228,7 +228,7 @@ function MediaText (props) {
                 </div>}
         
         </ConditionalWrapper>
-
+    );
 }
 
 MediaText.propTypes = {
