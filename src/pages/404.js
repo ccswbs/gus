@@ -1,8 +1,15 @@
 import React from "react"
+import { useState, useEffect } from "react"
 import Seo from "../components/seo"
 import Layout from 'components/layout';
 
 const NotFoundPage = () => {
+  const [archiveLink, setArchiveLink] = useState("https://www.uoguelph.ca/search")
+
+  useEffect(() => {
+    setArchiveLink("https://www.uoguelph.ca/search/#gsc.tab=0&gsc.q=" + window.location.pathname + "&gsc.sort=")
+  }, [])
+
   return (
     <Layout>
       <div className="container page-container">
@@ -26,7 +33,7 @@ const NotFoundPage = () => {
               </li>
 
               <li>
-                The university has removed this page (either by purpose or by mistake) - <a href="mailto:websites@uoguelph.ca">please let us know!</a>
+                The university has removed this page (either on purpose or by mistake) - <a href="mailto:websites@uoguelph.ca">please let us know!</a>
               </li>
             </ol>
             <p>
@@ -38,7 +45,7 @@ const NotFoundPage = () => {
             </p>
 
             <p>
-              <a href="https://www.uoguelph.ca/search">Search on the University of Guelph</a>
+              <a href={archiveLink}>Search on the University of Guelph</a>
             </p>
 
           </div>
