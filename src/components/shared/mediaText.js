@@ -205,7 +205,7 @@ function MediaText (props) {
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
 
     if (mediaAlignment !== "left") {
-        wrapperCol = wrapperCol + " flex-row-reverse"
+        wrapperCol = classNames(wrapperCol, "flex-row-reverse");
     };
 
     return (
