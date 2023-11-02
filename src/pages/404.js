@@ -16,7 +16,7 @@ const NotFoundPage = () => {
         <div className="site-content">
           <div className="content-area">
             <h1>HTTP 404 — File not found</h1>
-            <h2>Possible reasons for this error:</h2>
+            <h2 className="text-dark">Possible reasons for this error:</h2>
             <ol type="a">
               <li>
                 You have clicked on an out-of-date bookmark. Once you find the correct page, please update your bookmark to avoid this error in the future.
@@ -34,7 +34,8 @@ const NotFoundPage = () => {
                 The university has removed this page (either on purpose or by mistake) - <a href="mailto:websites@uoguelph.ca">please let us know!</a>
               </li>
             </ol>
-            <h2>Try one of these links instead:</h2>
+
+            <h2 className="text-dark">Try one of these links instead:</h2>
             <p>
               <a href="https://www.uoguelph.ca/">Go to the University of Guelph Home Page</a>
             </p>
