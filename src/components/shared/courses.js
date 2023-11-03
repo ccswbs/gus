@@ -8,8 +8,8 @@ function Courses ({ courseData, courseNotes, headingLevel }) {
 	var courseList="";
 	var trackCourseLevel="";
 	var coursesDisplay="<section class='row row-with-vspace'>";
-	var columnSetting = ((courseNotes === null || courseNotes === "") || (courseData === null || courseData === undefined || courseData.length === 0)) ? "col-lg-12" : "col-lg-6";
 	var columnSetting = (!courseNotes || !courseData || !courseData.length) ? "col-lg-12" : "col-lg-6";
+	
 	courseData.sort((a,b) => (a.field_level > b.field_level) ? 1 : (a.field_level === b.field_level) ? ((a.field_code > b.field_code) ? 1 : -1) : -1);
 
 	if ((courseData !== null) && (courseData !== undefined)) {
