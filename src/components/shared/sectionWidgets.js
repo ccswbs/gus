@@ -120,7 +120,7 @@ function SectionWidgets (props) {
         // then automatically create a grid (up to 3 or 4 columns)
         let onlyContainsMedia = primary.every(containsMediaTextOnly);
         let gridClasses = "";
-        if(onlyContainsMedia){
+        if((onlyContainsMedia) && (primary.length > 1)){
             // default is two items
             let gridDivision = 2;
 
@@ -180,6 +180,7 @@ export const query = graphql`
   fragment SectionParagraphFragment on paragraph__section {
     drupal_id
     field_section_title
+    field_heading_level
     field_section_classes
     relationships {
       field_section_content {

@@ -5,7 +5,7 @@ import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import SectionButtons from 'components/shared/sectionButtons';
 import Video from 'components/shared/video';
-import { ConditionalWrapper } from 'utils/ug-utils';
+import { extractVideoID, slugify, ConditionalWrapper } from 'utils/ug-utils';
 
 function MediaText (props) {
     
@@ -20,6 +20,7 @@ function MediaText (props) {
     const imageURL = mediaRelationships?.field_media_image;	
     const imageAlt = props.widgetData?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
+    const mediaAlignment = props.widgetData?.field_media_alignment ?? 'left';
     
     const videoTitle = props.widgetData?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
@@ -27,7 +28,7 @@ function MediaText (props) {
     const videoHeight = props.widgetData?.relationships.field_media_text_media?.field_video_height;
     const videoWidth = props.widgetData?.relationships.field_media_text_media?.field_video_width;
     const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
-    const videoID = (videoType === `youtube` ? videoURL?.substr(videoURL?.length - 11) : videoURL?.substr(18));
+    const videoID = (videoType === `youtube` ? extractVideoID(videoURL) : videoURL?.substring(18));
     
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";
@@ -202,7 +203,11 @@ function MediaText (props) {
     }
     headingClass = classNames(headingClass, headingColor);
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
-    
+
+    if (mediaAlignment !== "left") {
+        wrapperCol = classNames(wrapperCol, "flex-row-reverse");
+    };
+
     return (
     <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
         <div data-title="media" className={mediaCol}>
@@ -220,7 +225,7 @@ function MediaText (props) {
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol}>
-            {mediaTitle && <h3 {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
+            {mediaTitle && <h3 id={slugify(mediaTitle)} {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
             {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
@@ -249,7 +254,7 @@ export const query = graphql`
     relationships {
       field_media_image {
         publicUrl
-        gatsbyImage(width: 1000, placeholder: BLURRED, layout: CONSTRAINED)
+        gatsbyImage(width: 1000, placeholder: BLURRED, layout: FULL_WIDTH, formats: [AUTO, WEBP])
       }
     }
   }
@@ -257,6 +262,7 @@ export const query = graphql`
   fragment MediaTextParagraphFragment on paragraph__media_text {
     drupal_id
     field_media_image_size
+    field_media_alignment
     field_media_text_title
     field_media_text_desc {
       processed

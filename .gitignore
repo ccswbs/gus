@@ -77,3 +77,6 @@ config/sitemaps/
 
 # VSCode config
 .vscode/settings.json
+
+# Jetbrains IDE config
+.idea/

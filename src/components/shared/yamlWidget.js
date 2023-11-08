@@ -16,6 +16,7 @@ import LangBcommSupportiveCommunity from 'components/blocks/lang/lang-bcomm-supp
 import LangBcommFeatureExperience from 'components/blocks/lang/lang-bcomm-feature-experience';
 import LangBcommStudentBlog from 'components/blocks/lang/lang-bcomm-student-blog';
 import SouthAsiaExploreGrid from 'components/blocks/canada/south-asia-explore-grid';
+import AdmissionGrid from 'components/blocks/admission/admission-grid'
 
 const YamlWidget = (props) => {
     let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
@@ -37,6 +38,7 @@ const YamlWidget = (props) => {
         'lang_bcomm_student_blog':<LangBcommStudentBlog />,
         'lang_bcomm_student_blog_blue':<LangBcommStudentBlog background="#F4F7FA" />,
         'south_asia_explore_grid': <SouthAsiaExploreGrid />,
+        'admission_supplementary_block': <AdmissionGrid />,
 
     }[component] || null )
 }
@@ -57,7 +59,7 @@ export const query = graphql`
             name
             relationships {
               field_media_image {
-                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED)
+                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
               }
             }
             path {

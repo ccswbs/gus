@@ -77,6 +77,18 @@ function stripHTMLTags(content) {
 	return content !== null ? content.replace(/(<([^>]+)>)/ig,"") : ``;
 }
 
+// Source: https://www.labnol.org/code/19797-regex-youtube-id
+function extractVideoID(url) {
+	let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#]*).*/;
+	let match = url.match(regExp);
+
+	if (match) {
+		return match[7].split("?")[0];
+	} else{
+		console.log('Could not extract video ID.');
+	}
+}
+
 const ConditionalWrapper = ({ condition, wrapper, children }) => 
   condition ? wrapper(children) : children;
 
@@ -86,8 +98,9 @@ export {
 	fontAwesomeIconColour,
 	getNextHeadingLevel,
 	setHeadingLevel,
-    slugify,
+	slugify,
 	sortLastModifiedDates,
 	stripHTMLTags,
-    ConditionalWrapper
-   };
+	extractVideoID,
+	ConditionalWrapper
+};

@@ -1,73 +1,98 @@
-# Build and deploy content hub 
-
-variables:
-  AZURE_SUBSCRIPTION: 'Pay-As-You-Go($(subscription_id))'
-  AZURE_RESOURCE_MANAGER_CONNECTION: 'Pay-As-You-Go($(subscription_id))'
-  RESOURCE_GROUP_NAME: 'chuglivewebrg'
-  STORAGE_ACCOUNT_NAME: 'livechugstorage'
-
-pool:
-  vmImage: windows-latest
-  demands: npm
+# Build content hub 
 
 trigger:
-  - main
+  batch: true
+  branches:
+    include:
+    - main
+
+pr: none
 
 resources:
   webhooks:
     - webhook: ccswds-gus-pipeline-trigger
       connection: ccswds-gus-pipeline-service
 
+variables:
+- group: ug-gus
+- name: _gatsby_cache_folder
+  value: '.cache'
+- name: _gatsby_public_folder
+  value: 'public'
+- name: _npm_node_modules
+  value: 'node_modules'
+
+pool:
+  vmImage: ubuntu-latest
+
 schedules:
-- cron: "0 0 * * *"
-  displayName: Daily midnight build
+- cron: "0 5,6 * * *"
+  displayName: Daily 1 AM (Gatsby cache) and 2 AM EST (AzCDN cache) clear
   branches:
     include:
     - main
   always: true
-
+- cron: "0 10-22 * * *"
+  displayName: Hourly build (6am - 6pm EST)
+  branches:
+    include:
+    - main
+  always: true
+  
 steps:
+
+- pwsh: |
+    Write-Host "Setting up the date for cache build variable"
+    $date = $(Get-Date).AddHours(-4)
+    $formattedDate = $date.ToString("yyyyMMdd")
+    Write-Host "##vso[task.setvariable variable=_date]$formattedDate"
+  displayName: 'Output date variable'
+
 - task: NodeTool@0
   inputs:
-    versionSpec: '16.x'
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
+
+# - task: Npm@1
+#   displayName: 'npm cache clear --force'
+#   inputs:
+#     verbose: false
+
+- task: Cache@2
+  inputs:
+    key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
+    path: $(_npm_node_modules)
+  displayName: 'Retrieve cached NPM folder'
+
 - task: Npm@1
-  displayName: 'npm cache clear --force'
   inputs:
-    verbose: false
-- task: Npm@1
-  displayName: 'npm install'
+    command: 'ci'
+
+- task: Cache@2
   inputs:
-    verbose: false
-- task: Npm@1
-  displayName: 'npm run build'
+    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
+    path: $(_gatsby_cache_folder)
+  displayName: 'Retrieve cached Gatsby .cache folder'
+
+- task: Cache@2
   inputs:
-    command: 'custom'
-    customCommand: 'run build'
-    verbose: true
-- task: AzureResourceManagerTemplateDeployment@3
-  displayName: 'az deploy'
+    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
+    path: $(_gatsby_public_folder)
+  displayName: 'Retrieve cached Gatsby public folder'
+
+- script: npm run build
+  displayName: 'Build gatsby'
+
+- task: ArchiveFiles@2
   inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(AZURE_RESOURCE_MANAGER_CONNECTION)
-    subscriptionId: $(subscription_id)
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: $(RESOURCE_GROUP_NAME)
-    location: 'Canada East'
-    templateLocation: 'Linked artifact'
-    csmFile: 'azuredeploy.json'
-    deploymentMode: 'Complete'
-- task: AzureCLI@2
-  displayName: 'enable static website'
+    rootFolderOrFile: '$(Build.SourcesDirectory)/public'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
   inputs:
-    azureSubscription: $(AZURE_SUBSCRIPTION)
-    scriptType: 'pscore'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az storage blob service-properties update --account-name $(STORAGE_ACCOUNT_NAME) --static-website  --index-document index.html'
-- task: AzureFileCopy@3
-  displayName: 'copy files'
-  inputs:
-    SourcePath: 'public'
-    azureSubscription: $(AZURE_SUBSCRIPTION)
-    Destination: 'AzureBlob'
-    storage: $(STORAGE_ACCOUNT_NAME)
-    ContainerName: '$web'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

@@ -8,7 +8,7 @@
     },
     "env": {
       "type": "string",
-      "defaultValue": "live"
+      "defaultValue": "preview"
     },
     "zone": {
       "type": "string",
