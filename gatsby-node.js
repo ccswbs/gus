@@ -296,6 +296,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       title: String
       body: BodyFieldWithSummary
       field_hero_image: ImageField
+      field_news_author: String
+      field_lead_image: String
       relationships: node__articleRelationships
       fields: node__articleFields
       path: AliasPath
@@ -303,6 +305,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type node__articleRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_news_category: [taxonomy_term__news_category] @link(from: "field_news_category___NODE")
+      field_news_topic: [taxonomy_term__news_topics] @link(from: "field_news_topics___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__articleFields implements Node {
@@ -808,6 +811,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       name: String
     }
     type taxonomy_term__news_category implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+      description: TaxonomyDescription
+    }
+    type taxonomy_term__news_topics implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
       name: String
