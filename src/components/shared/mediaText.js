@@ -20,6 +20,7 @@ function MediaText (props) {
     const imageURL = mediaRelationships?.field_media_image;	
     const imageAlt = props.widgetData?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.widgetData?.field_media_image_size;
+    const mediaAlignment = props.widgetData?.field_media_alignment ?? 'left';
     
     const videoTitle = props.widgetData?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
@@ -205,6 +206,10 @@ function MediaText (props) {
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
     if (HeadingLevel === "h5" || HeadingLevel === "h6") HeadingLevel = "h4";
 
+    if (mediaAlignment !== "left") {
+        wrapperCol = classNames(wrapperCol, "flex-row-reverse");
+    };
+
     return (
     <ConditionalWrapper condition={wrapperCol} wrapper={children => <section data-title="media-text-widget" className={wrapperCol}>{children}</section>}>
         <div data-title="media" className={mediaCol}>
@@ -251,7 +256,7 @@ export const query = graphql`
     relationships {
       field_media_image {
         publicUrl
-        gatsbyImage(width: 1000, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
+        gatsbyImage(width: 1000, placeholder: BLURRED, layout: FULL_WIDTH, formats: [AUTO, WEBP])
       }
     }
   }
@@ -259,6 +264,7 @@ export const query = graphql`
   fragment MediaTextParagraphFragment on paragraph__media_text {
     drupal_id
     field_media_image_size
+    field_media_alignment
     field_media_text_title
     field_heading_level
     field_media_text_desc {
