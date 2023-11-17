@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 
 // @todo - add index of components in components/blocks and import all in one line
 // until then, import each component manually below
+import DiscoverGuelph from '../blocks/ovc/discover-guelph';
 import EconImpactNationalStory from 'components/blocks/economic-impact/national-impact-story';
 import EconImpactProvincialImpactOnehealth from 'components/blocks/economic-impact/provincial-impact-onehealth';
 import InternationalStatsGlobal from 'components/blocks/international/international-stats-global';
@@ -23,6 +24,7 @@ const YamlWidget = (props) => {
 
     // add new custom components to conditional rendering below
     return ({
+        'discover_guelph': <DiscoverGuelph />,
         'economic_impact_national_story': <EconImpactNationalStory />,
         'economic_impact_provincial_onehealth': <EconImpactProvincialImpactOnehealth />,
         'international_stats_global_impact': <InternationalStatsGlobal />,
