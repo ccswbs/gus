@@ -204,7 +204,6 @@ function MediaText (props) {
     }
     headingClass = classNames(headingClass, headingColor);
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
-    if (HeadingLevel === "h5" || HeadingLevel === "h6") HeadingLevel = "h4";
 
     if (mediaAlignment !== "left") {
         wrapperCol = classNames(wrapperCol, "flex-row-reverse");
