@@ -4,12 +4,11 @@ import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import OVCCustomFooter from 'components/blocks/ovc/footerOVC';
 import Widget from 'components/shared/widget';
-import { contentExists } from 'utils/ug-utils';
 import 'styles/customFooter.css';
 
 function chooseFooter (footer) {
   let footerSelection = ``;
-  footer.node.relationships.field_tags.forEach(
+  footer.node.relationships?.field_tags.forEach(
     tag => {
       if(tag.__typename === "taxonomy_term__units" && 
         tag.name.includes("Ontario Veterinary College")){
@@ -24,13 +23,13 @@ const DefaultFooter = ({logos, text, widgets}) => (
   <div className="full-width-container bg-light pre-footer">
   <div className="container page-container">
     <section className="row row-with-vspace site-content">
-      {contentExists(logos) &&
+      {logos &&
       <div className="col-md-3 content-area">
       {logos.map(logo => (
         <GatsbyImage
-          image={logo.relationships.field_media_image.gatsbyImage}
+          image={logo.relationships?.field_media_image?.gatsbyImage}
           className="footer-logo"
-          alt={logo.field_media_image.alt} />
+          alt={logo.field_media_image?.alt} />
       ))}
       </div>}
       <div className="col-md-9 content-area">
@@ -44,9 +43,9 @@ const DefaultFooter = ({logos, text, widgets}) => (
 
 const CustomFooter = (props) => {
   const footer = props.footerData;
-	const footerLogos = (contentExists(footer.node.relationships.field_footer_logo) ? footer.node.relationships.field_footer_logo : null);
-	const footerText = (contentExists(footer.node.body.processed) ? footer.node.body.processed : null);
-	const footerWidgets = (contentExists(footer.node.relationships.field_widgets) ? footer.node.relationships.field_widgets : null);
+	const footerLogos = footer.node.relationships?.field_footer_logo ? footer.node.relationships.field_footer_logo : null;
+	const footerText = footer.node.body?.processed ? footer.node.body.processed : null;
+	const footerWidgets = footer.node.relationships?.field_widgets ? footer.node.relationships.field_widgets : null;
 
   switch (chooseFooter(footer)) {
     case "OVC":
