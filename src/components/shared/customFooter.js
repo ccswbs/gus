@@ -4,7 +4,6 @@ import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import OVCCustomFooter from 'components/blocks/ovc/footerOVC';
 import Widget from 'components/shared/widget';
-import { contentExists } from 'utils/ug-utils';
 import 'styles/customFooter.css';
 
 function chooseFooter (footer) {
@@ -24,7 +23,7 @@ const DefaultFooter = ({logos, text, widgets}) => (
   <div className="full-width-container bg-light pre-footer">
   <div className="container page-container">
     <section className="row row-with-vspace site-content">
-      {contentExists(logos) &&
+      {logos &&
       <div className="col-md-3 content-area">
       {logos.map(logo => (
         <GatsbyImage
@@ -44,9 +43,9 @@ const DefaultFooter = ({logos, text, widgets}) => (
 
 const CustomFooter = (props) => {
   const footer = props.footerData;
-	const footerLogos = (contentExists(footer.node.relationships?.field_footer_logo) ? footer.node.relationships.field_footer_logo : null);
-	const footerText = (contentExists(footer.node.body?.processed) ? footer.node.body.processed : null);
-	const footerWidgets = (contentExists(footer.node.relationships?.field_widgets) ? footer.node.relationships.field_widgets : null);
+	const footerLogos = (footer.node.relationships?.field_footer_logo ? footer.node.relationships.field_footer_logo : null);
+	const footerText = (footer.node.body?.processed ? footer.node.body.processed : null);
+	const footerWidgets = (footer.node.relationships?.field_widgets ? footer.node.relationships.field_widgets : null);
 
   switch (chooseFooter(footer)) {
     case "OVC":
