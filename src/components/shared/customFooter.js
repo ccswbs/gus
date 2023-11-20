@@ -9,7 +9,7 @@ import 'styles/customFooter.css';
 
 function chooseFooter (footer) {
   let footerSelection = ``;
-  footer.node.relationships.field_tags.forEach(
+  footer.node.relationships?.field_tags.forEach(
     tag => {
       if(tag.__typename === "taxonomy_term__units" && 
         tag.name.includes("Ontario Veterinary College")){
@@ -28,9 +28,9 @@ const DefaultFooter = ({logos, text, widgets}) => (
       <div className="col-md-3 content-area">
       {logos.map(logo => (
         <GatsbyImage
-          image={logo.relationships.field_media_image.gatsbyImage}
+          image={logo.relationships?.field_media_image?.gatsbyImage}
           className="footer-logo"
-          alt={logo.field_media_image.alt} />
+          alt={logo.field_media_image?.alt} />
       ))}
       </div>}
       <div className="col-md-9 content-area">
@@ -44,9 +44,9 @@ const DefaultFooter = ({logos, text, widgets}) => (
 
 const CustomFooter = (props) => {
   const footer = props.footerData;
-	const footerLogos = (contentExists(footer.node.relationships.field_footer_logo) ? footer.node.relationships.field_footer_logo : null);
-	const footerText = (contentExists(footer.node.body.processed) ? footer.node.body.processed : null);
-	const footerWidgets = (contentExists(footer.node.relationships.field_widgets) ? footer.node.relationships.field_widgets : null);
+	const footerLogos = (contentExists(footer.node.relationships?.field_footer_logo) ? footer.node.relationships.field_footer_logo : null);
+	const footerText = (contentExists(footer.node.body?.processed) ? footer.node.body.processed : null);
+	const footerWidgets = (contentExists(footer.node.relationships?.field_widgets) ? footer.node.relationships.field_widgets : null);
 
   switch (chooseFooter(footer)) {
     case "OVC":
