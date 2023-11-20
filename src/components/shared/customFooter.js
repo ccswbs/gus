@@ -43,9 +43,9 @@ const DefaultFooter = ({logos, text, widgets}) => (
 
 const CustomFooter = (props) => {
   const footer = props.footerData;
-	const footerLogos = (footer.node.relationships?.field_footer_logo ? footer.node.relationships.field_footer_logo : null);
-	const footerText = (footer.node.body?.processed ? footer.node.body.processed : null);
-	const footerWidgets = (footer.node.relationships?.field_widgets ? footer.node.relationships.field_widgets : null);
+	const footerLogos = footer.node.relationships?.field_footer_logo ? footer.node.relationships.field_footer_logo : null;
+	const footerText = footer.node.body?.processed ? footer.node.body.processed : null;
+	const footerWidgets = footer.node.relationships?.field_widgets ? footer.node.relationships.field_widgets : null;
 
   switch (chooseFooter(footer)) {
     case "OVC":
