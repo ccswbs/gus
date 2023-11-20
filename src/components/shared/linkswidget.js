@@ -15,7 +15,7 @@ function LinksWidget (props) {
     const listFirstHeadingLevel = "h2";
    
 
-if(props.pageData?.length !== 0) {
+if(props.pageData?.length > 0) {
    return( props.pageData.map(linksWidgetData => {
       if (linksWidgetData.__typename==="paragraph__links_widget") {
         const linksDisplayType = linksWidgetData.relationships?.field_link_items[0]?.relationships?.field_link_image ? "grid" : "list";
