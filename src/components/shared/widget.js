@@ -36,7 +36,7 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__links_widget":
             const gridFirstHeadingLevel = "h2";
             const listFirstHeadingLevel = "h2";
-            const linksDisplayType = widget.relationships.field_link_items[0].relationships.field_link_image ? "grid" : "list";
+            const linksDisplayType = widget.relationships?.field_link_items[0]?.relationships?.field_link_image ? "grid" : "list";
             const headingLevel = (linksDisplayType === "grid") ? gridFirstHeadingLevel : listFirstHeadingLevel;
             const numColumns = (linksDisplayType === "grid") ? 4 : null;
             return <LinksItems key={widget.drupal_id}
