@@ -36,7 +36,7 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__links_widget":
             const gridFirstHeadingLevel = "h2";
             const listFirstHeadingLevel = "h2";
-            const linksDisplayType = widget.relationships.field_link_items[0].relationships.field_link_image ? "grid" : "list";
+            const linksDisplayType = widget.relationships?.field_link_items[0]?.relationships?.field_link_image ? "grid" : "list";
             const headingLevel = (linksDisplayType === "grid") ? gridFirstHeadingLevel : listFirstHeadingLevel;
             const numColumns = (linksDisplayType === "grid") ? 4 : null;
             return <LinksItems key={widget.drupal_id}
@@ -57,8 +57,10 @@ const WidgetSelector = ({widget}) => {
             transcript={video?.relationships?.field_media_file?.publicUrl} /> 
             : null;
         case "paragraph__section":
+            let HeadingLevelSec = (widget.field_heading_level ? widget.field_heading_level : "h2");
+            if (HeadingLevelSec === "h5" || HeadingLevelSec === "h6") HeadingLevelSec = "h4";
             return (<>
-              {widget.field_section_title && <h2 id={slugify(widget.field_section_title)} className="mt-0">{widget.field_section_title}</h2>}
+              {widget.field_section_title && <HeadingLevelSec id={slugify(widget.field_section_title)} className="mt-0">{widget.field_section_title}</HeadingLevelSec>}
                 <div key={widget.drupal_id} className="row" data-title="Section widget">
                     <SectionWidgets pageData={widget.relationships.field_section_content} sectionClasses={widget.field_section_classes} />
                 </div>

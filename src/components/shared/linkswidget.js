@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import LinksItems from 'components/shared/linksItems';
 
-import { contentExists } from 'utils/ug-utils';
-
 function LinksWidget (props) {
 
 // if there is at least one links widget (paragarph__links_widget) - step through each one to display links 
@@ -17,10 +15,10 @@ function LinksWidget (props) {
     const listFirstHeadingLevel = "h2";
    
 
-if(contentExists(props.pageData)&& props.pageData.length !==0){
+if(props.pageData?.length > 0) {
    return( props.pageData.map(linksWidgetData => {
       if (linksWidgetData.__typename==="paragraph__links_widget") {
-        const linksDisplayType = (contentExists(linksWidgetData.relationships.field_link_items[0].relationships.field_link_image))? 'grid': 'list';
+        const linksDisplayType = linksWidgetData.relationships?.field_link_items[0]?.relationships?.field_link_image ? "grid" : "list";
         const headingLevel = (linksDisplayType === 'grid')? gridFirstHeadingLevel: listFirstHeadingLevel;
         const numColumns = (linksDisplayType === 'grid')? 4: null;
     

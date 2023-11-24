@@ -599,6 +599,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__media_text implements Node {
       drupal_id: String
       field_media_image_size: String
+      field_media_alignment: String
       field_media_text_desc: BodyField
       field_media_text_title: String
       relationships: paragraph__media_textRelationships
@@ -642,6 +643,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       field_section_classes: String
       field_section_title: String
+      field_heading_level: String
       relationships: paragraph__sectionRelationships
     }
     type paragraph__sectionRelationships implements Node {
