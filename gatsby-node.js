@@ -67,7 +67,6 @@ const path = require(`path`)
 const fs = require('fs');
 const yaml = require('js-yaml');
 const util = require('util');
-const preview = process.env.GATSBY_IS_PREVIEW;
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
 
@@ -1180,7 +1179,6 @@ function processPage(node, contextID, nodeNid, tagID, nodePath, template, helper
     let alias = createContentTypeAlias(nodePath);
 
     helpers.createPage({
-      preview,
       path: alias,
       component: template,
       context: {
