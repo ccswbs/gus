@@ -21,6 +21,7 @@
     "express": "^4.18.2",
     "gatsby": "^5.12.11",
     "gatsby-cli": "^5.12.4",
+    "gatsby-graphiql-explorer": "^3.11.0",
     "gatsby-plugin-client-side-redirect": "^1.1.0",
     "gatsby-plugin-gatsby-cloud": "^5.12.2",
     "gatsby-plugin-google-analytics": "^5.12.0",
