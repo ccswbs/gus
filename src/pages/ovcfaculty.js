@@ -2,6 +2,7 @@ import { graphql, Link } from 'gatsby';
 import Layout from 'components/layout';
 import React from 'react';
 import Seo from 'components/seo';
+import { GatsbyImage } from "gatsby-plugin-image";
 
 const IndexPage = ({ data }) => {
     console.log(data);
@@ -27,6 +28,7 @@ const IndexPage = ({ data }) => {
               {pageTags.map((tag) => {
                 const taggedPages = tag.node.relationships.node__page;
                 const taggedPagesPubbed = taggedPages.filter(page => page.status === true);
+                console.log("taggedPagesPubbed",taggedPagesPubbed)
                 taggedPagesPubbed.sort((a,b) => (a.title.split(' ').pop() > b.title.split(' ').pop()) ? 1 : ((b.title.split(' ').pop() > a.title.split(' ').pop()) ? -1 : 0));
                 return (taggedPagesPubbed.length > 0 && 
                   <React.Fragment key={`tagged-fragment-${tag.node.name}`}>
@@ -35,7 +37,11 @@ const IndexPage = ({ data }) => {
                     <p>Total pages: <strong>{taggedPagesPubbed.length}</strong></p>
                       <ul className="three-col-md">
                         {taggedPagesPubbed.map((taggedPage, index) => (
-                            <li key={`tagged-${index}`}><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
+                            <li key={`tagged-${index}`}><Link to={taggedPage.path.alias}>
+                            {/* <GatsbyImage image={taggedPage.relationships.field_widgets.relationships.field_media_text_media.relationships.field_media_image} alt="" /> */}
+                            {console.log("field_widgets",taggedPage.relationships.field_widgets[0].relationships.field_media_text_media)}
+                            {taggedPage.title}
+                            </Link></li>
                         ))}
                       </ul>
                   </React.Fragment>)
@@ -106,6 +112,29 @@ export const query = graphql`{
               title
               path {
                 alias
+              }
+              relationships {
+                field_widgets {
+                  ... on paragraph__media_text {
+                    id
+                    relationships {
+                      field_media_text_media {
+                        ... on media__image {
+                          id
+                          name
+                          field_media_image {
+                            alt
+                          }
+                          relationships {
+                            field_media_image {
+                              gatsbyImage(cropFocus: FACES, placeholder: BLURRED, width: 500, aspectRatio: 1)
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
