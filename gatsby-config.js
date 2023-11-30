@@ -64,7 +64,7 @@ module.exports = {
           username: process.env.BASIC_AUTH_USERNAME,
           password: process.env.BASIC_AUTH_PASSWORD,
         },
-        fastBuilds: true,
+        fastBuilds: process.env.FASTBUILDS || true,
         skipFileDownloads: true,
         requestTimeoutMS: 300000,
       },
