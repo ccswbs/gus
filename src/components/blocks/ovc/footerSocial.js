@@ -5,10 +5,10 @@ import 'styles/ovc/social-icons.css';
 import {
   FaInstagram,
   FaFacebookSquare,
-  FaTwitterSquare,
   FaLinkedin,
   FaYoutubeSquare
 } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 const FooterSocial = () => (
   <div>
@@ -27,7 +27,7 @@ const FooterSocial = () => (
     </a>
     <a href="https://twitter.com/OntVetCollege/" className="text-dark-social">
       <span className="visually-hidden">Connect with OVC on Twitter</span>
-      <FaTwitterSquare style={{fontSize: "4.8rem"}} />
+      <FaSquareXTwitter style={{fontSize: "4.8rem"}} />
     </a>
     <a href="https://www.youtube.com/user/OntarioVetCollege" className="text-dark-social">
       <span className="visually-hidden">Connect with OVC on YouTube</span>

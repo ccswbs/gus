@@ -63,7 +63,7 @@ module.exports = {
         headers: {
           'api-key': process.env.API_KEY,
         },
-        fastBuilds: process.env.FASTBUILDS || false,
+        fastBuilds: process.env.FASTBUILDS || true,
         skipFileDownloads: true,
         requestTimeoutMS: 300000,
       },
