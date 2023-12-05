@@ -5,7 +5,6 @@ import Seo from 'components/seo';
 
 
 const IndexPage = ({ data }) => {
-    console.log(data);
     const allNodePages = data.allNodePage.edges;
     const ovcBioFaculty = [];
     const ovcClinFaculty = [];
