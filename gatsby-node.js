@@ -794,6 +794,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type taxonomy_term__event_categories implements Node & TaxonomyInterface {
       drupal_id: String
+      drupal_internal__tid: Int
       name: String
     }
     type taxonomy_term__goals implements Node & TaxonomyInterface {
