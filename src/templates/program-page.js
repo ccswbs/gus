@@ -106,10 +106,14 @@ function CountProgramVariants(variantData) {
 function renderProgramVariants (variantDataHeading, variantData) {
   if(variantDataHeading) {
     return (
-      <>
-        <h3>{variantDataHeading}</h3>
-        {<Variants variantData={variantData} />}>
-      </>
+      <div className="container page-container">
+        <div className="row site-content">        
+          <section className="content-area">
+            <h2>{variantDataHeading}</h2>
+            {<Variants variantData={variantData} />}
+          </section>
+        </div>
+      </div>
     )
   }
 }
@@ -339,11 +343,11 @@ const ProgramPage = ({data, location}) => {
           </div>
         }
 
-        {
-          renderProgramVariants(
-            variantDataHeading,
-            variantData,
-          )}
+        { /**** Variants (e.g., Majors) content ****/}
+        {renderProgramVariants(
+          variantDataHeading,
+          variantData,
+        )}
 
         { /**** Widgets content ****/} 
         {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
