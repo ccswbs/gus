@@ -353,7 +353,7 @@ const ProgramPage = ({data, location}) => {
         {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
 
         { /**** Program Stats ****/ }
-        {renderProgramStats(degreesData, variantData, statsData)}
+        {/* {renderProgramStats(degreesData, variantData, statsData)} */}
 
         {/**** Program Information Accordion ****/}
         {renderProgramInfoAccordion(
