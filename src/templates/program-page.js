@@ -103,7 +103,18 @@ function CountProgramVariants(variantData) {
     return null;
 }
 
-function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeading, variantData, careerData, employerData) {
+function renderProgramVariants (variantDataHeading, variantData) {
+  if(variantDataHeading) {
+    return (
+      <>
+        <h3>{variantDataHeading}</h3>
+        {<Variants variantData={variantData} />}>
+      </>
+    )
+  }
+}
+
+function renderProgramInfoAccordion  (courseData, courseNotes, careerData, employerData) {
 
     // accordion - Courses Item
     const programCourseItem = () => {
@@ -118,27 +129,6 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
               <div id="selectedCourses-courses" className="accordion-collapse collapse" aria-labelledby="selectedCourses-heading">
                 <div className="accordion-body">
                 {<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />}
-                </div>
-              </div>
-            </div>
-          )
-        }
-        return null;
-    }
-
-    // accordion - Variants Item
-    const programVariantItem = () => {
-        if(variantDataHeading) {
-          return (
-            <div className="accordion-item">
-              <h3 className="accordion-header" id="programVariants-heading">
-                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programVariants-variants" aria-expanded="false" aria-controls="programVariants-variants">
-                  {variantDataHeading}
-                </button>
-              </h3>
-              <div id="programVariants-variants" className="accordion-collapse collapse" aria-labelledby="programVariants-heading">
-                <div className="accordion-body">
-                  {<Variants variantData={variantData} />}
                 </div>
               </div>
             </div>
@@ -188,7 +178,7 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
         }
         return null;
     }
-    if (courseNotes || courseData?.length>0 || variantDataHeading || careerData?.length>0 ||employerData?.length > 0) {
+    if (courseNotes || courseData?.length>0 || careerData?.length>0 ||employerData?.length > 0) {
       return (
             <div className="container page-container">
               <section className="row row-with-vspace site-content">
@@ -196,7 +186,6 @@ function renderProgramInfoAccordion  (courseData, courseNotes, variantDataHeadin
                   <h2>Program Information</h2>
                     <div className="accordion" id="ProgramPageAccordion">
                       {programCourseItem()}
-                      {programVariantItem()}
                       {programCareersItem()}
                       {programEmployersItem()}
                     </div>
@@ -350,6 +339,12 @@ const ProgramPage = ({data, location}) => {
           </div>
         }
 
+        {
+          renderProgramVariants(
+            variantDataHeading,
+            variantData,
+          )}
+
         { /**** Widgets content ****/} 
         {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
 
@@ -360,8 +355,6 @@ const ProgramPage = ({data, location}) => {
         {renderProgramInfoAccordion(
           courseData,
           courseNotes,
-          variantDataHeading,
-          variantData,
           careerData,
           employerData
         )}
@@ -383,6 +376,8 @@ const ProgramPage = ({data, location}) => {
             headingLevel="h2"
           />
         )}
+
+
 
         {/**** Call to Actions ****/}
         {callToActionData.length !== 0 && (
