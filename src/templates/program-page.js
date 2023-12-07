@@ -6,7 +6,6 @@ import Hero from 'components/shared/hero';
 import Breadcrumbs from 'components/shared/breadcrumbs';
 import CallToAction from 'components/shared/callToAction';
 // import Careers from 'components/shared/careers';
-// import Courses from 'components/shared/courses';
 import CustomFooter from 'components/shared/customFooter';
 import Employers from 'components/shared/employers';
 import HeroVideo from 'components/shared/heroVideo';
@@ -101,7 +100,7 @@ function renderAdmissionRequirements() {
   )
 }
 
-function renderProgramInfoAccordion  (courseData, courseNotes, careerData, employerData) {
+function renderProgramInfoAccordion  (careerData, employerData) {
 
     // accordion - Careers Item
     // const programCareersItem = () => {
@@ -144,14 +143,12 @@ function renderProgramInfoAccordion  (courseData, courseNotes, careerData, emplo
         }
         return null;
     }
-    if (courseNotes || courseData?.length>0 || careerData?.length>0 ||employerData?.length > 0) {
+    if ( careerData?.length>0 ||employerData?.length > 0) {
       return (
             <div className="container page-container">
               <section className="row row-with-vspace site-content">
                   <div className="col-md-12 content-area">
-                  {/* <h2>Program Information</h2> */}
                     <div className="accordion" id="ProgramPageAccordion">
-                      {/* {programCourseItem()} */}
                       {/* {programCareersItem()} */}
                       {programEmployersItem()}
                     </div>
@@ -208,7 +205,6 @@ const ProgramPage = ({data, location}) => {
     let progData = data.programs.edges[0]?.node;
     let callToActionData = data.ctas?.edges;
     let careerData = data.careers?.edges;
-    let courseData = progData.relationships?.field_courses;
     let domains = progData?.field_domain_access;
     let employerData = data.employers?.edges;
     let footerData = data.footer?.edges;
@@ -237,7 +233,6 @@ const ProgramPage = ({data, location}) => {
     const heroWidgets = (progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null);
 
     const widgets = progData.relationships?.field_widgets;
-    const courseNotes = progData.field_course_notes?.processed;
 
     // set last modified date
     let allModifiedDates = sortLastModifiedDates(
@@ -313,8 +308,6 @@ const ProgramPage = ({data, location}) => {
 
         {/**** Program Information Accordion ****/}
         {renderProgramInfoAccordion(
-          courseData,
-          courseNotes,
           careerData,
           employerData
         )}
@@ -385,9 +378,6 @@ export const query = graphql`query ($id: String) {
         field_program_overview {
           processed
         }
-        field_course_notes {
-          processed
-        }
         relationships {
           field_prog_image {
             field_media_image {
@@ -409,36 +399,6 @@ export const query = graphql`query ($id: String) {
           field_program_acronym {
             name
             id
-          }
-          field_courses {
-            changed
-            field_credits
-            field_level
-            field_code
-            title
-            field_course_url {
-              uri
-            }
-          }
-          field_degrees {
-            drupal_id
-            name
-            field_degree_acronym
-          }
-          field_specializations {
-            name
-          }
-          field_program_statistics {
-            drupal_id
-            field_stat_range
-            field_stat_value
-            field_stat_value_end
-            field_font_awesome_icon
-            relationships {
-              field_stat_type {
-                name
-              }
-            }
           }
           field_tags {
             name
