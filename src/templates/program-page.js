@@ -5,100 +5,23 @@ import Seo from 'components/seo';
 import Hero from 'components/shared/hero';
 import Breadcrumbs from 'components/shared/breadcrumbs';
 import CallToAction from 'components/shared/callToAction';
-import Careers from 'components/shared/careers';
-import Courses from 'components/shared/courses';
+// import Careers from 'components/shared/careers';
+// import Courses from 'components/shared/courses';
 import CustomFooter from 'components/shared/customFooter';
-import Degrees from 'components/shared/degrees';
 import Employers from 'components/shared/employers';
 import HeroVideo from 'components/shared/heroVideo';
-import NewsGrid from 'components/shared/newsGrid';
-import Stats from 'components/shared/stats'
 import Testimonials from 'components/shared/testimonial';
 import Variants from 'components/shared/variants';
 import Widget from 'components/shared/widget';
+import { Row, Col } from "react-bootstrap";
+import { StaticImage } from "gatsby-plugin-image"
 import { sortLastModifiedDates } from 'utils/ug-utils';
 import { graphql } from 'gatsby';
+
 
 function renderProgramOverview(overview) {
     if (overview) {
         return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: overview }} /></>
-    }
-    return null;
-}
-
-function renderProgramStats(degreesData, variantData, statsData) {
-
-    if (statsData?.length>0 || degreesData?.length>0) {
-        return (
-        <div className="full-width-container stats-bg">
-            <div className="container page-container">
-                <section className="row row-with-vspace site-content">
-                    <div className="col-md-12 content-area">
-                        <h2 className="visually-hidden">Program Statistics</h2>
-                        <dl className="d-flex flex-wrap flex-fill justify-content-center">
-                            <Degrees degreesData={degreesData} />
-                            {CountProgramVariants(variantData)}
-                            <Stats statsData={statsData} />
-                        </dl>
-                    </div>
-                </section>
-            </div>
-        </div>)
-    }
-    return null;
-}
-
-function CountProgramVariants(variantData) {
-
-    let majors = [];
-    let minors = [];
-    let certificates = [];
-    let assocDiplomas = [];
-
-    if (variantData?.length > 0) {
-        variantData.forEach((edge) => {
-            if ((edge.__typename === "paragraph__program_variants") && (edge.relationships.field_variant_type !== null)) {
-                switch(edge.relationships.field_variant_type.name) {
-                    case "Associate Diplomas":
-                        assocDiplomas.push(edge.relationships.field_variant_type.name);
-                    break;
-                    case "Certificates":
-                        certificates.push(edge.relationships.field_variant_type.name);
-                    break;
-                    case "Minors":
-                        minors.push(edge.relationships.field_variant_type.name);
-                    break;
-                    default:
-                        majors.push(edge.relationships.field_variant_type.name);
-                }
-            }
-        });
-        return <>
-            {majors?.length>0 && <>
-                <div className="uog-card">
-                    <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {majors.length}</dt>
-                    <dd>Specialized Majors</dd>
-                </div>
-            </>}
-            {minors?.length>0 && <>
-                <div className="uog-card">
-                    <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {minors.length}</dt>
-                    <dd>Specialized Minors</dd>
-                </div>
-            </>}
-            {assocDiplomas?.length>0 && <>
-                <div className="uog-card">
-                    <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {assocDiplomas.length}</dt>
-                    <dd>Associate Diplomas</dd>
-                </div>
-            </>}
-            {certificates?.length>0 && <>
-                <div className="uog-card">
-                    <dt><span className="fa-icon-colour"><i className="fa-solid fa-file-certificate" aria-hidden="true">  </i></span> {certificates.length}</dt>
-                    <dd>Optional Certificates</dd>
-                </div>
-            </>}
-        </>
     }
     return null;
 }
@@ -118,49 +41,88 @@ function renderProgramVariants (variantDataHeading, variantData) {
   }
 }
 
+function renderAdmissionRequirements() {
+  return (
+    <div className="container page-container">
+      <section className="row row-with-vspace site-content">
+        <div className="col-md-12 content-area">
+
+          {/* 4 cards - Admission Requirements, Scholarships, Tour our Campus, Have Questions */}
+          <div class="row row-cols-1 row-cols-sm-2 my-5">
+
+            <div class="card border-0 mb-4 col">
+              <div class="card-body p-4 uog-blue-muted uog-border-black">
+                <h3 class="card-title text-dark mt-0">Admission Requirements</h3>
+                <p>Discover seamless entry to Bachelor programs. Explore admission requirements for Canadian, international, transfer, and mature students. Start your journey today!</p>
+                <p><a href="https://admission.uoguelph.ca/adminfo">Explore Admission Requirements</a></p>
+              </div>
+            </div>
+
+            <div class="card border-0 mb-4 col">
+              <div class="card-body p-4 uog-blue-muted uog-border-red">
+                <h3 class="card-title text-dark mt-0">Scholarships</h3>
+                <p>In 2022, more than $41.7 million in scholarships was awarded to U of G students. Learn how to apply for available Scholarships.</p>
+                <p><a href="https://www.uoguelph.ca/registrar/studentfinance/scholarships/index">Explore Available Scholarships</a></p>
+              </div>
+            </div>
+
+            <div class="card border-0 mb-4 col">
+              <div class="card-body p-4 uog-blue-muted uog-border-yellow">
+                <h3 class="card-title text-dark mt-0">Tour Our Campus</h3>
+                <p>Through virtual tours, presentations, webinars and in-person tours, get familiar with the University of Guelph campus.</p>
+                <p><a href="https://admission.uoguelph.ca/tours">Book a Tour</a></p>
+              </div>
+            </div>
+
+            <div class="card border-0 mb-4 col">
+              <div class="card-body p-4 uog-blue-muted uog-border-blue">
+                <h3 class="card-title text-dark mt-0">Have Questions?</h3>
+                <p>Learn more about how to connect, discover, and engage with programs, facilities and life at the University of Guelph.</p>
+                <p><a href="https://admission.uoguelph.ca/contact">Request More Info</a></p>
+              </div>
+            </div>
+          </div>
+
+          {/* Talk to a Current Student */}
+          <Row className="my-sm-5">
+            <Col md={6}>
+              <StaticImage src="../images/unibuddy.webp" alt="Collage of smiling students with callouts" />
+            </Col>
+            <Col md={6} className="mt-5 ps-5">
+              <h3>Talk to a Current Student</h3>
+              <p> Don’t just take it from us – hear from one of our many students on their experiences with Guelph, integrating into U of G life, and much more. Start chatting with <a href="https://admission.uoguelph.ca/chat-with-domestic-student">students from Canada</a> or <a href="https://admission.uoguelph.ca/international/chat/">international students</a></p>
+            </Col>
+          </Row>
+
+        </div>
+      </section>
+    </div>
+
+  )
+}
+
 function renderProgramInfoAccordion  (courseData, courseNotes, careerData, employerData) {
 
-    // accordion - Courses Item
-    const programCourseItem = () => {
-        if (courseNotes || courseData?.length>0) {
-          return (
-            <div className="accordion-item">
-              <h3 className="accordion-header" id="selectedCourses-heading">
-                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#selectedCourses-courses" aria-expanded="false" aria-controls="selectedCourses-courses">
-                  Selected Courses
-                </button>
-              </h3>
-              <div id="selectedCourses-courses" className="accordion-collapse collapse" aria-labelledby="selectedCourses-heading">
-                <div className="accordion-body">
-                {<Courses courseData={courseData} courseNotes={courseNotes} headingLevel="h4" />}
-                </div>
-              </div>
-            </div>
-          )
-        }
-        return null;
-    }
-
     // accordion - Careers Item
-    const programCareersItem = () => {
-        if (careerData?.length>0) {
-          return (
-            <div className="accordion-item">
-              <h3 className="accordion-header" id="programCareers-heading">
-                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programCareers-careers" aria-expanded="false" aria-controls="programCareers-careers">
-                  Careers
-                </button>
-              </h3>
-              <div id="programCareers-careers" className="accordion-collapse collapse" aria-labelledby="programCareers-heading">
-                <div className="accordion-body">
-                <Careers careerData={careerData} numColumns={3}/>
-                </div>
-              </div>
-            </div>
-          )
-        }
-        return null;
-    }
+    // const programCareersItem = () => {
+    //     if (careerData?.length>0) {
+    //       return (
+    //         <div className="accordion-item">
+    //           <h3 className="accordion-header" id="programCareers-heading">
+    //             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programCareers-careers" aria-expanded="false" aria-controls="programCareers-careers">
+    //               Careers
+    //             </button>
+    //           </h3>
+    //           <div id="programCareers-careers" className="accordion-collapse collapse" aria-labelledby="programCareers-heading">
+    //             <div className="accordion-body">
+    //             <Careers careerData={careerData} numColumns={3}/>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       )
+    //     }
+    //     return null;
+    // }
 
     // accordion - Employers Item
     const programEmployersItem = () => {
@@ -187,10 +149,10 @@ function renderProgramInfoAccordion  (courseData, courseNotes, careerData, emplo
             <div className="container page-container">
               <section className="row row-with-vspace site-content">
                   <div className="col-md-12 content-area">
-                  <h2>Program Information</h2>
+                  {/* <h2>Program Information</h2> */}
                     <div className="accordion" id="ProgramPageAccordion">
-                      {programCourseItem()}
-                      {programCareersItem()}
+                      {/* {programCourseItem()} */}
+                      {/* {programCareersItem()} */}
                       {programEmployersItem()}
                     </div>
                   </div>
@@ -247,14 +209,11 @@ const ProgramPage = ({data, location}) => {
     let callToActionData = data.ctas?.edges;
     let careerData = data.careers?.edges;
     let courseData = progData.relationships?.field_courses;
-    let degreesData = progData.relationships?.field_degrees;
     let domains = progData?.field_domain_access;
     let employerData = data.employers?.edges;
     let footerData = data.footer?.edges;
     let imageData =  data.images?.edges;
     let imageTaggedData = data.imagesTagged?.edges;
-    let newsData = data.news?.edges;
-    let statsData = progData.relationships?.field_program_statistics;
     let testimonialData = data.testimonials?.edges;
     let variantData = progData.relationships?.field_program_variants;
     let variantDataHeading = prepareVariantHeading(variantData);
@@ -352,9 +311,6 @@ const ProgramPage = ({data, location}) => {
         { /**** Widgets content ****/} 
         {widgets?.map((widget, index) => <Widget widget={widget} key={index} />)} 
 
-        { /**** Program Stats ****/ }
-        {/* {renderProgramStats(degreesData, variantData, statsData)} */}
-
         {/**** Program Information Accordion ****/}
         {renderProgramInfoAccordion(
           courseData,
@@ -372,16 +328,9 @@ const ProgramPage = ({data, location}) => {
           />
         )}
 
-        {/*** News ****/}
-        {newsData && (
-          <NewsGrid
-            newsData={newsData}
-            heading="Program News"
-            headingLevel="h2"
-          />
-        )}
-
-
+        {/**** Admission Requirements ****/}
+        {renderAdmissionRequirements()}
+        
 
         {/**** Call to Actions ****/}
         {callToActionData.length !== 0 && (
@@ -683,53 +632,6 @@ export const query = graphql`query ($id: String) {
         relationships {
           field_media_file {
             publicUrl
-          }
-        }
-      }
-    }
-  }
-  news: allNodeArticle(
-    limit: 4
-    sort: {created: ASC}
-    filter: {fields: {tags: {in: [$id]}}}
-  ) {
-    edges {
-      node {
-        title
-        drupal_id
-        changed
-        created
-        fields {
-          alias {
-            value
-          }
-        }
-        body {
-          processed
-        }
-        relationships {
-          field_hero_image {
-            field_media_image {
-              alt
-            }
-            relationships {
-              field_media_image {
-                gatsbyImage(width: 400, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
-              }
-            }
-          }
-          field_news_category {
-            drupal_id
-            id
-            name
-          }
-          field_tags {
-            __typename
-            ... on TaxonomyInterface {
-              drupal_id
-              id
-              name
-            }
           }
         }
       }
