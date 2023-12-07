@@ -337,7 +337,7 @@ const ProgramPage = ({data, location}) => {
           <div className="container page-container">
             <div className="row site-content">        
               <section className="content-area">
-                    {renderProgramOverview(overview)}
+                {renderProgramOverview(overview)}
               </section>
             </div>
           </div>
