@@ -9,7 +9,7 @@ import CallToAction from 'components/shared/callToAction';
 import CustomFooter from 'components/shared/customFooter';
 import Employers from 'components/shared/employers';
 import HeroVideo from 'components/shared/heroVideo';
-// import Testimonials from 'components/shared/testimonial';
+import Testimonials from 'components/shared/testimonial';
 import Variants from 'components/shared/variants';
 import Widget from 'components/shared/widget';
 import { Row, Col } from "react-bootstrap";
@@ -225,18 +225,20 @@ const ProgramPage = ({data, location}) => {
     // set program details
     const nodeID = progData.drupal_internal__nid;
     const title = progData.title;
-    // const acronym = (progData.relationships.field_program_acronym?.name);
+    const acronym = (progData.relationships.field_program_acronym?.name);
     const overview = progData.field_program_overview?.processed;
 
     // `field_hero_widgets` only allows a single widget (at the moment), and
     // Drupal doesn't return an array, so force it into an array.
     const heroWidgets = (progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null);
-
     const widgets = progData.relationships?.field_widgets;
 
     // set last modified date
     let allModifiedDates = sortLastModifiedDates(
-        [progData.changed, retrieveLastModifiedDates(callToActionData), retrieveLastModifiedDates(testimonialData)]
+        [progData.changed, 
+          retrieveLastModifiedDates(callToActionData), 
+          retrieveLastModifiedDates(testimonialData)
+        ]
         );
     let lastModified = allModifiedDates[allModifiedDates.length - 1];
 
@@ -312,18 +314,17 @@ const ProgramPage = ({data, location}) => {
           employerData
         )}
 
+        {/**** Admission Requirements ****/}
+        {renderAdmissionRequirements()}
+        
         {/**** Testimonials ****/}
-        {/* {testimonialData && (
+        {testimonialData && (
           <Testimonials
             testimonialData={testimonialData}
             programAcronym={acronym}
             headingLevel="h3"
           />
-        )} */}
-
-        {/**** Admission Requirements ****/}
-        {renderAdmissionRequirements()}
-        
+        )}
 
         {/**** Call to Actions ****/}
         {callToActionData.length !== 0 && (
