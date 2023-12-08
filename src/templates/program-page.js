@@ -20,7 +20,10 @@ import { graphql } from 'gatsby';
 
 function renderProgramOverview(overview) {
     if (overview) {
-        return <><h2>Program Overview</h2><div dangerouslySetInnerHTML={{ __html: overview }} /></>
+        return <>
+          {/* <h2>Program Overview</h2> */}
+          <div dangerouslySetInnerHTML={{ __html: overview }} />
+        </>
     }
     return null;
 }
@@ -52,16 +55,16 @@ function renderAdmissionRequirements() {
             <div class="card border-0 mb-4 col">
               <div class="card-body p-4 uog-blue-muted uog-border-black">
                 <h3 class="card-title text-dark mt-0">Admission Requirements</h3>
-                <p>Discover seamless entry to Bachelor programs. Explore admission requirements for Canadian, international, transfer, and mature students. Start your journey today!</p>
-                <p><a href="https://admission.uoguelph.ca/adminfo">Explore Admission Requirements</a></p>
+                <p>Explore admission requirements for Canadian, international, transfer, and mature students. Start your journey today!</p>
+                <p><a href="https://admission.uoguelph.ca/adminfo">View Admission Requirements</a></p>
               </div>
             </div>
 
             <div class="card border-0 mb-4 col">
               <div class="card-body p-4 uog-blue-muted uog-border-red">
-                <h3 class="card-title text-dark mt-0">Scholarships</h3>
-                <p>In 2022, more than $41.7 million in scholarships was awarded to U of G students. Learn how to apply for available Scholarships.</p>
-                <p><a href="https://www.uoguelph.ca/registrar/studentfinance/scholarships/index">Explore Available Scholarships</a></p>
+                <h3 class="card-title text-dark mt-0">Scholarships & Bursaries</h3>
+                <p>Helping U of G students fund their educations by offering $45.5 million (in 2022-2023) in scholarships and bursaries.</p>
+                <p><a href="https://www.uoguelph.ca/registrar/studentfinance/aid/index">Explore Scholarships & Bursaries</a></p>
               </div>
             </div>
 
@@ -100,7 +103,8 @@ function renderAdmissionRequirements() {
   )
 }
 
-function renderProgramInfoAccordion  (careerData, employerData) {
+// function renderProgramInfoAccordion  (careerData, employerData) {
+function renderProgramInfoAccordion (employerData) {
 
     // accordion - Careers Item
     // const programCareersItem = () => {
@@ -143,7 +147,8 @@ function renderProgramInfoAccordion  (careerData, employerData) {
         }
         return null;
     }
-    if ( careerData?.length>0 ||employerData?.length > 0) {
+    // if ( careerData?.length>0 ||employerData?.length > 0) {
+    if ( employerData?.length > 0) {
       return (
             <div className="container page-container">
               <section className="row row-with-vspace site-content">
@@ -204,7 +209,7 @@ const ProgramPage = ({data, location}) => {
 
     let progData = data.programs.edges[0]?.node;
     let callToActionData = data.ctas?.edges;
-    let careerData = data.careers?.edges;
+    // let careerData = data.careers?.edges;
     let domains = progData?.field_domain_access;
     let employerData = data.employers?.edges;
     let footerData = data.footer?.edges;
@@ -310,7 +315,7 @@ const ProgramPage = ({data, location}) => {
 
         {/**** Program Information Accordion ****/}
         {renderProgramInfoAccordion(
-          careerData,
+          // careerData,
           employerData
         )}
 
