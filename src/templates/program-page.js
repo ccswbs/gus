@@ -43,63 +43,58 @@ function renderProgramVariants (variantDataHeading, variantData) {
   }
 }
 
+function renderTalkToStudent() {
+  return (
+    <Row className="my-sm-5">
+      <Col md={6}>
+        <StaticImage src="../images/unibuddy.webp" alt="Collage of smiling students with callouts" />
+      </Col>
+      <Col md={6} className="mt-5 ps-5">
+        <h3>Talk to a Current Student</h3>
+        <p> Don’t just take it from us – hear from one of our many students on their experiences with Guelph, integrating into U of G life, and much more. Start chatting with <a href="https://admission.uoguelph.ca/chat-with-domestic-student">students from Canada</a> or <a href="https://admission.uoguelph.ca/international/chat/">international students</a></p>
+      </Col>
+    </Row>
+  )
+}
+
+/* 4 cards - Admission Requirements, Scholarships, Tour our Campus, Have Questions */
 function renderAdmissionRequirements() {
   return (
-    <div className="container page-container">
-      <section className="row row-with-vspace site-content">
-        <div className="col-md-12 content-area">
-
-          {/* 4 cards - Admission Requirements, Scholarships, Tour our Campus, Have Questions */}
-          <div class="row row-cols-1 row-cols-sm-2 my-5">
-
-            <div class="card border-0 mb-4 col">
-              <div class="card-body p-4 uog-blue-muted uog-border-black">
-                <h3 class="card-title text-dark mt-0">Admission Requirements</h3>
-                <p>Explore admission requirements for Canadian, international, transfer, and mature students. Start your journey today!</p>
-                <p><a href="https://admission.uoguelph.ca/adminfo">View Admission Requirements</a></p>
-              </div>
-            </div>
-
-            <div class="card border-0 mb-4 col">
-              <div class="card-body p-4 uog-blue-muted uog-border-red">
-                <h3 class="card-title text-dark mt-0">Scholarships & Bursaries</h3>
-                <p>Helping U of G students fund their educations by offering $45.5 million (in 2022-2023) in scholarships and bursaries.</p>
-                <p><a href="https://www.uoguelph.ca/registrar/studentfinance/aid/index">Explore Scholarships & Bursaries</a></p>
-              </div>
-            </div>
-
-            <div class="card border-0 mb-4 col">
-              <div class="card-body p-4 uog-blue-muted uog-border-yellow">
-                <h3 class="card-title text-dark mt-0">Tour Our Campus</h3>
-                <p>Through virtual tours, presentations, webinars and in-person tours, get familiar with the University of Guelph campus.</p>
-                <p><a href="https://admission.uoguelph.ca/tours">Book a Tour</a></p>
-              </div>
-            </div>
-
-            <div class="card border-0 mb-4 col">
-              <div class="card-body p-4 uog-blue-muted uog-border-blue">
-                <h3 class="card-title text-dark mt-0">Have Questions?</h3>
-                <p>Learn more about how to connect, discover, and engage with programs, facilities and life at the University of Guelph.</p>
-                <p><a href="https://admission.uoguelph.ca/contact">Request More Info</a></p>
-              </div>
-            </div>
+    <>
+      <div class="row row-cols-1 row-cols-sm-2 my-5">
+        <div class="card border-0 mb-4 col">
+          <div class="card-body p-4 uog-blue-muted uog-border-black">
+            <h3 class="card-title text-dark mt-0">Admission Requirements</h3>
+            <p>Explore admission requirements for Canadian, international, transfer, and mature students. Start your journey today!</p>
+            <p><a href="https://admission.uoguelph.ca/adminfo">View Admission Requirements</a></p>
           </div>
-
-          {/* Talk to a Current Student */}
-          <Row className="my-sm-5">
-            <Col md={6}>
-              <StaticImage src="../images/unibuddy.webp" alt="Collage of smiling students with callouts" />
-            </Col>
-            <Col md={6} className="mt-5 ps-5">
-              <h3>Talk to a Current Student</h3>
-              <p> Don’t just take it from us – hear from one of our many students on their experiences with Guelph, integrating into U of G life, and much more. Start chatting with <a href="https://admission.uoguelph.ca/chat-with-domestic-student">students from Canada</a> or <a href="https://admission.uoguelph.ca/international/chat/">international students</a></p>
-            </Col>
-          </Row>
-
         </div>
-      </section>
-    </div>
 
+        <div class="card border-0 mb-4 col">
+          <div class="card-body p-4 uog-blue-muted uog-border-red">
+            <h3 class="card-title text-dark mt-0">Scholarships & Bursaries</h3>
+            <p>Helping U of G students fund their educations by offering $45.5 million (in 2022-2023) in scholarships and bursaries.</p>
+            <p><a href="https://www.uoguelph.ca/registrar/studentfinance/aid/index">Explore Scholarships & Bursaries</a></p>
+          </div>
+        </div>
+
+        <div class="card border-0 mb-4 col">
+          <div class="card-body p-4 uog-blue-muted uog-border-yellow">
+            <h3 class="card-title text-dark mt-0">Tour Our Campus</h3>
+            <p>Through virtual tours, presentations, webinars and in-person tours, get familiar with the University of Guelph campus.</p>
+            <p><a href="https://admission.uoguelph.ca/tours">Book a Tour</a></p>
+          </div>
+        </div>
+
+        <div class="card border-0 mb-4 col">
+          <div class="card-body p-4 uog-blue-muted uog-border-blue">
+            <h3 class="card-title text-dark mt-0">Have Questions?</h3>
+            <p>Learn more about how to connect, discover, and engage with programs, facilities and life at the University of Guelph.</p>
+            <p><a href="https://admission.uoguelph.ca/contact">Request More Info</a></p>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -320,7 +315,16 @@ const ProgramPage = ({data, location}) => {
         )}
 
         {/**** Admission Requirements ****/}
-        {renderAdmissionRequirements()}
+        {
+          <div className="container page-container">
+            <section className="row row-with-vspace site-content">
+              <div className="col-md-12 content-area">
+                {renderAdmissionRequirements()}
+                {renderTalkToStudent()}
+              </div>
+            </section>
+          </div>
+        }
         
         {/**** Testimonials ****/}
         {testimonialData && (
