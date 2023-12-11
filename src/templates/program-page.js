@@ -336,6 +336,9 @@ const ProgramPage = ({ data, location }) => {
         employerData
       )}
 
+      {/**** Testimonials ****/}
+      {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />}
+
       {/**** Admission Requirements ****/}
       {
         <div className="container page-container">
@@ -347,9 +350,6 @@ const ProgramPage = ({ data, location }) => {
           </section>
         </div>
       }
-
-      {/**** Testimonials ****/}
-      {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />}
 
       {/**** Call to Actions ****/}
       {callToActionData.length !== 0 && (
