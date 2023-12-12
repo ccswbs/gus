@@ -27,11 +27,11 @@ const NotFoundPage = () => {
               </li>
 
               <li>
-                The search engine has an out-of-date listing for this page - <a href="mailto:websites@uoguelph.ca">please let us know!</a>
+                The search engine has an out-of-date listing for this page - <a href="mailto:ithelp@uoguelph.ca">please let us know!</a>
               </li>
 
               <li>
-                The university has removed this page (either on purpose or by mistake) - <a href="mailto:websites@uoguelph.ca">please let us know!</a>
+                The university has removed this page (either on purpose or by mistake) - <a href="mailto:ithelp@uoguelph.ca">please let us know!</a>
               </li>
             </ol>
 
