@@ -32,8 +32,14 @@ schedules:
     include:
     - main
   always: true
-- cron: "0 11-4 * * *"
-  displayName: Hourly build (6am - 11pm EST)
+- cron: "0 11-23 * * *"
+  displayName: Hourly build (6am - 6pm EST)
+  branches:
+    include:
+    - main
+  always: true
+- cron: "0 0-4 * * *"
+  displayName: Hourly build (7pm - 11pm EST)
   branches:
     include:
     - main
