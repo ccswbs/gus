@@ -76,13 +76,13 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_cache | prod | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
+    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
     path: $(_gatsby_cache_folder)
   displayName: 'Retrieve cached Gatsby .cache folder'
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_public | prod | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
+    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
     path: $(_gatsby_public_folder)
   displayName: 'Retrieve cached Gatsby public folder'
 
