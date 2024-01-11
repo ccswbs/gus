@@ -61,6 +61,12 @@ body,
   color: black;
 }
 
+/* Increase spacing above global footer by 60 px */
+/* Additional 20px from the global footer padding */
+#main-column {
+  margin-bottom: 60px;
+}
+
 .flex-even {
   flex: 1;
 }
