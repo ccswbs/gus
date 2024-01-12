@@ -45,7 +45,7 @@ export const query = graphql`
 		height: 640
                 cropFocus: CENTER
                 placeholder: BLURRED
-                aspectRatio: 3
+                aspectRatio: 5/3
 								formats: [AUTO, WEBP]
               )
 			}
