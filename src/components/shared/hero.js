@@ -45,8 +45,7 @@ export const query = graphql`
 		height: 640
                 cropFocus: CENTER
                 placeholder: BLURRED
-                aspectRatio: 5/3
-								formats: [AUTO, WEBP]
+                formats: [AUTO, WEBP]
               )
 			}
 			field_tags {
