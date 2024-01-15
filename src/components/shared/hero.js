@@ -14,7 +14,7 @@ function Hero (props) {
 					let altText = img.node.field_media_image.alt;					
 					return contentExists(heroImage) ? 
                         <React.Fragment key={img.node.drupal_id}>
-                            <GatsbyImage image={heroImage.gatsbyImage} alt={altText} />
+                            <GatsbyImage image={heroImage.gatsbyImage} alt={altText} className="w-100" />
                         </React.Fragment>
                     : null;
 				})}
@@ -42,7 +42,6 @@ export const query = graphql`
               publicUrl
               gatsbyImage(
                 width: 1680
-		height: 640
                 cropFocus: CENTER
                 placeholder: BLURRED
                 formats: [AUTO, WEBP]
