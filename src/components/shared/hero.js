@@ -42,6 +42,7 @@ export const query = graphql`
               publicUrl
               gatsbyImage(
                 width: 1680
+								height: 640
                 cropFocus: CENTER
                 placeholder: BLURRED
                 formats: [AUTO, WEBP]
