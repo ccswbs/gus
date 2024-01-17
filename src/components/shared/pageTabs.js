@@ -27,8 +27,7 @@ const PageTabs = (props) => {
       // If neither could be found then set the active tab to the first tab.
       setActiveTab(found?.drupal_id ?? tabs[0]?.drupal_id)
 
-      // Make sure the tab is visible
-      container.current?.scrollIntoView({ block: "start", inline: "nearest" })
+      found && container.current?.scrollIntoView({ block: "start", inline: "nearest" })
     } else {
       // No param passed in the url so default to showing the first tab.
       setActiveTab(tabs[0]?.drupal_id)
@@ -44,7 +43,7 @@ const PageTabs = (props) => {
       <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} justify transition={Fade}>
         {tabs.map((tab) => (
           <Tab key={tab.drupal_id} eventKey={tab.drupal_id} title={tab.field_tab_title.toUpperCase()}>
-            <div dangerouslySetInnerHTML={{ __html: tab.field_tab_body.processed }} />
+            <div data-tab-id={tab.drupal_id} dangerouslySetInnerHTML={{ __html: tab.field_tab_body.processed }} />
           </Tab>
         ))}
       </Tabs>
