@@ -32,8 +32,14 @@ schedules:
     include:
     - main
   always: true
-- cron: "0 10-22 * * *"
+- cron: "0 11-23 * * *"
   displayName: Hourly build (6am - 6pm EST)
+  branches:
+    include:
+    - main
+  always: true
+- cron: "0 0-4 * * *"
+  displayName: Hourly build (7pm - 11pm EST)
   branches:
     include:
     - main
@@ -60,7 +66,7 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: '_npm_node_modules | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
+    key: '_npm_node_modules | prod | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
     path: $(_npm_node_modules)
   displayName: 'Retrieve cached NPM folder'
 
@@ -70,13 +76,13 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_cache | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
+    key: 'gatsby_cache | prod | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
     path: $(_gatsby_cache_folder)
   displayName: 'Retrieve cached Gatsby .cache folder'
 
 - task: Cache@2
   inputs:
-    key: 'gatsby_public | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
+    key: 'gatsby_public | prod | "$(Agent.OS)" | "$(Build.SourceBranch)" | "$(_date)"'
     path: $(_gatsby_public_folder)
   displayName: 'Retrieve cached Gatsby public folder'
 
