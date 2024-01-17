@@ -1,20 +1,19 @@
-
-ul.nav-tabs {
+#content #main-column .container.page-container .nav-tabs-container ul.nav-tabs {
   display: flex;
-  border-bottom: 0.5rem solid #FFC72A !important;
+  border-bottom: 0.5rem solid #ffc72a !important;
   padding: 0 !important;
   gap: 0.5rem;
 }
 
-ul.nav-tabs li.nav-item {
+#content #main-column .container.page-container .nav-tabs-container ul.nav-tabs li.nav-item {
   margin-bottom: 0;
 }
 
-ul.nav-tabs li.nav-item::before {
+#content #main-column .container.page-container .nav-tabs-container ul.nav-tabs li.nav-item::before {
   content: none;
 }
 
-.nav-tabs .nav-link {
+#content #main-column .container.page-container .nav-tabs-container .nav-tabs .nav-link {
   color: #000;
   font-weight: 700;
   background-color: #eee;
@@ -24,22 +23,18 @@ ul.nav-tabs li.nav-item::before {
   border-bottom: 0.5rem solid #fff !important;
 }
 
-.nav-tabs .nav-link:hover,
-.nav-tabs .nav-link:focus {
+#content #main-column .container.page-container .nav-tabs-container .nav-tabs .nav-link:hover,
+#content #main-column .container.page-container .nav-tabs-container .nav-tabs .nav-link:focus {
   background-color: #ddd;
 }
 
-.nav-tabs .nav-link.active {
+#content #main-column .container.page-container .nav-tabs-container .nav-tabs .nav-link.active {
   color: #000;
   font-weight: 700;
-  background-color: #FFC72A;
-  border-bottom: 0.5rem solid #FFC72A !important;
+  background-color: #ffc72a;
+  border-bottom: 0.5rem solid #ffc72a !important;
 }
 
-.nav-tabs-container .tab-content .tab-pane {
+#content #main-column .container.page-container .nav-tabs-container .tab-content .tab-pane {
   transition-duration: 250ms;
-}
-
-.tab-content {
-  padding: 2rem 0;
 }
