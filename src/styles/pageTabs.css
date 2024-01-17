@@ -1,0 +1,41 @@
+
+ul.nav-tabs {
+  display: flex;
+  border-bottom: 0.5rem solid #FFC72A !important;
+  padding: 0 !important;
+  gap: 0.5rem;
+}
+
+ul.nav-tabs li.nav-item {
+  margin-bottom: 0;
+}
+
+ul.nav-tabs li.nav-item::before {
+  content: none;
+}
+
+.nav-tabs .nav-link {
+  color: #000;
+  font-weight: 700;
+  background-color: #eee;
+  border-radius: 0.25rem 0.25rem 0 0;
+  margin: 0;
+  padding: 1.25rem;
+  border-bottom: 0.5rem solid #fff !important;
+}
+
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  background-color: #ddd;
+}
+
+.nav-tabs .nav-link.active {
+  color: #000;
+  font-weight: 700;
+  background-color: #FFC72A;
+  border-bottom: 0.5rem solid #FFC72A !important;
+}
+
+.tab-content {
+  padding: 2rem 0;
+}
