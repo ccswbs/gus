@@ -10,7 +10,7 @@ import { slugify } from "../../utils/ug-utils"
 const PageTabs = (props) => {
   const container = useRef(null)
   const tabs = props.pageData?.relationships?.field_tabs ?? []
-  const [activeTab, setActiveTab] = useState("")
+  const [activeTab, setActiveTab] = useState(tabs[0]?.drupal_id ?? "")
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -28,9 +28,6 @@ const PageTabs = (props) => {
       setActiveTab(found?.drupal_id ?? tabs[0]?.drupal_id)
 
       found && container.current?.scrollIntoView({ block: "start", inline: "nearest" })
-    } else {
-      // No param passed in the url so default to showing the first tab.
-      setActiveTab(tabs[0]?.drupal_id)
     }
   }, [])
 
