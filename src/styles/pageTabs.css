@@ -36,6 +36,10 @@ ul.nav-tabs li.nav-item::before {
   border-bottom: 0.5rem solid #FFC72A !important;
 }
 
+.nav-tabs-container .tab-content .tab-pane {
+  transition-duration: 250ms;
+}
+
 .tab-content {
   padding: 2rem 0;
 }

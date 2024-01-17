@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
+import Fade from 'react-bootstrap/Fade';
 import 'styles/pageTabs.css';
 
 const PageTabs = (props) => {
@@ -19,8 +20,8 @@ const PageTabs = (props) => {
   }
 
   return (
-    <div className="col-md-12 content-area">
-      <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} justify>
+    <div className="col-md-12 content-area nav-tabs-container">
+      <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} justify transition={Fade}>
         {tabs.map((tab) => (
           <Tab key={tab.drupal_id} eventKey={tab.drupal_id} title={tab.field_tab_title}>
             <div dangerouslySetInnerHTML={{ __html: tab.field_tab_body.processed }} />
