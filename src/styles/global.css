@@ -54,6 +54,8 @@ body,
 #rotator img {
   top: 50% !important;
   left: 50% !important;
+  max-width: none !important;
+  width: 100% !important;
 }
 
 /* h1 title within page body */
