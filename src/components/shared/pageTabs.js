@@ -15,7 +15,7 @@ const PageTabs = (props) => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const title = params.get("tab")
-    let tabID = tabs[0]?.drupal_id
+    let tabID = tabs[0]?.drupal_id ?? ""
 
     if (title) {
       for (const tab of tabs) {
