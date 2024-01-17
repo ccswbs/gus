@@ -14,20 +14,25 @@ const PageTabs = (props) => {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const title = params.get("tab")
-    let tabID = tabs[0]?.drupal_id ?? ""
+    const titleOrID = params.get("tab")
 
-    if (title) {
-      for (const tab of tabs) {
-        if (title === slugify(tab.field_tab_title.toLowerCase())) {
-          tabID = tab.drupal_id
-          container.current?.scrollIntoView({ block: "start", inline: "nearest" })
-          break
-        }
-      }
+    if (titleOrID) {
+      // Try to find a tab with a matching drupal id
+      let found = tabs.find((tab) => tab.drupal_id === titleOrID)
+
+      // If we couldn't find a matching id, then try and find a matching title
+      found ??= tabs.find((tab) => titleOrID === slugify(tab.field_tab_title.toLowerCase()))
+
+      // Set the active tab to which ever was found
+      // If neither could be found then set the active tab to the first tab.
+      setActiveTab(found?.drupal_id ?? tabs[0]?.drupal_id)
+
+      // Make sure the tab is visible
+      container.current?.scrollIntoView({ block: "start", inline: "nearest" })
+    } else {
+      // No param passed in the url so default to showing the first tab.
+      setActiveTab(tabs[0]?.drupal_id)
     }
-
-    setActiveTab(tabID)
   }, [])
 
   if (tabs.length <= 0) {
