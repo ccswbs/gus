@@ -81,7 +81,7 @@ module.exports = {
         path: `./src/data/`,
       }
     },
-    {
+/*     {
       resolve: `gatsby-source-wordpress`,
       options: {
         catchLinks: false,
@@ -123,7 +123,7 @@ module.exports = {
           User: {exclude: true},
         },
       },
-    },
+    }, */
     {
       resolve: `gatsby-transformer-sharp`,
       options: {
