@@ -1,93 +1,77 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
-import { contentExists } from 'utils/ug-utils.js';
-import NavTabs from 'components/shared/navTabs';
-import NavTabHeading from 'components/shared/navTabHeading';
-import NavTabContent from 'components/shared/navTabContent';
+import React, { useState, useEffect, useRef } from "react"
+import PropTypes from "prop-types"
+import { graphql } from "gatsby"
+import Tab from "react-bootstrap/Tab"
+import Tabs from "react-bootstrap/Tabs"
+import Fade from "react-bootstrap/Fade"
+import "styles/pageTabs.css"
+import { slugify } from "../../utils/ug-utils"
 
-function renderTabInfo (pageData) {
-    
-    let activeValue = true;
-    let navTabHeadings = [];
-    let navTabContent = [];    
+const PageTabs = (props) => {
+  const container = useRef(null)
+  const tabs = props.pageData?.relationships?.field_tabs ?? []
+  const [activeTab, setActiveTab] = useState(tabs[0]?.drupal_id ?? "")
 
-    if (contentExists(pageData)) {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const titleOrID = params.get("tab")
 
-        let tabID = "";
+    if (titleOrID) {
+      // Try to find a tab with a matching drupal id
+      let found = tabs.find((tab) => tab.drupal_id === titleOrID)
 
-        for (let i = 0; i < pageData.relationships.field_tabs.length; i++) {
-            tabID = "pills-" + pageData.relationships.field_tabs[i].drupal_id;
+      // If we couldn't find a matching id, then try and find a matching title
+      found ??= tabs.find((tab) => titleOrID === slugify(tab.field_tab_title.toLowerCase()))
 
-            if (i > 0) activeValue = false;
+      // Set the active tab to which ever was found
+      // If neither could be found then set the active tab to the first tab.
+      setActiveTab(found?.drupal_id ?? tabs[0]?.drupal_id)
 
-            navTabHeadings.push(<NavTabHeading key={`navTabHeading-` + i}
-                active={activeValue}
-                heading={pageData.relationships.field_tabs[i].field_tab_title}
-                controls={tabID}
-            />);
-
-            navTabContent.push(<NavTabContent key={`navTabContent-` + i}
-                active={activeValue}
-                id={tabID}
-                content={<div dangerouslySetInnerHTML={{ __html: pageData.relationships.field_tabs[i].field_tab_body.processed }} />}
-            />);
-        }
-        return (
-        <React.Fragment>
-            <NavTabs headings={
-                navTabHeadings.map((heading) => {
-                    return heading;
-                    })
-                }>
-                {navTabContent.map((content) => {
-                    return content;
-
-                })}
-            </NavTabs>
-        </React.Fragment>
-        )
+      found && container.current?.scrollIntoView({ block: "start", inline: "nearest" })
     }
-    return null;
+  }, [])
+
+  if (tabs.length <= 0) {
+    return null
+  }
+
+  return (
+    <div className="col-md-12 content-area nav-tabs-container" ref={container}>
+      <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} justify transition={Fade}>
+        {tabs.map((tab) => (
+          <Tab key={tab.drupal_id} eventKey={tab.drupal_id} title={tab.field_tab_title.toUpperCase()}>
+            <div data-tab-id={tab.drupal_id} dangerouslySetInnerHTML={{ __html: tab.field_tab_body.processed }} />
+          </Tab>
+        ))}
+      </Tabs>
+    </div>
+  )
 }
 
-function pageTabs (props) {
-
-    if (contentExists(props.pageData) && props.pageData.length !== 0) {        
-        return (
-            <div className="col-md-12 content-area">
-                {renderTabInfo(props.pageData)}
-           </div>
-        )
-    } else {
-        return null;
-    }
+PageTabs.propTypes = {
+  pageData: PropTypes.object,
 }
 
-pageTabs.propTypes = {
-    pageData: PropTypes.object,
+PageTabs.defaultProps = {
+  pageData: ``,
 }
 
-pageTabs.defaultProps = {
-    pageData: ``,
-}
-
-export default pageTabs
+export default PageTabs
 
 export const query = graphql`
-    fragment SectionTabsParagraphFragment on paragraph__section_tabs {
+  fragment SectionTabsParagraphFragment on paragraph__section_tabs {
+    drupal_id
+    relationships {
+      field_tabs {
         drupal_id
-        relationships {
-          field_tabs {
-            drupal_id
-            field_tab_title
-            field_tab_body {
-              processed
-            }
-          }
-          field_section_column {
-            name
-          }
+        field_tab_title
+        field_tab_body {
+          processed
         }
+      }
+      field_section_column {
+        name
+      }
     }
+  }
 `
