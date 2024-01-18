@@ -217,6 +217,7 @@ fragment StatisticWidgetParagraphFragment on paragraph__statistic_widget {
                     layout: CONSTRAINED,
                     placeholder: BLURRED,
                     width: 600,
+                    formats: [AUTO, WEBP],
                   )
                 }
               }

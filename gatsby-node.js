@@ -487,10 +487,13 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       field_accordion_block_text: FieldAccordionBlockText
       field_accordion_title: String
+      field_heading_level: String
     }
     type paragraph__accordion_section implements Node {
       drupal_id: String
       field_accordion_stay_open: Boolean
+      field_accordion_title: String
+      field_heading_level: String
       relationships: paragraph__accordion_sectionRelationships
     }
     type paragraph__accordion_sectionRelationships implements Node {
@@ -595,6 +598,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type paragraph__media_text implements Node {
       drupal_id: String
       field_media_image_size: String
+      field_media_alignment: String
       field_media_text_desc: BodyField
       field_media_text_title: String
       relationships: paragraph__media_textRelationships
@@ -638,6 +642,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_id: String
       field_section_classes: String
       field_section_title: String
+      field_heading_level: String
       relationships: paragraph__sectionRelationships
     }
     type paragraph__sectionRelationships implements Node {
@@ -789,6 +794,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type taxonomy_term__event_categories implements Node & TaxonomyInterface {
       drupal_id: String
+      drupal_internal__tid: Int
       name: String
     }
     type taxonomy_term__goals implements Node & TaxonomyInterface {

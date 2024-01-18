@@ -4,24 +4,31 @@
  ***/
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 
 const createMenuHierarchy = (menuData, menuName) => {
   let tree = [],
-      mappedArr = {},
-      arrElem,
-      mappedElem
+    mappedArr = {},
+    arrElem,
+    mappedElem
 
   // First map the nodes of the array to an object -> create a hash table.
   for (let i = 0, len = menuData.length; i < len; i++) {
     arrElem = menuData[i].node
     if (arrElem.menu_name === menuName && arrElem.enabled === true) {
       mappedArr[arrElem.drupal_id] = arrElem
-      if (arrElem.drupal_parent_menu_item != null && arrElem.drupal_parent_menu_item.includes(arrElem.bundle)) {
-        let stripped_drupal_id = arrElem.drupal_parent_menu_item.replace(arrElem.bundle + ':', '')
-        mappedArr[arrElem.drupal_id].drupal_parent_menu_item = stripped_drupal_id
+      if (
+        arrElem.drupal_parent_menu_item != null &&
+        arrElem.drupal_parent_menu_item.includes(arrElem.bundle)
+      ) {
+        let stripped_drupal_id = arrElem.drupal_parent_menu_item.replace(
+          arrElem.bundle + ":",
+          ""
+        )
+        mappedArr[arrElem.drupal_id].drupal_parent_menu_item =
+          stripped_drupal_id
       }
-      mappedArr[arrElem.drupal_id]['children'] = []
+      mappedArr[arrElem.drupal_id]["children"] = []
     }
   }
 
@@ -33,7 +40,7 @@ const createMenuHierarchy = (menuData, menuName) => {
         let parentElem = mappedArr[mappedElem.drupal_parent_menu_item]
         // Check if the parent element is enabled before adding the current element as its child
         if (parentElem?.enabled === true) {
-          parentElem['children'].push(mappedElem)
+          parentElem["children"].push(mappedElem)
         }
       }
       // If the element is at the root level, add it to first level elements array.
@@ -46,68 +53,71 @@ const createMenuHierarchy = (menuData, menuName) => {
 }
 
 const generateMenu = (menuLinks, menuName) => {
-    let pageSpecificMenu;
-    let menuTree;
+  let menuTree = createMenuHierarchy(menuLinks.allMenuLinkContentMenuLinkContent.edges, menuName);
+  let pageHome = menuTree.shift();
 
-    menuTree = createMenuHierarchy(menuLinks.allMenuLinkContentMenuLinkContent.edges, menuName);    
+  const menuItems = menuTree.map((item) => {
+    let submenu = item.children;
+    return (
+      <React.Fragment key={item.drupal_id + `menu`}>
+        {submenu !== null && submenu.length > 0 ? (
+          <ul data-title={item.title} key={item.drupal_id}>
+            {item.link.url !== "" && (
+              <li key={item.drupal_id + `dup`}>
+                <a href={item.link.url}>{item.title}</a>
+              </li>
+            )}
+            {item?.children.map((child) => (
+              <li key={child.drupal_id}>
+                <a href={child.link.url}>{child.title}</a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <a key={item.drupal_id} href={item.link.url}>
+            {item.title}
+          </a>
+        )}
+      </React.Fragment>
+    );
+  });
 
-    pageSpecificMenu = menuTree.map(item => {			
-        let submenu = item.children;
-        let submenuItems = [];
+  return (
+    <>
+      <uofg-header page-title={pageHome.title} page-url={pageHome.link.url}>{menuItems}</uofg-header>
+    </>
+  );
+};
 
-        if (submenu !== null && submenu.length > 0) {
-            for (let i=0; i<submenu.length; i++) {
-                submenuItems.push(
-                    <li key={submenu[i].drupal_id}>
-                        <a href={submenu[i].link.url}>{submenu[i].title}</a>
-                    </li>
-                );
+
+const HeaderMenu = ({ menuName }) => (
+  <StaticQuery
+    query={graphql`
+      query HeaderMenuQuery {
+        allMenuLinkContentMenuLinkContent(sort: { weight: ASC }) {
+          edges {
+            node {
+              enabled
+              title
+              expanded
+              external
+              langcode
+              weight
+              link {
+                uri
+                url
+              }
+              drupal_parent_menu_item
+              bundle
+              drupal_id
+              menu_name
             }
+          }
         }
-        return (<React.Fragment key={item.drupal_id + `menu`}>
-        {submenu !== null && submenu.length > 0 ?  
-            <><uofg-dropdown-menu key={item.drupal_id}>
-            <button data-for="menu-button">{item.title}</button>
-            <ul data-for="menu-content">
-                {item.link.url !== "" && <li key={item.drupal_id + `dup`}><a href={item.link.url}>{item.title}</a></li> }
-                {submenuItems}
-            </ul>
-            </uofg-dropdown-menu></>
-        : <React.Fragment key={item.drupal_id}><a href={item.link.url}>{item.title}</a></React.Fragment>}
-        </React.Fragment>)
-    })
-
-    return pageSpecificMenu
-}
-
-const HeaderMenu = ({menuName}) => (
-   <StaticQuery
-      query={
-        graphql`query HeaderMenuQuery {
-  allMenuLinkContentMenuLinkContent(sort: {weight: ASC}) {
-    edges {
-      node {
-        enabled
-        title
-        expanded
-        external
-        langcode
-        weight
-        link {
-          uri
-          url
-        }
-        drupal_parent_menu_item
-        bundle
-        drupal_id
-        menu_name
       }
-    }
-  }
-}`
-      }
-      render={data => generateMenu(data, menuName)}
-   />
+    `}
+    render={(data) => generateMenu(data, menuName)}
+  />
 )
 
 HeaderMenu.propTypes = {

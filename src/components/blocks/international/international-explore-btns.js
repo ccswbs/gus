@@ -80,6 +80,7 @@ const query = graphql`
                 width: 1000
                 placeholder: BLURRED
                 layout: CONSTRAINED
+                formats: [AUTO, WEBP]
               )
             }
           }

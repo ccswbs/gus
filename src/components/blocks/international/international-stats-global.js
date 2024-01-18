@@ -79,7 +79,7 @@ const query = graphql`
           name
           relationships {
             field_media_image {
-              gatsbyImage(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED)
+              gatsbyImage(width: 1400, height: 190, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
             }
           }
           path {

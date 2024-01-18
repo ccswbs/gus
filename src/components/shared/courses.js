@@ -8,10 +8,10 @@ function Courses ({ courseData, courseNotes, headingLevel }) {
 	var courseList="";
 	var trackCourseLevel="";
 	var coursesDisplay="<section class='row row-with-vspace'>";
-	var columnSetting = ((courseNotes === null || courseNotes === "") || (courseData === null || courseData === undefined)) ? "col-lg-12" : "col-lg-6";
+	var columnSetting = (!courseNotes || !courseData || !courseData.length) ? "col-lg-12" : "col-lg-6";
 	
 	courseData.sort((a,b) => (a.field_level > b.field_level) ? 1 : (a.field_level === b.field_level) ? ((a.field_code > b.field_code) ? 1 : -1) : -1);
-	
+
 	if ((courseData !== null) && (courseData !== undefined)) {
 		courseData.forEach(course => {
 			let courseTitle = course.title;
@@ -39,7 +39,7 @@ function Courses ({ courseData, courseNotes, headingLevel }) {
 	}
 
 	if ((courseNotes !== null) && (courseNotes !== "")) {
-		coursesDisplay += "<div class='" + columnSetting + "'><" + headingLevel + " class='course-notes-heading'>Notes</" + headingLevel + ">" + courseNotes + "</div>";
+		coursesDisplay += "<div class='" + columnSetting + "'><" + headingLevel + " class='course-notes-heading mt-2'>Notes</" + headingLevel + ">" + courseNotes + "</div>";
 	}
 
 	coursesDisplay += "</section>";

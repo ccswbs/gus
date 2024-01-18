@@ -47,7 +47,7 @@ const IndexPage = ({ data }) => {
 
     
     return (
-    <Layout menuName="main">
+    <Layout>
         <Seo title="Content Hub Webpage Inventory" />
         <div className="container page-container">
           <div className="site-content">

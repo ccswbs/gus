@@ -127,7 +127,7 @@ const PageTemplate = ({data}) => (
         widgets={data.nodePage.relationships.field_widgets}
         heroWidgets={(data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null)}
         footer={data.footer.edges}
-        menuName={data.menu?.menu_name || `main`}
+        menuName={data.menu?.menu_name}
         domains={data.nodePage.field_domain_access}
     ></Page>
 )

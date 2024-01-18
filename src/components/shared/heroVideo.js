@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
-import { contentExists } from 'utils/ug-utils';
+import { extractVideoID, contentExists } from 'utils/ug-utils';
 import 'styles/heroVideo.css';
 
 class HeroVideo extends Component {
@@ -29,7 +29,7 @@ class HeroVideo extends Component {
         let videoWidth = this.props.videoWidth;
         let videoHeight = this.props.videoHeight;
         let videoType = (this.props.videoURL.includes("youtube") || this.props.videoURL.includes("youtu.be") ? `youtube` : `vimeo`);	
-        let videoID = (videoType === `youtube` ? this.props.videoURL.substr(this.props.videoURL.length - 11) : this.props.videoURL.substr(18));
+        let videoID = (videoType === `youtube` ? extractVideoID(this.props.videoURL) : this.props.videoURL.substring(18));
 
         let youtubeURL = "https://www.youtube.com/embed/";
         let vimeoURL = "https://player.vimeo.com/video/";	

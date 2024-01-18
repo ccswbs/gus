@@ -87,6 +87,7 @@ const render = ({ field_yaml_map, relationships }) => {
                   width: 1000
                   placeholder: BLURRED
                   layout: CONSTRAINED
+                  formats: [AUTO, WEBP]
                 )
                 relationships {
                   media__image {

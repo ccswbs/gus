@@ -316,6 +316,7 @@ export const query = graphql`
                 placeholder: BLURRED, 
                 layout: CONSTRAINED,
                 cropFocus: ENTROPY,
+                formats: [AUTO, WEBP],
               )
             }
           }

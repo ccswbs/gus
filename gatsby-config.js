@@ -56,22 +56,16 @@ module.exports = {
       }
     },
     {
-      resolve: `gatsby-plugin-sharp`,
-      options: {
-        defaultQuality: 90,
-      },
-    },
-    {
       resolve: `gatsby-source-drupal`,
         options: {
         baseUrl: process.env.DRUPAL_BASEURL,
         apiBase: process.env.DRUPAL_APIBASE,
-        basicAuth: {
-          username: process.env.BASIC_AUTH_USERNAME,
-          password: process.env.BASIC_AUTH_PASSWORD,
+        headers: {
+          'api-key': process.env.API_KEY,
         },
-        fastBuilds: true,
+        fastBuilds: process.env.FASTBUILDS || true,
         skipFileDownloads: true,
+        requestTimeoutMS: 300000,
       },
     },  
     {
@@ -99,8 +93,9 @@ module.exports = {
           //Prefixes all WP Types with "Wp" so "Post and allPost" become "WpPost and allWpPost".
           typePrefix: `Wp`,
           perPage: 20,
-          requestConcurrency: 5,
+          requestConcurrency: 2,
           previewRequestConcurrency: 2,
+          timeout: 60000,
         },
         develop: {
           //caches media files outside of Gatsby's default cache an thus allows them to persist through a cache reset.
@@ -111,7 +106,7 @@ module.exports = {
             limit:
               process.env.NODE_ENV === `development`
                 ? // Lets just pull 25 posts in development to make it easy on ourselves (aka. faster).
-                  25
+                  5
                 : // and we don't actually need more than 50 in production for this particular site
                   50,
           },

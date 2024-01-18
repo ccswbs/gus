@@ -96,7 +96,7 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                             <ol className="breadcrumb breadcrumb-right-tag">                                
                                 <li key={homeCrumbURL + `home`} className="breadcrumb-item">                                    
                                     <a href={homeCrumbURL}>
-                                        <i aria-hidden="true" className="fa fa-home"></i><span className="visually-hidden">{homeCrumb}</span>
+                                        <i aria-hidden="true" className="fa-sharp fa-light fa-home"></i><span className="visually-hidden">{homeCrumb}</span>
                                     </a>
                                 </li>
                                 {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 

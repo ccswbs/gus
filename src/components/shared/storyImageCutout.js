@@ -150,6 +150,7 @@ export const query = graphql`
                 layout: CONSTRAINED,
                 placeholder: BLURRED,
                 width: 1000,
+                formats: [AUTO, WEBP],
               )
             }
           }
@@ -171,6 +172,7 @@ export const query = graphql`
                 placeholder: BLURRED, 
                 layout: CONSTRAINED,
                 cropFocus: ENTROPY,
+                formats: [AUTO, WEBP],
               )
             }
           }
