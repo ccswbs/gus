@@ -899,16 +899,21 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type taxonomy_term__unitsRelationships {
       node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
+    `,
 
+    /***  
+    /* These type declarations belong in the above code block but are moved here to be commented out:
+    /*** 
     type WpEventToEventsCategoryConnection implements Node {
       nodes: [WpEventsCategory]
     }
     type WpEventsCategory implements Node {
       name: String
     }
-    `,
-
-    schema.buildObjectType({
+  /***    
+  /* The schema stays were it is:
+  /*** 
+  schema.buildObjectType({
       name: `WpEvent`,
       interfaces: [`Node`],
       fields: {
@@ -922,7 +927,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           resolve: (source) => new Date(source.startDate) < new Date(),
         },
       },
-    }),
+    }), 
+    */
   ]
   createTypes(typeDefs)
 }

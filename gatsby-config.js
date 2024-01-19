@@ -81,6 +81,7 @@ module.exports = {
         path: `./src/data/`,
       }
     },
+    /*** Disable WordPress plugin  
     {
       resolve: `gatsby-source-wordpress`,
       options: {
@@ -124,6 +125,7 @@ module.exports = {
         },
       },
     },
+    */
     {
       resolve: `gatsby-transformer-sharp`,
       options: {
