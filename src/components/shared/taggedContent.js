@@ -1,9 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 import Careers from 'src/components/shared/careers.js';
-import Courses from 'components/shared/courses';
+//import Courses from 'components/shared/courses';
 import Employers from 'src/components/shared/employers.js';
+
+const listCourses = (courseData) => {
+    return (<>
+      <ul className="two-col-md">
+          {courseData.map(course => { 
+              return <li>{course.node.title}</li>
+          })}
+      </ul>
+    </>)
+}
+
+const listPages = (taggedPages) => {
+    return (<>
+      <ul className="two-col-md">
+          {taggedPages.map(page => { 
+              return <li><Link to={page.node.path.alias}>{page.node.title}</Link></li>
+          })}
+      </ul>      
+    </>)
+}
 
 const TaggedContent = (props) => {    
     const data = useStaticQuery(graphql`
@@ -171,17 +191,20 @@ const TaggedContent = (props) => {
 
     switch (contentType) {
         case "basic_page":
-            return (taggedPages.length > 0 ? "yes pages exist" : "No pages :(")
+            return (taggedPages.length > 0 ? listPages(taggedPages) : "No pages :(")
         case "career":
             return (taggedCareers.length > 0 ? <Careers careerData={taggedCareers} numColumns={3} /> : "No careers :(")
         case "course":
-            return (taggedCourses.length > 0 ? <Courses courseData={taggedCourses} headingLevel="h4" /> : "No courses :(")
+            return (taggedCourses.length > 0 ? listCourses(taggedCourses) : "No courses :(")
         case "employer":
             return (taggedEmployers.length > 0 ? <Employers employerData={taggedEmployers} /> : "No employers :(")
         default:
             return "Nothing to see here"
     }
+    console.log(taggedPages)
 }
+
+/* <Courses courseData={taggedCourses} headingLevel="h4" /> */
 
 TaggedContent.propTypes = {
     contentType: PropTypes.string,
