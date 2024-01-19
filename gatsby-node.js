@@ -900,35 +900,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     `,
-
-    /***  
-    /* These type declarations belong in the above code block but are moved here to be commented out:
-    /*** 
-    type WpEventToEventsCategoryConnection implements Node {
-      nodes: [WpEventsCategory]
-    }
-    type WpEventsCategory implements Node {
-      name: String
-    }
-  /***    
-  /* The schema stays were it is:
-  /*** 
-  schema.buildObjectType({
-      name: `WpEvent`,
-      interfaces: [`Node`],
-      fields: {
-        endDate: `String`,
-        startDate: `String`,
-        title: `String`,
-        url: `String`,
-        eventsCategories: `WpEventToEventsCategoryConnection`,
-        isPast: {
-          type: `Boolean`,
-          resolve: (source) => new Date(source.startDate) < new Date(),
-        },
-      },
-    }), 
-    */
   ]
   createTypes(typeDefs)
 }
