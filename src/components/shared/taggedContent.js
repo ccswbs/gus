@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import Careers from 'src/components/shared/careers.js';
-//import Courses from 'components/shared/courses';
 import Employers from 'src/components/shared/employers.js';
 
 const listCourses = (courseData) => {
@@ -36,6 +35,9 @@ const TaggedContent = (props) => {
                 body {
                   processed
                 }
+                internal {
+                  type
+                }
                 relationships {
                   field_tags {
                     __typename
@@ -60,6 +62,9 @@ const TaggedContent = (props) => {
                 title
                 field_course_url {
                   uri
+                }
+                internal {
+                  type
                 }
                 relationships {
                   field_tags {
@@ -88,6 +93,9 @@ const TaggedContent = (props) => {
                 field_link {
                   uri
                 }
+                internal {
+                  type
+                }
                 relationships {
                   field_tags {
                     __typename
@@ -110,6 +118,9 @@ const TaggedContent = (props) => {
                 title
                 path {
                   alias
+                }
+                internal {
+                  type
                 }
                 relationships {
                   field_tags {
@@ -136,59 +147,47 @@ const TaggedContent = (props) => {
     let taggedPages = [];
     let nameTags = [];
     
+    const allNodes = pages.concat(careers, courses, employers);
+    
     if (tags && tags.length > 0) {
         for (let i=0; i<tags.length; i++) {
             nameTags.push(tags[i].name);
         }
     }
     
-    if (pages && pages.length > 0) {
-        pages.forEach(page => {
-            const pageTags = page.node?.relationships?.field_tags;
-            if (pageTags && pageTags.length > 0) {
-                for (let i=0; i<pageTags.length; i++) {
-                    if (nameTags.includes(pageTags[i].name)) {
-                        taggedPages.push(page);
+    if (allNodes && allNodes.length > 0) {
+        allNodes.forEach(item => {
+            const itemTags = item.node?.relationships?.field_tags;
+            if (itemTags && itemTags.length > 0) {
+                let hasAllTags = true;
+                for (let i=0; i<nameTags.length; i++) {
+                    if (!itemTags.some(tag => tag.name === nameTags[i])) {
+                        hasAllTags = false;
+                        break;
+                    }
+                }
+                if (hasAllTags) {
+                    switch (item.node.internal.type) {
+                        case 'node__page':
+                            taggedPages.push(item);
+                            break;
+                        case 'node__employer':
+                            taggedEmployers.push(item);
+                            break;
+                        case 'node__career':
+                            taggedCareers.push(item);
+                            break;
+                        case 'node__course':
+                            taggedCourses.push(item);
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
         });
     }
     
-    for (let i=0; i<careers.length; i++) {
-        const careerTags = careers[i].node?.relationships?.field_tags;
-        if (careerTags && careerTags.length > 0) {
-            for (let j=0; j<careerTags.length; j++) {
-                if (nameTags.includes(careerTags[j].name)) {
-                    taggedCareers.push(careers[i]);
-                    break;
-                }
-            }            
-        }
-    }
-    for (let i=0; i<courses.length; i++) {
-        const courseTags = courses[i].node?.relationships?.field_tags;
-        if (courseTags && courseTags.length > 0) {
-            for (let j=0; j<courseTags.length; j++) {
-                if (nameTags.includes(courseTags[j].name)) {
-                    taggedCourses.push(courses[i]);
-                    break;
-                }
-            }            
-        }
-    }
-    for (let i=0; i<employers.length; i++) {
-        const employerTags = employers[i].node?.relationships?.field_tags;
-        if (employerTags && employerTags.length > 0) {
-            for (let j=0; j<employerTags.length; j++) {
-                if (nameTags.includes(employerTags[j].name)) {
-                    taggedEmployers.push(employers[i]);
-                    break;
-                }
-            }            
-        }
-    }
-
     switch (contentType) {
         case "basic_page":
             return (taggedPages.length > 0 ? listPages(taggedPages) : "No pages :(")
@@ -199,9 +198,9 @@ const TaggedContent = (props) => {
         case "employer":
             return (taggedEmployers.length > 0 ? <Employers employerData={taggedEmployers} /> : "No employers :(")
         default:
-            return "Nothing to see here"
+            return null
     }
-    console.log(taggedPages)
+    //console.log(taggedPages)
 }
 
 /* <Courses courseData={taggedCourses} headingLevel="h4" /> */
