@@ -1,1 +1,0 @@
-"Disabling events for now"
