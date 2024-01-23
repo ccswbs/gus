@@ -4,16 +4,6 @@ import { useStaticQuery, graphql, Link } from 'gatsby';
 import Careers from 'src/components/shared/careers.js';
 import Employers from 'src/components/shared/employers.js';
 
-const listCourses = (courseData) => {
-    return (<>
-      <ul className="two-col-md">
-          {courseData.map(course => { 
-              return <li>{course.node.title}</li>
-          })}
-      </ul>
-    </>)
-}
-
 const listPages = (taggedPages) => {
     return (<>
       <ul className="two-col-md">
@@ -34,34 +24,6 @@ const TaggedContent = (props) => {
                 drupal_id
                 body {
                   processed
-                }
-                internal {
-                  type
-                }
-                relationships {
-                  field_tags {
-                    __typename
-                    ... on TaxonomyInterface {
-                      drupal_id
-                      id
-                      name
-                    }
-                  }
-                }
-              }
-            }
-          }
-          allNodeCourse(sort: {field_code: ASC}) {
-            edges {
-              node {
-                title
-                drupal_id
-                field_credits
-                field_level
-                field_code
-                title
-                field_course_url {
-                  uri
                 }
                 internal {
                   type
@@ -138,16 +100,14 @@ const TaggedContent = (props) => {
     let contentType = props.contentType;
     let tags = props.tags;
     let careers = data.allNodeCareer?.edges;
-    let courses = data.allNodeCourse?.edges;
     let employers = data.allNodeEmployer?.edges;
     let pages = data.allNodePage?.edges;
     let taggedCareers = [];
-    let taggedCourses = [];
     let taggedEmployers = [];
     let taggedPages = [];
     let nameTags = [];
     
-    const allNodes = pages.concat(careers, courses, employers);
+    const allNodes = pages.concat(careers, employers);
     
     if (tags && tags.length > 0) {
         for (let i=0; i<tags.length; i++) {
@@ -177,9 +137,6 @@ const TaggedContent = (props) => {
                         case 'node__career':
                             taggedCareers.push(item);
                             break;
-                        case 'node__course':
-                            taggedCourses.push(item);
-                            break;
                         default:
                             break;
                     }
@@ -193,8 +150,6 @@ const TaggedContent = (props) => {
             return (taggedPages.length > 0 ? listPages(taggedPages) : "No pages :(")
         case "career":
             return (taggedCareers.length > 0 ? <Careers careerData={taggedCareers} numColumns={3} /> : "No careers :(")
-        case "course":
-            return (taggedCourses.length > 0 ? listCourses(taggedCourses) : "No courses :(")
         case "employer":
             return (taggedEmployers.length > 0 ? <Employers employerData={taggedEmployers} /> : "No employers :(")
         default:
@@ -202,8 +157,6 @@ const TaggedContent = (props) => {
     }
     //console.log(taggedPages)
 }
-
-/* <Courses courseData={taggedCourses} headingLevel="h4" /> */
 
 TaggedContent.propTypes = {
     contentType: PropTypes.string,

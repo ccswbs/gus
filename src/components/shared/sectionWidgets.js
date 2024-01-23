@@ -29,7 +29,7 @@ function renderPrimary(widget) {
         case "paragraph__block_widget":
             return <BlockWidget key={widget.drupal_id} blockData={widget} />;
         case "paragraph__general_text":
-            return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
+            return <GeneralText key={widget.drupal_id} textData={widget} />;
         case "paragraph__image_overlay":
             return <ImageOverlay key={widget.drupal_id} data={widget} />;
         case "paragraph__lead_paragraph":

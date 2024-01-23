@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { graphql, Script } from "gatsby"
 import { Parser, ProcessNodeDefinitions } from "html-to-react"
+import TaggedContent from 'components/shared/taggedContent';
 
 const GeneralText = (props) => {
   const parser = new Parser()
@@ -23,20 +24,21 @@ const GeneralText = (props) => {
     },
   ]
 
-  const processed = parser.parseWithInstructions(props.processed, () => true, instructions)
-  const textClass = props.textClass
+  const processed = parser.parseWithInstructions(props.textData.field_general_text?.processed, () => true, instructions)
+  //const textClass = props.textClass
 
-  return <div {...(textClass !== `` ? { className: textClass } : {})}>{processed}</div>
+  return (<>
+        <div>{processed}</div>
+        <TaggedContent contentType={props.textData.relationships?.field_tagged_content?.field_content_type} tags={props.textData.relationships?.field_tagged_content?.relationships?.field_tags} />
+    </>)
 }
 
 GeneralText.propTypes = {
-  processed: PropTypes.string,
-  textClass: PropTypes.string,
+  textData: PropTypes.object,
 }
 
 GeneralText.defaultProps = {
-  processed: ``,
-  textClass: ``,
+  textData: ``,
 }
 
 export default GeneralText
@@ -50,6 +52,17 @@ export const query = graphql`
     relationships {
       field_section_column {
         name
+      }
+      field_tagged_content {
+        field_content_type
+        relationships {
+          field_tags {
+            __typename
+            ... on TaxonomyInterface {
+              name
+            }
+          }
+        }
       }
     }
   }

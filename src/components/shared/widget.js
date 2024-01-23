@@ -25,7 +25,7 @@ const WidgetSelector = ({widget}) => {
         case "paragraph__block_widget":
             return <BlockWidget blockData={widget} />;
         case "paragraph__general_text":
-            return <GeneralText processed={widget.field_general_text.processed} />;
+            return <GeneralText textData={widget} />;
         case "paragraph__image_overlay":
             return <ImageOverlay data={widget} />;
         case "paragraph__lead_paragraph":
