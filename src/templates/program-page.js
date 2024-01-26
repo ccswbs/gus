@@ -7,10 +7,10 @@ import Breadcrumbs from "components/shared/breadcrumbs"
 import CallToAction from "components/shared/callToAction"
 // import Careers from 'components/shared/careers';
 import CustomFooter from "components/shared/customFooter"
-import Employers from "components/shared/employers"
+//import Employers from "components/shared/employers"
 import HeroVideo from "components/shared/heroVideo"
 import Testimonials from "components/shared/testimonial"
-import Variants from "components/shared/variants"
+//import Variants from "components/shared/variants"
 import Widget from "components/shared/widget"
 import { Row, Col } from "react-bootstrap"
 import { StaticImage } from "gatsby-plugin-image"
@@ -27,21 +27,6 @@ function renderProgramOverview(overview) {
     )
   }
   return null
-}
-
-function renderProgramVariants(variantDataHeading, variantData) {
-  if (variantDataHeading) {
-    return (
-      <div className="container page-container">
-        <div className="row site-content">
-          <section className="content-area">
-            <h2>{variantDataHeading}</h2>
-            {<Variants variantData={variantData} />}
-          </section>
-        </div>
-      </div>
-    )
-  }
 }
 
 function renderTalkToStudent() {
@@ -127,78 +112,6 @@ function renderAdmissionRequirements() {
   )
 }
 
-// function renderProgramInfoAccordion  (careerData, employerData) {
-function renderProgramInfoAccordion(employerData) {
-  // accordion - Careers Item
-  // const programCareersItem = () => {
-  //     if (careerData?.length>0) {
-  //       return (
-  //         <div className="accordion-item">
-  //           <h3 className="accordion-header" id="programCareers-heading">
-  //             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programCareers-careers" aria-expanded="false" aria-controls="programCareers-careers">
-  //               Careers
-  //             </button>
-  //           </h3>
-  //           <div id="programCareers-careers" className="accordion-collapse collapse" aria-labelledby="programCareers-heading">
-  //             <div className="accordion-body">
-  //             <Careers careerData={careerData} numColumns={3}/>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       )
-  //     }
-  //     return null;
-  // }
-
-  // accordion - Employers Item
-  const programEmployersItem = () => {
-    if (employerData?.length > 0) {
-      return (
-        <div className="accordion-item">
-          <h3 className="accordion-header" id="programEmployers-heading">
-            <button
-              className="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#programEmployers-employers"
-              aria-expanded="false"
-              aria-controls="programEmployers-employers"
-            >
-              Employers
-            </button>
-          </h3>
-          <div
-            id="programEmployers-employers"
-            className="accordion-collapse collapse"
-            aria-labelledby="programEmployers-heading"
-          >
-            <div className="accordion-body">
-              <Employers employerData={employerData} />
-            </div>
-          </div>
-        </div>
-      )
-    }
-    return null
-  }
-  // if ( careerData?.length>0 ||employerData?.length > 0) {
-  if (employerData?.length > 0) {
-    return (
-      <div className="container page-container">
-        <section className="row row-with-vspace site-content">
-          <div className="col-md-12 content-area">
-            <div className="accordion" id="ProgramPageAccordion">
-              {/* {programCareersItem()} */}
-              {programEmployersItem()}
-            </div>
-          </div>
-        </section>
-      </div>
-    )
-  }
-  return null
-}
-
 function retrieveLastModifiedDates(content) {
   let dates = []
   if (content?.length > 0) {
@@ -209,48 +122,18 @@ function retrieveLastModifiedDates(content) {
   return dates
 }
 
-function prepareVariantHeading(variantData) {
-  let labels = []
-
-  // prepare variant data labels
-  variantData.forEach((edge) => {
-    if (edge.__typename === "paragraph__program_variants" && edge.relationships.field_variant_type !== null) {
-      labels.push(edge.relationships.field_variant_type.name)
-    }
-  })
-
-  const uniqueLabelSet = new Set(labels)
-  const uniqueLabels = [...uniqueLabelSet]
-  let variantHeading = ""
-
-  for (let i = 0; i < uniqueLabels.length; i++) {
-    if (i > 0) {
-      if (uniqueLabels.length > 2) {
-        variantHeading += ","
-      }
-      variantHeading += " "
-      if (i === uniqueLabels.length - 1) {
-        variantHeading += "and "
-      }
-    }
-    variantHeading += uniqueLabels[i]
-  }
-
-  return variantHeading
-}
-
 const ProgramPage = ({ data, location }) => {
   let progData = data.programs.edges[0]?.node
   let callToActionData = data.ctas?.edges
   // let careerData = data.careers?.edges;
   let domains = progData?.field_domain_access
-  let employerData = data.employers?.edges
+  //let employerData = data.employers?.edges
   let footerData = data.footer?.edges
   let imageData = data.images?.edges
   let imageTaggedData = data.imagesTagged?.edges
   let testimonialData = data.testimonials?.edges
-  let variantData = progData.relationships?.field_program_variants
-  let variantDataHeading = prepareVariantHeading(variantData)
+  //let variantData = progData.relationships?.field_program_variants
+  //let variantDataHeading = prepareVariantHeading(variantData)
   let videoData = data.videos.edges[0]?.node
 
   const heroImage = imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null
@@ -322,19 +205,13 @@ const ProgramPage = ({ data, location }) => {
         </div>
       )}
 
-      {/**** Variants (e.g., Majors) content ****/}
-      {renderProgramVariants(variantDataHeading, variantData)}
+      {/**** Variants (e.g., Majors) content 
+      {renderProgramVariants(variantDataHeading, variantData)}****/}
 
       {/**** Widgets content ****/}
       {widgets?.map((widget, index) => (
         <Widget widget={widget} key={index} />
       ))}
-
-      {/**** Program Information Accordion ****/}
-      {renderProgramInfoAccordion(
-        // careerData,
-        employerData
-      )}
 
       {/**** Testimonials ****/}
       {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />}
@@ -475,58 +352,6 @@ export const query = graphql`
                 id
                 name
               }
-            }
-          }
-        }
-      }
-    }
-    careers: allNodeCareer(sort: { title: ASC }, filter: { fields: { tags: { in: [$id] } } }) {
-      edges {
-        node {
-          title
-          drupal_id
-          changed
-          body {
-            processed
-          }
-          relationships {
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-    employers: allNodeEmployer(sort: { title: ASC }, filter: { fields: { tags: { in: [$id] } } }) {
-      edges {
-        node {
-          drupal_id
-          field_employer_summary {
-            processed
-          }
-          title
-          field_image {
-            alt
-          }
-          field_link {
-            uri
-          }
-          relationships {
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-            field_image {
-              gatsbyImage(width: 400, height: 400, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
             }
           }
         }
