@@ -16,7 +16,13 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['menus'] = "";
 }
 
+const adapter = require("gatsby-adapter-netlify")
+
 module.exports = {
+  adapter: adapter({
+    excludeDatastoreFromEngineFunction: false,
+    imageCDN: false,
+  }),
   assetPrefix: process.env.ASSET_PREFIX,
   siteMetadata: {
     title: metaConfig['title'],
@@ -27,6 +33,7 @@ module.exports = {
     menus: metaConfig['menus'],
   },
   plugins: [
+    `gatsby-plugin-webpack-bundle-analyser-v2`,
     `gatsby-plugin-client-side-redirect`,
     `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-image`,
