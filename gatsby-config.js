@@ -4,6 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
+const adapter = require("gatsby-adapter-netlify").default
 let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
@@ -15,8 +16,6 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['GAtrackingID'] = "";
     metaConfig['menus'] = "";
 }
-
-const adapter = require("gatsby-adapter-netlify")
 
 module.exports = {
   adapter: adapter({
