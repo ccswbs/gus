@@ -32,7 +32,6 @@ module.exports = {
     menus: metaConfig['menus'],
   },
   plugins: [
-    `gatsby-plugin-webpack-bundle-analyser-v2`,
     `gatsby-plugin-client-side-redirect`,
     `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-image`,
