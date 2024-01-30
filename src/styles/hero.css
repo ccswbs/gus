@@ -1,14 +1,23 @@
-
 @media only screen and (max-width: 992px) {
-    #rotator img {
-        width: calc(100% + 10rem) !important;
-    }
+  #rotator img {
+    width: calc(100% + 10rem) !important;
+  }
+}
+
+#rotator {
+  /* Margin was originally needed for old header */
+  margin-top: 0 !important;
 }
 
 #rotator .hero-widgets-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+#rotator .gatsby-image-wrapper {
+  aspect-ratio: 1680 / 640;
+  max-height: 70vh;
 }
