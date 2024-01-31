@@ -21,3 +21,9 @@
   aspect-ratio: 1680 / 640;
   max-height: 75vh;
 }
+
+@media only screen and (min-width: 1080px) {
+  #rotator {
+    max-height: unset !important;
+  }
+}
