@@ -5,7 +5,7 @@
 }
 
 #rotator {
-  /* Margin was originally needed for old header */
+  /* Margin was originally needed for old fixed position header */
   margin-top: 0 !important;
 }
 
