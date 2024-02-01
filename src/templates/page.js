@@ -8,11 +8,12 @@ import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
 
-const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
+const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains, data}) => (
+
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
-        
+        {console.log("data", data)}
         { /**** Header and Title ****/ }
         { (imageData?.length > 0 || heroWidgets?.length > 0) &&
         <div className={imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
@@ -129,6 +130,7 @@ const PageTemplate = ({data}) => (
         footer={data.footer.edges}
         menuName={data.menu?.menu_name}
         domains={data.nodePage.field_domain_access}
+        data={data}
     ></Page>
 )
 
