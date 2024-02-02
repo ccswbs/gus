@@ -899,30 +899,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type taxonomy_term__unitsRelationships {
       node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
-
-    type WpEventToEventsCategoryConnection implements Node {
-      nodes: [WpEventsCategory]
-    }
-    type WpEventsCategory implements Node {
-      name: String
-    }
     `,
-
-    schema.buildObjectType({
-      name: `WpEvent`,
-      interfaces: [`Node`],
-      fields: {
-        endDate: `String`,
-        startDate: `String`,
-        title: `String`,
-        url: `String`,
-        eventsCategories: `WpEventToEventsCategoryConnection`,
-        isPast: {
-          type: `Boolean`,
-          resolve: (source) => new Date(source.startDate) < new Date(),
-        },
-      },
-    }),
   ]
   createTypes(typeDefs)
 }
