@@ -7,7 +7,9 @@ const myUnionBy = (arrays, iteratee) => {
 
   arrays.forEach((array) => {
     array.forEach((object) => {
-      map[object[iteratee]] = object;
+      if (object !== null && object !== undefined) {
+        map[object[iteratee]] = object;
+      }
     });
   });
 
