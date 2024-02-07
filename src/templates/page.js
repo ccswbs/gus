@@ -13,7 +13,6 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
-        {console.log("data", data)}
         { /**** Header and Title ****/ }
         { (imageData?.length > 0 || heroWidgets?.length > 0) &&
         <div className={imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
@@ -80,6 +79,9 @@ export const query = graphql`
             name
           }
         }
+        field_primary_navigation {
+          field_menu_machine_name
+        }
         field_widgets {
           ...FieldWidgetsFragment
         }
@@ -115,9 +117,24 @@ export const query = graphql`
       drupal_id
       menu_name
     }
+
+    menus: allMenuLinkContentMenuLinkContent(
+      filter: {link: {uri: {eq: $nid}}}
+    ) {
+      edges {
+        node {
+          drupal_id
+          menu_name
+          drupal_internal__id
+          link {
+            uri
+            url
+          }
+        }
+      }
+    }
 }
 `
-
 const PageTemplate = ({data}) => (
     <Page nodeID={data.nodePage.drupal_internal__nid}
         pageTitle={data.nodePage.title} 
@@ -128,7 +145,7 @@ const PageTemplate = ({data}) => (
         widgets={data.nodePage.relationships.field_widgets}
         heroWidgets={(data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null)}
         footer={data.footer.edges}
-        menuName={data.menu?.menu_name}
+        menuName={data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name }
         domains={data.nodePage.field_domain_access}
         data={data}
     ></Page>
