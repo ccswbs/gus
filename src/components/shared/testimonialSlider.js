@@ -21,7 +21,7 @@ const TestimonialSlider = (props) => {
 
   let testimonialTitle = props.testimonialData.field_title;
 
-  // handle testimonials added individually
+  // handle testimonials added by title
   let testimonialNodes = props.testimonialData.relationships?.field_testimonial_nodes || [];
 
   // handle testimonials added by tag
