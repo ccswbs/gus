@@ -40,7 +40,7 @@
     "html-to-react": "^1.7.0",
     "is-subset": "^0.1.1",
     "js-yaml": "^4.1.0",
-    "moment-timezone": "^0.5.44",
+    "moment-timezone": "^0.5.45",
     "node-fetch": "^3.3.2",
     "npm": "^10.4.0",
     "npm-check-updates": "^16.14.14",
@@ -60,7 +60,7 @@
   "devDependencies": {
     "gatsby-plugin-asset-path": "^3.0.4",
     "gatsby-plugin-root-import": "^2.0.9",
-    "prettier": "^3.2.4"
+    "prettier": "^3.2.5"
   },
   "repository": {
     "type": "git",
