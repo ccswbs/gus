@@ -414,6 +414,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_hero_widgets: widgetParagraphUnion @link(from:"field_hero_widgets___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
+      field_primary_navigation: taxonomy_term__primary_navigation @link(from: "field_primary_navigation___NODE")
     }
     type node__link_url implements Node {
       title: String
@@ -813,6 +814,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__tid: Int
       name: String
       description: TaxonomyDescription
+    }
+    type taxonomy_term__primary_navigation implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+      field_menu_machine_name: String
     }
     type taxonomy_term__programs implements Node & TaxonomyInterface {
       drupal_id: String

@@ -117,22 +117,6 @@ export const query = graphql`
       drupal_id
       menu_name
     }
-
-    menus: allMenuLinkContentMenuLinkContent(
-      filter: {link: {uri: {eq: $nid}}}
-    ) {
-      edges {
-        node {
-          drupal_id
-          menu_name
-          drupal_internal__id
-          link {
-            uri
-            url
-          }
-        }
-      }
-    }
 }
 `
 const PageTemplate = ({data}) => (
@@ -145,7 +129,7 @@ const PageTemplate = ({data}) => (
         widgets={data.nodePage.relationships.field_widgets}
         heroWidgets={(data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null)}
         footer={data.footer.edges}
-        menuName={data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name }
+        menuName={data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name}
         domains={data.nodePage.field_domain_access}
         data={data}
     ></Page>
