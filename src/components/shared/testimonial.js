@@ -18,9 +18,9 @@ function setTestimonialHeading(props) {
         
         const testimonialTags = props.testimonialData.flatMap(testim => TestimonialTitle(testim.node ?? testim) ?? []);
 
-        const studentTag = testimonialTags.includes('Graduate Student', 'Undergraduate Student')
-        const facultyTag = testimonialTags.includes('Faculty')
-        const alumniTag = testimonialTags.includes('Alumni')
+        const studentTag = testimonialTags.includes('Graduate Student', 'Undergraduate Student');
+        const facultyTag = testimonialTags.includes('Faculty');
+        const alumniTag = testimonialTags.includes('Alumni');
     
         // Testimonial heading generated for program pages
         let testimonialHeading = studentTag && facultyTag && alumniTag ? "Alumni, Students, and Faculty" : 
@@ -72,7 +72,7 @@ function Testimonials (props) {
                         {testimonialNode.field_home_profile && testimonialHomeProfile()}
                     </p>
                 </div>
-        );
+            );
         })
         return (
             <div className="ug-testimonial">
