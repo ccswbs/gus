@@ -24,14 +24,13 @@ function setTestimonialHeading(props) {
     
         // Testimonial heading generated for program pages
         let testimonialHeading = studentTag && facultyTag && alumniTag ? "Alumni, Students, and Faculty" : 
-            studentTag && !facultyTag && !alumniTag ? "Students from" :
-            studentTag && facultyTag && !alumniTag ? "Students and Faculty from":
-            studentTag && !facultyTag && alumniTag ? "Alumni and Students from":
-            !studentTag && facultyTag && alumniTag ? "Alumni and Faculty from":
-            !studentTag && facultyTag && !alumniTag ? "Faculty from" :
-            !studentTag && !facultyTag && alumniTag ? "Alumni from" : "Students in"
+            studentTag && facultyTag && !alumniTag ? "Students and Faculty" :
+            studentTag && !facultyTag && alumniTag ? "Alumni and Students" :
+            !studentTag && facultyTag && alumniTag ? "Alumni and Faculty" :
+            !studentTag && facultyTag && !alumniTag ? "Faculty" :
+            !studentTag && !facultyTag && alumniTag ? "Alumni" : "Students"
     
-        return ("What " + testimonialHeading + " the program are saying about U of G");
+        return `What ${testimonialHeading === "Students" ? "Students in " : testimonialHeading + " from"} the program are saying about U of G`;
     }
 }
 
