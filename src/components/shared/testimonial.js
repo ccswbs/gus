@@ -18,7 +18,7 @@ function setTestimonialHeading(props) {
         
         const testimonialTags = props.testimonialData.flatMap(testim => TestimonialTitle(testim.node ?? testim) ?? []);
 
-        const studentTag = testimonialTags.includes('Graduate Student', 'Undergraduate Student');
+        const studentTag = testimonialTags.some(tag => tag === 'Graduate Student' || tag === 'Undergraduate Student');
         const facultyTag = testimonialTags.includes('Faculty');
         const alumniTag = testimonialTags.includes('Alumni');
     
