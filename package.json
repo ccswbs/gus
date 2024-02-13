@@ -22,7 +22,6 @@
     "gatsby": "^5.13.3",
     "gatsby-adapter-netlify": "^1.1.3",
     "gatsby-cli": "^5.13.2",
-    "gatsby-graphiql-explorer": "^3.11.0",
     "gatsby-plugin-client-side-redirect": "^1.1.0",
     "gatsby-plugin-gatsby-cloud": "^5.13.1",
     "gatsby-plugin-google-analytics": "^5.13.1",
