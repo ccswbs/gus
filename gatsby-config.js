@@ -4,6 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
+const adapter = require("gatsby-adapter-netlify").default
 let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
@@ -17,6 +18,10 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
 }
 
 module.exports = {
+  adapter: adapter({
+    excludeDatastoreFromEngineFunction: false,
+    imageCDN: false,
+  }),
   assetPrefix: process.env.ASSET_PREFIX,
   siteMetadata: {
     title: metaConfig['title'],
