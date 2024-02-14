@@ -1,16 +1,15 @@
 import PropTypes from 'prop-types';
 
-function TestimonialTitle (props){
-    let typeList = props?.relationships.field_testimonial_type.map((testimonialType) => {
-		return testimonialType.name;
-	})
+/**
+* Return first type found in typeList from the types array. If no match found, return null. 
+* The order of types in the array determines priority. The earlier a type appears, the higher its priority.
+**/
 
-	let highestTestimonialType = typeList.includes('Faculty') ? 'Faculty' : 
-			typeList.includes('Alumni') ? 'Alumni' : 
-			typeList.includes('Graduate Student') ? 'Graduate Student' : 
-			typeList.includes('Undergraduate Student') ? 'Undergraduate Student' : null;
+function TestimonialTitle(props) {
+    const typeList = props?.relationships.field_testimonial_type.map(testimonialType => testimonialType.name);
+    const types = ['Faculty', 'Alumni', 'Graduate Student', 'Undergraduate Student'];
 
-	return highestTestimonialType;
+    return types.find(type => typeList.includes(type)) || null;
 }
 
 TestimonialTitle.propTypes = {
