@@ -41,8 +41,8 @@ export const query = graphql`
 			field_media_image {
               publicUrl
               gatsbyImage(
-                width: 1680
-								height: 640
+                width: 1920
+								height: 600
                 cropFocus: CENTER
                 placeholder: BLURRED
                 formats: [AUTO, WEBP]
