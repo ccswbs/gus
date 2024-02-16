@@ -4,26 +4,10 @@
   }
 }
 
-#rotator {
-  /* Margin was originally needed for old fixed position header */
-  margin-top: 0 !important;
-}
-
 #rotator .hero-widgets-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-}
-
-#rotator .gatsby-image-wrapper {
-  aspect-ratio: 1920 / 600;
-  max-height: 75vh;
-}
-
-@media only screen and (min-width: 1080px) {
-  #rotator {
-    max-height: unset !important;
-  }
 }
