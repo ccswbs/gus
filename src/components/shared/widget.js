@@ -2,7 +2,6 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Accordion from 'components/shared/accordion';
 import BlockWidget from 'components/shared/blockWidget';
-import Events from 'components/shared/events';
 import GeneralText from 'components/shared/generalText';
 import ImageOverlay from 'components/shared/imageOverlay';
 import LeadPara from 'components/shared/leadPara';
@@ -25,8 +24,6 @@ const WidgetSelector = ({widget}) => {
             return <Accordion pageData={widget} />;
         case "paragraph__block_widget":
             return <BlockWidget blockData={widget} />;
-        case "paragraph__events_widget":
-            return <Events eventData={widget} />;
         case "paragraph__general_text":
             return <GeneralText processed={widget.field_general_text.processed} />;
         case "paragraph__image_overlay":
@@ -112,9 +109,6 @@ export const query = graphql`
     }
     ... on paragraph__block_widget {
       ...BlockWidgetParagraphFragment
-    }
-    ... on paragraph__events_widget {
-      ...EventsParagraphFragment
     }
     ... on paragraph__general_text {
       ...GeneralTextParagraphFragment

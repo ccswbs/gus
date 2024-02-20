@@ -54,11 +54,19 @@ body,
 #rotator img {
   top: 50% !important;
   left: 50% !important;
+  max-width: none !important;
+  width: 100% !important;
 }
 
 /* h1 title within page body */
 #main-column h1 {
   color: black;
+}
+
+/* Increase spacing above global footer by 60 px */
+/* Additional 20px from the global footer padding */
+#main-column {
+  margin-bottom: 60px;
 }
 
 .flex-even {

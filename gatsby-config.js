@@ -4,6 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
+const adapter = require("gatsby-adapter-netlify").default
 let metaConfig = require('./config/sites/ugconthub.js');
 
 if ((metaConfig === null) || (metaConfig === undefined)) {
@@ -17,6 +18,10 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
 }
 
 module.exports = {
+  adapter: adapter({
+    excludeDatastoreFromEngineFunction: false,
+    imageCDN: false,
+  }),
   assetPrefix: process.env.ASSET_PREFIX,
   siteMetadata: {
     title: metaConfig['title'],
@@ -80,49 +85,6 @@ module.exports = {
       options: {
         path: `./src/data/`,
       }
-    },
-    {
-      resolve: `gatsby-source-wordpress`,
-      options: {
-        catchLinks: false,
-        url:
-        // allows a fallback url if WPGRAPHQL_URL is not set in the env, this may be a local or remote WP instance.
-          process.env.WPGRAPHQL_URL ||
-          `https://live-ug-news.pantheonsite.io/graphql`,
-        schema: {
-          //Prefixes all WP Types with "Wp" so "Post and allPost" become "WpPost and allWpPost".
-          typePrefix: `Wp`,
-          perPage: 20,
-          requestConcurrency: 2,
-          previewRequestConcurrency: 2,
-          timeout: 60000,
-        },
-        develop: {
-          //caches media files outside of Gatsby's default cache an thus allows them to persist through a cache reset.
-          hardCacheMediaFiles: true,
-        },
-        type: {
-          Event: {
-            limit:
-              process.env.NODE_ENV === `development`
-                ? // Lets just pull 25 posts in development to make it easy on ourselves (aka. faster).
-                  5
-                : // and we don't actually need more than 50 in production for this particular site
-                  50,
-          },
-          Comment: {exclude: true},
-          Menu: {exclude: true},
-          MenuItem: {exclude: true},
-          Taxonomy: {exclude: true},
-          Category: {exclude: true},
-          UserRole: {exclude: true},
-          PostFormat: {exclude: true},
-          Page: {exclude: true},
-          Post: {exclude: true},
-          Tag: {exclude: true},
-          User: {exclude: true},
-        },
-      },
     },
     {
       resolve: `gatsby-transformer-sharp`,
