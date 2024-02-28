@@ -105,13 +105,14 @@ export const query = graphql`
       }
     }
 
-    menu: menuLinkContentMenuLinkContent(link: {uri: {eq: $nid}}) {
+    menu: menuLinkContentMenuLinkContent(link: {uri: {eq: $nid}}, enabled: {eq: true}) {
       link {
         uri
         url
       }
       drupal_parent_menu_item
       drupal_id
+      enabled
       menu_name
     }
 }
