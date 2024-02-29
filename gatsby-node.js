@@ -1026,7 +1026,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     const result = await graphql(`
     {
-      pages: allNodePage {
+      pages: allNodePage (filter: {moderation_state: {ne: "archived"}}) {
         edges {
           node {
             id
@@ -1042,7 +1042,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
           }
         }
       }
-      articles: allNodeArticle {
+      articles: allNodeArticle (filter: {moderation_state: {ne: "archived"}}) {
         edges {
           node {
             id
@@ -1055,7 +1055,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
           }
         }
       }
-      programs: allNodeProgram {
+      programs: allNodeProgram (filter: {moderation_state: {ne: "archived"}}) {
         edges {
           node {
             title
