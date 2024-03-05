@@ -1,8 +1,8 @@
 import React from "react";
 
-const wcBase = new URL(process.env.UOFG_WC_BASE_URL || "https://unpkg.com/@uoguelph/web-components@1.x.x");
-const wcJS = new URL("dist/uofg-web-components/uofg-web-components.esm.js", wcBase);
-const wcCSS = new URL("dist/uofg-web-components/uofg-web-components.css", wcBase);
+const wcVersion = process.env.UOFG_WC_VERSION || "1.x.x";
+const wcJS = `https://unpkg.com/@uoguelph/web-components@${wcVersion}/dist/uofg-web-components/uofg-web-components.esm.js`;
+const wcCSS = `https://unpkg.com/@uoguelph/web-components@${wcVersion}/dist/uofg-web-components/uofg-web-components.css`;
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
