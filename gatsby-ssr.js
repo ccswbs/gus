@@ -1,6 +1,8 @@
 import React from "react";
 
-const UNPKG_WC_CDN = "https://unpkg.com/@uoguelph/web-components@1.x.x/dist/uofg-web-components";
+const wcBase = new URL(process.env.UOFG_WC_BASE_URL || "https://unpkg.com/@uoguelph/web-components@1.x.x");
+const wcJS = new URL("dist/uofg-web-components/uofg-web-components.esm.js", wcBase);
+const wcCSS = new URL("dist/uofg-web-components/uofg-web-components.css", wcBase);
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
@@ -8,16 +10,8 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       key="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
       src="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
     />,
-    <script
-      type="module"
-      src={`${process.env.UOFG_WC_BASE_URL || UNPKG_WC_CDN}/uofg-web-components.esm.js`}
-      key={`${process.env.UOFG_WC_BASE_URL || UNPKG_WC_CDN}/uofg-web-components.esm.js`}
-    />,
-    <link
-      rel="stylesheet"
-      href={`${process.env.UOFG_WC_BASE_URL || UNPKG_WC_CDN}/uofg-web-components.css`}
-      key={`${process.env.UOFG_WC_BASE_URL || UNPKG_WC_CDN}/uofg-web-components.css`}
-    />,
+    <script type="module" src={wcJS} key={wcJS} />,
+    <link rel="stylesheet" href={wcCSS} key={wcCSS} />,
     <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" />,
     <link rel="preconnect" href="https://fonts.gstatic.com" key="https://fonts.gstatic.com" crossOrigin="anonymous" />,
     <link
