@@ -132,7 +132,7 @@ const PageTemplate = ({data}) => (
         heroWidgets={(data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null)}
         footer={data.footer.edges}
         menuName={data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name}
-        domains={data.nodePage.field_domain_access}ß
+        domains={data.nodePage.field_domain_access}
     ></Page>
 )
 
