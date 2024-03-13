@@ -7,6 +7,7 @@
 #rotator {
   /* Margin was originally needed for old fixed position header */
   margin-top: 0 !important;
+  max-height: min(var(--hero-height), 85vh) !important;
 }
 
 #rotator .hero-widgets-container {
@@ -19,11 +20,18 @@
 
 #rotator .gatsby-image-wrapper {
   aspect-ratio: 1680 / 640;
-  max-height: 75vh;
+  max-height: calc(85vh - 14rem);
 }
 
 @media only screen and (min-width: 1080px) {
   #rotator {
     max-height: unset !important;
+  }
+}
+
+@media only screen and (max-height: 800px) and (min-width: 720px) {
+  #rotator {
+    min-height: unset !important;
+    max-height: calc(85vh - 14rem) !important;
   }
 }

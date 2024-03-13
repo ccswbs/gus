@@ -39,6 +39,7 @@ function MediaText (props) {
     let headingClass;
     let headingColor;
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
+    let HeadingLevel = (props.widgetData?.field_heading_level ? props.widgetData.field_heading_level : "h2");
     
     switch(mediaBgColor) {
         case "Light Blue":
@@ -225,7 +226,7 @@ function MediaText (props) {
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol}>
-            {mediaTitle && <h3 id={slugify(mediaTitle)} {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</h3>}
+            {mediaTitle && <HeadingLevel id={slugify(mediaTitle)} {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</HeadingLevel>}
             {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})} dangerouslySetInnerHTML={{ __html: mediaDescription}} />}
             {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
         </div>}
@@ -264,6 +265,7 @@ export const query = graphql`
     field_media_image_size
     field_media_alignment
     field_media_text_title
+    field_heading_level
     field_media_text_desc {
       processed
     }

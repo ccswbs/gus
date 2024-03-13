@@ -80,3 +80,4 @@ config/sitemaps/
 
 # Jetbrains IDE config
 .idea/
+.fleet/
