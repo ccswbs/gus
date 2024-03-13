@@ -602,6 +602,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_media_alignment: String
       field_media_text_desc: BodyField
       field_media_text_title: String
+      field_heading_level: String
       relationships: paragraph__media_textRelationships
     }
     type paragraph__media_textRelationships implements Node {
