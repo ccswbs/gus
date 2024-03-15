@@ -1,2 +1,5 @@
+[build]
+BACKSTOPJS_URL = DEPLOY_URL
+
 [[plugins]]
 package = "./plugins/netlify-plugin-ug-backstop"
