@@ -7,6 +7,6 @@ module.exports = {
     console.log("Reference URL: " + process.env.BACKSTOPJS_REF);
     console.log("-------------------------------------------------------");
 
-    backstop('test', {config:'../backstop.config.js'});
+    backstop('test', {config:'backstop.config.js'});
   },
 }
