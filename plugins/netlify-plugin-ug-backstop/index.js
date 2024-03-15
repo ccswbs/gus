@@ -1,4 +1,4 @@
-// index.js
+const backstop = require('backstopjs');
 
 module.exports = {
   onPreBuild: () => {
