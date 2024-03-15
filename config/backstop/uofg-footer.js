@@ -4,36 +4,33 @@
 const url = process.env.BACKSTOPJS_URL;
 const referenceUrl = process.env.BACKSTOPJS_REF;
 const pathsToTest = {
-    'Basic Page: Student Experience': '/studentexperience',
-}
+  "Basic Page: Student Experience": "/studentexperience",
+};
 /*********************************/
 
 var pathConfig = {};
 let scenariosToTest = [];
 
 for (let [key, value] of Object.entries(pathsToTest)) {
-    scenariosToTest.push({
-        label: key,
-        cookiePath: "",
-        url: url + value,
-        referenceUrl: referenceUrl + value,
-        readySelector: "",
-        hideSelectors: [
-            'div[data-netlify-deploy-id]',
-        ],
-        removeSelectors: [],
-        hoverSelector: "",
-        clickSelector: "",
-        postInteractionWait: 0,
-        selectorExpansion: true,
-        selectors: [
-            'uofg-footer',
-        ],
-        readyEvent: null,
-        delay: 5000,
-        misMatchThreshold: 0.1,
-        requireSameDimensions: true
-    })
+  scenariosToTest.push({
+    label: key,
+    cookiePath: "",
+    url: url + value,
+    referenceUrl: referenceUrl + value,
+    readyEvent: null,
+    readySelector: "",
+    delay: 1000,
+    hideSelectors: ["div[data-netlify-deploy-id]"],
+    removeSelectors: [],
+    hoverSelector: "",
+    clickSelector: "",
+    postInteractionWait: 0,
+    selectors: ["uofg-footer"],
+    selectorExpansion: true,
+    expect: 0,
+    misMatchThreshold: 0.1,
+    requireSameDimensions: true,
+  });
 }
 
 pathConfig.array = scenariosToTest;

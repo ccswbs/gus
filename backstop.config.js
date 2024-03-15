@@ -3,17 +3,15 @@ let scenario = arguments.scenario == null ? "default" : arguments.scenario;
 let scenarios;
 
 try {
-  let testURL = (arguments.testURL == null) ? "" : arguments.testURL;
-  let liveURL = (arguments.liveURL == null) ? "" : arguments.liveURL;
 
-  if((process.env.BACKSTOPJS_URL == null) || (process.env.BACKSTOPJS_REF == null)){
+  if (process.env.BACKSTOPJS_URL == null || process.env.BACKSTOPJS_REF == null) {
     console.log("-------------------------------------------------------");
     console.error("ERROR: Environment variables BACKSTOPJS_URL and BACKSTOPJS_REF are null or undefined.\n");
     console.debug("FIX: Ensure the environment variables BACKSTOPJS_URL and BACKSTOPJS_REF are properly set.\n");
     console.debug("- BACKSTOPJS_URL is the URL you are testing.");
     console.debug("- BACKSTOPJS_REF is the URL showing how things should appear (i.e., your reference URL");
     console.log("-------------------------------------------------------");
-  }else{
+  } else {
     // Load scenario test configuration
     console.log("-------------------------------------------------------");
     console.log("Scenario: " + scenario);
@@ -65,14 +63,8 @@ try {
   }
 } catch (error) {
   console.error("ERROR: Unable to load configuration '" + scenario + "'.");
-  console.debug(
-    "Tip 1: Confirm the file /config/scenarios/" + scenario + ".js exists."
-  );
-  console.debug(
-    "Tip 2: Ensure your environment variables BACKSTOPJS_URL and BACKSTOPJS_REF are properly set."
-  );
-  console.debug(
-    "Tip 3: Get up and stretch. Then consider the problem again."
-  );
+  console.debug("Tip 1: Confirm the file /config/scenarios/" + scenario + ".js exists.");
+  console.debug("Tip 2: Ensure your environment variables BACKSTOPJS_URL and BACKSTOPJS_REF are properly set.");
+  console.debug("Tip 3: Get up and stretch. Then consider the problem again.");
   console.log("-------------------------------------------------------");
 }
