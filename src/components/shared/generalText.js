@@ -1,7 +1,8 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { graphql, Script, useStaticQuery } from "gatsby"
-import { Parser, ProcessNodeDefinitions } from "html-to-react"
+import React from "react";
+import PropTypes from "prop-types";
+import { graphql, Script, useStaticQuery } from "gatsby";
+import { Parser, ProcessNodeDefinitions } from "html-to-react";
+//import GetFilePath from 'components/shared/getFilePath';
 
 const GeneralText = (props) => {
     
@@ -12,8 +13,32 @@ const GeneralText = (props) => {
       }
     }
   `)
-  const baseUrl = urlData.sitePlugin.pluginOptions.baseUrl;
+  const baseUrl = urlData.sitePlugin.pluginOptions.baseUrl.endsWith('/') 
+                    ? urlData.sitePlugin.pluginOptions.baseUrl.slice(0, -1) 
+                    : urlData.sitePlugin.pluginOptions.baseUrl;
+  
   const parser = new Parser();
+  
+  const AnchorTag = ({ node, children }) => {
+      //const [mediaFileID, setMediaFileID] = useState(null);
+      //const setFilePath = useState(null);
+
+      let newAttribs = {...node.attribs};
+
+      // If href is internal and doesn't start with http or https, prepend baseUrl
+      if (!newAttribs.href.startsWith('http')) {
+        newAttribs.href = baseUrl + newAttribs.href;
+      }
+
+      // Remove any data-entity attributes
+      for (let attr in newAttribs) {
+        if (attr.startsWith('data-entity')) {
+          delete newAttribs[attr];
+        }
+      }
+
+      return <a {...newAttribs}>{children}</a>
+  };
   
   const instructions = [
     {
@@ -27,22 +52,9 @@ const GeneralText = (props) => {
       processNode: (node) => <Script>{node.children[0].data}</Script>,
     },
     {
-      // Process anchor tags to prepend URL and remove data-entity attributes
+      // Process anchor tags to prepend baseUrl and remove data-entity attributes
       shouldProcessNode: (node) => node.name === "a",
-      processNode: (node, children) => {
-      // Prepend the URL to the href attribute
-      let newAttribs = {...node.attribs, href: baseUrl + node.attribs.href};
-
-      // Remove the data-entity attributes
-        for (let attr in newAttribs) {
-          if (attr.startsWith('data-entity')) {
-            delete newAttribs[attr];
-          }
-        }
-
-        // Return a new anchor tag with the modified attributes and the original children
-        return <a {...newAttribs}>{children}</a>;
-      },
+      processNode: (node, children) => <AnchorTag node={node} children={children} />,
     },
     {
       // Process all other nodes with the default parser
@@ -78,6 +90,15 @@ export const query = graphql`
     relationships {
       field_section_column {
         name
+      }
+    }
+  }
+  fragment MediaFileFragment on media__file {
+    drupal_id
+    relationships {
+      field_media_file {
+        filename
+        publicUrl
       }
     }
   }
