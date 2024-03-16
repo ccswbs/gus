@@ -60,6 +60,9 @@ try {
       debugWindow: false,
     };
     console.log("Success! Your test is running.");
+    if (typeof process.env.DEPLOY_URL !== 'undefined'){
+      console.log("Once complete, you can view the report at " + process.env.DEPLOY_URL + "/_backstop_data/" + scenario + "/html_report");
+    }
   }
 } catch (error) {
   console.error("ERROR: Unable to load configuration '" + scenario + "'.");
