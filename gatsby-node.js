@@ -238,6 +238,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_yaml_files: [media__image] @link(from: "field_yaml_files___NODE")
     }
     
+    type media__file implements Node {
+      drupal_id: String
+      drupal_internal__mid: Int
+      name: String
+      relationships: media__fileRelationships
+    }
+    type media__fileRelationships implements Node {
+      field_media_file: file__file @link(from: "field_media_file___NODE")
+    }
     type media__image implements Node {
       drupal_id: String
       name: String
