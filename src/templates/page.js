@@ -112,6 +112,7 @@ export const query = graphql`
       }
       drupal_parent_menu_item
       drupal_id
+      enabled
       menu_name
     }
 }
