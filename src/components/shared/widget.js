@@ -31,22 +31,15 @@ const WidgetSelector = ({ widget }) => {
     case "paragraph__lead_paragraph":
       return <LeadPara pageData={widget} />;
     case "paragraph__links_widget":
-      const gridFirstHeadingLevel = "h2";
-      const listFirstHeadingLevel = "h2";
-      const linksDisplayType = widget.relationships?.field_link_items[0]?.relationships?.field_link_image
-        ? "grid"
-        : "list";
-      const headingLevel = linksDisplayType === "grid" ? gridFirstHeadingLevel : listFirstHeadingLevel;
-      const numColumns = linksDisplayType === "grid" ? 4 : null;
       return (
         <Links
           key={widget.drupal_id}
-          pageData={widget.relationships.field_link_items}
-          displayType={linksDisplayType}
-          heading={widget.field_link_items_title}
-          headingLevel={headingLevel}
+          data={widget.relationships.field_link_items}
+          type={widget.relationships?.field_link_items?.[0]?.relationships?.field_link_image ? "grid" : "list"}
+          title={widget.field_link_items_title}
+          headingLevel={"h2"}
           description={widget.field_link_items_description}
-          numColumns={numColumns}
+          columns={4}
         />
       );
     case "paragraph__media_text":
