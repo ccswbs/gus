@@ -90,7 +90,6 @@ const WidgetSelector = ({ widget }) => {
 };
 
 const Widget = ({ widget }) => {
-  const WidgetComponent = widgetMap[widget?.__typename];
 
   // add any full-width components to the Conditional Wrapper
   return (
