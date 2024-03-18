@@ -5,7 +5,6 @@ import BlockWidget from "components/shared/blockWidget";
 import GeneralText from "components/shared/generalText";
 import ImageOverlay from "components/shared/imageOverlay";
 import LeadPara from "components/shared/leadPara";
-import Links from "components/shared/links";
 import MediaText from "components/shared/mediaText";
 import PageContainer from "components/shared/pageContainer";
 import ModalVideo from "components/shared/modalVideo";
@@ -17,6 +16,7 @@ import Story from "components/shared/story";
 import TestimonialSlider from "components/shared/testimonialSlider";
 import YamlWidget from "components/shared/yamlWidget";
 import { ConditionalWrapper, slugify } from "utils/ug-utils";
+import LinksWidget from "./linksWidget";
 
 const WidgetSelector = ({ widget }) => {
   switch (widget?.__typename) {
@@ -31,17 +31,7 @@ const WidgetSelector = ({ widget }) => {
     case "paragraph__lead_paragraph":
       return <LeadPara pageData={widget} />;
     case "paragraph__links_widget":
-      return (
-        <Links
-          key={widget.drupal_id}
-          data={widget.relationships.field_link_items}
-          type={widget.relationships?.field_link_items?.[0]?.relationships?.field_link_image ? "grid" : "list"}
-          title={widget.field_link_items_title}
-          headingLevel={"h2"}
-          description={widget.field_link_items_description}
-          columns={4}
-        />
-      );
+      return <LinksWidget key={widget.drupal_id} data={widget} />;
     case "paragraph__media_text":
       return <MediaText headingClass="mt-md-0" widgetData={widget} />;
     case "paragraph__modal_video_widget":
@@ -90,7 +80,6 @@ const WidgetSelector = ({ widget }) => {
 };
 
 const Widget = ({ widget }) => {
-
   // add any full-width components to the Conditional Wrapper
   return (
     <ConditionalWrapper

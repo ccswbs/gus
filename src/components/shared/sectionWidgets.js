@@ -7,7 +7,7 @@ import BlockWidget from "components/shared/blockWidget";
 import GeneralText from "components/shared/generalText";
 import ImageOverlay from "components/shared/imageOverlay";
 import LeadPara from "components/shared/leadPara";
-import Links from "components/shared/Links";
+import LinksWidget from "components/shared/linksWidget";
 import MediaText from "components/shared/mediaText";
 import PageTabs from "components/shared/pageTabs";
 import SectionButtons from "components/shared/sectionButtons";
@@ -35,17 +35,7 @@ function renderPrimary(widget) {
     case "paragraph__lead_paragraph":
       return <LeadPara key={widget.drupal_id} pageData={widget} />;
     case "paragraph__links_widget":
-      return (
-        <Links
-          key={widget.drupal_id}
-          data={widget.relationships.field_link_items}
-          type={widget.relationships?.field_link_items?.[0]?.relationships?.field_link_image ? "grid" : "list"}
-          title={widget.field_link_items_title}
-          headingLevel={"h2"}
-          description={widget.field_link_items_description}
-          columns={4}
-        />
-      );
+      return <LinksWidget key={widget.drupal_id} data={widget} />;
     case "paragraph__media_text":
       return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
     case "paragraph__section_tabs":
