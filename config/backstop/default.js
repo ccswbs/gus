@@ -7,6 +7,8 @@ const pathsToTest = {
   "Basic Page: Explore All Programs": "/explore-all-programs",
   "Program Page: BAS": "/programs/bachelor-of-applied-science",
   "Basic Page: Student Experience": "/studentexperience",
+  "Testimonials + Image Overlay": "/oac/study/plants/",
+  "Redirect": "/choose-u-of-g",
 };
 /*********************************/
 
@@ -22,7 +24,12 @@ for (let [key, value] of Object.entries(pathsToTest)) {
     readyEvent: null,
     readySelector: "",
     delay: 1000,
-    hideSelectors: ["div[data-netlify-deploy-id]", ".gatsby-image-wrapper"],
+    hideSelectors: [
+      "div[data-netlify-deploy-id]", 
+      ".gatsby-image-wrapper",
+      "#becookiebarid",
+      "div[data-title=\"media\"] iframe",
+    ],
     removeSelectors: [],
     hoverSelector: "",
     clickSelector: "",
