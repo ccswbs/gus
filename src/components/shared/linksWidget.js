@@ -1,5 +1,6 @@
 import Links from "./links";
 import React from "react";
+import { graphql } from "gatsby";
 
 export const LinksWidget = ({ data }) => {
   const links = data.relationships?.field_link_items
@@ -28,3 +29,31 @@ export const LinksWidget = ({ data }) => {
 };
 
 export default LinksWidget;
+
+export const query = graphql`
+  fragment LinksWidgetParagraphFragment on paragraph__links_widget {
+    drupal_id
+    field_link_items_title
+    field_link_items_description
+    relationships {
+      field_link_items {
+        drupal_id
+        field_link_description
+        field_link_url {
+          title
+          uri
+          url
+        }
+        relationships {
+          field_link_image {
+            relationships {
+              field_media_image {
+                gatsbyImage(width: 800, height: 600, cropFocus: CENTER, formats: [AUTO, WEBP])
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
