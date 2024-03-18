@@ -84,7 +84,7 @@ const generateMenu = (menuLinks, menuName) => {
 
   return (
     <>
-      {pageHome.title != null && (
+      {pageHome && pageHome.title != null && (
         <uofg-header page-title={pageHome.title} page-url={pageHome.link.url}>
           {menuItems}
         </uofg-header>

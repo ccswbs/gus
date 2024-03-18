@@ -105,7 +105,7 @@ export const query = graphql`
       }
     }
 
-    menu: menuLinkContentMenuLinkContent(link: {uri: {eq: $nid}}, enabled: {eq: true}) {
+    menu: menuLinkContentMenuLinkContent(link: {uri: {eq: $nid}}) {
       link {
         uri
         url
