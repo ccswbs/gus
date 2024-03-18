@@ -18,67 +18,82 @@ import TestimonialSlider from "components/shared/testimonialSlider";
 import YamlWidget from "components/shared/yamlWidget";
 import { ConditionalWrapper, slugify } from "utils/ug-utils";
 
-const widgetMap = {
-  paragraph__accordion_section: ({ widget }) => <Accordion pageData={widget} />,
-  paragraph__block_widget: ({ widget }) => <BlockWidget blockData={widget} />,
-  paragraph__general_text: ({ widget }) => <GeneralText processed={widget.field_general_text.processed} />,
-  paragraph__image_overlay: ({ widget }) => <ImageOverlay data={widget} />,
-  paragraph__lead_paragraph: ({ widget }) => <LeadPara pageData={widget} />,
-  paragraph__links_widget: ({ widget }) => {
-    const gridFirstHeadingLevel = "h2";
-    const listFirstHeadingLevel = "h2";
-    const type = widget.relationships?.field_link_items?.[0]?.relationships?.field_link_image ? "grid" : "list";
-    const headingLevel = type === "grid" ? gridFirstHeadingLevel : listFirstHeadingLevel;
-    const numColumns = type === "grid" ? 4 : null;
-    return (
-      <Links
-        key={widget.drupal_id}
-        items={widget.relationships.field_link_items}
-        type={type}
-        title={widget.field_link_items_title}
-        description={widget.field_link_items_description}
-        level="h2"
-        columns={4}
-      />
-    );
-  },
-  paragraph__media_text: ({ widget }) => <MediaText headingClass="mt-md-0" widgetData={widget} />,
-  paragraph__modal_video_widget: ({ widget }) => {
-    const video = widget.relationships?.field_media_video;
-    return video ? (
-      <ModalVideo
-        id={widget.drupal_id}
-        src={video?.field_media_oembed_video}
-        title={video?.name}
-        transcript={video?.relationships?.field_media_file?.publicUrl}
-      />
-    ) : null;
-  },
-  paragraph__section: ({ widget }) => {
-    let HeadingLevelSec = widget.field_heading_level ? widget.field_heading_level : "h2";
-    if (HeadingLevelSec === "h5" || HeadingLevelSec === "h6") HeadingLevelSec = "h4";
-    return (
-      <>
-        {widget.field_section_title && (
-          <HeadingLevelSec id={slugify(widget.field_section_title)} className="mt-0">
-            {widget.field_section_title}
-          </HeadingLevelSec>
-        )}
-        <div key={widget.drupal_id} className="row" data-title="Section widget">
-          <SectionWidgets
-            pageData={widget.relationships.field_section_content}
-            sectionClasses={widget.field_section_classes}
-          />
-        </div>
-      </>
-    );
-  },
-  paragraph__section_tabs: ({ widget }) => <PageTabs pageData={widget} />,
-  paragraph__statistic_widget: ({ widget }) => <StatisticWidget statisticData={widget} />,
-  paragraph__stats_widget: ({ widget }) => <StatsWidget statsWidgetData={widget} />,
-  paragraph__story_widget: ({ widget }) => <Story storyData={widget} />,
-  paragraph__testimonial_slider: ({ widget }) => <TestimonialSlider testimonialData={widget} />,
-  paragraph__yaml_widget: ({ widget }) => <YamlWidget blockData={widget} />,
+const WidgetSelector = ({ widget }) => {
+  switch (widget?.__typename) {
+    case "paragraph__accordion_section":
+      return <Accordion pageData={widget} />;
+    case "paragraph__block_widget":
+      return <BlockWidget blockData={widget} />;
+    case "paragraph__general_text":
+      return <GeneralText processed={widget.field_general_text.processed} />;
+    case "paragraph__image_overlay":
+      return <ImageOverlay data={widget} />;
+    case "paragraph__lead_paragraph":
+      return <LeadPara pageData={widget} />;
+    case "paragraph__links_widget":
+      const gridFirstHeadingLevel = "h2";
+      const listFirstHeadingLevel = "h2";
+      const linksDisplayType = widget.relationships?.field_link_items[0]?.relationships?.field_link_image
+        ? "grid"
+        : "list";
+      const headingLevel = linksDisplayType === "grid" ? gridFirstHeadingLevel : listFirstHeadingLevel;
+      const numColumns = linksDisplayType === "grid" ? 4 : null;
+      return (
+        <Links
+          key={widget.drupal_id}
+          pageData={widget.relationships.field_link_items}
+          displayType={linksDisplayType}
+          heading={widget.field_link_items_title}
+          headingLevel={headingLevel}
+          description={widget.field_link_items_description}
+          numColumns={numColumns}
+        />
+      );
+    case "paragraph__media_text":
+      return <MediaText headingClass="mt-md-0" widgetData={widget} />;
+    case "paragraph__modal_video_widget":
+      const video = widget.relationships?.field_media_video;
+      return video ? (
+        <ModalVideo
+          id={widget.drupal_id}
+          src={video?.field_media_oembed_video}
+          title={video?.name}
+          transcript={video?.relationships?.field_media_file?.publicUrl}
+        />
+      ) : null;
+    case "paragraph__section":
+      let HeadingLevelSec = widget.field_heading_level ? widget.field_heading_level : "h2";
+      if (HeadingLevelSec === "h5" || HeadingLevelSec === "h6") HeadingLevelSec = "h4";
+      return (
+        <>
+          {widget.field_section_title && (
+            <HeadingLevelSec id={slugify(widget.field_section_title)} className="mt-0">
+              {widget.field_section_title}
+            </HeadingLevelSec>
+          )}
+          <div key={widget.drupal_id} className="row" data-title="Section widget">
+            <SectionWidgets
+              pageData={widget.relationships.field_section_content}
+              sectionClasses={widget.field_section_classes}
+            />
+          </div>
+        </>
+      );
+    case "paragraph__section_tabs":
+      return <PageTabs pageData={widget} />;
+    case "paragraph__statistic_widget":
+      return <StatisticWidget statisticData={widget} />;
+    case "paragraph__stats_widget":
+      return <StatsWidget statsWidgetData={widget} />;
+    case "paragraph__story_widget":
+      return <Story storyData={widget} />;
+    case "paragraph__testimonial_slider":
+      return <TestimonialSlider testimonialData={widget} />;
+    case "paragraph__yaml_widget":
+      return <YamlWidget blockData={widget} />;
+    default:
+      return <></>;
+  }
 };
 
 const Widget = ({ widget }) => {
@@ -101,7 +116,7 @@ const Widget = ({ widget }) => {
         </PageContainer.SiteContent>
       )}
     >
-      <WidgetComponent widget={widget} />
+      <WidgetSelector widget={widget} />
     </ConditionalWrapper>
   );
 };
