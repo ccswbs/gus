@@ -3,8 +3,6 @@ import Links from "./links";
 import { graphql } from "gatsby";
 
 export const LinksWidget = ({ data }) => {
-  console.log(data);
-
   const links = data.relationships?.field_link_items
     ?.map((link) =>
       link
@@ -18,8 +16,6 @@ export const LinksWidget = ({ data }) => {
         : null
     )
     .filter(Boolean);
-
-  console.log(links);
 
   return (
     <Links
