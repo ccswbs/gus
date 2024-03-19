@@ -7,6 +7,10 @@ import "styles/links.css";
 function LinkElement(props) {
   const url = props.url;
 
+  // Remove url from props to avoid passing it to the anchor or Gatsby Link
+  const copyProps = { ...props };
+  delete copyProps.url;
+
   return isExternalURL(url) ? (
     <a {...props} href={url}>
       {props.children}
@@ -40,7 +44,7 @@ function ListLink({ title, url }) {
 function Links({ links = [], title, headingLevel, description }) {
   const isGrid = links?.some((item) => item.image);
   const Heading = getHeadingLevel(headingLevel);
-  const LinkHeading = getHeadingLevel(headingLevel, 1);
+  const LinkHeading = title ? getHeadingLevel(headingLevel, 1) : 'p';
   const LinksInner = isGrid ? "div" : "ul";
 
   return (
