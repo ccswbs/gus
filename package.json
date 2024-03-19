@@ -17,6 +17,7 @@
     "@fontsource/roboto": "^5.0.12",
     "axios": "^1.6.7",
     "babel-plugin-styled-components": "^2.1.4",
+    "backstopjs": "^6.3.23",
     "classnames": "^2.5.1",
     "express": "^4.18.3",
     "gatsby": "^5.13.3",
