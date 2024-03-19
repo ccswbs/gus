@@ -20,7 +20,7 @@ div.links-inner .link-element:focus {
 }
 
 div.links-inner .link-element img {
-  transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out, opacity 0.25s ease-in-out;
 }
 
 div.links-inner .link-element:hover img,
