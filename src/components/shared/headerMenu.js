@@ -3,7 +3,7 @@
  * https://github.com/xaviemirmon/gatsby-plugin-drupal-menus
  ***/
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 
 const createMenuHierarchy = (menuData, menuName) => {
@@ -84,41 +84,42 @@ const generateMenu = (menuLinks, menuName) => {
 
   return (
     <>
-      <uofg-header page-title={pageHome.title} page-url={pageHome.link.url}>{menuItems}</uofg-header>
+      {pageHome && pageHome.title != null && (
+        <uofg-header page-title={pageHome.title} page-url={pageHome.link.url}>
+          {menuItems}
+        </uofg-header>
+      )}
     </>
   );
 };
 
-
-const HeaderMenu = ({ menuName }) => (
-  <StaticQuery
-    query={graphql`
-      query HeaderMenuQuery {
-        allMenuLinkContentMenuLinkContent(sort: { weight: ASC }) {
-          edges {
-            node {
-              enabled
-              title
-              expanded
-              external
-              langcode
-              weight
-              link {
-                uri
-                url
-              }
-              drupal_parent_menu_item
-              bundle
-              drupal_id
-              menu_name
+const HeaderMenu = ({ menuName }) => {
+  const data = useStaticQuery(graphql`
+    query HeaderMenuQuery {
+      allMenuLinkContentMenuLinkContent(sort: { weight: ASC }) {
+        edges {
+          node {
+            enabled
+            title
+            expanded
+            external
+            langcode
+            weight
+            link {
+              uri
+              url
             }
+            drupal_parent_menu_item
+            bundle
+            drupal_id
+            menu_name
           }
         }
       }
-    `}
-    render={(data) => generateMenu(data, menuName)}
-  />
-)
+    }
+  `)
+   return generateMenu(data, menuName)
+}
 
 HeaderMenu.propTypes = {
   menuName: PropTypes.string,
