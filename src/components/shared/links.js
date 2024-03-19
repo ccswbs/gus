@@ -54,7 +54,7 @@ function Links({ links = [], title, headingLevel, description }) {
 
       <LinksInner className="links-inner">
         {links.map((link) => {
-          const { id, title, description, url, image, alt } = link;
+          const { id, title, url, image, alt } = link;
 
           return isGrid ? (
             <GridLink key={id} title={title} url={url} image={image} alt={alt} />
