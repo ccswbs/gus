@@ -39,7 +39,7 @@ function MediaText (props) {
     let headingClass;
     let headingColor;
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
-    let HeadingLevel = (props.widgetData?.field_heading_level ? props.widgetData.field_heading_level : "h2");
+    let HeadingLevel = (props.widgetData?.field_heading_level ? props.widgetData.field_heading_level : "h3");
     
     switch(mediaBgColor) {
         case "Light Blue":
