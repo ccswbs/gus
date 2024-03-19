@@ -32,3 +32,8 @@ You can create additional scenarios for testing our frontend development.
 1. Update the [BackstopJS scenario properties](https://github.com/garris/BackstopJS?tab=readme-ov-file#scenario-properties) as you see fit (e.g., you can remove dynamic site elements using removeSelectors or hideSelectors.)
 1. Test your configuration file by running `backstop reference --config=./backstop.config.js  --scenario=unique-name` and `backstop test --config=./backstop.config.js  --scenario=unique-name`
 1. If all works as expected, commit your configuration file to the repository.
+
+## Tips for running backstopJS on a Windows machine
+1. Use Windows Subsystem 2
+1. Install Google Chrome
+1. Precede your backstop commands with `npx`
