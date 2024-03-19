@@ -1,5 +1,5 @@
-import Links from "./links";
 import React from "react";
+import Links from "./links";
 import { graphql } from "gatsby";
 
 export const LinksWidget = ({ data }) => {
@@ -8,10 +8,9 @@ export const LinksWidget = ({ data }) => {
       link
         ? {
             id: link?.drupal_id,
-            description: link?.field_link_description,
             title: link?.field_link_url?.title,
             url: link?.field_link_url?.url,
-            image: link.relationships.field_link_image.relationships.field_media_image?.gatsbyImage || null,
+            image: link?.relationships?.field_link_image?.relationships?.field_media_image?.gatsbyImage || null,
           }
         : null
     )

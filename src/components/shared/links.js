@@ -1,31 +1,38 @@
 import React from "react";
-import { graphql, Link } from "gatsby";
+import { Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { getHeadingLevel, isExternalURL } from "../../utils/ug-utils";
 import "styles/links.css";
 
-function GridLink({ title, description, url, image, Heading }) {
-  const isExternal = isExternalURL(url);
-  const LinkTag = isExternal ? "a" : Link;
+function LinkElement(props) {
+  const url = props.url;
 
-  return (
-    <LinkTag className="link" href={isExternal ? url : undefined} to={isExternal ? undefined : url}>
-      <GatsbyImage image={image} alt={title} className="link-image" imgClassName="link-image" />
-      <div className="link-text">
-        <Heading className="link-title">{title}</Heading>
-        <p className="link-description">{description}</p>
-      </div>
-    </LinkTag>
+  return isExternalURL(url) ? (
+    <a {...props} href={url}>
+      {props.children}
+    </a>
+  ) : (
+    <Link {...props} to={url}>
+      {props.children}
+    </Link>
   );
 }
 
-function ListLink({ title, description, url, Heading }) {
+function GridLink({ title, url, image, Heading }) {
+  return (
+    <LinkElement className="link-element link-grid-item" url={url}>
+      <GatsbyImage image={image} alt={title} className="link-image" imgClassName="link-image" />
+      <Heading className="link-title h4">{title}</Heading>
+    </LinkElement>
+  );
+}
+
+function ListLink({ title, url }) {
   return (
     <li>
-      <a href={url}>
-        <Heading>{title}</Heading>
-        <p>{description}</p>
-      </a>
+      <LinkElement url={url}>
+        <span>{title}</span>
+      </LinkElement>
     </li>
   );
 }
@@ -39,10 +46,9 @@ function Links({ links = [], title, headingLevel, description }) {
   return (
     <div className="links-outer">
       {title && <Heading className="links-heading">{title}</Heading>}
+      {description && <p className="links-description">{description}</p>}
 
       <LinksInner className="links-inner">
-        {description && <p className="links-description">{description}</p>}
-
         {links.map((link) => {
           const { id, title, description, url, image } = link;
 
