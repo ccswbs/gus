@@ -22,10 +22,10 @@ function LinkElement(props) {
   );
 }
 
-function GridLink({ title, url, image, Heading }) {
+function GridLink({ title, url, image, alt, Heading }) {
   return (
     <LinkElement className="link-element link-grid-item" url={url}>
-      <GatsbyImage image={image} alt={title} className="link-image" />
+      <GatsbyImage image={image} alt={alt} className="link-image" />
       <Heading className="link-title h4">{title}</Heading>
     </LinkElement>
   );
@@ -54,10 +54,10 @@ function Links({ links = [], title, headingLevel, description }) {
 
       <LinksInner className="links-inner">
         {links.map((link) => {
-          const { id, title, description, url, image } = link;
+          const { id, title, description, url, image, alt } = link;
 
           return isGrid ? (
-            <GridLink key={id} title={title} description={description} url={url} image={image} Heading={LinkHeading} />
+            <GridLink key={id} title={title} description={description} url={url} image={image} alt={alt} Heading={LinkHeading} />
           ) : (
             <ListLink key={id} title={title} description={description} url={url} Heading={LinkHeading} />
           );
