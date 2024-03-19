@@ -1,10 +1,10 @@
-div.links-inner {
+.outer div.inner {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
 }
 
-div.links-inner .link-element {
+.outer div.inner .link {
   display: flex !important;
   background-color: #e9f0f8;
   flex-direction: column;
@@ -14,23 +14,23 @@ div.links-inner .link-element {
   text-decoration: none !important;
 }
 
-div.links-inner .link-element:hover,
-div.links-inner .link-element:focus {
+.outer div.inner .link:hover,
+.outer div.inner .link:focus {
   background-color: #ffc72b !important;
 }
 
-div.links-inner .link-element img {
+.outer div.inner .link img {
   transition:
     transform 0.2s ease-in-out,
     opacity 0.25s ease-in-out;
 }
 
-div.links-inner .link-element:hover img,
-div.links-inner .link-element:focus img {
+.outer div.inner .link:hover img,
+.outer div.inner .link:focus img {
   transform: scale(1.1);
 }
 
-div.links-inner .link-element .link-title {
+.outer div.inner .link .title {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -40,26 +40,26 @@ div.links-inner .link-element .link-title {
   font-size: 2rem !important;
 }
 
-ul.links-inner {
+.outer ul.inner {
   display: flex;
   flex-direction: column;
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 0 1.2em;
 }
 
-ul.links-inner li a {
+.outer ul.inner li a {
   display: block;
 }
 
 @media (min-width: 576px) {
-  div.links-inner {
+  .outer div.inner {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (min-width: 768px) {
-  div.links-inner {
+  .outer div.inner {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }

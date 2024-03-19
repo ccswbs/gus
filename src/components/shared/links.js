@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { getHeadingLevel, isExternalURL } from "../../utils/ug-utils";
-import "styles/links.css";
+import * as styles from "styles/links.module.css";
 
 function LinkElement(props) {
   const url = props.url;
@@ -24,9 +24,9 @@ function LinkElement(props) {
 
 function GridLink({ title, url, image, alt }) {
   return (
-    <LinkElement className="link-element link-grid-item" url={url}>
-      <GatsbyImage image={image} alt={alt} className="link-image" />
-      <span className="link-title h4">{title}</span>
+    <LinkElement className={styles.link} url={url}>
+      <GatsbyImage image={image} alt={alt} />
+      <span className={`${styles.title} h4`}>{title}</span>
     </LinkElement>
   );
 }
@@ -34,7 +34,7 @@ function GridLink({ title, url, image, alt }) {
 function ListLink({ title, url }) {
   return (
     <li>
-      <LinkElement url={url}>
+      <LinkElement className={styles.link} url={url}>
         <span>{title}</span>
       </LinkElement>
     </li>
@@ -48,11 +48,11 @@ function Links({ links = [], title, headingLevel, description }) {
   const LinksInner = isGrid ? "div" : "ul";
 
   return (
-    <div className="links-outer">
-      {title && <Heading className="links-heading">{title}</Heading>}
-      {description && <p className="links-description">{description}</p>}
+    <div className={styles.outer}>
+      {title && <Heading>{title}</Heading>}
+      {description && <p>{description}</p>}
 
-      <LinksInner className="links-inner">
+      <LinksInner className={styles.inner}>
         {links.map((link) => {
           const { id, title, url, image, alt } = link;
 
