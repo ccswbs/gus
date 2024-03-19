@@ -25,7 +25,7 @@ function LinkElement(props) {
 function GridLink({ title, url, image, Heading }) {
   return (
     <LinkElement className="link-element link-grid-item" url={url}>
-      <GatsbyImage image={image} alt={title} className="link-image" imgClassName="link-image" />
+      <GatsbyImage image={image} alt={title} className="link-image" />
       <Heading className="link-title h4">{title}</Heading>
     </LinkElement>
   );
