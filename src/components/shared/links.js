@@ -12,12 +12,12 @@ function LinkElement(props) {
   delete copyProps.url;
 
   return isExternalURL(url) ? (
-    <a {...props} href={url}>
-      {props.children}
+    <a {...copyProps} href={url}>
+      {copyProps.children}
     </a>
   ) : (
-    <Link {...props} to={url}>
-      {props.children}
+    <Link {...copyProps} to={url}>
+      {copyProps.children}
     </Link>
   );
 }
@@ -54,7 +54,7 @@ function Links({ links = [], title, headingLevel, description }) {
 
       <LinksInner className={styles.inner}>
         {links.map((link) => {
-          const { id, title, url, image, alt } = link;
+          const { id, title, url, image } = link;
 
           return isGrid ? (
             <GridLink key={id} title={title} url={url} image={image} />
