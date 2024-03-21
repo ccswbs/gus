@@ -22,10 +22,10 @@ function LinkElement(props) {
   );
 }
 
-function GridLink({ title, url, image, alt }) {
+function GridLink({ title, url, image }) {
   return (
     <LinkElement className={styles.link} url={url}>
-      <GatsbyImage image={image} alt={alt} />
+      <GatsbyImage image={image} alt="" />
       <span className={`${styles.title} h4`}>{title}</span>
     </LinkElement>
   );
@@ -57,7 +57,7 @@ function Links({ links = [], title, headingLevel, description }) {
           const { id, title, url, image, alt } = link;
 
           return isGrid ? (
-            <GridLink key={id} title={title} url={url} image={image} alt={alt} />
+            <GridLink key={id} title={title} url={url} image={image} />
           ) : (
             <ListLink key={id} title={title} url={url} />
           );

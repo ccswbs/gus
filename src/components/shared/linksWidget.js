@@ -11,7 +11,6 @@ export const LinksWidget = ({ data }) => {
             title: link?.field_link_url?.title,
             url: link?.field_link_url?.url,
             image: link?.relationships?.field_link_image?.relationships?.field_media_image?.gatsbyImage || null,
-            alt: link?.relationships?.field_link_image?.field_media_image?.alt || "",
           }
         : null
     )
@@ -46,9 +45,6 @@ export const query = graphql`
         }
         relationships {
           field_link_image {
-            field_media_image {
-              alt
-            }
             relationships {
               field_media_image {
                 gatsbyImage(width: 800, height: 600, cropFocus: CENTER, formats: [AUTO, WEBP])
