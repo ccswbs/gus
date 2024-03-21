@@ -5,6 +5,7 @@ import BlockWidget from "components/shared/blockWidget";
 import GeneralText from "components/shared/generalText";
 import ImageOverlay from "components/shared/imageOverlay";
 import LeadPara from "components/shared/leadPara";
+import LinksWidget from "./linksWidget";
 import MediaText from "components/shared/mediaText";
 import PageContainer from "components/shared/pageContainer";
 import ModalVideo from "components/shared/modalVideo";
@@ -16,7 +17,6 @@ import Story from "components/shared/story";
 import TestimonialSlider from "components/shared/testimonialSlider";
 import YamlWidget from "components/shared/yamlWidget";
 import { ConditionalWrapper, slugify } from "utils/ug-utils";
-import LinksWidget from "./linksWidget";
 
 const WidgetSelector = ({ widget }) => {
   switch (widget?.__typename) {
