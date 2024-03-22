@@ -23,7 +23,7 @@ const GeneralText = (props) => {
       let newAttribs = {...node.attribs};
 
       // If href is internal and doesn't start with http or https, prepend baseUrl
-      if (!newAttribs.href.startsWith('http')) {
+      if (newAttribs.href && !newAttribs.href.startsWith('http')) {
         newAttribs.href = baseUrl + newAttribs.href;
       }
 
