@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { graphql, Script, useStaticQuery } from "gatsby";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
-//import GetFilePath from 'components/shared/getFilePath';
 
 const GeneralText = (props) => {
     
@@ -20,8 +19,6 @@ const GeneralText = (props) => {
   const parser = new Parser();
   
   const AnchorTag = ({ node, children }) => {
-      //const [mediaFileID, setMediaFileID] = useState(null);
-      //const setFilePath = useState(null);
 
       let newAttribs = {...node.attribs};
 
@@ -90,15 +87,6 @@ export const query = graphql`
     relationships {
       field_section_column {
         name
-      }
-    }
-  }
-  fragment MediaFileFragment on media__file {
-    drupal_id
-    relationships {
-      field_media_file {
-        filename
-        publicUrl
       }
     }
   }
