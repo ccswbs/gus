@@ -22,8 +22,8 @@ const GeneralText = (props) => {
 
       let newAttribs = {...node.attribs};
 
-      // If href is internal and doesn't start with http or https, prepend baseUrl
-      if (newAttribs.href && !newAttribs.href.startsWith('http')) {
+      // If href points to a media file, prepend baseUrl
+      if (newAttribs && newAttribs.href && newAttribs['data-entity-type'] === 'media') {
         newAttribs.href = baseUrl + newAttribs.href;
       }
 
