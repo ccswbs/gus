@@ -1,3 +1,6 @@
+import React from "react";
+import { graphql, useStaticQuery } from "gatsby";
+
 //Unnecessary function - this can be deleted once we eliminate all calls to it
 function contentExists(content) {
   if (content && !Array.isArray(content)) {
@@ -9,6 +12,17 @@ function contentExists(content) {
 }
 
 const AnchorTag = ({ node, children }) => {
+  const urlData = useStaticQuery(graphql`
+    query {
+      sitePlugin(name: { eq: "gatsby-source-drupal" }) {
+        pluginOptions
+      }
+    }
+  `);
+  const baseUrl = urlData.sitePlugin.pluginOptions.baseUrl.endsWith("/")
+    ? urlData.sitePlugin.pluginOptions.baseUrl.slice(0, -1)
+    : urlData.sitePlugin.pluginOptions.baseUrl;
+
   let newAttribs = { ...node.attribs };
 
   // If href points to a media file, prepend baseUrl

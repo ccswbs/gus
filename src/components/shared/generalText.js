@@ -1,21 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { graphql, Script, useStaticQuery } from "gatsby";
+import { graphql, Script } from "gatsby";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
 import { AnchorTag } from 'utils/ug-utils';
 
 const GeneralText = (props) => {
-    
-  const urlData = useStaticQuery(graphql`
-    query {
-      sitePlugin(name: {eq: "gatsby-source-drupal"}) {
-        pluginOptions
-      }
-    }
-  `)
-  const baseUrl = urlData.sitePlugin.pluginOptions.baseUrl.endsWith('/') 
-                    ? urlData.sitePlugin.pluginOptions.baseUrl.slice(0, -1) 
-                    : urlData.sitePlugin.pluginOptions.baseUrl;
   
   const parser = new Parser();
   
