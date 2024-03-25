@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { graphql, Script, useStaticQuery } from "gatsby";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
+import { AnchorTag } from 'utils/ug-utils';
 
 const GeneralText = (props) => {
     
@@ -17,25 +18,6 @@ const GeneralText = (props) => {
                     : urlData.sitePlugin.pluginOptions.baseUrl;
   
   const parser = new Parser();
-  
-  const AnchorTag = ({ node, children }) => {
-
-      let newAttribs = {...node.attribs};
-
-      // If href points to a media file, prepend baseUrl
-      if (newAttribs && newAttribs.href && newAttribs['data-entity-type'] === 'media') {
-        newAttribs.href = baseUrl + newAttribs.href;
-      }
-
-      // Remove any data-entity attributes
-      for (let attr in newAttribs) {
-        if (attr.startsWith('data-entity')) {
-          delete newAttribs[attr];
-        }
-      }
-
-      return <a {...newAttribs}>{children}</a>
-  };
   
   const instructions = [
     {
