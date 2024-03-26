@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, StaticQuery, graphql } from 'gatsby';
+import 'styles/breadcrumbs.css';
 
 /***
 * Recursive function to iterate through the menu in search of parents
