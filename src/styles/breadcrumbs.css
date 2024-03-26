@@ -1,3 +1,3 @@
 .breadcrumb-right-tag .breadcrumb-item:last-child  {
-    max-width: none;
+    max-width: none !important;
 }
