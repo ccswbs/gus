@@ -40,6 +40,10 @@ const AnchorTag = ({ node, children }) => {
   return <a {...newAttribs}>{children}</a>;
 };
 
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
 const ConditionalWrapper = ({ condition, wrapper, children }) => (condition ? wrapper(children) : children);
 
 // Source: https://flaviocopes.com/how-to-divide-array-js/
@@ -87,10 +91,27 @@ function fontAwesomeIconColour(colourChoice) {
   }
 }
 
+function getHeadingLevel(headingLevel, shift = 0) {
+  const parsed = headingLevel.match(/^[Hh](\d)$/i)?.[1];
+  const level = clamp((Number.parseInt(parsed) || 0) + shift, 0, 6);
+
+  return level === 0 ? "p" : `h${level}`;
+}
+
 function getNextHeadingLevel(headingLevel) {
   let level = parseInt(headingLevel.replace(/[^\d.]/g, "")) + 1;
   let nextHeadingLevel = setHeadingLevel("h" + level);
   return nextHeadingLevel;
+}
+
+function isExternalURL(url) {
+  const includesProtocol = url.includes("http");
+
+  if (typeof window !== "undefined" && includesProtocol) {
+    return new URL(url).origin !== window.location?.origin;
+  }
+
+  return includesProtocol;
 }
 
 function setHeadingLevel(headingLevel) {
@@ -129,11 +150,14 @@ function stripHTMLTags(content) {
 export {
   contentExists,
   AnchorTag,
+  clamp,
   ConditionalWrapper,
   divideIntoColumns,
   extractVideoID,
   fontAwesomeIconColour,
+  getHeadingLevel,
   getNextHeadingLevel,
+  isExternalURL,
   setHeadingLevel,
   slugify,
   sortLastModifiedDates,
