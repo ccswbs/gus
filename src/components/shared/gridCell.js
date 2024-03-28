@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'gatsby';
-import { setHeadingLevel, contentExists } from 'utils/ug-utils.js';
+import { setHeadingLevel } from 'utils/ug-utils.js';
 
 /* 
 Example Usage:
@@ -44,9 +44,9 @@ const GridCell = (props) => {
     const Tag = props.tag;
 
     // General Scenario: heading, image and text below (link and text optional)
-    if(contentExists(props.headingLink) && contentExists(props.image)){
+    if(props.headingLink && props.image){
         const levelHeading = setHeadingLevel(props.headingLinkLevel);
-        const HeadingElement = (contentExists(props.text)) 
+        const HeadingElement = props?.text; 
             ? <levelHeading className="grid-heading">{props.headingLink}</levelHeading> 
             : <span className={`grid-heading ${levelHeading}`}>{props.headingLink}</span>;
 
@@ -54,13 +54,13 @@ const GridCell = (props) => {
             return(<React.Fragment>
                         {props.image && <div className="img-container">{props.image}</div>}
                         {HeadingElement}
-                        {contentExists(props.text) && <span className="grid-text">{props.text}</span>}
+                        {props.text && <span className="grid-text">{props.text}</span>}
                     </React.Fragment>
             )
         }
 
         // If link exists, add optional link
-        if(contentExists(props.url)){
+        if(props.url){
             // check to see if url is external - i.e. it contains http to use <a href..> ... </a> 
             // otherwise use the gatsby Link comand for internal links
             if (props.url.includes("http")){
@@ -88,7 +88,7 @@ const GridCell = (props) => {
 
         // Fallback Scenario: For gridCells that contain something other than an image and heading,
         // Just return the children
-        if(contentExists(props.children)){
+        if(props.children){
             return(
                 <Tag className={classes}>
                     {props.children}
