@@ -2,16 +2,6 @@ import React from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
 import { graphql, useStaticQuery, Script } from "gatsby";
 
-//Unnecessary function - this can be deleted once we eliminate all calls to it
-function contentExists(content) {
-  if (content && !Array.isArray(content)) {
-    return true;
-  } else if (content && Array.isArray(content) && content.length > 0) {
-    return true;
-  }
-  return false;
-}
-
 const AnchorTag = ({ node, children }) => {
   const urlData = useStaticQuery(graphql`
     query {
@@ -115,7 +105,7 @@ function isExternalURL(url) {
   return includesProtocol;
 }
 
-const ParseText = ({ textContent}) => {
+const ParseText = ({ textContent }) => {
   const parser = new Parser();
   const instructions = [
     {
@@ -138,9 +128,9 @@ const ParseText = ({ textContent}) => {
       shouldProcessNode: () => true,
       processNode: new ProcessNodeDefinitions().processDefaultNode,
     },
-  ]
-  return parser.parseWithInstructions(textContent, () => true, instructions)
-}
+  ];
+  return parser.parseWithInstructions(textContent, () => true, instructions);
+};
 
 function setHeadingLevel(headingLevel) {
   // console.log(headingLevel, "setHeadingLevel")
@@ -176,7 +166,6 @@ function stripHTMLTags(content) {
 }
 
 export {
-  contentExists,
   AnchorTag,
   clamp,
   ConditionalWrapper,
