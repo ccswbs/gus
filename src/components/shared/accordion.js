@@ -34,7 +34,9 @@ const Accordion = (props) => {
                 <div className="accordion-item" key={"item" + item.drupal_id}>
                   <ItemHeading className="accordion-header" id={"heading" + item.drupal_id}>{accordionToggle}</ItemHeading>
                   <div {...(stayOpen ? {} : {"data-bs-parent": dataParent})} id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={"heading" + item.drupal_id}>
-                    <ParseText textClass="accordion-body" textContent={item.field_accordion_block_text.processed} />
+                    <div className="accordion-body">
+                      <ParseText textContent={item.field_accordion_block_text.processed} />
+                    </div>
                   </div>
                 </div>
               );
