@@ -1,5 +1,6 @@
 import React from "react";
-import { graphql, useStaticQuery } from "gatsby";
+import { Parser, ProcessNodeDefinitions } from "html-to-react";
+import { graphql, useStaticQuery, Script } from "gatsby";
 
 //Unnecessary function - this can be deleted once we eliminate all calls to it
 function contentExists(content) {
@@ -114,6 +115,33 @@ function isExternalURL(url) {
   return includesProtocol;
 }
 
+const ParseText = ({ textContent}) => {
+  const parser = new Parser();
+  const instructions = [
+    {
+      // Replace <script> tags with Gatsby <Script> components
+      shouldProcessNode: (node) => node.name === "script" && node.attribs?.src,
+      processNode: (node) => <Script src={node.attribs.src} />,
+    },
+    {
+      // Inline scripts will also be replaced but should only have one child, which is the script text
+      shouldProcessNode: (node) => node.name === "script" && node?.children.length === 1,
+      processNode: (node) => <Script>{node.children[0].data}</Script>,
+    },
+    {
+      // Process anchor tags to prepend baseUrl and remove data-entity attributes
+      shouldProcessNode: (node) => node.name === "a",
+      processNode: (node, children) => <AnchorTag node={node} children={children} />,
+    },
+    {
+      // Process all other nodes with the default parser
+      shouldProcessNode: () => true,
+      processNode: new ProcessNodeDefinitions().processDefaultNode,
+    },
+  ]
+  return parser.parseWithInstructions(textContent, () => true, instructions)
+}
+
 function setHeadingLevel(headingLevel) {
   // console.log(headingLevel, "setHeadingLevel")
   const validHeadingLevels = ["h1", "h2", "h3", "h4", "h5", "h6"];
@@ -158,6 +186,7 @@ export {
   getHeadingLevel,
   getNextHeadingLevel,
   isExternalURL,
+  ParseText,
   setHeadingLevel,
   slugify,
   sortLastModifiedDates,
