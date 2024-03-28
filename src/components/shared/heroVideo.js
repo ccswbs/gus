@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
-import { extractVideoID, contentExists } from 'utils/ug-utils';
+import { extractVideoID } from 'utils/ug-utils';
 import 'styles/heroVideo.css';
 
 class HeroVideo extends Component {
@@ -48,7 +48,7 @@ class HeroVideo extends Component {
                     <i aria-hidden="true" className={playing ? "duotoneColors fad fa-pause-circle" : "duotoneColors fad fa-play-circle"}></i>
                     <span className="sr-only">{playing ? "Pause video" : "Play video"}</span>
                 </button>
-                {contentExists(videoTranscript) ? 
+                {videoTranscript ? 
                     <><a id="hero-transcript" href={videoTranscript} download aria-label="Download transcript" title="Download transcript">
                         <i aria-hidden="true" className="duotoneColors fad fa-file-alt"></i>
                         <span className="sr-only">Download transcript</span>                        
