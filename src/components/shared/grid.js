@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GridParent from 'components/shared/gridParent';
-import { contentExists, setHeadingLevel } from 'utils/ug-utils.js';
+import { setHeadingLevel } from 'utils/ug-utils.js';
 import 'styles/grid.css';
 
 /* 
@@ -28,7 +28,7 @@ Example Usage:
 function Grid (props) {
     let Heading = setHeadingLevel(props.headingLevel);
    
-	if (contentExists(props.children)) {
+	if (props.children) {
 		return (<div className="full-width-container bg-light grid">
                     <div className="container page-container">
                         <GridParent extraClasses="row row-with-vspace site-content content-area">
