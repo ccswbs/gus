@@ -1,27 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
-import { ParseText } from 'utils/ug-utils';
+import { ParseText } from "utils/ug-utils";
 
 const GeneralText = (props) => {
-  
-  const textContent = props.processed
- // const textClass = props.textClass
-
-  return <ParseText textContent={textContent} />
-}
+  return <ParseText textContent={props.processed} />;
+};
 
 GeneralText.propTypes = {
   processed: PropTypes.string,
   textClass: PropTypes.string,
-}
+};
 
 GeneralText.defaultProps = {
   processed: ``,
   textClass: ``,
-}
+};
 
-export default GeneralText
+export default GeneralText;
 
 export const query = graphql`
   fragment GeneralTextParagraphFragment on paragraph__general_text {
@@ -35,4 +31,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;
