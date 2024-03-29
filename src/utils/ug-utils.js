@@ -21,9 +21,9 @@ const AnchorTag = ({ node, children }) => {
     newAttribs.href = baseUrl + newAttribs.href;
   }
 
-  // Remove any data-entity attributes
+  // Remove any data-entity or style attributes
   for (let attr in newAttribs) {
-    if (attr.startsWith("data-entity")) {
+    if (attr.startsWith("data-entity") || attr.startsWith("style")) {
       delete newAttribs[attr];
     }
   }
