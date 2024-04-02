@@ -20,7 +20,7 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
 module.exports = {
   adapter: adapter({
     excludeDatastoreFromEngineFunction: false,
-    imageCDN: false,
+    imageCDN: true,
   }),
   assetPrefix: process.env.ASSET_PREFIX,
   siteMetadata: {
