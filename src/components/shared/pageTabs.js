@@ -5,7 +5,7 @@ import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import Fade from "react-bootstrap/Fade"
 import "styles/pageTabs.css"
-import { slugify } from "../../utils/ug-utils"
+import { slugify, ParseText } from "../../utils/ug-utils"
 
 const PageTabs = (props) => {
   const container = useRef(null)
@@ -40,7 +40,9 @@ const PageTabs = (props) => {
       <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} justify transition={Fade}>
         {tabs.map((tab) => (
           <Tab key={tab.drupal_id} eventKey={tab.drupal_id} title={tab.field_tab_title.toUpperCase()}>
-            <div data-tab-id={tab.drupal_id} dangerouslySetInnerHTML={{ __html: tab.field_tab_body.processed }} />
+            <div data-tab-id={tab.drupal_id}>
+              <ParseText textContent={tab.field_tab_body.processed} />
+            </div>
           </Tab>
         ))}
       </Tabs>
