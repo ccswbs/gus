@@ -1175,7 +1175,7 @@ function processPage(node, contextID, nodeNid, tagID, nodePath, template, helper
 function createContentTypeAlias(nodePath) {
   let alias = "";
 
-  if (nodePath !== "") {
+  if (nodePath && nodePath.alias) {
     alias = nodePath.alias;
   } else {
     alias = `/` + slugify(node.title);
