@@ -44,7 +44,7 @@
     "js-yaml": "^4.1.0",
     "moment-timezone": "^0.5.45",
     "node-fetch": "^3.3.2",
-    "npm": "^10.5.0",
+    "npm": "^10.5.2",
     "npm-check-updates": "^16.14.15",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
