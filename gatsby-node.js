@@ -1102,6 +1102,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
           node.drupal_internal__nid,
           node.fields.tags,
           node.path,
+          node.title,
           pageTemplate,
           helpers
         );
@@ -1156,8 +1157,8 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
   }
 };
 
-function processPage(node, contextID, nodeNid, tagID, nodePath, template, helpers) {
-  let alias = createContentTypeAlias(nodePath);
+function processPage(node, contextID, nodeNid, tagID, nodePath, nodeTitle, template, helpers) {
+  let alias = createContentTypeAlias(nodePath, nodeTitle);
 
   helpers.createPage({
     path: alias,
@@ -1172,13 +1173,13 @@ function processPage(node, contextID, nodeNid, tagID, nodePath, template, helper
 }
 
 // use for content types
-function createContentTypeAlias(nodePath) {
+function createContentTypeAlias(nodePath, nodeTitle) {
   let alias = "";
 
   if (nodePath && nodePath.alias) {
     alias = nodePath.alias;
   } else {
-    alias = `/` + slugify(node.title);
+    alias = `/` + slugify(nodeTitle);
   }
   return alias;
 }
