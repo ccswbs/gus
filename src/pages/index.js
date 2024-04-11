@@ -16,46 +16,26 @@ function createLink(gatsbyID, gatsbyPageData, nodeAlias, nodeTitle) {
 const IndexPage = ({ data }) => {
   const count = data.allSitePage.totalCount;
   const gatsbyPageData = data.allSitePage.edges;
-
-  const pageTags = [];
-  const pubPages = [];
-  const unpubPages = [];
-  const pubPrograms = [];
-  const unpubPrograms = [];
   const pages = data.allNodePage.edges;
   const programs = data.programs.edges;
   const tags = data.tags.edges;
-
-  let pubPagesUntagged = [];
-  let unpubPagesUntagged = [];
-
   let accordionData = data.accordion;
+  let pageTags, pubPages, unpubPages, pubPrograms, unpubPrograms;
 
   // Fetch tags used on pages
-  for (let i = 0; i < tags.length; i++) {
-    if (tags[i].node?.relationships?.node__page?.length > 0) {
-      pageTags.push(tags[i]);
-    }
-  }
+  pageTags = tags.filter((tag) => tag.node?.relationships?.node__page?.length > 0);
+
   // Sort pages into pubbed vs unpubbed
-  for (let i = 0; i < pages.length; i++) {
-    if (pages[i].node.status === true) {
-      pubPages.push(pages[i]);
-    } else {
-      unpubPages.push(pages[i]);
-    }
-  }
+  pubPages = pages.filter((page) => page.node.status === true);
+  unpubPages = pages.filter((page) => page.node.status !== true);
+
   // Sort programs into pubbed vs unpubbed
-  for (let i = 0; i < programs.length; i++) {
-    if (programs[i].node.status === true) {
-      pubPrograms.push(programs[i]);
-    } else {
-      unpubPrograms.push(programs[i]);
-    }
-  }
+  pubPrograms = programs.filter((program) => program.node.status === true);
+  unpubPrograms = programs.filter((program) => program.node.status !== true);
+
   // Collect untagged pages
-  pubPagesUntagged = pubPages.filter((page) => page.node.relationships.field_tags.length === 0);
-  unpubPagesUntagged = unpubPages.filter((page) => page.node.relationships.field_tags.length === 0);
+  let pubPagesUntagged = pubPages.filter((page) => page.node.relationships.field_tags.length === 0);
+  let unpubPagesUntagged = unpubPages.filter((page) => page.node.relationships.field_tags.length === 0);
 
   return (
     <Layout>
