@@ -3,7 +3,20 @@ import Layout from 'components/layout';
 import React from 'react';
 import Seo from 'components/seo';
 
+// Check if path alias from Drupal exists. If not, find and use the alias created by Gatsby
+function createLink(gatsbyID, gatsbyPageData, nodeAlias, nodeTitle) {
+    let linkPath = nodeAlias;
+    if (!linkPath) {
+        const pagePath = gatsbyPageData.find(path => gatsbyID === path.node.pageContext.id);
+        linkPath = pagePath ? pagePath.node.path : null;
+    }
+    return linkPath ? <Link to={linkPath}>{nodeTitle}</Link> : null;
+}
+
 const IndexPage = ({ data }) => {
+
+    const count = data.allSitePage.totalCount;
+    const gatsbyPageData = data.allSitePage.edges;
 
     const pageTags = [];    
     const pubPages = [];
@@ -16,7 +29,7 @@ const IndexPage = ({ data }) => {
 
     let pubPagesUntagged = [];
     let unpubPagesUntagged = [];
-
+    
     let accordionData = data.accordion;
     
     // Fetch tags used on pages
@@ -77,7 +90,7 @@ const IndexPage = ({ data }) => {
               <p> If you are new to the Content Hub and your tags are not yet in our system, please contact the CCS team to have them added. Once it's added, you can create more pages and assign that tag without the help of CCS.</p>
               <h2>Want to quickly find your page?</h2>
               <p>"Control+F" (or "Command+F" on a Mac) is the keyboard shortcut for the Find command. While on this webpage, press the Ctrl key and the F key at the same time to bring up a search box in the top right corner of the screen.</p>
-
+                <p>There are {count} webpages in the Content Hub at this time.</p>
               
               <h2 id="published">Published Content</h2>
               <h3>Basic Pages</h3>
@@ -93,7 +106,7 @@ const IndexPage = ({ data }) => {
                     <p>Total pages: <strong>{taggedPagesPubbed.length}</strong></p>
                       <ul className="three-col-md">
                         {taggedPagesPubbed.map((taggedPage, index) => (
-                            <li key={`tagged-${index}`}><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
+                            <li key={`tagged-${index}`}>{createLink(taggedPage.id, gatsbyPageData, taggedPage.path.alias, taggedPage.title)}</li>
                         ))}
                       </ul>
                   </React.Fragment>)
@@ -103,7 +116,7 @@ const IndexPage = ({ data }) => {
               <p>Total: <strong>{pubPagesUntagged.length}</strong></p>
               <ul className="three-col-md">
                   {pubPagesUntagged.map((page) => (
-                      <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
+                      <li key={page.node.drupal_id}>{createLink(page.node.id, gatsbyPageData, page.node.path.alias, page.node.title)}</li>
                   ))}
               </ul>
 
@@ -129,21 +142,22 @@ const IndexPage = ({ data }) => {
                   <p>Total: <strong>{taggedPagesUnpubbed.length}</strong></p>
                   <ul className="three-col-md">
                     {taggedPagesUnpubbed.map((taggedPage, index) => (
-                      <li key={`tagged-${index}`}><Link to={taggedPage.path.alias}>{taggedPage.title}</Link></li>
+                      <li key={`tagged-${index}`}>{createLink(taggedPage.id, gatsbyPageData, taggedPage.path.alias, taggedPage.title)}</li>
                     ))}
                   </ul>
                 </React.Fragment>)
               })}
               
               {unpubPagesUntagged.length > 0 && <>
-              <h4>Untagged Pages</h4>
-              <p>Total: <strong>{unpubPagesUntagged.length}</strong></p>
-              <ul className="three-col-md">
-                  {unpubPagesUntagged.map((page) => (
-                      <li key={page.node.drupal_id}><Link to={page.node.path.alias}>{page.node.title}</Link></li>
-                  ))}
-              </ul>
-              </>}              
+                <h4>Untagged Pages</h4>
+                <p>Total: <strong>{unpubPagesUntagged.length}</strong></p>
+                <ul className="three-col-md">
+                    {unpubPagesUntagged.map((page) => (
+                      <li key={page.node.drupal_id}>{createLink(page.node.id, gatsbyPageData, page.node.path.alias, page.node.title)}</li>
+                    ))}
+                </ul>
+            </>}
+             
                             
               {unpubPrograms.length > 0 && <>
                 <h3>Programs</h3>
@@ -171,11 +185,21 @@ export const query = graphql`{
       content
     }
   }
+  allSitePage {
+    totalCount
+    edges {
+      node {
+        pageContext
+        path
+      }
+    }
+  }
   allNodePage(sort: {title: ASC}) {
     edges {
       node {
         title
         drupal_id
+        id
         path {
           alias
         }
