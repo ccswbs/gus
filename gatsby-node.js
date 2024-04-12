@@ -960,10 +960,10 @@ exports.onCreateNode = ({ node, createNodeId, actions }) => {
     if (typeof node.body !== "undefined" && node.body !== null) {
       content = `${node.body.processed}`;
     } else if (typeof node.description !== "undefined" && node.description !== null) {
-    /*    - return description of taxonomy */
+      /*    - return description of taxonomy */
       content = `${node.description.processed}`;
     } else {
-    /*    - set default content */
+      /*    - set default content */
       content = "";
     }
     createNodeField({
@@ -988,7 +988,6 @@ exports.onCreateWebpackConfig = (helper) => {
 exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
   // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
   const pageTemplate = path.resolve("./src/templates/page.js");
-  // const articleTemplate = path.resolve('./src/templates/article-page.js');
   const programTemplate = path.resolve("./src/templates/program-page.js");
   const { createRedirect } = actions;
 
@@ -1027,11 +1026,11 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     return data;
   });
 
-  // INSTRUCTION: Query for menu and page template content here
+  // INSTRUCTION: Query for page template content here
 
   const result = await graphql(`
     {
-      pages: allNodePage {
+      pages: allNodePage(filter: { path: { alias: { ne: null } }, moderation_state: { ne: "archived" } }) {
         edges {
           node {
             id
@@ -1047,20 +1046,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
           }
         }
       }
-      articles: allNodeArticle {
-        edges {
-          node {
-            id
-            drupal_id
-            drupal_internal__nid
-            title
-            path {
-              alias
-            }
-          }
-        }
-      }
-      programs: allNodeProgram {
+      programs: allNodeProgram(filter: { path: { alias: { ne: null } }, moderation_state: { ne: "archived" } }) {
         edges {
           node {
             title
@@ -1108,20 +1094,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         );
       });
     }
-
-    /*         // process article nodes
-        if (result.data.articles !== undefined) {
-            const articles = result.data.articles.edges;
-            articles.forEach(( { node }, index) => {
-                aliases[node.drupal_internal__nid] = processPage(
-                    node,
-                    node.id,
-                    node.path,
-                    articleTemplate,
-                    helpers
-                );
-            })
-        } */
 
     // process program nodes
     if (result.data.programs !== undefined) {
