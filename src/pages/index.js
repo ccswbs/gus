@@ -3,8 +3,6 @@ import Layout from "components/layout";
 import React from "react";
 import Seo from "components/seo";
 
-//Trigger build
-
 // Check if path alias from Drupal exists. If not, find and use the alias created by Gatsby
 function createLink(gatsbyID, gatsbyPageData, nodeAlias, nodeTitle) {
   let linkPath = nodeAlias;
