@@ -1133,6 +1133,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
           node.drupal_internal__nid,
           null,
           node.path,
+          node.title,
           programTemplate,
           helpers
         );
