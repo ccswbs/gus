@@ -66,7 +66,7 @@ module.exports = {
         baseUrl: process.env.DRUPAL_BASEURL,
         apiBase: process.env.DRUPAL_APIBASE,
         headers: {
-          'api-key': process.env.API_KEY,
+          'api-key': process.env.NODE_ENV === 'production' ? process.env.API_KEY_PROD : process.env.API_KEY
         },
         fastBuilds: process.env.FASTBUILDS || true,
         skipFileDownloads: true,
