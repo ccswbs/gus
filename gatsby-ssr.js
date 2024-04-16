@@ -1,17 +1,10 @@
 import React from "react";
 
-const wcVersion = process.env.UOFG_WC_VERSION || "1.x.x";
-const wcJS = `https://unpkg.com/@uoguelph/web-components@${wcVersion}/dist/uofg-web-components/uofg-web-components.esm.js`;
-const wcCSS = `https://unpkg.com/@uoguelph/web-components@${wcVersion}/dist/uofg-web-components/uofg-web-components.css`;
+const CDN_BASE = process.env.UOFG_WC_CDN_BASE_URL?.trim() || "https://cdn.jsdelivr.net/npm";
+const UOFG_WEB_COMPONENTS_BASE = `@uoguelph/web-components@${process.env.UOFG_WC_VERSION?.trim() || "1.x.x"}/dist/uofg-web-components`;
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
-    <script
-      key="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
-      src="https://cdn.bc0a.com/autopilot/f00000000209359/autopilot_sdk.js"
-    />,
-    <script type="module" src={wcJS} key={wcJS} />,
-    <link rel="stylesheet" href={wcCSS} key={wcCSS} />,
     <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" />,
     <link rel="preconnect" href="https://fonts.gstatic.com" key="https://fonts.gstatic.com" crossOrigin="anonymous" />,
     <link
@@ -20,12 +13,21 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       rel="stylesheet"
     />,
     <link
+      rel="stylesheet"
+      href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
+      key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
+    />,
+    <script
+      type="module"
+      src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
+      key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
+    ></script>,
+    <link
       key="https://www.uoguelph.ca/css/UofG-styles-dist.css"
       rel="stylesheet"
       href="https://www.uoguelph.ca/css/UofG-styles-dist.css"
     />,
   ]);
-
   setPostBodyComponents([
     <script
       key="https://kit.fontawesome.com/7993323d0c.js"
