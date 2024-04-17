@@ -208,15 +208,6 @@ export const query = graphql`
         content
       }
     }
-    allSitePage {
-      totalCount
-      edges {
-        node {
-          pageContext
-          path
-        }
-      }
-    }
     pubPages: allNodePage(filter: { moderation_state: { eq: "published" } }, sort: { title: ASC }) {
       edges {
         node {
