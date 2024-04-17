@@ -84,7 +84,7 @@ const IndexPage = ({ data }) => {
 
             {pageTags.map((tag) => {
               const taggedPages = tag.node.relationships.node__page;
-              const taggedPagesPubbed = taggedPages.filter((page) => page.status === true);
+              const taggedPagesPubbed = taggedPages.filter((page) => page.moderation_state === "published");
               taggedPagesPubbed.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0));
               return (
                 taggedPagesPubbed.length > 0 && (
@@ -138,7 +138,7 @@ const IndexPage = ({ data }) => {
             {unpubPages.length > 0 && <h3>Basic Pages ({unpubPages.length} total)</h3>}
             {pageTags.map((tag) => {
               const taggedPages = tag.node.relationships.node__page;
-              const taggedPagesUnpubbed = taggedPages.filter((page) => page.status === false);
+              const taggedPagesUnpubbed = taggedPages.filter((page) => page.moderation_state === "draft");
               taggedPagesUnpubbed.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0));
               return (
                 taggedPagesUnpubbed.length > 0 && (
@@ -236,7 +236,6 @@ export const query = graphql`
               }
             }
           }
-          status
         }
       }
     }
@@ -259,7 +258,6 @@ export const query = graphql`
               }
             }
           }
-          status
         }
       }
     }
@@ -272,7 +270,6 @@ export const query = graphql`
           path {
             alias
           }
-          status
         }
       }
     }
@@ -285,7 +282,6 @@ export const query = graphql`
           path {
             alias
           }
-          status
         }
       }
     }
@@ -299,7 +295,7 @@ export const query = graphql`
             }
             relationships {
               node__page {
-                status
+                moderation_state
                 title
                 path {
                   alias
@@ -314,7 +310,7 @@ export const query = graphql`
             }
             relationships {
               node__page {
-                status
+                moderation_state
                 title
                 path {
                   alias
