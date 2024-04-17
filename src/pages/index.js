@@ -3,35 +3,18 @@ import Layout from "components/layout";
 import React from "react";
 import Seo from "components/seo";
 
-// Check if path alias from Drupal exists. If not, find and use the alias created by Gatsby
-function createLink(gatsbyID, gatsbyPageData, nodeAlias, nodeTitle) {
-  let linkPath = nodeAlias;
-  if (!linkPath) {
-    const pagePath = gatsbyPageData.find((path) => gatsbyID === path.node.pageContext.id);
-    linkPath = pagePath ? pagePath.node.path : null;
-  }
-  return linkPath ? <Link to={linkPath}>{nodeTitle}</Link> : null;
-}
-
 const IndexPage = ({ data }) => {
-  const count = data.allSitePage.totalCount;
-  const gatsbyPageData = data.allSitePage.edges;
-  const pages = data.allNodePage.edges;
-  const programs = data.programs.edges;
+  const accordionData = data.accordion;
+  const pubPages = data.pubPages.edges;
+  const unpubPages = data.unpubPages.edges;
+  const pubPrograms = data.pubPrograms.edges;
+  const unpubPrograms = data.unpubPrograms.edges;
   const tags = data.tags.edges;
-  let accordionData = data.accordion;
-  let pageTags, pubPages, unpubPages, pubPrograms, unpubPrograms;
+
+  let pageTags;
 
   // Fetch tags used on pages
   pageTags = tags.filter((tag) => tag.node?.relationships?.node__page?.length > 0);
-
-  // Sort pages into pubbed vs unpubbed
-  pubPages = pages.filter((page) => page.node.status === true);
-  unpubPages = pages.filter((page) => page.node.status !== true);
-
-  // Sort programs into pubbed vs unpubbed
-  pubPrograms = programs.filter((program) => program.node.status === true);
-  unpubPrograms = programs.filter((program) => program.node.status !== true);
 
   // Collect untagged pages
   let pubPagesUntagged = pubPages.filter((page) => page.node.relationships.field_tags.length === 0);
@@ -86,7 +69,6 @@ const IndexPage = ({ data }) => {
             )}
 
             <p>
-              {" "}
               If you are new to the Content Hub and your tags are not yet in our system, please contact the CCS team to
               have them added. Once it's added, you can create more pages and assign that tag without the help of CCS.
             </p>
@@ -96,10 +78,9 @@ const IndexPage = ({ data }) => {
               webpage, press the Ctrl key and the F key at the same time to bring up a search box in the top right
               corner of the screen.
             </p>
-            <p>There are {count} webpages in the Content Hub at this time.</p>
 
             <h2 id="published">Published Content</h2>
-            <h3>Basic Pages</h3>
+            <h3>Basic Pages ({pubPages.length} total)</h3>
 
             {pageTags.map((tag) => {
               const taggedPages = tag.node.relationships.node__page;
@@ -118,7 +99,7 @@ const IndexPage = ({ data }) => {
                     <ul className="three-col-md">
                       {taggedPagesPubbed.map((taggedPage, index) => (
                         <li key={`tagged-${index}`}>
-                          {createLink(taggedPage.id, gatsbyPageData, taggedPage.path.alias, taggedPage.title)}
+                          <Link to={taggedPage.path.alias}>{taggedPage.title}</Link>
                         </li>
                       ))}
                     </ul>
@@ -134,7 +115,7 @@ const IndexPage = ({ data }) => {
             <ul className="three-col-md">
               {pubPagesUntagged.map((page) => (
                 <li key={page.node.drupal_id}>
-                  {createLink(page.node.id, gatsbyPageData, page.node.path.alias, page.node.title)}
+                  <Link to={page.node.path.alias}>{page.node.title}</Link>
                 </li>
               ))}
             </ul>
@@ -154,7 +135,7 @@ const IndexPage = ({ data }) => {
             <h2 id="unpublished">Unpublished Content</h2>
             <p>Unpublished pages and programs are only visible on preview and test sites.</p>
 
-            {unpubPages.length > 0 && <h3>Basic Pages</h3>}
+            {unpubPages.length > 0 && <h3>Basic Pages ({unpubPages.length} total)</h3>}
             {pageTags.map((tag) => {
               const taggedPages = tag.node.relationships.node__page;
               const taggedPagesUnpubbed = taggedPages.filter((page) => page.status === false);
@@ -167,9 +148,9 @@ const IndexPage = ({ data }) => {
                       Total: <strong>{taggedPagesUnpubbed.length}</strong>
                     </p>
                     <ul className="three-col-md">
-                      {taggedPagesUnpubbed.map((taggedPage, index) => (
+                      {taggedPagesUnpubbed.map((page, index) => (
                         <li key={`tagged-${index}`}>
-                          {createLink(taggedPage.id, gatsbyPageData, taggedPage.path.alias, taggedPage.title)}
+                          <Link to={page.path.alias}>{page.title}</Link>
                         </li>
                       ))}
                     </ul>
@@ -187,7 +168,7 @@ const IndexPage = ({ data }) => {
                 <ul className="three-col-md">
                   {unpubPagesUntagged.map((page) => (
                     <li key={page.node.drupal_id}>
-                      {createLink(page.node.id, gatsbyPageData, page.node.path.alias, page.node.title)}
+                      <Link to={page.node.path.alias}>{page.node.title}</Link>
                     </li>
                   ))}
                 </ul>
@@ -236,7 +217,7 @@ export const query = graphql`
         }
       }
     }
-    allNodePage(sort: { title: ASC }) {
+    pubPages: allNodePage(filter: { moderation_state: { eq: "published" } }, sort: { title: ASC }) {
       edges {
         node {
           title
@@ -259,7 +240,43 @@ export const query = graphql`
         }
       }
     }
-    programs: allNodeProgram(sort: { title: ASC }) {
+    unpubPages: allNodePage(filter: { moderation_state: { eq: "draft" } }, sort: { title: ASC }) {
+      edges {
+        node {
+          title
+          drupal_id
+          id
+          path {
+            alias
+          }
+          relationships {
+            field_tags {
+              __typename
+              ... on TaxonomyInterface {
+                drupal_id
+                id
+                name
+              }
+            }
+          }
+          status
+        }
+      }
+    }
+    pubPrograms: allNodeProgram(filter: { moderation_state: { eq: "published" } }, sort: { title: ASC }) {
+      edges {
+        node {
+          drupal_id
+          drupal_internal__nid
+          title
+          path {
+            alias
+          }
+          status
+        }
+      }
+    }
+    unpubPrograms: allNodeProgram(filter: { moderation_state: { eq: "draft" } }, sort: { title: ASC }) {
       edges {
         node {
           drupal_id
