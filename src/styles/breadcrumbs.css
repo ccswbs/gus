@@ -1,3 +1,73 @@
 .breadcrumb-right-tag .breadcrumb-item:last-child  {
     max-width: none !important;
 }
+
+.gus-breadcrumbs {
+    font-size: 1.5rem !important;
+    line-height:2.2rem !important;
+    color: #0b0c0c;
+    width: 100%;
+    height: 4.2rem;
+    position:relative;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+.gus-breadcrumbs a {
+    color:#0b0c0c;
+    text-decoration: none;
+}
+.gus-breadcrumbs a:hover {
+    color:#0b0c0c;
+    text-decoration: underline;
+}
+  @media (min-width: 40.0625em) {
+    .gus-breadcrumbs {
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+  }
+  
+  .gus-breadcrumbs__list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  .gus-breadcrumbs__list::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  
+  .gus-breadcrumbs__list-item {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 5px;
+    margin-left: 0.625em;
+    padding-left: 0.9784375em;
+    float: left;
+  }
+  .gus-breadcrumbs__list-item::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -0.206875em;
+    width: 0.4375em;
+    height: 0.4375em;
+    margin: auto 0;
+    transform: rotate(45deg);
+    border: solid;
+    border-width: 1px 1px 0 0;
+    border-color: #505a5f;
+  }
+ 
+  .gus-breadcrumbs__list-item:first-child {
+    margin-left: 0;
+    padding-left: 0;
+  }
+  .gus-breadcrumbs__list-item:first-child::before {
+    content: none;
+    display: none;
+  }
+  

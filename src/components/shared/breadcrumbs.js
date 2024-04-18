@@ -89,31 +89,56 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
         }
         
         return (<>
-            <div className="breadcrumbs loaded">
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12">
-                            <div className="site-breadcrumbs">          
-                            <ol className="breadcrumb breadcrumb-right-tag">                                
-                                <li key={homeCrumbURL + `home`} className="breadcrumb-item">                                    
-                                    <a href={homeCrumbURL}>
-                                        <i aria-hidden="true" className="fa-sharp fa-light fa-home"></i><span className="visually-hidden">{homeCrumb}</span>
-                                    </a>
-                                </li>
-                                {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 
-                                    <li key={topCrumbURL} className="breadcrumb-item"><Link to={topCrumbURL}>{topCrumb}</Link></li>}
-                                {midCrumbs && midCrumbs.map(midCrumb => {
-                                    return <><li key={midCrumb.node.link.url + `mid`} className="breadcrumb-item">
-                                            <Link to={midCrumb.node.link.url}>{midCrumb.node.title}</Link>
-                                    </li></>
-                                })}
-                                <li key={endCrumb + `end`} className="breadcrumb-item">{endCrumb ? endCrumb : pageTitle}</li>                           
-                            </ol>
+                            <div className='gus-breadcrumbs gus-breadcrumbs--collapse-on-mobile'>
+                                <ol className="gus-breadcrumbs__list">                                
+                                    <li key={homeCrumbURL + `home`} className="gus-breadcrumbs__list-item">                                    
+                                        <a href={homeCrumbURL}>
+                                            <i aria-hidden="true" className="fa-sharp fa-light fa-home gus-breadcrumb__link"></i><span className="visually-hidden">{homeCrumb}</span>
+                                        </a>
+                                    </li>
+                                    {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 
+                                        <li key={topCrumbURL} className="gus-breadcrumbs__list-item"><Link to={topCrumbURL}>{topCrumb}</Link></li>}
+                                    {midCrumbs && midCrumbs.map(midCrumb => {
+                                        return <><li key={midCrumb.node.link.url + `mid`} className="gus-breadcrumbs__list-item">
+                                                <Link to={midCrumb.node.link.url}>{midCrumb.node.title}</Link>
+                                        </li></>
+                                    })}
+                                    <li key={endCrumb + `end`} className="gus-breadcrumbs__list-item active" aria-current="page">{endCrumb ? endCrumb : pageTitle}</li>                           
+                                </ol>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {/* <nav aria-label="breadcrumb">
+                <div className="breadcrumbs loaded">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <div className="site-breadcrumbs">          
+                                <ol className="breadcrumb breadcrumb-right-tag">                                
+                                    <li key={homeCrumbURL + `home`} className="breadcrumb-item">                                    
+                                        <a href={homeCrumbURL}>
+                                            <i aria-hidden="true" className="fa-sharp fa-light fa-home"></i><span className="visually-hidden">{homeCrumb}</span>
+                                        </a>
+                                    </li>
+                                    {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 
+                                        <li key={topCrumbURL} className="breadcrumb-item"><Link to={topCrumbURL}>{topCrumb}</Link></li>}
+                                    {midCrumbs && midCrumbs.map(midCrumb => {
+                                        return <><li key={midCrumb.node.link.url + `mid`} className="breadcrumb-item">
+                                                <Link to={midCrumb.node.link.url}>{midCrumb.node.title}</Link>
+                                        </li></>
+                                    })}
+                                    <li key={endCrumb + `end`} className="breadcrumb-item active" aria-current="page">{endCrumb ? endCrumb : pageTitle}</li>                           
+                                </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav> */}
         </>)        
     }
     return null;
