@@ -101,11 +101,20 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                                             </a>
                                         </li>
                                         {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 
-                                            <li key={topCrumbURL} className="gus-breadcrumbs__list-item"><Link to={topCrumbURL}>{topCrumb}</Link></li>}
+                                            <li key={topCrumbURL} className="gus-breadcrumbs__list-item">
+                                                <Link to={topCrumbURL}>{topCrumb}</Link>
+                                            </li>}
+
+                                        <li className="gus-breadcrumbs__list-item">
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">Click to expand</button>
+                                        </li>
+
                                         {midCrumbs && midCrumbs.map(midCrumb => {
-                                            return <><li key={midCrumb.node.link.url + `mid`} className="gus-breadcrumbs__list-item">
+                                            return <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                                                <li key={midCrumb.node.link.url + `mid`} className="gus-breadcrumbs__list-item">
                                                     <Link to={midCrumb.node.link.url}>{midCrumb.node.title}</Link>
-                                            </li></>
+                                                </li>
+                                            </div>
                                         })}
                                         <li key={endCrumb + `end`} className="gus-breadcrumbs__list-item active" aria-current="page">{endCrumb ? endCrumb : pageTitle}</li>                           
                                     </ol>
