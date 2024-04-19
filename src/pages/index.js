@@ -208,7 +208,10 @@ export const query = graphql`
         content
       }
     }
-    pubPages: allNodePage(filter: { moderation_state: { eq: "published" } }, sort: { title: ASC }) {
+    pubPages: allNodePage(
+      filter: { moderation_state: { eq: "published" }, path: { alias: { ne: null } } }
+      sort: { title: ASC }
+    ) {
       edges {
         node {
           title
@@ -230,7 +233,10 @@ export const query = graphql`
         }
       }
     }
-    unpubPages: allNodePage(filter: { moderation_state: { eq: "draft" } }, sort: { title: ASC }) {
+    unpubPages: allNodePage(
+      filter: { moderation_state: { eq: "draft" }, path: { alias: { ne: null } } }
+      sort: { title: ASC }
+    ) {
       edges {
         node {
           title
@@ -252,7 +258,10 @@ export const query = graphql`
         }
       }
     }
-    pubPrograms: allNodeProgram(filter: { moderation_state: { eq: "published" } }, sort: { title: ASC }) {
+    pubPrograms: allNodeProgram(
+      filter: { moderation_state: { eq: "published" }, path: { alias: { ne: null } } }
+      sort: { title: ASC }
+    ) {
       edges {
         node {
           drupal_id
@@ -264,7 +273,10 @@ export const query = graphql`
         }
       }
     }
-    unpubPrograms: allNodeProgram(filter: { moderation_state: { eq: "draft" } }, sort: { title: ASC }) {
+    unpubPrograms: allNodeProgram(
+      filter: { moderation_state: { eq: "draft" }, path: { alias: { ne: null } } }
+      sort: { title: ASC }
+    ) {
       edges {
         node {
           drupal_id
