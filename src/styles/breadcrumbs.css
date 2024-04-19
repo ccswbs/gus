@@ -9,7 +9,8 @@
     width: 100%;
     height: 4.2rem;
     position:relative;
-    margin-top: 0px;
+    margin-top: 10px;
+    margin-left: 5px;
     margin-bottom: 0px;
   }
 .gus-breadcrumbs a {
