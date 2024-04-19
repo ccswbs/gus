@@ -1,0 +1,11 @@
+[build.environment]
+NETLIFY_IMAGE_CDN = "true"
+
+[images]
+remote_images = [
+  "https://cdn.uoguelph.ca/.*",
+  "https://api.liveugconthub.uoguelph.dev/.*",
+  "https://api.testugconthub.uoguelph.dev/.*",
+  "https://api.devugconthub.uoguelph.dev/.*",
+  "https://.*.pantheonsite.io/.*"
+]
