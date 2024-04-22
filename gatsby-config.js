@@ -19,8 +19,8 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
 
 module.exports = {
   adapter: adapter({
-    excludeDatastoreFromEngineFunction: false,
-    imageCDN: false,
+    excludeDatastoreFromEngineFunction: process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE || true,
+    imageCDN: process.env.NETLIFY_IMAGE_CDN || true,
   }),
   assetPrefix: process.env.ASSET_PREFIX,
   siteMetadata: {
