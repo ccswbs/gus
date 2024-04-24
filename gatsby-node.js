@@ -63,14 +63,13 @@ field_name: [taxonomy_term__vocabulary_name] @link(from: "field_name___NODE")
 
 **/
 
-const path = require(`path`)
-const fs = require('fs');
-const yaml = require('js-yaml');
-const util = require('util');
+const path = require(`path`);
+const fs = require("fs");
+const yaml = require("js-yaml");
+const util = require("util");
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
-
-  const { createTypes } = actions
+  const { createTypes } = actions;
 
   const typeDefs = [
     `interface TaxonomyInterface implements Node {
@@ -917,98 +916,94 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
     }
     `,
-  ]
-  createTypes(typeDefs)
-}
+  ];
+  createTypes(typeDefs);
+};
 
 exports.onCreateNode = ({ node, createNodeId, actions }) => {
-    const { createNodeField } = actions
+  const { createNodeField } = actions;
 
-    // Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
-    // INSTRUCTION: If you've added a new content-type and it contains a field that references
-    // multiple vocabularies, then add it to the if statement
-    if (node.internal.type === `media__image` ||
-        node.internal.type === `node__article` ||
-        node.internal.type === `node__call_to_action` ||
-        node.internal.type === `node__career` ||
-        node.internal.type === `node__course` ||
-        node.internal.type === `node__custom_footer` ||
-        node.internal.type === `node__employer` ||
-        node.internal.type === `node__page` ||
-        node.internal.type === `node__testimonial`
-    ) {
+  // Handle nodes that point to multiple tag vocabularies and allows us to filter by that tag in our Gatsby template query
+  // INSTRUCTION: If you've added a new content-type and it contains a field that references
+  // multiple vocabularies, then add it to the if statement
+  if (
+    node.internal.type === `media__image` ||
+    node.internal.type === `node__article` ||
+    node.internal.type === `node__call_to_action` ||
+    node.internal.type === `node__career` ||
+    node.internal.type === `node__course` ||
+    node.internal.type === `node__custom_footer` ||
+    node.internal.type === `node__employer` ||
+    node.internal.type === `node__page` ||
+    node.internal.type === `node__testimonial`
+  ) {
     createNodeField({
-        node,
-        name: `tags`,
-        value: node.relationships.field_tags___NODE,
-        })
+      node,
+      name: `tags`,
+      value: node.relationships.field_tags___NODE,
+    });
+  }
+
+  // Handle nodes that require page aliases
+  // INSTRUCTION: If you've added a new content-type and need each node to generate a page
+  // then add it to the following if statement
+  if (
+    node.internal.type === `node__article` ||
+    node.internal.type === `node__page` ||
+    node.internal.type === `node__program`
+  ) {
+    /* Create page path */
+    const aliasID = createNodeId(`alias-${node.drupal_id}`);
+
+    // add  mapped alias node as a field
+    createNodeField({
+      node,
+      name: "alias",
+      value: aliasID,
+    });
+
+    /* Set content field for search */
+    /*    - return body of content */
+    if (typeof node.body !== "undefined" && node.body !== null) {
+      content = `${node.body.processed}`;
+    } else if (typeof node.description !== "undefined" && node.description !== null) {
+      /*    - return description of taxonomy */
+      content = `${node.description.processed}`;
+    } else {
+      /*    - set default content */
+      content = "";
     }
-
-    // Handle nodes that require page aliases
-    // INSTRUCTION: If you've added a new content-type and need each node to generate a page
-    // then add it to the following if statement
-    if (node.internal.type === `node__article` ||
-        node.internal.type === `node__page` ||
-        node.internal.type === `node__program` ) {
-
-        /* Create page path */
-        const aliasID = createNodeId(`alias-${node.drupal_id}`);
-
-        // add  mapped alias node as a field
-        createNodeField({
-            node,
-            name: "alias",
-            value: aliasID,
-        })
-
-        /* Set content field for search */
-        /*    - return body of content */
-        if (typeof node.body !== 'undefined' && node.body !== null) {
-            content = `${node.body.processed}`
-        }
-        /*    - return description of taxonomy */
-        else if (typeof node.description !== 'undefined' && node.description !== null) {
-            content = `${node.description.processed}`
-        }
-        /*    - set default content */
-        else {
-            content = ''
-        }
-        createNodeField({
-            node,
-            name: `content`,
-            value: content,
-        })
-    }
-}
+    createNodeField({
+      node,
+      name: `content`,
+      value: content,
+    });
+  }
+};
 
 // Suppress chunk out-of-order warnings
-exports.onCreateWebpackConfig = helper => {
-    const { actions, getConfig } = helper
-    const config = getConfig()
-    const miniCssExtractPlugin = config.plugins.find(
-        plugin => plugin.constructor.name === "MiniCssExtractPlugin"
-    )
-    if (miniCssExtractPlugin) {
-        miniCssExtractPlugin.options.ignoreOrder = true
-    }
-    actions.replaceWebpackConfig(config)
-}
+exports.onCreateWebpackConfig = (helper) => {
+  const { actions, getConfig } = helper;
+  const config = getConfig();
+  const miniCssExtractPlugin = config.plugins.find((plugin) => plugin.constructor.name === "MiniCssExtractPlugin");
+  if (miniCssExtractPlugin) {
+    miniCssExtractPlugin.options.ignoreOrder = true;
+  }
+  actions.replaceWebpackConfig(config);
+};
 
 exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
+  // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
+  const pageTemplate = path.resolve("./src/templates/page.js");
+  const programTemplate = path.resolve("./src/templates/program-page.js");
+  const { createRedirect } = actions;
 
-    // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
-    const pageTemplate = path.resolve('./src/templates/page.js');
-    // const articleTemplate = path.resolve('./src/templates/article-page.js');
-    const programTemplate = path.resolve('./src/templates/program-page.js');
-    const { createRedirect } = actions;
-    
-    const helpers = Object.assign({}, actions, {
-        createNodeId,
-    })
+  const helpers = Object.assign({}, actions, {
+    createNodeId,
+  });
 
-    // Query for redirects
-    const redirects = await graphql(`
+  // Query for redirects
+  const redirects = await graphql(`
     {
       allRedirectRedirect {
         edges {
@@ -1024,25 +1019,25 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         }
       }
     }
-  `).then(result => {
+  `).then((result) => {
     const data = [];
     if (!result.errors) {
       result.data.allRedirectRedirect.edges.forEach(({ node }) => {
-        const source_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, '/')
+        const source_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
         if (!(source_uri in data)) {
           data[source_uri] = [];
         }
         data[source_uri].push(node);
-      })
+      });
     }
     return data;
   });
 
-    // INSTRUCTION: Query for menu and page template content here
+  // INSTRUCTION: Query for page template content here
 
-    const result = await graphql(`
+  const result = await graphql(`
     {
-      pages: allNodePage {
+      pages: allNodePage(filter: { path: { alias: { ne: null } }, moderation_state: { ne: "archived" } }) {
         edges {
           node {
             id
@@ -1058,20 +1053,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
           }
         }
       }
-      articles: allNodeArticle {
-        edges {
-          node {
-            id
-            drupal_id
-            drupal_internal__nid
-            title
-            path {
-              alias
-            }
-          }
-        }
-      }
-      programs: allNodeProgram {
+      programs: allNodeProgram(filter: { path: { alias: { ne: null } }, moderation_state: { ne: "archived" } }) {
         edges {
           node {
             title
@@ -1090,125 +1072,112 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
           }
         }
       }
-
-
     }
-  `)
+  `);
 
-    if (result.errors) {
-        reporter.panicOnBuild('ERROR: Loading "createPages" query')
+  if (result.errors) {
+    reporter.panicOnBuild('ERROR: Loading "createPages" query');
+  }
+
+  if (result.data !== undefined) {
+    // INSTRUCTION: Create a page for each node by processing the results of your query here
+    // Each content type should have its own if statement code snippet
+
+    let aliases = {};
+
+    // process page nodes
+    if (result.data.pages !== undefined) {
+      const pages = result.data.pages.edges;
+      pages.forEach(({ node }, index) => {
+        aliases[node.drupal_internal__nid] = processPage(
+          node,
+          node.id,
+          node.drupal_internal__nid,
+          node.fields.tags,
+          node.path,
+          node.title,
+          pageTemplate,
+          helpers
+        );
+      });
     }
 
-    if (result.data !== undefined) {
-
-        // INSTRUCTION: Create a page for each node by processing the results of your query here
-        // Each content type should have its own if statement code snippet
-
-        let aliases = {};
-
-        // process page nodes
-        if (result.data.pages !== undefined) {
-            const pages = result.data.pages.edges;
-            pages.forEach(( { node }, index) => {
-                aliases[node.drupal_internal__nid] = processPage(
-                    node,
-                    node.id,
-                    node.drupal_internal__nid,
-                    node.fields.tags,
-                    node.path,
-                    pageTemplate,
-                    helpers
-                );
-            })
-        }
-
-/*         // process article nodes
-        if (result.data.articles !== undefined) {
-            const articles = result.data.articles.edges;
-            articles.forEach(( { node }, index) => {
-                aliases[node.drupal_internal__nid] = processPage(
-                    node,
-                    node.id,
-                    node.path,
-                    articleTemplate,
-                    helpers
-                );
-            })
-        } */
-
-        // process program nodes
-        if (result.data.programs !== undefined) {
-            const programs = result.data.programs.edges;
-            programs.forEach(( { node }, index) => {
-                aliases[node.drupal_internal__nid] = processPage(
-                    node,
-                    node.relationships.field_program_acronym.id,
-                    node.drupal_internal__nid,
-                    null,
-                    node.path,
-                    programTemplate,
-                    helpers
-                );
-            })
-        }
-
-        // REDIRECTS
-        Object.entries(aliases).forEach(([nodeID, alias]) => {
-          if (redirects[`/node/${nodeID}`]) {
-            redirects[`/node/${nodeID}`].forEach(redirect => {
-              const sourcePath = '/' + redirect.redirect_source.path;
-
-              createRedirect({ 
-                fromPath: sourcePath, 
-                toPath: alias, 
-                isPermanent: true,
-                status: redirect.status_code
-              });
-            })
-          }
-        })
+    // process program nodes
+    if (result.data.programs !== undefined) {
+      const programs = result.data.programs.edges;
+      programs.forEach(({ node }, index) => {
+        aliases[node.drupal_internal__nid] = processPage(
+          node,
+          node.relationships.field_program_acronym.id,
+          node.drupal_internal__nid,
+          null,
+          node.path,
+          node.title,
+          programTemplate,
+          helpers
+        );
+      });
     }
-}
 
-function processPage(node, contextID, nodeNid, tagID, nodePath, template, helpers) {
-    let alias = createContentTypeAlias(nodePath);
+    // REDIRECTS
+    Object.entries(aliases).forEach(([nodeID, alias]) => {
+      if (redirects[`/node/${nodeID}`]) {
+        redirects[`/node/${nodeID}`].forEach((redirect) => {
+          const sourcePath = "/" + redirect.redirect_source.path;
 
-    helpers.createPage({
-      path: alias,
-      component: template,
-      context: {
-        id: contextID,
-        nid: `entity:node/` + nodeNid,
-        tid: tagID,
-      },
-    })
-    return alias;
+          createRedirect({
+            fromPath: sourcePath,
+            toPath: alias,
+            isPermanent: true,
+            status: redirect.status_code,
+          });
+        });
+      }
+    });
+  }
+};
+
+function processPage(node, contextID, nodeNid, tagID, nodePath, nodeTitle, template, helpers) {
+  let alias = createContentTypeAlias(nodePath, nodeTitle);
+
+  helpers.createPage({
+    path: alias,
+    component: template,
+    context: {
+      id: contextID,
+      nid: `entity:node/` + nodeNid,
+      tid: tagID,
+    },
+  });
+  return alias;
 }
 
 // use for content types
-function createContentTypeAlias(nodePath) {
-    let alias = '';
+function createContentTypeAlias(nodePath, nodeTitle) {
+  let alias = "";
 
-    if (nodePath !== '') {
-        alias = nodePath.alias;
-    } else {
-        alias = `/` + slugify(node.title);
-    }
-    return alias;
+  if (nodePath && nodePath.alias) {
+    alias = nodePath.alias;
+  } else {
+    alias = `/` + slugify(nodeTitle);
+  }
+  return alias;
 }
 
 // Source: https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function slugify(string) {
-    const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
-    const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
-    const p = new RegExp(a.split('').join('|'), 'g')
+  const a = "àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;";
+  const b = "aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------";
+  const p = new RegExp(a.split("").join("|"), "g");
 
-    return string.toString().toLowerCase()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, '') // Trim - from end of text
+  return string
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(p, (c) => b.charAt(a.indexOf(c))) // Replace special characters
+    .replace(/&/g, "-and-") // Replace & with 'and'
+    .replace(/[^\w\-]+/g, "") // Remove all non-word characters
+    .replace(/\-\-+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/, "") // Trim - from start of text
+    .replace(/-+$/, ""); // Trim - from end of text
 }
