@@ -7,5 +7,5 @@ remote_images = [
   "https://api.liveugconthub.uoguelph.dev/.*",
   "https://api.testugconthub.uoguelph.dev/.*",
   "https://api.devugconthub.uoguelph.dev/.*",
-  "https://.*\.pantheonsite.io/.*"
+  "https://.*.pantheonsite.io/.*"
 ]
