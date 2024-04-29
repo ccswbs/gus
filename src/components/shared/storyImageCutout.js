@@ -171,7 +171,7 @@ export const query = graphql`
                 height: 600,
                 placeholder: BLURRED, 
                 layout: CONSTRAINED,
-                cropFocus: ENTROPY,
+                cropFocus: CENTER,
                 formats: [AUTO, WEBP],
               )
             }
