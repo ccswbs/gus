@@ -113,7 +113,7 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                             </div>
                         </div>
                     </div>
-                </nav>ß
+                </nav>
         </>)        
     }
     return null;
