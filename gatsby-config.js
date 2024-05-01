@@ -43,6 +43,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: metaConfig['GAtrackingID'],
+        cookieFlags: "Secure;SameSite=None",
       },
     },
     {
