@@ -40,13 +40,6 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-transformer-yaml`,
     {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: metaConfig['GAtrackingID'],
-        cookieFlags: "Secure;SameSite=None",
-      },
-    },
-    {
       resolve: `gatsby-plugin-google-tagmanager`,
       options: {
         id: "GTM-NRSSDKW",
