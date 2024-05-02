@@ -9,10 +9,11 @@ import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
 
 const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
+
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
-        
+
         { /**** Header and Title ****/ }
         { (imageData?.length > 0 || heroWidgets?.length > 0) &&
         <div className={imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
@@ -79,6 +80,9 @@ export const query = graphql`
             name
           }
         }
+        field_primary_navigation {
+          field_menu_machine_name
+        }
         field_widgets {
           ...FieldWidgetsFragment
         }
@@ -128,7 +132,7 @@ const PageTemplate = ({data}) => (
         widgets={data.nodePage.relationships.field_widgets}
         heroWidgets={(data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null)}
         footer={data.footer.edges}
-        menuName={data.menu?.menu_name}
+        menuName={data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name}
         domains={data.nodePage.field_domain_access}
     ></Page>
 )
