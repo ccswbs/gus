@@ -21,7 +21,7 @@
     color:#0b0c0c;
     text-decoration: underline;
 }
-  @media (min-width: 40.0625em) {
+  @media (min-width: 576px) {
     .gus-breadcrumbs {
       font-size: 1rem;
       line-height: 1.25;
