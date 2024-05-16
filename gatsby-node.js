@@ -1157,7 +1157,8 @@ function createContentTypeAlias(nodePath, nodeTitle) {
   let alias = "";
 
   if (nodePath && nodePath.alias) {
-    alias = nodePath.alias;
+    // Convert alias to lowercase
+    alias = nodePath.alias.toLowerCase();
   } else {
     alias = `/` + slugify(nodeTitle);
   }
