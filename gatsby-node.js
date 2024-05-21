@@ -1125,12 +1125,15 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         redirects[`/node/${nodeID}`].forEach((redirect) => {
           const sourcePath = "/" + redirect.redirect_source.path;
 
-          createRedirect({
-            fromPath: sourcePath,
-            toPath: alias,
-            isPermanent: true,
-            status: redirect.status_code,
-          });
+          // Skip if sourcePath and alias are the same except for letter case
+          if (sourcePath.toLowerCase() !== alias) {
+            createRedirect({
+              fromPath: sourcePath,
+              toPath: alias,
+              isPermanent: true,
+              status: redirect.status_code,
+            });
+          }
         });
       }
     });
