@@ -1125,12 +1125,15 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         redirects[`/node/${nodeID}`].forEach((redirect) => {
           const sourcePath = "/" + redirect.redirect_source.path;
 
-          createRedirect({
-            fromPath: sourcePath,
-            toPath: alias,
-            isPermanent: true,
-            status: redirect.status_code,
-          });
+          // Skip if sourcePath and alias are the same except for letter case
+          if (sourcePath.toLowerCase() !== alias) {
+            createRedirect({
+              fromPath: sourcePath,
+              toPath: alias,
+              isPermanent: true,
+              status: redirect.status_code,
+            });
+          }
         });
       }
     });
@@ -1157,7 +1160,8 @@ function createContentTypeAlias(nodePath, nodeTitle) {
   let alias = "";
 
   if (nodePath && nodePath.alias) {
-    alias = nodePath.alias;
+    // Convert alias to lowercase
+    alias = nodePath.alias.toLowerCase();
   } else {
     alias = `/` + slugify(nodeTitle);
   }
