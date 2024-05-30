@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useMemo, useRef } from "react"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 import Tab from "react-bootstrap/Tab"
@@ -9,7 +9,9 @@ import { slugify, ParseText } from "../../utils/ug-utils"
 
 const PageTabs = (props) => {
   const container = useRef(null)
-  const tabs = props.pageData?.relationships?.field_tabs ?? []
+  const tabs = useMemo(() => {
+    return props.pageData?.relationships?.field_tabs ?? []
+  }, [props.pageData?.relationships?.field_tabs])
   const [activeTab, setActiveTab] = useState(tabs[0]?.drupal_id ?? "")
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const PageTabs = (props) => {
 
       found && container.current?.scrollIntoView({ block: "start", inline: "nearest" })
     }
-  }, [])
+  }, [tabs])
 
   if (tabs.length <= 0) {
     return null
