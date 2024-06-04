@@ -345,7 +345,7 @@ const ProgramPage = ({ data, location }) => {
           <section className="row row-with-vspace site-content">
             <div className="col-md-12 content-area">
               {renderAdmissionRequirements()}
-              {renderTalkToStudent()}
+              {/****renderTalkToStudent()****/}
             </div>
           </section>
         </div>
