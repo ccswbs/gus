@@ -44,6 +44,7 @@ function renderProgramVariants(variantDataHeading, variantData) {
   }
 }
 
+/*
 function renderTalkToStudent() {
   return (
     <Row className="my-sm-5">
@@ -63,6 +64,7 @@ function renderTalkToStudent() {
     </Row>
   )
 }
+*/
 
 /* 4 cards - Admission Requirements, Scholarships, Tour our Campus, Have Questions */
 function renderAdmissionRequirements() {
