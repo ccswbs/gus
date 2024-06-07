@@ -29,7 +29,7 @@ const PageTabs = (props) => {
 
       found && container.current?.scrollIntoView({ block: "start", inline: "nearest" })
     }
-  }, [tabs])
+  }, [])
 
   if (tabs?.length <= 0) {
     return null
