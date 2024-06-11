@@ -21,6 +21,7 @@ const Layout = ({ children, date, menuName }) => (
       <DateModified date={date} />
     </main>
     <div className="be-ix-link-block"></div>
+    <uofg-back-to-top></uofg-back-to-top>
     <uofg-footer></uofg-footer>
   </>
 );
