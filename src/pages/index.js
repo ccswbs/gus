@@ -5,16 +5,21 @@ import Seo from "components/seo";
 
 const IndexPage = ({ data }) => {
   const accordionData = data.accordion;
-  const pubPages = data.pubPages.edges;
-  const unpubPages = data.unpubPages.edges;
-  const pubPrograms = data.pubPrograms.edges;
-  const unpubPrograms = data.unpubPrograms.edges;
   const tags = data.tags.edges;
-
+  let pubPages = data.pubPages.edges;
+  let unpubPages = data.unpubPages.edges;
+  let pubPrograms = data.pubPrograms.edges;
+  let unpubPrograms = data.unpubPrograms.edges;
   let pageTags;
 
   // Fetch tags used on pages
   pageTags = tags.filter((tag) => tag.node?.relationships?.node__page?.length > 0);
+
+  // BUG FIX: remove stray content with null aliases
+  pubPages = unpubPages.filter((page) => page.node.path.alias != null);
+  unpubPages = unpubPages.filter((page) => page.node.path.alias != null);
+  pubPrograms = pubPrograms.filter((program) => program.node.path.alias != null);
+  unpubPrograms = pubPrograms.filter((program) => program.node.path.alias != null);
 
   // Collect untagged pages
   let pubPagesUntagged = pubPages.filter((page) => page.node.relationships.field_tags.length === 0);
@@ -84,7 +89,9 @@ const IndexPage = ({ data }) => {
 
             {pageTags.map((tag) => {
               const taggedPages = tag.node.relationships.node__page;
-              const taggedPagesPubbed = taggedPages.filter((page) => page.moderation_state === "published");
+              const taggedPagesPubbed = taggedPages.filter(
+                (page) => page.moderation_state === "published" && page.path.alias != null
+              );
               taggedPagesPubbed.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0));
               return (
                 taggedPagesPubbed.length > 0 && (
@@ -138,7 +145,9 @@ const IndexPage = ({ data }) => {
             {unpubPages.length > 0 && <h3>Basic Pages ({unpubPages.length} total)</h3>}
             {pageTags.map((tag) => {
               const taggedPages = tag.node.relationships.node__page;
-              const taggedPagesUnpubbed = taggedPages.filter((page) => page.moderation_state === "draft");
+              const taggedPagesUnpubbed = taggedPages.filter(
+                (page) => page.moderation_state === "draft" && page.path.alias != null
+              );
               taggedPagesUnpubbed.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0));
               return (
                 taggedPagesUnpubbed.length > 0 && (
