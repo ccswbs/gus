@@ -12,8 +12,8 @@ import HeroVideo from "components/shared/heroVideo"
 import Testimonials from "components/shared/testimonial"
 import Variants from "components/shared/variants"
 import Widget from "components/shared/widget"
-import { Row, Col } from "react-bootstrap"
-import { StaticImage } from "gatsby-plugin-image"
+//import { Row, Col } from "react-bootstrap"
+//import { StaticImage } from "gatsby-plugin-image"
 import { sortLastModifiedDates } from "utils/ug-utils"
 import { graphql } from "gatsby"
 
@@ -44,6 +44,7 @@ function renderProgramVariants(variantDataHeading, variantData) {
   }
 }
 
+/*
 function renderTalkToStudent() {
   return (
     <Row className="my-sm-5">
@@ -63,6 +64,7 @@ function renderTalkToStudent() {
     </Row>
   )
 }
+*/
 
 /* 4 cards - Admission Requirements, Scholarships, Tour our Campus, Have Questions */
 function renderAdmissionRequirements() {
@@ -345,7 +347,7 @@ const ProgramPage = ({ data, location }) => {
           <section className="row row-with-vspace site-content">
             <div className="col-md-12 content-area">
               {renderAdmissionRequirements()}
-              {renderTalkToStudent()}
+              {/****renderTalkToStudent()****/}
             </div>
           </section>
         </div>
