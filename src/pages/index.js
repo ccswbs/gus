@@ -19,7 +19,7 @@ const IndexPage = ({ data }) => {
   pubPages = pubPages.filter((page) => page.node.path.alias != null);
   unpubPages = unpubPages.filter((page) => page.node.path.alias != null);
   pubPrograms = pubPrograms.filter((program) => program.node.path.alias != null);
-  unpubPrograms = pubPrograms.filter((program) => program.node.path.alias != null);
+  unpubPrograms = unpubPrograms.filter((program) => program.node.path.alias != null);
 
   // Collect untagged pages
   let pubPagesUntagged = pubPages.filter((page) => page.node.relationships.field_tags.length === 0);
