@@ -16,10 +16,10 @@ const IndexPage = ({ data }) => {
   pageTags = tags.filter((tag) => tag.node?.relationships?.node__page?.length > 0);
 
   // BUG FIX: remove stray content with null aliases
-  pubPages = unpubPages.filter((page) => page.node.path.alias != null);
+  pubPages = pubPages.filter((page) => page.node.path.alias != null);
   unpubPages = unpubPages.filter((page) => page.node.path.alias != null);
   pubPrograms = pubPrograms.filter((program) => program.node.path.alias != null);
-  unpubPrograms = pubPrograms.filter((program) => program.node.path.alias != null);
+  unpubPrograms = unpubPrograms.filter((program) => program.node.path.alias != null);
 
   // Collect untagged pages
   let pubPagesUntagged = pubPages.filter((page) => page.node.relationships.field_tags.length === 0);
