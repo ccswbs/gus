@@ -120,9 +120,11 @@ function MediaText (props) {
                 break;
                 case "large":
                     wrapperCol = "col-xs-12 border-0 card mb-4";
+                    textColHeight = "h-100";
                 break;
                 default:
                     wrapperCol = "col-sm border-0 card mb-4";
+                    textColHeight = "h-100";
                 break;
             }
         }
