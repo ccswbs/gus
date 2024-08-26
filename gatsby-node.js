@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Implement Gatsby's Node APIs in this file.
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
@@ -304,6 +304,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       title: String
       body: BodyFieldWithSummary
       field_hero_image: ImageField
+      field_news_author: String
+      field_lead_image: String
       relationships: node__articleRelationships
       fields: node__articleFields
       path: AliasPath
@@ -311,6 +313,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type node__articleRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
       field_news_category: [taxonomy_term__news_category] @link(from: "field_news_category___NODE")
+      field_news_topics: [taxonomy_term__news_topics] @link(from: "field_news_topics___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
     }
     type node__articleFields implements Node {
@@ -830,6 +833,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       name: String
       field_menu_machine_name: String
     }
+    type taxonomy_term__news_topics implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String
+      description: TaxonomyDescription
+    }
     type taxonomy_term__programs implements Node & TaxonomyInterface {
       drupal_id: String
       drupal_internal__tid: Int
@@ -995,6 +1004,7 @@ exports.onCreateWebpackConfig = (helper) => {
 exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
   // INSTRUCTION: Add new page templates here (e.g. you may want a new template for a new content type)
   const pageTemplate = path.resolve("./src/templates/page.js");
+  const articleTemplate = path.resolve('./src/templates/article-page.js');
   const programTemplate = path.resolve("./src/templates/program-page.js");
   const { createRedirect } = actions;
 
@@ -1038,6 +1048,22 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
   const result = await graphql(`
     {
       pages: allNodePage(filter: { path: { alias: { ne: null } }, moderation_state: { ne: "archived" } }) {
+        edges {
+          node {
+            id
+            drupal_id
+            drupal_internal__nid
+            title
+            fields {
+              tags
+            }
+            path {
+              alias
+            }
+          }
+        }
+      }
+      articles: allNodeArticle {
         edges {
           node {
             id
@@ -1101,7 +1127,20 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         );
       });
     }
-
+    // process article nodes
+    if (result.data.articles !== undefined) {
+    const articles = result.data.articles.edges;
+    articles.forEach(( { node }, index) => {
+        aliases[node.drupal_internal__nid] = processNews(
+            node,
+            node.id,
+            node.drupal_internal__nid,
+            node.fields.tags,
+            articleTemplate,
+            helpers
+        );
+    })
+  }
     // process program nodes
     if (result.data.programs !== undefined) {
       const programs = result.data.programs.edges;
@@ -1154,7 +1193,25 @@ function processPage(node, contextID, nodeNid, tagID, nodePath, nodeTitle, templ
   });
   return alias;
 }
+function processNews(node, contextID, nodeNid, tagID, template, helpers) {
+  let alias = createNewsContentTypeAlias(node);
 
+ helpers.createPage({
+   path: alias,
+   component: template,
+   context: {
+     id: contextID,
+     nid: `entity:node/` + nodeNid,
+     tid: tagID,
+   },
+ })
+ return alias;
+}
+function createNewsContentTypeAlias(node) {
+let  alias = `/news/` + slugify(node.title);
+console.log(alias, "news alias");
+return alias;
+}
 // use for content types
 function createContentTypeAlias(nodePath, nodeTitle) {
   let alias = "";
