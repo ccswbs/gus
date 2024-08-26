@@ -14,21 +14,20 @@ function contentExists(content) {
     }
 	return false;
 }
+//**** for listing topics as buttions removed for now - but want to mainting the code here for future use. Along with the call below ****/
+// function ListAsButtons (props) {
+// 	let ButtonToDisplay = props
+// 	return (
+// 		<React.Fragment>
+// 			<span><a href="" className='btn btn-outline-info'>{ButtonToDisplay} </a>{" "}</span>
+// 		</React.Fragment>
+// 	)
+// }
 
-function ListAsButtons (props) {
-	let ButtonToDisplay = props
-	return (
-		<React.Fragment>
-			<span><a href="" className='btn btn-outline-info'>{ButtonToDisplay} </a>{" "}</span>
-		</React.Fragment>
-	)
-}
 const ArticlePage = ({data}) => {
-	console.log(data, "data")
 	const pageData = data.articles.edges[0].node;
 	const pageTitle = pageData.title;
-	const author = (contentExists(pageData.field_news_author))?pageData.field_news_author: null;
-	const displayDate = (contentExists(pageData.field_publish_date))? pageData.field_publish_date: null;
+	const displayDate = (contentExists(pageData.created))? pageData.created: null;
 	const updatedDate = (contentExists(pageData.changed))? pageData.changed: null;
 	const imageCredit = (contentExists(pageData.field_lead_image))? pageData.field_lead_image: null;
 	const body = (contentExists(pageData.body)) ? pageData.body.processed:``;
@@ -51,7 +50,6 @@ const ArticlePage = ({data}) => {
                 <div className="row site-content">
                     <div className="content-area">
 						<h1>{pageTitle}</h1>
-						<p>{author && <><strong>By </strong>{author}<br/></>}</p>
 						<div className="row">
 							<div className="col-md-9 col-12 col">
 								<div className ="clearfix">
@@ -60,14 +58,13 @@ const ArticlePage = ({data}) => {
 							</div>
 							<div className="col-md-3 col-12">
 								<p><strong>News Categories</strong></p>
-								{pageData.relationships.field_news_category.map (newsCategory =>{return ListAsButtons(newsCategory.name)} )}
+								{/* {pageData.relationships.field_news_category.map (newsCategory =>{return ListAsButtons(newsCategory.name)} )} */}
+								{pageData.relationships.field_news_category.map (newsCategory =>{return <div>{newsCategory.name}</div>} )}<br/>
 								<p>
 									{displayDate && <><strong>Posted </strong> {displayDate}</>}<br/>
 									{updatedDate && <><strong>Updated </strong>{updatedDate}</>}<br/>
 									{imageCredit && <><strong>Lead Image </strong>{imageCredit}</>}
 								</p>
-								<p><strong>News Topics</strong></p>
-								{pageData.relationships.field_news_topics.map (newsTopic => { return ListAsButtons(newsTopic.name)})}
 							</div>
 						</div>
                     </div>
@@ -83,9 +80,12 @@ const ArticlePage = ({data}) => {
 
 export default ArticlePage;
 
+// Note: the ", field_domain_access: {elemMatch: {drupal_internal__target_id: {eq: "api_ovc_uoguelph_dev"}}}" in the filter will be removed when the live site is cleaned up of all non-ovc news content
+//       This is to enable the removial of the ovc domain.
+
 export const query = graphql`
   query ($id: String, $tid: [String]) {
-	articles: allNodeArticle(filter: {id: {eq: $id}}) {
+	articles: allNodeArticle(filter: {id: {eq: $id}, field_domain_access: {elemMatch: {drupal_internal__target_id: {eq: "api_ovc_uoguelph_dev"}}}}) {
 		edges {
 			node {
 				drupal_id
@@ -95,21 +95,15 @@ export const query = graphql`
 				}
 				field_news_author
 				field_lead_image
-				field_publish_date (formatString: "MMMM DD, YYYY")
+				created (formatString: "MMMM DD, YYYY")
 				changed (formatString: "MMMM DD, YYYY")
 				relationships {
 					field_news_category {
 					  name
-					  relationships {
-						parent {
-						  name
-						}
-					  }
-					}
-					field_news_topics {
-						name
 					}
 				}
+				field_domain_access {
+					drupal_internal__target_id}
 		  	}
 		}
 	}
