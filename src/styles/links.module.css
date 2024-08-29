@@ -62,4 +62,7 @@
   .outer div.inner {
     grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
   }
+  .outer div.inner.twoOrLess {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 }
