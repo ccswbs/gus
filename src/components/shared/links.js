@@ -44,7 +44,7 @@ function ListLink({ title, url }) {
 function Links({ links = [], title, headingLevel, description }) {
   const isGrid = links?.some((item) => item.image);
   const Heading = getHeadingLevel(headingLevel);
-  const numColumns = links.length;
+  const numLinks = links.length;
   // const LinkHeading = title ? getHeadingLevel(headingLevel, 1) : "p";
   const LinksInner = isGrid ? "div" : "ul";
 
@@ -53,7 +53,7 @@ function Links({ links = [], title, headingLevel, description }) {
       {title && <Heading>{title}</Heading>}
       {description && <p>{description}</p>}
 
-      <LinksInner className={`${styles.inner} ${(numColumns < 3) && styles.twoOrLess}`}>
+      <LinksInner className={`${styles.inner} ${(numLinks < 3) && styles.twoOrLess}`}>
         {links.map((link) => {
           const { id, title, url, image } = link;
 
