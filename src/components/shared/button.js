@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "gatsby";
 import { fontAwesomeIconColour } from "utils/ug-utils";
-//import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 import classNames from "classnames";
 
 function buttonStyle(styleOfButton) {
