@@ -60,9 +60,9 @@
 
 @media (min-width: 768px) {
   .outer div.inner {
-    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
-  }
-  .outer div.inner.twoOrLess {
     grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  :global(.col-md-9) .outer div.inner.twoOrThree {
+    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
   }
 }

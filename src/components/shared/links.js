@@ -53,7 +53,7 @@ function Links({ links = [], title, headingLevel, description }) {
       {title && <Heading>{title}</Heading>}
       {description && <p>{description}</p>}
 
-      <LinksInner className={`${styles.inner} ${(numLinks < 3) && styles.twoOrLess}`}>
+      <LinksInner className={`${styles.inner} ${(numLinks === 2 || numLinks === 3) && styles.twoOrThree}`}>
         {links.map((link) => {
           const { id, title, url, image } = link;
 
