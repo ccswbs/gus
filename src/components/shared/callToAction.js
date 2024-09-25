@@ -9,7 +9,7 @@ const CallToAction = ({ children, classes, href, goalEventCategory, goalEventAct
         href={href}
         onClick={(e) => {
           // Track the custom click
-          window.dataLayer = window.dataLayer || [];
+          window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : []
           window.dataLayer.push({
             event: "custom_event",
             category: goalEventCategory,
