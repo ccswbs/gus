@@ -126,13 +126,13 @@ function Button(buttonCol, buttonData, buttonSpacing) {
           to={urlLink}
           className={buttonClasses}
           onClick={(e) => {
-              window.dataLayer = window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
-              window.dataLayer.push({
-                event: "customEvent",
-                category: btnAnalyticsGoal,
-                action: btnAnalyticsAction,
-              });
-            }}
+            window.dataLayer = window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
+            window.dataLayer.push({
+              event: "customEvent",
+              category: btnAnalyticsGoal,
+              action: btnAnalyticsAction,
+            });
+          }}
         >
           {buttonIcon && (
             <i aria-hidden="true" className={buttonFontAwesomeClasses}>
