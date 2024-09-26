@@ -13,7 +13,6 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['author'] = "Author of site";
     metaConfig['ogImage'] = "",
     metaConfig['ogImageAlt'] = "",
-    metaConfig['GAtrackingID'] = "";
     metaConfig['menus'] = "";
 }
 
@@ -39,12 +38,6 @@ module.exports = {
     `gatsby-plugin-root-import`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-yaml`,
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: metaConfig['GAtrackingID'],
-      },
-    },
     {
       resolve: `gatsby-plugin-google-tagmanager`,
       options: {

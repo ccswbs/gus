@@ -4,7 +4,6 @@ var metaConfig = {
     author: "@uofg",
 	ogImage: "https://www.uoguelph.ca/img/ug-social-thumb.jpg",
 	ogImageAlt: "University of Guelph logo",
-    GAtrackingID: "UA-106745064-4",
     IGuser: "5851379098",
     menus: ["main"],
 };
