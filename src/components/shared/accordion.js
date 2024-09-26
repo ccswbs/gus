@@ -6,6 +6,7 @@ import { slugify, ParseText } from 'utils/ug-utils';
 const Accordion = (props) => {
     let accordionData = props.pageData?.relationships?.field_accordion_block_elements;
     let accordionTitle = props.pageData?.field_accordion_title;
+    let accordionDescription = props.pageData?.field_accordion_description;
     let stayOpen = props.pageData?.field_accordion_stay_open;
     let dataParent = ("#accordion" + props.pageData?.drupal_id);
     let HeadingLevel = (props.pageData?.field_heading_level ? props.pageData.field_heading_level : "h2");
@@ -13,6 +14,7 @@ const Accordion = (props) => {
     if (accordionData) {
       return (<>
           {accordionTitle && <HeadingLevel id={slugify(accordionTitle)} className="mt-5">{accordionTitle}</HeadingLevel>}
+          {accordionDescription && accordionDescription}
           <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
             {accordionData.map((item) => {
               const accordionToggle = (
@@ -60,6 +62,9 @@ export default Accordion
 export const query = graphql`
   fragment AccordionSectionParagraphFragment on paragraph__accordion_section {
     drupal_id
+    field_accordion_description {
+      processed
+    }
     field_accordion_stay_open
     field_accordion_title
     field_heading_level
