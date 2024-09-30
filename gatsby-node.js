@@ -500,6 +500,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type paragraph__accordion_section implements Node {
       drupal_id: String
+      field_accordion_description: BodyField
       field_accordion_stay_open: Boolean
       field_accordion_title: String
       field_heading_level: String
