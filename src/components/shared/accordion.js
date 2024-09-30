@@ -6,7 +6,7 @@ import { slugify, ParseText } from 'utils/ug-utils';
 const Accordion = (props) => {
     let accordionData = props.pageData?.relationships?.field_accordion_block_elements;
     let accordionTitle = props.pageData?.field_accordion_title;
-    let accordionDescription = props.pageData?.field_accordion_description.processed;
+    let accordionDescription = props.pageData?.field_accordion_description?.processed;
     let stayOpen = props.pageData?.field_accordion_stay_open;
     let dataParent = ("#accordion" + props.pageData?.drupal_id);
     let HeadingLevel = (props.pageData?.field_heading_level ? props.pageData.field_heading_level : "h2");
