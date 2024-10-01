@@ -1002,6 +1002,23 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     createNodeId,
   });
 
+  const getObjectDiff = (obj1, obj2, compareRef = false) => {
+    return Object.keys(obj1).reduce((result, key) => {
+      if (!obj2.hasOwnProperty(key)) {
+        result.push(key);
+      } else if (_.isEqual(obj1[key], obj2[key])) {
+        const resultKeyIndex = result.indexOf(key);
+  
+        if (compareRef && obj1[key] !== obj2[key]) {
+          result[resultKeyIndex] = `${key} (ref)`;
+        } else {
+          result.splice(resultKeyIndex, 1);
+        }
+      }
+      return result;
+    }, Object.keys(obj2));
+  }
+
   // Query for redirects
   const redirects = await graphql(`
     {
@@ -1022,14 +1039,24 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
   `).then((result) => {
     const data = [];
     if (!result.errors) {
+
+      // for each redirect
       result.data.allRedirectRedirect.edges.forEach(({ node }) => {
+        //replace the entity: or internal: with a slash
         const source_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
+
+        // if source_uri does not exist in data, create a new array
         if (!(source_uri in data)) {
           data[source_uri] = [];
         }
+
+        // push the redirect node onto the array using source_uri as a key
+        // means a source_uri may have multiple redirects associated with it
         data[source_uri].push(node);
       });
     }
+
+    // return all redirects (should still have all redirects in there)
     return data;
   });
 
@@ -1119,9 +1146,24 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
       });
     }
 
+    // aliases contains all aliases for pages and programs that are not archived
+
     // REDIRECTS
+    let redirectCheck = {};
+
+    // console.log(redirects);
+
+    // for each alias (pages and programs not archived)
     Object.entries(aliases).forEach(([nodeID, alias]) => {
+
+      // if the alias has redirect data affiliated with it
       if (redirects[`/node/${nodeID}`]) {
+
+        // CHECK THE REDIRECTS BEING CREATED
+        redirectCheck[`/node/${nodeID}`] = [];
+        redirectCheck[`/node/${nodeID}`].push(...redirects[`/node/${nodeID}`]);
+
+        // create each redirect affiliated with the node
         redirects[`/node/${nodeID}`].forEach((redirect) => {
           const sourcePath = "/" + redirect.redirect_source.path;
 
@@ -1137,6 +1179,15 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         });
       }
     });
+
+    console.log(Object.keys(redirects).length);
+    console.log(Object.keys(redirectCheck).length);
+
+    let redirectDiffs = getObjectDiff(redirects, redirectCheck);
+    console.log(redirectDiffs);
+
+    
+
   }
 };
 
