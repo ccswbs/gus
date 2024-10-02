@@ -67,6 +67,7 @@ const path = require(`path`);
 const fs = require("fs");
 const yaml = require("js-yaml");
 const util = require("util");
+const _ = require('lodash');
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
@@ -1043,16 +1044,16 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
       // for each redirect
       result.data.allRedirectRedirect.edges.forEach(({ node }) => {
         //replace the entity: or internal: with a slash
-        const source_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
+        const redirect_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
 
         // if source_uri does not exist in data, create a new array
-        if (!(source_uri in data)) {
-          data[source_uri] = [];
+        if (!(redirect_uri in data)) {
+          data[redirect_uri] = [];
         }
 
-        // push the redirect node onto the array using source_uri as a key
-        // means a source_uri may have multiple redirects associated with it
-        data[source_uri].push(node);
+        // push the redirect node onto the array using redirect_uri as a key
+        // means a redirect_uri may have multiple redirects associated with it
+        data[redirect_uri].push(node);
       });
     }
 
@@ -1149,10 +1150,31 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     // aliases contains all aliases for pages and programs that are not archived
 
     // REDIRECTS
+    
     let redirectCheck = {};
+    // console.log(aliases);
 
-    // console.log(redirects);
+    redirects.forEach((redirect) => {
+      const sourcePath = "/" + redirect.redirect_source.path;
+      const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
+      const node = redirect.redirect_redirect.uri.replace(/^entity:|internal:\/node/, "/");
 
+      console.log(node);
+      const alias = aliases[node] ?? destinationPath;
+      console.log(alias);
+
+      if (sourcePath.toLowerCase() !== destinationPath.toLowerCase()) {
+        createRedirect({
+          fromPath: sourcePath,
+          toPath: alias,
+          isPermanent: true,
+          status: redirect.status_code,
+        });
+      }
+
+    });
+  
+/*
     // for each alias (pages and programs not archived)
     Object.entries(aliases).forEach(([nodeID, alias]) => {
 
@@ -1179,14 +1201,34 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         });
       }
     });
+    */
 
-    console.log(Object.keys(redirects).length);
-    console.log(Object.keys(redirectCheck).length);
+    // console.log(Object.keys(redirects).length);
+    // console.log(Object.keys(redirectCheck).length);
 
-    let redirectDiffs = getObjectDiff(redirects, redirectCheck);
-    console.log(redirectDiffs);
+    // let redirectDiffs = getObjectDiff(redirects, redirectCheck);
+    // fs.writeFile('redirectDiffList.csv', redirectDiffs.toString(), 'utf8', function (err) {
+    //   if (err) {
+    //     console.log('Some error occured - file either not saved or corrupted file saved.');
+    //   } else{
+    //     console.log('It\'s saved!');
+    //   }
+    // });
 
-    
+    // fs.writeFile('redirectDiffList.csv', redirects.toString(), 'utf8', function (err) {
+    //   if (err) {
+    //     console.log('Some error occured - file either not saved or corrupted file saved.');
+    //   } else{
+    //     console.log('It\'s saved!');
+    //   }
+    // });
+    // fs.writeFile('redirectDiffList.csv', redirects.toString(), 'utf8', function (err) {
+    //   if (err) {
+    //     console.log('Some error occured - file either not saved or corrupted file saved.');
+    //   } else{
+    //     console.log('It\'s saved!');
+    //   }
+    // }); 
 
   }
 };
