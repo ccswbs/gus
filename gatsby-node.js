@@ -1151,29 +1151,34 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
     // REDIRECTS
     
-    let redirectCheck = {};
+    // let redirectCheck = {};
     // console.log(aliases);
 
     // console.log(redirects);
 
-    Object.entries(redirects).forEach((redirect) => {
-      const sourcePath = "/" + redirect.redirect_source.path;
-      const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
-      const node = redirect.redirect_redirect.uri.replace(/^entity:|internal:\/node/, "/");
+    Object.entries(redirects).forEach(([key,values]) => {
 
-      console.log(node);
-      const alias = aliases[node] ?? destinationPath;
-      console.log(alias);
+      // create each redirect affiliated with the node
+      values.forEach((redirect) => {
+        const sourcePath = "/" + redirect.redirect_source.path;
+        const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
+        const node = destinationPath.replace(/\D/g, "");
+        const alias = aliases[node] ?? destinationPath;
 
-      if (sourcePath.toLowerCase() !== alias.toLowerCase()) {
-        createRedirect({
-          fromPath: sourcePath,
-          toPath: alias,
-          isPermanent: true,
-          status: redirect.status_code,
-        });
-      }
+        console.log("sourcePath:" + sourcePath);
+        console.log("destinationPath:" + destinationPath);
+        console.log("node:" + node);
+        console.log("alias:" + alias);
 
+        if (sourcePath.toLowerCase() !== alias.toLowerCase()) {
+          createRedirect({
+            fromPath: sourcePath,
+            toPath: alias,
+            isPermanent: true,
+            status: redirect.status_code,
+          });
+        }
+      })
     });
   
 /*
