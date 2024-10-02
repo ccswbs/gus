@@ -1154,9 +1154,9 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     let redirectCheck = {};
     // console.log(aliases);
 
-    console.log(redirects);
+    // console.log(redirects);
 
-    redirects.forEach((redirect) => {
+    Object.entries(redirects).forEach((redirect) => {
       const sourcePath = "/" + redirect.redirect_source.path;
       const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
       const node = redirect.redirect_redirect.uri.replace(/^entity:|internal:\/node/, "/");
@@ -1165,7 +1165,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
       const alias = aliases[node] ?? destinationPath;
       console.log(alias);
 
-      if (sourcePath.toLowerCase() !== destinationPath.toLowerCase()) {
+      if (sourcePath.toLowerCase() !== alias.toLowerCase()) {
         createRedirect({
           fromPath: sourcePath,
           toPath: alias,
