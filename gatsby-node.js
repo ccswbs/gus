@@ -1154,6 +1154,8 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     let redirectCheck = {};
     // console.log(aliases);
 
+    console.log(redirects);
+
     redirects.forEach((redirect) => {
       const sourcePath = "/" + redirect.redirect_source.path;
       const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
