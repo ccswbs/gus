@@ -1017,17 +1017,14 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
   `).then((result) => {
     const data = [];
     if (!result.errors) {
-
       result.data.allRedirectRedirect.edges.forEach(({ node }) => {
         const redirect_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
-
         if (!(redirect_uri in data)) {
           data[redirect_uri] = [];
         }
         data[redirect_uri].push(node);
       });
     }
-
     return data;
   });
 
