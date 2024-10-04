@@ -1017,14 +1017,24 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
   `).then((result) => {
     const data = [];
     if (!result.errors) {
+
+      // for each redirect
       result.data.allRedirectRedirect.edges.forEach(({ node }) => {
-        const source_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
-        if (!(source_uri in data)) {
-          data[source_uri] = [];
+        //replace the entity: or internal: with a slash
+        const redirect_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
+
+        // if redirect_uri does not exist in data, create a new array
+        if (!(redirect_uri in data)) {
+          data[redirect_uri] = [];
         }
-        data[source_uri].push(node);
+
+        // push the redirect node onto the array using redirect_uri as a key
+        // means a redirect_uri may have multiple redirects associated with it
+        data[redirect_uri].push(node);
       });
     }
+
+    // return all redirects (should still have all redirects in there)
     return data;
   });
 
@@ -1114,23 +1124,31 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
       });
     }
 
-    // REDIRECTS
-    Object.entries(aliases).forEach(([nodeID, alias]) => {
-      if (redirects[`/node/${nodeID}`]) {
-        redirects[`/node/${nodeID}`].forEach((redirect) => {
-          const sourcePath = "/" + redirect.redirect_source.path;
+    // ALIASES contains all url aliases for pages and programs that are not archived
 
-          // Skip if sourcePath and alias are the same except for letter case
-          if (sourcePath.toLowerCase() !== alias) {
-            createRedirect({
-              fromPath: sourcePath,
-              toPath: alias,
-              isPermanent: true,
-              status: redirect.status_code,
-            });
-          }
-        });
-      }
+    // REDIRECTS
+
+    Object.entries(redirects).forEach(([key,values]) => {
+
+      // create each redirect affiliated with the node
+      values.forEach((redirect) => {
+        const sourcePath = "/" + redirect.redirect_source.path;
+        const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
+        const node = destinationPath.replace(/\D/g, "");
+        const alias = aliases[node] ?? destinationPath;
+
+        console.log("From sourcePath:" + sourcePath);
+        console.log("To destinationAlias:" + alias);
+
+        if (sourcePath.toLowerCase() !== alias.toLowerCase()) {
+          createRedirect({
+            fromPath: sourcePath,
+            toPath: alias,
+            isPermanent: true,
+            status: redirect.status_code,
+          });
+        }
+      })
     });
   }
 };
