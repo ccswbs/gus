@@ -64,9 +64,6 @@ field_name: [taxonomy_term__vocabulary_name] @link(from: "field_name___NODE")
 **/
 
 const path = require(`path`);
-const fs = require("fs");
-const yaml = require("js-yaml");
-const util = require("util");
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
@@ -1116,18 +1113,25 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     }
 
     // REDIRECTS contains all redirects that point to a specific redirect_uri (key)
-    Object.entries(redirects).forEach(([key,values]) => {
+    Object.values(redirects).forEach(value => {
 
       // create each redirect affiliated with the node
-      values.forEach((redirect) => {
+      value.forEach((redirect) => {
         const sourcePath = "/" + redirect.redirect_source.path;
         const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
-        // retrieve node ID from destinationPath by replacing all characters that are not digits
-        const nodeID = destinationPath.replace(/\D/g, "");
-        const alias = aliases[nodeID] ?? destinationPath;
+        const isExternalURL = destinationPath.startsWith("http");
+        let alias = destinationPath;
 
+        if(!isExternalURL){
+          // retrieve node ID from destinationPath by replacing all characters that are not digits
+          const nodeID = destinationPath.replace(/\D/g, "");
+          // if destinationPath is internal but has no alias (e.g., archived), this value should be undefined
+          alias = aliases[nodeID];
+        }
+
+        // Skip if no alias (e.g., if destinationPath does not exist in $aliases array)
         // Skip if sourcePath and alias are the same except for letter case
-        if (sourcePath.toLowerCase() !== alias) {
+        if (alias && (sourcePath.toLowerCase() !== alias)) {
           createRedirect({
             fromPath: sourcePath,
             toPath: alias,
