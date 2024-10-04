@@ -1122,8 +1122,9 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
       values.forEach((redirect) => {
         const sourcePath = "/" + redirect.redirect_source.path;
         const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
-        const node = destinationPath.replace(/\D/g, "");
-        const alias = aliases[node] ?? destinationPath;
+        // retrieve node ID from destinationPath by replacing all characters that are not digits
+        const nodeID = destinationPath.replace(/\D/g, "");
+        const alias = aliases[nodeID] ?? destinationPath;
 
         // Skip if sourcePath and alias are the same except for letter case
         if (sourcePath.toLowerCase() !== alias) {
