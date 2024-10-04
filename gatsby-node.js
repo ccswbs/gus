@@ -1018,23 +1018,16 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     const data = [];
     if (!result.errors) {
 
-      // for each redirect
       result.data.allRedirectRedirect.edges.forEach(({ node }) => {
-        //replace the entity: or internal: with a slash
         const redirect_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
 
-        // if redirect_uri does not exist in data, create a new array
         if (!(redirect_uri in data)) {
           data[redirect_uri] = [];
         }
-
-        // push the redirect node onto the array using redirect_uri as a key
-        // means a redirect_uri may have multiple redirects associated with it
         data[redirect_uri].push(node);
       });
     }
 
-    // return all redirects (should still have all redirects in there)
     return data;
   });
 
@@ -1088,6 +1081,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     // INSTRUCTION: Create a page for each node by processing the results of your query here
     // Each content type should have its own if statement code snippet
 
+    // ALIASES will contain all url aliases for pages and programs that are NOT archived
     let aliases = {};
 
     // process page nodes
@@ -1124,10 +1118,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
       });
     }
 
-    // ALIASES contains all url aliases for pages and programs that are not archived
-
-    // REDIRECTS
-
+    // REDIRECTS contains all redirects that point to a specific redirect_uri (key)
     Object.entries(redirects).forEach(([key,values]) => {
 
       // create each redirect affiliated with the node
@@ -1136,9 +1127,6 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
         const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
         const node = destinationPath.replace(/\D/g, "");
         const alias = aliases[node] ?? destinationPath;
-
-        console.log("From sourcePath:" + sourcePath);
-        console.log("To destinationAlias:" + alias);
 
         if (sourcePath.toLowerCase() !== alias.toLowerCase()) {
           createRedirect({
