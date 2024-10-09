@@ -64,9 +64,6 @@ field_name: [taxonomy_term__vocabulary_name] @link(from: "field_name___NODE")
 **/
 
 const path = require(`path`);
-const fs = require("fs");
-const yaml = require("js-yaml");
-const util = require("util");
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
@@ -1018,11 +1015,11 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     const data = [];
     if (!result.errors) {
       result.data.allRedirectRedirect.edges.forEach(({ node }) => {
-        const source_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
-        if (!(source_uri in data)) {
-          data[source_uri] = [];
+        const redirect_uri = node.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
+        if (!(redirect_uri in data)) {
+          data[redirect_uri] = [];
         }
-        data[source_uri].push(node);
+        data[redirect_uri].push(node);
       });
     }
     return data;
@@ -1078,6 +1075,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     // INSTRUCTION: Create a page for each node by processing the results of your query here
     // Each content type should have its own if statement code snippet
 
+    // ALIASES will contain all url aliases for pages and programs that are NOT archived
     let aliases = {};
 
     // process page nodes
@@ -1114,23 +1112,34 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
       });
     }
 
-    // REDIRECTS
-    Object.entries(aliases).forEach(([nodeID, alias]) => {
-      if (redirects[`/node/${nodeID}`]) {
-        redirects[`/node/${nodeID}`].forEach((redirect) => {
-          const sourcePath = "/" + redirect.redirect_source.path;
+    // REDIRECTS contains all redirects that point to a specific redirect_uri (key)
+    Object.values(redirects).forEach(value => {
 
-          // Skip if sourcePath and alias are the same except for letter case
-          if (sourcePath.toLowerCase() !== alias) {
-            createRedirect({
-              fromPath: sourcePath,
-              toPath: alias,
-              isPermanent: true,
-              status: redirect.status_code,
-            });
-          }
-        });
-      }
+      // create each redirect affiliated with the node
+      value.forEach((redirect) => {
+        const sourcePath = "/" + redirect.redirect_source.path;
+        const destinationPath = redirect.redirect_redirect.uri.replace(/^entity:|internal:\//, "/");
+        const isExternalURL = destinationPath.startsWith("http");
+        let alias = destinationPath;
+
+        if(!isExternalURL){
+          // retrieve node ID from destinationPath by replacing all characters that are not digits
+          const nodeID = destinationPath.replace(/\D/g, "");
+          // if destinationPath is internal but has no alias (e.g., archived), this value should be undefined
+          alias = aliases[nodeID];
+        }
+
+        // Skip if no alias (e.g., if destinationPath does not exist in $aliases array)
+        // Skip if sourcePath and alias are the same except for letter case
+        if (alias && (sourcePath.toLowerCase() !== alias)) {
+          createRedirect({
+            fromPath: sourcePath,
+            toPath: alias,
+            isPermanent: true,
+            status: redirect.status_code,
+          });
+        }
+      })
     });
   }
 };
