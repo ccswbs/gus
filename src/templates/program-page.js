@@ -79,7 +79,7 @@ function renderAdmissionRequirements() {
               journey today!
             </p>
             <p>
-              <a href="https://admission.uoguelph.ca/adminfo">View Admission Requirements</a>
+              <a href="https://www.uoguelph.ca/admission/undergraduate/">View Admission Requirements</a>
             </p>
           </div>
         </div>
@@ -107,7 +107,7 @@ function renderAdmissionRequirements() {
               Guelph campus.
             </p>
             <p>
-              <a href="https://admission.uoguelph.ca/tours">Book a Tour</a>
+              <a href="https://www.uoguelph.ca/admission/undergraduate/tours/">Book a Tour</a>
             </p>
           </div>
         </div>
@@ -120,7 +120,7 @@ function renderAdmissionRequirements() {
               of Guelph.
             </p>
             <p>
-              <a href="https://admission.uoguelph.ca/contact">Request More Info</a>
+              <a href="https://www.uoguelph.ca/admission/undergraduate/contact/">Request More Info</a>
             </p>
           </div>
         </div>
