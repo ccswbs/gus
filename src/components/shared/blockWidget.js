@@ -17,6 +17,7 @@ const BlockWidget = (props) => {
     }
     if (props.blockData?.relationships?.field_custom_block?.__typename === "block_content__widget_block") {
         widgetBlockContent = props.blockData.relationships.field_custom_block?.relationships?.field_widget_block_content;
+        let widgetRegion = props.blockData.relationships.field_section_column?.name;
         return (widgetBlockContent.map(widget => {
             switch(widget.__typename) {
                 case "paragraph__accordion_section":
@@ -24,7 +25,7 @@ const BlockWidget = (props) => {
                 case "paragraph__general_text":
                     return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
                 case "paragraph__media_text":
-                    return <MediaText key={widget.drupal_id} widgetData={widget} />;
+                    return <MediaText key={widget.drupal_id} widgetData={widget} region={widgetRegion} />;
                 case "paragraph__section_tabs":
                     return <PageTabs key={widget.drupal_id} pageData={widget} />;
                 case "paragraph__section_buttons":
