@@ -17,7 +17,8 @@ const BlockWidget = (props) => {
     }
     if (props.blockData?.relationships?.field_custom_block?.__typename === "block_content__widget_block") {
         widgetBlockContent = props.blockData.relationships.field_custom_block?.relationships?.field_widget_block_content;
-        let widgetRegion = props.blockData.relationships.field_section_column?.name ?? ``;
+        let widgetRegion = props.region;
+
         return (widgetBlockContent.map(widget => {
             switch(widget.__typename) {
                 case "paragraph__accordion_section":
@@ -40,10 +41,12 @@ const BlockWidget = (props) => {
 
 BlockWidget.propTypes = {
     blockData: PropTypes.object,
+    region: PropTypes.string,
 }
 
 BlockWidget.defaultProps = {
     blockData: ``,
+    region: ``,
 }
 
 export default BlockWidget
