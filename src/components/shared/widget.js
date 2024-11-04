@@ -23,7 +23,7 @@ const WidgetSelector = ({ widget }) => {
     case "paragraph__accordion_section":
       return <Accordion pageData={widget} />;
     case "paragraph__block_widget":
-      return <BlockWidget blockData={widget} />;
+      return <BlockWidget key={widget.drupal_id} blockData={widget} />;
     case "paragraph__general_text":
       return <GeneralText processed={widget.field_general_text.processed} />;
     case "paragraph__image_overlay":

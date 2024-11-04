@@ -27,7 +27,7 @@ function renderPrimary(widget) {
     case "paragraph__accordion_section":
       return <Accordion key={widget.drupal_id} pageData={widget} />;
     case "paragraph__block_widget":
-      return <BlockWidget key={widget.drupal_id} blockData={widget} />;
+      return <BlockWidget key={widget.drupal_id} blockData={widget} region="Primary" />;
     case "paragraph__general_text":
       return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
     case "paragraph__image_overlay":
@@ -58,7 +58,7 @@ function renderPrimary(widget) {
 function renderSecondary(widget, sectionClasses) {
   switch (widget?.__typename) {
     case "paragraph__block_widget":
-      return <BlockWidget key={widget.drupal_id} blockData={widget} />;
+      return <BlockWidget key={widget.drupal_id} blockData={widget} region="Secondary"  />;
     case "paragraph__general_text":
       return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
     case "paragraph__media_text":
