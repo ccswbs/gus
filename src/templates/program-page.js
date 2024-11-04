@@ -3,6 +3,7 @@ import Layout from "components/layout"
 import { Helmet } from "react-helmet"
 import Seo from "components/seo"
 import Hero from "components/shared/hero"
+import BlockWidget from "components/shared/blockWidget"
 import Breadcrumbs from "components/shared/breadcrumbs"
 import CallToAction from "components/shared/callToAction"
 // import Careers from 'components/shared/careers';
@@ -70,10 +71,10 @@ function renderTalkToStudent() {
 function renderAdmissionRequirements() {
   return (
     <>
-      <div class="row row-cols-1 row-cols-sm-2 my-5">
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-black">
-            <h3 class="card-title text-dark mt-0">Admission Requirements</h3>
+      <div className="row row-cols-1 row-cols-sm-2 my-5">
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-black">
+            <h3 className="card-title text-dark mt-0">Admission Requirements</h3>
             <p>
               Explore admission requirements for Canadian, international, transfer, and mature students. Start your
               journey today!
@@ -84,9 +85,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-red">
-            <h3 class="card-title text-dark mt-0">Scholarships & Bursaries</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-red">
+            <h3 className="card-title text-dark mt-0">Scholarships & Bursaries</h3>
             <p>
               We offer a wide range of financial aid programs to assist with funding your education at the University of
               Guelph.
@@ -99,9 +100,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-yellow">
-            <h3 class="card-title text-dark mt-0">Tour Our Campus</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-yellow">
+            <h3 className="card-title text-dark mt-0">Tour Our Campus</h3>
             <p>
               Through virtual tours, presentations, webinars and in-person tours, get familiar with the University of
               Guelph campus.
@@ -112,9 +113,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-blue">
-            <h3 class="card-title text-dark mt-0">Have Questions?</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-blue">
+            <h3 className="card-title text-dark mt-0">Have Questions?</h3>
             <p>
               Learn more about how to connect, discover, and engage with programs, facilities and life at the University
               of Guelph.
@@ -255,6 +256,9 @@ const ProgramPage = ({ data, location }) => {
   let variantDataHeading = prepareVariantHeading(variantData)
   let videoData = data.videos.edges[0]?.node
 
+  // Only pulling one block right now
+  let blockData = data.block75;
+
   const heroImage = imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null
 
   // Open Graph metatags
@@ -336,6 +340,17 @@ const ProgramPage = ({ data, location }) => {
       {renderProgramInfoAccordion(
         // careerData,
         employerData
+      )}
+
+      { /**** Block Data - International Webinars (ID 75) ****/}
+      {blockData && (
+        <div className="container page-container">
+          <section className="row row-with-vspace site-content">
+            <div className="col-md-12 content-area">
+              <BlockWidget key={blockData.drupal_id} blockData={blockData} />
+            </div>
+          </section>
+        </div>
       )}
 
       {/**** Testimonials ****/}
@@ -456,6 +471,9 @@ export const query = graphql`
           }
         }
       }
+    }
+    block75: paragraphBlockWidget(field_custom_block: {drupal_internal__target_id: {eq: 75}}) {
+      ...BlockWidgetParagraphFragment
     }
     ctas: allNodeCallToAction(filter: { fields: { tags: { in: [$id] } } }) {
       edges {
