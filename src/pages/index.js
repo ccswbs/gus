@@ -22,8 +22,8 @@ const IndexPage = ({ data }) => {
   unpubPrograms = unpubPrograms.filter((program) => program.node.path.alias != null);
 
   // Collect untagged pages
-  let pubPagesUntagged = pubPages.filter((page) => page.node.relationships.field_tags.length === 0);
-  let unpubPagesUntagged = unpubPages.filter((page) => page.node.relationships.field_tags.length === 0);
+  let pubPagesUntagged = pubPages.filter((page) => page.node?.relationships?.field_editorial_access?.length === 0);
+  let unpubPagesUntagged = unpubPages.filter((page) => page.node?.relationships?.field_editorial_access?.length === 0);
 
   return (
     <Layout>
@@ -36,8 +36,8 @@ const IndexPage = ({ data }) => {
             <p>
               Pages are organized into 2 main sections: <a href="#published">Published</a> and{" "}
               <a href="#unpublished">Unpublished</a>. Under these sections, pages are divided up even further by their
-              tags (ie. "Admission", "Convocation", "OAC", and so on). If a page has more than one tag, it will be
-              listed more than once, with untagged pages listed at the end.
+              Editorial Access unit (ie. "Admissions", "College of Arts (COA)", "OVC", and so on). If a page belongs to more than one Editorial Access unit, it will be
+              listed multiple times. Pages with no Editorial Access unit will appear at the end.
             </p>
             <p>
               When you create a new page, please be sure to tag it with the correct tag(s). It's possible to have more
@@ -230,7 +230,7 @@ export const query = graphql`
             alias
           }
           relationships {
-            field_tags {
+            field_editorial_access {
               __typename
               ... on TaxonomyInterface {
                 drupal_id
@@ -255,7 +255,7 @@ export const query = graphql`
             alias
           }
           relationships {
-            field_tags {
+            field_editorial_access {
               __typename
               ... on TaxonomyInterface {
                 drupal_id
@@ -300,7 +300,7 @@ export const query = graphql`
     tags: allTaxonomyInterface(sort: { name: ASC }) {
       edges {
         node {
-          ... on taxonomy_term__tags {
+          ... on taxonomy_term__editorial_access {
             name
             description {
               processed
@@ -315,21 +315,7 @@ export const query = graphql`
               }
             }
           }
-          ... on taxonomy_term__units {
-            name
-            description {
-              processed
-            }
-            relationships {
-              node__page {
-                moderation_state
-                title
-                path {
-                  alias
-                }
-              }
-            }
-          }
+
         }
       }
     }
