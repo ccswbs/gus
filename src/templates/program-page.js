@@ -331,17 +331,6 @@ const ProgramPage = ({ data, location }) => {
       {/**** Variants (e.g., Majors) content ****/}
       {renderProgramVariants(variantDataHeading, variantData)}
 
-      {/**** Widgets content ****/}
-      {widgets?.map((widget, index) => (
-        <Widget widget={widget} key={index} />
-      ))}
-
-      {/**** Program Information Accordion ****/}
-      {renderProgramInfoAccordion(
-        // careerData,
-        employerData
-      )}
-
       { /**** Block Data - International Webinars (ID 75) ****/}
       {blockData && (
         <div className="container page-container">
@@ -351,6 +340,17 @@ const ProgramPage = ({ data, location }) => {
             </div>
           </section>
         </div>
+      )}
+
+      {/**** Widgets content ****/}
+      {widgets?.map((widget, index) => (
+        <Widget widget={widget} key={index} />
+      ))}
+
+      {/**** Program Information Accordion ****/}
+      {renderProgramInfoAccordion(
+        // careerData,
+        employerData
       )}
 
       {/**** Testimonials ****/}
