@@ -8,12 +8,11 @@ import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
 
-const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
+const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuSEOTitle, menuName, domains}) => (
 
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
-        <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
-
+        <Seo title={((pageTitle !== menuSEOTitle) && menuSEOTitle) ? `${pageTitle} - ${menuSEOTitle}` : pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
         { /**** Header and Title ****/ }
         { (imageData?.length > 0 || heroWidgets?.length > 0) &&
         <div className={imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
@@ -82,6 +81,8 @@ export const query = graphql`
         }
         field_primary_navigation {
           field_menu_machine_name
+          field_seo_title
+          name
         }
         field_widgets {
           ...FieldWidgetsFragment
@@ -124,7 +125,7 @@ export const query = graphql`
 
 const PageTemplate = ({data}) => (
     <Page nodeID={data.nodePage.drupal_internal__nid}
-        pageTitle={data.nodePage.title} 
+        pageTitle={data.nodePage.title}
         ogDescription={data.nodePage.field_metatags?.og_description}
         ogImage={data.images.edges[0]?.node.relationships.field_media_image.publicUrl}
         ogImageAlt={data.images.edges[0]?.node?.field_media_image.alt}
@@ -132,7 +133,13 @@ const PageTemplate = ({data}) => (
         widgets={data.nodePage.relationships.field_widgets}
         heroWidgets={(data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null)}
         footer={data.footer.edges}
-        menuName={(data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name === "no-menu")? null: data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name}
+        menuSEOTitle={
+          (data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name === "no-menu") ? null : 
+          data.nodePage.relationships?.field_primary_navigation?.field_seo_title ?? data.nodePage.relationships?.field_primary_navigation?.name
+        }
+        menuName={
+          (data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name === "no-menu") ? null : 
+          data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name}
         domains={data.nodePage.field_domain_access}
     ></Page>
 )
