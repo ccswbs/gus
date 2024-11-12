@@ -115,7 +115,7 @@ const IndexPage = ({ data }) => {
               );
             })}
 
-            <h4>Untagged Pages</h4>
+            <h4>Pages without an Editorial Access tag</h4>
             <p>
               Total: <strong>{pubPagesUntagged.length}</strong>
             </p>
@@ -127,9 +127,9 @@ const IndexPage = ({ data }) => {
               ))}
             </ul>
 
-            <h3>Programs</h3>
+            <h3>Programs built using the Program content type ({pubPrograms.length} total)</h3>
             <p>
-              Total: <strong>{pubPrograms.length}</strong>
+              <strong>Note:</strong> these are not basic pages and their appearance is ultimately controlled by the hardcoded Program template.
             </p>
             <ul className="three-col-md">
               {pubPrograms.map((program) => (
@@ -170,7 +170,7 @@ const IndexPage = ({ data }) => {
 
             {unpubPagesUntagged.length > 0 && (
               <>
-                <h4>Untagged Pages</h4>
+                <h4>Pages without an Editorial Access tag</h4>
                 <p>
                   Total: <strong>{unpubPagesUntagged.length}</strong>
                 </p>
@@ -186,9 +186,9 @@ const IndexPage = ({ data }) => {
 
             {unpubPrograms.length > 0 && (
               <>
-                <h3>Programs</h3>
+                <h3>Programs built using the Program content type ({unpubPrograms.length} total)</h3>
                 <p>
-                  Total: <strong>{unpubPrograms.length}</strong>
+                  <strong>Note:</strong> these are not basic pages and their appearance is ultimately controlled by the hardcoded Program template.
                 </p>
                 <ul className="three-col-md">
                   {unpubPrograms.map((program) => (
