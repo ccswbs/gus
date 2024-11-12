@@ -4,7 +4,6 @@ import React from "react";
 import Seo from "components/seo";
 
 const IndexPage = ({ data }) => {
-  //const accordionData = data.accordion;
   const tags = data.tags.edges;
   let pubPages = data.pubPages.edges;
   let unpubPages = data.unpubPages.edges;
@@ -78,7 +77,7 @@ const IndexPage = ({ data }) => {
               );
             })}
 
-            <h4>Pages without an Editorial Access tag</h4>
+            <h4>Pages without an Editorial Access group</h4>
             <p>
               Total: <strong>{pubPagesUntagged.length}</strong>
             </p>
@@ -133,7 +132,7 @@ const IndexPage = ({ data }) => {
 
             {unpubPagesUntagged.length > 0 && (
               <>
-                <h4>Pages without an Editorial Access tag</h4>
+                <h4>Pages without an Editorial Access group</h4>
                 <p>
                   Total: <strong>{unpubPagesUntagged.length}</strong>
                 </p>
