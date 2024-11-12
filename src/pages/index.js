@@ -4,7 +4,7 @@ import React from "react";
 import Seo from "components/seo";
 
 const IndexPage = ({ data }) => {
-  const accordionData = data.accordion;
+  //const accordionData = data.accordion;
   const tags = data.tags.edges;
   let pubPages = data.pubPages.edges;
   let unpubPages = data.unpubPages.edges;
@@ -36,47 +36,10 @@ const IndexPage = ({ data }) => {
             <p>
               Pages are organized into 2 main sections: <a href="#published">Published</a> and{" "}
               <a href="#unpublished">Unpublished</a>. Under these sections, pages are divided up even further by their
-              Editorial Access unit (ie. "Admissions", "College of Arts (COA)", "OVC", and so on). If a page belongs to more than one Editorial Access unit, it will be
-              listed multiple times. Pages with no Editorial Access unit will appear at the end.
+              Editorial Access group (ie. "Admissions", "College of Arts (COA)", "OVC", and so on). If a page belongs to more than one Editorial Access group, it will be
+              listed multiple times. Pages without an Editorial Access group will appear at the end. <strong>Note that if you do not set an Editorial Access group when creating your content, it can be updated by any user with the editor or publisher role.</strong>
             </p>
-            <p>
-              When you create a new page, please be sure to tag it with the correct tag(s). It's possible to have more
-              than one tag on a single page if that page either belongs to two different units or belongs to a
-              micro-site. What does this mean? Check out the Tagging Scenarios below:
-            </p>
-            <h2>Tagging Scenarios</h2>
-            {accordionData && (
-              <div className="accordion mb-5" id={"accordion" + accordionData.id}>
-                {accordionData.accordion.map((item, index) => (
-                  <div className="accordion-item" key={"item" + index}>
-                    <h3 className="accordion-header" id={"heading" + index}>
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target={"#part" + index}
-                        aria-expanded="false"
-                        aria-controls={"part" + index}
-                      >
-                        {item.title !== "" ? item.title : "Read More"}
-                      </button>
-                    </h3>
-                    <div
-                      id={"part" + index}
-                      className="accordion-collapse collapse"
-                      aria-labelledby={"heading" + index}
-                    >
-                      <div className="accordion-body" dangerouslySetInnerHTML={{ __html: item.content }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
 
-            <p>
-              If you are new to the Content Hub and your tags are not yet in our system, please contact the CCS team to
-              have them added. Once it's added, you can create more pages and assign that tag without the help of CCS.
-            </p>
             <h2>Want to quickly find your page?</h2>
             <p>
               "Control+F" (or "Command+F" on a Mac) is the keyboard shortcut for the Find command. While on this
@@ -210,13 +173,6 @@ export default IndexPage;
 
 export const query = graphql`
   {
-    accordion: homeYaml(yamlId: { eq: "home_accordion" }) {
-      id
-      accordion {
-        title
-        content
-      }
-    }
     pubPages: allNodePage(
       filter: { moderation_state: { eq: "published" }, path: { alias: { ne: null } } }
       sort: { title: ASC }
