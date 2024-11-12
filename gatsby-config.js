@@ -32,7 +32,7 @@ module.exports = {
   },
   headers: [
     {
-      source: `/cbs/graduate/course-based-masters/`,
+      source: `/cbs/graduate/course-based-masters`,
       headers: [
         {
           key: `robots`,
