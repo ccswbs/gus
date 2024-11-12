@@ -30,6 +30,17 @@ module.exports = {
     ogImageAlt: metaConfig['ogImageAlt'],
     menus: metaConfig['menus'],
   },
+  headers: [
+    {
+      source: `/cbs/graduate/course-based-masters/`,
+      headers: [
+        {
+          key: `robots`,
+          value: `noindex`,
+        }
+      ]
+    }
+  ],
   plugins: [
     `gatsby-plugin-client-side-redirect`,
     `gatsby-plugin-gatsby-cloud`,
