@@ -57,7 +57,7 @@ module.exports = {
         policy: [ 
             { 
                 userAgent: '*',
-                disallow: ['/cbs/graduate/course-based-masters-int/'],
+                disallow: ['/cbs/graduate/course-based-masters-int'],
             }, 
             { 
                 userAgent: '*', 
