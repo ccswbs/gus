@@ -30,6 +30,17 @@ module.exports = {
     ogImageAlt: metaConfig['ogImageAlt'],
     menus: metaConfig['menus'],
   },
+  headers: [
+    {
+      source: `/cbs/graduate/course-based-masters`,
+      headers: [
+        {
+          key: `robots`,
+          value: `noindex`,
+        }
+      ]
+    }
+  ],
   plugins: [
     `gatsby-plugin-client-side-redirect`,
     `gatsby-plugin-gatsby-cloud`,
@@ -50,21 +61,8 @@ module.exports = {
       options: {
         host: `https://livechugendpoint.azureedge.net/`,
         sitemap: null,
-        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }],
-          
-        host: 'https://deploy-preview-259--ugconthub.netlify.app/', 
-        sitemap: null,
-        policy: [ 
-            { 
-                userAgent: '*',
-                disallow: ['/cbs/graduate/course-based-masters-int'],
-            }, 
-            { 
-                userAgent: '*', 
-                allow: '/', 
-            },
-        ],
-        
+        policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
+                    
       }
     },
     {
