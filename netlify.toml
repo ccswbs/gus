@@ -6,6 +6,10 @@ remote_images = [
   "https://cdn.uoguelph.ca/.*",
   "https://api.liveugconthub.uoguelph.dev/.*",
   "https://api.testugconthub.uoguelph.dev/.*",
-  "https://api.devugconthub.uoguelph.dev/.*",
   "https://.*.pantheonsite.io/.*"
 ]
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Encoding = "gzip"
