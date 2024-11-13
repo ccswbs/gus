@@ -63,6 +63,7 @@ field_name: [taxonomy_term__vocabulary_name] @link(from: "field_name___NODE")
 
 **/
 
+const BrotliPlugin = require('brotli-webpack-plugin');
 const path = require(`path`);
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
@@ -978,9 +979,20 @@ exports.onCreateWebpackConfig = (helper) => {
   const { actions, getConfig } = helper;
   const config = getConfig();
   const miniCssExtractPlugin = config.plugins.find((plugin) => plugin.constructor.name === "MiniCssExtractPlugin");
+
   if (miniCssExtractPlugin) {
     miniCssExtractPlugin.options.ignoreOrder = true;
   }
+
+  config.plugins.push(
+    new BrotliPlugin({
+      asset: '[path].br[query]',
+      test: /\.(js|css|html|svg)$/,
+      threshold: 10240,
+      minRatio: 0.8,
+    })
+  );
+
   actions.replaceWebpackConfig(config);
 };
 
