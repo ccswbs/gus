@@ -35,7 +35,7 @@ module.exports = {
       source: `/cbs/graduate/course-based-masters-int`,
       headers: [
         {
-          key: `robots`,
+          key: `X-Robots-Tag`,
           value: `noindex`,
         }
       ]
