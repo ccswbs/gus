@@ -101,10 +101,10 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                                             </a>
                                         </li>
                                         {menuName !== "main" && topCrumbURL && topCrumbID !== currentPage && 
-                                            <li key={topCrumbURL} className="gus-breadcrumbs__list-item"><Link to={topCrumbURL}>{topCrumb}</Link></li>}
+                                            <li key={topCrumbURL} className="gus-breadcrumbs__list-item"><a href={topCrumbURL}>{topCrumb}</a></li>}
                                         {midCrumbs && midCrumbs.map(midCrumb => {
                                             return <><li key={midCrumb.node.link.url + `mid`} className="gus-breadcrumbs__list-item">
-                                                    <Link to={midCrumb.node.link.url}>{midCrumb.node.title}</Link>
+                                                    <a href={midCrumb.node.link.url}>{midCrumb.node.title}</a>
                                             </li></>
                                         })}
                                         <li key={endCrumb + `end`} className="gus-breadcrumbs__list-item active" aria-current="page">{endCrumb ? endCrumb : pageTitle}</li>                           

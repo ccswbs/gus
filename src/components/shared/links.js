@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
-import { getHeadingLevel, isExternalURL } from "../../utils/ug-utils";
+import { getHeadingLevel } from "../../utils/ug-utils";
 import * as styles from "styles/links.module.css";
 
 function LinkElement(props) {
@@ -11,15 +10,11 @@ function LinkElement(props) {
   const copyProps = { ...props };
   delete copyProps.url;
 
-  return isExternalURL(url) ? (
+  return (
     <a {...copyProps} href={url}>
       {copyProps.children}
     </a>
-  ) : (
-    <Link {...copyProps} to={url}>
-      {copyProps.children}
-    </Link>
-  );
+    )
 }
 
 function GridLink({ title, url, image }) {

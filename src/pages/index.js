@@ -1,4 +1,4 @@
-import { graphql, Link } from "gatsby";
+import { graphql } from "gatsby";
 import Layout from "components/layout";
 import React from "react";
 import Seo from "components/seo";
@@ -106,7 +106,7 @@ const IndexPage = ({ data }) => {
                     <ul className="three-col-md">
                       {taggedPagesPubbed.map((taggedPage, index) => (
                         <li key={`tagged-${index}`}>
-                          <Link to={taggedPage.path.alias.toLowerCase()}>{taggedPage.title}</Link>
+                          <a href={taggedPage.path.alias.toLowerCase()}>{taggedPage.title}</a>
                         </li>
                       ))}
                     </ul>
@@ -122,7 +122,7 @@ const IndexPage = ({ data }) => {
             <ul className="three-col-md">
               {pubPagesUntagged.map((page) => (
                 <li key={page.node.drupal_id}>
-                  <Link to={page.node.path.alias.toLowerCase()}>{page.node.title}</Link>
+                  <a href={page.node.path.alias.toLowerCase()}>{page.node.title}</a>
                 </li>
               ))}
             </ul>
@@ -134,7 +134,7 @@ const IndexPage = ({ data }) => {
             <ul className="three-col-md">
               {pubPrograms.map((program) => (
                 <li key={program.node.drupal_id}>
-                  <Link to={program.node.path.alias.toLowerCase()}>{program.node.title}</Link>
+                  <a href={program.node.path.alias.toLowerCase()}>{program.node.title}</a>
                 </li>
               ))}
             </ul>
@@ -159,7 +159,7 @@ const IndexPage = ({ data }) => {
                     <ul className="three-col-md">
                       {taggedPagesUnpubbed.map((page, index) => (
                         <li key={`tagged-${index}`}>
-                          <Link to={page.path.alias.toLowerCase()}>{page.title}</Link>
+                          <a href={page.path.alias.toLowerCase()}>{page.title}</a>
                         </li>
                       ))}
                     </ul>
@@ -177,7 +177,7 @@ const IndexPage = ({ data }) => {
                 <ul className="three-col-md">
                   {unpubPagesUntagged.map((page) => (
                     <li key={page.node.drupal_id}>
-                      <Link to={page.node.path.alias.toLowerCase()}>{page.node.title}</Link>
+                      <a href={page.node.path.alias.toLowerCase()}>{page.node.title}</a>
                     </li>
                   ))}
                 </ul>
@@ -193,7 +193,7 @@ const IndexPage = ({ data }) => {
                 <ul className="three-col-md">
                   {unpubPrograms.map((program) => (
                     <li key={program.node.drupal_id}>
-                      <Link to={program.node.path.alias.toLowerCase()}>{program.node.title}</Link>
+                      <a href={program.node.path.alias.toLowerCase()}>{program.node.title}</a>
                     </li>
                   ))}
                 </ul>
