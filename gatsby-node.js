@@ -106,6 +106,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       | taxonomy_term__degrees
       | taxonomy_term__topics
       | taxonomy_term__units
+      | taxonomy_term__editorial_access
 
     union relatedTestimonialTaxonomyUnion =
       taxonomy_term__tags
@@ -794,6 +795,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type taxonomy_term__degreesRelationships {
       node__testimonial: [node__testimonial] @link(from: "node__testimonial___NODE")
+    }
+    type taxonomy_term__editorial_access implements Node & TaxonomyInterface {
+      drupal_id: String
+      drupal_internal__tid: Int
+      name: String      
     }
     type taxonomy_term__event_categories implements Node & TaxonomyInterface {
       drupal_id: String
