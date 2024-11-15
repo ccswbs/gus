@@ -4,7 +4,6 @@ import React from "react";
 import Seo from "components/seo";
 
 const IndexPage = ({ data }) => {
-  const accordionData = data.accordion;
   const tags = data.tags.edges;
   let pubPages = data.pubPages.edges;
   let unpubPages = data.unpubPages.edges;
@@ -22,8 +21,8 @@ const IndexPage = ({ data }) => {
   unpubPrograms = unpubPrograms.filter((program) => program.node.path.alias != null);
 
   // Collect untagged pages
-  let pubPagesUntagged = pubPages.filter((page) => page.node.relationships.field_tags.length === 0);
-  let unpubPagesUntagged = unpubPages.filter((page) => page.node.relationships.field_tags.length === 0);
+  let pubPagesUntagged = pubPages.filter((page) => page.node?.relationships?.field_editorial_access?.length === 0);
+  let unpubPagesUntagged = unpubPages.filter((page) => page.node?.relationships?.field_editorial_access?.length === 0);
 
   return (
     <Layout>
@@ -36,47 +35,10 @@ const IndexPage = ({ data }) => {
             <p>
               Pages are organized into 2 main sections: <a href="#published">Published</a> and{" "}
               <a href="#unpublished">Unpublished</a>. Under these sections, pages are divided up even further by their
-              tags (ie. "Admission", "Convocation", "OAC", and so on). If a page has more than one tag, it will be
-              listed more than once, with untagged pages listed at the end.
+              Editorial Access group (ie. "Admissions", "College of Arts (COA)", "OVC", and so on). If a page belongs to more than one Editorial Access group, it will be
+              listed multiple times. Pages without an Editorial Access group will appear at the end. <strong>Note that if you do not set an Editorial Access group when creating your content, it can be updated by any user with the editor or publisher role.</strong>
             </p>
-            <p>
-              When you create a new page, please be sure to tag it with the correct tag(s). It's possible to have more
-              than one tag on a single page if that page either belongs to two different units or belongs to a
-              micro-site. What does this mean? Check out the Tagging Scenarios below:
-            </p>
-            <h2>Tagging Scenarios</h2>
-            {accordionData && (
-              <div className="accordion mb-5" id={"accordion" + accordionData.id}>
-                {accordionData.accordion.map((item, index) => (
-                  <div className="accordion-item" key={"item" + index}>
-                    <h3 className="accordion-header" id={"heading" + index}>
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target={"#part" + index}
-                        aria-expanded="false"
-                        aria-controls={"part" + index}
-                      >
-                        {item.title !== "" ? item.title : "Read More"}
-                      </button>
-                    </h3>
-                    <div
-                      id={"part" + index}
-                      className="accordion-collapse collapse"
-                      aria-labelledby={"heading" + index}
-                    >
-                      <div className="accordion-body" dangerouslySetInnerHTML={{ __html: item.content }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
 
-            <p>
-              If you are new to the Content Hub and your tags are not yet in our system, please contact the CCS team to
-              have them added. Once it's added, you can create more pages and assign that tag without the help of CCS.
-            </p>
             <h2>Want to quickly find your page?</h2>
             <p>
               "Control+F" (or "Command+F" on a Mac) is the keyboard shortcut for the Find command. While on this
@@ -115,7 +77,7 @@ const IndexPage = ({ data }) => {
               );
             })}
 
-            <h4>Untagged Pages</h4>
+            <h4>Pages without an Editorial Access group</h4>
             <p>
               Total: <strong>{pubPagesUntagged.length}</strong>
             </p>
@@ -127,9 +89,9 @@ const IndexPage = ({ data }) => {
               ))}
             </ul>
 
-            <h3>Programs</h3>
+            <h3>Programs built using the Program content type ({pubPrograms.length} total)</h3>
             <p>
-              Total: <strong>{pubPrograms.length}</strong>
+              <strong>Note:</strong> these are not basic pages and their appearance is ultimately controlled by the hardcoded Program template.
             </p>
             <ul className="three-col-md">
               {pubPrograms.map((program) => (
@@ -170,7 +132,7 @@ const IndexPage = ({ data }) => {
 
             {unpubPagesUntagged.length > 0 && (
               <>
-                <h4>Untagged Pages</h4>
+                <h4>Pages without an Editorial Access group</h4>
                 <p>
                   Total: <strong>{unpubPagesUntagged.length}</strong>
                 </p>
@@ -186,9 +148,9 @@ const IndexPage = ({ data }) => {
 
             {unpubPrograms.length > 0 && (
               <>
-                <h3>Programs</h3>
+                <h3>Programs built using the Program content type ({unpubPrograms.length} total)</h3>
                 <p>
-                  Total: <strong>{unpubPrograms.length}</strong>
+                  <strong>Note:</strong> these are not basic pages and their appearance is ultimately controlled by the hardcoded Program template.
                 </p>
                 <ul className="three-col-md">
                   {unpubPrograms.map((program) => (
@@ -210,13 +172,6 @@ export default IndexPage;
 
 export const query = graphql`
   {
-    accordion: homeYaml(yamlId: { eq: "home_accordion" }) {
-      id
-      accordion {
-        title
-        content
-      }
-    }
     pubPages: allNodePage(
       filter: { moderation_state: { eq: "published" }, path: { alias: { ne: null } } }
       sort: { title: ASC }
@@ -230,7 +185,7 @@ export const query = graphql`
             alias
           }
           relationships {
-            field_tags {
+            field_editorial_access {
               __typename
               ... on TaxonomyInterface {
                 drupal_id
@@ -255,7 +210,7 @@ export const query = graphql`
             alias
           }
           relationships {
-            field_tags {
+            field_editorial_access {
               __typename
               ... on TaxonomyInterface {
                 drupal_id
@@ -300,7 +255,7 @@ export const query = graphql`
     tags: allTaxonomyInterface(sort: { name: ASC }) {
       edges {
         node {
-          ... on taxonomy_term__tags {
+          ... on taxonomy_term__editorial_access {
             name
             description {
               processed
@@ -315,21 +270,7 @@ export const query = graphql`
               }
             }
           }
-          ... on taxonomy_term__units {
-            name
-            description {
-              processed
-            }
-            relationships {
-              node__page {
-                moderation_state
-                title
-                path {
-                  alias
-                }
-              }
-            }
-          }
+
         }
       }
     }
