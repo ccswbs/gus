@@ -23,9 +23,9 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
     ></script>,
     <link
-      key="https://www.uoguelph.ca/css/UofG-styles-dist.css"
+      key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
       rel="stylesheet"
-      href="https://www.uoguelph.ca/css/UofG-styles-dist.css"
+      href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
     />,
   ]);
   setPostBodyComponents([
