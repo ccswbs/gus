@@ -2,14 +2,13 @@ import React from "react"
 import Layout from "components/layout"
 import { Helmet } from "react-helmet"
 import Seo from "components/seo"
-import Hero from "components/shared/hero"
+const Hero = React.lazy(() => import('components/shared/hero'));
 import Breadcrumbs from "components/shared/breadcrumbs"
 import CallToAction from "components/shared/callToAction"
-// import Careers from 'components/shared/careers';
-import CustomFooter from "components/shared/customFooter"
-import Employers from "components/shared/employers"
-import HeroVideo from "components/shared/heroVideo"
-import Testimonials from "components/shared/testimonial"
+const CustomFooter = React.lazy(() => import('components/shared/customFooter'));
+const Employers = React.lazy(() => import('components/shared/employers'));
+const HeroVideo = React.lazy(() => import('components/shared/heroVideo'));
+const Testimonials = React.lazy(() => import('components/shared/testimonial'));
 import Variants from "components/shared/variants"
 import Widget from "components/shared/widget"
 //import { Row, Col } from "react-bootstrap"
