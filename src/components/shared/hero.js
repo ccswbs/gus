@@ -14,7 +14,7 @@ function Hero(props) {
             let altText = img.node.field_media_image.alt;
             return heroImage ? (
               <React.Fragment key={img.node.drupal_id}>
-                <GatsbyImage image={heroImage.gatsbyImage} alt={altText} className="w-100" />
+                <GatsbyImage image={heroImage.gatsbyImage} alt={altText} className="w-100" loading="eager" />
               </React.Fragment>
             ) : null;
           })}
