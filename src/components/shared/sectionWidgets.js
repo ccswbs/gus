@@ -13,7 +13,6 @@ import PageTabs from "components/shared/pageTabs";
 import SectionButtons from "components/shared/sectionButtons";
 import StatisticWidget from "components/shared/statisticWidget";
 import StatsWidget from "components/shared/statsWidget";
-import YamlWidget from "components/shared/yamlWidget";
 import { ConditionalWrapper } from "utils/ug-utils";
 
 // Check if section only contains media and text
@@ -46,8 +45,6 @@ function renderPrimary(widget) {
       return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
     case "paragraph__section_buttons":
       return <SectionButtons key={widget.drupal_id} pageData={widget} />;
-    case "paragraph__yaml_widget":
-      return <YamlWidget key={widget.drupal_id} blockData={widget} />;
     default:
       return <></>;
   }
@@ -65,8 +62,6 @@ function renderSecondary(widget, sectionClasses) {
       return <MediaText key={widget.drupal_id} widgetData={widget} region="Secondary" />;
     case "paragraph__section_buttons":
       return <SectionButtons key={widget.drupal_id} pageData={widget} />;
-    case "paragraph__yaml_widget":
-      return <YamlWidget key={widget.drupal_id} blockData={widget} />;
     case "paragraph__section_tabs":
       if (sectionClasses === "col-md-6") {
         return <PageTabs key={widget.drupal_id} pageData={widget} />;
@@ -212,9 +207,6 @@ export const query = graphql`
         }
         ... on paragraph__section_tabs {
           ...SectionTabsParagraphFragment
-        }
-        ... on paragraph__yaml_widget {
-          ...YamlWidgetParagraphFragment
         }
       }
     }
