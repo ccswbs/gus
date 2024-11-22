@@ -246,7 +246,7 @@ const ProgramPage = ({ data, location }) => {
   let progData = data.programs.edges[0]?.node
   let callToActionData = data.ctas?.edges
   // let careerData = data.careers?.edges;
-  let domains = progData?.field_domain_access
+  // let domains = progData?.field_domain_access
   let employerData = data.employers?.edges
   let footerData = data.footer?.edges
   let imageData = data.images?.edges
@@ -288,31 +288,7 @@ const ProgramPage = ({ data, location }) => {
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 
       {/**** Header and Title ****/}
-      <div className={!heroImage?.length > 0 && !videoData?.length > 0 ? "no-thumb" : null} id="rotator">
-        {videoData ? (
-          <React.Suspense fallback={<div />}>
-            <HeroVideo
-              videoURL={videoData.field_media_oembed_video}
-              videoWidth={videoData.field_video_width}
-              videoHeight={videoData.field_video_height}
-              videoTranscript={videoData.relationships.field_media_file?.publicUrl}
-            />
-          </React.Suspense>
-        ) : (
-          <>
-          <React.Suspense fallback={<div />}>
-            <Hero imgData={heroImage} />
-          </React.Suspense>
-            {/**** Hero Widgets content ****/}
-            {heroWidgets && (
-              <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-                {heroWidgets.map((widget, index) => (
-                  <Widget widget={widget} key={index} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
+      <div className="no-thumb" id="rotator">
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
