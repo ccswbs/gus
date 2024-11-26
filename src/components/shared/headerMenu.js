@@ -4,7 +4,7 @@
  ***/
 import React from "react"
 import PropTypes from "prop-types"
-import { useMenuData } from "../../hooks/drupal/use-menu_data"
+import { useMenuData } from "hooks/drupal/use-menu-data"
 
 const createMenuHierarchy = (menuData, menuName) => {
   let tree = [],
