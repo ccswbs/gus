@@ -3,8 +3,8 @@
  * https://github.com/xaviemirmon/gatsby-plugin-drupal-menus
  ***/
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
+import { useMenuData } from "../../hooks/drupal/use-menu_data"
 
 const createMenuHierarchy = (menuData, menuName) => {
   let tree = [],
@@ -96,31 +96,8 @@ const generateMenu = (menuLinks, menuName) => {
 };
 
 const HeaderMenu = ({ menuName }) => {
-  const data = useStaticQuery(graphql`
-    query HeaderMenuQuery {
-      allMenuLinkContentMenuLinkContent(sort: { weight: ASC }) {
-        edges {
-          node {
-            enabled
-            title
-            expanded
-            external
-            langcode
-            weight
-            link {
-              uri
-              url
-            }
-            drupal_parent_menu_item
-            bundle
-            drupal_id
-            menu_name
-          }
-        }
-      }
-    }
-  `)
-   return generateMenu(data, menuName)
+  const data = useMenuData();
+  return generateMenu(data, menuName)
 }
 
 HeaderMenu.propTypes = {

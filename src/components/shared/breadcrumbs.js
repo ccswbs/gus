@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, StaticQuery, graphql } from 'gatsby';
-import 'styles/breadcrumbs.css';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link, StaticQuery, graphql } from 'gatsby'
+import 'styles/breadcrumbs.css'
+import { useMenuData } from "../../hooks/drupal/use-menu-data"
 
 /***
 * Recursive function to iterate through the menu in search of parents
@@ -119,33 +120,10 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
     return null;
 }
 
-const Breadcrumbs = (props) => (
-   <StaticQuery
-      query={
-        graphql`query BreadcrumbMenuQuery {
-  allMenuLinkContentMenuLinkContent(
-    sort: {weight: ASC}
-    filter: {enabled: {eq: true}}
-  ) {
-    edges {
-      node {
-        drupal_id
-        drupal_parent_menu_item
-        menu_name
-        link {
-          uri
-          url
-        }
-        title
-        weight
-      }
-    }
+const Breadcrumbs = (props) => {
+    const data = useMenuData();
+    return makeBreadcrumbTrail(data, props.domains, props.menuName, props.nodeID, props.nodeTitle)
   }
-}`
-      }
-      render={data => makeBreadcrumbTrail(data, props.domains, props.menuName, props.nodeID, props.nodeTitle)}
-   />
-)
 
 Breadcrumbs.propTypes = {
     domains: PropTypes.array,
