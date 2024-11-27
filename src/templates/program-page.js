@@ -358,7 +358,7 @@ const ProgramPage = ({ data, location }) => {
         <div className="container page-container apply-footer">
           <section className="row row-with-vspace site-content">
             <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
-              <h3 className="text-dark text-center">Are you ready to Improve Life?</h3>
+              <h3 className="text-dark text-center">Get Future Ready</h3>
               {callToActionData.map((cta, index) => (
                 <CallToAction
                   key={index}
