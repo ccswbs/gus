@@ -30,12 +30,6 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   ]);
   setPostBodyComponents([
     <script
-      key="https://kit.fontawesome.com/7993323d0c.js"
-      src="https://kit.fontawesome.com/7993323d0c.js"
-      crossOrigin="anonymous"
-      defer
-    />,
-    <script
       key="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
       crossOrigin="anonymous"
