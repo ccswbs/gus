@@ -30,6 +30,17 @@ module.exports = {
     ogImageAlt: metaConfig['ogImageAlt'],
     menus: metaConfig['menus'],
   },
+  headers: [
+    {
+      source: `/cbs/graduate/course-based-masters-int`,
+      headers: [
+        {
+          key: `X-Robots-Tag`,
+          value: `noindex`,
+        }
+      ]
+    }
+  ],
   plugins: [
     `gatsby-plugin-client-side-redirect`,
     `gatsby-plugin-gatsby-cloud`,
@@ -51,6 +62,7 @@ module.exports = {
         host: `https://livechugendpoint.azureedge.net/`,
         sitemap: null,
         policy: [{ userAgent: '*', allow: ['/*.jpg', '/*.gif', '/*.png'], disallow: '/' }]
+                    
       }
     },
     {
