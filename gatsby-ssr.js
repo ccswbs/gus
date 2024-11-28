@@ -12,16 +12,19 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
       rel="stylesheet"
     />,
+    <link rel="preload" href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} as="style" />,
     <link
       rel="stylesheet"
       href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
     />,
+    <link href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`} rel="preload" as="script" />,
     <script
       type="module"
       src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
     ></script>,
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css" as="style" />,
     <link
       key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
       rel="stylesheet"
