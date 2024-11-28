@@ -2,14 +2,11 @@ import React from "react"
 import Layout from "components/layout"
 import { Helmet } from "react-helmet"
 import Seo from "components/seo"
-import Hero from "components/shared/hero"
-import Breadcrumbs from "components/shared/breadcrumbs"
+// import Breadcrumbs from "components/shared/breadcrumbs"
 import CallToAction from "components/shared/callToAction"
-// import Careers from 'components/shared/careers';
 import CustomFooter from "components/shared/customFooter"
-import Employers from "components/shared/employers"
-import HeroVideo from "components/shared/heroVideo"
-import Testimonials from "components/shared/testimonial"
+const Employers = React.lazy(() => import('components/shared/employers'));
+const Testimonials = React.lazy(() => import('components/shared/testimonial'));
 import Variants from "components/shared/variants"
 import Widget from "components/shared/widget"
 //import { Row, Col } from "react-bootstrap"
@@ -175,7 +172,9 @@ function renderProgramInfoAccordion(employerData) {
             aria-labelledby="programEmployers-heading"
           >
             <div className="accordion-body">
-              <Employers employerData={employerData} />
+              <React.Suspense fallback={<div />}>
+                <Employers employerData={employerData} />
+              </React.Suspense>
             </div>
           </div>
         </div>
@@ -245,7 +244,7 @@ const ProgramPage = ({ data, location }) => {
   let progData = data.programs.edges[0]?.node
   let callToActionData = data.ctas?.edges
   // let careerData = data.careers?.edges;
-  let domains = progData?.field_domain_access
+  // let domains = progData?.field_domain_access
   let employerData = data.employers?.edges
   let footerData = data.footer?.edges
   let imageData = data.images?.edges
@@ -287,33 +286,13 @@ const ProgramPage = ({ data, location }) => {
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 
       {/**** Header and Title ****/}
-      <div className={!heroImage?.length > 0 && !videoData?.length > 0 ? "no-thumb" : null} id="rotator">
-        {videoData ? (
-          <HeroVideo
-            videoURL={videoData.field_media_oembed_video}
-            videoWidth={videoData.field_video_width}
-            videoHeight={videoData.field_video_height}
-            videoTranscript={videoData.relationships.field_media_file?.publicUrl}
-          />
-        ) : (
-          <>
-            <Hero imgData={heroImage} />
-            {/**** Hero Widgets content ****/}
-            {heroWidgets && (
-              <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-                {heroWidgets.map((widget, index) => (
-                  <Widget widget={widget} key={index} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
+      <div className="no-thumb" id="rotator">
         <div className="container ft-container">
           <h1 className="fancy-title">{title}</h1>
         </div>
       </div>
 
-      <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
+      {/* <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} /> */}
 
       {/**** Program Overview ****/}
       {overview && (
@@ -339,7 +318,11 @@ const ProgramPage = ({ data, location }) => {
       )}
 
       {/**** Testimonials ****/}
-      {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />}
+      {testimonialData && 
+        <React.Suspense fallback={<div />}>
+          <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />
+        </React.Suspense>
+      }
 
       {/**** Admission Requirements ****/}
       {

@@ -15,7 +15,6 @@ import StatisticWidget from "components/shared/statisticWidget";
 import StatsWidget from "components/shared/statsWidget";
 import Story from "components/shared/story";
 import TestimonialSlider from "components/shared/testimonialSlider";
-import YamlWidget from "components/shared/yamlWidget";
 import { ConditionalWrapper, slugify } from "utils/ug-utils";
 
 const WidgetSelector = ({ widget }) => {
@@ -72,8 +71,6 @@ const WidgetSelector = ({ widget }) => {
       return <Story storyData={widget} />;
     case "paragraph__testimonial_slider":
       return <TestimonialSlider testimonialData={widget} />;
-    case "paragraph__yaml_widget":
-      return <YamlWidget blockData={widget} />;
     default:
       return <></>;
   }
@@ -84,7 +81,6 @@ const Widget = ({ widget }) => {
   return (
     <ConditionalWrapper
       condition={
-        widget?.__typename !== "paragraph__yaml_widget" &&
         widget?.__typename !== "paragraph__image_overlay" &&
         widget?.__typename !== "paragraph__modal_video_widget" &&
         widget?.__typename !== "paragraph__story_widget" &&
@@ -148,9 +144,6 @@ export const query = graphql`
     }
     ... on paragraph__testimonial_slider {
       ...TestimonialSliderParagraphFragment
-    }
-    ... on paragraph__yaml_widget {
-      ...YamlWidgetParagraphFragment
     }
   }
 `;

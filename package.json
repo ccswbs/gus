@@ -26,7 +26,6 @@
     "gatsby-graphiql-explorer": "^3.13.1",
     "gatsby-plugin-client-side-redirect": "^1.1.0",
     "gatsby-plugin-gatsby-cloud": "^5.13.1",
-    "gatsby-plugin-google-tagmanager": "^5.13.1",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-manifest": "^5.13.1",
     "gatsby-plugin-react-helmet": "^6.13.1",
