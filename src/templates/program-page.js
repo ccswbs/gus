@@ -361,6 +361,7 @@ const ProgramPage = ({ data, location }) => {
               <h3 className="text-dark text-center">Get Future Ready</h3>
               {callToActionData.map((cta, index) => (
                 <CallToAction
+                  btnClass = {index === (callToActionData.length - 1) ? 'btn-primary':'btn-outline-primary'}
                   key={index}
                   href={cta.node.field_call_to_action_link.uri}
                   goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
