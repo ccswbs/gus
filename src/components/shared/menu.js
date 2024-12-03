@@ -1,5 +1,5 @@
 import React from "react"
-import { StaticQuery, graphql, Link } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types";
 
 const createMenuHierarchy = (menuData, menuName) => {
@@ -38,13 +38,9 @@ const createMenuHierarchy = (menuData, menuName) => {
 }
 
 const buildLink = link => {
-  if (link.link.uri.includes('entity:')) {
-    return (<Link to={link.link.url}>{link.title}</Link>)
-  } else {
     return ( <a href={link.link.url}>
       {link.title}
     </a>)
-  }
 }
 
 const buildMenu = menuArray => {

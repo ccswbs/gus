@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Link } from "gatsby";
 import { fontAwesomeIconColour } from "utils/ug-utils";
 import classNames from "classnames";
 
@@ -122,8 +121,8 @@ function Button(buttonCol, buttonData, buttonSpacing) {
           </a>
         )
       ) : btnAnalyticsGoal && btnAnalyticsAction ? (
-        <Link
-          to={urlLink}
+        <a
+          href={urlLink}
           className={buttonClasses}
           onClick={(e) => {
             window.dataLayer = window.dataLayer = Array.isArray(window.dataLayer) ? window.dataLayer : [];
@@ -140,16 +139,16 @@ function Button(buttonCol, buttonData, buttonSpacing) {
             </i>
           )}
           <span className={buttonTitleClasses} dangerouslySetInnerHTML={{ __html: buttonLinkTitle }} />
-        </Link>
+        </a>
       ) : (
-        <Link to={urlLink} className={buttonClasses}>
+        <a href={urlLink} className={buttonClasses}>
           {buttonIcon && (
             <i aria-hidden="true" className={buttonFontAwesomeClasses}>
               {" "}
             </i>
           )}
           <span className={buttonTitleClasses} dangerouslySetInnerHTML={{ __html: buttonLinkTitle }} />
-        </Link>
+        </a>
       )}
     </React.Fragment>
   );
