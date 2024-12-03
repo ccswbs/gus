@@ -2,15 +2,14 @@ import React from "react"
 import Layout from "components/layout"
 import { Helmet } from "react-helmet"
 import Seo from "components/seo"
-import Hero from "components/shared/hero"
+const Hero = React.lazy(() => import('components/shared/hero'));
 import Breadcrumbs from "components/shared/breadcrumbs"
 import CallToAction from "components/shared/callToAction"
-// import Careers from 'components/shared/careers';
 import CustomFooter from "components/shared/customFooter"
-import Employers from "components/shared/employers"
-import HeroVideo from "components/shared/heroVideo"
-import Testimonials from "components/shared/testimonial"
-import Variants from "components/shared/variants"
+// const Employers = React.lazy(() => import('components/shared/employers'));
+const HeroVideo = React.lazy(() => import('components/shared/heroVideo'));
+const Testimonials = React.lazy(() => import('components/shared/testimonial'));
+// import Variants from "components/shared/variants"
 import Widget from "components/shared/widget"
 //import { Row, Col } from "react-bootstrap"
 //import { StaticImage } from "gatsby-plugin-image"
@@ -29,20 +28,20 @@ function renderProgramOverview(overview) {
   return null
 }
 
-function renderProgramVariants(variantDataHeading, variantData) {
-  if (variantDataHeading) {
-    return (
-      <div className="container page-container">
-        <div className="row site-content">
-          <section className="content-area">
-            <h2>{variantDataHeading}</h2>
-            {<Variants variantData={variantData} />}
-          </section>
-        </div>
-      </div>
-    )
-  }
-}
+// function renderProgramVariants(variantDataHeading, variantData) {
+//   if (variantDataHeading) {
+//     return (
+//       <div className="container page-container">
+//         <div className="row site-content">
+//           <section className="content-area">
+//             <h2>{variantDataHeading}</h2>
+//             {<Variants variantData={variantData} />}
+//           </section>
+//         </div>
+//       </div>
+//     )
+//   }
+// }
 
 /*
 function renderTalkToStudent() {
@@ -175,7 +174,9 @@ function renderProgramInfoAccordion(employerData) {
             aria-labelledby="programEmployers-heading"
           >
             <div className="accordion-body">
-              <Employers employerData={employerData} />
+              <React.Suspense fallback={<div />}>
+                <Employers employerData={employerData} />
+              </React.Suspense>
             </div>
           </div>
         </div>
@@ -211,48 +212,15 @@ function retrieveLastModifiedDates(content) {
   return dates
 }
 
-function prepareVariantHeading(variantData) {
-  let labels = []
-
-  // prepare variant data labels
-  variantData.forEach((edge) => {
-    if (edge.__typename === "paragraph__program_variants" && edge.relationships.field_variant_type !== null) {
-      labels.push(edge.relationships.field_variant_type.name)
-    }
-  })
-
-  const uniqueLabelSet = new Set(labels)
-  const uniqueLabels = [...uniqueLabelSet]
-  let variantHeading = ""
-
-  for (let i = 0; i < uniqueLabels.length; i++) {
-    if (i > 0) {
-      if (uniqueLabels.length > 2) {
-        variantHeading += ","
-      }
-      variantHeading += " "
-      if (i === uniqueLabels.length - 1) {
-        variantHeading += "and "
-      }
-    }
-    variantHeading += uniqueLabels[i]
-  }
-
-  return variantHeading
-}
-
 const ProgramPage = ({ data, location }) => {
   let progData = data.programs.edges[0]?.node
   let callToActionData = data.ctas?.edges
   // let careerData = data.careers?.edges;
   let domains = progData?.field_domain_access
-  let employerData = data.employers?.edges
   let footerData = data.footer?.edges
   let imageData = data.images?.edges
   let imageTaggedData = data.imagesTagged?.edges
   let testimonialData = data.testimonials?.edges
-  let variantData = progData.relationships?.field_program_variants
-  let variantDataHeading = prepareVariantHeading(variantData)
   let videoData = data.videos.edges[0]?.node
 
   const heroImage = imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null
@@ -289,15 +257,19 @@ const ProgramPage = ({ data, location }) => {
       {/**** Header and Title ****/}
       <div className={!heroImage?.length > 0 && !videoData?.length > 0 ? "no-thumb" : null} id="rotator">
         {videoData ? (
-          <HeroVideo
-            videoURL={videoData.field_media_oembed_video}
-            videoWidth={videoData.field_video_width}
-            videoHeight={videoData.field_video_height}
-            videoTranscript={videoData.relationships.field_media_file?.publicUrl}
-          />
+          <React.Suspense fallback={<div />}>
+            <HeroVideo
+              videoURL={videoData.field_media_oembed_video}
+              videoWidth={videoData.field_video_width}
+              videoHeight={videoData.field_video_height}
+              videoTranscript={videoData.relationships.field_media_file?.publicUrl}
+            />
+          </React.Suspense>
         ) : (
           <>
+          <React.Suspense fallback={<div />}>
             <Hero imgData={heroImage} />
+          </React.Suspense>
             {/**** Hero Widgets content ****/}
             {heroWidgets && (
               <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
@@ -325,21 +297,19 @@ const ProgramPage = ({ data, location }) => {
       )}
 
       {/**** Variants (e.g., Majors) content ****/}
-      {renderProgramVariants(variantDataHeading, variantData)}
+      {/* {renderProgramVariants(variantDataHeading, variantData)} */}
 
       {/**** Widgets content ****/}
       {widgets?.map((widget, index) => (
         <Widget widget={widget} key={index} />
       ))}
 
-      {/**** Program Information Accordion ****/}
-      {renderProgramInfoAccordion(
-        // careerData,
-        employerData
-      )}
-
       {/**** Testimonials ****/}
-      {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />}
+      {testimonialData && 
+        <React.Suspense fallback={<div />}>
+          <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />
+        </React.Suspense>
+      }
 
       {/**** Admission Requirements ****/}
       {
@@ -423,30 +393,6 @@ export const query = graphql`
             field_tags {
               name
             }
-            field_program_variants {
-              __typename
-              ... on paragraph__general_text {
-                drupal_id
-                field_general_text {
-                  processed
-                }
-              }
-              ... on paragraph__program_variants {
-                drupal_id
-                field_variant_title
-                field_variant_link {
-                  uri
-                }
-                field_variant_info {
-                  processed
-                }
-                relationships {
-                  field_variant_type {
-                    name
-                  }
-                }
-              }
-            }
             field_widgets {
               ...FieldWidgetsFragment
             }
@@ -499,36 +445,6 @@ export const query = graphql`
                 id
                 name
               }
-            }
-          }
-        }
-      }
-    }
-    employers: allNodeEmployer(sort: { title: ASC }, filter: { fields: { tags: { in: [$id] } } }) {
-      edges {
-        node {
-          drupal_id
-          field_employer_summary {
-            processed
-          }
-          title
-          field_image {
-            alt
-          }
-          field_link {
-            uri
-          }
-          relationships {
-            field_tags {
-              __typename
-              ... on TaxonomyInterface {
-                drupal_id
-                id
-                name
-              }
-            }
-            field_image {
-              gatsbyImage(width: 400, height: 400, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
             }
           }
         }
