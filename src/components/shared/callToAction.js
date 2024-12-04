@@ -3,7 +3,7 @@ import React from "react";
 import classNames from "classnames";
 
 const CallToAction = ({ children, btnClass, classes, href, goalEventCategory, goalEventAction }) => {
-  let className = classNames(btnClass,'btn fs-1 me-4 p-4 w-100');
+  let className = classNames(btnClass,classes);
   if (goalEventCategory) {    
     return (
       <a
@@ -38,7 +38,6 @@ CallToAction.propTypes = {
   href: PropTypes.string,
 };
 
-/* will remove the default classes if className works as expected */ 
 CallToAction.defaultProps = {
   children: ``,
   classes: "btn btn-primary fs-1 me-4 p-4 w-100",
