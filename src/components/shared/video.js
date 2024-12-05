@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
 function Video (props) {
     let videoTitle = props.videoTitle;
@@ -19,7 +21,10 @@ function Video (props) {
 
     return (<>
         <div className={"embed-responsive embed-responsive-" + aspectRatio}>
-            <iframe allowFullScreen src={videoSrc} title={videoTitle ? videoTitle : videoType + " video player"} />
+          {videoType === `youtube` ?
+            <LiteYouTubeEmbed id={videoID} title={videoTitle ? videoTitle : videoType + " video player"} />
+            : <iframe loading="lazy" allowFullScreen src={videoSrc} title={videoTitle ? videoTitle : videoType + " video player"} />
+          }
         </div>
         {videoTranscript && <a className="btn btn-primary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
     </>)
