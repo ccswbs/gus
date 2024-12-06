@@ -357,19 +357,21 @@ const ProgramPage = ({ data, location }) => {
       {callToActionData.length !== 0 && (
         <div className="container page-container apply-footer">
           <section className="row row-with-vspace site-content">
-            <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
+            <div className="col-sm-12 col-md-8 offset-md-3 col-lg-8 mx-auto my-0 content-area">
               <h3 className="text-dark text-center">Get Future Ready</h3>
-              {callToActionData.map((cta, index) => (
-                <CallToAction
-                  btnClass = {index === (callToActionData.length - 1) ? 'btn-primary':'btn-outline-primary'}
-                  key={index}
-                  href={cta.node.field_call_to_action_link.uri}
-                  goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
-                  goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
-                >
-                  {cta.node.field_call_to_action_link.title}
-                </CallToAction>
-              ))}
+              <div class="d-lg-flex justify-content-lg-between">
+                {callToActionData.map((cta, index) => (
+                  <CallToAction
+                    btnClass = {index === (callToActionData.length - 1) ? 'btn-primary':'btn-outline-primary'}
+                    key={index}
+                    href={cta.node.field_call_to_action_link.uri}
+                    goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
+                    goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
+                  >
+                    {cta.node.field_call_to_action_link.title}
+                  </CallToAction>
+                ))}
+              </div>
             </div>
           </section>
         </div>

@@ -228,7 +228,17 @@ i.green {
 @media (max-width: 768px) {
   .ug-slate .form_button_submit {
     width: 100%;
-  }
+  } 
+  
+  .w-sm-100 {
+    width: 100% !important;
+    }
+}
+
+@media (max-width: 1024px) {
+  .w-md-100 {
+    width: 100% !important;
+    }
 }
 
 @media (min-width: 992px) {
