@@ -359,18 +359,26 @@ const ProgramPage = ({ data, location }) => {
           <section className="row row-with-vspace site-content">
             <div className="col-sm-12 col-md-8 offset-md-3 col-lg-8 mx-auto my-0 content-area">
               <h3 className="text-dark text-center">Get Future Ready</h3>
-              <div class="d-lg-flex justify-content-lg-between">
-                {callToActionData.map((cta, index) => (
-                  <CallToAction
-                    btnClass = {index === (callToActionData.length - 1) ? 'btn-primary':'btn-outline-primary'}
-                    key={index}
-                    href={cta.node.field_call_to_action_link.uri}
-                    goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
-                    goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
-                  >
-                    {cta.node.field_call_to_action_link.title}
-                  </CallToAction>
-                ))}
+              <div className="d-lg-flex justify-content-lg-between">
+                {(() => {
+                  let isPrimary = true;
+                  return callToActionData.map((cta) => {
+                    const btnClass = isPrimary ? 'btn-primary' : 'btn-outline-primary';
+                    isPrimary = !isPrimary; // Toggle the class for the next item
+
+                    return (
+                      <CallToAction
+                        btnClass={btnClass}
+                        key={cta.drupal_id}
+                        href={cta.node.field_call_to_action_link.uri}
+                        goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
+                        goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
+                      >
+                        {cta.node.field_call_to_action_link.title}
+                      </CallToAction>
+                    );
+                  });
+                })()}
               </div>
             </div>
           </section>
@@ -464,6 +472,7 @@ export const query = graphql`
       edges {
         node {
           changed
+          drupal_id
           field_call_to_action_link {
             title
             uri
