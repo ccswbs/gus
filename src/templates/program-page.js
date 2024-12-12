@@ -70,10 +70,10 @@ function renderTalkToStudent() {
 function renderAdmissionRequirements() {
   return (
     <>
-      <div class="row row-cols-1 row-cols-sm-2 my-5">
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-black">
-            <h3 class="card-title text-dark mt-0">Admission Requirements</h3>
+      <div className="row row-cols-1 row-cols-sm-2 my-5">
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-black">
+            <h3 className="card-title text-dark mt-0">Admission Requirements</h3>
             <p>
               Explore admission requirements for Canadian, international, transfer, and mature students. Start your
               journey today!
@@ -84,9 +84,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-red">
-            <h3 class="card-title text-dark mt-0">Scholarships & Bursaries</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-red">
+            <h3 className="card-title text-dark mt-0">Scholarships & Bursaries</h3>
             <p>
               We offer a wide range of financial aid programs to assist with funding your education at the University of
               Guelph.
@@ -99,9 +99,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-yellow">
-            <h3 class="card-title text-dark mt-0">Tour Our Campus</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-yellow">
+            <h3 className="card-title text-dark mt-0">Tour Our Campus</h3>
             <p>
               Through virtual tours, presentations, webinars and in-person tours, get familiar with the University of
               Guelph campus.
@@ -112,9 +112,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-blue">
-            <h3 class="card-title text-dark mt-0">Have Questions?</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-blue">
+            <h3 className="card-title text-dark mt-0">Have Questions?</h3>
             <p>
               Learn more about how to connect, discover, and engage with programs, facilities and life at the University
               of Guelph.
