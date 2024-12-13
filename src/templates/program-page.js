@@ -70,10 +70,10 @@ function renderTalkToStudent() {
 function renderAdmissionRequirements() {
   return (
     <>
-      <div class="row row-cols-1 row-cols-sm-2 my-5">
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-black">
-            <h3 class="card-title text-dark mt-0">Admission Requirements</h3>
+      <div className="row row-cols-1 row-cols-sm-2 my-5">
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-black">
+            <h3 className="card-title text-dark mt-0">Admission Requirements</h3>
             <p>
               Explore admission requirements for Canadian, international, transfer, and mature students. Start your
               journey today!
@@ -84,9 +84,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-red">
-            <h3 class="card-title text-dark mt-0">Scholarships & Bursaries</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-red">
+            <h3 className="card-title text-dark mt-0">Scholarships & Bursaries</h3>
             <p>
               We offer a wide range of financial aid programs to assist with funding your education at the University of
               Guelph.
@@ -99,9 +99,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-yellow">
-            <h3 class="card-title text-dark mt-0">Tour Our Campus</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-yellow">
+            <h3 className="card-title text-dark mt-0">Tour Our Campus</h3>
             <p>
               Through virtual tours, presentations, webinars and in-person tours, get familiar with the University of
               Guelph campus.
@@ -112,9 +112,9 @@ function renderAdmissionRequirements() {
           </div>
         </div>
 
-        <div class="card border-0 mb-4 col">
-          <div class="card-body p-4 uog-blue-muted uog-border-blue">
-            <h3 class="card-title text-dark mt-0">Have Questions?</h3>
+        <div className="card border-0 mb-4 col">
+          <div className="card-body p-4 uog-blue-muted uog-border-blue">
+            <h3 className="card-title text-dark mt-0">Have Questions?</h3>
             <p>
               Learn more about how to connect, discover, and engage with programs, facilities and life at the University
               of Guelph.
@@ -355,22 +355,35 @@ const ProgramPage = ({ data, location }) => {
 
       {/**** Call to Actions ****/}
       {callToActionData.length !== 0 && (
-        <div className="container page-container apply-footer">
-          <section className="row row-with-vspace site-content">
-            <div className="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 content-area">
-              <h3 className="text-dark text-center">Get Future Ready</h3>
-              {callToActionData.map((cta, index) => (
-                <CallToAction
-                  key={index}
-                  href={cta.node.field_call_to_action_link.uri}
-                  goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
-                  goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
-                >
-                  {cta.node.field_call_to_action_link.title}
-                </CallToAction>
-              ))}
+        <div className="pt-0 container page-container apply-footer">
+          <div className="col-md-8 mx-auto">
+            <h3 className="mt-0 text-center text-dark">Get Future Ready</h3>
+            <div className="row gx-3 mx-5 mb-5">              
+              {(() => {
+                let isFirstButton = true;
+                return callToActionData.map((cta) => {
+                  const btnClass = isFirstButton ? 'btn-primary' : 'btn-outline-primary';
+                  isFirstButton = false; // Set the flag to false after the first button
+
+                  // Apply mx-auto if there's only one button
+                  const colClass = callToActionData.length === 1 ? 'col-md-6 mx-auto' : 'col-md-6';
+
+                  return (
+                    <div className={colClass} key={cta.drupal_id}>
+                      <CallToAction
+                        btnClass={btnClass}
+                        href={cta.node.field_call_to_action_link.uri}
+                        goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
+                        goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
+                      >
+                        {cta.node.field_call_to_action_link.title}
+                      </CallToAction>
+                    </div>
+                  );
+                });
+              })()}
             </div>
-          </section>
+          </div>
         </div>
       )}
       {footerData?.length > 0 && <CustomFooter footerData={footerData[0]} />}
@@ -461,6 +474,7 @@ export const query = graphql`
       edges {
         node {
           changed
+          drupal_id
           field_call_to_action_link {
             title
             uri

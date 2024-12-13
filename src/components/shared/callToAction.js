@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
+import classNames from "classnames";
 
-const CallToAction = ({ children, classes, href, goalEventCategory, goalEventAction }) => {
-  if (goalEventCategory) {
+const CallToAction = ({ children, btnClass, classes, href, goalEventCategory, goalEventAction }) => {
+  let className = classNames(btnClass,classes);
+  if (goalEventCategory) {    
     return (
       <a
-        className={classes}
+        className = {className}
         href={href}
         onClick={(e) => {
           // Track the custom click
@@ -22,7 +24,7 @@ const CallToAction = ({ children, classes, href, goalEventCategory, goalEventAct
     );
   }
   return (
-    <a className={classes} href={href}>
+    <a className={className} href={href}>
       {children}
     </a>
   );
@@ -38,7 +40,7 @@ CallToAction.propTypes = {
 
 CallToAction.defaultProps = {
   children: ``,
-  classes: "btn btn-primary fs-1 me-4 p-4 w-100",
+  classes: "btn fs-1 p-4 w-100",
   href: "#",
   goalEventAction: ``,
   goalEventCategory: ``,
