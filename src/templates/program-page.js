@@ -360,10 +360,10 @@ const ProgramPage = ({ data, location }) => {
             <h3 className="mt-0 text-center text-dark">Get Future Ready</h3>
             <div className="row gx-3 mx-5 mb-5">              
               {(() => {
-                let isPrimary = true;
-                return callToActionData.map((cta, index) => {
-                  const btnClass = isPrimary ? 'btn-primary' : 'btn-outline-primary';
-                  isPrimary = !isPrimary; // Toggle the class for the next item
+                let isFirstButton = true;
+                return callToActionData.map((cta) => {
+                  const btnClass = isFirstButton ? 'btn-primary' : 'btn-outline-primary';
+                  isFirstButton = false; // Set the flag to false after the first button
 
                   // Apply mx-auto if there's only one button
                   const colClass = callToActionData.length === 1 ? 'col-md-6 mx-auto' : 'col-md-6';
