@@ -229,15 +229,6 @@ i.green {
   .ug-slate .form_button_submit {
     width: 100%;
   }
-  .w-sm-100 {
-    width: 100% !important;
-    }
-}
-
-@media (max-width: 991px) {
-  .w-md-100 {
-    width: 100% !important;
-    }
 }
 
 @media (min-width: 992px) {
@@ -246,9 +237,6 @@ i.green {
   }
   .ug-slate .form_button_submit {
     font-size: 2.5rem !important;
-  }
-  .w-lg-50 {
-    width: 50% !important;
   }
 }
 
