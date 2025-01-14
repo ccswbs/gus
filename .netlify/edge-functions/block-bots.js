@@ -16,8 +16,6 @@ const botUas = [
   'cohere-ai',
   'DataForSeoBot',
   'Diffbot',
-  'FacebookBot',
-  'FacebookBot',
   'Google-Extended',
   'GPTBot',
   'ImagesiftBot',
