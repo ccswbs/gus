@@ -7,6 +7,7 @@ export default async (request: Request) => {
   const ua = request.headers.get('user-agent');
 
   if (!ua?.length) {
+    console.log(`blocking null agent`);
     return new Response('Access Denied: User-Agent is required', {
       status: 403,
       headers: {
