@@ -9,7 +9,8 @@ export default async (request: Request) => {
   // Check against our list of known AI bots
   let isBot = false;
   agents.forEach(agent => {
-    if (ua.toLowerCase().includes(agent.toLowerCase())) {
+    if (ua?.toLowerCase().includes(agent.toLowerCase())) {
+      console.log(`blocking ${agent}`);
       isBot = true;
       return;
     }
