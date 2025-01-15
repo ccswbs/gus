@@ -6,6 +6,7 @@ export default async (request: Request) => {
   // Get the user agent string of the requester
   const ua = request.headers.get('user-agent');
 
+  // Block any null user-agents
   if (!ua?.length) {
     console.log(`blocking null agent`);
     return new Response('Access Denied: User-Agent is required', {
