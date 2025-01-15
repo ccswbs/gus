@@ -6,6 +6,15 @@ export default async (request: Request) => {
   // Get the user agent string of the requester
   const ua = request.headers.get('user-agent');
 
+  if (!ua?.length) {
+    return new Response('Access Denied: User-Agent is required', {
+      status: 403,
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    });
+  }
+
   // Check against our list of known AI bots
   let isBot = false;
   agents.forEach(agent => {
@@ -28,5 +37,5 @@ export default async (request: Request) => {
 
 // This edge function is executed for all requests across the site
 export const config: Config = {
-  path: "*",
+  path: "/*",
 };
