@@ -9,3 +9,7 @@ remote_images = [
   "https://api.devugconthub.uoguelph.dev/.*",
   "https://.*.pantheonsite.io/.*"
 ]
+
+[[edge_functions]]
+function = "block-bots"
+path = "/*"
