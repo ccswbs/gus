@@ -5,10 +5,6 @@ body,
   min-height: 100vh !important;
 }
 
-body {
-  font-family: "Bitter", serif !important;
-}
-
 #gatsby-focus-wrapper {
   display: flex;
   flex-direction: column;
