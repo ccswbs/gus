@@ -26,9 +26,9 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
     ></script>,
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.0/dist/index.css" as="style" />,
     <link
-      key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
+      key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.0/dist/index.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
+      href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.0/dist/index.css"
     />,
   ]);
   setPostBodyComponents([
