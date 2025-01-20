@@ -67,69 +67,6 @@ function renderTalkToStudent() {
 }
 */
 
-/* 4 cards - Admission Requirements, Scholarships, Tour our Campus, Have Questions */
-function renderAdmissionRequirements() {
-  return (
-    <>
-      <div className="row row-cols-1 row-cols-sm-2 my-5">
-        <div className="card border-0 mb-4 col">
-          <div className="card-body p-4 uog-blue-muted uog-border-black">
-            <h3 className="card-title text-dark mt-0">Admission Requirements</h3>
-            <p>
-              Explore admission requirements for Canadian, international, transfer, and mature students. Start your
-              journey today!
-            </p>
-            <p>
-              <a href="https://www.uoguelph.ca/admission/undergraduate/">View Admission Requirements</a>
-            </p>
-          </div>
-        </div>
-
-        <div className="card border-0 mb-4 col">
-          <div className="card-body p-4 uog-blue-muted uog-border-red">
-            <h3 className="card-title text-dark mt-0">Scholarships & Bursaries</h3>
-            <p>
-              We offer a wide range of financial aid programs to assist with funding your education at the University of
-              Guelph.
-            </p>
-            <p>
-              <a href="https://www.uoguelph.ca/registrar/studentfinance/aid/index">
-                Explore Scholarships & Financial Aid
-              </a>
-            </p>
-          </div>
-        </div>
-
-        <div className="card border-0 mb-4 col">
-          <div className="card-body p-4 uog-blue-muted uog-border-yellow">
-            <h3 className="card-title text-dark mt-0">Tour Our Campus</h3>
-            <p>
-              Through virtual tours, presentations, webinars and in-person tours, get familiar with the University of
-              Guelph campus.
-            </p>
-            <p>
-              <a href="https://www.uoguelph.ca/admission/undergraduate/tours/">Book a Tour</a>
-            </p>
-          </div>
-        </div>
-
-        <div className="card border-0 mb-4 col">
-          <div className="card-body p-4 uog-blue-muted uog-border-blue">
-            <h3 className="card-title text-dark mt-0">Have Questions?</h3>
-            <p>
-              Learn more about how to connect, discover, and engage with programs, facilities and life at the University
-              of Guelph.
-            </p>
-            <p>
-              <a href="https://www.uoguelph.ca/admission/undergraduate/contact/">Request More Info</a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </>
-  )
-}
-
 // function renderProgramInfoAccordion  (careerData, employerData) {
 function renderProgramInfoAccordion(employerData) {
   // accordion - Careers Item
@@ -257,7 +194,7 @@ const ProgramPage = ({ data, location }) => {
   let videoData = data.videos.edges[0]?.node
 
   // Only pulling one block right now
-  let blockData = data.block75;
+  let blockData = data.blockAdmissionRequirements;
 
   const heroImage = imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null
 
@@ -336,17 +273,6 @@ const ProgramPage = ({ data, location }) => {
         <Widget widget={widget} key={index} />
       ))}
 
-      { /**** Block Data - International Webinars (ID 75) ****/}
-      {blockData && (
-        <div className="container page-container">
-          <section className="row row-with-vspace site-content">
-            <div className="col-md-12 content-area">
-              <BlockWidget key={blockData.drupal_id} blockData={blockData} />
-            </div>
-          </section>
-        </div>
-      )}
-
       {/**** Program Information Accordion ****/}
       {renderProgramInfoAccordion(
         // careerData,
@@ -356,17 +282,16 @@ const ProgramPage = ({ data, location }) => {
       {/**** Testimonials ****/}
       {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />}
 
-      {/**** Admission Requirements ****/}
-      {
+      { /**** Block - Admission Requirements Data ****/}
+      {blockData && (
         <div className="container page-container">
           <section className="row row-with-vspace site-content">
             <div className="col-md-12 content-area">
-              {renderAdmissionRequirements()}
-              {/****renderTalkToStudent()****/}
+              <BlockWidget key={blockData.drupal_id} blockData={blockData} />
             </div>
           </section>
         </div>
-      }
+      )}
 
       {/**** Call to Actions ****/}
       {callToActionData.length !== 0 && (
@@ -485,7 +410,7 @@ export const query = graphql`
         }
       }
     }
-    block65: paragraphBlockWidget(field_custom_block: {drupal_internal__target_id: {eq: 65}}) {
+    blockAdmissionRequirements: paragraphBlockWidget(field_custom_block: {drupal_internal__target_id: {eq: 65}}) {
       ...BlockWidgetParagraphFragment
     }
     ctas: allNodeCallToAction(filter: { fields: { tags: { in: [$id] } } }) {
