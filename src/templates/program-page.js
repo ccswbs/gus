@@ -485,7 +485,7 @@ export const query = graphql`
         }
       }
     }
-    block75: paragraphBlockWidget(field_custom_block: {drupal_internal__target_id: {eq: 75}}) {
+    block65: paragraphBlockWidget(field_custom_block: {drupal_internal__target_id: {eq: 65}}) {
       ...BlockWidgetParagraphFragment
     }
     ctas: allNodeCallToAction(filter: { fields: { tags: { in: [$id] } } }) {
