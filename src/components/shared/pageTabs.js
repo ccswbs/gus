@@ -41,7 +41,7 @@ const PageTabs = (props) => {
         {tabs?.map((tab) => (
           <Tab key={tab.drupal_id} eventKey={tab.drupal_id} title={tab.field_tab_title.toUpperCase()}>
             <div data-tab-id={tab.drupal_id}>
-              <ParseText textContent={tab.field_tab_body.processed} />
+                <ParseText textContent={tab.field_tab_body?.processed} />
             </div>
           </Tab>
         ))}
