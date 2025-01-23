@@ -10,7 +10,7 @@ import CustomFooter from 'components/shared/customFooter';
 
 const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, domains}) => {
   return (
-    <Layout menuName={menuName}>
+    <Layout menuName={menuData.menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={seoData.description} img={seoData.img} imgAlt={seoData.imgAlt} />
 
