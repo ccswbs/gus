@@ -1,5 +1,5 @@
 import React from "react";
-import { Widget } from "components/shared/widget";
+import Widget from "components/shared/widget";
 import widgetModules from "components/shared/widgetModules";
 
 const SortWidgets = (widgets) => {
@@ -7,10 +7,15 @@ const SortWidgets = (widgets) => {
   let currentContainer = null;
   let containerHolder = [];
 
-  widgets?.forEach((widget) => {
+  console.log("HERE");
+  console.log(widgets);
+
+  // const widgetsArray = Array.isArray(widgets) ? widgets : Array.from(widgets);
+
+  widgets.map((widget) => {
     let newContainer = "container";
 
-    if(widgetModules[widget.__typename].container === "container-fluid") {
+    if (widgetModules[widget.__typename] && widgetModules[widget.__typename].container === "container-fluid") {
         newContainer = "container-fluid";
     }
 
@@ -30,8 +35,8 @@ const SortWidgets = (widgets) => {
   return sortedWidgets;
 }
 
-const Widgets = (widgets) => {
-  const sortedWidgets = SortWidgets(widgets);
+const Widgets = ({widgetData}) => {
+  const sortedWidgets = SortWidgets(widgetData);
   return <>
     {sortedWidgets.map((widgetGroup, index) => (
       widgetGroup.container === "container" ?           

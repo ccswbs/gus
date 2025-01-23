@@ -3,9 +3,10 @@ import React from 'react';
 import { ParseText } from 'utils/ug-utils';
 
 const AccordionBody = ({ content }) => {
+  console.log("AccordionBody content: ", content);
   return (
     <div className="accordion-body">
-      <ParseText text={content} />
+      <ParseText textContent={content} />
     </div>
   );
 };

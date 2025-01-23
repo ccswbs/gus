@@ -39,7 +39,7 @@ const Accordion = (props) => {
                   <ItemHeading className="accordion-header" id={"heading" + item.drupal_id}>{accordionToggle}</ItemHeading>
                   <div {...(stayOpen ? {} : {"data-bs-parent": dataParent})} id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={"heading" + item.drupal_id}>
                     <Suspense fallback={<div>Loading content...</div>}>
-                      <AccordionBody content={pageData.content} />
+                      <AccordionBody content={item.field_accordion_block_text.processed} />
                     </Suspense>
                   </div>
                 </div>

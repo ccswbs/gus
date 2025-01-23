@@ -17,19 +17,19 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
 
         { /**** Header and Title ****/ }
         { (heroData.imageData?.length > 0 || heroData.heroWidgets?.length > 0) &&
-        <div className={heroData.imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
-            <Hero imgData={heroData.imageData} />
-            {heroData.heroWidgets && (
-              <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-                {heroData.heroWidgets.map((widget, index) => (
-                  <Widget widget={widget} key={index} />
-                ))}
+          <div className={heroData.imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
+              <Hero imgData={heroData.imageData} />
+              {heroData.heroWidgets && (
+                <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
+                  {heroData.heroWidgets.map((widget, index) => (
+                    <Widget widget={widget} key={index} />
+                  ))}
+                </div>
+              )}
+              <div className="container ft-container">
+                  <h1 className="fancy-title">{pageTitle}</h1>
               </div>
-            )}
-            <div className="container ft-container">
-                <h1 className="fancy-title">{pageTitle}</h1>
-            </div>
-        </div>
+          </div>
         }
         
         <Breadcrumbs menuName={menuData.menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
@@ -48,7 +48,7 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
               </div>
           }
 
-          <Widgets widgets={widgets} />
+          <Widgets widgetData={widgets} />
 
         </div>
 
@@ -129,13 +129,13 @@ const PageTemplate = ({data}) => {
     const seoData = {
         title: data.nodePage.title,
         description: data.nodePage.field_metatags?.og_description,
-        img: data.images.edges[0]?.node.relationships.field_media_image.publicUrl,
-        imgAlt: data.images.edges[0]?.node?.field_media_image.alt
+        img: data.images.edges[0]?.node?.relationships?.field_media_image?.publicUrl,
+        imgAlt: data.images.edges[0]?.node?.field_media_image?.alt
     };
 
     const heroData = {
         imageData: data.images.edges,
-        heroWidgets: data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null
+        heroWidgets: data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships.field_hero_widgets] : null
     };
 
     const footerData = data.footer.edges;
