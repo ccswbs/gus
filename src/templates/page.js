@@ -8,8 +8,40 @@ import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
 
-const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
+const SortWidgets = (widgets) => {
+  const sortedWidgets = [];
+  let currentContainer = null;
+  let containerHolder = [];
 
+  widgets?.map((widget) => {
+    let newContainer = "container";
+
+    if ( widget?.__typename === "paragraph__yaml_widget" ||
+      widget?.__typename === "paragraph__image_overlay" ||
+      widget?.__typename === "paragraph__modal_video_widget" ||
+      widget?.__typename === "paragraph__story_widget" ||
+      widget?.__typename === "paragraph__statistic_widget" ||
+      widget?.__typename === "paragraph__testimonial_slider" ) {
+        newContainer = "container-fluid";
+    }
+
+    if (currentContainer !== newContainer) {
+      if (currentContainer !== null) {
+        sortedWidgets.push({container: currentContainer, containerHolder});
+        containerHolder = [];
+      }
+      currentContainer = newContainer;
+    }
+    containerHolder.push(widget);
+  });
+
+  sortedWidgets.push({container: currentContainer, containerHolder});
+  return sortedWidgets;
+}
+
+const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => {
+  const sortedWidgets = SortWidgets(widgets);
+  return (
     <Layout menuName={menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
@@ -47,14 +79,28 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
               </div>
           }
 
-          {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)} 
+          {sortedWidgets.map((widgetGroup, index) => (
+            widgetGroup.container === "container" ?           
+              <div className="container page-container" key={index}>
+                <div className="row site-content">
+                  <div className="content-area">
+                    {widgetGroup.containerHolder.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)}
+                  </div> 
+                </div>
+              </div> : 
+              <div key={index}>
+                {widgetGroup.containerHolder.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)}
+              </div>
+          ))}
+
         </div>
 
         { /**** Custom Footer content ****/}
         {footer?.length > 0 &&
         <CustomFooter footerData={footer[0]} />}
     </Layout>
-)
+  );
+}
 
 export const query = graphql`
   query ($id: String, $nid: String, $tid: [String]) {

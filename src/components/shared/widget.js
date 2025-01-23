@@ -7,7 +7,6 @@ import ImageOverlay from "components/shared/imageOverlay";
 import LeadPara from "components/shared/leadPara";
 import LinksWidget from "./linksWidget";
 import MediaText from "components/shared/mediaText";
-import PageContainer from "components/shared/pageContainer";
 import ModalVideo from "components/shared/modalVideo";
 import PageTabs from "components/shared/pageTabs";
 import SectionWidgets from "components/shared/sectionWidgets";
@@ -16,7 +15,7 @@ import StatsWidget from "components/shared/statsWidget";
 import Story from "components/shared/story";
 import TestimonialSlider from "components/shared/testimonialSlider";
 import YamlWidget from "components/shared/yamlWidget";
-import { ConditionalWrapper, slugify } from "utils/ug-utils";
+import { slugify } from "utils/ug-utils";
 
 const WidgetSelector = ({ widget }) => {
   switch (widget?.__typename) {
@@ -80,26 +79,7 @@ const WidgetSelector = ({ widget }) => {
 };
 
 const Widget = ({ widget }) => {
-  // add any full-width components to the Conditional Wrapper
-  return (
-    <ConditionalWrapper
-      condition={
-        widget?.__typename !== "paragraph__yaml_widget" &&
-        widget?.__typename !== "paragraph__image_overlay" &&
-        widget?.__typename !== "paragraph__modal_video_widget" &&
-        widget?.__typename !== "paragraph__story_widget" &&
-        widget?.__typename !== "paragraph__statistic_widget" &&
-        widget?.__typename !== "paragraph__testimonial_slider"
-      }
-      wrapper={(children) => (
-        <PageContainer.SiteContent>
-          <PageContainer.ContentArea>{children}</PageContainer.ContentArea>
-        </PageContainer.SiteContent>
-      )}
-    >
-      <WidgetSelector widget={widget} />
-    </ConditionalWrapper>
-  );
+  return <WidgetSelector widget={widget} />
 };
 
 export default Widget;
