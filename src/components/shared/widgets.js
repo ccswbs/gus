@@ -7,11 +7,6 @@ const SortWidgets = (widgets) => {
   let currentContainer = null;
   let containerHolder = [];
 
-  console.log("HERE");
-  console.log(widgets);
-
-  // const widgetsArray = Array.isArray(widgets) ? widgets : Array.from(widgets);
-
   widgets.map((widget) => {
     let newContainer = "container";
 
