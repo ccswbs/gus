@@ -13,7 +13,7 @@ const SortWidgets = (widgets) => {
   let currentContainer = null;
   let containerHolder = [];
 
-  widgets?.map((widget) => {
+  widgets?.forEach((widget) => {
     let newContainer = "container";
 
     if ( widget?.__typename === "paragraph__yaml_widget" ||
@@ -27,7 +27,7 @@ const SortWidgets = (widgets) => {
 
     if (currentContainer !== newContainer) {
       if (currentContainer !== null) {
-        sortedWidgets.push({container: currentContainer, containerHolder});
+        sortedWidgets.push({container: currentContainer, containerHolder: containerHolder.slice()});
         containerHolder = [];
       }
       currentContainer = newContainer;
@@ -35,7 +35,9 @@ const SortWidgets = (widgets) => {
     containerHolder.push(widget);
   });
 
-  sortedWidgets.push({container: currentContainer, containerHolder});
+  if (containerHolder.length > 0) {
+    sortedWidgets.push({container: currentContainer, containerHolder});
+  }
   return sortedWidgets;
 }
 
