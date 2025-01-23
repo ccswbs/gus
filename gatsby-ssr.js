@@ -12,14 +12,19 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       key="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
       rel="stylesheet"
     />,
-    <link rel="preload" href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} as="style" />,
+    <link rel="preload" href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} as="style" key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css-preload`} />,
     <link
       rel="stylesheet"
       href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
     />,
-    <link href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`} rel="preload" as="script" />,
-    <script
+    <link
+      href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
+      rel="preload"
+      as="script"
+      key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js-preload`}
+    />,
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.0/dist/index.css" as="style" key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.0/dist/index.css-preload" />,
       type="module"
       src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
