@@ -5,6 +5,7 @@ import Seo from 'components/seo';
 import { Helmet } from 'react-helmet';
 import Hero from 'components/shared/hero'; 
 import Breadcrumbs from 'components/shared/breadcrumbs';
+import Widget from '../components/shared/widget';
 import Widgets from 'components/shared/widgets';
 import CustomFooter from 'components/shared/customFooter';
 
@@ -37,7 +38,7 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
         <div id="main-column">
             
           { /**** No banner ****/}  
-          { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
+          { !(heroData.imageData?.length > 0 || heroData.heroWidgets?.length > 0) && 
               <div className="container page-container">
                 <div className="row site-content">
                     <div className="content-area">
