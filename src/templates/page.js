@@ -21,7 +21,7 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
             <Hero imgData={heroData.imageData} />
             {heroData.heroWidgets && (
               <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-                {heroWidgets.map((widget, index) => (
+                {heroData.heroWidgets.map((widget, index) => (
                   <Widget widget={widget} key={index} />
                 ))}
               </div>
