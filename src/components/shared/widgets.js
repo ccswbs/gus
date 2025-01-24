@@ -7,7 +7,7 @@ const SortWidgets = (widgets) => {
   let currentContainer = null;
   let containerHolder = [];
 
-  widgets.map((widget) => {
+  widgets.forEach((widget) => {
     let newContainer = "container";
 
     if (widgetModules[widget.__typename] && widgetModules[widget.__typename].container === "container-fluid") {
