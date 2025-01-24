@@ -86,6 +86,12 @@ module.exports = {
         // defaults to true - changed to false to mute SVG warnings
         checkSupportedExtensions: false,
       },
-    },    
+    },
+    {
+      resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+      options: {
+        devMode: true,
+      },
+    }    
   ],  
 }
