@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import dayjs from 'dayjs';
 
 function DateModified ({ date }) {
-    const lastModified = dayjs(date).format(`MMMM D, YYYY HH:mm zzz`);
+    const lastModified = dayjs(date).tz('America/Toronto').format(`MMMM D, YYYY HH:mm zzz`);
     if(date !== null && date !== ""){
         return <div className="container-fluid date-modified">
                     <div className="container ft-container">
