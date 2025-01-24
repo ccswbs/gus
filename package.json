@@ -14,7 +14,8 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "@fontsource/roboto": "^5.0.12",
+    "@fontsource/bitter": "^5.1.1",
+    "@fontsource/dm-sans": "^5.1.1",
     "axios": "^1.7.4",
     "babel-plugin-styled-components": "^2.1.4",
     "backstopjs": "^6.3.23",

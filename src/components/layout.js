@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import DateModified from 'components/dateModified';
 import HeaderMenu from 'components/shared/headerMenu';
 import 'styles/global.css';
-import "@fontsource/roboto"
-import "@fontsource/roboto/700.css"
-import "@fontsource/roboto/300.css"
-import "@fontsource/roboto/100-italic.css"
-import "@fontsource/roboto/400-italic.css"
+import "@fontsource/bitter";
+import "@fontsource/bitter/700.css";
+import "@fontsource/dm-sans";
+import "@fontsource/dm-sans/400.css";
+import "@fontsource/dm-sans/400-italic.css";
+import "@fontsource/dm-sans/700.css";
+import "@fontsource/dm-sans/700-italic.css";
 
 const Layout = ({ children, date, menuName }) => (
   <>
