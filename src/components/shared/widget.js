@@ -7,8 +7,9 @@ import LeadPara from "components/shared/leadPara";
 import LinksWidget from "./linksWidget";
 import MediaText from "components/shared/mediaText";
 import ModalVideo from "components/shared/modalVideo";
+import PageContainer from "components/shared/pageContainer";
 import SectionWidgets from "components/shared/sectionWidgets";
-import { slugify } from "utils/ug-utils";
+import { ConditionalWrapper, slugify } from "utils/ug-utils";
 
 const Accordion = lazy(() => import("components/shared/accordion"));
 const PageTabs = lazy(() => import("components/shared/pageTabs"));
@@ -107,6 +108,12 @@ const WidgetSelector = ({ widget }) => {
   }
 };
 
+const wrapper = (children) => (
+  <PageContainer.SiteContent>
+    <PageContainer.ContentArea>{children}</PageContainer.ContentArea>
+  </PageContainer.SiteContent>
+);
+
 const Widget = ({ widget }) => {
   // add any full-width components to the Conditional Wrapper
   return (
@@ -119,11 +126,7 @@ const Widget = ({ widget }) => {
         widget?.__typename !== "paragraph__statistic_widget" &&
         widget?.__typename !== "paragraph__testimonial_slider"
       }
-      wrapper={(children) => (
-        <PageContainer.SiteContent>
-          <PageContainer.ContentArea>{children}</PageContainer.ContentArea>
-        </PageContainer.SiteContent>
-      )}
+      wrapper={wrapper}
     >
       <WidgetSelector widget={widget} />
     </ConditionalWrapper>
