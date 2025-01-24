@@ -9,7 +9,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 function DateModified ({ date }) {
-    const lastModified = dayjs(date).tz('America/Toronto').format(`MMMM D, YYYY HH:mm zzz`);
+    const lastModified = dayjs(date).tz('America/Toronto').format(`MMMM D, YYYY HH:mm z`);
     if(date !== null && date !== ""){
         return <div className="container-fluid date-modified">
                     <div className="container ft-container">
