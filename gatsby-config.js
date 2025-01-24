@@ -43,7 +43,6 @@ module.exports = {
       options: {
         id: "GTM-NRSSDKW",
         includeInDevelopment: false,
-        defaultDataLayer: { platform: "gatsby" },
       },
     },
     {
