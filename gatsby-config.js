@@ -39,13 +39,6 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-transformer-yaml`,
     {
-      resolve: `gatsby-plugin-google-tagmanager`,
-      options: {
-        id: "GTM-NRSSDKW",
-        includeInDevelopment: false,
-      },
-    },
-    {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
         host: `https://livechugendpoint.azureedge.net/`,
