@@ -6,12 +6,13 @@ import ImageOverlay from "components/shared/imageOverlay";
 import LeadPara from "components/shared/leadPara";
 import LinksWidget from "./linksWidget";
 import MediaText from "components/shared/mediaText";
-import ModalVideo from "components/shared/modalVideo";
+import ModalVideoStatic from "./modalVideoStatic";
 import PageContainer from "components/shared/pageContainer";
 import SectionWidgets from "components/shared/sectionWidgets";
 import { ConditionalWrapper, slugify } from "utils/ug-utils";
 
 const Accordion = lazy(() => import("components/shared/accordion"));
+const ModalVideo = lazy(() => import("components/shared/modalVideo"));
 const PageTabs = lazy(() => import("components/shared/pageTabs"));
 const TestimonialSlider = lazy(() => import("components/shared/testimonialSlider"));
 const Story = lazy(() => import("components/shared/story"));
@@ -42,12 +43,14 @@ const WidgetSelector = ({ widget }) => {
     case "paragraph__modal_video_widget":
       const video = widget.relationships?.field_media_video;
       return video ? (
-        <ModalVideo
-          id={widget.drupal_id}
-          src={video?.field_media_oembed_video}
-          title={video?.name}
-          transcript={video?.relationships?.field_media_file?.publicUrl}
-        />
+        <Suspense fallback={<ModalVideoStatic modalId={widget.drupal_id} />}>
+          <ModalVideo
+            id={widget.drupal_id}
+            src={video?.field_media_oembed_video}
+            title={video?.name}
+            transcript={video?.relationships?.field_media_file?.publicUrl}
+          />
+        </Suspense>
       ) : null;
     case "paragraph__section":
       let HeadingLevelSec = widget.field_heading_level ? widget.field_heading_level : "h2";
