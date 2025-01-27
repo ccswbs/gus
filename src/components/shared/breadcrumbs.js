@@ -108,7 +108,7 @@ const makeBreadcrumbTrail = (menuData, domains, menuName, nodeID, nodeTitle) => 
                                                     <Link to={midCrumb.node.link.url}>{midCrumb.node.title}</Link>
                                             </li></>
                                         })}
-                                        <li key={endCrumb + `end`} className="gus-breadcrumbs__list-item active" aria-current="page">{endCrumb ? endCrumb : pageTitle}</li>                           
+                                        <li key={endCrumb + `end`} className="gus-breadcrumbs__list-item active" aria-current="page">{endCrumb ? endCrumb : pageTitle}</li>
                                     </ol>
                                 </div>
                             </div>

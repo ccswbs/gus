@@ -3,7 +3,7 @@ import Layout from "components/layout"
 import { Helmet } from "react-helmet"
 import Seo from "components/seo"
 import BlockWidget from "components/shared/blockWidget"
-import Breadcrumbs from "components/shared/breadcrumbs"
+import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
 import CallToAction from "components/shared/callToAction"
 import CustomFooter from "components/shared/customFooter"
 import Hero from "components/shared/hero"
@@ -12,6 +12,7 @@ import Widget from "components/shared/widget"
 import { sortLastModifiedDates } from "utils/ug-utils"
 import { graphql } from "gatsby"
 
+const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
 const Employers = lazy(() => import("components/shared/employers"));
 const HeroVideo = lazy(() => import("components/shared/heroVideo"));
 const Testimonials = lazy(() => import("components/shared/testimonial"));
@@ -214,7 +215,9 @@ const ProgramPage = ({ data, location }) => {
         </div>
       </div>
 
-      <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
+      <Suspense fallback={<BreadcrumbsStatic pageTitle={title} />}>
+        <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
+      </Suspense>
 
       {/**** Program Overview ****/}
       {overview && (
