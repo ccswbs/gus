@@ -5,8 +5,13 @@ const UOFG_WEB_COMPONENTS_BASE = `@uoguelph/web-components@${process.env.UOFG_WC
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
-    <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" />,
+    <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" crossOrigin="anonymous" />,
     <link rel="preconnect" href="https://fonts.gstatic.com" key="https://fonts.gstatic.com" crossOrigin="anonymous" />,
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+      key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+      rel="preload" as="style" crossOrigin="anonymous" 
+    />,
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
       key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
@@ -24,7 +29,7 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
     ></script>,
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css" as="style" />,
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css" as="style" type="text/css" />,
     <link
       key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
       rel="stylesheet"
