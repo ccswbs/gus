@@ -36,7 +36,7 @@ function renderProgramVariants(variantDataHeading, variantData) {
           <section className="content-area">
             <h2>{variantDataHeading}</h2>
             {
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<></>}>
                 <Variants variantData={variantData} />
               </Suspense>
             }
@@ -241,7 +241,7 @@ const ProgramPage = ({ data, location }) => {
 
       {/**** Testimonials ****/}
       {testimonialData && 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />
         </Suspense>
       }
