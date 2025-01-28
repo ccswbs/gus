@@ -14,6 +14,14 @@ remote_images = [
   package = "@netlify/plugin-lighthouse"
 
   [[plugins.inputs.audits]]
+    path = "admission"
+    output_path = "reports/admission.html"
+
+  [[plugins.inputs.audits]]
+    path = "transform/frequently-asked-questions/"
+    output_path = "reports/accordions.html"
+
+  [[plugins.inputs.audits]]
     path = "programs/bachelor-of-mathematics"
     output_path = "reports/ba-math.html"
 
