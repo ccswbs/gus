@@ -1,6 +1,9 @@
 [
+  "AhrefsBot",
+  "AhrefsSiteAudit",
   "Amazonbot",
   "anthropic-ai",
+  "AwarioBot",
   "AwarioRssBot",
   "AwarioSmartBot",
   "Bytespider",
@@ -26,5 +29,6 @@
   "PerplexityBot",
   "PetalBot",
   "python-requests",
+  "Timpibot",
   "YouBot"
 ]
