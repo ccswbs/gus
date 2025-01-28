@@ -22,19 +22,19 @@ remote_images = [
     output_path = "reports/accordions.html"
 
   [[plugins.inputs.audits]]
-    path = "programs/bachelor-of-mathematics"
+    path = "programs/bachelor-of-mathematics/"
     output_path = "reports/ba-math.html"
 
   [[plugins.inputs.audits]]
-    path = "programs/bachelor-of-computing"
+    path = "programs/bachelor-of-computing/"
     output_path = "reports/ba-comp.html"
 
   [[plugins.inputs.audits]]
-    path = "programs/bachelor-of-engineering"
+    path = "programs/bachelor-of-engineering/"
     output_path = "reports/ba-eng.html"
 
   [[plugins.inputs.audits]]
-    path = "programs/bachelor-of-science"
+    path = "programs/bachelor-of-science/"
     output_path = "reports/ba-sci.html"
 
   [[plugins.inputs.audits]]

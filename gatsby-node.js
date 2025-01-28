@@ -1035,7 +1035,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
 
   const result = await graphql(`
     {
-      pages: allNodePage(filter: { path: { alias: { ne: null } }, moderation_state: { ne: "archived" } }) {
+      pages: allNodePage(filter: { path: { alias: { ne: null } }, moderation_state: { in: ["published", "draft"] } }) {
         edges {
           node {
             id
@@ -1051,7 +1051,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
           }
         }
       }
-      programs: allNodeProgram(filter: { path: { alias: { ne: null } }, moderation_state: { ne: "archived" } }) {
+      programs: allNodeProgram(filter: { path: { alias: { ne: null } }, moderation_state: { in: ["published", "draft"] } }) {
         edges {
           node {
             title
@@ -1081,7 +1081,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     // INSTRUCTION: Create a page for each node by processing the results of your query here
     // Each content type should have its own if statement code snippet
 
-    // ALIASES will contain all url aliases for pages and programs that are NOT archived
+    // ALIASES will contain all url aliases for pages and programs in a Draft or Published state
     let aliases = {};
 
     // process page nodes
