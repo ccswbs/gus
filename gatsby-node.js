@@ -1081,7 +1081,7 @@ exports.createPages = async ({ graphql, actions, createNodeId, reporter }) => {
     // INSTRUCTION: Create a page for each node by processing the results of your query here
     // Each content type should have its own if statement code snippet
 
-    // ALIASES will contain all url aliases for pages and programs that are NOT archived
+    // ALIASES will contain all url aliases for pages and programs in a Draft or Published state
     let aliases = {};
 
     // process page nodes
