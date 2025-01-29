@@ -1,20 +1,21 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import classNames from "classnames";
 import { graphql } from "gatsby";
-import Accordion from "components/shared/accordion";
-import BlockWidget from "components/shared/blockWidget";
 import GeneralText from "components/shared/generalText";
 import ImageOverlay from "components/shared/imageOverlay";
 import LeadPara from "components/shared/leadPara";
 import LinksWidget from "components/shared/linksWidget";
 import MediaText from "components/shared/mediaText";
-import PageTabs from "components/shared/pageTabs";
 import SectionButtons from "components/shared/sectionButtons";
-import StatisticWidget from "components/shared/statisticWidget";
-import StatsWidget from "components/shared/statsWidget";
-import YamlWidget from "components/shared/yamlWidget";
 import { ConditionalWrapper } from "utils/ug-utils";
+
+const Accordion = lazy(() => import("components/shared/accordion"));
+const BlockWidget = lazy(() => import("components/shared/blockWidget"));
+const PageTabs = lazy(() => import("components/shared/pageTabs"));
+const StatsWidget = lazy(() => import("components/shared/statsWidget"));
+const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
+const YamlWidget = lazy(() => import("components/shared/yamlWidget"));
 
 // Check if section only contains media and text
 function containsMediaTextOnly(widget) {
@@ -25,9 +26,17 @@ function containsMediaTextOnly(widget) {
 function renderPrimary(widget) {
   switch (widget?.__typename) {
     case "paragraph__accordion_section":
-      return <Accordion key={widget.drupal_id} pageData={widget} />;
+      return (
+        <Suspense fallback={<></>}>
+          <Accordion key={widget.drupal_id} pageData={widget} />
+        </Suspense>
+        );
     case "paragraph__block_widget":
-      return <BlockWidget key={widget.drupal_id} blockData={widget} region="Primary" />;
+      return (
+        <Suspense fallback={<></>}>
+          <BlockWidget key={widget.drupal_id} blockData={widget} region="Primary" />
+        </Suspense>
+      );
     case "paragraph__general_text":
       return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
     case "paragraph__image_overlay":
@@ -39,15 +48,31 @@ function renderPrimary(widget) {
     case "paragraph__media_text":
       return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
     case "paragraph__section_tabs":
-      return <PageTabs key={widget.drupal_id} pageData={widget} />;
+      return (
+        <Suspense fallback={<></>}>
+          <PageTabs key={widget.drupal_id} pageData={widget} />
+        </Suspense>
+      );
     case "paragraph__statistic_widget":
-      return <StatisticWidget key={widget.drupal_id} statisticData={widget} />;
+      return (
+        <Suspense fallback={<></>}>
+          <StatisticWidget key={widget.drupal_id} statisticData={widget} />
+        </Suspense>
+      );
     case "paragraph__stats_widget":
-      return <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />;
+      return(
+        <Suspense fallback={<></>}>
+          <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />
+        </Suspense>
+      );
     case "paragraph__section_buttons":
       return <SectionButtons key={widget.drupal_id} pageData={widget} />;
     case "paragraph__yaml_widget":
-      return <YamlWidget key={widget.drupal_id} blockData={widget} />;
+      return (
+        <Suspense fallback={<></>}>
+          <YamlWidget key={widget.drupal_id} blockData={widget} />
+        </Suspense>
+      );
     default:
       return <></>;
   }
@@ -58,7 +83,11 @@ function renderPrimary(widget) {
 function renderSecondary(widget, sectionClasses) {
   switch (widget?.__typename) {
     case "paragraph__block_widget":
-      return <BlockWidget key={widget.drupal_id} blockData={widget} region="Secondary"  />;
+      return (
+        <Suspense fallback={<></>}>
+          <BlockWidget key={widget.drupal_id} blockData={widget} region="Secondary" />
+        </Suspense>
+      );
     case "paragraph__general_text":
       return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
     case "paragraph__media_text":
@@ -66,16 +95,28 @@ function renderSecondary(widget, sectionClasses) {
     case "paragraph__section_buttons":
       return <SectionButtons key={widget.drupal_id} pageData={widget} />;
     case "paragraph__yaml_widget":
-      return <YamlWidget key={widget.drupal_id} blockData={widget} />;
+      return (
+        <Suspense fallback={<></>}>
+          <YamlWidget key={widget.drupal_id} blockData={widget} />
+        </Suspense>
+      );
     case "paragraph__section_tabs":
       if (sectionClasses === "col-md-6") {
-        return <PageTabs key={widget.drupal_id} pageData={widget} />;
+        return (
+          <Suspense fallback={<></>}>
+            <PageTabs key={widget.drupal_id} pageData={widget} />
+          </Suspense>
+        );
       } else {
         return <></>;
       }
     case "paragraph__accordion_section":
       if (sectionClasses === "col-md-6") {
-        return <Accordion key={widget.drupal_id} pageData={widget} />;
+        return (
+          <Suspense fallback={<></>}>
+            <Accordion key={widget.drupal_id} pageData={widget} />
+          </Suspense>
+          );
       } else {
         return <></>;
       }
@@ -165,8 +206,8 @@ SectionWidgets.propTypes = {
   sectionClasses: PropTypes.string,
 };
 SectionWidgets.defaultProps = {
-  pageData: ``,
-  sectionClasses: ``,
+  pageData: [],
+  sectionClasses: null,
 };
 
 export default SectionWidgets;

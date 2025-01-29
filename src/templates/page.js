@@ -64,8 +64,6 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
     </Layout>
   );
 }
-  );
-}
 
 export const query = graphql`
   query ($id: String, $nid: String, $tid: [String]) {
