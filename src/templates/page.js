@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { graphql } from 'gatsby';
 import Layout from 'components/layout';
 import Seo from 'components/seo';
 import { Helmet } from 'react-helmet';
+import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
 import Hero from 'components/shared/hero'; 
-import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from 'components/shared/widget';
 import CustomFooter from 'components/shared/customFooter';
+
+const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
 
 const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
 
@@ -31,7 +33,9 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
         </div>
         }
         
-        <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
+        <Suspense fallback={<BreadcrumbsStatic pageTitle={pageTitle} />}>
+          <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
+        </Suspense>
         
         { /**** Widgets content ****/}
         <div id="main-column">
