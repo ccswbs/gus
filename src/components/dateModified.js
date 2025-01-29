@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-// import moment from 'moment-timezone'
 import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 
+// Extend dayjs with the timezone and utc plugins
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(advancedFormat);
 
 function DateModified ({ date }) {
-    // const lastModified = moment(date).tz('America/Toronto').format(`MMMM D, YYYY HH:mm z`);
-    const lastModified = dayjs(date).format(`MMMM D, YYYY HH:mm z`);
+    const lastModified = dayjs(date).tz('America/Toronto').format(`MMMM D, YYYY HH:mm z`);
     if(date !== null && date !== ""){
         return <div className="container-fluid date-modified">
                     <div className="container ft-container">

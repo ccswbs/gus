@@ -1,4 +1,3 @@
-// filepath: /Users/mmafe/Work/gus/src/components/shared/AccordionBody.js
 import React from 'react';
 import { ParseText } from 'utils/ug-utils';
 

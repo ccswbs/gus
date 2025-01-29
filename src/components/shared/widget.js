@@ -1,16 +1,17 @@
 import React, { lazy, Suspense } from "react";
 import { graphql } from "gatsby";
-import BlockWidget from "components/shared/blockWidget";
 import GeneralText from "components/shared/generalText";
 import ImageOverlay from "components/shared/imageOverlay";
 import LeadPara from "components/shared/leadPara";
 import LinksWidget from "./linksWidget";
 import MediaText from "components/shared/mediaText";
-import ModalVideo from "components/shared/modalVideo";
+import ModalVideoStatic from "./modalVideoStatic";
 import SectionWidgets from "components/shared/sectionWidgets";
 import { slugify } from "utils/ug-utils";
 
 const Accordion = lazy(() => import("components/shared/accordion"));
+const BlockWidget = lazy(() => import("components/shared/blockWidget"));
+const ModalVideo = lazy(() => import("components/shared/modalVideo"));
 const PageTabs = lazy(() => import("components/shared/pageTabs"));
 const TestimonialSlider = lazy(() => import("components/shared/testimonialSlider"));
 const Story = lazy(() => import("components/shared/story"));
@@ -22,12 +23,16 @@ const WidgetSelector = ({ widget }) => {
   switch (widget?.__typename) {
     case "paragraph__accordion_section":
       return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           <Accordion pageData={widget} />
         </Suspense>
       );
     case "paragraph__block_widget":
-      return <BlockWidget key={widget.drupal_id} blockData={widget} />;
+      return (
+        <Suspense fallback={<></>}>
+          <BlockWidget key={widget.drupal_id} blockData={widget} />
+        </Suspense>
+      );
     case "paragraph__general_text":
       return <GeneralText processed={widget.field_general_text.processed} />;
     case "paragraph__image_overlay":
@@ -41,12 +46,14 @@ const WidgetSelector = ({ widget }) => {
     case "paragraph__modal_video_widget":
       const video = widget.relationships?.field_media_video;
       return video ? (
-        <ModalVideo
-          id={widget.drupal_id}
-          src={video?.field_media_oembed_video}
-          title={video?.name}
-          transcript={video?.relationships?.field_media_file?.publicUrl}
-        />
+        <Suspense fallback={<ModalVideoStatic modalId={widget.drupal_id} />}>
+          <ModalVideo
+            id={widget.drupal_id}
+            src={video?.field_media_oembed_video}
+            title={video?.name}
+            transcript={video?.relationships?.field_media_file?.publicUrl}
+          />
+        </Suspense>
       ) : null;
     case "paragraph__section":
       let HeadingLevelSec = widget.field_heading_level ? widget.field_heading_level : "h2";
@@ -68,37 +75,37 @@ const WidgetSelector = ({ widget }) => {
       );
     case "paragraph__section_tabs":
       return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           <PageTabs pageData={widget} />
         </Suspense>
       );
       case "paragraph__statistic_widget":
         return (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<></>}>
             <StatisticWidget statisticData={widget} />
           </Suspense>
         );
       case "paragraph__stats_widget":
         return (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<></>}>
             <StatsWidget statsWidgetData={widget} />
           </Suspense>
         );
       case "paragraph__story_widget":
         return (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<></>}>
             <Story storyData={widget} />
           </Suspense>
         );
     case "paragraph__testimonial_slider":
       return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           <TestimonialSlider testimonialData={widget} />
         </Suspense>
       );
     case "paragraph__yaml_widget":
       return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           <YamlWidget blockData={widget} />
         </Suspense>
       );

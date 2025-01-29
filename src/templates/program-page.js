@@ -1,28 +1,27 @@
-import React from "react"
+import React, { lazy, Suspense } from "react"
 import Layout from "components/layout"
 import { Helmet } from "react-helmet"
 import Seo from "components/seo"
-import Hero from "components/shared/hero"
 import BlockWidget from "components/shared/blockWidget"
-import Breadcrumbs from "components/shared/breadcrumbs"
+import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
 import CallToAction from "components/shared/callToAction"
-// import Careers from 'components/shared/careers';
 import CustomFooter from "components/shared/customFooter"
-import Employers from "components/shared/employers"
-import HeroVideo from "components/shared/heroVideo"
-import Testimonials from "components/shared/testimonial"
-import Variants from "components/shared/variants"
+import Hero from "components/shared/hero"
+import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
-//import { Row, Col } from "react-bootstrap"
-//import { StaticImage } from "gatsby-plugin-image"
 import { sortLastModifiedDates } from "utils/ug-utils"
 import { graphql } from "gatsby"
+
+const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
+const Employers = lazy(() => import("components/shared/employers"));
+const HeroVideo = lazy(() => import("components/shared/heroVideo"));
+const Testimonials = lazy(() => import("components/shared/testimonial"));
+const Variants = lazy(() => import("components/shared/variants"));
 
 function renderProgramOverview(overview) {
   if (overview) {
     return (
       <>
-        {/* <h2>Program Overview</h2> */}
         <div dangerouslySetInnerHTML={{ __html: overview }} />
       </>
     )
@@ -37,7 +36,11 @@ function renderProgramVariants(variantDataHeading, variantData) {
         <div className="row site-content">
           <section className="content-area">
             <h2>{variantDataHeading}</h2>
-            {<Variants variantData={variantData} />}
+            {
+              <Suspense fallback={<></>}>
+                <Variants variantData={variantData} />
+              </Suspense>
+            }
           </section>
         </div>
       </div>
@@ -45,51 +48,7 @@ function renderProgramVariants(variantDataHeading, variantData) {
   }
 }
 
-/*
-function renderTalkToStudent() {
-  return (
-    <Row className="my-sm-5">
-      <Col md={6}>
-        <StaticImage src="../images/unibuddy.webp" alt="Collage of smiling students with callouts" />
-      </Col>
-      <Col md={6} className="mt-5 ps-5">
-        <h3>Talk to a Current Student</h3>
-        <p>
-          {" "}
-          Don’t just take it from us – hear from one of our many students on their experiences with Guelph, integrating
-          into U of G life, and much more. Start chatting with{" "}
-          <a href="https://admission.uoguelph.ca/chat-with-domestic-student">students from Canada</a> or{" "}
-          <a href="https://admission.uoguelph.ca/international/chat/">international students</a>
-        </p>
-      </Col>
-    </Row>
-  )
-}
-*/
-
-// function renderProgramInfoAccordion  (careerData, employerData) {
 function renderProgramInfoAccordion(employerData) {
-  // accordion - Careers Item
-  // const programCareersItem = () => {
-  //     if (careerData?.length>0) {
-  //       return (
-  //         <div className="accordion-item">
-  //           <h3 className="accordion-header" id="programCareers-heading">
-  //             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#programCareers-careers" aria-expanded="false" aria-controls="programCareers-careers">
-  //               Careers
-  //             </button>
-  //           </h3>
-  //           <div id="programCareers-careers" className="accordion-collapse collapse" aria-labelledby="programCareers-heading">
-  //             <div className="accordion-body">
-  //             <Careers careerData={careerData} numColumns={3}/>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       )
-  //     }
-  //     return null;
-  // }
-
   // accordion - Employers Item
   const programEmployersItem = () => {
     if (employerData?.length > 0) {
@@ -113,7 +72,9 @@ function renderProgramInfoAccordion(employerData) {
             aria-labelledby="programEmployers-heading"
           >
             <div className="accordion-body">
-              <Employers employerData={employerData} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Employers employerData={employerData} />
+              </Suspense>
             </div>
           </div>
         </div>
@@ -121,14 +82,13 @@ function renderProgramInfoAccordion(employerData) {
     }
     return null
   }
-  // if ( careerData?.length>0 ||employerData?.length > 0) {
+  
   if (employerData?.length > 0) {
     return (
       <div className="container page-container">
         <section className="row row-with-vspace site-content">
           <div className="col-md-12 content-area">
             <div className="accordion" id="ProgramPageAccordion">
-              {/* {programCareersItem()} */}
               {programEmployersItem()}
             </div>
           </div>
@@ -182,7 +142,6 @@ function prepareVariantHeading(variantData) {
 const ProgramPage = ({ data, location }) => {
   let progData = data.programs.edges[0]?.node
   let callToActionData = data.ctas?.edges
-  // let careerData = data.careers?.edges;
   let domains = progData?.field_domain_access
   let employerData = data.employers?.edges
   let footerData = data.footer?.edges
@@ -230,12 +189,14 @@ const ProgramPage = ({ data, location }) => {
       {/**** Header and Title ****/}
       <div className={!heroImage?.length > 0 && !videoData?.length > 0 ? "no-thumb" : null} id="rotator">
         {videoData ? (
-          <HeroVideo
-            videoURL={videoData.field_media_oembed_video}
-            videoWidth={videoData.field_video_width}
-            videoHeight={videoData.field_video_height}
-            videoTranscript={videoData.relationships.field_media_file?.publicUrl}
-          />
+          <Suspense fallback={<ModalVideoStatic />}>
+            <HeroVideo
+              videoURL={videoData.field_media_oembed_video}
+              videoWidth={videoData.field_video_width}
+              videoHeight={videoData.field_video_height}
+              videoTranscript={videoData.relationships.field_media_file?.publicUrl}
+            />
+          </Suspense>
         ) : (
           <>
             <Hero imgData={heroImage} />
@@ -254,7 +215,9 @@ const ProgramPage = ({ data, location }) => {
         </div>
       </div>
 
-      <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
+      <Suspense fallback={<BreadcrumbsStatic pageTitle={title} />}>
+        <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
+      </Suspense>
 
       {/**** Program Overview ****/}
       {overview && (
@@ -280,7 +243,11 @@ const ProgramPage = ({ data, location }) => {
       )}
 
       {/**** Testimonials ****/}
-      {testimonialData && <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />}
+      {testimonialData && 
+        <Suspense fallback={<></>}>
+          <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />
+        </Suspense>
+      }
 
       { /**** Block - Admission Requirements Data ****/}
       {blockData && (
