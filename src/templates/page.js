@@ -5,7 +5,6 @@ import Seo from 'components/seo';
 import { Helmet } from 'react-helmet';
 import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
 import Hero from 'components/shared/hero'; 
-import Breadcrumbs from 'components/shared/breadcrumbs';
 import Widget from '../components/shared/widget';
 import Widgets from 'components/shared/widgets';
 import CustomFooter from 'components/shared/customFooter';
@@ -13,13 +12,15 @@ import CustomFooter from 'components/shared/customFooter';
 const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
 
 const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, domains}) => {
+  const hasHeroContent = heroData.imageData?.length > 0 || heroData.heroWidgets?.length > 0;
+
   return (
     <Layout menuName={menuData.menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
         <Seo title={pageTitle} description={seoData.description} img={seoData.img} imgAlt={seoData.imgAlt} />
 
         { /**** Header and Title ****/ }
-        { (heroData.imageData?.length > 0 || heroData.heroWidgets?.length > 0) &&
+        { hasHeroContent &&
           <div className={heroData.imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
               <Hero imgData={heroData.imageData} />
               {heroData.heroWidgets && (
@@ -43,7 +44,7 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
         <div id="main-column">
             
           { /**** No banner ****/}  
-          { !(heroData.imageData?.length > 0 || heroData.heroWidgets?.length > 0) && 
+          { !hasHeroContent && 
               <div className="container page-container">
                 <div className="row site-content">
                     <div className="content-area">
@@ -61,6 +62,8 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
         {footer?.length > 0 &&
         <CustomFooter footerData={footer[0]} />}
     </Layout>
+  );
+}
   );
 }
 
@@ -145,8 +148,11 @@ const PageTemplate = ({data}) => {
 
     const footerData = data.footer.edges;
 
+    const primaryNav = data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name;
+    const menuName = primaryNav === "no-menu" ? null : primaryNav ?? data.menu?.menu_name;
+
     const menuData = {
-        menuName: (data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name === "no-menu") ? null : data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name
+        menuName: menuName
     };
 
     const domainData = data.nodePage.field_domain_access;
