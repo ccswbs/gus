@@ -61,7 +61,7 @@ const WidgetSelector = ({ widget }) => {
       return (
         <>
           {widget.field_section_title && (
-            <HeadingLevelSec id={slugify(widget.field_section_title)} className="mt-0">
+            <HeadingLevelSec id={slugify(widget.field_section_title)}>
               {widget.field_section_title}
             </HeadingLevelSec>
           )}
