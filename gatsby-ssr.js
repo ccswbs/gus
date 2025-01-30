@@ -2,6 +2,7 @@ import React from "react";
 
 const CDN_BASE = process.env.UOFG_WC_CDN_BASE_URL?.trim() || "https://cdn.jsdelivr.net/npm";
 const UOFG_WEB_COMPONENTS_BASE = `@uoguelph/web-components@${process.env.UOFG_WC_VERSION?.trim() || "1.x.x"}/dist/uofg-web-components`;
+const UOFG_STYLES_BASE = `@uoguelph/uofg-styles@${process.env.UOFG_STYLE_VERSION?.trim() || "2.x.x"}/dist`;
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
@@ -32,11 +33,12 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
     ></script>,
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.1/dist/index.css" as="style" type="text/css" />,
+    <link rel="preload" 
+      href={`${CDN_BASE}/${UOFG_STYLES_BASE}/index.css`} as="style" type="text/css" />,
     <link
-      key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.1/dist/index.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.1/dist/index.css"
+      key={`${CDN_BASE}/${UOFG_STYLES_BASE}/index.css`}
+      href={`${CDN_BASE}/${UOFG_STYLES_BASE}/index.css`}
     />,
   ]);
   setPostBodyComponents([
