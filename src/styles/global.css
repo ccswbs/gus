@@ -285,8 +285,8 @@ i.green {
 
 .ug-slate input[type="checkbox"]:checked,
 .ug-slate input[type="radio"]:checked {
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: var(--uog-blue);
+  border-color: var(--uog-blue);
 }
 
 .ug-slate input[type="checkbox"]:checked {
@@ -365,9 +365,9 @@ i.green {
 }
 
 .ug-slate .form_button_submit {
-  background-color: #c20430 !important;
+  background-color: var(--uog-red) !important;
   border: 2px solid transparent;
-  border-color: #c20430 !important;
+  border-color: var(--uog-red) !important;
   border-radius: 0;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
@@ -388,8 +388,8 @@ i.green {
 .ug-slate .form_button:active,
 .ug-slate .form_button_submit:hover,
 .ug-slate .form_button_submit:focus {
-  background-color: #900324 !important;
-  border-color: #900324 !important;
+  background-color:var(--uog-red-focus) !important;
+  border-color: var(--uog-red-focus) !important;
   color: #fff !important;
 }
 
