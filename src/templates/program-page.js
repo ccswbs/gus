@@ -10,7 +10,7 @@ import Hero from "components/shared/hero"
 import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
 import Widgets from "components/shared/widgets"
-import { sortLastModifiedDates } from "utils/ug-utils"
+import { ParseText, sortLastModifiedDates } from "utils/ug-utils"
 import { graphql } from "gatsby"
 
 const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
@@ -19,35 +19,6 @@ const HeroVideo = lazy(() => import("components/shared/heroVideo"));
 const Testimonials = lazy(() => import("components/shared/testimonial"));
 const Variants = lazy(() => import("components/shared/variants"));
 
-function renderProgramOverview(overview) {
-  if (overview) {
-    return (
-      <>
-        <div dangerouslySetInnerHTML={{ __html: overview }} />
-      </>
-    )
-  }
-  return null
-}
-
-function renderProgramVariants(variantDataHeading, variantData) {
-  if (variantDataHeading) {
-    return (
-      <div className="container page-container">
-        <div className="row site-content">
-          <section className="content-area">
-            <h2>{variantDataHeading}</h2>
-            {
-              <Suspense fallback={<></>}>
-                <Variants variantData={variantData} />
-              </Suspense>
-            }
-          </section>
-        </div>
-      </div>
-    )
-  }
-}
 
 function renderProgramInfoAccordion(employerData) {
   // accordion - Employers Item
@@ -169,6 +140,8 @@ const ProgramPage = ({ data, location }) => {
   const acronym = progData.relationships.field_program_acronym?.name
   const overview = progData.field_program_overview?.processed
 
+  const hasOverviewContent = overview.length > 0 || variantDataHeading.length > 0;
+
   // `field_hero_widgets` only allows a single widget (at the moment), and
   // Drupal doesn't return an array, so force it into an array.
   const heroWidgets = progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null
@@ -221,16 +194,28 @@ const ProgramPage = ({ data, location }) => {
       </Suspense>
 
       {/**** Program Overview ****/}
-      {overview && (
+      {hasOverviewContent && (
         <div className="container page-container">
           <div className="row site-content">
-            <section className="content-area">{renderProgramOverview(overview)}</section>
+            <section className="content-area">
+
+              {/**** Program Overview ****/}
+              {overview && <ParseText textContent={overview} />}
+
+              { /*** Variants (e.g., Majors ) */}
+              {variantDataHeading && (
+                <>
+                  <h2>{variantDataHeading}</h2>
+                  <Suspense fallback={<></>}>
+                    <Variants variantData={variantData} />
+                  </Suspense>
+                </>
+              )}
+            
+            </section>
           </div>
         </div>
       )}
-
-      {/**** Variants (e.g., Majors) content ****/}
-      {renderProgramVariants(variantDataHeading, variantData)}
 
       {/**** Widgets content ****/}
       <Widgets widgetData={widgets} />
