@@ -15,9 +15,9 @@ const Accordion = (props) => {
 
     if (accordionData) {
       return (<>
-          {accordionTitle && <HeadingLevel id={slugify(accordionTitle)} className="mt-5">{accordionTitle}</HeadingLevel>}
+          {accordionTitle && <HeadingLevel id={slugify(accordionTitle)}>{accordionTitle}</HeadingLevel>}
           {accordionDescription && <ParseText textContent={accordionDescription} />}
-          <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
+          <div className="accordion mb-5" id={"accordion" + props.pageData.drupal_id}>
             {accordionData.map((item) => {
               const accordionToggle = (
                 <button
