@@ -65,7 +65,7 @@ const WidgetSelector = ({ widget }) => {
               {widget.field_section_title}
             </HeadingLevelSec>
           )}
-          <div key={widget.drupal_id} className="row" data-title="Section widget">
+          <div key={widget.drupal_id} className="row mb-5" data-title="Section widget">
             <SectionWidgets
               pageData={widget.relationships.field_section_content}
               sectionClasses={widget.field_section_classes}
