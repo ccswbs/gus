@@ -24,7 +24,7 @@ const WidgetSelector = ({ widget }) => {
     case "paragraph__accordion_section":
       return (
         <Suspense fallback={<></>}>
-          <Accordion pageData={widget} />
+          <Accordion key={widget.drupal_id} pageData={widget} />
         </Suspense>
       );
     case "paragraph__block_widget":
@@ -34,15 +34,15 @@ const WidgetSelector = ({ widget }) => {
         </Suspense>
       );
     case "paragraph__general_text":
-      return <GeneralText processed={widget.field_general_text.processed} />;
+      return <GeneralText key={widget.drupal_id}  processed={widget.field_general_text.processed} />;
     case "paragraph__image_overlay":
-      return <ImageOverlay data={widget} />;
+      return <ImageOverlay key={widget.drupal_id}  data={widget} />;
     case "paragraph__lead_paragraph":
-      return <LeadPara pageData={widget} />;
+      return <LeadPara key={widget.drupal_id}  pageData={widget} />;
     case "paragraph__links_widget":
       return <LinksWidget key={widget.drupal_id} data={widget} />;
     case "paragraph__media_text":
-      return <MediaText headingClass="mt-md-0" widgetData={widget} />;
+      return <MediaText key={widget.drupal_id} headingClass="mt-md-0" widgetData={widget} />;
     case "paragraph__modal_video_widget":
       const video = widget.relationships?.field_media_video;
       return video ? (
