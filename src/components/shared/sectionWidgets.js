@@ -9,6 +9,7 @@ import LinksWidget from "components/shared/linksWidget";
 import MediaText from "components/shared/mediaText";
 import SectionButtons from "components/shared/sectionButtons";
 import { ConditionalWrapper } from "utils/ug-utils";
+import widgetModules from "components/shared/widgetModules";
 
 const Accordion = lazy(() => import("components/shared/accordion"));
 const BlockWidget = lazy(() => import("components/shared/blockWidget"));
@@ -56,7 +57,7 @@ function renderPrimary(widget) {
     case "paragraph__statistic_widget":
       return (
         <Suspense fallback={<></>}>
-          <StatisticWidget key={widget.drupal_id} statisticData={widget} />
+          <StatisticWidget key={widget.drupal_id} statisticData={widget} shouldHaveContainer={false} />
         </Suspense>
       );
     case "paragraph__stats_widget":
@@ -79,50 +80,53 @@ function renderPrimary(widget) {
 }
 
 //For the right column
-//Only render certain widgets if there's enough space, i.e. class of col-md-6
 function renderSecondary(widget, sectionClasses) {
-  switch (widget?.__typename) {
-    case "paragraph__block_widget":
-      return (
-        <Suspense fallback={<></>}>
-          <BlockWidget key={widget.drupal_id} blockData={widget} region="Secondary" />
-        </Suspense>
-      );
-    case "paragraph__general_text":
-      return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
-    case "paragraph__media_text":
-      return <MediaText key={widget.drupal_id} widgetData={widget} region="Secondary" />;
-    case "paragraph__section_buttons":
-      return <SectionButtons key={widget.drupal_id} pageData={widget} />;
-    case "paragraph__yaml_widget":
-      return (
-        <Suspense fallback={<></>}>
-          <YamlWidget key={widget.drupal_id} blockData={widget} />
-        </Suspense>
-      );
-    case "paragraph__section_tabs":
-      if (sectionClasses === "col-md-6") {
+  //Only render certain widgets if there's enough space, i.e. class of col-md-6
+  if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderSecondary) {
+    switch (widget?.__typename) {
+      case "paragraph__accordion_section":
+        if (sectionClasses === "col-md-6") {
+          return (
+            <Suspense fallback={<></>}>
+              <Accordion key={widget.drupal_id} pageData={widget} />
+            </Suspense>
+            );
+        } else {
+          return <></>;
+        }
+      case "paragraph__block_widget":
         return (
           <Suspense fallback={<></>}>
-            <PageTabs key={widget.drupal_id} pageData={widget} />
+            <BlockWidget key={widget.drupal_id} blockData={widget} region="Secondary" />
           </Suspense>
         );
-      } else {
-        return <></>;
-      }
-    case "paragraph__accordion_section":
-      if (sectionClasses === "col-md-6") {
+      case "paragraph__general_text":
+        return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
+      case "paragraph__media_text":
+        return <MediaText key={widget.drupal_id} widgetData={widget} region="Secondary" />;
+      case "paragraph__section_buttons":
+        return <SectionButtons key={widget.drupal_id} pageData={widget} />;
+      case "paragraph__yaml_widget":
         return (
           <Suspense fallback={<></>}>
-            <Accordion key={widget.drupal_id} pageData={widget} />
+            <YamlWidget key={widget.drupal_id} blockData={widget} />
           </Suspense>
+        );
+      case "paragraph__section_tabs":
+        if (sectionClasses === "col-md-6") {
+          return (
+            <Suspense fallback={<></>}>
+              <PageTabs key={widget.drupal_id} pageData={widget} />
+            </Suspense>
           );
-      } else {
+        } else {
+          return <></>;
+        }
+      default:
         return <></>;
-      }
-    default:
-      return <></>;
+    }
   }
+  return <></>;
 }
 
 function SectionWidgets(props) {

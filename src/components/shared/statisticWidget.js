@@ -6,12 +6,10 @@ import PageContainer from 'components/shared/pageContainer';
 import Statistic from 'components/shared/statistic';
 import styled from "styled-components";
 
-
 const Gradient = styled.div`
   background: ${props => (props.gradientStyle ?? "none")};
   padding: 0;
 `
-
 const gradientColourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
   {background: "var(--uog-red)", colour: "#FFFFFF"},
@@ -77,55 +75,47 @@ const solidColourOptions = [
 
 const SolidColourStatistic = ({stats, numColumns}) => {
   return (
-    <PageContainer.SiteContent>
-      <Container>
-        <Statistic.Grid columns={numColumns} className="gap-4">
-          {stats.map((stat, index) => {
-              let type = stat.field_statistic_represents;
-              let value = stat.field_statistic_value;
-              let icon = stat.field_font_awesome_icon;
-              let image = {
-                src: stat.relationships?.field_media_text_media?.relationships?.field_media_image,
-                alt: stat.relationships?.field_media_text_media?.field_media_image?.alt,
-              }
+    <Statistic.Grid columns={numColumns} className="gap-4">
+      {stats.map((stat, index) => {
+          let type = stat.field_statistic_represents;
+          let value = stat.field_statistic_value;
+          let icon = stat.field_font_awesome_icon;
+          let image = {
+            src: stat.relationships?.field_media_text_media?.relationships?.field_media_image,
+            alt: stat.relationships?.field_media_text_media?.field_media_image?.alt,
+          }
 
-              return <Statistic.SolidCard  
-                key={`solid-stat-${stat.drupal_id}`} 
-                background={solidColourOptions[index%solidColourOptions.length].background} 
-                colour={solidColourOptions[index%solidColourOptions.length].colour}
-                className="pt-4 pb-0 px-0 h-100 card border-0" >
-                  {icon && <Statistic.Icon icon={icon} colour={solidColourOptions[index%solidColourOptions.length].colour} />}
-                  <Statistic.Value><strong>{value}</strong></Statistic.Value>
-                  <Statistic.Type className="mb-4 px-5"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
-                  {image.src && <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" /></dd>}
-              </Statistic.SolidCard>
-            }
-          )}
-      </Statistic.Grid>
-    </Container>
-  </PageContainer.SiteContent>
+          return <Statistic.SolidCard  
+            key={`solid-stat-${stat.drupal_id}`} 
+            background={solidColourOptions[index%solidColourOptions.length].background} 
+            colour={solidColourOptions[index%solidColourOptions.length].colour}
+            className="pt-4 pb-0 px-0 h-100 card border-0" >
+              {icon && <Statistic.Icon icon={icon} colour={solidColourOptions[index%solidColourOptions.length].colour} />}
+              <Statistic.Value><strong>{value}</strong></Statistic.Value>
+              <Statistic.Type className="mb-4 px-5"><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
+              {image.src && <dd className="mb-0 h-100"><GatsbyImage image={getImage(image.src)} alt={image.alt} className="h-100 card-img-bottom" /></dd>}
+          </Statistic.SolidCard>
+        }
+      )}
+  </Statistic.Grid>
 )} 
 
 const NoBorderStatistic = ({stats, numColumns}) => {
   return (
-    <PageContainer.SiteContent>
-      <Container>
-        <Statistic.Grid columns={numColumns} className="gap-4">
-          {stats.map((stat) => {
-            let type = stat.field_statistic_represents;
-            let value = stat.field_statistic_value;
-            let icon = stat.field_font_awesome_icon;
+    <Statistic.Grid columns={numColumns} className="gap-4">
+      {stats.map((stat) => {
+        let type = stat.field_statistic_represents;
+        let value = stat.field_statistic_value;
+        let icon = stat.field_font_awesome_icon;
 
-            return <Statistic.Card key={`noborder-stat-${stat.drupal_id}`} className="px-5">
-                  {icon && <Statistic.Icon icon={icon} />}
-                  <Statistic.Value><strong>{value}</strong></Statistic.Value>
-                  <Statistic.Type><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
-              </Statistic.Card>
-            }
-          )}
-        </Statistic.Grid>
-      </Container>
-    </PageContainer.SiteContent>
+        return <Statistic.Card key={`noborder-stat-${stat.drupal_id}`} className="px-5">
+              {icon && <Statistic.Icon icon={icon} />}
+              <Statistic.Value><strong>{value}</strong></Statistic.Value>
+              <Statistic.Type><span dangerouslySetInnerHTML={{__html: type.processed}} /></Statistic.Type>
+          </Statistic.Card>
+        }
+      )}
+    </Statistic.Grid>
   )
 } 
 
@@ -139,8 +129,6 @@ const borderColourOptions = [
 
 const LeftBorderStatistic = ({stats, numColumns}) => {
   return (
-    <PageContainer.SiteContent>
-      <Container>
         <Statistic.Grid columns={numColumns} className="gap-4">
           {stats.map((stat, index) => {
             let type = stat.field_statistic_represents;
@@ -157,34 +145,75 @@ const LeftBorderStatistic = ({stats, numColumns}) => {
             }
           )}
         </Statistic.Grid>
-      </Container>
-    </PageContainer.SiteContent>
 )}
 
-const StatisticSelector = ({statistics, style}) => {
+
+const StatisticSelector = ({statistics, style, shouldHaveContainer}) => {
   let numStats = statistics.length;
   let numColumns =  ((numStats === 2) || (numStats === 4)) ? 2 : 3;
 
+console.log(shouldHaveContainer)
+
   switch (style) {
       case "Light Blue":
-          return <NoBorderStatistic stats={statistics} numColumns={numColumns} />
+        return shouldHaveContainer ? (
+          <PageContainer.SiteContent>
+            <Container>
+              <NoBorderStatistic stats={statistics} numColumns={numColumns} />
+            </Container>
+          </PageContainer.SiteContent>
+        ):(
+          <NoBorderStatistic stats={statistics} numColumns={numColumns} />
+      );
       case "Left Border":
-          return <LeftBorderStatistic stats={statistics} numColumns={numColumns} />
+          return shouldHaveContainer ? (
+              <PageContainer.SiteContent>
+                <Container>
+                  <LeftBorderStatistic stats={statistics} numColumns={numColumns} />
+                </Container>
+              </PageContainer.SiteContent>
+            ):(
+            <LeftBorderStatistic stats={statistics} numColumns={numColumns} />
+          );
       case "Gradient of Solid Colours":
           return <GradientStatistic stats={statistics} />
       case "Solid Colours":
-          return <SolidColourStatistic stats={statistics} numColumns={numColumns} />
+        return shouldHaveContainer ? (
+          <PageContainer.SiteContent>
+            <Container>
+            <SolidColourStatistic stats={statistics} numColumns={numColumns} />
+            </Container>
+          </PageContainer.SiteContent>
+        ):(
+          <SolidColourStatistic stats={statistics} numColumns={numColumns} />
+      );
       default:
           return null;
   }
 }
 
+/** 
+  By default the StatisticWidget is a container-fluid (full-width) element
+
+The 4 styles of Statistic Widget are:
+- Light Blue: No border, light blue background
+- Left Border: Left border, no background
+- Gradient of Solid Colours: Gradient background, no border, full-width element
+- Solid Colours: Solid background, no border
+
+NOTE on Containers:
+- Only the Gradient of Solid colours is a full-width element.
+- The other 3 styles have a surrounding container, which can be removed by setting shouldHaveContainer to false.
+- This is for when the StatisticWidget is used within a SectionWidget, which already has a container.
+**/
+
 const StatisticWidget = (props) => {
   let statItems = props.statisticData?.relationships?.field_statistic;
   let statStyle = props.statisticData?.relationships?.field_statistic_style.name;
+  let shouldHaveContainer = props.shouldHaveContainer ?? true;
 
   return statItems ? 
-    <StatisticSelector statistics={statItems} style={statStyle} /> 
+    <StatisticSelector statistics={statItems} style={statStyle} shouldHaveContainer={shouldHaveContainer} /> 
     : null
 }
 
