@@ -32,11 +32,11 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
     ></script>,
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.0/dist/index.css" as="style" type="text/css" />,
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.1/dist/index.css" as="style" type="text/css" />,
     <link
-      key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.0/dist/index.css"
+      key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.1/dist/index.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.0/dist/index.css"
+      href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles@3.0.0-rc.1/dist/index.css"
     />,
   ]);
   setPostBodyComponents([
