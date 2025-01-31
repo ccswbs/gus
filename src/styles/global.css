@@ -145,7 +145,10 @@ html {
   color: var(--uog-blue);
 }
 .uog-blue-muted {
-  background: #f5f7fa;
+  background: var(--uog-blue-muted);
+}
+.uog-grey-muted {
+  background: var(--uog-grey-muted);
 }
 i.green {
   color: var(--uog-green);
