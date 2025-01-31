@@ -6,7 +6,7 @@
 
 .outer div.inner .link {
   display: flex !important;
-  background-color: #e9f0f8;
+  background-color: var(--uog-grey-muted);
   flex-direction: column;
   align-items: center;
   text-align: center;
