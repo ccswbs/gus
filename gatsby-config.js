@@ -16,6 +16,20 @@ if ((metaConfig === null) || (metaConfig === undefined)) {
     metaConfig['menus'] = "";
 }
 
+// Provides variable to exclude production-only plugins (e.g., GTM) from development builds
+const productionOnlyPlugins = [];
+if ( process.env.EXCLUDE_PRODUCTION_PLUGINS_FROM_BUILD === null 
+  || process.env.EXCLUDE_PRODUCTION_PLUGINS_FROM_BUILD === undefined 
+  || process.env.EXCLUDE_PRODUCTION_PLUGINS_FROM_BUILD === "false") {
+  productionOnlyPlugins.push({
+    resolve: `gatsby-plugin-google-tagmanager`,
+    options: {
+      id: "GTM-NRSSDKW",
+      includeInDevelopment: false,
+    },
+  });
+}
+
 module.exports = {
   adapter: adapter({
     excludeDatastoreFromEngineFunction: process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE ?? true,
@@ -31,6 +45,7 @@ module.exports = {
     menus: metaConfig['menus'],
   },
   plugins: [
+    ...productionOnlyPlugins,
     `gatsby-plugin-client-side-redirect`,
     `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-image`,
@@ -38,13 +53,6 @@ module.exports = {
     `gatsby-plugin-root-import`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-yaml`,
-    {
-      resolve: `gatsby-plugin-google-tagmanager`,
-      options: {
-        id: "GTM-NRSSDKW",
-        includeInDevelopment: false,
-      },
-    },
     {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
@@ -85,6 +93,12 @@ module.exports = {
         // defaults to true - changed to false to mute SVG warnings
         checkSupportedExtensions: false,
       },
-    },    
+    },
+    {
+      resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+      options: {
+        devMode: true,
+      },
+    }    
   ],  
 }
