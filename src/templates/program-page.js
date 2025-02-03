@@ -9,6 +9,7 @@ import CustomFooter from "components/shared/customFooter"
 import Hero from "components/shared/hero"
 import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
+import Widgets from "components/shared/widgets"
 import { ParseText } from "utils/ug-utils"
 import { graphql } from "gatsby"
 
@@ -199,7 +200,7 @@ const ProgramPage = ({ data, location }) => {
       )}
 
       {/**** Widgets content ****/}
-      <Widget widgetData={widgets} />
+      <Widgets widgetData={widgets} />
 
       {/**** Program Information Accordion ****/}
       {renderProgramInfoAccordion(
