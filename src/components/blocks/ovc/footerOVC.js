@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { lazy, Suspense } from "react";
 import { GatsbyImage } from "gatsby-plugin-image";
-import OVCFooterSocial from 'components/blocks/ovc/footerSocial';
 import Widget from 'components/shared/widget';
 import 'styles/customFooter.css';
+
+const OVCFooterSocial = lazy(() => import('components/blocks/ovc/footerSocial'));
 
 function OVCCustomFooter (props) {
 	
 	const footer = props.footerData;
 	const footerLogos = footer.node.relationships?.field_footer_logo || null;
-    const footerText = footer.node.body?.processed || null;
-    const footerWidgets = footer.node.relationships?.field_widgets || null;
-
+	const footerText = footer.node.body?.processed || null;
+	const footerWidgets = footer.node.relationships?.field_widgets || null;
 		
 	return <>	
 		<div className="full-width-container bg-light pre-footer">
@@ -26,7 +26,9 @@ function OVCCustomFooter (props) {
 								className="footer-logo"
 								alt={logo.field_media_image.alt} />
 						))}
-						<OVCFooterSocial />
+						<Suspense fallback={<></>}>
+							<OVCFooterSocial />
+						</Suspense>
 					</div>}
 					<div className="col-md-8 content-area">
 						<div className="container" dangerouslySetInnerHTML={{ __html: footerText}} />

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { lazy, Suspense } from "react";
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
-import OVCCustomFooter from 'components/blocks/ovc/footerOVC';
 import Widget from 'components/shared/widget';
 import 'styles/customFooter.css';
+
+const OVCCustomFooter = lazy(() => import('components/blocks/ovc/footerOVC'));
 
 function chooseFooter (footer) {
   let footerSelection = ``;
@@ -49,7 +50,11 @@ const CustomFooter = (props) => {
 
   switch (chooseFooter(footer)) {
     case "OVC":
-      return <OVCCustomFooter footerData={footer} />
+      return (
+        <Suspense fallback={<></>}>
+          <OVCCustomFooter footerData={footer} />
+        </Suspense>
+      )
     default:
       return <DefaultFooter
               logos={footerLogos} 

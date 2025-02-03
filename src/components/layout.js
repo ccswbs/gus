@@ -18,7 +18,6 @@ const Layout = ({ children, menuName }) => (
     <main id="content">
       {children}
     </main>
-    <div className="be-ix-link-block"></div>
     <uofg-back-to-top></uofg-back-to-top>
     <uofg-footer></uofg-footer>
   </>
