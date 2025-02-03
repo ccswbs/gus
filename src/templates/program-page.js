@@ -9,7 +9,7 @@ import CustomFooter from "components/shared/customFooter"
 import Hero from "components/shared/hero"
 import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
-import { ParseText, sortLastModifiedDates } from "utils/ug-utils"
+import { ParseText } from "utils/ug-utils"
 import { graphql } from "gatsby"
 
 const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
@@ -68,16 +68,6 @@ function renderProgramInfoAccordion(employerData) {
     )
   }
   return null
-}
-
-function retrieveLastModifiedDates(content) {
-  let dates = []
-  if (content?.length > 0) {
-    content.forEach((edge) => {
-      dates.push(edge.node.changed)
-    })
-  }
-  return dates
 }
 
 function prepareVariantHeading(variantData) {
@@ -146,16 +136,8 @@ const ProgramPage = ({ data, location }) => {
   const heroWidgets = progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null
   const widgets = progData.relationships?.field_widgets
 
-  // set last modified date
-  let allModifiedDates = sortLastModifiedDates([
-    progData.changed,
-    retrieveLastModifiedDates(callToActionData),
-    retrieveLastModifiedDates(testimonialData),
-  ])
-  let lastModified = allModifiedDates[allModifiedDates.length - 1]
-
   return (
-    <Layout date={lastModified}>
+    <Layout>
       <Helmet bodyAttributes={{ class: "program" }} />
       <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
 

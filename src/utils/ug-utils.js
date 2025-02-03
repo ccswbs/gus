@@ -157,10 +157,6 @@ function slugify(string) {
     .replace(/-+$/, ""); // Trim - from end of text
 }
 
-function sortLastModifiedDates(dates) {
-  return dates.slice().flat().sort();
-}
-
 function stripHTMLTags(content) {
   return content !== null ? content.replace(/(<([^>]+)>)/gi, "") : ``;
 }
@@ -178,6 +174,5 @@ export {
   ParseText,
   setHeadingLevel,
   slugify,
-  sortLastModifiedDates,
   stripHTMLTags,
 };
