@@ -2,11 +2,9 @@ import PropTypes from "prop-types";
 import React, { lazy, Suspense } from "react";
 import classNames from "classnames";
 import { graphql } from "gatsby";
-import LeadPara from "components/shared/leadPara";
 import { ConditionalWrapper } from "utils/ug-utils";
 import widgetModules from "components/shared/widgetModules";
 
-const StatsWidget = lazy(() => import("components/shared/statsWidget"));
 const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
 
 // Check if section only contains media and text
@@ -30,6 +28,7 @@ function renderWidget(componentName, shouldLazyLoad = false, fallback = null, wi
   WidgetModule = require(`components/shared/${componentName}`).default;
   return <WidgetModule key={widget.drupal_id} data={widget} region={region} />
 }
+
 // For the left column
 function renderPrimary(widget) {
   let moduleName = widgetModules[widget.__typename].moduleName;
@@ -61,7 +60,7 @@ function renderSecondary(widget, sectionClasses) {
   let region = "Secondary";
 
   if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderSecondary) {
-    
+
     //Only render certain widgets if there's enough space, i.e. class of col-md-6
     if(widget.__typename === "paragraph__accordion_section" || widget.__typename === "paragraph__section_tabs") {
         if (sectionClasses === "col-md-6"){
@@ -77,7 +76,6 @@ function renderSecondary(widget, sectionClasses) {
 }
 
 const SectionWidgets = React.memo(function SectionWidgets(props) {
-// const SectionWidgets = (props) => {
   
   if (props.pageData?.length > 0) {
     let primary = [];
@@ -152,7 +150,6 @@ const SectionWidgets = React.memo(function SectionWidgets(props) {
     );
   }
   return null;
-// }
 });
 
 /**
@@ -171,7 +168,6 @@ SectionWidgets.defaultProps = {
 };
 
 export default React.memo(SectionWidgets);
-// export default SectionWidgets;
 
 export const query = graphql`
   fragment SectionParagraphFragment on paragraph__section {
