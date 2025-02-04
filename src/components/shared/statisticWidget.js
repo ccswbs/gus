@@ -43,7 +43,7 @@ const GradientStatistic = ({stats}) => {
   }
 
   return (
-    <Gradient className="d-flex flex-column mb-4" gradientStyle={gradientStyle}>
+    <Gradient className="d-flex flex-column mb-4" gradientstyle={gradientStyle}>
       <Container className="page-container p-0">
           <Statistic className={`row g-0 row-cols-1 ${rowClasses} justify-content-center mb-0`}>
               {stats.map((stat, index) => {
@@ -151,8 +151,6 @@ const LeftBorderStatistic = ({stats, numColumns}) => {
 const StatisticSelector = ({statistics, style, shouldHaveContainer}) => {
   let numStats = statistics.length;
   let numColumns =  ((numStats === 2) || (numStats === 4)) ? 2 : 3;
-
-console.log(shouldHaveContainer)
 
   switch (style) {
       case "Light Blue":

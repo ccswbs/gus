@@ -12,25 +12,25 @@ const BlockWidget = (props) => {
     let basicBlockContent;
     let widgetBlockContent = [];
     
-    if (props.blockData?.relationships?.field_custom_block?.__typename === "block_content__basic") {
-        basicBlockContent = props.blockData?.relationships?.field_custom_block?.body.processed;
+    if (props.data?.relationships?.field_custom_block?.__typename === "block_content__basic") {
+        basicBlockContent = props.data?.relationships?.field_custom_block?.body.processed;
     }
-    if (props.blockData?.relationships?.field_custom_block?.__typename === "block_content__widget_block") {
-        widgetBlockContent = props.blockData.relationships.field_custom_block?.relationships?.field_widget_block_content;
+    if (props.data?.relationships?.field_custom_block?.__typename === "block_content__widget_block") {
+        widgetBlockContent = props.data.relationships.field_custom_block?.relationships?.field_widget_block_content;
         let widgetRegion = props.region;
 
         return (widgetBlockContent.map(widget => {
             switch(widget.__typename) {
                 case "paragraph__accordion_section":
-                    return <Accordion key={widget.drupal_id} pageData={widget} />;
+                    return <Accordion key={widget.drupal_id} data={widget} />;
                 case "paragraph__general_text":
-                    return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
+                    return <GeneralText key={widget.drupal_id} data={widget} />;
                 case "paragraph__media_text":
-                    return <MediaText key={widget.drupal_id} widgetData={widget} region={widgetRegion} />;
+                    return <MediaText key={widget.drupal_id} data={widget} region={widgetRegion} />;
                 case "paragraph__section_tabs":
-                    return <PageTabs key={widget.drupal_id} pageData={widget} />;
+                    return <PageTabs key={widget.drupal_id} data={widget} />;
                 case "paragraph__section_buttons":
-                    return <SectionButtons key={widget.drupal_id} pageData={widget} />;
+                    return <SectionButtons key={widget.drupal_id} data={widget} />;
                 default:
                     return <></>;
             }
@@ -40,12 +40,12 @@ const BlockWidget = (props) => {
 }
 
 BlockWidget.propTypes = {
-    blockData: PropTypes.object,
+    data: PropTypes.object,
     region: PropTypes.string,
 }
 
 BlockWidget.defaultProps = {
-    blockData: ``,
+    data: ``,
     region: ``,
 }
 

@@ -4,17 +4,15 @@ import { graphql } from "gatsby";
 import { ParseText } from "utils/ug-utils";
 
 const GeneralText = (props) => {
-  return <ParseText textContent={props.processed} />;
+  return <ParseText textContent={props.data.field_general_text.processed} />;
 };
 
 GeneralText.propTypes = {
-  processed: PropTypes.string,
-  textClass: PropTypes.string,
+  data: PropTypes.object
 };
 
 GeneralText.defaultProps = {
-  processed: ``,
-  textClass: ``,
+  data: null,
 };
 
 export default GeneralText;

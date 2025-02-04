@@ -2,134 +2,83 @@ import PropTypes from "prop-types";
 import React, { lazy, Suspense } from "react";
 import classNames from "classnames";
 import { graphql } from "gatsby";
-import GeneralText from "components/shared/generalText";
-import ImageOverlay from "components/shared/imageOverlay";
 import LeadPara from "components/shared/leadPara";
-import LinksWidget from "components/shared/linksWidget";
-import MediaText from "components/shared/mediaText";
-import SectionButtons from "components/shared/sectionButtons";
 import { ConditionalWrapper } from "utils/ug-utils";
 import widgetModules from "components/shared/widgetModules";
 
-const Accordion = lazy(() => import("components/shared/accordion"));
-const BlockWidget = lazy(() => import("components/shared/blockWidget"));
-const PageTabs = lazy(() => import("components/shared/pageTabs"));
 const StatsWidget = lazy(() => import("components/shared/statsWidget"));
 const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
-const YamlWidget = lazy(() => import("components/shared/yamlWidget"));
 
 // Check if section only contains media and text
 function containsMediaTextOnly(widget) {
   return widget?.__typename === "paragraph__media_text";
 }
 
+function renderWidget(componentName, shouldLazyLoad = false, fallback = null, widget, region) {
+  let WidgetModule;
+
+  if(shouldLazyLoad === true) {
+    const Fallback = fallback ? lazy(() => import(`components/shared/${fallback}`)) : () => <></>;
+    WidgetModule = lazy(() => import(`components/shared/${componentName}`));
+    return (
+      <Suspense fallback={<Fallback />}>
+        <WidgetModule key={widget.drupal_id} data={widget} region={region} />
+      </Suspense>
+    );
+  }
+
+  WidgetModule = require(`components/shared/${componentName}`).default;
+  return <WidgetModule key={widget.drupal_id} data={widget} region={region} />
+}
 // For the left column
 function renderPrimary(widget) {
-  switch (widget?.__typename) {
-    case "paragraph__accordion_section":
-      return (
-        <Suspense fallback={<></>}>
-          <Accordion key={widget.drupal_id} pageData={widget} />
-        </Suspense>
+  let moduleName = widgetModules[widget.__typename].moduleName;
+  let fallback = widgetModules[widget.__typename].fallback;
+  let shouldLazyLoad = widgetModules[widget.__typename].shouldLazyLoad ?? false;
+  let region = "Primary";
+
+  if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderPrimary) {
+    switch (widget?.__typename) {
+      case "paragraph__statistic_widget":
+        return (
+          <Suspense fallback={<></>}>
+            <StatisticWidget key={widget.drupal_id} statisticData={widget} shouldHaveContainer={false} />
+          </Suspense>
         );
-    case "paragraph__block_widget":
-      return (
-        <Suspense fallback={<></>}>
-          <BlockWidget key={widget.drupal_id} blockData={widget} region="Primary" />
-        </Suspense>
-      );
-    case "paragraph__general_text":
-      return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
-    case "paragraph__image_overlay":
-      return <ImageOverlay key={widget.drupal_id} data={widget} />;
-    case "paragraph__lead_paragraph":
-      return <LeadPara key={widget.drupal_id} pageData={widget} />;
-    case "paragraph__links_widget":
-      return <LinksWidget key={widget.drupal_id} data={widget} />;
-    case "paragraph__media_text":
-      return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
-    case "paragraph__section_tabs":
-      return (
-        <Suspense fallback={<></>}>
-          <PageTabs key={widget.drupal_id} pageData={widget} />
-        </Suspense>
-      );
-    case "paragraph__statistic_widget":
-      return (
-        <Suspense fallback={<></>}>
-          <StatisticWidget key={widget.drupal_id} statisticData={widget} shouldHaveContainer={false} />
-        </Suspense>
-      );
-    case "paragraph__stats_widget":
-      return(
-        <Suspense fallback={<></>}>
-          <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />
-        </Suspense>
-      );
-    case "paragraph__section_buttons":
-      return <SectionButtons key={widget.drupal_id} pageData={widget} />;
-    case "paragraph__yaml_widget":
-      return (
-        <Suspense fallback={<></>}>
-          <YamlWidget key={widget.drupal_id} blockData={widget} />
-        </Suspense>
-      );
-    default:
-      return <></>;
+      default:
+        return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
+    }
   }
+
+  return <></>;
 }
 
 //For the right column
 function renderSecondary(widget, sectionClasses) {
-  //Only render certain widgets if there's enough space, i.e. class of col-md-6
+  let moduleName = widgetModules[widget.__typename].moduleName;
+  let fallback = widgetModules[widget.__typename].fallback;
+  let shouldLazyLoad = widgetModules[widget.__typename].shouldLazyLoad ?? false;
+  let region = "Secondary";
+
   if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderSecondary) {
-    switch (widget?.__typename) {
-      case "paragraph__accordion_section":
-        if (sectionClasses === "col-md-6") {
-          return (
-            <Suspense fallback={<></>}>
-              <Accordion key={widget.drupal_id} pageData={widget} />
-            </Suspense>
-            );
-        } else {
+    
+    //Only render certain widgets if there's enough space, i.e. class of col-md-6
+    if(widget.__typename === "paragraph__accordion_section" || widget.__typename === "paragraph__section_tabs") {
+        if (sectionClasses === "col-md-6"){
+          return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
+        }else {
           return <></>;
         }
-      case "paragraph__block_widget":
-        return (
-          <Suspense fallback={<></>}>
-            <BlockWidget key={widget.drupal_id} blockData={widget} region="Secondary" />
-          </Suspense>
-        );
-      case "paragraph__general_text":
-        return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
-      case "paragraph__media_text":
-        return <MediaText key={widget.drupal_id} widgetData={widget} region="Secondary" />;
-      case "paragraph__section_buttons":
-        return <SectionButtons key={widget.drupal_id} pageData={widget} />;
-      case "paragraph__yaml_widget":
-        return (
-          <Suspense fallback={<></>}>
-            <YamlWidget key={widget.drupal_id} blockData={widget} />
-          </Suspense>
-        );
-      case "paragraph__section_tabs":
-        if (sectionClasses === "col-md-6") {
-          return (
-            <Suspense fallback={<></>}>
-              <PageTabs key={widget.drupal_id} pageData={widget} />
-            </Suspense>
-          );
-        } else {
-          return <></>;
-        }
-      default:
-        return <></>;
     }
+    return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
   }
+  
   return <></>;
 }
 
-function SectionWidgets(props) {
+const SectionWidgets = React.memo(function SectionWidgets(props) {
+// const SectionWidgets = (props) => {
+  
   if (props.pageData?.length > 0) {
     let primary = [];
     let secondary = [];
@@ -140,9 +89,9 @@ function SectionWidgets(props) {
 
     // sort all widgets into primary or secondary regions
     allWidgets.forEach((widgetData) => {
-      let secCol = widgetData.relationships?.field_section_column?.name;
+      let sectionColumn = widgetData.relationships?.field_section_column?.name;
 
-      if (secCol === "right" || secCol === "Secondary") {
+      if (sectionColumn === "right" || sectionColumn === "Secondary") {
         secondary.push(widgetData);
       } else {
         primary.push(widgetData);
@@ -203,8 +152,15 @@ function SectionWidgets(props) {
     );
   }
   return null;
-}
+// }
+});
 
+/**
+ * SectionWidgets component
+ * 
+ * @param {Array} pageData - Array of widgets data to be rendered.
+ * @param {string} sectionClasses - CSS classes for the section.
+ */
 SectionWidgets.propTypes = {
   pageData: PropTypes.array,
   sectionClasses: PropTypes.string,
@@ -214,7 +170,8 @@ SectionWidgets.defaultProps = {
   sectionClasses: null,
 };
 
-export default SectionWidgets;
+export default React.memo(SectionWidgets);
+// export default SectionWidgets;
 
 export const query = graphql`
   fragment SectionParagraphFragment on paragraph__section {

@@ -24,30 +24,31 @@ const WidgetSelector = ({ widget }) => {
     case "paragraph__accordion_section":
       return (
         <Suspense fallback={<></>}>
-          <Accordion key={widget.drupal_id} pageData={widget} />
+          <Accordion key={widget.drupal_id} data={widget} />
         </Suspense>
       );
     case "paragraph__block_widget":
       return (
         <Suspense fallback={<></>}>
-          <BlockWidget key={widget.drupal_id} blockData={widget} />
+          <BlockWidget key={widget.drupal_id} data={widget} />
         </Suspense>
       );
     case "paragraph__general_text":
-      return <GeneralText key={widget.drupal_id}  processed={widget.field_general_text.processed} />;
+      return <GeneralText key={widget.drupal_id} data={widget} />;
     case "paragraph__image_overlay":
       return <ImageOverlay key={widget.drupal_id}  data={widget} />;
     case "paragraph__lead_paragraph":
-      return <LeadPara key={widget.drupal_id}  pageData={widget} />;
+      return <LeadPara key={widget.drupal_id}  data={widget} />;
     case "paragraph__links_widget":
       return <LinksWidget key={widget.drupal_id} data={widget} />;
     case "paragraph__media_text":
-      return <MediaText key={widget.drupal_id} headingClass="mt-md-0" widgetData={widget} />;
+      return <MediaText key={widget.drupal_id} headingClass="mt-md-0" data={widget} />;
     case "paragraph__modal_video_widget":
       const video = widget.relationships?.field_media_video;
       return video ? (
         <Suspense fallback={<ModalVideoStatic modalId={widget.drupal_id} />}>
           <ModalVideo
+            key={widget.drupal_id} 
             id={widget.drupal_id}
             src={video?.field_media_oembed_video}
             title={video?.name}
@@ -76,37 +77,37 @@ const WidgetSelector = ({ widget }) => {
     case "paragraph__section_tabs":
       return (
         <Suspense fallback={<></>}>
-          <PageTabs pageData={widget} />
+          <PageTabs key={widget.drupal_id} data={widget} />
         </Suspense>
       );
       case "paragraph__statistic_widget":
         return (
           <Suspense fallback={<></>}>
-            <StatisticWidget statisticData={widget} />
+            <StatisticWidget key={widget.drupal_id} statisticData={widget} />
           </Suspense>
         );
       case "paragraph__stats_widget":
         return (
           <Suspense fallback={<></>}>
-            <StatsWidget statsWidgetData={widget} />
+            <StatsWidget key={widget.drupal_id} data={widget} />
           </Suspense>
         );
       case "paragraph__story_widget":
         return (
           <Suspense fallback={<></>}>
-            <Story storyData={widget} />
+            <Story key={widget.drupal_id} storyData={widget} />
           </Suspense>
         );
     case "paragraph__testimonial_slider":
       return (
         <Suspense fallback={<></>}>
-          <TestimonialSlider testimonialData={widget} />
+          <TestimonialSlider key={widget.drupal_id} testimonialData={widget} />
         </Suspense>
       );
     case "paragraph__yaml_widget":
       return (
         <Suspense fallback={<></>}>
-          <YamlWidget blockData={widget} />
+          <YamlWidget key={widget.drupal_id} data={widget} />
         </Suspense>
       );
     default:

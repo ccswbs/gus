@@ -5,8 +5,8 @@ import Button from 'components/shared/button';
 
 function SectionButtons (props) {
 
-    const fieldButtonsData = props.pageData.relationships?.field_buttons;
-    const buttonCol = props.pageData.relationships?.field_section_column?.name;
+    const fieldButtonsData = props.data.relationships?.field_buttons;
+    const buttonCol = props.data.relationships?.field_section_column?.name;
     
     let buttonColClasses;
     let buttonSpacing;
@@ -36,11 +36,11 @@ function SectionButtons (props) {
 }
 
 SectionButtons.propTypes = {
-    pageData: PropTypes.object,
+    data: PropTypes.object,
 }
 
 SectionButtons.defaultProps = {
-    pageData: ``,
+    data: ``,
 }
 
 export default SectionButtons

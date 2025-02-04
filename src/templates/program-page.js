@@ -219,7 +219,7 @@ const ProgramPage = ({ data, location }) => {
         <div className="container page-container">
           <section className="row row-with-vspace site-content">
             <div className="col-md-12 content-area">
-              <BlockWidget key={blockData.drupal_id} blockData={blockData} />
+              <BlockWidget key={blockData.drupal_id} data={blockData} />
             </div>
           </section>
         </div>

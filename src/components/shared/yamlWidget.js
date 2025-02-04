@@ -19,7 +19,7 @@ import SouthAsiaExploreGrid from 'components/blocks/canada/south-asia-explore-gr
 import AdmissionGrid from 'components/blocks/admission/admission-grid'
 
 const YamlWidget = (props) => {
-    let component = props.blockData.relationships.field_custom_block?.field_yaml_id;
+    let component = props.data.relationships.field_custom_block?.field_yaml_id;
 
     // add new custom components to conditional rendering below
     return ({

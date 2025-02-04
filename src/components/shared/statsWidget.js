@@ -5,7 +5,7 @@ import Stats from 'components/shared/stats'
 
 function StatsWidget (props) {
 	
-	let statsData = props.statsWidgetData.relationships.field_statistic;
+	let statsData = props.data.relationships.field_statistic;
 
 	return (<>
 		<dl className="card-group stats">
@@ -15,10 +15,10 @@ function StatsWidget (props) {
 }
 		
 StatsWidget.propTypes = {
-	statsWidgetData: PropTypes.object,
+	data: PropTypes.object,
 }
 StatsWidget.defaultProps = {
-	statsWidgetData: null,
+	data: null,
 }
 export default StatsWidget
 
