@@ -32,7 +32,7 @@ function OVCCustomFooter (props) {
 					</div>}
 					<div className="col-md-8 content-area">
 						<div className="container" dangerouslySetInnerHTML={{ __html: footerText}} />
-						<Widget pageData={footerWidgets} />
+						<Widget widget={footerWidgets} />
 					</div>
 				</section>			
 			</div>

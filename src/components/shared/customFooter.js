@@ -25,17 +25,18 @@ const DefaultFooter = ({logos, text, widgets}) => (
   <div className="container page-container">
     <section className="row row-with-vspace site-content">
       {logos &&
-      <div className="col-md-3 content-area">
-      {logos.map(logo => (
-        <GatsbyImage
-          image={logo.relationships?.field_media_image?.gatsbyImage}
-          className="footer-logo"
-          alt={logo.field_media_image?.alt} />
-      ))}
-      </div>}
+        <div className="col-md-3 content-area">
+          {logos.map(logo => (
+            <GatsbyImage
+              key={`footer-logo-${logo.field_footer_logo?.drupal_id}`}
+              image={logo.relationships?.field_media_image?.gatsbyImage}
+              className="footer-logo"
+              alt={logo.field_media_image?.alt} />
+          ))}
+        </div>}
       <div className="col-md-9 content-area">
         <div className="container" dangerouslySetInnerHTML={{ __html: text}} />
-        <Widget pageData={widgets} />
+        <Widget widget={widgets} />
       </div>
     </section>			
   </div>
@@ -92,6 +93,7 @@ export const query = graphql`
         }
       }
       field_footer_logo {
+        drupal_id
         field_media_image {
           alt
         }

@@ -35,14 +35,14 @@ const Widgets = ({widgetData}) => {
   return <>
     {sortedWidgets.map((widgetGroup, index) => (
       widgetGroup.container === "container" ?           
-        <div className="container page-container" key={index}>
+        <div className="container page-container" key={`widget-container-parent-${index}`}>
           <div className="row site-content">
             <div className="content-area">
               {widgetGroup.containerHolder.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)}
             </div> 
           </div>
         </div> : 
-        <div key={index}>
+        <div key={`widget-container-parent-${index}`}>
           {widgetGroup.containerHolder.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)}
         </div>
     ))}

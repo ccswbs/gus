@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { lazy, Suspense } from "react";
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import Accordion from 'components/shared/accordion';
-import GeneralText from 'components/shared/generalText';
+import widgetModules from "components/shared/widgetModules";
+
 import MediaText from 'components/shared/mediaText';
-import PageTabs from 'components/shared/pageTabs';
-import SectionButtons from 'components/shared/sectionButtons';
+
+
+function renderWidget(componentName, shouldLazyLoad = false, fallback = null, widget, region) {
+  let WidgetModule;
+
+  if(shouldLazyLoad === true) {
+    const Fallback = fallback ? lazy(() => import(`components/shared/${fallback}`)) : () => <></>;
+    WidgetModule = lazy(() => import(`components/shared/${componentName}`));
+    return (
+      <Suspense key={`suspend-${widget.drupal_id}`} fallback={<Fallback />}>
+        <WidgetModule key={widget.drupal_id} data={widget} region={region} />
+      </Suspense>
+    );
+  }
+
+  WidgetModule = require(`components/shared/${componentName}`).default;
+  return <WidgetModule key={widget.drupal_id} data={widget} region={region} />
+}
 
 const BlockWidget = (props) => {
     
@@ -17,23 +33,23 @@ const BlockWidget = (props) => {
     }
     if (props.data?.relationships?.field_custom_block?.__typename === "block_content__widget_block") {
         widgetBlockContent = props.data.relationships.field_custom_block?.relationships?.field_widget_block_content;
-        let widgetRegion = props.region;
+        let region = props.region;
 
         return (widgetBlockContent.map(widget => {
+          let moduleName = widgetModules[widget.__typename].moduleName;
+          let fallback = widgetModules[widget.__typename].fallback;
+          let shouldLazyLoad = widgetModules[widget.__typename].shouldLazyLoad ?? false;
+
+          if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderSecondary) {
             switch(widget.__typename) {
-                case "paragraph__accordion_section":
-                    return <Accordion key={widget.drupal_id} data={widget} />;
-                case "paragraph__general_text":
-                    return <GeneralText key={widget.drupal_id} data={widget} />;
-                case "paragraph__media_text":
-                    return <MediaText key={widget.drupal_id} data={widget} region={widgetRegion} />;
-                case "paragraph__section_tabs":
-                    return <PageTabs key={widget.drupal_id} data={widget} />;
-                case "paragraph__section_buttons":
-                    return <SectionButtons key={widget.drupal_id} data={widget} />;
-                default:
-                    return <></>;
+              case "paragraph__media_text":
+                return <MediaText key={widget.drupal_id} data={widget} region={region} />;
+              default:
+                return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
             }
+          }
+
+          return <></>;
         }))
     }
     return <div dangerouslySetInnerHTML={{__html: basicBlockContent}}></div>

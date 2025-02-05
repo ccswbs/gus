@@ -19,7 +19,7 @@ function renderWidget(componentName, shouldLazyLoad = false, fallback = null, wi
     const Fallback = fallback ? lazy(() => import(`components/shared/${fallback}`)) : () => <></>;
     WidgetModule = lazy(() => import(`components/shared/${componentName}`));
     return (
-      <Suspense fallback={<Fallback />}>
+      <Suspense key={`suspend-${widget.drupal_id}`} fallback={<Fallback />}>
         <WidgetModule key={widget.drupal_id} data={widget} region={region} />
       </Suspense>
     );
@@ -40,7 +40,7 @@ function renderPrimary(widget) {
     switch (widget?.__typename) {
       case "paragraph__statistic_widget":
         return (
-          <Suspense fallback={<></>}>
+          <Suspense key={`suspend-${widget.drupal_id}`} fallback={<></>}>
             <StatisticWidget key={widget.drupal_id} statisticData={widget} shouldHaveContainer={false} />
           </Suspense>
         );
@@ -52,7 +52,7 @@ function renderPrimary(widget) {
   return <></>;
 }
 
-//For the right column
+// For the right column
 function renderSecondary(widget, sectionClasses) {
   let moduleName = widgetModules[widget.__typename].moduleName;
   let fallback = widgetModules[widget.__typename].fallback;
@@ -61,7 +61,7 @@ function renderSecondary(widget, sectionClasses) {
 
   if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderSecondary) {
 
-    //Only render certain widgets if there's enough space, i.e. class of col-md-6
+    // Only render certain widgets if there's enough space, i.e. class of col-md-6
     if(widget.__typename === "paragraph__accordion_section" || widget.__typename === "paragraph__section_tabs") {
         if (sectionClasses === "col-md-6"){
           return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
@@ -77,12 +77,12 @@ function renderSecondary(widget, sectionClasses) {
 
 const SectionWidgets = React.memo(function SectionWidgets(props) {
   
-  if (props.pageData?.length > 0) {
+  if (props.data?.length > 0) {
     let primary = [];
     let secondary = [];
     let primaryClass;
     let secondaryClass;
-    let allWidgets = props.pageData;
+    let allWidgets = props.data;
     let sectionClasses = props.sectionClasses;
 
     // sort all widgets into primary or secondary regions
@@ -155,15 +155,15 @@ const SectionWidgets = React.memo(function SectionWidgets(props) {
 /**
  * SectionWidgets component
  * 
- * @param {Array} pageData - Array of widgets data to be rendered.
+ * @param {Array} data - Array of widgets data to be rendered.
  * @param {string} sectionClasses - CSS classes for the section.
  */
 SectionWidgets.propTypes = {
-  pageData: PropTypes.array,
+  data: PropTypes.array,
   sectionClasses: PropTypes.string,
 };
 SectionWidgets.defaultProps = {
-  pageData: [],
+  data: [],
   sectionClasses: null,
 };
 

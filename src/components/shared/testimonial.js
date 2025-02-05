@@ -16,7 +16,7 @@ function setTestimonialHeading(props) {
     // heading generated for program page
     if (props.programAcronym) {
         
-        const testimonialTags = props.testimonialData.flatMap(testim => TestimonialTitle(testim.node ?? testim) ?? []);
+        const testimonialTags = props.data.flatMap(testim => TestimonialTitle(testim.node ?? testim) ?? []);
 
         const studentTag = testimonialTags.some(tag => tag === 'Graduate Student' || tag === 'Undergraduate Student');
         const facultyTag = testimonialTags.includes('Faculty');
@@ -38,8 +38,8 @@ function Testimonials (props) {
     let Heading = setHeadingLevel(props.headingLevel);
     let testimonialHeading = setTestimonialHeading(props)
 
-    if (props.testimonialData?.length > 0) {
-        const testimonialUnits  = () => props.testimonialData.map((testimonial) => {
+    if (props.data?.length > 0) {
+        const testimonialUnits  = () => props.data.map((testimonial) => {
             // program queries are nested under .node and widget queries are not
             let testimonialNode = testimonial.node ?? testimonial;
             let testimonialName = testimonialNode.field_testimonial_person_name ?? testimonialNode.title;
@@ -97,11 +97,11 @@ function Testimonials (props) {
 }
 
 Testimonials.propTypes = {
-    testimonialData: PropTypes.array,
+    data: PropTypes.array,
 }
 
 Testimonials.defaultProps = {
-    testimonialData: null,
+    data: null,
 }
 
 export default Testimonials

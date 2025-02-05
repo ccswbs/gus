@@ -8,14 +8,14 @@ const StorySelector = ({story}) => {
         case "paragraph__statistic_widget":
             return <StatisticWidget statisticData={story} />;
         case "paragraph__story_image_cutout_background":
-            return <StoryImageCutout storyData={story} />;
+            return <StoryImageCutout data={story} />;
         default:
             return null;
     }
 }
 
 const Story = (props) => {
-    let storyContent = props.storyData?.relationships.field_story_content;
+    let storyContent = props.data?.relationships.field_story_content;
     return storyContent ? 
       <>
         {storyContent?.map((story, index) => <StorySelector story={story} key={index} />)} 

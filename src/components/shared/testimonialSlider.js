@@ -17,27 +17,27 @@ const myUnionBy = (arrays, iteratee) => {
 };
 
 const TestimonialSlider = (props) => {
-  if (!props.testimonialData) {
+  if (!props.data) {
     return null;
   }
 
-  let testimonialTitle = props.testimonialData.field_title;
+  let testimonialTitle = props.data.field_title;
 
   // handle testimonials added by title
-  let testimonialNodes = props.testimonialData.relationships?.field_testimonial_nodes || [];
+  let testimonialNodes = props.data.relationships?.field_testimonial_nodes || [];
 
   // handle testimonials added by tag
-  let testimonialTags = props.testimonialData.relationships?.field_tags || [];
+  let testimonialTags = props.data.relationships?.field_tags || [];
   let testimonialTaggedNodes = testimonialTags.flatMap((tag) => {
     return tag.relationships.node__testimonial;
   })
 
   // remove duplicate values from array of objects using drupal_id + limit to 10 testimonials
-  let testimonialData = myUnionBy([testimonialNodes, testimonialTaggedNodes], 'drupal_id').slice(0,10);
+  let data = myUnionBy([testimonialNodes, testimonialTaggedNodes], 'drupal_id').slice(0,10);
 
-  return testimonialData.length > 0 ? 
+  return data.length > 0 ? 
     <Testimonials
-      testimonialData={testimonialData}
+      data={data}
       headingLevel="h3"
       heading={testimonialTitle}
     />

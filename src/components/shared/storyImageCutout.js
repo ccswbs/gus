@@ -51,7 +51,7 @@ function sortContent(content) {
 }
 
 function StoryImageCutout (props) {
-  let story = props.storyData;
+  let story = props.data;
   let title = story?.field_story_title;
   let body = story?.field_story_text;
 

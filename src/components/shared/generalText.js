@@ -4,7 +4,11 @@ import { graphql } from "gatsby";
 import { ParseText } from "utils/ug-utils";
 
 const GeneralText = (props) => {
-  return <ParseText textContent={props.data.field_general_text.processed} />;
+  return (
+    <React.Fragment key={`parsed-${props.data.drupal_id}`}>
+      <ParseText textContent={props.data.field_general_text.processed} />
+    </React.Fragment>
+  );
 };
 
 GeneralText.propTypes = {

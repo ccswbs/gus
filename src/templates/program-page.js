@@ -210,7 +210,7 @@ const ProgramPage = ({ data, location }) => {
       {/**** Testimonials ****/}
       {testimonialData && 
         <Suspense fallback={<></>}>
-          <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />
+          <Testimonials data={testimonialData} programAcronym={acronym} headingLevel="h3" />
         </Suspense>
       }
 
