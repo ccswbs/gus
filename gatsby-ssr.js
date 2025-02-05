@@ -5,7 +5,7 @@ const UOFG_WEB_COMPONENTS_BASE = `@uoguelph/web-components@${process.env.UOFG_WC
 
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
-    <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" />,
+    <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" crossOrigin="anonymous" />,
     <link rel="preconnect" href="https://fonts.gstatic.com" key="https://fonts.gstatic.com" crossOrigin="anonymous" />,
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
@@ -30,6 +30,7 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
     />,
+    <link rel="preload" href="https://kit.fontawesome.com/7993323d0c.js" as="script" />,
   ]);
   setPostBodyComponents([
     <script
