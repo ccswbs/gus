@@ -12,6 +12,26 @@ function containsMediaTextOnly(widget) {
   return widget?.__typename === "paragraph__media_text";
 }
 
+// If only media + text widgets in Primary section
+// then automatically create a grid (up to 3 or 4 columns)
+function renderMediaGrid(primary_data) {
+  let gridClasses = "";
+
+  if(primary_data.length > 1){
+    // default is two columns
+    let gridDivision = 2;
+
+    // if more than two items, allow for up to 3 or 4 columns
+    if (primary_data.length > 2) {
+      gridDivision = primary_data.length % 4 === 0 ? "4" : "3";
+    }
+
+    gridClasses = `row-cols-1 row-cols-sm-2 row-cols-lg-${gridDivision}`;
+  }
+
+  return gridClasses;
+}
+
 function renderWidget(componentName, shouldLazyLoad = false, fallback = null, widget, region) {
   let WidgetModule;
 
@@ -84,6 +104,7 @@ const SectionWidgets = React.memo(function SectionWidgets(props) {
     let secondaryClass;
     let allWidgets = props.data;
     let sectionClasses = props.sectionClasses;
+    let onlyContainsMediaText = true;
 
     // sort all widgets into primary or secondary regions
     allWidgets.forEach((widgetData) => {
@@ -93,24 +114,16 @@ const SectionWidgets = React.memo(function SectionWidgets(props) {
         secondary.push(widgetData);
       } else {
         primary.push(widgetData);
+
+        // check if primary column only contains media text widgets
+        if(!containsMediaTextOnly(widgetData)){
+          onlyContainsMediaText = false;
+        }
       }
     });
 
-    // if only media + text widgets in Primary
-    // then automatically create a grid (up to 3 or 4 columns)
-    let onlyContainsMedia = primary.every(containsMediaTextOnly);
-    let gridClasses = "";
-    if (onlyContainsMedia && primary.length > 1) {
-      // default is two items
-      let gridDivision = 2;
-
-      // if more than two items, allow for up to 3 or 4 columns
-      if (primary.length > 2) {
-        gridDivision = primary.length % 4 === 0 ? "4" : "3";
-      }
-
-      gridClasses = `row-cols-1 row-cols-sm-2 row-cols-lg-${gridDivision}`;
-    }
+    // if only media text widgets, render a media grid
+    let gridClasses = onlyContainsMediaText === true ? renderMediaGrid(primary) : "";
 
     // if secondary region exists
     if (secondary.length > 0) {
