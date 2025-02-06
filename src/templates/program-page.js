@@ -9,7 +9,7 @@ import CustomFooter from "components/shared/customFooter"
 import Hero from "components/shared/hero"
 import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
-import Widgets from "components/shared/widgets"
+import WidgetContainer from "components/shared/widgetContainer"
 import { ParseText } from "utils/ug-utils"
 import { graphql } from "gatsby"
 
@@ -160,7 +160,7 @@ const ProgramPage = ({ data, location }) => {
             {heroWidgets && (
               <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
                 {heroWidgets.map((widget, index) => (
-                  <Widget widget={widget} key={index} />
+                  <Widget data={widget} key={index} />
                 ))}
               </div>
             )}
@@ -200,7 +200,7 @@ const ProgramPage = ({ data, location }) => {
       )}
 
       {/**** Widgets content ****/}
-      <Widgets widgetData={widgets} />
+      <WidgetContainer data={widgets} />
 
       {/**** Program Information Accordion ****/}
       {renderProgramInfoAccordion(

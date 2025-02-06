@@ -80,8 +80,8 @@ const WidgetSelector = ({ widget }) => {
   return <></>;
 };
 
-const Widget = ({ widget }) => {
-  return <WidgetSelector widget={widget} />
+const Widget = ({ data }) => {
+  return <WidgetSelector widget={data} />
 };
 
 export default Widget;

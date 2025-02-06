@@ -36,7 +36,7 @@ const DefaultFooter = ({logos, text, widgets}) => (
         </div>}
       <div className="col-md-9 content-area">
         <div className="container" dangerouslySetInnerHTML={{ __html: text}} />
-        <Widget widget={widgets} />
+        <Widget data={widgets} />
       </div>
     </section>			
   </div>

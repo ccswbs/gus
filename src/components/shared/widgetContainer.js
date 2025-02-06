@@ -30,23 +30,23 @@ const SortWidgets = (widgets) => {
   return sortedWidgets;
 }
 
-const Widgets = ({widgetData}) => {
-  const sortedWidgets = SortWidgets(widgetData);
+const WidgetContainer = ({data}) => {
+  const sortedWidgets = SortWidgets(data);
   return <>
     {sortedWidgets.map((widgetGroup, index) => (
       widgetGroup.container === "container" ?           
         <div className="container page-container" key={`widget-container-parent-${index}`}>
           <div className="row site-content">
             <div className="content-area">
-              {widgetGroup.containerHolder.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)}
+              {widgetGroup.containerHolder.map((widget) => <Widget data={widget} key={widget.drupal_id} />)}
             </div> 
           </div>
         </div> : 
         <div key={`widget-container-parent-${index}`}>
-          {widgetGroup.containerHolder.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)}
+          {widgetGroup.containerHolder.map((widget) => <Widget data={widget} key={widget.drupal_id} />)}
         </div>
     ))}
   </>
 };
 
-export default Widgets;
+export default WidgetContainer;
