@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from "react";
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import widgetModules from "components/shared/widgetModules";
-// import MediaText from 'components/shared/mediaText';
 
 function renderWidget(componentName, shouldLazyLoad = false, fallback = null, widget, region) {
   let WidgetModule;
@@ -38,14 +37,8 @@ const BlockWidget = (props) => {
           let fallback = widgetModules[widget.__typename].fallback;
           let shouldLazyLoad = widgetModules[widget.__typename].shouldLazyLoad ?? false;
 
-          if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderSecondary) {
-            switch(widget.__typename) {
-              case "paragraph__media_text":
-                // return <MediaText key={widget.drupal_id} data={widget} region={region} />;
-                return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
-              default:
-                return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
-            }
+          if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderBlock) {
+            return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
           }
 
           return <></>;
