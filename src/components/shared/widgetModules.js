@@ -14,7 +14,7 @@ const widgetModules = {
   'paragraph__stats_widget': { container: 'container', moduleName: 'statsWidget', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: false, shouldRenderBlock: false },
   'paragraph__story_widget': { container: 'container-fluid', moduleName: 'story', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: false, shouldRenderBlock: false },
   'paragraph__testimonial_slider': { container: 'container-fluid', moduleName: 'testimonialSlider', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: false, shouldRenderBlock: false },
-  'paragraph__yaml_widget': { container: 'container-fluid', moduleName: 'yamlWidget', shouldLazyLoad: false, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: true, shouldRenderBlock: false },
+  'paragraph__yaml_widget': { container: 'container-fluid', moduleName: 'yamlWidget', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: true, shouldRenderBlock: false },
 }
 
 export default widgetModules;

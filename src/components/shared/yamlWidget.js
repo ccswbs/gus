@@ -1,46 +1,39 @@
-import React from 'react';
+import React, { lazy, Suspense } from "react";
 import { graphql } from 'gatsby';
 
-// @todo - add index of components in components/blocks and import all in one line
-// until then, import each component manually below
-import EconImpactNationalStory from 'components/blocks/economic-impact/national-impact-story';
-import EconImpactProvincialImpactOnehealth from 'components/blocks/economic-impact/provincial-impact-onehealth';
-import InternationalStatsGlobal from 'components/blocks/international/international-stats-global';
-import InternationalExploreThingsToKnow from 'components/blocks/international/international-things-to-know';
-import InternationalExploreButtons from 'components/blocks/international/international-explore-btns';
-import InternationalExploreGrid from 'components/blocks/international/international-explore-grid';
-import InternationalTalkCurrentStudent from 'components/blocks/international/international-talk-current-student';
-import InternationalExploreLead from 'components/blocks/international/international-explore-lead';
-import LangBcommQuote from 'components/blocks/lang/lang-bcomm-quote';
-import LangBcommSupportiveCommunity from 'components/blocks/lang/lang-bcomm-supportive-community';
-import LangBcommFeatureExperience from 'components/blocks/lang/lang-bcomm-feature-experience';
-import LangBcommStudentBlog from 'components/blocks/lang/lang-bcomm-student-blog';
-import SouthAsiaExploreGrid from 'components/blocks/canada/south-asia-explore-grid';
-import AdmissionGrid from 'components/blocks/admission/admission-grid'
+const yamlModules = {
+  'economic_impact_national_story': { moduleName: 'econImpactNationalStory', path: 'economic-impact' },
+  'economic_impact_provincial_onehealth': { moduleName: 'econImpactProvincialImpactOnehealth', path: 'economic-impact'},
+  'international_explore_grid': { moduleName: 'internationalExploreGrid', path: 'international'},
+  'international_talk_current_student': { moduleName: 'internationalTalkCurrentStudent', path: 'international'},
+  'lang_bcomm_supportive_community': { moduleName: 'langBcommSupportiveCommunity', path: 'lang'},
+  'lang_bcomm_student_blog': { moduleName: 'langBcommStudentBlog', path: 'lang'},
+  'lang_bcomm_student_blog_blue': { moduleName: 'langBcommStudentBlog', path: 'lang', background: '#F4F7FA'},
+  'south_asia_explore_grid': { moduleName: 'southAsiaExploreGrid', path: 'canada'},
+}
+
+function renderYamlWidget(componentName, path, key, background) {
+  const YamlComponent = lazy(() => import(`components/custom/${path}/${componentName}`));
+
+  return (
+    <Suspense key={`suspend-${key}`} fallback={<></>}>
+      <YamlComponent key={key} background={background} />
+    </Suspense>
+  );
+}
 
 const YamlWidget = (props) => {
     let component = props.data.relationships.field_custom_block?.field_yaml_id;
 
-    // add new custom components to conditional rendering below
-    return ({
-        'economic_impact_national_story': <EconImpactNationalStory />,
-        'economic_impact_provincial_onehealth': <EconImpactProvincialImpactOnehealth />,
-        'international_stats_global_impact': <InternationalStatsGlobal />,
-        'international_explore_things_to_know': <InternationalExploreThingsToKnow />,
-        'international_explore_btns': <InternationalExploreButtons />,
-        'international_explore_grid': <InternationalExploreGrid />,
-        'international_talk_current_student':<InternationalTalkCurrentStudent />,
-        'international_talk_current_student_blue':<InternationalTalkCurrentStudent background="#F4F7FA" />,
-        'international_explore_lead':<InternationalExploreLead />,
-        'lang_bcomm_quote':<LangBcommQuote />,
-        'lang_bcomm_supportive_community':<LangBcommSupportiveCommunity />,
-        'lang_bcomm_feature_experience':<LangBcommFeatureExperience />,
-        'lang_bcomm_student_blog':<LangBcommStudentBlog />,
-        'lang_bcomm_student_blog_blue':<LangBcommStudentBlog background="#F4F7FA" />,
-        'south_asia_explore_grid': <SouthAsiaExploreGrid />,
-        'admission_supplementary_block': <AdmissionGrid />,
+    if (yamlModules[component]) {
+      let key = props.data.drupal_id;
+      let componentName = yamlModules[component].moduleName;
+      let path = yamlModules[component].path;
+      let background = yamlModules[component].background;
+      return renderYamlWidget(componentName, path, key, background);
+    }
 
-    }[component] || null )
+    return <></>;
 }
 
 export default YamlWidget

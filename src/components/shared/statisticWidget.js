@@ -43,7 +43,7 @@ const GradientStatistic = ({stats}) => {
   }
 
   return (
-    <Gradient className="d-flex flex-column mb-4" gradientstyle={gradientStyle}>
+    <Gradient className="d-flex flex-column mb-4" gradientStyle={gradientStyle}>
       <Container className="page-container p-0">
           <Statistic className={`row g-0 row-cols-1 ${rowClasses} justify-content-center mb-0`}>
               {stats.map((stat, index) => {
