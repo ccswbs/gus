@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { lazy, Suspense } from "react";
 import classNames from "classnames";
 import { graphql } from "gatsby";
-import { ConditionalWrapper } from "utils/ug-utils";
+import { ConditionalWrapper, renderWidget } from "utils/ug-utils";
 import widgetModules from "components/shared/widgetModules";
 
 const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
@@ -32,23 +32,6 @@ function renderMediaGrid(primary_data) {
   return gridClasses;
 }
 
-function renderWidget(componentName, shouldLazyLoad = false, fallback = null, widget, region) {
-  let WidgetModule;
-
-  if(shouldLazyLoad === true) {
-    const Fallback = fallback ? lazy(() => import(`components/shared/${fallback}`)) : () => <></>;
-    WidgetModule = lazy(() => import(`components/shared/${componentName}`));
-    return (
-      <Suspense key={`suspend-${widget.drupal_id}`} fallback={<Fallback />}>
-        <WidgetModule key={widget.drupal_id} data={widget} region={region} />
-      </Suspense>
-    );
-  }
-
-  WidgetModule = require(`components/shared/${componentName}`).default;
-  return <WidgetModule key={widget.drupal_id} data={widget} region={region} />
-}
-
 // For the left column
 function renderPrimary(widget) {
   let moduleName = widgetModules[widget.__typename].moduleName;
@@ -57,6 +40,8 @@ function renderPrimary(widget) {
   let region = "Primary";
 
   if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderPrimary) {
+
+    // @todo - update the switch-case scenarios so they're handled by renderWidget
     switch (widget?.__typename) {
       case "paragraph__statistic_widget":
         return (

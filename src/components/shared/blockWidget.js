@@ -1,24 +1,8 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import widgetModules from "components/shared/widgetModules";
-
-function renderWidget(componentName, shouldLazyLoad = false, fallback = null, widget, region) {
-  let WidgetModule;
-
-  if(shouldLazyLoad === true) {
-    const Fallback = fallback ? lazy(() => import(`components/shared/${fallback}`)) : () => <></>;
-    WidgetModule = lazy(() => import(`components/shared/${componentName}`));
-    return (
-      <Suspense key={`suspend-${widget.drupal_id}`} fallback={<Fallback />}>
-        <WidgetModule key={widget.drupal_id} data={widget} region={region} />
-      </Suspense>
-    );
-  }
-
-  WidgetModule = require(`components/shared/${componentName}`).default;
-  return <WidgetModule key={widget.drupal_id} data={widget} region={region} />
-}
+import { renderWidget } from "../../utils/ug-utils";
 
 const BlockWidget = (props) => {
     

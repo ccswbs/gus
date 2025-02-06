@@ -3,28 +3,11 @@ import { graphql } from "gatsby";
 import MediaText from "components/shared/mediaText";
 import ModalVideoStatic from "./modalVideoStatic";
 import SectionWidgets from "components/shared/sectionWidgets";
-import { slugify } from "utils/ug-utils";
+import { renderWidget, slugify } from "utils/ug-utils";
 import widgetModules from "components/shared/widgetModules";
 
 const ModalVideo = lazy(() => import("components/shared/modalVideo"));
 const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
-
-function renderWidget(componentName, shouldLazyLoad = false, fallback = null, widget) {
-  let WidgetModule;
-
-  if(shouldLazyLoad === true) {
-    const Fallback = fallback ? lazy(() => import(`components/shared/${fallback}`)) : () => <></>;
-    WidgetModule = lazy(() => import(`components/shared/${componentName}`));
-    return (
-      <Suspense key={`suspend-${widget.drupal_id}`} fallback={<Fallback />}>
-        <WidgetModule key={widget.drupal_id} data={widget} />
-      </Suspense>
-    );
-  }
-
-  WidgetModule = require(`components/shared/${componentName}`).default;
-  return <WidgetModule key={widget.drupal_id} data={widget} />
-}
 
 const WidgetSelector = ({ widget }) => {
   if (widgetModules[widget?.__typename]) {
@@ -32,9 +15,14 @@ const WidgetSelector = ({ widget }) => {
     let fallback = widgetModules[widget.__typename].fallback;
     let shouldLazyLoad = widgetModules[widget.__typename].shouldLazyLoad ?? false;
 
+    // @todo - update the switch-case scenarios so they're handled by renderWidget
     switch (widget?.__typename) {  
       case "paragraph__media_text":
-        return <MediaText key={widget.drupal_id} headingClass="mt-md-0" data={widget} />;
+        return (
+          <Suspense key={`suspend-${widget.drupal_id}`} fallback={<></>}>
+            <MediaText key={widget.drupal_id} headingClass="mt-md-0" data={widget} />
+          </Suspense>
+        );
       case "paragraph__modal_video_widget":
         const video = widget.relationships?.field_media_video;
         return video ? (

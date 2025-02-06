@@ -15,9 +15,7 @@ function setTestimonialHeading(props) {
 
     // heading generated for program page
     if (props.programAcronym) {
-        
         const testimonialTags = props.data.flatMap(testim => TestimonialTitle(testim.node ?? testim) ?? []);
-
         const studentTag = testimonialTags.some(tag => tag === 'Graduate Student' || tag === 'Undergraduate Student');
         const facultyTag = testimonialTags.includes('Faculty');
         const alumniTag = testimonialTags.includes('Alumni');
