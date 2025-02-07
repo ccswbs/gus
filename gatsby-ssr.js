@@ -64,10 +64,10 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       defer
     />,
     // U of G Gatsby script
-    <script
-      key="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
-      src="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
-      defer
-    />,
+    // <script
+    //   key="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
+    //   src="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
+    //   defer
+    // />,
   ]);
 };
