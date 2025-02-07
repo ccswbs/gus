@@ -7,29 +7,33 @@ import widgetModules from "components/shared/widgetModules";
 
 const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
 
+const templates = {
+  'primary-100': { primary: 'row', secondary: '' },
+  'primary-50-secondary-50': { primary: 'col-md-6 mb-5 mb-md-0', secondary: 'col-md-6'},
+  'primary-75-secondary-25': { primary: 'col-md-9 mb-5 mb-md-0', secondary: 'col-md-3'},
+}
+
 // Check if section only contains media and text
 function containsMediaTextOnly(widget) {
   return widget?.__typename === "paragraph__media_text";
 }
 
-// If only media + text widgets in Primary section
-// then automatically create a grid (up to 3 or 4 columns)
+// Create a grid if only media + text widgets in Primary section
+// default is two columns; if more, then 3 or 4 columns
 function renderMediaGrid(primary_data) {
-  let gridClasses = "";
+  let mediaGridClasses = "";
 
   if(primary_data.length > 1){
-    // default is two columns
     let gridDivision = 2;
 
-    // if more than two items, allow for up to 3 or 4 columns
     if (primary_data.length > 2) {
       gridDivision = primary_data.length % 4 === 0 ? "4" : "3";
     }
 
-    gridClasses = `row-cols-1 row-cols-sm-2 row-cols-lg-${gridDivision}`;
+    mediaGridClasses = `row-cols-1 row-cols-sm-2 row-cols-lg-${gridDivision}`;
   }
 
-  return gridClasses;
+  return mediaGridClasses;
 }
 
 // For the left column
@@ -80,56 +84,67 @@ function renderSecondary(widget, sectionClasses) {
   return <></>;
 }
 
+function sortWidgets(widgets){
+  const primary = [];
+  const secondary = [];
+  let onlyContainsMediaText = true;
+
+  // sort all widgets into primary or secondary regions
+  widgets.forEach((widgetData) => {
+    let sectionColumn = widgetData.relationships?.field_section_column?.name;
+
+    if (sectionColumn === "right" || sectionColumn === "Secondary") {
+      secondary.push(widgetData);
+    } else {
+      primary.push(widgetData);
+
+      // check if primary only contains media text widgets
+      if(!containsMediaTextOnly(widgetData)){
+        onlyContainsMediaText = false;
+      }
+    }
+  });
+
+  return({primary, secondary, onlyContainsMediaText});
+}
+
+function getTemplate(secondaryRegionExists, sectionClasses){
+  if (secondaryRegionExists) {
+    if (sectionClasses === "col-md-6") {
+      return "primary-50-secondary-50";
+    } else {
+      return "primary-75-secondary-25";
+    }
+  }
+  return "primary-100";
+}
+
 const SectionWidgets = React.memo(function SectionWidgets(props) {
   
   if (props.data?.length > 0) {
-    let primary = [];
-    let secondary = [];
-    let primaryClass;
-    let secondaryClass;
     let allWidgets = props.data;
-    let sectionClasses = props.sectionClasses;
-    let onlyContainsMediaText = true;
+    const sortedWidgets = sortWidgets(allWidgets);
 
-    // sort all widgets into primary or secondary regions
-    allWidgets.forEach((widgetData) => {
-      let sectionColumn = widgetData.relationships?.field_section_column?.name;
-
-      if (sectionColumn === "right" || sectionColumn === "Secondary") {
-        secondary.push(widgetData);
-      } else {
-        primary.push(widgetData);
-
-        // check if primary column only contains media text widgets
-        if(!containsMediaTextOnly(widgetData)){
-          onlyContainsMediaText = false;
-        }
-      }
-    });
+    let primary = sortedWidgets?.primary;
+    let secondary = sortedWidgets?.secondary;
+    const secondaryRegionExists = (secondary.length > 0) ? true : false;
 
     // if only media text widgets, render a media grid
-    let gridClasses = onlyContainsMediaText === true ? renderMediaGrid(primary) : "";
+    let onlyContainsMediaText = sortedWidgets?.onlyContainsMediaText;
+    let mediaGridClasses = onlyContainsMediaText === true ? renderMediaGrid(primary) : "";
 
-    // if secondary region exists
-    if (secondary.length > 0) {
-      if (sectionClasses === "col-md-6") {
-        primaryClass = classNames("col-md-6 mb-5 mb-md-0");
-        secondaryClass = classNames("col-md-6");
-      } else {
-        primaryClass = classNames("col-md-9 mb-5 mb-md-0");
-        secondaryClass = classNames("col-md-3");
-      }
-    } else {
-      // only primary region exists
-      primaryClass = classNames("row", gridClasses);
-    }
+    let sectionClasses = props.sectionClasses;
+    let template = getTemplate(secondaryRegionExists, sectionClasses);
+
+    let primaryClass = (template === "primary-100") ? classNames(templates[template].primary, mediaGridClasses) : classNames(templates[template].primary);
+    let secondaryClass = classNames(templates[template].secondary);
 
     return (
       <>
         <div className={primaryClass} data-title="Primary column">
           <ConditionalWrapper
             condition={secondary.length > 0}
-            wrapper={(children) => <div className={classNames("row", gridClasses)}>{children}</div>}
+            wrapper={(children) => <div className={classNames("row", mediaGridClasses)}>{children}</div>}
           >
             {primary &&
               primary.map((widget) => {
