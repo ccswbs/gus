@@ -8,7 +8,7 @@ import widgetModules from "components/shared/widgetModules";
 const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
 
 const templates = {
-  'primary-100': { primary: 'row', secondary: '' },
+  'primary-100': { primary: '', secondary: '' },
   'primary-50-secondary-50': { primary: 'col-md-6 mb-5 mb-md-0', secondary: 'col-md-6'},
   'primary-75-secondary-25': { primary: 'col-md-9 mb-5 mb-md-0', secondary: 'col-md-3'},
 }
@@ -30,7 +30,7 @@ function renderMediaGrid(primary_data) {
       gridDivision = primary_data.length % 4 === 0 ? "4" : "3";
     }
 
-    mediaGridClasses = `row-cols-1 row-cols-sm-2 row-cols-lg-${gridDivision}`;
+    mediaGridClasses = `row row-cols-1 row-cols-sm-2 row-cols-lg-${gridDivision}`;
   }
 
   return mediaGridClasses;
@@ -127,13 +127,13 @@ const SectionWidgets = React.memo(function SectionWidgets(props) {
 
     let primary = sortedWidgets?.primary;
     let secondary = sortedWidgets?.secondary;
-    const secondaryRegionExists = (secondary.length > 0) ? true : false;
 
     // if only media text widgets, render a media grid
     let onlyContainsMediaText = sortedWidgets?.onlyContainsMediaText;
     let mediaGridClasses = onlyContainsMediaText === true ? renderMediaGrid(primary) : "";
 
     let sectionClasses = props.sectionClasses;
+    const secondaryRegionExists = (secondary.length > 0) ? true : false;
     let template = getTemplate(secondaryRegionExists, sectionClasses);
 
     let primaryClass = (template === "primary-100") ? classNames(templates[template].primary, mediaGridClasses) : classNames(templates[template].primary);
