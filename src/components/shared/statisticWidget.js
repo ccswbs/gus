@@ -26,7 +26,7 @@ const GradientStatistic = ({stats}) => {
 
   // default is displaying 3 colours in a row
   let rowClasses = "row-cols-md-3";
-  let gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%)";
+  let gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#ffc72a 60%,#ffc72a 100%)";
 
   if (numStats === 1){
     // one colour
