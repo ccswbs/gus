@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import widgetModules from "components/shared/widgetModules";
 import { renderWidget } from "../../utils/ug-utils";
 
-const BlockWidget = (props) => {
+const BlockWidget = React.memo(function BlockWidget(props) {
     
     let basicBlockContent;
     let widgetBlockContent = [];
@@ -29,7 +29,7 @@ const BlockWidget = (props) => {
         }))
     }
     return <div dangerouslySetInnerHTML={{__html: basicBlockContent}}></div>
-}
+});
 
 BlockWidget.propTypes = {
     data: PropTypes.object,
@@ -41,7 +41,7 @@ BlockWidget.defaultProps = {
     region: ``,
 }
 
-export default BlockWidget
+export default React.memo(BlockWidget);
 
 export const query = graphql`
   fragment BlockWidgetParagraphFragment on paragraph__block_widget {
