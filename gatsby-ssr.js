@@ -7,31 +7,31 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
     <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" crossOrigin="anonymous" />,
     <link rel="preconnect" href="https://fonts.gstatic.com" key="https://fonts.gstatic.com" crossOrigin="anonymous" />,
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" as="style" />,
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" as="style" crossOrigin="anonymous" />,
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
       key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
       rel="stylesheet"
     />,
-    <link rel="preload" href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} as="style" />,
+    <link rel="preload" href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} as="style" crossOrigin="anonymous" />,
     <link
       rel="stylesheet"
       href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
     />,
-    <link href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`} rel="preload" as="script" />,
+    <link href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`} rel="preload" as="script" crossOrigin="anonymous" />,
     <script
       type="module"
       src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
     ></script>,
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css" as="style" />,
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css" as="style" crossOrigin="anonymous" />,
     <link
       key="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
     />,
-    <link rel="preload" href="https://kit.fontawesome.com/7993323d0c.js" as="script" />,
+    <link rel="preload" href="https://kit.fontawesome.com/7993323d0c.js" as="script" crossOrigin="anonymous" />,
   ]);
   setPostBodyComponents([
     <script
