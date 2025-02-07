@@ -80,7 +80,7 @@ function renderSecondary(widget, sectionClasses) {
   return <></>;
 }
 
-const SectionWidgets = (props) => {
+const SectionWidgets = React.memo(function SectionWidgets(props) {
   
   if (props.data?.length > 0) {
     let primary = [];
@@ -148,7 +148,7 @@ const SectionWidgets = (props) => {
     );
   }
   return null;
-};
+});
 
 /**
  * SectionWidgets component
@@ -165,7 +165,7 @@ SectionWidgets.defaultProps = {
   sectionClasses: null,
 };
 
-export default SectionWidgets;
+export default React.memo(SectionWidgets);
 
 export const query = graphql`
   fragment SectionParagraphFragment on paragraph__section {
