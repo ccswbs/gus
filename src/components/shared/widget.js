@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import { graphql } from "gatsby";
-import MediaText from "components/shared/mediaText";
 import ModalVideoStatic from "./modalVideoStatic";
 import SectionWidgets from "components/shared/sectionWidgets";
 import { renderWidget, slugify } from "utils/ug-utils";
 import widgetModules from "components/shared/widgetModules";
 
+const MediaText = lazy(() => import("components/shared/mediaText"))
 const ModalVideo = lazy(() => import("components/shared/modalVideo"));
 const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
 
