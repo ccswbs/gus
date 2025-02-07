@@ -11,7 +11,7 @@ import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
 import WidgetContainer from "components/shared/widgetContainer"
 import { ParseText } from "utils/ug-utils"
-import { graphql } from "gatsby"
+import { graphql, Script } from "gatsby"
 
 const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
 const Employers = lazy(() => import("components/shared/employers"));
@@ -19,6 +19,36 @@ const HeroVideo = lazy(() => import("components/shared/heroVideo"));
 const Testimonials = lazy(() => import("components/shared/testimonial"));
 const Variants = lazy(() => import("components/shared/variants"));
 
+const slateFormIDs = {
+  "BASc": {id:"78834d6b-07a8-4b3f-95b8-fac032e9be73"},
+  "BA": {id: "7f450ae7-c251-488a-a220-71e1545d6755"},
+  "BAS": {id: "b6214efd-4c37-4a4a-bf20-0aa313439ec2"},
+  "BAG": {id: "77ab0213-494f-40bc-bea0-02f2db4c8bab"},
+  "BBRM": {id: "d6c14a8e-a69c-4970-8a5f-e01dc4872dbc"},
+  "BComm": {id: "42684f4f-078e-4c53-ae02-86e014274a0c"},
+  "BComp": {id: "e1d37493-9b4e-4bdb-b86d-60feed5be8fd"},
+  "BCAHW": {id: "3c760ac4-9cde-4a98-bc26-d77e1a6709be"},
+  "BEng": {id: "21c3ee6d-104c-45bb-bb01-53e464d1834a"},
+  "BOH": {id: "46185678-374d-4dea-805a-32d27b9a5c09"},
+  "BSc": {id: "8170d0fc-d8f2-4ee4-84e2-5b4446a9c7fb"},
+  "BScAg": {id: "2bf40bb7-b95f-421e-9e61-04ab0aee08bd"},
+  "BScEnv": {id: "6a16e4f6-192d-4d2c-8006-55dab0ac99a2"},
+}
+
+function renderSlateForm(acronym) {
+  if(slateFormIDs[acronym]){
+    const slateURL = "https://apply.uoguelph.ca/register/?id=";
+    const id = slateFormIDs[acronym].id;
+
+    return(
+      <div>
+        <h2 className="mt-0" id="subscribe">Sign Up to Learn More</h2>
+        <div className="ug-slate" id={`form_${id}`}>Loading...</div>
+        <Script async="async" src={`${slateURL}${id}&amp;output=embed&amp;div=form_${id}`}>{/**/}</Script>
+      </div>
+    )
+  }
+}
 
 function renderProgramInfoAccordion(employerData) {
   // accordion - Employers Item
@@ -224,6 +254,17 @@ const ProgramPage = ({ data, location }) => {
           </section>
         </div>
       )}
+
+      { /**** Slate Form ****/}
+      {slateFormIDs[acronym] &&
+        <div className="container page-container">
+          <section className="row row-with-vspace site-content">
+            <div className="col-md-12 content-area">
+              {renderSlateForm(acronym)}
+            </div>
+          </section>
+        </div>
+      }
 
       {/**** Call to Actions ****/}
       {callToActionData.length !== 0 && (

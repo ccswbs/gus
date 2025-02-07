@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { lazy, Suspense } from "react";
 import { GatsbyImage } from "gatsby-plugin-image";
+import { ParseText } from "utils/ug-utils"
 import Widget from 'components/shared/widget';
 import 'styles/customFooter.css';
 
@@ -31,7 +32,9 @@ function OVCCustomFooter (props) {
 						</Suspense>
 					</div>}
 					<div className="col-md-8 content-area">
-						<div className="container" dangerouslySetInnerHTML={{ __html: footerText}} />
+						<div className="container">
+							<ParseText textContent={footerText} />
+						</div>
 						<Widget data={footerWidgets} />
 					</div>
 				</section>			

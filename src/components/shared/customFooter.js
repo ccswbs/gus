@@ -3,6 +3,7 @@ import React, { lazy, Suspense } from "react";
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import Widget from 'components/shared/widget';
+import { ParseText } from "utils/ug-utils"
 import 'styles/customFooter.css';
 
 const OVCCustomFooter = lazy(() => import('components/blocks/ovc/footerOVC'));
@@ -35,7 +36,9 @@ const DefaultFooter = ({logos, text, widgets}) => (
           ))}
         </div>}
       <div className="col-md-9 content-area">
-        <div className="container" dangerouslySetInnerHTML={{ __html: text}} />
+        <div className="container">
+          <ParseText textContent={text} />
+        </div>
         <Widget data={widgets} />
       </div>
     </section>			

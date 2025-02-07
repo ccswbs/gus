@@ -5,6 +5,7 @@ import { Container, Col, Row } from "react-bootstrap"
 import Overlay from "components/shared/overlay"
 import ModalVideo from "components/shared/modalVideo"
 import styled from "styled-components"
+import { ParseText } from "../../utils/ug-utils"
 
 const SectionText = styled.div`
   text-shadow: 2px 2px 8px rgb(0 0 0 / 99%);
@@ -87,7 +88,9 @@ function StoryImageCutout (props) {
                 <Row className="site-content bg-transparent h-100 text-white pb-0">
                     <Col lg={6} className="fs-3 mb-4 d-flex flex-column justify-content-center">
                         <SectionTitle>{title}</SectionTitle>
-                        <SectionText dangerouslySetInnerHTML={{__html: body.processed}}></SectionText>  
+                        <SectionText>
+                          <ParseText textContent={body.processed} />
+                        </SectionText>  
                         {video ? <ModalVideo 
                             id={videoID} 
                             src={videoSrc} 

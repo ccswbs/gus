@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import widgetModules from "components/shared/widgetModules";
-import { renderWidget } from "../../utils/ug-utils";
+import { ParseText, renderWidget } from "../../utils/ug-utils";
 
 const BlockWidget = React.memo(function BlockWidget(props) {
     
@@ -28,7 +28,7 @@ const BlockWidget = React.memo(function BlockWidget(props) {
           return <></>;
         }))
     }
-    return <div dangerouslySetInnerHTML={{__html: basicBlockContent}}></div>
+    return <ParseText textContent={basicBlockContent} />
 });
 
 BlockWidget.propTypes = {
