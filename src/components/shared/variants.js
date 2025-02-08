@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ParseText } from "utils/ug-utils"
 
 function Variants ( { variantData } ) {
 	var displayElements = [];
@@ -26,7 +27,11 @@ function Variants ( { variantData } ) {
 			if (trackPreviousElement === "paragraph__program_variants") {
 				displayElements.push(<ul className="two-col-md" key={'ul-before-' + variantData[i].drupal_id}>{displayProgVariants}</ul>);
 			}
-			displayElements.push(<div key={variantData[i].drupal_id} dangerouslySetInnerHTML={{__html: variantData[i].field_general_text.processed}}/>);
+			displayElements.push(
+				<div key={variantData[i].drupal_id}>
+					<ParseText textContent={variantData[i].field_general_text.processed} />
+				</div>
+			);
 		}
 		trackPreviousElement = variantData[i].__typename;
 	};

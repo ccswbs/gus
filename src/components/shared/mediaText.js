@@ -11,22 +11,22 @@ function MediaText (props) {
     
     const region = props.region;
 
-    const mediaTitle = props.widgetData?.field_media_text_title;
-    const mediaDescription = props.widgetData?.field_media_text_desc?.processed;
-    const mediaBgColor = props.widgetData?.relationships?.field_bg_color?.name;
-    const mediaButtons = props.widgetData?.relationships?.field_button_section;
-    const mediaRelationships = props.widgetData?.relationships.field_media_text_media?.relationships;
+    const mediaTitle = props.data?.field_media_text_title;
+    const mediaDescription = props.data?.field_media_text_desc?.processed;
+    const mediaBgColor = props.data?.relationships?.field_bg_color?.name;
+    const mediaButtons = props.data?.relationships?.field_button_section;
+    const mediaRelationships = props.data?.relationships.field_media_text_media?.relationships;
 
     const imageURL = mediaRelationships?.field_media_image;	
-    const imageAlt = props.widgetData?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
-    const mediaSize = props.widgetData?.field_media_image_size;
-    const mediaAlignment = props.widgetData?.field_media_alignment ?? 'left';
+    const imageAlt = props.data?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
+    const mediaSize = props.data?.field_media_image_size;
+    const mediaAlignment = props.data?.field_media_alignment ?? 'left';
     
-    const videoTitle = props.widgetData?.relationships.field_media_text_media?.name;
+    const videoTitle = props.data?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
-    const videoURL = props.widgetData?.relationships.field_media_text_media?.field_media_oembed_video;
-    const videoHeight = props.widgetData?.relationships.field_media_text_media?.field_video_height;
-    const videoWidth = props.widgetData?.relationships.field_media_text_media?.field_video_width;
+    const videoURL = props.data?.relationships.field_media_text_media?.field_media_oembed_video;
+    const videoHeight = props.data?.relationships.field_media_text_media?.field_video_height;
+    const videoWidth = props.data?.relationships.field_media_text_media?.field_video_width;
     const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
     const videoID = (videoType === `youtube` ? extractVideoID(videoURL) : videoURL?.substring(18));
     
@@ -39,7 +39,7 @@ function MediaText (props) {
     let headingClass;
     let headingColor;
     let textOrButtons = mediaDescription || mediaButtons ? true : false;
-    let HeadingLevel = (props.widgetData?.field_heading_level ? props.widgetData.field_heading_level : "h3");
+    let HeadingLevel = (props.data?.field_heading_level ? props.data.field_heading_level : "h3");
     
     switch(mediaBgColor) {
         case "Light Blue":
@@ -230,18 +230,18 @@ function MediaText (props) {
         <div data-title="media-description" className={textCol}>
             {mediaTitle && <HeadingLevel id={slugify(mediaTitle)} {...(headingClass !== `` ? {className:headingClass} : {})}>{mediaTitle}</HeadingLevel>}
             {mediaDescription && <div {...(textColBg === `bg-dark` ? {className:`text-light`} : {})}><ParseText textContent={mediaDescription} /></div>}
-            {mediaButtons && <SectionButtons key={props.widgetData.relationships.field_button_section.drupal_id} pageData={props.widgetData.relationships.field_button_section} />}
+            {mediaButtons && <SectionButtons key={props.data.relationships.field_button_section.drupal_id} data={props.data.relationships.field_button_section} />}
         </div>}
     </ConditionalWrapper>
     );
 }
 
 MediaText.propTypes = {
-    widgetData: PropTypes.object,
+    data: PropTypes.object,
     region: PropTypes.string,
 }
 MediaText.defaultProps = {
-    widgetData: null,
+    data: null,
     region: ``,
 }
 

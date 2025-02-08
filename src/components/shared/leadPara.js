@@ -16,8 +16,8 @@ const StyledText = styled.div`
 
 function LeadPara (props) {
     
-    const paraBG = props.pageData?.relationships?.field_lead_para_hero?.relationships.field_media_image?.publicUrl;
-    const paraText = props.pageData.field_lead_paratext?.value;
+    const paraBG = props.data?.relationships?.field_lead_para_hero?.relationships.field_media_image?.publicUrl;
+    const paraText = props.data.field_lead_paratext?.value;
     
     if (paraBG) {               
         return (
@@ -34,11 +34,11 @@ function LeadPara (props) {
 }
 
 LeadPara.propTypes = {
-    pageData: PropTypes.object,
+    data: PropTypes.object,
 }
   
 LeadPara.defaultProps = {
-    pageData: ``,
+    data: ``,
 }
 
 export default LeadPara

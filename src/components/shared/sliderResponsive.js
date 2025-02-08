@@ -3,7 +3,6 @@ import Slider from 'react-slick';
 import 'styles/sliderResponsive.css';
 import 'slick-carousel/slick/slick.css';
 
-
 function SliderArrow (props) {
 	const { onClick } = props;
 	let controlLabel = props.type === "next" ? "Next" : "Previous"; 

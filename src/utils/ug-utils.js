@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Parser, ProcessNodeDefinitions } from "html-to-react";
 import { graphql, useStaticQuery, Script } from "gatsby";
 
@@ -132,6 +132,23 @@ const ParseText = ({ textContent }) => {
   return parser.parseWithInstructions(textContent, () => true, instructions);
 };
 
+function renderWidget(componentName, shouldLazyLoad = false, fallback = null, widget, region) {
+  let WidgetModule;
+
+  if(shouldLazyLoad === true) {
+    const Fallback = fallback ? lazy(() => import(`components/shared/${fallback}`)) : () => <></>;
+    WidgetModule = lazy(() => import(`components/shared/${componentName}`));
+    return (
+      <Suspense key={`suspend-${widget.drupal_id}`} fallback={<Fallback />}>
+        <WidgetModule key={widget.drupal_id} data={widget} region={region} />
+      </Suspense>
+    );
+  }
+
+  WidgetModule = require(`components/shared/${componentName}`).default;
+  return <WidgetModule key={widget.drupal_id} data={widget} region={region} />
+}
+
 function setHeadingLevel(headingLevel) {
   // console.log(headingLevel, "setHeadingLevel")
   const validHeadingLevels = ["h1", "h2", "h3", "h4", "h5", "h6"];
@@ -157,10 +174,6 @@ function slugify(string) {
     .replace(/-+$/, ""); // Trim - from end of text
 }
 
-function sortLastModifiedDates(dates) {
-  return dates.slice().flat().sort();
-}
-
 function stripHTMLTags(content) {
   return content !== null ? content.replace(/(<([^>]+)>)/gi, "") : ``;
 }
@@ -176,8 +189,8 @@ export {
   getNextHeadingLevel,
   isExternalURL,
   ParseText,
+  renderWidget,
   setHeadingLevel,
   slugify,
-  sortLastModifiedDates,
   stripHTMLTags,
 };

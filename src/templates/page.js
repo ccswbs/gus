@@ -1,43 +1,50 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { graphql } from 'gatsby';
 import Layout from 'components/layout';
 import Seo from 'components/seo';
 import { Helmet } from 'react-helmet';
+import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
 import Hero from 'components/shared/hero'; 
-import Breadcrumbs from 'components/shared/breadcrumbs';
-import Widget from 'components/shared/widget';
+import Widget from '../components/shared/widget';
+import WidgetContainer from 'components/shared/widgetContainer';
 import CustomFooter from 'components/shared/customFooter';
 
-const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData, widgets, heroWidgets, footer, menuName, domains}) => (
+const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
 
-    <Layout menuName={menuName}>
+const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, domains}) => {
+  const hasHeroContent = heroData.imageData?.length > 0 || heroData.heroWidgets?.length > 0;
+
+  return (
+    <Layout menuName={menuData.menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
-        <Seo title={pageTitle} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
+        <Seo title={pageTitle} description={seoData.description} img={seoData.img} imgAlt={seoData.imgAlt} />
 
         { /**** Header and Title ****/ }
-        { (imageData?.length > 0 || heroWidgets?.length > 0) &&
-        <div className={imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
-            <Hero imgData={imageData} />
-            {heroWidgets && (
-              <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-                {heroWidgets.map((widget, index) => (
-                  <Widget widget={widget} key={index} />
-                ))}
+        { hasHeroContent &&
+          <div className={heroData.imageData?.length > 0 ? "" : "no-thumb"} id="rotator">
+              <Hero imgData={heroData.imageData} />
+              {heroData.heroWidgets && (
+                <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
+                  {heroData.heroWidgets.map((widget, index) => (
+                    <Widget data={widget} key={index} />
+                  ))}
+                </div>
+              )}
+              <div className="container ft-container">
+                  <h1 className="fancy-title">{pageTitle}</h1>
               </div>
-            )}
-            <div className="container ft-container">
-                <h1 className="fancy-title">{pageTitle}</h1>
-            </div>
-        </div>
+          </div>
         }
         
-        <Breadcrumbs menuName={menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
+        <Suspense fallback={<BreadcrumbsStatic pageTitle={pageTitle} />}>
+          <Breadcrumbs menuName={menuData.menuName} nodeID={nodeID} nodeTitle={pageTitle} domains={domains} />
+        </Suspense>
         
         { /**** Widgets content ****/}
         <div id="main-column">
             
           { /**** No banner ****/}  
-          { !(imageData?.length > 0 || heroWidgets?.length > 0) && 
+          { !hasHeroContent && 
               <div className="container page-container">
                 <div className="row site-content">
                     <div className="content-area">
@@ -47,14 +54,16 @@ const Page = ({nodeID, pageTitle, ogDescription, ogImage, ogImageAlt, imageData,
               </div>
           }
 
-          {widgets?.map((widget) => <Widget widget={widget} key={widget.drupal_id} />)} 
+          <WidgetContainer data={widgets} />
+
         </div>
 
         { /**** Custom Footer content ****/}
         {footer?.length > 0 &&
         <CustomFooter footerData={footer[0]} />}
     </Layout>
-)
+  );
+}
 
 export const query = graphql`
   query ($id: String, $nid: String, $tid: [String]) {
@@ -122,19 +131,42 @@ export const query = graphql`
 }
 `
 
-const PageTemplate = ({data}) => (
-    <Page nodeID={data.nodePage.drupal_internal__nid}
-        pageTitle={data.nodePage.title} 
-        ogDescription={data.nodePage.field_metatags?.og_description}
-        ogImage={data.images.edges[0]?.node.relationships.field_media_image.publicUrl}
-        ogImageAlt={data.images.edges[0]?.node?.field_media_image.alt}
-        imageData={data.images.edges}
-        widgets={data.nodePage.relationships.field_widgets}
-        heroWidgets={(data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships?.field_hero_widgets] : null)}
-        footer={data.footer.edges}
-        menuName={(data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name === "no-menu")? null: data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name ?? data.menu?.menu_name}
-        domains={data.nodePage.field_domain_access}
-    ></Page>
-)
+const PageTemplate = ({data}) => {
+    const seoData = {
+        title: data.nodePage.title,
+        description: data.nodePage.field_metatags?.og_description,
+        img: data.images.edges[0]?.node?.relationships?.field_media_image?.publicUrl,
+        imgAlt: data.images.edges[0]?.node?.field_media_image?.alt
+    };
+
+    const heroData = {
+        imageData: data.images.edges,
+        heroWidgets: data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships.field_hero_widgets] : null
+    };
+
+    const footerData = data.footer.edges;
+
+    const primaryNav = data.nodePage.relationships?.field_primary_navigation?.field_menu_machine_name;
+    const menuName = primaryNav === "no-menu" ? null : primaryNav ?? data.menu?.menu_name;
+
+    const menuData = {
+        menuName: menuName
+    };
+
+    const domainData = data.nodePage.field_domain_access;
+
+    return (
+        <Page 
+            nodeID={data.nodePage.drupal_internal__nid}
+            pageTitle={data.nodePage.title}
+            seoData={seoData}
+            heroData={heroData}
+            widgets={data.nodePage.relationships.field_widgets}
+            footer={footerData}
+            menuData={menuData}
+            domains={domainData}
+        />
+    );
+}
 
 export default PageTemplate;
