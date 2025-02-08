@@ -2,10 +2,7 @@ import React, { lazy, Suspense } from "react"
 import Layout from "components/layout"
 import { Helmet } from "react-helmet"
 import Seo from "components/seo"
-import BlockWidget from "components/shared/blockWidget"
 import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
-import CallToAction from "components/shared/callToAction"
-import CustomFooter from "components/shared/customFooter"
 import Hero from "components/shared/hero"
 import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
@@ -13,7 +10,10 @@ import WidgetContainer from "components/shared/widgetContainer"
 import { ParseText } from "utils/ug-utils"
 import { graphql, Script } from "gatsby"
 
-const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
+const BlockWidget = lazy(() => import("components/shared/blockWidget"));
+const Breadcrumbs = lazy(() => import("components/shared/breadcrumbs"));
+const CallToAction = lazy(() => import("components/shared/callToAction"));
+const CustomFooter = lazy(() => import("components/shared/customFooter"));
 const Employers = lazy(() => import("components/shared/employers"));
 const HeroVideo = lazy(() => import("components/shared/heroVideo"));
 const Testimonials = lazy(() => import("components/shared/testimonial"));
@@ -51,6 +51,7 @@ function renderSlateForm(acronym) {
 }
 
 function renderProgramInfoAccordion(employerData) {
+  
   // accordion - Employers Item
   const programEmployersItem = () => {
     if (employerData?.length > 0) {
@@ -131,65 +132,74 @@ function prepareVariantHeading(variantData) {
   return variantHeading
 }
 
-const ProgramPage = ({ data, location }) => {
-  let progData = data.programs.edges[0]?.node
-  let callToActionData = data.ctas?.edges
-  let domains = progData?.field_domain_access
-  let employerData = data.employers?.edges
-  let footerData = data.footer?.edges
-  let imageData = data.images?.edges
-  let imageTaggedData = data.imagesTagged?.edges
-  let testimonialData = data.testimonials?.edges
-  let variantData = progData.relationships?.field_program_variants
-  let variantDataHeading = prepareVariantHeading(variantData)
-  let videoData = data.videos.edges[0]?.node
+function renderCallToActions(data) {
+  if (data.length !== 0){
+    return (
+      <div className="pt-0 container page-container apply-footer">
+        <div className="col-md-8 mx-auto">
+          <h3 className="mt-0 text-center text-dark">Get Future Ready</h3>
+          <div className="row gx-3 mx-5 mb-5">              
+            {(() => {
+              let isFirstButton = true;
+              let isOnlyButton = data.length === 1;
+              return data.map((cta) => {
+                const btnClass = isFirstButton ? 'btn-primary' : 'btn-outline-primary';
+                isFirstButton = false; // Set the flag to false after the first button
 
-  // Only pulling one block right now
-  let blockData = data.blockAdmissionRequirements;
+                // Apply mx-auto if there's only one button
+                const colClass = isOnlyButton ? 'col-md-6 mx-auto' : 'col-md-6';
 
-  const heroImage = imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null
+                return (
+                  <div className={colClass} key={cta.drupal_id}>
+                    <Suspense fallback={<></>}>
+                      <CallToAction
+                        btnClass={btnClass}
+                        href={cta.node.field_call_to_action_link.uri}
+                        goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
+                        goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
+                      >
+                        {cta.node.field_call_to_action_link.title}
+                      </CallToAction>
+                    </Suspense>
+                  </div>
+                );
+              });
+            })()}
+          </div>
+        </div>
+      </div>
+  )}
 
-  // Open Graph metatags
-  const ogDescription = progData.field_metatags?.og_description
-  const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.publicUrl
-  const ogImageAlt = heroImage && heroImage[0]?.node.field_media_image.alt
+  return <></>
+}
 
-  // set program details
-  const nodeID = progData.drupal_internal__nid
-  const title = progData.title
-  const acronym = progData.relationships.field_program_acronym?.name
-  const overview = progData.field_program_overview?.processed
-
-  const hasOverviewContent = overview.length > 0 || variantDataHeading.length > 0;
-
-  // `field_hero_widgets` only allows a single widget (at the moment), and
-  // Drupal doesn't return an array, so force it into an array.
-  const heroWidgets = progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null
-  const widgets = progData.relationships?.field_widgets
+const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, variants, widgets, sections, footer, domains}) => {
+  const hasIntroContent = overview.length > 0 || variants.heading.length > 0;
+  const hasHeroContent = heroData.images?.length > 0 || heroData.videos?.length > 0;
 
   return (
     <Layout>
       <Helmet bodyAttributes={{ class: "program" }} />
-      <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
+      <Seo title={seoData.title} description={seoData.description} img={seoData.img} imgAlt={seoData.imgAlt} />
 
       {/**** Header and Title ****/}
-      <div className={!heroImage?.length > 0 && !videoData?.length > 0 ? "no-thumb" : null} id="rotator">
-        {videoData ? (
+      <div className={!hasHeroContent ? "no-thumb" : null} id="rotator">
+        {heroData.videos ? (
           <Suspense fallback={<ModalVideoStatic />}>
             <HeroVideo
-              videoURL={videoData.field_media_oembed_video}
-              videoWidth={videoData.field_video_width}
-              videoHeight={videoData.field_video_height}
-              videoTranscript={videoData.relationships.field_media_file?.publicUrl}
+              videoURL={heroData.videos.field_media_oembed_video}
+              videoWidth={heroData.videos.field_video_width}
+              videoHeight={heroData.videos.field_video_height}
+              videoTranscript={heroData.videos.relationships.field_media_file?.publicUrl}
             />
           </Suspense>
         ) : (
           <>
-            <Hero imgData={heroImage} />
+            <Hero imgData={heroData.images} />
             {/**** Hero Widgets content ****/}
-            {heroWidgets && (
+            {heroData.widgets && (
               <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-                {heroWidgets.map((widget, index) => (
+                {heroData.widgets.map((widget, index) => (
                   <Widget data={widget} key={index} />
                 ))}
               </div>
@@ -205,25 +215,18 @@ const ProgramPage = ({ data, location }) => {
         <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
       </Suspense>
 
-      {/**** Program Overview ****/}
-      {hasOverviewContent && (
+      {/**** Program & Variants Overview ****/}
+      {hasIntroContent && (
         <div className="container page-container">
           <div className="row site-content">
             <section className="content-area">
-
-              {/**** Program Overview ****/}
               {overview && <ParseText textContent={overview} />}
-
-              { /*** Variants (e.g., Majors ) */}
-              {variantDataHeading && (
-                <>
-                  <h2>{variantDataHeading}</h2>
+              {variants.heading && (<>
+                  <h2>{variants.heading}</h2>
                   <Suspense fallback={<></>}>
-                    <Variants variantData={variantData} />
+                    <Variants variantData={variants.data} />
                   </Suspense>
-                </>
-              )}
-            
+                </>)}
             </section>
           </div>
         </div>
@@ -233,23 +236,23 @@ const ProgramPage = ({ data, location }) => {
       <WidgetContainer data={widgets} />
 
       {/**** Program Information Accordion ****/}
-      {renderProgramInfoAccordion(
-        employerData
-      )}
+      {renderProgramInfoAccordion(sections.employerData)}
 
       {/**** Testimonials ****/}
-      {testimonialData && 
+      {sections.testimonialData && 
         <Suspense fallback={<></>}>
-          <Testimonials data={testimonialData} programAcronym={acronym} headingLevel="h3" />
+          <Testimonials data={sections.testimonialData} programAcronym={acronym} headingLevel="h3" />
         </Suspense>
       }
 
       { /**** Block - Admission Requirements Data ****/}
-      {blockData && (
+      {sections.blockData && (
         <div className="container page-container">
           <section className="row row-with-vspace site-content">
             <div className="col-md-12 content-area">
-              <BlockWidget key={blockData.drupal_id} data={blockData} />
+              <Suspense fallback={<></>}>
+                <BlockWidget key={sections.blockData.drupal_id} data={sections.blockData} />
+              </Suspense>
             </div>
           </section>
         </div>
@@ -267,44 +270,70 @@ const ProgramPage = ({ data, location }) => {
       }
 
       {/**** Call to Actions ****/}
-      {callToActionData.length !== 0 && (
-        <div className="pt-0 container page-container apply-footer">
-          <div className="col-md-8 mx-auto">
-            <h3 className="mt-0 text-center text-dark">Get Future Ready</h3>
-            <div className="row gx-3 mx-5 mb-5">              
-              {(() => {
-                let isFirstButton = true;
-                return callToActionData.map((cta) => {
-                  const btnClass = isFirstButton ? 'btn-primary' : 'btn-outline-primary';
-                  isFirstButton = false; // Set the flag to false after the first button
+      {renderCallToActions(sections.callToActionData)}
 
-                  // Apply mx-auto if there's only one button
-                  const colClass = callToActionData.length === 1 ? 'col-md-6 mx-auto' : 'col-md-6';
-
-                  return (
-                    <div className={colClass} key={cta.drupal_id}>
-                      <CallToAction
-                        btnClass={btnClass}
-                        href={cta.node.field_call_to_action_link.uri}
-                        goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
-                        goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
-                      >
-                        {cta.node.field_call_to_action_link.title}
-                      </CallToAction>
-                    </div>
-                  );
-                });
-              })()}
-            </div>
-          </div>
-        </div>
-      )}
-      {footerData?.length > 0 && <CustomFooter footerData={footerData[0]} />}
+      {footer && 
+        <Suspense fallback={<></>}>
+          <CustomFooter footerData={footer} />
+        </Suspense>
+      }
     </Layout>
   )
 }
 
-export default ProgramPage
+const ProgramPageTemplate = ({data}) => {
+  const progData = data.programs.edges[0]?.node;
+  const imageData = data.images?.edges;
+  const imageTaggedData = data.imagesTagged?.edges
+  const variantData = progData.relationships?.field_program_variants;
+
+  // Re: Hero Widgets - `field_hero_widgets` only allows a single widget (at the moment), and
+  // Drupal doesn't return an array, so force it into an array.
+  const heroData = {
+    images: imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null,
+    widgets: progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null,
+    videos: data.videos.edges[0]?.node,
+  }
+
+  const seoData = {
+    title: progData.title,
+    description: progData.field_metatags?.og_description,
+    img: heroData.images[0]?.node.relationships.field_media_image.publicUrl,
+    imgAlt: heroData.images[0]?.node.field_media_image.alt
+  };
+
+  const sections = {
+    callToActionData: data.ctas?.edges,
+    employerData: data.employers?.edges,
+    testimonialData: data.testimonials?.edges,
+    blockData: data.blockAdmissionRequirements,
+  }
+
+  const variants = {
+    heading: prepareVariantHeading(variantData),
+    data: variantData,
+  }
+
+  const footerData = data.footer?.edges;
+
+  return (
+      <ProgramPage 
+        nodeID={progData.drupal_internal__nid}
+        title={progData.title}
+        acronym={progData.relationships.field_program_acronym?.name}
+        overview={progData.field_program_overview?.processed}
+        seoData={seoData}
+        heroData={heroData}
+        variants={variants}
+        widgets={progData.relationships?.field_widgets}
+        sections={sections}
+        footer={footerData?.length > 0 ? data.footer?.edges[0] : null}
+        domains={progData?.field_domain_access}
+      />
+  );
+}
+
+export default ProgramPageTemplate
 
 export const query = graphql`
   query ($id: String) {
