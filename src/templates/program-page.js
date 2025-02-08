@@ -199,8 +199,8 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
             {/**** Hero Widgets content ****/}
             {heroData.widgets && (
               <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-                {heroData.widgets.map((widget, index) => (
-                  <Widget data={widget} key={index} />
+                {heroData.widgets.map((widget) => (
+                  <Widget data={widget} key={widget.drupal_id} />
                 ))}
               </div>
             )}
