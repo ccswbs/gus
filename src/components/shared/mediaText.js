@@ -200,9 +200,8 @@ function MediaText (props) {
                 mediaCol = "col-xs-12";
             }
         }
-        if (textColBg) {
-            mediaCol = classNames(mediaCol, 'ps-0');
-        }        
+
+        mediaCol = classNames(mediaCol, 'ps-0');    
     }
     headingClass = classNames(headingClass, headingColor);
     textCol = classNames(textCol, textColBg, textColHeight, textColPadding, "text-break");
