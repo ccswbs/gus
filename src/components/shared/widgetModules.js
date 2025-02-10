@@ -5,7 +5,7 @@ const widgetModules = {
   'paragraph__image_overlay': { container: 'container-fluid', moduleName: 'imageOverlay', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: false, shouldRenderBlock: false },
   'paragraph__lead_paragraph': { container: 'container', moduleName: 'leadPara', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: false, shouldRenderBlock: false },
   'paragraph__links_widget': { container: 'container', moduleName: 'linksWidget', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: false, shouldRenderBlock: false },
-  'paragraph__media_text': { container: 'container', moduleName: 'mediaText', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: true, shouldRenderBlock: true },
+  'paragraph__media_text': { container: 'container', moduleName: 'mediaText', shouldLazyLoad: false, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: true, shouldRenderBlock: true },
   'paragraph__modal_video_widget': { container: 'container-fluid', moduleName: 'modalVideo', shouldLazyLoad: true, fallback: 'modalVideoStatic', shouldRenderPrimary: true, shouldRenderSecondary: false, shouldRenderBlock: false },
   'paragraph__section': { container: 'container', moduleName: 'sectionWidgets', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: false, shouldRenderSecondary: false, shouldRenderBlock: false },
   'paragraph__section_tabs': { container: 'container', moduleName: 'pageTabs', shouldLazyLoad: true, fallback: null, shouldRenderPrimary: true, shouldRenderSecondary: true, shouldRenderBlock: true },
