@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import SliderResponsive from 'components/shared/sliderResponsive';
 import TestimonialTitle from 'components/shared/testimonialTitle';
-import { ParseText, stripHTMLTags, setHeadingLevel } from 'utils/ug-utils.js';
+import { stripHTMLTags, setHeadingLevel } from 'utils/ug-utils.js';
 import 'styles/testimonial.css';
 
 function setTestimonialHeading(props) {
@@ -61,9 +61,7 @@ function Testimonials (props) {
                         <GatsbyImage image={testimonialPicture}
                             className="testimonial-pic"
                             alt={testimonialNode.relationships.field_hero_image.field_media_image.alt} />}
-                    <blockquote className="testimonial-quote mb-0">
-                      <ParseText textContent={testimonialContent} />
-                    </blockquote>
+                    <blockquote className="testimonial-quote mb-0" dangerouslySetInnerHTML={{__html: testimonialContent}} />
                     <p className="testimonial-tagline author">
                         <strong className="testimonial-title">{testimonialName}{testimonialTitle ? ', ' + testimonialTitle : '' }</strong>
                         <br />
