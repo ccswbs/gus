@@ -297,7 +297,7 @@ const ProgramPage = ({ data, location }) => {
       {callToActionData.length !== 0 && (
         <div className="pt-0 container page-container apply-footer">
           <div className="col-md-8 mx-auto">
-            <h3 className="mt-0 text-center text-dark">Get Future Ready</h3>
+            <h3 className="mt-0 text-center text-dark">Get the Education You Need for the Life You Want</h3>
             <div className="row gx-3 mx-5 mb-5">              
               {(() => {
                 let isFirstButton = true;
