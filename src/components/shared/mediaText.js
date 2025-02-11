@@ -43,7 +43,7 @@ function MediaText (props) {
     
     switch(mediaBgColor) {
         case "Light Blue":
-            textColBg = classNames('uog-blue-muted');
+            textColBg = classNames('uog-grey-muted');
             headingColor = classNames('text-dark');            
         break;
         case "Dark Gray":
