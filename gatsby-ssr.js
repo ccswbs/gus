@@ -9,10 +9,10 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
     <link rel="preconnect" href="https://fonts.gstatic.com" key="https://fonts.gstatic.com" crossOrigin="anonymous" />,
 
     // Roboto and Roboto Condensed
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" as="style" crossOrigin="anonymous" />,    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,100;1,400&display=swap" as="style" crossOrigin="anonymous" />,    
     <link 
-      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" 
-      key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" 
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,100;1,400&display=swap" 
+      key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,100;1,400&display=swap" 
       rel="stylesheet" />,
 
     // Web Components
@@ -55,11 +55,5 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       crossOrigin="anonymous"
       defer
     />,
-    // U of G Gatsby script
-    // <script
-    //   key="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
-    //   src="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
-    //   defer
-    // />,
   ]);
 };
