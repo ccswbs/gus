@@ -61,6 +61,10 @@ module.exports = {
         headers: {
           'api-key': process.env.API_KEY,
         },
+        filters: {
+          // Exclude Spotlight content type
+          "node--spotlight": "filter[status][value]=0",
+        },
         fastBuilds: process.env.FASTBUILDS ?? true,
         skipFileDownloads: true,
         requestTimeoutMS: 300000,
