@@ -213,6 +213,11 @@ i.green {
   filter: brightness(0.5);
 }
 
+/* Media & text widget description */
+div[data-title="media-description"] > div > :first-child {
+  margin-top: 0;
+}
+
 /* Quick columns */
 /* the two-col-md class is in UofG-styles.css but can be moved here later */
 

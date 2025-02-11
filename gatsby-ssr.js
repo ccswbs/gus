@@ -8,18 +8,31 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
     <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" crossOrigin="anonymous" />,
     <link rel="preconnect" href="https://fonts.gstatic.com" key="https://fonts.gstatic.com" crossOrigin="anonymous" />,
+
+    // Bitter and DM Sans
     <link 
       rel="preload" as="style" crossOrigin="anonymous" 
-      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" 
+      href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,700&display=swap" 
     />,
     <link
-      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
-      key="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,700&display=swap"
+      key="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,700&display=swap"
       rel="stylesheet"
     />,
     <link 
       rel="preload" as="style" crossOrigin="anonymous" 
       href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} type="text/css" />,
+
+    // Roboto Condensed
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700" as="style" crossOrigin="anonymous" />,    
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700" 
+      key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700" 
+      rel="stylesheet" />,
+
+    // Web Components
+    <link rel="preload" as="style" crossOrigin="anonymous" type="text/css" 
+      href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} />,
     <link
       rel="stylesheet"
       href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`}
@@ -33,8 +46,10 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       src={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
       key={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.esm.js`}
     ></script>,
+    
+    // U of G Stylesheet
     <link rel="preload" 
-      href={`${CDN_BASE}/${UOFG_STYLES_BASE}/index.css`} as="style" type="text/css" />,
+      href={`${CDN_BASE}/${UOFG_STYLES_BASE}/index.css`} as="style" crossOrigin="anonymous" type="text/css" />,
     <link
       rel="stylesheet"
       key={`${CDN_BASE}/${UOFG_STYLES_BASE}/index.css`}
@@ -42,17 +57,19 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
     />,
   ]);
   setPostBodyComponents([
+    // FontAwesome kit
     <script
       key="https://kit.fontawesome.com/7993323d0c.js"
       src="https://kit.fontawesome.com/7993323d0c.js"
       crossOrigin="anonymous"
       defer
     />,
+    // Bootstrap
     <script
       key="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
       crossOrigin="anonymous"
       defer
-    />
+    />,
   ]);
 };

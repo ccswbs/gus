@@ -2,25 +2,56 @@ import React, { lazy, Suspense } from "react"
 import Layout from "components/layout"
 import { Helmet } from "react-helmet"
 import Seo from "components/seo"
-import BlockWidget from "components/shared/blockWidget"
 import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
-import CallToAction from "components/shared/callToAction"
-import CustomFooter from "components/shared/customFooter"
 import Hero from "components/shared/hero"
 import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
-import Widgets from "components/shared/widgets"
-import { ParseText, sortLastModifiedDates } from "utils/ug-utils"
-import { graphql } from "gatsby"
+import WidgetContainer from "components/shared/widgetContainer"
+import { ParseText } from "utils/ug-utils"
+import { graphql, Script } from "gatsby"
 
-const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
+const BlockWidget = lazy(() => import("components/shared/blockWidget"));
+const Breadcrumbs = lazy(() => import("components/shared/breadcrumbs"));
+const CallToAction = lazy(() => import("components/shared/callToAction"));
+const CustomFooter = lazy(() => import("components/shared/customFooter"));
 const Employers = lazy(() => import("components/shared/employers"));
 const HeroVideo = lazy(() => import("components/shared/heroVideo"));
 const Testimonials = lazy(() => import("components/shared/testimonial"));
 const Variants = lazy(() => import("components/shared/variants"));
 
+const slateFormIDs = {
+  "BASc": {id:"78834d6b-07a8-4b3f-95b8-fac032e9be73"},
+  "BA": {id: "7f450ae7-c251-488a-a220-71e1545d6755"},
+  "BAS": {id: "b6214efd-4c37-4a4a-bf20-0aa313439ec2"},
+  "BAG": {id: "77ab0213-494f-40bc-bea0-02f2db4c8bab"},
+  "BBRM": {id: "d6c14a8e-a69c-4970-8a5f-e01dc4872dbc"},
+  "BComm": {id: "42684f4f-078e-4c53-ae02-86e014274a0c"},
+  "BComp": {id: "e1d37493-9b4e-4bdb-b86d-60feed5be8fd"},
+  "BCAHW": {id: "3c760ac4-9cde-4a98-bc26-d77e1a6709be"},
+  "BEng": {id: "21c3ee6d-104c-45bb-bb01-53e464d1834a"},
+  "BOH": {id: "46185678-374d-4dea-805a-32d27b9a5c09"},
+  "BSc": {id: "8170d0fc-d8f2-4ee4-84e2-5b4446a9c7fb"},
+  "BScAg": {id: "2bf40bb7-b95f-421e-9e61-04ab0aee08bd"},
+  "BScEnv": {id: "6a16e4f6-192d-4d2c-8006-55dab0ac99a2"},
+}
+
+function renderSlateForm(acronym) {
+  if(slateFormIDs[acronym]){
+    const slateURL = "https://apply.uoguelph.ca/register/?id=";
+    const id = slateFormIDs[acronym].id;
+
+    return(
+      <div>
+        <h2 className="mt-0" id="subscribe">Sign Up to Learn More</h2>
+        <div className="ug-slate" id={`form_${id}`}>Loading...</div>
+        <Script async="async" src={`${slateURL}${id}&amp;output=embed&amp;div=form_${id}`}>{/**/}</Script>
+      </div>
+    )
+  }
+}
 
 function renderProgramInfoAccordion(employerData) {
+  
   // accordion - Employers Item
   const programEmployersItem = () => {
     if (employerData?.length > 0) {
@@ -71,16 +102,6 @@ function renderProgramInfoAccordion(employerData) {
   return null
 }
 
-function retrieveLastModifiedDates(content) {
-  let dates = []
-  if (content?.length > 0) {
-    content.forEach((edge) => {
-      dates.push(edge.node.changed)
-    })
-  }
-  return dates
-}
-
 function prepareVariantHeading(variantData) {
   let labels = []
 
@@ -111,74 +132,75 @@ function prepareVariantHeading(variantData) {
   return variantHeading
 }
 
-const ProgramPage = ({ data, location }) => {
-  let progData = data.programs.edges[0]?.node
-  let callToActionData = data.ctas?.edges
-  let domains = progData?.field_domain_access
-  let employerData = data.employers?.edges
-  let footerData = data.footer?.edges
-  let imageData = data.images?.edges
-  let imageTaggedData = data.imagesTagged?.edges
-  let testimonialData = data.testimonials?.edges
-  let variantData = progData.relationships?.field_program_variants
-  let variantDataHeading = prepareVariantHeading(variantData)
-  let videoData = data.videos.edges[0]?.node
+function renderCallToActions(data) {
+  if (data.length !== 0){
+    return (
+      <div className="pt-0 container page-container apply-footer">
+        <div className="col-md-8 mx-auto">
+          <h3 className="mt-0 text-center text-dark">Get the Education You Need for the Life You Want</h3>
+          <div className="row gx-3 mx-5 mb-5">              
+            {(() => {
+              let isFirstButton = true;
+              let isOnlyButton = data.length === 1;
+              return data.map((cta) => {
+                const btnClass = isFirstButton ? 'btn-primary' : 'btn-outline-primary';
+                isFirstButton = false; // Set the flag to false after the first button
 
-  // Only pulling one block right now
-  let blockData = data.blockAdmissionRequirements;
+                // Apply mx-auto if there's only one button
+                const colClass = isOnlyButton ? 'col-md-6 mx-auto' : 'col-md-6';
 
-  const heroImage = imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null
+                return (
+                  <div className={colClass} key={cta.drupal_id}>
+                    <Suspense fallback={<></>}>
+                      <CallToAction
+                        btnClass={btnClass}
+                        href={cta.node.field_call_to_action_link.uri}
+                        goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
+                        goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
+                      >
+                        {cta.node.field_call_to_action_link.title}
+                      </CallToAction>
+                    </Suspense>
+                  </div>
+                );
+              });
+            })()}
+          </div>
+        </div>
+      </div>
+  )}
 
-  // Open Graph metatags
-  const ogDescription = progData.field_metatags?.og_description
-  const ogImage = heroImage && heroImage[0]?.node.relationships.field_media_image.publicUrl
-  const ogImageAlt = heroImage && heroImage[0]?.node.field_media_image.alt
+  return <></>
+}
 
-  // set program details
-  const nodeID = progData.drupal_internal__nid
-  const title = progData.title
-  const acronym = progData.relationships.field_program_acronym?.name
-  const overview = progData.field_program_overview?.processed
-
-  const hasOverviewContent = overview.length > 0 || variantDataHeading.length > 0;
-
-  // `field_hero_widgets` only allows a single widget (at the moment), and
-  // Drupal doesn't return an array, so force it into an array.
-  const heroWidgets = progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null
-  const widgets = progData.relationships?.field_widgets
-
-  // set last modified date
-  let allModifiedDates = sortLastModifiedDates([
-    progData.changed,
-    retrieveLastModifiedDates(callToActionData),
-    retrieveLastModifiedDates(testimonialData),
-  ])
-  let lastModified = allModifiedDates[allModifiedDates.length - 1]
+const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, variants, widgets, sections, footer, domains}) => {
+  const hasIntroContent = overview.length > 0 || variants.heading.length > 0;
+  const hasHeroContent = heroData.images?.length > 0 || heroData.videos?.length > 0;
 
   return (
-    <Layout date={lastModified}>
+    <Layout>
       <Helmet bodyAttributes={{ class: "program" }} />
-      <Seo title={title} description={ogDescription} img={ogImage} imgAlt={ogImageAlt} />
+      <Seo title={seoData.title} description={seoData.description} img={seoData.img} imgAlt={seoData.imgAlt} />
 
       {/**** Header and Title ****/}
-      <div className={!heroImage?.length > 0 && !videoData?.length > 0 ? "no-thumb" : null} id="rotator">
-        {videoData ? (
+      <div className={!hasHeroContent ? "no-thumb" : null} id="rotator">
+        {heroData.videos ? (
           <Suspense fallback={<ModalVideoStatic />}>
             <HeroVideo
-              videoURL={videoData.field_media_oembed_video}
-              videoWidth={videoData.field_video_width}
-              videoHeight={videoData.field_video_height}
-              videoTranscript={videoData.relationships.field_media_file?.publicUrl}
+              videoURL={heroData.videos.field_media_oembed_video}
+              videoWidth={heroData.videos.field_video_width}
+              videoHeight={heroData.videos.field_video_height}
+              videoTranscript={heroData.videos.relationships.field_media_file?.publicUrl}
             />
           </Suspense>
         ) : (
           <>
-            <Hero imgData={heroImage} />
+            <Hero imgData={heroData.images} />
             {/**** Hero Widgets content ****/}
-            {heroWidgets && (
+            {heroData.widgets && (
               <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
-                {heroWidgets.map((widget, index) => (
-                  <Widget widget={widget} key={index} />
+                {heroData.widgets.map((widget) => (
+                  <Widget data={widget} key={widget.drupal_id} />
                 ))}
               </div>
             )}
@@ -193,95 +215,125 @@ const ProgramPage = ({ data, location }) => {
         <Breadcrumbs nodeID={nodeID} nodeTitle={title} domains={domains} />
       </Suspense>
 
-      {/**** Program Overview ****/}
-      {hasOverviewContent && (
+      {/**** Program & Variants Overview ****/}
+      {hasIntroContent && (
         <div className="container page-container">
           <div className="row site-content">
             <section className="content-area">
-
-              {/**** Program Overview ****/}
               {overview && <ParseText textContent={overview} />}
-
-              { /*** Variants (e.g., Majors ) */}
-              {variantDataHeading && (
-                <>
-                  <h2>{variantDataHeading}</h2>
+              {variants.heading && (<>
+                  <h2>{variants.heading}</h2>
                   <Suspense fallback={<></>}>
-                    <Variants variantData={variantData} />
+                    <Variants variantData={variants.data} />
                   </Suspense>
-                </>
-              )}
-            
+                </>)}
             </section>
           </div>
         </div>
       )}
 
       {/**** Widgets content ****/}
-      <Widgets widgetData={widgets} />
+      <WidgetContainer data={widgets} />
 
       {/**** Program Information Accordion ****/}
-      {renderProgramInfoAccordion(
-        employerData
-      )}
+      {renderProgramInfoAccordion(sections.employerData)}
 
       {/**** Testimonials ****/}
-      {testimonialData && 
+      {sections.testimonialData && 
         <Suspense fallback={<></>}>
-          <Testimonials testimonialData={testimonialData} programAcronym={acronym} headingLevel="h3" />
+          <Testimonials data={sections.testimonialData} programAcronym={acronym} headingLevel="h3" />
         </Suspense>
       }
 
       { /**** Block - Admission Requirements Data ****/}
-      {blockData && (
+      {sections.blockData && (
         <div className="container page-container">
           <section className="row row-with-vspace site-content">
             <div className="col-md-12 content-area">
-              <BlockWidget key={blockData.drupal_id} blockData={blockData} />
+              <Suspense fallback={<></>}>
+                <BlockWidget key={sections.blockData.drupal_id} data={sections.blockData} />
+              </Suspense>
             </div>
           </section>
         </div>
       )}
 
-      {/**** Call to Actions ****/}
-      {callToActionData.length !== 0 && (
-        <div className="pt-0 container page-container apply-footer">
-          <div className="col-md-8 mx-auto">
-            <h3 className="mt-0 text-center text-dark">Get Future Ready</h3>
-            <div className="row gx-3 mx-5 mb-5">              
-              {(() => {
-                let isFirstButton = true;
-                return callToActionData.map((cta) => {
-                  const btnClass = isFirstButton ? 'btn-primary' : 'btn-outline-primary';
-                  isFirstButton = false; // Set the flag to false after the first button
-
-                  // Apply mx-auto if there's only one button
-                  const colClass = callToActionData.length === 1 ? 'col-md-6 mx-auto' : 'col-md-6';
-
-                  return (
-                    <div className={colClass} key={cta.drupal_id}>
-                      <CallToAction
-                        btnClass={btnClass}
-                        href={cta.node.field_call_to_action_link.uri}
-                        goalEventCategory={cta?.node.relationships.field_call_to_action_goal?.name}
-                        goalEventAction={cta?.node.relationships.field_call_to_action_goal?.field_goal_action}
-                      >
-                        {cta.node.field_call_to_action_link.title}
-                      </CallToAction>
-                    </div>
-                  );
-                });
-              })()}
+      { /**** Slate Form ****/}
+      {slateFormIDs[acronym] &&
+        <div className="container page-container">
+          <section className="row row-with-vspace site-content">
+            <div className="col-md-12 content-area">
+              {renderSlateForm(acronym)}
             </div>
-          </div>
+          </section>
         </div>
-      )}
-      {footerData?.length > 0 && <CustomFooter footerData={footerData[0]} />}
+      }
+
+      {/**** Call to Actions ****/}
+      {renderCallToActions(sections.callToActionData)}
+
+      {footer && 
+        <Suspense fallback={<></>}>
+          <CustomFooter footerData={footer} />
+        </Suspense>
+      }
     </Layout>
   )
 }
 
-export default ProgramPage
+const ProgramPageTemplate = ({data}) => {
+  const progData = data.programs.edges[0]?.node;
+  const imageData = data.images?.edges;
+  const imageTaggedData = data.imagesTagged?.edges
+  const variantData = progData.relationships?.field_program_variants;
+
+  // Re: Hero Widgets - `field_hero_widgets` only allows a single widget (at the moment), and
+  // Drupal doesn't return an array, so force it into an array.
+  const heroData = {
+    images: imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null,
+    widgets: progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null,
+    videos: data.videos.edges[0]?.node,
+  }
+
+  const seoData = {
+    title: progData.title,
+    description: progData.field_metatags?.og_description,
+    img: heroData.images[0]?.node.relationships.field_media_image.publicUrl,
+    imgAlt: heroData.images[0]?.node.field_media_image.alt
+  };
+
+  const sections = {
+    callToActionData: data.ctas?.edges,
+    employerData: data.employers?.edges,
+    testimonialData: data.testimonials?.edges,
+    blockData: data.blockAdmissionRequirements,
+  }
+
+  const variants = {
+    heading: prepareVariantHeading(variantData),
+    data: variantData,
+  }
+
+  const footerData = data.footer?.edges;
+
+  return (
+      <ProgramPage 
+        nodeID={progData.drupal_internal__nid}
+        title={progData.title}
+        acronym={progData.relationships.field_program_acronym?.name}
+        overview={progData.field_program_overview?.processed}
+        seoData={seoData}
+        heroData={heroData}
+        variants={variants}
+        widgets={progData.relationships?.field_widgets}
+        sections={sections}
+        footer={footerData?.length > 0 ? data.footer?.edges[0] : null}
+        domains={progData?.field_domain_access}
+      />
+  );
+}
+
+export default ProgramPageTemplate
 
 export const query = graphql`
   query ($id: String) {

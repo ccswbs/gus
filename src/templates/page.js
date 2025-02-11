@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
 import Hero from 'components/shared/hero'; 
 import Widget from '../components/shared/widget';
-import Widgets from 'components/shared/widgets';
+import WidgetContainer from 'components/shared/widgetContainer';
 import CustomFooter from 'components/shared/customFooter';
 
 const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
@@ -26,7 +26,7 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
               {heroData.heroWidgets && (
                 <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
                   {heroData.heroWidgets.map((widget, index) => (
-                    <Widget widget={widget} key={index} />
+                    <Widget data={widget} key={index} />
                   ))}
                 </div>
               )}
@@ -54,7 +54,7 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
               </div>
           }
 
-          <Widgets widgetData={widgets} />
+          <WidgetContainer data={widgets} />
 
         </div>
 

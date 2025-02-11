@@ -1,6 +1,7 @@
 import React from "react"
-import { StaticQuery, graphql, Link } from "gatsby"
+import {Link } from 'gatsby'
 import PropTypes from "prop-types";
+import { useMenuData } from "hooks/drupal/use-menu-data"
 
 const createMenuHierarchy = (menuData, menuName) => {
   let tree = [],
@@ -79,43 +80,17 @@ const generateMenu = (menuLinks, menuName) => {
   return menu
 }
 
-const Menu = ({menuName}) => (
+const Menu = ({menuName}) => {
+  const data = useMenuData();
 
-   <StaticQuery
-      query={
-        graphql`query MenuQuery {
-  allMenuLinkContentMenuLinkContent(sort: {weight: ASC}) {
-    edges {
-      node {
-        enabled
-        title
-        expanded
-        external
-        langcode
-        weight
-        link {
-          uri
-          url
-        }
-        drupal_parent_menu_item
-        bundle
-        drupal_id
-        menu_name
-      }
-    }
-  }
-}`
-      }
-      render={data => (
-        <nav className={menuName}>
-          <ul >
-            {generateMenu(data, menuName)}
-          </ul>
-        </nav>
-
-      )}
-   />
-)
+  return (
+    <nav className={menuName}>
+      <ul >
+        {generateMenu(data, menuName)}
+      </ul>
+    </nav>
+  );
+}
 
 Menu.propTypes = {
   menuName: PropTypes.string,
