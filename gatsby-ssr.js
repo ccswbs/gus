@@ -36,9 +36,6 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
     />,
-
-    // FontAwesome kit preload
-    <link rel="preload" href="https://kit.fontawesome.com/7993323d0c.js" as="script" crossOrigin="anonymous" />,
   ]);
   setPostBodyComponents([
     // FontAwesome kit
