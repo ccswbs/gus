@@ -44,7 +44,7 @@ function renderSlateForm(acronym) {
       <div>
         <h2 className="mt-0" id="subscribe">Sign Up to Learn More</h2>
         <div className="ug-slate" id={`form_${id}`}>Loading...</div>
-        <Script async="async" src={`${slateURL}${id}&amp;output=embed&amp;div=form_${id}`}>{/**/}</Script>
+        <Script defer src={`${slateURL}${id}&amp;output=embed&amp;div=form_${id}`}>{/**/}</Script>
       </div>
     )
   }
