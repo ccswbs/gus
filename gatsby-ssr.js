@@ -38,7 +38,7 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
     />,
 
     // FontAwesome kit preload
-    <link rel="preload" href="https://kit.fontawesome.com/7993323d0c.js" as="script" crossOrigin="anonymous" />,
+    // <link rel="preload" href="https://kit.fontawesome.com/7993323d0c.js" as="script" crossOrigin="anonymous" />,
   ]);
   setPostBodyComponents([
     // FontAwesome kit
@@ -55,11 +55,5 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       crossOrigin="anonymous"
       defer
     />,
-    // U of G Gatsby script
-    // <script
-    //   key="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
-    //   src="https://www.uoguelph.ca/js/uog-scripts-gatsby-dist.js"
-    //   defer
-    // />,
   ]);
 };
