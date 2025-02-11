@@ -38,59 +38,6 @@ function renderMediaGrid(primary_data) {
 
 // For the left column
 function renderPrimary(widget) {
-<<<<<<< HEAD
-  switch (widget?.__typename) {
-    case "paragraph__accordion_section":
-      return (
-        <Suspense fallback={<></>}>
-          <Accordion key={widget.drupal_id} pageData={widget} />
-        </Suspense>
-        );
-    case "paragraph__block_widget":
-      return (
-        <Suspense fallback={<></>}>
-          <BlockWidget key={widget.drupal_id} blockData={widget} region="Primary" />
-        </Suspense>
-      );
-    case "paragraph__general_text":
-      return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
-    case "paragraph__image_overlay":
-      return <ImageOverlay key={widget.drupal_id} data={widget} />;
-    case "paragraph__lead_paragraph":
-      return <LeadPara key={widget.drupal_id} pageData={widget} />;
-    case "paragraph__links_widget":
-      return <LinksWidget key={widget.drupal_id} data={widget} />;
-    case "paragraph__media_text":
-      return <MediaText key={widget.drupal_id} widgetData={widget} region="Primary" />;
-    case "paragraph__section_tabs":
-      return (
-        <Suspense fallback={<></>}>
-          <PageTabs key={widget.drupal_id} pageData={widget} />
-        </Suspense>
-      );
-    case "paragraph__statistic_widget":
-      return (
-        <Suspense fallback={<></>}>
-          <StatisticWidget key={widget.drupal_id} statisticData={widget} shouldHaveContainer={false} />
-        </Suspense>
-      );
-    case "paragraph__stats_widget":
-      return(
-        <Suspense fallback={<></>}>
-          <StatsWidget key={widget.drupal_id} statsWidgetData={widget} />
-        </Suspense>
-      );
-    case "paragraph__section_buttons":
-      return <SectionButtons key={widget.drupal_id} pageData={widget} />;
-    case "paragraph__yaml_widget":
-      return (
-        <Suspense fallback={<></>}>
-          <YamlWidget key={widget.drupal_id} blockData={widget} />
-        </Suspense>
-      );
-    default:
-      return <></>;
-=======
   let moduleName = widgetModules[widget.__typename].moduleName;
   let fallback = widgetModules[widget.__typename].fallback;
   let shouldLazyLoad = widgetModules[widget.__typename].shouldLazyLoad ?? false;
@@ -109,7 +56,6 @@ function renderPrimary(widget) {
       default:
         return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
     }
->>>>>>> prog-block2
   }
 
   return <></>;
