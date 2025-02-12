@@ -44,7 +44,7 @@ function renderSlateForm(acronym) {
       <div>
         <h2 className="mt-0" id="subscribe">Sign Up to Learn More</h2>
         <div className="ug-slate" id={`form_${id}`}>Loading...</div>
-        <Script async="async" src={`${slateURL}${id}&amp;output=embed&amp;div=form_${id}`}>{/**/}</Script>
+        <Script defer src={`${slateURL}${id}&amp;output=embed&amp;div=form_${id}`}>{/**/}</Script>
       </div>
     )
   }
@@ -173,7 +173,7 @@ function renderCallToActions(data) {
   return <></>
 }
 
-const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, variants, widgets, sections, footer, domains}) => {
+const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, variants, widgets, sections, footerData, domains}) => {
   const hasIntroContent = overview.length > 0 || variants.heading.length > 0;
   const hasHeroContent = heroData.images?.length > 0 || heroData.videos?.length > 0;
 
@@ -272,9 +272,9 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
       {/**** Call to Actions ****/}
       {renderCallToActions(sections.callToActionData)}
 
-      {footer && 
+      {footerData?.length > 0 && 
         <Suspense fallback={<></>}>
-          <CustomFooter footerData={footer} />
+          <CustomFooter footerData={footerData[0]} />
         </Suspense>
       }
     </Layout>
@@ -298,8 +298,8 @@ const ProgramPageTemplate = ({data}) => {
   const seoData = {
     title: progData.title,
     description: progData.field_metatags?.og_description,
-    img: heroData.images[0]?.node.relationships.field_media_image.publicUrl,
-    imgAlt: heroData.images[0]?.node.field_media_image.alt
+    img: heroData.images && heroData.images[0]?.node.relationships.field_media_image.publicUrl,
+    imgAlt: heroData.images && heroData.images[0]?.node.field_media_image.alt
   };
 
   const sections = {
@@ -327,7 +327,7 @@ const ProgramPageTemplate = ({data}) => {
         variants={variants}
         widgets={progData.relationships?.field_widgets}
         sections={sections}
-        footer={footerData?.length > 0 ? data.footer?.edges[0] : null}
+        footerData={footerData}
         domains={progData?.field_domain_access}
       />
   );
