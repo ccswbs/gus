@@ -19,9 +19,6 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       key="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,700&display=swap"
       rel="stylesheet"
     />,
-    <link 
-      rel="preload" as="style" crossOrigin="anonymous" 
-      href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} type="text/css" />,
 
     // Roboto Condensed
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700" as="style" crossOrigin="anonymous" />,    
