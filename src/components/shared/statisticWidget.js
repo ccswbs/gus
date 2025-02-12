@@ -152,8 +152,6 @@ const StatisticSelector = ({statistics, style, shouldHaveContainer}) => {
   let numStats = statistics.length;
   let numColumns =  ((numStats === 2) || (numStats === 4)) ? 2 : 3;
 
-console.log(shouldHaveContainer)
-
   switch (style) {
       case "Light Blue":
         return shouldHaveContainer ? (
