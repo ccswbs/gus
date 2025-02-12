@@ -5,7 +5,7 @@ content:
     body_html: |
       <p>14 degree programs and 94 majors in Business, Agriculture, Engineering, Computing, Arts and Social Sciences and Veterinary Medicine. <br><a href="https://admission.uoguelph.ca/programs/list">Explore All Programs</a></p>
     icon: fa-solid fa-graduation-cap
-    icon_color: "#c20430"
+    icon_color: "#e51937"
   - title: Experiential Learning
     body_html: |
       <p>Over 1,000 hands-on learning experiences, including 45+ Co-op Programs. <br><a href="https://www.uoguelph.ca/experientiallearning/experiential-learning-students">Explore Co-op All Opportunities</a></p>

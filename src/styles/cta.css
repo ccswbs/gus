@@ -1,7 +1,7 @@
 div.cta { padding: 25px; width: 50% }
 
 div.cta a.btn.btn-uogRed {
-    background: #c20430 !important;
+    background: var(--uog-red) !important;
     color: #fff !important;
     text-align: left;
     text-transform: none;
@@ -13,7 +13,7 @@ div.cta a.btn.btn-uogRed {
 
 div.cta a.btn.btn-uogRed:hover,
 div.cta a.btn.btn-uogRed:focus {
-    background: #69A3B9 !important;
+    background: var(--uog-red-focus) !important;
     color: #fff !important;
     outline: none !important;
     border-bottom: 0rem !important;

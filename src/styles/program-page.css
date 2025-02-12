@@ -3,7 +3,7 @@ body.program h4, body.program h3 {
 }
 
 body.program li.list-group-item.feature a {
-    background: #c20430;
+    background: var(--uog-red);
     font-weight: 700;
     color: #fff !important;
 }
@@ -20,7 +20,7 @@ body.program .lead {
 }
 
 body.program a.btn.btn-uogRed {
-    background: #c20430 !important;
+    background: var(--uog-red) !important;
     text-align: left;
     text-transform: none;
     font-size: 1.5rem;
@@ -31,7 +31,7 @@ body.program a.btn.btn-uogRed {
 
 body.program a.btn.btn-uogRed:hover,
 body.program a.btn.btn-uogRed:focus {
-    background: #69A3B9 !important;
+    background: var(--uog-red-focus) !important;
     color: #fff !important;
     outline: none !important;
     border-bottom: 0rem !important;
@@ -129,15 +129,15 @@ body.program .pre-footer img {
 
 @media only screen and (max-width: 768px) {
     body.program .event-card {
-        background: linear-gradient(to right, #4C9BB2 0%, #4C9BB2 20%, #f5f5f5 20%, #f5f5f5 100%);
+        background: linear-gradient(to right, #187bb4 0%, #187bb4 20%, #f5f5f5 20%, #f5f5f5 100%);
     }
 
     body.program .event-card.yellow {
-        background: linear-gradient(to right, #FFC72A 0%, #FFC72A 20%, #f5f5f5 20%, #f5f5f5 100%);
+        background: linear-gradient(to right, #ffc429 0%, #ffc429 20%, #f5f5f5 20%, #f5f5f5 100%);
     }
 
     body.program .event-card.red {
-        background: linear-gradient(to right, #c20430 0%, #c20430 20%, #f5f5f5 20%, #f5f5f5 100%);
+        background: linear-gradient(to right, #e51937 0%, #e51937 20%, #f5f5f5 20%, #f5f5f5 100%);
     }
 
     body.program .event-date {

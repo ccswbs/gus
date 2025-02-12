@@ -12,7 +12,7 @@ button#hero-playPause {
 	top: 4rem;
 }
 button#hero-playPause:focus {
-	outline: 0.1rem dotted #ffc72a;
+	outline: 0.1rem dotted var(--uog-yellow);
 }
 button#hero-playPause i,
 a#hero-transcript i {
@@ -78,11 +78,11 @@ i.hero-thruster {
 
 .duotoneColors {
 	--fa-primary-color: #fff;
-	--fa-secondary-color: #c20430;
+	--fa-secondary-color: #var(--uog-red);
 	--fa-secondary-opacity: 1.0;
 }
 .duotoneColors:hover {
-	--fa-primary-color: #c20430;
+	--fa-primary-color: var(--uog-red);
 	--fa-secondary-color: #fff;	
 }
 

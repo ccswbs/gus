@@ -26,7 +26,7 @@ const GradientStatistic = ({stats}) => {
 
   // default is displaying 3 colours in a row
   let rowClasses = "row-cols-md-3";
-  let gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#187bb4 60%,#187bb4 100%)";
+  let gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#ffc429 60%,#ffc429 100%)";
 
   if (numStats === 1){
     // one colour
@@ -35,7 +35,7 @@ const GradientStatistic = ({stats}) => {
   } else if (numStats === 2) {
     // two colours
     rowClasses = "row-cols-sm-2";
-    gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#c20430 60%,#c20430 100%)";
+    gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#e51937 60%,#e51937 100%)";
   } else if (numStats % 4 === 0) {
     // four colour
     rowClasses = "row-cols-sm-2 row-cols-lg-4";
