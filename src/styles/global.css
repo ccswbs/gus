@@ -145,7 +145,7 @@ html {
   color: var(--uog-blue);
 }
 .uog-blue-muted {
-  background: var(--uog-blue-muted);
+  background: var(--uog-grey-muted);
 }
 .uog-grey-muted {
   background: var(--uog-grey-muted);
