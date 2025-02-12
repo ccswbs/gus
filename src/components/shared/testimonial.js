@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import SliderResponsive from 'components/shared/sliderResponsive';
 import TestimonialTitle from 'components/shared/testimonialTitle';
-import { stripHTMLTags, setHeadingLevel } from 'utils/ug-utils.js';
+import { ParseText, stripHTMLTags, setHeadingLevel } from 'utils/ug-utils.js';
 import 'styles/testimonial.css';
 
 function setTestimonialHeading(props) {
@@ -15,9 +15,7 @@ function setTestimonialHeading(props) {
 
     // heading generated for program page
     if (props.programAcronym) {
-        
-        const testimonialTags = props.testimonialData.flatMap(testim => TestimonialTitle(testim.node ?? testim) ?? []);
-
+        const testimonialTags = props.data.flatMap(testim => TestimonialTitle(testim.node ?? testim) ?? []);
         const studentTag = testimonialTags.some(tag => tag === 'Graduate Student' || tag === 'Undergraduate Student');
         const facultyTag = testimonialTags.includes('Faculty');
         const alumniTag = testimonialTags.includes('Alumni');
@@ -38,8 +36,8 @@ function Testimonials (props) {
     let Heading = setHeadingLevel(props.headingLevel);
     let testimonialHeading = setTestimonialHeading(props)
 
-    if (props.testimonialData?.length > 0) {
-        const testimonialUnits  = () => props.testimonialData.map((testimonial) => {
+    if (props.data?.length > 0) {
+        const testimonialUnits  = () => props.data.map((testimonial) => {
             // program queries are nested under .node and widget queries are not
             let testimonialNode = testimonial.node ?? testimonial;
             let testimonialName = testimonialNode.field_testimonial_person_name ?? testimonialNode.title;
@@ -63,7 +61,9 @@ function Testimonials (props) {
                         <GatsbyImage image={testimonialPicture}
                             className="testimonial-pic"
                             alt={testimonialNode.relationships.field_hero_image.field_media_image.alt} />}
-                    <blockquote className="testimonial-quote mb-0" dangerouslySetInnerHTML={{__html: testimonialContent}} />
+                    <blockquote className="testimonial-quote mb-0">
+                      <ParseText textContent={testimonialContent} />
+                    </blockquote>
                     <p className="testimonial-tagline author">
                         <strong className="testimonial-title">{testimonialName}{testimonialTitle ? ', ' + testimonialTitle : '' }</strong>
                         <br />
@@ -97,11 +97,11 @@ function Testimonials (props) {
 }
 
 Testimonials.propTypes = {
-    testimonialData: PropTypes.array,
+    data: PropTypes.array,
 }
 
 Testimonials.defaultProps = {
-    testimonialData: null,
+    data: null,
 }
 
 export default Testimonials

@@ -48,7 +48,7 @@ function Links({ links = [], title, headingLevel, description }) {
   const LinksInner = isGrid ? "div" : "ul";
 
   return (
-    <div className={styles.outer}>
+    <div className={`mb-5 ${styles.outer}`}>
       {title && <Heading>{title}</Heading>}
       {description && <p>{description}</p>}
 

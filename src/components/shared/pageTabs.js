@@ -9,7 +9,7 @@ import { slugify, ParseText } from "../../utils/ug-utils"
 
 const PageTabs = (props) => {
   const container = useRef(null)
-  const tabs = props.pageData?.relationships?.field_tabs;
+  const tabs = props.data?.relationships?.field_tabs;
   const [activeTab, setActiveTab] = useState(tabs?.[0]?.drupal_id ?? "")
 
   useEffect(() => {
@@ -51,11 +51,11 @@ const PageTabs = (props) => {
 }
 
 PageTabs.propTypes = {
-  pageData: PropTypes.object,
+  data: PropTypes.object,
 }
 
 PageTabs.defaultProps = {
-  pageData: ``,
+  data: ``,
 }
 
 export default PageTabs

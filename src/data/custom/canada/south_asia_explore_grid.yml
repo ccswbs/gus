@@ -1,0 +1,33 @@
+id: south_asia_explore_grid
+title: Explore the University of Guelph
+content:
+  - title: Academic Programs
+    body_html: |
+      <p>14 degree programs and 94 majors in Business, Agriculture, Engineering, Computing, Arts and Social Sciences and Veterinary Medicine. <br><a href="https://admission.uoguelph.ca/programs/list">Explore All Programs</a></p>
+    icon: fa-solid fa-graduation-cap
+    icon_color: "#c20430"
+  - title: Experiential Learning
+    body_html: |
+      <p>Over 1,000 hands-on learning experiences, including 45+ Co-op Programs. <br><a href="https://www.uoguelph.ca/experientiallearning/experiential-learning-students">Explore Co-op All Opportunities</a></p>
+    icon: fa-solid fa-handshake
+    icon_color: "#f1b91d"
+  - title: Scholarships & Jobs
+    body_html: |
+      <p>$7 million in scholarships for international students and 4,000 job opportunities on campus. <br><a href="https://admission.uoguelph.ca/international/funding-your-education/">Fund Your Education</a></p>
+    icon: fa-solid fa-circle-dollar
+    icon_color: "#4cae3e"
+  - title: Live On Campus
+    body_html: |
+      <p>Guaranteed housing on campus that is affordable, convenient, and ranked #1 in housing for universities in Canada. <br><a href="https://housing.uoguelph.ca/">Student Housing Services</a></p>
+    icon: fa-solid fa-house-building
+    icon_color: "#3c8ad2"
+  - title: Student Experience
+    body_html: |
+      <p>Supporting the transition and orientation needs of international students by providing resources and support for your personal development. <br><a href="https://www.uoguelph.ca/studentexperience/">Join Our Community</a></p>
+    icon: fa-solid fa-map-location-dot
+    icon_color: "#e86e3a"
+  - title: Clubs & Athletics
+    body_html: |
+      <p>Over 200 student clubs that represent the diversity of our campus community, and a world-class athletics centre. <br><a href="https://gryphlife.uoguelph.ca/">GryphLife</a> | <a href="https://fitandrec.gryphons.ca/">Athletics Centre</a></p>
+    icon: fa-solid fa-users
+    icon_color: "#864cc1"

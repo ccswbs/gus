@@ -201,11 +201,11 @@ const ContentSelector = ({data, textAlignment }) => {
     switch (data?.__typename) {
         case "paragraph__general_text":
           return <div className={textAlignment}>
-                    <GeneralText processed={data.field_general_text.processed} />
+                    <GeneralText data={data} />
                   </div>;
         case "paragraph__section_buttons":
           return <div className={textAlignment}>
-                    <SectionButtons key={data.drupal_id} pageData={data} />
+                    <SectionButtons key={data.drupal_id} data={data} />
                   </div>;
         case "paragraph__story_modal_video":
           let video = data.relationships?.field_media_video;

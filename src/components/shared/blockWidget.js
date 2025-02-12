@@ -1,55 +1,47 @@
-import React from 'react';
+import React from "react";
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import Accordion from 'components/shared/accordion';
-import GeneralText from 'components/shared/generalText';
-import MediaText from 'components/shared/mediaText';
-import PageTabs from 'components/shared/pageTabs';
-import SectionButtons from 'components/shared/sectionButtons';
+import widgetModules from "components/shared/widgetModules";
+import { ParseText, renderWidget } from "../../utils/ug-utils";
 
 const BlockWidget = (props) => {
     
     let basicBlockContent;
     let widgetBlockContent = [];
     
-    if (props.blockData?.relationships?.field_custom_block?.__typename === "block_content__basic") {
-        basicBlockContent = props.blockData?.relationships?.field_custom_block?.body.processed;
+    if (props.data?.relationships?.field_custom_block?.__typename === "block_content__basic") {
+        basicBlockContent = props.data?.relationships?.field_custom_block?.body.processed;
     }
-    if (props.blockData?.relationships?.field_custom_block?.__typename === "block_content__widget_block") {
-        widgetBlockContent = props.blockData.relationships.field_custom_block?.relationships?.field_widget_block_content;
-        let widgetRegion = props.region;
+    if (props.data?.relationships?.field_custom_block?.__typename === "block_content__widget_block") {
+        widgetBlockContent = props.data.relationships.field_custom_block?.relationships?.field_widget_block_content;
+        let region = props.region;
 
         return (widgetBlockContent.map(widget => {
-            switch(widget.__typename) {
-                case "paragraph__accordion_section":
-                    return <Accordion key={widget.drupal_id} pageData={widget} />;
-                case "paragraph__general_text":
-                    return <GeneralText key={widget.drupal_id} processed={widget.field_general_text.processed} />;
-                case "paragraph__media_text":
-                    return <MediaText key={widget.drupal_id} widgetData={widget} region={widgetRegion} />;
-                case "paragraph__section_tabs":
-                    return <PageTabs key={widget.drupal_id} pageData={widget} />;
-                case "paragraph__section_buttons":
-                    return <SectionButtons key={widget.drupal_id} pageData={widget} />;
-                default:
-                    return <></>;
-            }
+          let moduleName = widgetModules[widget.__typename].moduleName;
+          let fallback = widgetModules[widget.__typename].fallback;
+          let shouldLazyLoad = widgetModules[widget.__typename].shouldLazyLoad ?? false;
+
+          if (widgetModules[widget.__typename] && widgetModules[widget.__typename].shouldRenderBlock) {
+            return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
+          }
+
+          return <></>;
         }))
     }
-    return <div dangerouslySetInnerHTML={{__html: basicBlockContent}}></div>
-}
+    return <ParseText textContent={basicBlockContent} />
+};
 
 BlockWidget.propTypes = {
-    blockData: PropTypes.object,
+    data: PropTypes.object,
     region: PropTypes.string,
 }
 
 BlockWidget.defaultProps = {
-    blockData: ``,
+    data: ``,
     region: ``,
 }
 
-export default BlockWidget
+export default BlockWidget;
 
 export const query = graphql`
   fragment BlockWidgetParagraphFragment on paragraph__block_widget {
