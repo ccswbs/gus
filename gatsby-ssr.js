@@ -20,13 +20,6 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       rel="stylesheet"
     />,
 
-    // Roboto Condensed
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700" as="style" crossOrigin="anonymous" />,    
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700" 
-      key="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700" 
-      rel="stylesheet" />,
-
     // Web Components
     <link rel="preload" as="style" crossOrigin="anonymous" type="text/css" 
       href={`${CDN_BASE}/${UOFG_WEB_COMPONENTS_BASE}/uofg-web-components.css`} />,
