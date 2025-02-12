@@ -119,7 +119,7 @@ function getTemplate(secondaryRegionExists, sectionClasses){
   return "primary-100";
 }
 
-const SectionWidgets = React.memo(function SectionWidgets(props) {
+const SectionWidgets = (props) => {
   
   if (props.data?.length > 0) {
     let allWidgets = props.data;
@@ -163,7 +163,7 @@ const SectionWidgets = React.memo(function SectionWidgets(props) {
     );
   }
   return null;
-});
+};
 
 /**
  * SectionWidgets component
@@ -180,7 +180,7 @@ SectionWidgets.defaultProps = {
   sectionClasses: null,
 };
 
-export default React.memo(SectionWidgets);
+export default SectionWidgets;
 
 export const query = graphql`
   fragment SectionParagraphFragment on paragraph__section {
