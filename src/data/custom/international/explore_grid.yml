@@ -1,0 +1,33 @@
+id: international_explore_grid
+title: Explore the University of Guelph
+content:
+  - title: Access Available Scholarships
+    body_html: |
+      <p>More than $27.1 million in scholarships were awarded to University of Guelph students in 2022-23. <a href="https://admission.uoguelph.ca/international/funding-your-education/">How To Access Scholarships</a>.</p>
+    icon: fa-solid fa-circle-dollar
+    icon_color: "#4cae3e"
+  - title: Housing For Your Needs
+    body_html: |
+      <p>Guaranteed Housing for First-Year International, Exchange, and Canadian Students Outside Ontario! Learn about our <a href="https://housing.uoguelph.ca/residence-priority">residence priority</a>.</p>
+    icon: fa-solid fa-house-building
+    icon_color: "#69A3B9"
+  - title: Discover our Beautiful Campus
+    body_html: |
+      <p>Explore the unique features at University of Guelph with our <a href="https://www.uoguelph.ca/maps/interactive-map">interactive campus map</a>.</p>
+    icon: fa-solid fa-map-location-dot
+    icon_color: "#C20430"
+  - title: Experience Student Life
+    body_html: |
+      <p>Student clubs that represent the diversity of our campus community, representating our global make-up. <a href="https://gryphlife.uoguelph.ca/">Explore GryphLife</a>.</p>
+    icon: fa-solid fa-users
+    icon_color: "#FFC72A"
+  - title: The Athletics Centre
+    body_html: |
+      <p>Want to join a sports team? Learn how to dance? Shoot hoops between classes? You can, in our new, state of the art <a href="https://fitandrec.gryphons.ca/">Athletics Centre</a>.</p>
+    icon: fa-solid fa-basketball
+    icon_color: "#f86624"
+  - title: Explore The Arboretum
+    body_html: |
+      <p>Get outside! Recharge and go for a nature walk between classes with 400 acres of trails and forest connected to campus. <a href="https://arboretum.uoguelph.ca/">Explore The Arboretum</a>.</p>
+    icon: fa-solid fa-tree-deciduous
+    icon_color: "#4cae3e"

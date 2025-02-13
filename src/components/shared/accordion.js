@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { slugify, ParseText } from 'utils/ug-utils';
 
+const AccordionBody = lazy(() => import('./accordionBody'));
+
 const Accordion = (props) => {
-    let accordionData = props.pageData?.relationships?.field_accordion_block_elements;
-    let accordionTitle = props.pageData?.field_accordion_title;
-    let accordionDescription = props.pageData?.field_accordion_description?.processed;
-    let stayOpen = props.pageData?.field_accordion_stay_open;
-    let dataParent = ("#accordion" + props.pageData?.drupal_id);
-    let HeadingLevel = (props.pageData?.field_heading_level ? props.pageData.field_heading_level : "h2");
+    let accordionData = props.data?.relationships?.field_accordion_block_elements;
+    let accordionTitle = props.data?.field_accordion_title;
+    let accordionDescription = props.data?.field_accordion_description?.processed;
+    let stayOpen = props.data?.field_accordion_stay_open;
+    let dataParent = ("#accordion" + props.data?.drupal_id);
+    let HeadingLevel = (props.data?.field_heading_level ? props.data.field_heading_level : "h2");
 
     if (accordionData) {
       return (<>
-          {accordionTitle && <HeadingLevel id={slugify(accordionTitle)} className="mt-5">{accordionTitle}</HeadingLevel>}
+          {accordionTitle && <HeadingLevel id={slugify(accordionTitle)}>{accordionTitle}</HeadingLevel>}
           {accordionDescription && <ParseText textContent={accordionDescription} />}
-          <div className="accordion" id={"accordion" + props.pageData.drupal_id}>
+          <div className="accordion mb-5" id={"accordion" + props.data.drupal_id}>
             {accordionData.map((item) => {
               const accordionToggle = (
                 <button
@@ -36,9 +38,9 @@ const Accordion = (props) => {
                 <div className="accordion-item" key={"item" + item.drupal_id}>
                   <ItemHeading className="accordion-header" id={"heading" + item.drupal_id}>{accordionToggle}</ItemHeading>
                   <div {...(stayOpen ? {} : {"data-bs-parent": dataParent})} id={"part" + item.drupal_id} className="accordion-collapse collapse" aria-labelledby={"heading" + item.drupal_id}>
-                    <div className="accordion-body">
-                      <ParseText textContent={item.field_accordion_block_text.processed} />
-                    </div>
+                    <Suspense fallback={<div>Loading content...</div>}>
+                      <AccordionBody content={item.field_accordion_block_text.processed} />
+                    </Suspense>
                   </div>
                 </div>
               );
@@ -50,11 +52,11 @@ const Accordion = (props) => {
 }
 
 Accordion.propTypes = {
-    pageData: PropTypes.object,
+    data: PropTypes.object,
 }
   
 Accordion.defaultProps = {
-    pageData: ``,
+    data: ``,
 }
 
 export default Accordion

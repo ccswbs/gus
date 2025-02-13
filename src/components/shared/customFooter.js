@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { lazy, Suspense } from "react";
 import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
-import OVCCustomFooter from 'components/blocks/ovc/footerOVC';
 import Widget from 'components/shared/widget';
+import { ParseText } from "utils/ug-utils"
 import 'styles/customFooter.css';
+
+const OVCCustomFooter = lazy(() => import('components/blocks/ovc/footerOVC'));
 
 function chooseFooter (footer) {
   let footerSelection = ``;
@@ -24,17 +26,20 @@ const DefaultFooter = ({logos, text, widgets}) => (
   <div className="container page-container">
     <section className="row row-with-vspace site-content">
       {logos &&
-      <div className="col-md-3 content-area">
-      {logos.map(logo => (
-        <GatsbyImage
-          image={logo.relationships?.field_media_image?.gatsbyImage}
-          className="footer-logo"
-          alt={logo.field_media_image?.alt} />
-      ))}
-      </div>}
+        <div className="col-md-3 content-area">
+          {logos.map(logo => (
+            <GatsbyImage
+              key={`footer-logo-${logo.field_footer_logo?.drupal_id}`}
+              image={logo.relationships?.field_media_image?.gatsbyImage}
+              className="footer-logo"
+              alt={logo.field_media_image?.alt} />
+          ))}
+        </div>}
       <div className="col-md-9 content-area">
-        <div className="container" dangerouslySetInnerHTML={{ __html: text}} />
-        <Widget pageData={widgets} />
+        <div className="container">
+          <ParseText textContent={text} />
+        </div>
+        <Widget data={widgets} />
       </div>
     </section>			
   </div>
@@ -49,7 +54,11 @@ const CustomFooter = (props) => {
 
   switch (chooseFooter(footer)) {
     case "OVC":
-      return <OVCCustomFooter footerData={footer} />
+      return (
+        <Suspense fallback={<></>}>
+          <OVCCustomFooter footerData={footer} />
+        </Suspense>
+      )
     default:
       return <DefaultFooter
               logos={footerLogos} 
@@ -87,6 +96,7 @@ export const query = graphql`
         }
       }
       field_footer_logo {
+        drupal_id
         field_media_image {
           alt
         }

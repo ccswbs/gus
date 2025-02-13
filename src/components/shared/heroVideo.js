@@ -42,34 +42,34 @@ class HeroVideo extends Component {
         const { playing, muted, loop, videoStatus } = this.state;
         
         return (
-            <React.Fragment>
-            <div className={"hero-controls-" + aspectRatio + videoStatus}>
-                <button id="hero-playPause" aria-label={playing ? "Pause" : "Play"} title={playing ? "Pause" : "Play"} onClick={this.handlePlayPause}>
-                    <i aria-hidden="true" className={playing ? "duotoneColors fad fa-pause-circle" : "duotoneColors fad fa-play-circle"}></i>
-                    <span className="sr-only">{playing ? "Pause video" : "Play video"}</span>
-                </button>
-                {videoTranscript ? 
-                    <><a id="hero-transcript" href={videoTranscript} download aria-label="Download transcript" title="Download transcript">
-                        <i aria-hidden="true" className="duotoneColors fad fa-file-alt"></i>
-                        <span className="sr-only">Download transcript</span>                        
-                    </a></>
-                : ``}
-                <i aria-label="Loading video" className="hero-thruster fas fa-spinner fa-spin"></i>
-            </div>
-            <div className={"embed-responsive embed-responsive-" + aspectRatio}>                
-                <ReactPlayer
-                    ref={this.ref}
-                    className="react-player"
-                    url={videoSrc}
-                    playing={playing}
-                    loop={loop}
-                    muted={muted}
-                    width="100%"
-                    height="100%"
-                    onStart={this.handleStart}
-                />
-            </div>      
-            </React.Fragment>
+            <>
+                <div className={"hero-controls-" + aspectRatio + videoStatus}>
+                    <button id="hero-playPause" aria-label={playing ? "Pause" : "Play"} title={playing ? "Pause" : "Play"} onClick={this.handlePlayPause}>
+                        <i aria-hidden="true" className={playing ? "duotoneColors fad fa-pause-circle" : "duotoneColors fad fa-play-circle"}></i>
+                        <span className="sr-only">{playing ? "Pause video" : "Play video"}</span>
+                    </button>
+                    {videoTranscript ? 
+                        <><a id="hero-transcript" href={videoTranscript} download aria-label="Download transcript" title="Download transcript">
+                            <i aria-hidden="true" className="duotoneColors fad fa-file-alt"></i>
+                            <span className="sr-only">Download transcript</span>                        
+                        </a></>
+                    : ``}
+                    <i aria-label="Loading video" className="hero-thruster fas fa-spinner fa-spin"></i>
+                </div>
+                <div className={"embed-responsive embed-responsive-" + aspectRatio}>                
+                    <ReactPlayer
+                        ref={this.ref}
+                        className="react-player"
+                        url={videoSrc}
+                        playing={playing}
+                        loop={loop}
+                        muted={muted}
+                        width="100%"
+                        height="100%"
+                        onStart={this.handleStart}
+                    />
+                </div>      
+            </>
         )
     }
 }
