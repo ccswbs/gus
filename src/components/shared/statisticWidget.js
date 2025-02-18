@@ -14,10 +14,10 @@ const gradientColourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
   {background: "var(--uog-red)", colour: "#FFFFFF"},
   {background: "var(--uog-yellow)", colour: "#000000"},
-  {background: "var(--uog-blue)", colour: "#000000"},
+  {background: "var(--uog-blue)", colour: "#FFFFFF"},
   {background: "var(--uog-yellow)", colour: "#000000"},
   {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-blue)", colour: "#000000"},
+  {background: "var(--uog-blue)", colour: "#FFFFFF"},
   {background: "var(--uog-red)", colour: "#FFFFFF"},
 ];
 
