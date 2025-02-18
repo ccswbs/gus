@@ -36,13 +36,13 @@ body,
 }
 
 .full-width-container.bg-light {
-  background-color: #f5f5f5 !important;
+  background-color: var(--uog-grey-light-bg) !important;
   color: #555;
   padding: 2rem 0;
 }
 
 .full-width-container.bg-dark {
-  background-color: #333 !important;
+  background-color: var(--uog-grey-dark-bg) !important;
   color: #aaa !important;
   padding: 2rem 0;
 }
@@ -145,10 +145,7 @@ html {
   color: var(--uog-blue);
 }
 .uog-blue-muted {
-  background: var(--uog-grey-muted);
-}
-.uog-grey-muted {
-  background: var(--uog-grey-muted);
+  background: var(--uog-grey-light-bg);
 }
 i.green {
   color: var(--uog-green);

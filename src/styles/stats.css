@@ -15,7 +15,7 @@ body.program .uog-card {
 }
 
 body.basic-page .uog-card {
-	background: var(--uog-grey-muted);
+	background: var(--uog-grey-light-bg);
 	flex: 1 0 0%;
     padding: 1.25rem;
 	margin: 1.5rem;
