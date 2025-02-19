@@ -44,7 +44,7 @@ const StatType = styled.dd`
   font-size: 1.8rem;
   line-height: 1.58;
   & > a {
-    color: #0068ad !important;
+    color: var(--uog-blue-on-light) !important;
   }
 
   & > a:hover,
