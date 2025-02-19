@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import Seo from "components/seo"
 import BreadcrumbsStatic from '../components/shared/breadcrumbsStatic';
 import Hero from "components/shared/hero"
-// import ModalVideoStatic from "components/shared/modalVideoStatic"
+import ModalVideoStatic from "components/shared/modalVideoStatic"
 import Widget from "components/shared/widget"
 import WidgetContainer from "components/shared/widgetContainer"
 import { ParseText } from "utils/ug-utils"
@@ -12,18 +12,17 @@ import { graphql, Script } from "gatsby"
 
 // Turn off lazy loading until anchor issue resolved
 import BlockWidget from "components/shared/blockWidget"
-import HeroVideo from "components/shared/heroVideo"
 import Testimonials from "components/shared/testimonial"
 import Variants from "components/shared/variants"
 // const BlockWidget = lazy(() => import("components/shared/blockWidget"));
 // const Testimonials = lazy(() => import("components/shared/testimonial"));
 // const Variants = lazy(() => import("components/shared/variants"));
-// const HeroVideo = lazy(() => import("components/shared/heroVideo"));
 
 const Breadcrumbs = lazy(() => import("components/shared/breadcrumbs"));
 const CallToAction = lazy(() => import("components/shared/callToAction"));
 const CustomFooter = lazy(() => import("components/shared/customFooter"));
 const Employers = lazy(() => import("components/shared/employers"));
+const HeroVideo = lazy(() => import("components/shared/heroVideo"));
 
 const slateFormIDs = {
   "BASc": {id:"78834d6b-07a8-4b3f-95b8-fac032e9be73"},
@@ -191,14 +190,14 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
       {/**** Header and Title ****/}
       <div className={!hasHeroContent ? "no-thumb" : null} id="rotator">
         {heroData.videos ? (
-          // <Suspense fallback={<ModalVideoStatic />}>
+          <Suspense fallback={<ModalVideoStatic />}>
             <HeroVideo
               videoURL={heroData.videos.field_media_oembed_video}
               videoWidth={heroData.videos.field_video_width}
               videoHeight={heroData.videos.field_video_height}
               videoTranscript={heroData.videos.relationships.field_media_file?.publicUrl}
             />
-          // </Suspense>
+          </Suspense>
         ) : (
           <>
             <Hero imgData={heroData.images} />
