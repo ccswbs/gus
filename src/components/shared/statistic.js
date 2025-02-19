@@ -11,7 +11,7 @@ const StatisticGrid = styled.dl`
   }
 `;
 const StatCard = styled.div`
-  background: #f5f7fa;
+  background: var(--uog-grey-light-bg);
   padding: 1.25rem;
   min-width: 25%;
   word-wrap: break-word;
@@ -28,6 +28,9 @@ const StatSolidCard = styled(StatCard)`
     color: ${props => (props.colour ?? "#ffffff")} !important;
   }
   & > dt {
+    color: ${props => (props.colour ?? "#ffffff")};
+  }
+  & > dt strong {
     color: ${props => (props.colour ?? "#ffffff")};
   }
 `;
