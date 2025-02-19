@@ -7,7 +7,7 @@ import ModalVideoStatic from "components/shared/modalVideoStatic";
 
 // Note - Turned off lazy loading until anchor issue resolved
 import MediaText from "components/shared/mediaText";
-import StatisticWidget from "components/statisticWidget";
+import StatisticWidget from "components/shared/statisticWidget";
 // const MediaText = lazy(() => import("components/shared/mediaText"))
 // const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
 
