@@ -10,14 +10,19 @@ import WidgetContainer from "components/shared/widgetContainer"
 import { ParseText } from "utils/ug-utils"
 import { graphql, Script } from "gatsby"
 
-const BlockWidget = lazy(() => import("components/shared/blockWidget"));
+// Turn off lazy loading until anchor issue resolved
+import BlockWidget from "components/shared/blockWidget"
+import Testimonials from "components/shared/testimonial"
+import Variants from "components/shared/variants"
+// const BlockWidget = lazy(() => import("components/shared/blockWidget"));
+// const Testimonials = lazy(() => import("components/shared/testimonial"));
+// const Variants = lazy(() => import("components/shared/variants"));
+
 const Breadcrumbs = lazy(() => import("components/shared/breadcrumbs"));
 const CallToAction = lazy(() => import("components/shared/callToAction"));
 const CustomFooter = lazy(() => import("components/shared/customFooter"));
 const Employers = lazy(() => import("components/shared/employers"));
 const HeroVideo = lazy(() => import("components/shared/heroVideo"));
-const Testimonials = lazy(() => import("components/shared/testimonial"));
-const Variants = lazy(() => import("components/shared/variants"));
 
 const slateFormIDs = {
   "BASc": {id:"78834d6b-07a8-4b3f-95b8-fac032e9be73"},
@@ -223,9 +228,9 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
               {overview && <ParseText textContent={overview} />}
               {variants.heading && (<>
                   <h2>{variants.heading}</h2>
-                  <Suspense fallback={<></>}>
+                  {/* <Suspense fallback={<></>}> */}
                     <Variants variantData={variants.data} />
-                  </Suspense>
+                  {/* </Suspense> */}
                 </>)}
             </section>
           </div>
@@ -240,9 +245,9 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
 
       {/**** Testimonials ****/}
       {sections.testimonialData && 
-        <Suspense fallback={<></>}>
+        // <Suspense fallback={<></>}>
           <Testimonials data={sections.testimonialData} programAcronym={acronym} headingLevel="h3" />
-        </Suspense>
+        // </Suspense>
       }
 
       { /**** Block - Admission Requirements Data ****/}
@@ -250,9 +255,9 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
         <div className="container page-container">
           <section className="row row-with-vspace site-content">
             <div className="col-md-12 content-area">
-              <Suspense fallback={<></>}>
+              {/* <Suspense fallback={<></>}> */}
                 <BlockWidget key={sections.blockData.drupal_id} data={sections.blockData} />
-              </Suspense>
+              {/* </Suspense> */}
             </div>
           </section>
         </div>
