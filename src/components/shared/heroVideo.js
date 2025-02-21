@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import ReactPlayer from 'react-player';
+// import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { extractVideoID } from 'utils/ug-utils';
-import 'styles/heroVideo.css';
+// import 'styles/heroVideo.css';
+import '@justinribeiro/lite-youtube';
+import '@slightlyoff/lite-vimeo';
 
 class HeroVideo extends Component {
     
@@ -33,7 +35,7 @@ class HeroVideo extends Component {
 
         let youtubeURL = "https://www.youtube.com/embed/";
         let vimeoURL = "https://player.vimeo.com/video/";	
-        let videoSrc = (videoType === `youtube` ? youtubeURL + videoID : vimeoURL + videoID);
+        // let videoSrc = (videoType === `youtube` ? youtubeURL + videoID : vimeoURL + videoID);
         
         let ratio = videoWidth / videoHeight;        
         ratio = +ratio.toFixed(2);
@@ -56,7 +58,17 @@ class HeroVideo extends Component {
                     : ``}
                     <i aria-label="Loading video" className="hero-thruster fas fa-spinner fa-spin"></i>
                 </div>
-                <div className={"embed-responsive embed-responsive-" + aspectRatio}>                
+                {videoType === `youtube` && 
+                    <lite-youtube 
+                        posterquality="maxresdefault"
+                        videoid={videoID} />
+                    }
+                {videoType === `vimeo` && 
+                <lite-vimeo 
+                    posterquality="maxresdefault"
+                    videoid={videoID} />
+                }
+                {/* <div className={"embed-responsive embed-responsive-" + aspectRatio}>                
                     <ReactPlayer
                         ref={this.ref}
                         className="react-player"
@@ -68,7 +80,7 @@ class HeroVideo extends Component {
                         height="100%"
                         onStart={this.handleStart}
                     />
-                </div>      
+                </div>       */}
             </>
         )
     }
