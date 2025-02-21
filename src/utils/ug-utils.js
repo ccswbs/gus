@@ -75,8 +75,9 @@ function fontAwesomeIconColour(colourChoice) {
       return "uog-yellow";
     case "Red":
       return "uog-red";
+    // legacy colour
     case "Darker Red":
-      return "uog-red-darker";
+      return "uog-red";
     default:
       return "";
   }

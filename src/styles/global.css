@@ -144,6 +144,7 @@ html {
 .uog-blue {
   color: var(--uog-blue);
 }
+/* legacy colour */
 .uog-blue-muted {
   background: var(--uog-grey-light-bg);
 }
