@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import classNames from "classnames";
 import { graphql } from "gatsby";
 import { ConditionalWrapper, renderWidget } from "utils/ug-utils";
 import widgetModules from "components/shared/widgetModules";
 
-const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
+// Note - Turned off lazy loading until anchor issue resolved
+import StatisticWidget from "components/shared/statisticWidget";
+// import { lazy, Suspense } from "react";
+// const StatisticWidget = lazy(() => import("components/shared/statisticWidget"));
 
 const templates = {
   'primary-100': { primary: 'row', secondary: '' },
@@ -49,9 +52,9 @@ function renderPrimary(widget) {
     switch (widget?.__typename) {
       case "paragraph__statistic_widget":
         return (
-          <Suspense key={`suspend-${widget.drupal_id}`} fallback={<></>}>
+          // <Suspense key={`suspend-${widget.drupal_id}`} fallback={<></>}>
             <StatisticWidget key={widget.drupal_id} statisticData={widget} shouldHaveContainer={false} />
-          </Suspense>
+          // </Suspense>
         );
       default:
         return renderWidget(moduleName, shouldLazyLoad, fallback, widget, region);
