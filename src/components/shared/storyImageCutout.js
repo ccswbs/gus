@@ -19,13 +19,13 @@ const Testimonial = styled.div`
     background: #000;
 `
 const QuoteMark = styled.i`
-    color: var(--uog-blue);
+    color: var(--uog-yellow);
 `
 const QuoteText = styled.p`
     color: #000;
 `
 const QuoteSource = styled.p`
-    color: var(--uog-blue);
+    color: var(--uog-yellow);
 `
 
 function sortContent(content) {
