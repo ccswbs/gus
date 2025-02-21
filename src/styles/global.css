@@ -37,13 +37,13 @@ body,
 
 .full-width-container.bg-light {
   background-color: var(--uog-grey-light-bg) !important;
-  color: #555;
+  color: var(--uog-body-copy-on-light);
   padding: 2rem 0;
 }
 
 .full-width-container.bg-dark {
   background-color: var(--uog-grey-dark-bg) !important;
-  color: #aaa !important;
+  color: var(--uog-body-copy-on-dark) !important;
   padding: 2rem 0;
 }
 
@@ -60,7 +60,7 @@ body,
 
 /* h1 title within page body */
 #main-column h1 {
-  color: black;
+  color: var(--uog-black);
 }
 
 /* Increase spacing above global footer by 60 px */
@@ -103,7 +103,7 @@ html {
 /* Custom card styles */
 
 .bg-dark a:not(.btn) {
-  color: var(--uog-blue) !important;
+  color: var( --uog-body-copy-link-on-dark) !important;
 }
 .bg-dark a:not(.btn):focus,
 .bg-dark a:not(.btn):hover {
@@ -119,12 +119,12 @@ html {
   color: white !important;
 }
 .bg-dark .btn-secondary {
-  color: black !important;
+  color: var(--uog-grey-light-contrast) !important;
   background: var(--uog-grey-light) !important;
 }
 .bg-dark .btn-secondary:focus,
 .bg-dark .btn-secondary:hover {
-  color: black !important;
+  color: var(--uog-grey-light-contrast) !important;
   background: var(--uog-grey-light-focus) !important;
 }
 .bg-dark .btn-outline-secondary {
@@ -133,13 +133,13 @@ html {
 }
 .bg-dark .btn-outline-secondary:focus,
 .bg-dark .btn-outline-secondary:hover {
-  color: black !important;
+  color: var(--uog-grey-light-contrast) !important;
   background: var(--uog-grey-light) !important;
 }
 .bg-dark h2,
 .bg-dark h3,
 .bg-dark h4 {
-  color: var(--off-white) !important;
+  color: var(--uog-body-copy-on-dark) !important;
 }
 .uog-blue {
   color: var(--uog-blue);
