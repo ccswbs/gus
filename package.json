@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@justinribeiro/lite-youtube": "^1.7.1",
+    "@slightlyoff/lite-vimeo": "^0.1.2",
     "axios": "^1.7.4",
     "babel-plugin-styled-components": "^2.1.4",
     "backstopjs": "^6.3.23",
