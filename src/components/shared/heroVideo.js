@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-// import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { extractVideoType, extractVideoID } from 'utils/ug-utils';
-// import 'styles/heroVideo.css';
+import 'styles/heroVideo.css';
 
 class HeroVideo extends Component {
     
@@ -31,16 +31,15 @@ class HeroVideo extends Component {
         let videoType = extractVideoType(this.props.videoURL);
         let videoID = (videoType === `youtube` ? extractVideoID(this.props.videoURL) : this.props.videoURL.substring(18));
 
-        // let youtubeURL = "https://www.youtube.com/embed/";
-        // let vimeoURL = "https://player.vimeo.com/video/";	
-        // let videoSrc = (videoType === `youtube` ? youtubeURL + videoID : vimeoURL + videoID);
+        let youtubeURL = "https://www.youtube.com/embed/";
+        let vimeoURL = "https://player.vimeo.com/video/";	
+        let videoSrc = (videoType === `youtube` ? youtubeURL + videoID : vimeoURL + videoID);
         
         let ratio = videoWidth / videoHeight;        
         ratio = +ratio.toFixed(2);
         const aspectRatio = (ratio === 2.34 ? "21by9" : "16by9");
 
-        // const { playing, muted, loop, videoStatus } = this.state;
-        const { playing, videoStatus } = this.state;
+        const { playing, muted, loop, videoStatus } = this.state;
         
         return (
             <>
@@ -57,17 +56,7 @@ class HeroVideo extends Component {
                     : ``}
                     <i aria-label="Loading video" className="hero-thruster fas fa-spinner fa-spin"></i>
                 </div>
-                {videoType === `youtube` && 
-                    <lite-youtube 
-                        posterquality="maxresdefault"
-                        videoid={videoID} />
-                    }
-                {videoType === `vimeo` && 
-                <lite-vimeo 
-                    posterquality="maxresdefault"
-                    videoid={videoID} />
-                }
-                {/* <div className={"embed-responsive embed-responsive-" + aspectRatio}>                
+                <div className={"embed-responsive embed-responsive-" + aspectRatio}>                
                     <ReactPlayer
                         ref={this.ref}
                         className="react-player"
@@ -79,7 +68,7 @@ class HeroVideo extends Component {
                         height="100%"
                         onStart={this.handleStart}
                     />
-                </div>       */}
+                </div>
             </>
         )
     }
