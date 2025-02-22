@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy'
 import PropTypes from 'prop-types';
 import { extractVideoType, extractVideoID } from 'utils/ug-utils';
 import 'styles/heroVideo.css';

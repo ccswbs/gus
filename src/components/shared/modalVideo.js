@@ -1,9 +1,8 @@
 import React, { useState } from "react"
-import ReactPlayer from "react-player"
+import ReactPlayer from 'react-player/lazy'
 import { graphql } from "gatsby"
 import { Modal, CloseButton } from "react-bootstrap"
 import "../../styles/modalVideo.css"
-
 
 function ModalVideo (props) {
   const modalId = `modal-${props.id}`;
