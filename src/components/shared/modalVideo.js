@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 import { Modal, CloseButton } from "react-bootstrap"
 import "../../styles/modalVideo.css"
 
+
 function ModalVideo (props) {
   const modalId = `modal-${props.id}`;
   const videoSrc = props.src;

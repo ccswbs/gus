@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import '@justinribeiro/lite-youtube';
-import '@slightlyoff/lite-vimeo';
 
 function Video (props) {
     let videoTitle = props.videoTitle;
