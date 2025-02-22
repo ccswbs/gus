@@ -37,12 +37,9 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
     />,
 
-    // YouTube options
+    // YouTube and Vimeo lite options
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/paulirish/lite-youtube-embed/src/lite-yt-embed.css" />,
     <script src="https://cdn.jsdelivr.net/gh/paulirish/lite-youtube-embed/src/lite-yt-embed.js"></script>,
-    // <script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"></script>,
-
-    // Vimeo option
     <script type="module" src="https://cdn.jsdelivr.net/npm/@slightlyoff/lite-vimeo@0.1.1/lite-vimeo.js"></script>,
   ]);
   setPostBodyComponents([
