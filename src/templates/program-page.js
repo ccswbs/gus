@@ -179,7 +179,7 @@ function renderCallToActions(data) {
 }
 
 const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, variants, widgets, sections, footerData, domains}) => {
-  const hasIntroContent = overview.length > 0 || variants.heading.length > 0;
+  const hasIntroContent = overview?.length > 0 || variants?.heading.length > 0;
   const hasHeroContent = heroData.images?.length > 0 || heroData.videos?.length > 0;
 
   return (
