@@ -22,9 +22,9 @@ function MediaText (props) {
     const mediaSize = props.data?.field_media_image_size;
     const mediaAlignment = props.data?.field_media_alignment ?? 'left';
 
-    const videoURL = props.data?.relationships.field_media_text_media?.field_media_oembed_video;
     const videoTitle = props.data?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
+    const videoURL = props.data?.relationships.field_media_text_media?.field_media_oembed_video;
     const videoHeight = props.data?.relationships.field_media_text_media?.field_video_height;
     const videoWidth = props.data?.relationships.field_media_text_media?.field_video_width;
     let videoType;
