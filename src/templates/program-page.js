@@ -182,6 +182,8 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
   const hasIntroContent = overview.length > 0 || variants.heading.length > 0;
   const hasHeroContent = heroData.images?.length > 0 || heroData.videos?.length > 0;
 
+  console.log(heroData)
+
   return (
     <Layout>
       <Helmet bodyAttributes={{ class: "program" }} />
@@ -200,7 +202,6 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
           </Suspense>
         ) : (
           <>
-            <Hero imgData={heroData.images} />
             {/**** Hero Widgets content ****/}
             {heroData.widgets && (
               <div className="container hero-widgets-container d-flex flex-column justify-content-center align-items-center">
@@ -209,6 +210,7 @@ const ProgramPage = ({nodeID, title, acronym, overview, seoData, heroData, varia
                 ))}
               </div>
             )}
+            <Hero imgData={heroData.images} />
           </>
         )}
         <div className="container ft-container">
