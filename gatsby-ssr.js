@@ -36,6 +36,10 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@uoguelph/uofg-styles/dist/index.css"
     />,
+
+    // YouTube and Vimeo lite options
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"></script>,
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@slightlyoff/lite-vimeo@0.1.1/lite-vimeo.js"></script>,
   ]);
   setPostBodyComponents([
     // FontAwesome kit

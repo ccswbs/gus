@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy'
 import PropTypes from 'prop-types';
-import { extractVideoID } from 'utils/ug-utils';
+import { extractVideoType, extractVideoID } from 'utils/ug-utils';
 import 'styles/heroVideo.css';
 
 class HeroVideo extends Component {
@@ -28,7 +28,7 @@ class HeroVideo extends Component {
         let videoTranscript = this.props.videoTranscript;
         let videoWidth = this.props.videoWidth;
         let videoHeight = this.props.videoHeight;
-        let videoType = (this.props.videoURL.includes("youtube") || this.props.videoURL.includes("youtu.be") ? `youtube` : `vimeo`);	
+        let videoType = extractVideoType(this.props.videoURL);
         let videoID = (videoType === `youtube` ? extractVideoID(this.props.videoURL) : this.props.videoURL.substring(18));
 
         let youtubeURL = "https://www.youtube.com/embed/";
@@ -68,7 +68,7 @@ class HeroVideo extends Component {
                         height="100%"
                         onStart={this.handleStart}
                     />
-                </div>      
+                </div>
             </>
         )
     }

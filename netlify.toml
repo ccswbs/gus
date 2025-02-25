@@ -22,6 +22,10 @@ remote_images = [
     output_path = "reports/accordions.html"
 
   [[plugins.inputs.audits]]
+    path = "choose-u-of-guelph/"
+    output_path = "reports/media-text.html"
+
+  [[plugins.inputs.audits]]
     path = "programs/bachelor-of-mathematics/"
     output_path = "reports/ba-math.html"
 

@@ -5,7 +5,7 @@ import { graphql } from 'gatsby';
 import { GatsbyImage } from "gatsby-plugin-image";
 import SectionButtons from 'components/shared/sectionButtons';
 import Video from 'components/shared/video';
-import { extractVideoID, slugify, ConditionalWrapper, ParseText } from 'utils/ug-utils';
+import { extractVideoID, extractVideoType, slugify, ConditionalWrapper, ParseText } from 'utils/ug-utils';
 
 function MediaText (props) {
     
@@ -21,14 +21,19 @@ function MediaText (props) {
     const imageAlt = props.data?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.data?.field_media_image_size;
     const mediaAlignment = props.data?.field_media_alignment ?? 'left';
-    
+
     const videoTitle = props.data?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
     const videoURL = props.data?.relationships.field_media_text_media?.field_media_oembed_video;
     const videoHeight = props.data?.relationships.field_media_text_media?.field_video_height;
     const videoWidth = props.data?.relationships.field_media_text_media?.field_video_width;
-    const videoType = (videoURL?.includes("youtube") || videoURL?.includes("youtu.be") ? `youtube` : `vimeo`);
-    const videoID = (videoType === `youtube` ? extractVideoID(videoURL) : videoURL?.substring(18));
+    let videoType;
+    let videoID;
+
+    if (videoURL) {
+        videoType = extractVideoType(videoURL);
+        videoID = (videoType === `youtube` ? extractVideoID(videoURL) : videoURL?.substring(18));
+    }
     
     let mediaCol = "col-xs-12";
     let textCol = "col-xs-12";
