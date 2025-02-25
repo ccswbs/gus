@@ -7,6 +7,7 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
     <link rel="preconnect" href="https://fonts.googleapis.com" key="https://fonts.googleapis.com" crossOrigin="anonymous" />,
     <link rel="preconnect" href="https://fonts.gstatic.com" key="https://fonts.gstatic.com" crossOrigin="anonymous" />,
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" key="https://cdn.jsdelivr.net" crossOrigin="anonymous" />,
 
     // Roboto and Roboto Condensed
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,100;1,400&display=swap" as="style" crossOrigin="anonymous" />,    
