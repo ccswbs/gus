@@ -12,7 +12,7 @@ const SectionText = styled.div`
 `
 const SectionTitle = styled.h3`
   font-size: 2.5rem;
-  color: #fff;
+  color: #fff !important;
   text-transform: uppercase;
 `
 const Testimonial = styled.div`
