@@ -119,13 +119,13 @@ html {
   color: white !important;
 }
 .bg-dark .btn-secondary {
-  color: var(--uog-grey-light-contrast) !important;
+  color: var(--uog-body-copy-on-light) !important;
   background: var(--uog-grey-light-bg) !important;
 }
 .bg-dark .btn-secondary:focus,
 .bg-dark .btn-secondary:hover {
-  color: var(--uog-grey-light-contrast) !important;
-  background: var(--uog-grey-light-focus) !important;
+  color: var(--uog-body-copy-on-light) !important;
+  background: var(--uog-grey-light-bg-focus) !important;
 }
 .bg-dark .btn-outline-secondary {
   color: var(--uog-grey-light-bg) !important;
@@ -133,7 +133,7 @@ html {
 }
 .bg-dark .btn-outline-secondary:focus,
 .bg-dark .btn-outline-secondary:hover {
-  color: var(--uog-grey-light-contrast) !important;
+  color: var(--uog-body-copy-on-light) !important;
   background: var(--uog-grey-light-bg) !important;
 }
 .bg-dark h2,
