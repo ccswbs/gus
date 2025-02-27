@@ -7,20 +7,21 @@ function Video (props) {
     let videoTranscript = props.videoTranscript;
     let videoType = props.videoType;
     let videoID = props.videoID;
-    let videoWidth = props.videoWidth;
-    let videoHeight = props.videoHeight;
-    let ratio = videoWidth / videoHeight;
-    ratio = +ratio.toFixed(2);
-    const aspectRatio = (ratio === 2.34 ? "21by9" : "16by9");
 
-    const youtubeURL = "https://www.youtube.com/embed/";
-    const vimeoURL = "https://player.vimeo.com/video/";
-    let videoSrc = (videoType === `youtube` ? youtubeURL + videoID : vimeoURL + videoID);
-
-    return (<>
-        <div className={"embed-responsive embed-responsive-" + aspectRatio}>
-            <iframe allowFullScreen src={videoSrc} title={videoTitle ? videoTitle : videoType + " video player"} />
-        </div>
+    return (
+      <>
+        {videoType === `youtube` && 
+          <lite-youtube 
+            posterquality="maxresdefault"
+            videotitle={videoTitle ? videoTitle : videoType + " video player"}
+            videoid={videoID} />
+        }
+        {videoType === `vimeo` && 
+          <lite-vimeo 
+            posterquality="maxresdefault"
+            videotitle={videoTitle ? videoTitle : videoType + " video player"}
+            videoid={videoID} />
+        }
         {videoTranscript && <a className="btn btn-primary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
     </>)
 }

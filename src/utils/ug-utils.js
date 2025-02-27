@@ -57,6 +57,10 @@ function divideIntoColumns(data, numColumns) {
   return dividedData;
 }
 
+function extractVideoType(url) {
+  return url?.includes("youtube") || url?.includes("youtu.be") ? `youtube` : `vimeo`;
+}
+
 // Source: https://www.labnol.org/code/19797-regex-youtube-id
 function extractVideoID(url) {
   let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#]*).*/;
@@ -185,6 +189,7 @@ export {
   ConditionalWrapper,
   divideIntoColumns,
   extractVideoID,
+  extractVideoType,
   fontAwesomeIconColour,
   getHeadingLevel,
   getNextHeadingLevel,
