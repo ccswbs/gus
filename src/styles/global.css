@@ -112,7 +112,7 @@ html {
   color: white !important;
 }
 .bg-dark .btn-secondary {
-  color: var(--uog-body-copy-on-light) !important;
+  color: var(--uog-body-copy) !important;
   background: var(--uog-grey-light-bg) !important;
 }
 .bg-dark .btn-secondary:focus,
@@ -126,7 +126,7 @@ html {
 }
 .bg-dark .btn-outline-secondary:focus,
 .bg-dark .btn-outline-secondary:hover {
-  color: var(--uog-body-copy-on-light) !important;
+  color: var(--uog-body-copy) !important;
   background: var(--uog-grey-light-bg) !important;
 }
 .bg-dark h2,
@@ -140,6 +140,9 @@ html {
 /* legacy colour */
 .uog-blue-muted {
   background: var(--uog-grey-light-bg);
+}
+.uog-blue-muted a {
+  color: var(--uog-body-copy-link-on-light);
 }
 i.green {
   color: var(--uog-green);
