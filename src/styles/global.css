@@ -117,7 +117,7 @@ html {
 }
 .bg-dark .btn-secondary:focus,
 .bg-dark .btn-secondary:hover {
-  color: var(--uog-body-copy-on-light) !important;
+  color: var(--uog-body-copy-bold) !important;
   background: var(--uog-grey-light-bg-focus) !important;
 }
 .bg-dark .btn-outline-secondary {
