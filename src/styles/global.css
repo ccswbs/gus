@@ -105,13 +105,6 @@ html {
 .bg-dark a:not(.btn) {
   color: var( --uog-body-copy-link-on-dark) !important;
 }
-.bg-dark a:not(.btn):focus,
-.bg-dark a:not(.btn):hover {
-  background: #edf2f5 !important;
-  color: black !important;
-  text-decoration-color: #edf2f5 !important;
-}
-
 .bg-dark .btn-outline-info {
   color: white !important;
 }
