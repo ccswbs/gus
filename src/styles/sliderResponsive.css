@@ -30,7 +30,7 @@
 
 .ug-slick-slider .ug-slick-slider-control-arrow {
     width: 5%;
-    color: var(--uog-yellow);
+    color: var(--uog-blue-on-light);
     font-size: 6rem;
     font-weight: 300;
     opacity: 1;
@@ -82,7 +82,7 @@
     display: inline-block;
     vertical-align: top;
     position: absolute;
-    color: var(--uog-yellow);
+    color: var(--uog-blue-on-light);
     top: 20%;
     left: 10%;
     width: 0.7em;
