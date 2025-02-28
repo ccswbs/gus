@@ -43,7 +43,7 @@
 .outer ul.inner {
   display: flex;
   flex-direction: column;
-  padding: 0;
+  padding: 0 0 0 2.5rem;
 }
 
 .outer ul.inner li a {
