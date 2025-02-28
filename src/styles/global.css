@@ -37,7 +37,7 @@ body,
 
 .full-width-container.bg-light {
   background-color: var(--uog-grey-light-bg) !important;
-  color: var(--uog-body-copy-on-light);
+  color: var(--uog-body-copy);
   padding: 2rem 0;
 }
 
@@ -225,6 +225,9 @@ i.green {
 
 /* Slate form styles (pulled from UofG-styles-dist) */
 /* @todo: clean up when time permits */
+.ug-slate {
+  font-size: 1.8rem;
+}
 
 @media (max-width: 768px) {
   .ug-slate .form_button_submit {
@@ -242,7 +245,7 @@ i.green {
 }
 
 .ug-slate label {
-  color: black;
+  color: var(--uog-body-copy);
 }
 
 .ug-slate input:not([type="checkbox"]):not([type="radio"]) {
