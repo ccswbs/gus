@@ -411,13 +411,3 @@ i.green {
 .page-container .site-content ul.list-unstyled li:before {
   all: unset;
 }
-
-/* Fix h3 margins messed up by spaghetti code in UofG-styles-dist.css */
-.row > h1,
-.row > h2,
-.row > h3,
-.row > h4,
-.row > h5,
-.row > h6 {
-    margin-top: 3rem !important;
-}
