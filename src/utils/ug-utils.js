@@ -36,8 +36,8 @@ const AnchorTag = ({ node, children }) => {
   return <a {...newAttribs}>{children}</a>;
 };
 
-const TableTag = ({node, children}) => {
-  return <table className="table table-striped table-bordered table-responsive">{children}</table>;
+const TableTag = ({children}) => {
+  return <div className="table-responsive"><table className="table table-striped table-bordered table-responsive">{children}</table></div>;
 }
 
 function removeStyleAttributes(node, children) {
@@ -156,7 +156,7 @@ const ParseText = ({ textContent }) => {
     {
       // Fix table rendering
       shouldProcessNode: (node) => node.name === "table",
-      processNode: (node, children) => <TableTag node={node} children={children} />,
+      processNode: (node, children) => <TableTag children={children} />,
     },
     {
       // Fix table rendering
