@@ -43,7 +43,10 @@ const TableTag = ({children}) => {
 function removeStyleAttributes(node, children) {
   let newAttribs = { ...node.attribs };
   delete newAttribs["style"];
-  return <node.name {...newAttribs}>{children}</node.name>;
+  if(children.length > 0){
+    return <node.name {...newAttribs}>{children}</node.name>;
+  }
+  return <node.name {...newAttribs} />;
 }
 
 function clamp(value, min, max) {
@@ -139,12 +142,12 @@ const ParseText = ({ textContent }) => {
       processNode: (node) => <Script>{node.children[0].data}</Script>,
     },
     {
-      // Do not render empty <p> tags
-      shouldProcessNode: (node) => node.name === "p" && node.children[0].data?.trim().length === 0,
+      // Do not render empty <p> elements
+      shouldProcessNode: (node) => node.name === "p" && node.children[0]?.data?.trim().length === 0,
       processNode: () => <></>,
     },
     {
-      // Do not render empty <p> tags
+      // Do not render style elements
       shouldProcessNode: (node) => node.name === "style",
       processNode: () => <></>,
     },
@@ -156,10 +159,10 @@ const ParseText = ({ textContent }) => {
     {
       // Fix table rendering
       shouldProcessNode: (node) => node.name === "table",
-      processNode: (node, children) => <TableTag children={children} />,
+      processNode: (children) => <TableTag children={children} />,
     },
     {
-      // Fix table rendering
+      // Remove class attributes from table elements
       shouldProcessNode: (node) => node.name === "thead" || node.name === "tr" || node.name === "th" || node.name === "td",
       processNode: (node, children) => <node.name>{children}</node.name>,
     },
