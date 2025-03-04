@@ -26,10 +26,28 @@ const AnchorTag = ({ node, children }) => {
     if (attr.startsWith("data-entity") || attr.startsWith("style")) {
       delete newAttribs[attr];
     }
+    //replace class with className
+    if(attr.startsWith("class")){
+      newAttribs["className"] = newAttribs[attr];
+      delete newAttribs[attr];
+    }
   }
 
   return <a {...newAttribs}>{children}</a>;
 };
+
+const TableTag = ({node, children}) => {
+  // let newAttribs = { ...node.attribs };
+  // newAttribs["className"] = "table table-striped";
+  // delete newAttribs.class;
+  return <table className="table table-striped">{children}</table>;
+}
+
+function removeStyleAttributes(node, children) {
+  let newAttribs = { ...node.attribs };
+  delete newAttribs["style"];
+  return <node.name {...newAttribs}>{children}</node.name>;
+}
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -124,9 +142,24 @@ const ParseText = ({ textContent }) => {
       processNode: (node) => <Script>{node.children[0].data}</Script>,
     },
     {
+      // Do not render empty <p> tags
+      shouldProcessNode: (node) => node.name === "p" && node.children[0].data?.trim().length === 0,
+      processNode: () => <></>,
+    },
+    {
       // Process anchor tags to prepend baseUrl and remove data-entity attributes
       shouldProcessNode: (node) => node.name === "a",
       processNode: (node, children) => <AnchorTag node={node} children={children} />,
+    },
+    {
+      // Fix table rendering
+      shouldProcessNode: (node) => node.name === "table",
+      processNode: (node, children) => <TableTag node={node} children={children} />,
+    },
+    {
+      // Remove style attributes
+      shouldProcessNode: (node) => node.attribs?.style,
+      processNode: (node, children) => removeStyleAttributes(node, children),
     },
     {
       // Process all other nodes with the default parser
