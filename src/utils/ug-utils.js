@@ -37,7 +37,7 @@ const AnchorTag = ({ node, children }) => {
 };
 
 const TableTag = ({children}) => {
-  return <div className="table-responsive"><table className="table table-striped table-bordered table-responsive">{children}</table></div>;
+  return <div className="table-responsive"><table className="table table-striped table-bordered">{children}</table></div>;
 }
 
 function removeStyleAttributes(node, children) {
@@ -164,7 +164,9 @@ const ParseText = ({ textContent }) => {
     {
       // Remove class attributes from table elements
       shouldProcessNode: (node) => node.name === "thead" || node.name === "tr" || node.name === "th" || node.name === "td",
-      processNode: (node, children) => <node.name>{children}</node.name>,
+      processNode: (node, children) => {
+        return <node.name>{children}</node.name>;
+      }
     },
     {
       // Remove style attributes
@@ -198,7 +200,6 @@ function renderWidget(componentName, shouldLazyLoad = false, fallback = null, wi
 }
 
 function setHeadingLevel(headingLevel) {
-  // console.log(headingLevel, "setHeadingLevel")
   const validHeadingLevels = ["h1", "h2", "h3", "h4", "h5", "h6"];
   const safeHeading = headingLevel ? headingLevel.toLowerCase() : "";
   const selectedHeading = validHeadingLevels.includes(safeHeading) ? safeHeading : "p";
