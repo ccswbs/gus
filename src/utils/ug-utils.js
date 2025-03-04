@@ -37,10 +37,7 @@ const AnchorTag = ({ node, children }) => {
 };
 
 const TableTag = ({node, children}) => {
-  // let newAttribs = { ...node.attribs };
-  // newAttribs["className"] = "table table-striped";
-  // delete newAttribs.class;
-  return <table className="table table-striped">{children}</table>;
+  return <table className="table table-striped table-bordered table-responsive">{children}</table>;
 }
 
 function removeStyleAttributes(node, children) {
@@ -147,6 +144,11 @@ const ParseText = ({ textContent }) => {
       processNode: () => <></>,
     },
     {
+      // Do not render empty <p> tags
+      shouldProcessNode: (node) => node.name === "style",
+      processNode: () => <></>,
+    },
+    {
       // Process anchor tags to prepend baseUrl and remove data-entity attributes
       shouldProcessNode: (node) => node.name === "a",
       processNode: (node, children) => <AnchorTag node={node} children={children} />,
@@ -155,6 +157,11 @@ const ParseText = ({ textContent }) => {
       // Fix table rendering
       shouldProcessNode: (node) => node.name === "table",
       processNode: (node, children) => <TableTag node={node} children={children} />,
+    },
+    {
+      // Fix table rendering
+      shouldProcessNode: (node) => node.name === "thead" || node.name === "tr" || node.name === "th" || node.name === "td",
+      processNode: (node, children) => <node.name>{children}</node.name>,
     },
     {
       // Remove style attributes
