@@ -36,7 +36,7 @@ const AnchorTag = ({ node, children }) => {
   return <a {...newAttribs}>{children}</a>;
 };
 
-const TableTag = ({children}) => {
+const TableTag = ({ node, children}) => {
   return <div className="table-responsive"><table className="table table-striped table-bordered">{children}</table></div>;
 }
 
@@ -159,14 +159,12 @@ const ParseText = ({ textContent }) => {
     {
       // Fix table rendering
       shouldProcessNode: (node) => node.name === "table",
-      processNode: (children) => <TableTag children={children} />,
+      processNode: (node, children) => <TableTag node={node} children={children} />,
     },
     {
       // Remove class attributes from table elements
       shouldProcessNode: (node) => node.name === "thead" || node.name === "tr" || node.name === "th" || node.name === "td",
-      processNode: (node, children) => {
-        return <node.name>{children}</node.name>;
-      }
+      processNode: (node, children) => <node.name>{children}</node.name>,
     },
     {
       // Remove style attributes
