@@ -37,7 +37,7 @@ const AnchorTag = ({ node, children }) => {
 };
 
 const TableTag = ({ node, children}) => {
-  return <div className="table-responsive"><table className="table table-striped table-bordered">{children}</table></div>;
+  return <div className="table-responsive mb-5"><table className="table table-striped table-bordered">{children}</table></div>;
 }
 
 function removeStyleAttributes(node, children) {
