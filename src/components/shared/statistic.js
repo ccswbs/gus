@@ -11,7 +11,7 @@ const StatisticGrid = styled.dl`
   }
 `;
 const StatCard = styled.div`
-  background: var(--uog-grey-light-bg);
+  background: var(--uog-color-grey-light-bg);
   padding: 1.25rem;
   min-width: 25%;
   word-wrap: break-word;
@@ -44,7 +44,7 @@ const StatType = styled.dd`
   font-size: 1.8rem;
   line-height: 1.58;
   & > a {
-    color: var(--uog-blue-on-light) !important;
+    color: var(--uog-color-blue-on-light) !important;
   }
 
   & > a:hover,

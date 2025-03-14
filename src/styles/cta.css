@@ -1,7 +1,7 @@
 div.cta { padding: 25px; width: 50% }
 
 div.cta a.btn.btn-uogRed {
-    background: var(--uog-red) !important;
+    background: var(--uog-color-red) !important;
     color: #fff !important;
     text-align: left;
     text-transform: none;
@@ -13,7 +13,7 @@ div.cta a.btn.btn-uogRed {
 
 div.cta a.btn.btn-uogRed:hover,
 div.cta a.btn.btn-uogRed:focus {
-    background: var(--uog-red-focus) !important;
+    background: var(--uog-color-red-focus) !important;
     color: #fff !important;
     outline: none !important;
     border-bottom: 0rem !important;
@@ -41,9 +41,9 @@ div.lead h2 { margin-bottom: 35px;}
 
 div.lead p {font-weight: bold; color: white; margin-top: 45px; opacity: 0.9; font-size: 1.5em; padding-left: 40px; padding-right: 40px;}
 
-div.lead p:not(.author)::before { content: open-quote; color: var(--uog-yellow); font-weight: bold; margin-left: -40px; margin-top: -30px; position: absolute; font-size: 4em;}
+div.lead p:not(.author)::before { content: open-quote; color: var(--uog-color-yellow); font-weight: bold; margin-left: -40px; margin-top: -30px; position: absolute; font-size: 4em;}
 
-div.lead p:not(.author)::after { content: close-quote; color: var(--uog-yellow); font-weight: bold; font-size: 4em; margin-top: -20px; display: block; float: right; margin-right: -25px;}
+div.lead p:not(.author)::after { content: close-quote; color: var(--uog-color-yellow); font-weight: bold; font-size: 4em; margin-top: -20px; display: block; float: right; margin-right: -25px;}
 
 div.lead p.author { margin-left: 4rem; padding-left: 10px;}
 

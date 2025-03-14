@@ -15,7 +15,7 @@ body.program .uog-card {
 }
 
 body.basic-page .uog-card {
-	background: var(--uog-grey-light-bg);
+	background: var(--uog-color-grey-light-bg);
 	flex: 1 0 0%;
     padding: 1.25rem;
 	margin: 1.5rem;
@@ -54,53 +54,53 @@ body.basic-page .uog-card dd {
 }
 
 div.uog-card span.fa-icon-colour {
-	color: var(--uog-red);
+	color: var(--uog-color-red);
 	padding-right: 1.5rem;
 }
 div.uog-card:nth-of-type(9n+2) span.fa-icon-colour,
 div.uog-card:nth-of-type(9n+4) span.fa-icon-colour,
 div.uog-card:nth-of-type(9n+9) span.fa-icon-colour {
-	color: var(--uog-yellow);	
+	color: var(--uog-color-yellow);	
 	padding-right: 1.5rem;
 }
 
 div.uog-card:nth-of-type(9n+3) span.fa-icon-colour,
 div.uog-card:nth-of-type(9n+5) span.fa-icon-colour,
 div.uog-card:nth-of-type(9n+7) span.fa-icon-colour {
-	color: var(--uog-blue);
+	color: var(--uog-color-blue);
 	padding-right: 1.5rem;
 }
 
 div.uog-card path {
-	fill: var(--uog-red);
+	fill: var(--uog-color-red);
 }
 
 div.uog-card:nth-of-type(9n+2) path,
 div.uog-card:nth-of-type(9n+4) path,
 div.uog-card:nth-of-type(9n+9) path {
-	fill: var(--uog-yellow);
+	fill: var(--uog-color-yellow);
 }
 
 div.uog-card:nth-of-type(9n+3) path,
 div.uog-card:nth-of-type(9n+5) path,
 div.uog-card:nth-of-type(9n+7) path {
-	fill: var(--uog-blue);
+	fill: var(--uog-color-blue);
 }
 
 body.basic-page div.uog-card {
-	border-left: 1rem solid var(--uog-red);
+	border-left: 1rem solid var(--uog-color-red);
 }
 
 body.basic-page div.uog-card:nth-of-type(9n+2),
 body.basic-page div.uog-card:nth-of-type(9n+4),
 body.basic-page div.uog-card:nth-of-type(9n+9) {
-	border-left: 1rem solid var(--uog-yellow);
+	border-left: 1rem solid var(--uog-color-yellow);
 }
 
 body.basic-page div.uog-card:nth-of-type(9n+3),
 body.basic-page div.uog-card:nth-of-type(9n+5),
 body.basic-page div.uog-card:nth-of-type(9n+7) {
-	border-left: 1rem solid var(--uog-blue);
+	border-left: 1rem solid var(--uog-color-blue);
 }
 
 @media only screen and (max-width: 768px) {

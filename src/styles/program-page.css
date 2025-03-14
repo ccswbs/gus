@@ -3,7 +3,7 @@ body.program h4, body.program h3 {
 }
 
 body.program li.list-group-item.feature a {
-    background: var(--uog-red);
+    background: var(--uog-color-red);
     font-weight: 700;
     color: #fff !important;
 }
@@ -20,7 +20,7 @@ body.program .lead {
 }
 
 body.program a.btn.btn-uogRed {
-    background: var(--uog-red) !important;
+    background: var(--uog-color-red) !important;
     text-align: left;
     text-transform: none;
     font-size: 1.5rem;
@@ -31,7 +31,7 @@ body.program a.btn.btn-uogRed {
 
 body.program a.btn.btn-uogRed:hover,
 body.program a.btn.btn-uogRed:focus {
-    background: var(--uog-red-focus) !important;
+    background: var(--uog-color-red-focus) !important;
     color: #fff !important;
     outline: none !important;
     border-bottom: 0rem !important;

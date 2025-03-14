@@ -12,13 +12,13 @@ const Gradient = styled.div`
 `
 const gradientColourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
-  {background: "var(--uog-blue)", colour: "#FFFFFF"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
+  {background: "var(--uog-color-red)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-yellow)", colour: "#000000"},
+  {background: "var(--uog-color-blue)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-yellow)", colour: "#000000"},
   {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-blue)", colour: "#FFFFFF"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-blue)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-red)", colour: "#FFFFFF"},
 ];
 
 const GradientStatistic = ({stats}) => {
@@ -69,8 +69,8 @@ const GradientStatistic = ({stats}) => {
 
 const solidColourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
+  {background: "var(--uog-color-red)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-yellow)", colour: "#000000"},
 ];
 
 const SolidColourStatistic = ({stats, numColumns}) => {
@@ -121,9 +121,9 @@ const NoBorderStatistic = ({stats, numColumns}) => {
 
 const borderColourOptions = [
   {border: "var(--black)"},
-  {border: "var(--uog-red)"},
-  {border: "var(--uog-yellow)"},
-  {border: "var(--uog-blue)"},
+  {border: "var(--uog-color-red)"},
+  {border: "var(--uog-color-yellow)"},
+  {border: "var(--uog-color-blue)"},
   {border: "var(--black)"},
 ]
 

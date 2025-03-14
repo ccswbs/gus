@@ -85,12 +85,12 @@ function extractVideoID(url) {
 function fontAwesomeIconColour(colourChoice) {
   switch (colourChoice) {
     case "Yellow":
-      return "uog-yellow";
+      return "uog-color-yellow";
     case "Red":
-      return "uog-red";
-    // legacy colour
+      return "uog-color-red";
+    // legacy colour option
     case "Darker Red":
-      return "uog-red";
+      return "uog-color-red";
     default:
       return "";
   }
