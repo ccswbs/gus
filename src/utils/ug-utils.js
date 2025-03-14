@@ -40,6 +40,15 @@ const TableTag = ({ node, children}) => {
   return <div className="table-responsive mb-5"><table className="table table-striped table-bordered">{children}</table></div>;
 }
 
+function removeStyleAttributes(node, children) {
+  let newAttribs = { ...node.attribs };
+  delete newAttribs["style"];
+  if(children.length > 0){
+    return <node.name {...newAttribs}>{children}</node.name>;
+  }
+  return <node.name {...newAttribs} />;
+}
+
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
@@ -156,6 +165,11 @@ const ParseText = ({ textContent }) => {
       // Remove class attributes from table elements
       shouldProcessNode: (node) => node.name === "thead" || node.name === "tr" || node.name === "th" || node.name === "td",
       processNode: (node, children) => <node.name>{children}</node.name>,
+    },
+    {
+      // Remove style attributes
+      shouldProcessNode: (node) => node.attribs?.style && node.name !== "div" && node.name !== "iframe",
+      processNode: (node, children) => removeStyleAttributes(node, children),
     },
     {
       // Process all other nodes with the default parser
