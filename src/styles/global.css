@@ -118,7 +118,7 @@ html {
 .bg-dark .btn-secondary:focus,
 .bg-dark .btn-secondary:hover {
   color: var(--uog-color-body-copy-bold) !important;
-  background: var(--uog-color-grey-light-bg-focus) !important;
+  background: var(--uog-color-grey-light-focus) !important;
 }
 .bg-dark .btn-outline-secondary {
   color: var(--uog-color-grey-light-bg) !important;
