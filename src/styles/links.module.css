@@ -6,7 +6,7 @@
 
 .outer div.inner .link {
   display: flex !important;
-  background-color: #e9f0f8;
+  background-color: var(--uog-color-grey-light-bg);
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -43,9 +43,7 @@
 .outer ul.inner {
   display: flex;
   flex-direction: column;
-  list-style-type: none;
-  padding: 0;
-  margin: 0 0 0 1.2em;
+  padding: 0 0 0 2.5rem;
 }
 
 .outer ul.inner li a {

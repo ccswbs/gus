@@ -5,7 +5,7 @@ content:
     body_html: |
       <p>Affordable, convenient, and <a href="https://www.macleans.ca/education/canadas-best-universities-by-student-satisfaction-rankings-2022/">ranked #1 in Housing</a>! Visit the <a href="https://housing.uoguelph.ca/">Student Housing Services</a> today!</p>
     icon: fa-solid fa-house-building
-    icon_color: "#69A3B9"
+    icon_color: "#69a3b9"
   - title: Explore The Arboretum
     body_html: |
       <p>Get outside! Recharge and go for a nature walk between classes. <a href="https://arboretum.uoguelph.ca/">Explore The Arboretum</a>.</p>
@@ -20,9 +20,9 @@ content:
     body_html: |
       <p>Your unique interests require unique communities – find them at U of G. <a href="https://gryphlife.uoguelph.ca/">Explore GryphLife</a>.</p>
     icon: fa-solid fa-users
-    icon_color: "#FFC72A"
+    icon_color: "#ffc429"
   - title: Experience Student Life
     body_html: |
       <p>Explore the unique features at U of G with our <a href="https://www.uoguelph.ca/maps/">interactive map</a>.</p>
     icon: fa-solid fa-users
-    icon_color: "#C20430"
+    icon_color: "#e51937"

@@ -5,7 +5,7 @@ import { Container, Row, Col } from "react-bootstrap"
 import styled from "styled-components"
 
 const QuoteMark = styled.i`
-    color: var(--uog-blue);
+    color: var(--uog-color-blue);
 `
 const QuoteText = styled.p`
     color: #000;

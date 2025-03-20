@@ -7,7 +7,7 @@ const Author = styled.p`
     }
 `
 const QuoteMark = styled.i`
-  color: var(--uog-blue);
+  color: var(--uog-color-yellow);
 `
 
 function Quote (props) {

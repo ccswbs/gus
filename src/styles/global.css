@@ -36,14 +36,14 @@ body,
 }
 
 .full-width-container.bg-light {
-  background-color: #f5f5f5 !important;
-  color: #555;
+  background-color: var(--uog-color-grey-light-bg) !important;
+  color: var(--uog-color-body-copy);
   padding: 2rem 0;
 }
 
 .full-width-container.bg-dark {
-  background-color: #333 !important;
-  color: #aaa !important;
+  background-color: var(--uog-color-grey-dark-bg) !important;
+  color: var(--uog-color-body-copy-on-dark) !important;
   padding: 2rem 0;
 }
 
@@ -60,7 +60,7 @@ body,
 
 /* h1 title within page body */
 #main-column h1 {
-  color: black;
+  color: var(--uog-color-black);
 }
 
 /* Increase spacing above global footer by 60 px */
@@ -103,52 +103,40 @@ html {
 /* Custom card styles */
 
 .bg-dark a:not(.btn) {
-  color: var(--uog-blue) !important;
+  color: var( --uog-color-body-copy-link-on-dark) !important;
 }
-.bg-dark a:not(.btn):focus,
-.bg-dark a:not(.btn):hover {
-  background: #edf2f5 !important;
-  color: black !important;
-  text-decoration-color: #edf2f5 !important;
-}
-
 .bg-dark .btn-outline-info {
   color: white !important;
 }
 .bg-dark .btn-outline-primary {
   color: white !important;
 }
-.bg-dark .btn-secondary {
-  color: black !important;
-  background: var(--off-white) !important;
-}
-.bg-dark .btn-secondary:focus,
-.bg-dark .btn-secondary:hover {
-  color: black !important;
-  background: var(--light-grey) !important;
-}
 .bg-dark .btn-outline-secondary {
-  color: white !important;
-  border-color: white !important;
+  color: var(--uog-color-grey-light-bg) !important;
+  border-color: var(--uog-color-grey-light-bg) !important;
 }
 .bg-dark .btn-outline-secondary:focus,
 .bg-dark .btn-outline-secondary:hover {
-  color: black !important;
-  background: var(--off-white) !important;
+  color: var(--uog-color-body-copy) !important;
+  background: var(--uog-color-grey-light-bg) !important;
 }
 .bg-dark h2,
 .bg-dark h3,
 .bg-dark h4 {
-  color: var(--off-white) !important;
+  color: var(--uog-color-body-copy-on-dark) !important;
 }
 .uog-blue {
-  color: var(--uog-blue);
+  color: var(--uog-color-blue);
 }
+/* legacy colour */
 .uog-blue-muted {
-  background: #f5f7fa;
+  background: var(--uog-color-grey-light-bg);
+}
+.uog-blue-muted a {
+  color: var(--uog-color-body-copy-link-on-light);
 }
 i.green {
-  color: #4cae3e;
+  color: var(--uog-color-green);
 }
 
 .uog-tertiary-color1 {
@@ -171,30 +159,30 @@ i.green {
 } /* Mountain Meadow (green) */
 
 .uog-border-red {
-  border-left: 1rem solid var(--uog-red);
+  border-left: 1rem solid var(--uog-color-red);
 }
 .uog-border-yellow {
-  border-left: 1rem solid var(--uog-yellow);
+  border-left: 1rem solid var(--uog-color-yellow);
 }
 .uog-border-black {
-  border-left: 1rem solid var(--black);
+  border-left: 1rem solid var(--uog-color-black);
 }
 .uog-border-blue {
-  border-left: 1rem solid var(--uog-blue);
+  border-left: 1rem solid var(--uog-color-blue);
 }
 
 .card .uog-card-border {
-  border-left: 1rem solid var(--uog-red);
+  border-left: 1rem solid var(--uog-color-red);
 }
 .card:nth-of-type(9n + 2) .uog-card-border,
 .card:nth-of-type(9n + 4) .uog-card-border,
 .card:nth-of-type(9n + 9) .uog-card-border {
-  border-left: 1rem solid var(--uog-yellow);
+  border-left: 1rem solid var(--uog-color-yellow);
 }
 .card:nth-of-type(9n + 3) .uog-card-border,
 .card:nth-of-type(9n + 5) .uog-card-border,
 .card:nth-of-type(9n + 7) .uog-card-border {
-  border-left: 1rem solid var(--uog-blue);
+  border-left: 1rem solid var(--uog-color-blue);
 }
 
 /* social media icons */
@@ -224,6 +212,9 @@ i.green {
 
 /* Slate form styles (pulled from UofG-styles-dist) */
 /* @todo: clean up when time permits */
+.ug-slate {
+  font-size: 1.8rem;
+}
 
 @media (max-width: 768px) {
   .ug-slate .form_button_submit {
@@ -241,7 +232,7 @@ i.green {
 }
 
 .ug-slate label {
-  color: black;
+  color: var(--uog-color-body-copy);
 }
 
 .ug-slate input:not([type="checkbox"]):not([type="radio"]) {
@@ -285,8 +276,8 @@ i.green {
 
 .ug-slate input[type="checkbox"]:checked,
 .ug-slate input[type="radio"]:checked {
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: var(--uog-color-blue);
+  border-color: var(--uog-color-blue);
 }
 
 .ug-slate input[type="checkbox"]:checked {
@@ -365,9 +356,9 @@ i.green {
 }
 
 .ug-slate .form_button_submit {
-  background-color: #c20430 !important;
+  background-color: var(--uog-color-red) !important;
   border: 2px solid transparent;
-  border-color: #c20430 !important;
+  border-color: var(--uog-color-red) !important;
   border-radius: 0;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
@@ -388,8 +379,8 @@ i.green {
 .ug-slate .form_button:active,
 .ug-slate .form_button_submit:hover,
 .ug-slate .form_button_submit:focus {
-  background-color: #900324 !important;
-  border-color: #900324 !important;
+  background-color:var(--uog-color-red-focus) !important;
+  border-color: var(--uog-color-red-focus) !important;
   color: #fff !important;
 }
 
@@ -410,14 +401,4 @@ i.green {
 .main-container .site-content ul.list-unstyled li:before,
 .page-container .site-content ul.list-unstyled li:before {
   all: unset;
-}
-
-/* Fix h3 margins messed up by spaghetti code in UofG-styles-dist.css */
-.row > h1,
-.row > h2,
-.row > h3,
-.row > h4,
-.row > h5,
-.row > h6 {
-    margin-top: 3rem !important;
 }

@@ -9,14 +9,14 @@
 
 .event-list .card:nth-of-type(4n+1) .event-day,
 .event-list .card:nth-of-type(4n+4) .event-day {
-	border-color: var(--uog-red) !important;
+	border-color: var(--uog-color-red) !important;
 }
 
 .event-list .card:nth-of-type(4n+2) .event-day {
-	border-color:  var(--uog-yellow) !important;
+	border-color:  var(--uog-color-yellow) !important;
 }
 .event-list .card:nth-of-type(4n+3) .event-day {
-	border-color: var(--uog-blue) !important;
+	border-color: var(--uog-color-blue) !important;
 }
 .event-list {
 	padding-left: 0 !important;

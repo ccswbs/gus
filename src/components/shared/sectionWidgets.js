@@ -13,7 +13,7 @@ import StatisticWidget from "components/shared/statisticWidget";
 const templates = {
   'primary-100': { primary: 'row', secondary: '' },
   'primary-50-secondary-50': { primary: 'col-md-6 mb-5 mb-md-0', secondary: 'col-md-6'},
-  'primary-75-secondary-25': { primary: 'col-md-9 mb-5 mb-md-0', secondary: 'col-md-3'},
+  'primary-75-secondary-25': { primary: 'col-md-9 mb-5 mb-md-0', secondary: 'col-md-3 section-right'},
 }
 
 // Check if section only contains media and text

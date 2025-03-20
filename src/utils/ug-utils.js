@@ -26,10 +26,28 @@ const AnchorTag = ({ node, children }) => {
     if (attr.startsWith("data-entity") || attr.startsWith("style")) {
       delete newAttribs[attr];
     }
+    //replace class with className
+    if(attr.startsWith("class")){
+      newAttribs["className"] = newAttribs[attr];
+      delete newAttribs[attr];
+    }
   }
 
   return <a {...newAttribs}>{children}</a>;
 };
+
+const TableTag = ({ node, children}) => {
+  return <div className="table-responsive mb-5"><table className="table table-striped table-bordered">{children}</table></div>;
+}
+
+function removeStyleAttributes(node, children) {
+  let newAttribs = { ...node.attribs };
+  delete newAttribs["style"];
+  if(children.length > 0){
+    return <node.name {...newAttribs}>{children}</node.name>;
+  }
+  return <node.name {...newAttribs} />;
+}
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -76,11 +94,12 @@ function extractVideoID(url) {
 function fontAwesomeIconColour(colourChoice) {
   switch (colourChoice) {
     case "Yellow":
-      return "uog-yellow";
+      return "uog-color-yellow";
     case "Red":
-      return "uog-red";
+      return "uog-color-red";
+    // legacy colour option
     case "Darker Red":
-      return "uog-red-darker";
+      return "uog-color-red";
     default:
       return "";
   }
@@ -123,9 +142,34 @@ const ParseText = ({ textContent }) => {
       processNode: (node) => <Script>{node.children[0].data}</Script>,
     },
     {
+      // Do not render empty <p> elements
+      shouldProcessNode: (node) => node.name === "p" && node.children[0]?.data?.trim().length === 0,
+      processNode: () => <></>,
+    },
+    {
+      // Do not render style elements
+      shouldProcessNode: (node) => node.name === "style",
+      processNode: () => <></>,
+    },
+    {
       // Process anchor tags to prepend baseUrl and remove data-entity attributes
       shouldProcessNode: (node) => node.name === "a",
       processNode: (node, children) => <AnchorTag node={node} children={children} />,
+    },
+    {
+      // Fix table rendering
+      shouldProcessNode: (node) => node.name === "table",
+      processNode: (node, children) => <TableTag node={node} children={children} />,
+    },
+    {
+      // Remove class attributes from table elements
+      shouldProcessNode: (node) => node.name === "thead" || node.name === "tr" || node.name === "th" || node.name === "td",
+      processNode: (node, children) => <node.name>{children}</node.name>,
+    },
+    {
+      // Remove style attributes
+      shouldProcessNode: (node) => node.attribs?.style && node.name !== "div" && node.name !== "iframe",
+      processNode: (node, children) => removeStyleAttributes(node, children),
     },
     {
       // Process all other nodes with the default parser
@@ -154,7 +198,6 @@ function renderWidget(componentName, shouldLazyLoad = false, fallback = null, wi
 }
 
 function setHeadingLevel(headingLevel) {
-  // console.log(headingLevel, "setHeadingLevel")
   const validHeadingLevels = ["h1", "h2", "h3", "h4", "h5", "h6"];
   const safeHeading = headingLevel ? headingLevel.toLowerCase() : "";
   const selectedHeading = validHeadingLevels.includes(safeHeading) ? safeHeading : "p";

@@ -12,13 +12,13 @@ const Gradient = styled.div`
 `
 const gradientColourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
-  {background: "var(--uog-blue)", colour: "#000000"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
+  {background: "var(--uog-color-red)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-yellow)", colour: "#000000"},
+  {background: "var(--uog-color-blue)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-yellow)", colour: "#000000"},
   {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-blue)", colour: "#000000"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-blue)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-red)", colour: "#FFFFFF"},
 ];
 
 const GradientStatistic = ({stats}) => {
@@ -26,7 +26,7 @@ const GradientStatistic = ({stats}) => {
 
   // default is displaying 3 colours in a row
   let rowClasses = "row-cols-md-3";
-  let gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#ffc72a 60%,#ffc72a 100%)";
+  let gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#ffc429 60%,#ffc429 100%)";
 
   if (numStats === 1){
     // one colour
@@ -35,11 +35,11 @@ const GradientStatistic = ({stats}) => {
   } else if (numStats === 2) {
     // two colours
     rowClasses = "row-cols-sm-2";
-    gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#c20430 60%,#c20430 100%)";
+    gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#e51937 60%,#e51937 100%)";
   } else if (numStats % 4 === 0) {
     // four colour
     rowClasses = "row-cols-sm-2 row-cols-lg-4";
-    gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#69A3B9 60%,#69A3B9 100%)";
+    gradientStyle = "linear-gradient(to right,#000 0%,#000 60%,#187bb4 60%,#187bb4 100%)";
   }
 
   return (
@@ -69,8 +69,8 @@ const GradientStatistic = ({stats}) => {
 
 const solidColourOptions = [
   {background: "var(--black)", colour: "#FFFFFF"},
-  {background: "var(--uog-red)", colour: "#FFFFFF"},
-  {background: "var(--uog-yellow)", colour: "#000000"},
+  {background: "var(--uog-color-red)", colour: "#FFFFFF"},
+  {background: "var(--uog-color-yellow)", colour: "#000000"},
 ];
 
 const SolidColourStatistic = ({stats, numColumns}) => {
@@ -121,9 +121,9 @@ const NoBorderStatistic = ({stats, numColumns}) => {
 
 const borderColourOptions = [
   {border: "var(--black)"},
-  {border: "var(--uog-red)"},
-  {border: "var(--uog-yellow)"},
-  {border: "var(--uog-blue)"},
+  {border: "var(--uog-color-red)"},
+  {border: "var(--uog-color-yellow)"},
+  {border: "var(--uog-color-blue)"},
   {border: "var(--black)"},
 ]
 

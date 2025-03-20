@@ -1,6 +1,6 @@
 #content #main-column .container.page-container .nav-tabs-container ul.nav-tabs {
   display: flex;
-  border-bottom: 0.5rem solid #ffc72a !important;
+  border-bottom: 0.5rem solid var(--uog-color-yellow) !important;
   padding: 0 !important;
   gap: 0.5rem;
 }
@@ -31,8 +31,8 @@
 #content #main-column .container.page-container .nav-tabs-container .nav-tabs .nav-link.active {
   color: #000;
   font-weight: 700;
-  background-color: #ffc72a;
-  border-bottom: 0.5rem solid #ffc72a !important;
+  background-color: var(--uog-color-yellow);
+  border-bottom: 0.5rem solid var(--uog-color-yellow) !important;
 }
 
 #content #main-column .container.page-container .nav-tabs-container .tab-content .tab-pane {

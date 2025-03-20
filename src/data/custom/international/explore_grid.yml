@@ -15,12 +15,12 @@ content:
     body_html: |
       <p>Explore the unique features at University of Guelph with our <a href="https://www.uoguelph.ca/maps/interactive-map">interactive campus map</a>.</p>
     icon: fa-solid fa-map-location-dot
-    icon_color: "#C20430"
+    icon_color: "#e51937"
   - title: Experience Student Life
     body_html: |
       <p>Student clubs that represent the diversity of our campus community, representating our global make-up. <a href="https://gryphlife.uoguelph.ca/">Explore GryphLife</a>.</p>
     icon: fa-solid fa-users
-    icon_color: "#FFC72A"
+    icon_color: "#ffc429"
   - title: The Athletics Centre
     body_html: |
       <p>Want to join a sports team? Learn how to dance? Shoot hoops between classes? You can, in our new, state of the art <a href="https://fitandrec.gryphons.ca/">Athletics Centre</a>.</p>
