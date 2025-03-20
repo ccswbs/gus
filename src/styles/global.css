@@ -111,15 +111,6 @@ html {
 .bg-dark .btn-outline-primary {
   color: white !important;
 }
-.bg-dark .btn-secondary {
-  color: var(--uog-color-body-copy) !important;
-  background: var(--uog-color-grey-light-bg) !important;
-}
-.bg-dark .btn-secondary:focus,
-.bg-dark .btn-secondary:hover {
-  color: var(--uog-color-body-copy-bold) !important;
-  background: var(--uog-color-grey-light-focus) !important;
-}
 .bg-dark .btn-outline-secondary {
   color: var(--uog-color-grey-light-bg) !important;
   border-color: var(--uog-color-grey-light-bg) !important;
