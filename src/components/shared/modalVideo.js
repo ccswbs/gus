@@ -36,7 +36,7 @@ function ModalVideo (props) {
                 </div>                
             </Modal.Body>
             <Modal.Footer className="bg-dark border-top-0">
-                {videoTranscript && <a className="btn btn-primary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
+                {videoTranscript && <a className="btn btn-secondary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
             </Modal.Footer>
         </Modal>
     </div>
