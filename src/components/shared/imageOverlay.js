@@ -30,16 +30,16 @@ const TextShadow = styled.div`
 const YellowQuotes = styled.div`
   i.fa-quote-left,
   i.fa-quote-right {
-    color: var(--uog-yellow);
+    color: var(--uog-color-yellow);
   }
 `
 const RedQuotes = styled.div`
   i.fa-quote-left,
   i.fa-quote-right {
-    color: var(--uog-red);
+    color: var(--uog-color-red);
   }
   .author {
-    border-left-color: var(--uog-red)
+    border-left-color: var(--uog-color-red)
   }
 `
 const DarkText = styled.div`

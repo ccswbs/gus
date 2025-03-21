@@ -31,20 +31,20 @@
 #program-list .col:nth-of-type(12n+4) .card,
 #program-list .col:nth-of-type(12n+7) .card,
 #program-list .col:nth-of-type(12n+10) .card {
-	border-left: 1rem solid var(--uog-red);
+	border-left: 1rem solid var(--uog-color-red);
 }
 
 #program-list .col:nth-of-type(12n+2) .card,
 #program-list .col:nth-of-type(12n+5) .card,
 #program-list .col:nth-of-type(12n+8) .card,
 #program-list .col:nth-of-type(12n+11) .card {
-	border-left: 1rem solid var(--uog-yellow);
+	border-left: 1rem solid var(--uog-color-yellow);
 }
 #program-list .col:nth-of-type(12n+3) .card,
 #program-list .col:nth-of-type(12n+6) .card,
 #program-list .col:nth-of-type(12n+9) .card,
 #program-list .col:nth-of-type(12n+12) .card {
-	border-left: 1rem solid var(--uog-blue);
+	border-left: 1rem solid var(--uog-color-blue);
 }
   
 

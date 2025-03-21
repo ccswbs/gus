@@ -12,7 +12,7 @@
 
 .modal-video .play i {
   font-size: 10rem;
-  color: var(--uog-black);
+  color: var(--uog-color-black);
   line-height: 10rem;
   height: 10rem;
 }
@@ -24,7 +24,7 @@
 .modal-video .play:focus,
 .modal-video .play:hover {
   cursor: pointer;
-  color: var(--uog-red);
+  color: var(--uog-color-red);
   opacity: 1;
   outline: none;
 }

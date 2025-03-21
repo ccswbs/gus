@@ -46,7 +46,7 @@ const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, 
           { /**** No banner ****/}  
           { !hasHeroContent && 
               <div className="container page-container">
-                <div className="row site-content">
+                <div className="row site-content py-0">
                     <div className="content-area">
                         <h1>{pageTitle}</h1>
                     </div>

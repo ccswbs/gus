@@ -22,7 +22,7 @@ function Video (props) {
             videotitle={videoTitle ? videoTitle : videoType + " video player"}
             videoid={videoID} />
         }
-        {videoTranscript && <a className="btn btn-primary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
+        {videoTranscript && <a className="btn btn-secondary w-100" href={videoTranscript}>Download transcript<span className="visually-hidden"> for {videoTitle + " video"}</span></a>}
     </>)
 }
 Video.propTypes = {

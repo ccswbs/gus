@@ -48,7 +48,7 @@ function MediaText (props) {
     
     switch(mediaBgColor) {
         case "Light Blue":
-            textColBg = classNames('uog-blue-muted');
+            textColBg = classNames('bg-light');
             headingColor = classNames('text-dark');            
         break;
         case "Dark Gray":
@@ -138,7 +138,7 @@ function MediaText (props) {
         wrapperCol = "col-xs-12 border-0 card mb-4";        
     // Region is null, widget not in section 
     } else {
-        wrapperCol = classNames('row mt-5', textColBg);
+        wrapperCol = classNames('row my-5', textColBg);
         if (imageURL) {
             if (mediaDescription || mediaButtons) {
                 switch(mediaSize) {

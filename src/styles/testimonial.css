@@ -23,7 +23,7 @@
         font-size: 2rem;
         line-height: 3rem;
         text-align: left;
-        color: #555;
+        color: var(--grey);
         margin-top: 0;
         margin-left: 0;
         margin-bottom: 2rem;
@@ -51,5 +51,5 @@
     }
 
     .ug-testimonial .testimonial-wrapper p.testimonial-tagline span.testimonial-person-desc {
-        color: #C20430;
+        color: var(--uog-color-body-copy);
     }
