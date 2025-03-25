@@ -40,6 +40,13 @@ const TableTag = ({ node, children}) => {
   return <div className="table-responsive mb-5"><table className="table table-striped table-bordered">{children}</table></div>;
 }
 
+function removeTableAttributes(node, children) {
+  let newAttribs = { ...node.attribs };
+  delete newAttribs["class"];
+  delete newAttribs["style"];
+  return <node.name {...newAttribs}>{children}</node.name>
+}
+
 function removeStyleAttributes(node, children) {
   let newAttribs = { ...node.attribs };
   delete newAttribs["style"];
@@ -164,7 +171,7 @@ const ParseText = ({ textContent }) => {
     {
       // Remove class attributes from table elements
       shouldProcessNode: (node) => node.name === "thead" || node.name === "tr" || node.name === "th" || node.name === "td",
-      processNode: (node, children) => <node.name>{children}</node.name>,
+      processNode: (node, children) => removeTableAttributes(node, children),
     },
     {
       // Remove style attributes
