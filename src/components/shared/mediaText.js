@@ -84,17 +84,14 @@ function MediaText (props) {
     switch(mediaBgColor) {
         case "Light Blue":
             textColBg = classNames('bg-light');
-            headingColor = classNames('text-dark');
-            // headingClass = "mt-0";        
+            headingColor = classNames('text-dark');    
         break;
         case "Dark Gray":
             textColBg = classNames('bg-dark');
             headingColor = classNames('text-light');
-            // headingClass = "mt-0";
         break;
         default:
             textColBg = "";
-            // headingClass = "mt-4";
         break;
     }
 
@@ -152,7 +149,7 @@ function MediaText (props) {
     // Everything in the Secondary column is stacked
     } else if (region === "Secondary") {
         chosenMediaTemplate = mediaTemplates['secondary-default'];
-    // Region is null, widget not in section 
+    // Region is null, widget not in section
     } else {
         wrapperCol = classNames(textColBg);
         if (imageURL) {
@@ -197,9 +194,9 @@ function MediaText (props) {
     }
 
     headingClass = classNames(headingClass, chosenMediaTemplate.headingClass, headingColor);
-    mediaCol = classNames("col-xs-12", chosenMediaTemplate.mediaCol);
+    mediaCol = classNames(mediaCol, chosenMediaTemplate.mediaCol);
     textColPadding = textColBg ? "p-4" : classNames(textColPadding, chosenMediaTemplate.textColPadding);
-    textCol = classNames("col-xs-12", chosenMediaTemplate.textCol, textColBg, textColHeight, textColPadding, "text-break");
+    textCol = classNames(textCol, chosenMediaTemplate.textCol, textColBg, textColHeight, textColPadding, "text-break");
     wrapperCol = mediaAlignment !== "left" ? classNames(wrapperCol, chosenMediaTemplate.wrapperCol, "flex-row-reverse") : classNames(wrapperCol,chosenMediaTemplate.wrapperCol);
 
     return (
