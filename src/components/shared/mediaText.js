@@ -61,7 +61,7 @@ function MediaText (props) {
     }
     
     if (textColBg) {
-        textColPadding = classNames('px-4 pb-4');
+        textColPadding = classNames('p-4');
     } else {
         textColPadding = "";
     }
