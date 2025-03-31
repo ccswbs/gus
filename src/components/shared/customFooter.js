@@ -30,12 +30,7 @@ const DefaultFooter = ({ logos, text, widgets }) => (
               const isSvg = imageUrl?.endsWith('.svg');
 
               return isSvg ? (
-                <Svg
-                  key={`footer-logo-${logo.field_footer_logo?.drupal_id}`}
-                  src={imageUrl}
-                  className="footer-logo"
-                  alt={logo.field_media_image?.alt}
-                />
+                <Svg src={imageUrl} />
               ) : (
                 <GatsbyImage
                   key={`footer-logo-${logo.field_footer_logo?.drupal_id}`}
