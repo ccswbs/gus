@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { lazy, Suspense } from "react";
+import Svg from "react-inlinesvg";
 import { graphql } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import Widget from "components/shared/widget";
@@ -24,14 +25,26 @@ const DefaultFooter = ({ logos, text, widgets }) => (
       <section className="row row-with-vspace site-content">
         {logos && (
           <div className="col-md-3 content-area">
-            {logos.map((logo) => (
-              <GatsbyImage
-                key={`footer-logo-${logo.field_footer_logo?.drupal_id}`}
-                image={logo.relationships?.field_media_image?.gatsbyImage}
-                className="footer-logo"
-                alt={logo.field_media_image?.alt}
-              />
-            ))}
+            {logos.map((logo) => {
+              const imageUrl = logo.relationships?.field_media_image?.publicUrl;
+              const isSvg = imageUrl?.endsWith('.svg');
+
+              return isSvg ? (
+                <Svg
+                  key={`footer-logo-${logo.field_footer_logo?.drupal_id}`}
+                  src={imageUrl}
+                  className="footer-logo"
+                  alt={logo.field_media_image?.alt}
+                />
+              ) : (
+                <GatsbyImage
+                  key={`footer-logo-${logo.field_footer_logo?.drupal_id}`}
+                  image={logo.relationships?.field_media_image?.gatsbyImage}
+                  className="footer-logo"
+                  alt={logo.field_media_image?.alt}
+                />
+              );
+            })}
           </div>
         )}
         <div className="col-md-9 content-area">
