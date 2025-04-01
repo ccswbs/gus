@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { lazy, Suspense } from "react";
-import Svg from "react-inlinesvg";
+import { ReactSVG } from "react-svg";
 import { graphql } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import Widget from "components/shared/widget";
@@ -30,7 +30,7 @@ const DefaultFooter = ({ logos, text, widgets }) => (
               const isSvg = imageUrl?.endsWith('.svg');
 
               return isSvg ? (
-                <Svg src={imageUrl} />
+                <><ReactSVG src={imageUrl} /></>
               ) : (
                 <GatsbyImage
                   key={`footer-logo-${logo.field_footer_logo?.drupal_id}`}
