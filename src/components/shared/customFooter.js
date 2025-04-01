@@ -26,7 +26,7 @@ const DefaultFooter = ({ logos, text, widgets }) => (
         {logos && (
           <div className="col-md-3 content-area">
             {logos.map((logo) => {
-              const imageUrl = logo.relationships?.field_media_image?.publicUrl;
+              const imageUrl = logo.relationships?.field_media_image?.url;
               const isSvg = imageUrl?.endsWith('.svg');
 
               return isSvg ? (
@@ -106,6 +106,7 @@ export const query = graphql`
         relationships {
           field_media_image {
             publicUrl
+            url
             gatsbyImage(width: 800, placeholder: BLURRED, layout: CONSTRAINED, formats: [AUTO, WEBP])
           }
         }
