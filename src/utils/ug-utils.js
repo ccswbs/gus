@@ -159,10 +159,23 @@ const ParseText = ({ textContent }) => {
       processNode: () => <></>,
     },
     {
-      // Remove <strong> tags but keep their content
-      shouldProcessNode: (node) => node.name === "strong",
-      processNode: (node, children) => <>{children}</>,
-    },
+      // Remove <strong> inside Heading tags
+      shouldProcessNode: (node) =>
+        ["h1", "h2", "h3", "h4", "h5", "h6"].includes(node.name),
+      
+      processNode: (node, children, index) => {
+        const cleanedChildren = children.map((child) => {
+          if (child?.type === "strong") {
+            return child.props.children; // Unwrap <strong>
+          }
+          return child;
+        });
+      
+        const Tag = node.name;
+        return <Tag key={index}>{cleanedChildren}</Tag>;
+      }
+      
+    },    
     {
       // Process anchor tags to prepend baseUrl and remove data-entity attributes
       shouldProcessNode: (node) => node.name === "a",
