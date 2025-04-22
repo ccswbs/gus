@@ -160,7 +160,7 @@ const ParseText = ({ textContent }) => {
     },
     {
       // Remove <strong> inside Heading tags
-      shouldProcessNode: (node) =>
+     /* shouldProcessNode: (node) =>
         ["h1", "h2", "h3", "h4", "h5", "h6"].includes(node.name),
       
       processNode: (node, children, index) => {
@@ -173,7 +173,13 @@ const ParseText = ({ textContent }) => {
       
         const Tag = node.name;
         return <Tag key={index}>{cleanedChildren}</Tag>;
-      }
+      }*/
+     // Remove <strong> elements from heading tags
+    shouldProcessNode: (node) => 
+      node.name === "strong" && 
+      node.parent && 
+      /^h[1-6]$/i.test(node.parent.name),
+    processNode: (node, children) => children,
       
     },    
     {
