@@ -159,6 +159,15 @@ const ParseText = ({ textContent }) => {
       processNode: () => <></>,
     },
     {
+      // Remove <strong> inside Heading tags
+    shouldProcessNode: (node) => 
+      node.name === "strong" && 
+      node.parent && 
+      /^h[1-6]$/i.test(node.parent.name),
+    processNode: (node, children) => children,
+      
+    },    
+    {
       // Process anchor tags to prepend baseUrl and remove data-entity attributes
       shouldProcessNode: (node) => node.name === "a",
       processNode: (node, children) => <AnchorTag node={node} children={children} />,
