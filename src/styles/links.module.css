@@ -47,7 +47,7 @@
 }
 
 .outer ul.inner li a {
-  display: block;
+  display: inline-block;
 }
 
 @media (min-width: 576px) {
