@@ -83,8 +83,6 @@ function Button(buttonCol, buttonData, buttonSpacing) {
     buttonFontAwesomeClasses = classNames(buttonFontAwesomeClasses, "d-table-cell");
   }
 
-  console.log(id);
-
   return (
     <React.Fragment key={buttonData.drupal_id}>
       {buttonData.field_cta_heading && (
