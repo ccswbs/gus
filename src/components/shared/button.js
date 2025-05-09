@@ -44,6 +44,7 @@ function buttonStyle(styleOfButton) {
 }
 
 function Button(buttonCol, buttonData, buttonSpacing) {
+  const id = buttonData.drupal_id;
   let urlLink = buttonData.field_button_link?.url;
   let buttonLinkTitle = buttonData?.field_formatted_title
     ? buttonData.field_formatted_title.processed
@@ -93,6 +94,7 @@ function Button(buttonCol, buttonData, buttonSpacing) {
       {urlLink && urlLink.includes("http") ? (
         btnAnalyticsGoal && btnAnalyticsAction ? (
           <a
+            id={id}
             href={urlLink}
             className={buttonClasses}
             onClick={(e) => {
@@ -112,7 +114,7 @@ function Button(buttonCol, buttonData, buttonSpacing) {
             <span className={buttonTitleClasses} dangerouslySetInnerHTML={{ __html: buttonLinkTitle }} />
           </a>
         ) : (
-          <a href={urlLink} className={buttonClasses}>
+          <a id={id} href={urlLink} className={buttonClasses}>
             {buttonIcon && (
               <i aria-hidden="true" className={buttonFontAwesomeClasses}>
                 {" "}
@@ -123,6 +125,7 @@ function Button(buttonCol, buttonData, buttonSpacing) {
         )
       ) : btnAnalyticsGoal && btnAnalyticsAction ? (
         <Link
+          id={id}
           to={urlLink}
           className={buttonClasses}
           onClick={(e) => {
@@ -142,7 +145,7 @@ function Button(buttonCol, buttonData, buttonSpacing) {
           <span className={buttonTitleClasses} dangerouslySetInnerHTML={{ __html: buttonLinkTitle }} />
         </Link>
       ) : (
-        <Link to={urlLink} className={buttonClasses}>
+        <Link id={id} to={urlLink} className={buttonClasses}>
           {buttonIcon && (
             <i aria-hidden="true" className={buttonFontAwesomeClasses}>
               {" "}
