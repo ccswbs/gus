@@ -34,8 +34,10 @@ function OVCCustomFooter (props) {
 					<div className="col-md-8 content-area">
 						<div className="container">
 							<ParseText textContent={footerText} />
+							{footerWidgets.map((widget) => (
+								<Widget data={widget} key={widget.drupal_id} />
+							))}
 						</div>
-						<Widget data={footerWidgets} />
 					</div>
 				</section>			
 			</div>

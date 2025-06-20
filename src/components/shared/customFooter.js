@@ -45,8 +45,10 @@ const DefaultFooter = ({ logos, text, widgets }) => (
         <div className="col-md-9 content-area">
           <div className="container">
             <ParseText textContent={text} />
+            {widgets.map((widget) => (
+              <Widget data={widget} key={widget.drupal_id} />
+            ))}
           </div>
-          <Widget data={widgets} />
         </div>
       </section>
     </div>
