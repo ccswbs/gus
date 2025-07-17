@@ -213,7 +213,7 @@ function MediaText (props) {
                 videoWidth={videoWidth}
             />}
 
-            {imageURL && <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} />}
+            {imageURL && <GatsbyImage image={imageURL.gatsbyImage} alt={mediaIsDecorative ? "" : imageAlt} />}
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol}>
