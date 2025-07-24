@@ -54,6 +54,7 @@ function MediaText (props) {
     const imageAlt = props.data?.relationships?.field_media_text_media?.field_media_image?.alt ?? "";
     const mediaSize = props.data?.field_media_image_size;
     const mediaAlignment = props.data?.field_media_alignment ?? 'left';
+    const mediaIsDecorative = props.data?.field_media_is_decorative;
 
     const videoTitle = props.data?.relationships.field_media_text_media?.name;
     const videoTranscript = mediaRelationships?.field_media_file?.publicUrl;
@@ -212,7 +213,7 @@ function MediaText (props) {
                 videoWidth={videoWidth}
             />}
 
-            {imageURL && <GatsbyImage image={imageURL.gatsbyImage} alt={imageAlt} />}
+            {imageURL && <GatsbyImage image={imageURL.gatsbyImage} alt={mediaIsDecorative ? "" : imageAlt} />}
         </div>
         {textOrButtons &&
         <div data-title="media-description" className={textCol}>
@@ -255,6 +256,7 @@ export const query = graphql`
     field_media_image_size
     field_media_alignment
     field_media_text_title
+    field_media_is_decorative
     field_heading_level
     field_media_text_desc {
       processed
