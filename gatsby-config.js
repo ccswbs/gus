@@ -66,7 +66,7 @@ module.exports = {
         options: {
         baseUrl: process.env.DRUPAL_BASEURL,
         apiBase: process.env.DRUPAL_APIBASE,
-        entityReferenceRevisions: "[paragraph]",
+        entityReferenceRevisions: ["paragraph"],
         headers: {
           'api-key': process.env.API_KEY,
         },
