@@ -66,6 +66,7 @@ module.exports = {
         options: {
         baseUrl: process.env.DRUPAL_BASEURL,
         apiBase: process.env.DRUPAL_APIBASE,
+        entityReferenceRevisions: "[paragraph]",
         headers: {
           'api-key': process.env.API_KEY,
         },
@@ -75,7 +76,7 @@ module.exports = {
         },
         fastBuilds: process.env.FASTBUILDS ?? true,
         skipFileDownloads: true,
-        requestTimeoutMS: 500000,
+        requestTimeoutMS: 300000,
       },
     },  
     {
