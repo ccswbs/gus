@@ -75,7 +75,7 @@ module.exports = {
         },
         fastBuilds: process.env.FASTBUILDS ?? true,
         skipFileDownloads: true,
-        requestTimeoutMS: 300000,
+        requestTimeoutMS: 500000,
       },
     },  
     {
