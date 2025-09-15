@@ -76,6 +76,7 @@ module.exports = {
         fastBuilds: process.env.FASTBUILDS ?? true,
         skipFileDownloads: true,
         requestTimeoutMS: 300000,
+        entityReferenceRevisions: ["paragraph"], // optional, defaults to `[]`
       },
     },  
     {
