@@ -14,7 +14,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "axios": "^1.8.4",
+    "axios": "^1.12.1",
     "babel-plugin-styled-components": "^2.1.4",
     "backstopjs": "^6.3.23",
     "classnames": "^2.5.1",
