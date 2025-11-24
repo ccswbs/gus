@@ -68,11 +68,12 @@ module.exports = {
         apiBase: process.env.DRUPAL_APIBASE,
         headers: {
           'api-key': process.env.API_KEY,
-        },
+        },            
         filters: {
           // Exclude Spotlight content type
           "node--spotlight": "filter[status][value]=0",
         },
+        disallowedLinkTypes: ["node--profile"], // Exclude this content type entirely
         fastBuilds: process.env.FASTBUILDS ?? true,
         skipFileDownloads: true,
         requestTimeoutMS: 300000,
