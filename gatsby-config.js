@@ -73,6 +73,7 @@ module.exports = {
           // Exclude Spotlight content type
           "node--spotlight": "filter[status][value]=0",
         },
+        disallowedLinkTypes: ["node--profile"], // Exclude this content type entirely
         fastBuilds: process.env.FASTBUILDS ?? true,
         skipFileDownloads: true,
         requestTimeoutMS: 300000,
