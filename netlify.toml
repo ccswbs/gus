@@ -12,6 +12,9 @@ remote_images = [
 
 [[plugins]]
   package = "@netlify-plugin-visual-diff"
+
+[[plugins]]
+  
   
   package = "@netlify/plugin-lighthouse"
   
@@ -47,5 +50,6 @@ remote_images = [
     path = "programs/bachelor-of-indigenous-environmental-science-and-practice/"
 
     output_path = "reports/ba-indigenous.html"
+
 
 
