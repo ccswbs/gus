@@ -11,7 +11,7 @@ remote_images = [
 ]
 
 [[plugins]]
-  package = "@netlify-plugin-visual-diff"
+  package = "netlify-plugin-visual-diff"
 
 [[plugins]]
   
@@ -50,6 +50,7 @@ remote_images = [
     path = "programs/bachelor-of-indigenous-environmental-science-and-practice/"
 
     output_path = "reports/ba-indigenous.html"
+
 
 
 
