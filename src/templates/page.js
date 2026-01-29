@@ -74,8 +74,10 @@ export const query = graphql`
       field_domain_access {
         drupal_internal__target_id
       }
-      field_metatags {
-        og_description
+      metatag {
+        attributes {
+          content
+        }
       }
       path {
         alias
@@ -134,7 +136,7 @@ export const query = graphql`
 const PageTemplate = ({data}) => {
     const seoData = {
         title: data.nodePage.title,
-        description: data.nodePage.field_metatags?.og_description,
+        description: data.nodePage.metatag?.attributes?.content,
         img: data.images.edges[0]?.node?.relationships?.field_media_image?.publicUrl,
         imgAlt: data.images.edges[0]?.node?.field_media_image?.alt
     };
