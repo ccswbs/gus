@@ -398,7 +398,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__nid: Int
       field_domain_access: [node__pageField_domain_access]
       field_hero_image: ImageField
-      field_metatags: node__pageField_metatags
+      metatag: node__pageMetatag
       relationships: node__pageRelationships
       fields: FieldsPathAlias
       path: AliasPath
@@ -406,8 +406,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type node__pageField_domain_access implements Node {
       drupal_internal__target_id: String
     }
-    type node__pageField_metatags implements Node {
-      og_description: String
+    type node__pageMetatag implements Node {
+      attributes: node__pageMetatagAttributes
+    }
+    type node__pageMetatagAttributes implements Node {
+      content: String
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
