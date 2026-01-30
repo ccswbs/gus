@@ -13,7 +13,7 @@ const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
 
 const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, domains}) => {
   const hasHeroContent = heroData.imageData?.length > 0 || heroData.heroWidgets?.length > 0;
-
+    
   return (
     <Layout menuName={menuData.menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />
@@ -77,6 +77,7 @@ export const query = graphql`
       metatag {
         attributes {
           content
+          property
         }
       }
       path {
@@ -136,7 +137,7 @@ export const query = graphql`
 const PageTemplate = ({data}) => {
     const seoData = {
         title: data.nodePage.title,
-        description: data.nodePage.metatag?.attributes?.content,
+        description: data.nodePage.metatag?.find(tag => tag.attributes?.property === 'og:description')?.attributes?.content,
         img: data.images.edges[0]?.node?.relationships?.field_media_image?.publicUrl,
         imgAlt: data.images.edges[0]?.node?.field_media_image?.alt
     };
