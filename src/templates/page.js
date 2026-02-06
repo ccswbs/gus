@@ -13,7 +13,7 @@ const Breadcrumbs = lazy(() => import('components/shared/breadcrumbs'));
 
 const Page = ({nodeID, pageTitle, seoData, heroData, widgets, footer, menuData, domains}) => {
   const hasHeroContent = heroData.imageData?.length > 0 || heroData.heroWidgets?.length > 0;
-    
+
   return (
     <Layout menuName={menuData.menuName}>
         <Helmet bodyAttributes={{ class: 'basic-page' }} />

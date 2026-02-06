@@ -302,7 +302,7 @@ const ProgramPageTemplate = ({data}) => {
 
   const seoData = {
     title: progData.title,
-    description: progData.field_metatags?.og_description,
+    description: progData.metatag?.find(tag => tag.attributes?.property === 'og:description')?.attributes?.content,
     img: heroData.images && heroData.images[0]?.node.relationships.field_media_image.publicUrl,
     imgAlt: heroData.images && heroData.images[0]?.node.field_media_image.alt
   };
@@ -352,11 +352,14 @@ export const query = graphql`
           field_domain_access {
             drupal_internal__target_id
           }
-          field_metatags {
-            og_description
-          }
           field_program_overview {
             processed
+          }
+          metatag {
+            attributes {
+              content
+              property
+            }
           }
           relationships {
             field_prog_image {
