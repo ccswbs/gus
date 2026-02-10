@@ -398,7 +398,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       drupal_internal__nid: Int
       field_domain_access: [node__pageField_domain_access]
       field_hero_image: ImageField
-      field_metatags: node__pageField_metatags
+      metatag: [node__pageMetatag]
       relationships: node__pageRelationships
       fields: FieldsPathAlias
       path: AliasPath
@@ -406,8 +406,12 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type node__pageField_domain_access implements Node {
       drupal_internal__target_id: String
     }
-    type node__pageField_metatags implements Node {
-      og_description: String
+    type node__pageMetatag implements Node {
+      attributes: node__pageMetatagAttributes
+    }
+    type node__pageMetatagAttributes implements Node {
+      content: String
+      property: String
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
@@ -428,8 +432,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_course_notes: node__programField_course_notes
       field_domain_access: [node__programField_domain_access]
       field_prog_image: ImageField
-      field_metatags: node__programField_metatags
       field_program_overview: node__programField_program_overview
+      metatag: [node__programMetatag]
       relationships: node__programRelationships
       fields: FieldsPathAlias
       path: AliasPath
@@ -442,13 +446,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     type node__programField_domain_access implements Node {
       drupal_internal__target_id: String
     }
-    type node__programField_metatags implements Node {
-      og_description: String
-    }
     type node__programField_program_overview implements Node {
       value: String
       format: String
       processed: String
+    }
+    type node__programMetatag implements Node {
+      attributes: node__programMetatagAttributes
+    }
+    type node__programMetatagAttributes implements Node {
+      content: String
+      property: String
     }
     type node__programRelationships implements Node {
       field_program_acronym: taxonomy_term__programs @link(from: "field_program_acronym___NODE")
