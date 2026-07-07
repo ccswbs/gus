@@ -291,12 +291,10 @@ const ProgramPageTemplate = ({data}) => {
   const imageData = data.images?.edges;
   const imageTaggedData = data.imagesTagged?.edges
   const variantData = progData.relationships?.field_program_variants;
-
-  // Re: Hero Widgets - `field_hero_widgets` only allows a single widget (at the moment), and
-  // Drupal doesn't return an array, so force it into an array.
+  
   const heroData = {
     images: imageData?.length > 0 ? imageData : imageTaggedData?.length > 0 ? imageTaggedData : null,
-    widgets: progData.relationships?.field_hero_widgets ? [progData.relationships?.field_hero_widgets] : null,
+    widgets: progData.relationships?.field_hero_widgets,
     videos: data.videos.edges[0]?.node,
   }
 
