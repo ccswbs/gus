@@ -415,7 +415,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }
     type node__pageRelationships implements Node {
       field_hero_image: media__image @link(from: "field_hero_image___NODE")
-      field_hero_widgets: widgetParagraphUnion @link(from:"field_hero_widgets___NODE")
+      field_hero_widgets: [widgetParagraphUnion] @link(from:"field_hero_widgets___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
       field_tags: [relatedTaxonomyUnion] @link(from: "field_tags___NODE")
       field_primary_navigation: taxonomy_term__primary_navigation @link(from: "field_primary_navigation___NODE")
@@ -467,7 +467,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       field_specializations: [taxonomy_term__specializations] @link(from: "field_specializations___NODE")
       field_tags: [taxonomy_term__tags] @link(from: "field_tags___NODE")
       field_prog_image: media__image @link(from: "field_prog_image___NODE")
-      field_hero_widgets: widgetParagraphUnion @link(from:"field_hero_widgets___NODE")
+      field_hero_widgets: [widgetParagraphUnion] @link(from:"field_hero_widgets___NODE")
       field_widgets: [widgetParagraphUnion] @link(from:"field_widgets___NODE")
     }
     type node__testimonial implements Node {

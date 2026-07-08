@@ -144,7 +144,7 @@ const PageTemplate = ({data}) => {
 
     const heroData = {
         imageData: data.images.edges,
-        heroWidgets: data.nodePage.relationships?.field_hero_widgets ? [data.nodePage.relationships.field_hero_widgets] : null
+        heroWidgets: data.nodePage.relationships?.field_hero_widgets,
     };
 
     const footerData = data.footer.edges;
